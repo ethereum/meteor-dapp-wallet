@@ -1,0 +1,173 @@
+#dapp-form-helper-iframe {
+    display: none;
+}
+
+.dapp-profile-image {
+    display: inline-block;
+    width: @gridWidth * 2;
+    height: @gridWidth * 2;
+    .border-radius(50%);
+    .background-size(cover);
+    background-positon: 50% 50%;
+    .box-shadow(inset rgba(255,255,255,0.5) 0 2px 2px, inset rgba(0,0,0,0.9) 0 -1px 8px);
+
+    &.dapp-small {
+        width: @gridWidth;
+        height: @gridWidth;
+    }
+    &.dapp-medium {
+        width: @gridWidth * 1.5;
+        height: @gridWidth * 1.5;
+    }
+}
+
+.dapp-message {
+    position: relative;
+    max-width: @gridWidth * 16;
+    margin: @defaultMargin*3 0;
+    font-size: 1.5em;
+    font-weight: 100;
+    line-height: 27pt;
+
+    // input[type="text"] {
+    //     display: block;
+    //     width: @gridWidth * 10;
+    //     color: @colorLink;
+    //     margin-top: 1*@gridHeight;
+    //     background: lighten(@colorGrayLight, 4%);
+    //     border-bottom: solid 2px @colorGrayLight;
+    //     font-size: 1em;
+    // }
+}
+
+
+.dapp-count {
+    .display(flex);
+    .align-items(center);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    padding: 0 @gridWidth/4;
+    color: @colorWhite;
+    font-weight: 100;
+    .opacity(0.7);
+
+    // ANIMATION
+    .transition(opacity @animationSpeed);
+    &.animate {
+        .opacity(0);
+    }
+}
+
+.active .dapp-count {
+    background-color: @colorGrayLight;
+    color: @colorMainBackground;    
+}
+
+.dapp-modal-buttons {
+    position: relative;
+    .display(flex);
+    .justify-content(flex-end);
+    margin-top: @defaultMargin;
+    // background: @colorWhite;
+
+    button, a, a:visited {
+        .flex(1);
+        margin: 0 @defaultMargin/2;
+        height: 2*@gridHeight;
+        line-height: 2*@gridHeight;
+        font-family: @fontFamily;
+        font-size: 0.9em;
+        text-transform: uppercase;
+        font-weight: 400;
+        
+        &.dapp-primary-button {
+            font-weight: 600;
+        }
+    }
+}
+
+// default elements
+
+a,
+a:visited,
+button {
+    text-decoration: none;
+    color: @colorBlue;
+
+    outline: 0;
+
+    &:hover,
+    &:focus {
+        outline: 0;
+    }
+    &:active {
+        .scale(0.95);
+    }
+}
+button {
+    .dapp-button-reset;
+    font-weight: inherit;
+}
+
+hr {
+    border: 0;
+    height: 0;
+    background-color: transparent;
+    border-bottom: 1px solid @colorGray; 
+}
+
+
+h1 {
+    font-weight: 100;
+    font-size: 2.2em;
+}
+
+h2 {
+    font-weight: 300;
+    font-size: 1.8em;
+    // text-transform: uppercase;
+    // background: @colorLink;
+    // color: @colorWhite;
+}
+
+
+// forms
+input,
+select,
+textarea {
+    padding: @defaultPaddingVertical/2 @defaultPaddingHorizontal/2;
+    background-color: transparent;
+    border: 0;
+    font-size: 1em;
+    font-weight: 300;
+    width: 250px;
+
+    color: @colorLink;
+        margin-top: @gridHeight;
+        background: @colorGrayLight;
+        border-bottom: solid 2px @colorGray;
+
+    .placeholder(@colorLink);
+
+    &:focus {
+        outline: 0;
+        // border-color: @colorBrand1;
+    }
+}
+:disabled {
+    color: @colorGrayDark;
+    // background-color: @colorGrayLight;
+}
+label {
+    font-weight: 300;
+}
+fieldset {
+    border: 0;
+    padding: 0;
+    margin: @defaultMargin;
+}
+select {
+    height: 45px;
+}

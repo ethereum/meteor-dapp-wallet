@@ -1,0 +1,329 @@
+body {
+    .display(flex);
+    .flex-direction(column);
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+    background-color: @colorWhite;
+    font: 100 16px 'Source Sans Pro', 'Helvetica Neue', arial, sans-serif;
+    color: @colorTextPrimary;
+
+
+    // lock scroll and blur content
+    &.disable-scroll {
+        overflow: hidden;
+
+    }
+    &.blur {
+        .dapp-flex-content,
+        .dapp-footer {
+            .blur(8px);
+        }
+    }
+
+}
+
+// DEBUG GRID
+.dapp-grid {
+    display: none;
+    z-index: 999;
+    background: #FFF url(hex-grid-tile.png);
+    background-size: 64px 111px;
+    position: absolute;
+    height: 200%;
+    left: 0;
+    right: 0;
+    opacity: 0.1;
+}
+body:hover .dapp-grid {
+    display: none;
+}
+
+
+
+// CONTAINERS
+
+// MODAL
+
+.dapp-modal-overlay {    
+    z-index: 99;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    .display(flex);
+    .align-items(flex-start);
+    .justify-content(center);
+    .dapp-overflow;
+
+    background: fadeout(@colorMainBackgroundDark, 50%);
+
+
+    // ANIMATION
+    .transition(opacity @animationSpeed);
+    &.animate {
+        .opacity(0);
+
+        .dapp-modal-container {
+            .translateY(-20%);
+        }
+    }
+}
+
+
+.dapp-modal-container {
+    position: relative;
+    width: 14*@gridWidth;
+    margin: 6*@gridHeight auto;
+    padding: @defaultPaddingVertical @defaultPaddingHorizontal;
+    background: @colorWhite;
+    .box-sizing(border-box);
+    .dapp-shadow-medium;
+    .border-radius(3px);
+
+    text-align: center;
+
+
+    // ANIMATION
+    .transition(transform @animationSpeed);
+
+
+    .dapp-modal-header {
+        position: relative;
+        padding: @defaultPaddingVertical*2 0;
+        margin: -@defaultPaddingVertical -@defaultPaddingHorizontal;
+        margin-bottom: @defaultPaddingVertical;
+        .border-radius(2px 2px 0 0);
+        color: @colorTextPrimary;
+        line-height: 2 * @gridHeight;
+        text-align: center;
+
+        &.dapp-pattern {
+            color: @colorWhite;
+        }
+
+
+        h1 {
+            margin: 0;
+        }
+
+        .dapp-profile-image {
+            position: absolute;
+            top: -@gridHeight * 2;
+            left: 50%;
+            margin-left: -@gridWidth;
+        }
+    }
+
+
+    p {
+        margin: @defaultPaddingVertical*2 0;
+        line-height: @gridHeight*1.2;
+        font-size: 1.2em;
+    }
+}
+
+
+// MAIN APP
+
+.dapp-header,
+.dapp-aside,
+.dapp-content,
+.dapp-footer {
+    position: relative;
+    padding: @defaultPaddingVertical @defaultPaddingHorizontal;
+    .box-sizing(border-box);
+    .dapp-overflow;
+}
+
+
+.dapp-flex-content {
+    .display(flex);
+    // .flex-direction(column);
+    .flex(1);
+    max-height: 100vh;//85vh;
+}
+
+.dapp-header {
+    height: @heightHeader;
+
+    nav {
+
+        ul {
+            .dapp-horizontal-menu;
+        }
+    }
+}
+
+.dapp-aside {
+    .flex(0 0 @widthSidebar);
+    padding-right: 0;
+
+    .background-image(linear-gradient(to bottom,  lighten(@colorMainBackground, 15%) 0, @colorMainBackground 100px));
+
+
+
+    // ANIMATION
+    .transition(flex @animationSpeed);
+
+    nav {
+        ul {
+            .dapp-vertical-menu;
+            padding-top: @gridHeight*1;
+
+            li {
+
+                a, a:visited, button {
+                    // display: block;
+                    .display(flex);
+                    .align-items(center);
+                    position: relative;
+                    min-height: @gridHeight*4;
+                    max-height: @gridHeight*5;
+                    padding: @defaultPaddingVertical @defaultPaddingHorizontal;
+                    padding-left: @gridWidth / 3;
+                    overflow: hidden;
+                    border-top: @colorMainBackgroundDark solid 1px;
+                    .border-radius(3px 0 0 3px);
+                    .box-sizing(border-box); // align button and links properties
+                    color: @colorWhite;
+
+
+                    // .dapp-shorten-text;
+                    font-weight: 300;
+                    line-height: @gridHeight;
+
+                    &:active {
+                        .transform-origin(100% 50%);
+                        .scale(0.98);
+                    }
+
+                    > i {
+                        margin-right: 4px;
+                    }
+
+                    // elipsis span
+                    > span {
+                        max-width: 115px;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 3;
+                        -webkit-box-orient: vertical;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+
+                }
+                .dapp-main-button {
+                    position: relative;
+                    width: 100%;
+                    // position: fixed;
+                    // width: 6 * @gridWidth;
+                    margin-bottom: 4*@gridHeight;
+                    .border-radius(3px 0 0 3px);
+                    background: @colorMainBackgroundDark;
+                    border-top: none;
+                    
+                    i {
+                        position: absolute;
+                        right: @gridWidth / 4;
+                        top: @gridHeight * 1.5;
+                    }
+                }
+
+                &.active a {
+                    background: #FFF;
+                    border-top: none;        
+                    color: @colorMainBackgroundDark; 
+                    font-weight: 500;       
+                }
+
+                // remove the top border
+                &:first-child a,
+                &.active + li > a,
+                &.dapp-main-button + li  {
+                    border-top: 0;
+                }
+            }
+        }
+    }
+}
+
+.dapp-actions {
+    z-index: 20;
+    .flex(0 0 @widthToolbar);
+    // position: fixed;
+    // width: @widthToolbar;
+    // top: 0;
+    // right: 0;
+    // bottom: 0;
+    background: @colorWhite;
+    .dapp-overflow;
+
+    nav {
+        ul {
+        	.dapp-vertical-menu;
+            
+            li {
+                margin: @defaultMargin 0;// thats what I always use, so we can better control the the spacing, without comming back here. @gridHeight*2 2px 0;
+                color: @colorLink;
+                position: relative;
+                overflow: hidden;
+                text-align: center;
+
+                // ANIMATION
+                .transition(height @animationSpeed);
+
+                // give every button the icon style
+                button,
+                a, a:visited {
+                    .dapp-icon-button;
+                    color: @colorBlue;
+                	font-size: 0.8em;
+                    font-weight: 400;
+
+                    i {
+                        font-size: 2em;
+                        display: block; // makes sure the text is below
+                    }
+                }
+        	}
+        }
+    }
+}
+
+.dapp-content {
+    .flex(1);
+    background: @colorWhite;
+
+    &.dapp-has-header {
+        padding-top: 180px + 3 * @defaultPaddingVertical;
+    }
+
+
+    .dapp-content-header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        min-height: @gridHeight * 2;
+        padding: @defaultPaddingVertical @gridWidth / 2;
+        margin-left: -@defaultPaddingHorizontal;
+        background: fadeout(@colorGrayLight, 20%);
+        z-index: 10;
+        line-height: 30px;
+        .dapp-shadow-medium;
+        
+        // ANIMATION
+        // .transition(opacity @animationSpeed);
+        // &.animate {
+        //     .opacity(0);
+        // }
+    }
+}
+
+
+.dapp-footer {
+    height: 15vh;
+    background-color: @colorBlack;
+}
+

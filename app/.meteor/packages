@@ -1,0 +1,21 @@
+# Meteor packages used by this project, one per line.
+#
+# 'meteor add' and 'meteor remove' will edit this file for you,
+# but you can also edit it by hand.
+
+meteor-platform
+fastclick
+iron:router
+less
+chuangbo:cookie
+jeeeyul:moment-with-langs
+tap:i18n
+raix:handlebar-helpers
+frozeman:animation-helper
+frozeman:template-var
+frozeman:persistent-minimongo
+frozeman:reactive-timer
+zimme:iron-router-active
+3stack:bignumber
+mistereo:identicon
+markdown

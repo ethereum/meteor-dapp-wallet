@@ -1,0 +1,33 @@
+<template name="view_modals_addUser">
+
+    <div class="dapp-modal-header">
+        <h1>{{i18n 'whisper.chat.texts.addUserTitle'}}</h1>
+    </div>
+
+    <p>
+        {{i18n 'whisper.chat.texts.invitePeople3'}}    
+        <input type="text" value="whisperchat.eth/chat/{{_id}}">
+    </p>
+
+    <ul class="whisper-user-list">
+        {{#each following}}
+        <li>
+            <button class="{{#if isInvited}}invited{{/if}}">
+                {{> elements_profileImage identity=identity}}
+                
+                <span class="whisper-username">{{name}}</span>
+            </button>
+        </li>
+        {{/each}}
+    </ul>
+
+    <div class="dapp-modal-buttons">
+        {{#if noneSelected}}
+            <a href="{{pathFor route='chat' sessionKey=_id}}">{{i18n 'whisper.app.buttons.cancel'}}</a>
+        {{else}}
+            <a href="{{pathFor route='chat' sessionKey=_id}}">{{i18n 'whisper.app.buttons.cancel'}}</a>
+            <button class="invite dapp-primary-button">{{inviteButtonText}}</button>
+        {{/if}}
+    </div>
+    
+</template>

@@ -1,0 +1,28 @@
+<template name="layout_main">
+
+	<div class="dapp-flex-content">
+		
+		<div class="dapp-grid"></div>
+
+		<!-- aside -->
+		<aside class="dapp-aside">
+			{{> yield region="aside"}}
+		</aside>
+
+		<!-- content, the <main class="dapp-content">...</main> is inside the template-->
+		{{> yield}}
+
+		<!-- actions -->
+		<aside class="dapp-actions">
+			{{> yield region="actionbar"}}
+		</aside>
+
+	</div>
+	
+	<!-- footer -->
+	<footer class="dapp-footer">
+		
+	</footer>
+
+	{{> yield region="modal"}}
+</template>

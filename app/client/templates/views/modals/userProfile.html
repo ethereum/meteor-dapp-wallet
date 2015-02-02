@@ -1,0 +1,39 @@
+<template name="view_modals_userProfile">
+
+    <header class="dapp-modal-header dapp-pattern">
+        {{> elements_profileImage identity=identity}}
+
+        <h1 class="whisper-username whisper-unauthenticated">{{name}}</h1>
+        <br>
+        <p class="whisper-identity-string">{{identity}}</p>
+    </header>
+
+    {{#if $eq identity currentIdentity.identity}}
+
+        <p>{{i18n 'whisper.users.texts.yourProfile'}}</p>
+
+
+        <fieldset>
+            <label>{{i18n 'whisper.users.texts.changeUsername'}}<br>
+            <input type="text" name="username" value="{{name}}" class="dapp-center">
+            </label>
+        </fieldset>
+
+        <button class="dapp-block-button save-username">{{i18n 'whisper.users.buttons.changeUsername'}}</button>
+
+    {{else}}
+
+        <p>{{i18n 'whisper.users.texts.anonymous'}}</p>
+
+        <div class="dapp-modal-buttons">
+            {{#if hasIdentity}}
+                {{#if isFollowing}}
+                    <button class="dapp-block-button unfollow">{{i18n 'whisper.users.buttons.unfollow'}}</button>
+                {{else}}
+                    <button class="dapp-block-button follow">{{i18n 'whisper.users.buttons.follow'}}</button>
+                {{/if}}
+                <a href="{{pathFor route='chat' sessionKey=identity}}" class="dapp-block-button send-message">{{i18n 'whisper.users.buttons.sendMessage'}}</a>
+            {{/if}}
+        </div>
+    {{/if}}
+</template>
