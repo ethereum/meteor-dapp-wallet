@@ -23,6 +23,7 @@ body {
 
 }
 
+
 // DEBUG GRID
 .dapp-grid {
     display: none;
@@ -57,7 +58,7 @@ body:hover .dapp-grid {
     .justify-content(center);
     .dapp-overflow;
 
-    background: fadeout(@colorMainBackgroundDark, 50%);
+    background: fadeout(@colorBackgroundOverlay, 50%);
 
 
     // ANIMATION
@@ -134,19 +135,12 @@ body:hover .dapp-grid {
     position: relative;
     padding: @defaultPaddingVertical @defaultPaddingHorizontal;
     .box-sizing(border-box);
-    .dapp-overflow;
 }
 
-
-.dapp-flex-content {
-    .display(flex);
-    // .flex-direction(column);
-    .flex(1);
-    max-height: 100vh;//85vh;
-}
 
 .dapp-header {
     height: @heightHeader;
+    .background-image(linear-gradient(to bottom,  lighten(@colorBackgroundHeader, 15%) 0, @colorBackgroundHeader 100px));
 
     nav {
 
@@ -156,11 +150,48 @@ body:hover .dapp-grid {
     }
 }
 
+.dapp-footer {
+    height: @heightFooter;
+    background-color: @colorBlack;
+}
+
+// Makes the content with asides align in rows
+.dapp-flex-content {
+    .display(flex);
+    // .flex-direction(column);
+    .flex(1);
+    // max-height: 100vh;//85vh;
+}
+
+.dapp-content {
+    .flex(1);
+    background: @colorWhite;
+
+    &.dapp-has-header {
+        padding-top: 120px + 3 * @defaultPaddingVertical;
+    }
+
+
+    .dapp-content-header {
+        position: fixed;
+        top: 0;
+        width: 80%;
+        min-height: @gridHeight * 2;
+        padding: @defaultPaddingVertical @gridWidth / 2;
+        margin-left: -@defaultPaddingHorizontal;
+        background: fadeout(@colorGrayLight, 20%);
+        z-index: 10;
+        line-height: @gridHeight * 2;
+        .dapp-shadow-medium;
+        .box-sizing(border-box);
+    }
+}
+
+
 .dapp-aside {
     .flex(0 0 @widthSidebar);
     padding-right: 0;
-
-    .background-image(linear-gradient(to bottom,  lighten(@colorMainBackground, 15%) 0, @colorMainBackground 100px));
+    .background-image(linear-gradient(to bottom,  lighten(@colorBackgroundAside, 15%) 0, @colorBackgroundAside 100px));
 
 
 
@@ -184,7 +215,7 @@ body:hover .dapp-grid {
                     padding: @defaultPaddingVertical @defaultPaddingHorizontal;
                     padding-left: @gridWidth / 3;
                     overflow: hidden;
-                    border-top: @colorMainBackgroundDark solid 1px;
+                    border-top: darken(@colorBackgroundAside, 8%) solid 1px;
                     .border-radius(3px 0 0 3px);
                     .box-sizing(border-box); // align button and links properties
                     color: @colorWhite;
@@ -221,7 +252,7 @@ body:hover .dapp-grid {
                     // width: 6 * @gridWidth;
                     margin-bottom: 4*@gridHeight;
                     .border-radius(3px 0 0 3px);
-                    background: @colorMainBackgroundDark;
+                    background: darken(@colorBackgroundAside, 8%);
                     border-top: none;
                     
                     i {
@@ -234,7 +265,7 @@ body:hover .dapp-grid {
                 &.active a {
                     background: #FFF;
                     border-top: none;        
-                    color: @colorMainBackgroundDark; 
+                    color: darken(@colorBackgroundAside, 8%); 
                     font-weight: 500;       
                 }
 
@@ -258,7 +289,6 @@ body:hover .dapp-grid {
     // right: 0;
     // bottom: 0;
     background: @colorWhite;
-    .dapp-overflow;
 
     nav {
         ul {
@@ -290,40 +320,5 @@ body:hover .dapp-grid {
         	}
         }
     }
-}
-
-.dapp-content {
-    .flex(1);
-    background: @colorWhite;
-
-    &.dapp-has-header {
-        padding-top: 180px + 3 * @defaultPaddingVertical;
-    }
-
-
-    .dapp-content-header {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        min-height: @gridHeight * 2;
-        padding: @defaultPaddingVertical @gridWidth / 2;
-        margin-left: -@defaultPaddingHorizontal;
-        background: fadeout(@colorGrayLight, 20%);
-        z-index: 10;
-        line-height: 30px;
-        .dapp-shadow-medium;
-        
-        // ANIMATION
-        // .transition(opacity @animationSpeed);
-        // &.animate {
-        //     .opacity(0);
-        // }
-    }
-}
-
-
-.dapp-footer {
-    height: 15vh;
-    background-color: @colorBlack;
 }
 
