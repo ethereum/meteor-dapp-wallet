@@ -1,13 +1,13 @@
 <template name="layout_main">
 
+<div class="dapp-grid"></div>
+
 	<header class="dapp-header dapp-overflow">
-		
+		{{> yield region="header"}}
 	</header>
 
 	<div class="dapp-flex-content">
 		
-		<div class="dapp-grid"></div>
-
 		<!-- content -->
 		<main class="dapp-content">
 			{{> yield}}

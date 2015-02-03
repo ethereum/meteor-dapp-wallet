@@ -12,9 +12,39 @@
 // Change Default constants
 
 @colorLink: #02A8F3;
-@colorMainBackground: #05669A;
-@colorMainBackgroundDark: #064A80;
+@colorBackgroundHeader: #d9d0d0;
 
 html, body {
     height: 100%;
+}
+
+.dapp-header {
+    .wallet-balance {
+        position: absolute;
+        right: @defaultPaddingHorizontal;
+        bottom: @defaultPaddingVertical;
+        text-align: right;
+
+        span {
+            color: @colorTextSecondary;
+            font-size: 1.6em;
+        }
+    }
+}
+
+
+a.wallet-account {
+    .account-pattern {
+        width: @gridWidth;
+        height: 100%;
+        background-color: @colorGray;
+        float: left;
+    }
+
+    h3 {
+        color: @colorLink;
+    }
+    span {
+        color: @colorTextSecondary;
+    }
 }

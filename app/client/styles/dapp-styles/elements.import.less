@@ -120,16 +120,35 @@ hr {
 
 
 h1 {
+    margin: @defaultMargin 0;
     font-weight: 100;
     font-size: 2.2em;
+    color: @colorTextSecondary;
+
+    span {
+        font-weight: 500;
+    }
 }
 
 h2 {
-    font-weight: 300;
-    font-size: 1.8em;
-    // text-transform: uppercase;
-    // background: @colorLink;
-    // color: @colorWhite;
+    display: inline-block;
+    padding: 0 @defaultPaddingHorizontal/4;
+    margin: 0;
+    margin-bottom: @defaultMargin;
+    font-weight: 500;
+    font-size: 1.2em;
+    text-transform: uppercase;
+    background: @colorTextSecondary;
+    color: @colorWhite;
+}
+
+h3 {
+    margin: 0;
+    padding: 0;
+    color: @colorTextSecondary;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 1em;
 }
 
 

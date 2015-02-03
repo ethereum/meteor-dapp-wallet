@@ -21,7 +21,7 @@ Router.configure({
     layoutTemplate: 'layout_main',
     notFoundTemplate: 'layout_notFound',
     yieldRegions: {
-        'views_chats_aside': {to: 'aside'}
+        'layout_header': {to: 'header'}
     }
 });
 
