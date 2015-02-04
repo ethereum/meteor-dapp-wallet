@@ -14,9 +14,7 @@
 @colorLink: #02A8F3;
 @colorBackgroundHeader: #d9d0d0;
 
-html, body {
-    height: 100%;
-}
+
 
 .dapp-header {
     .wallet-balance {
@@ -112,6 +110,29 @@ table {
                 background-color: @colorRed;
                 border-color: darken(@colorRed, 10%);
             }
+        }
+    }
+}
+
+.account-send-form {
+    width: 50%;
+
+    .account-send-from,
+    .account-send-to {
+        // .display(flex);
+        // .align-items(center);
+        width: 50%;
+        float: left;
+
+        a.dapp-profile-image {
+            float: left;
+            margin-right: @defaultMargin;
+        }
+
+        span, button {
+            margin-top: @gridHeight;
+            float: left;
+            font-weight: 400;
         }
     }
 }

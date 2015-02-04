@@ -50,5 +50,21 @@ Router.route('/send', {
 });
 
 
+/**
+The account route.
+
+@method send
+*/
+Router.route('/account/:publicKey', {
+    template: 'views_account',
+    name: 'account',
+    data: function() {
+        return {
+            publicKey: this.params.publicKey
+        };
+    }
+});
+
+
 
 

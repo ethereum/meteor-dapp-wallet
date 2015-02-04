@@ -30,7 +30,7 @@ body {
     background: #FFF url('dapp-styles/hex-grid-tile.png');
     background-size: 64px 111px;
     position: absolute;
-    height: 200%;
+    min-height: 100%;
     left: 0;
     right: 0;
     opacity: 0.05;
@@ -171,7 +171,7 @@ body {
 
                     // .dapp-shorten-text;
                     font-weight: 300;
-                    line-height: @gridHeight;
+                    line-height: 20px;
 
                     &:active {
                         .transform-origin(100% 50%);
@@ -228,7 +228,7 @@ body {
     }
 }
 
-.dapp-actions {
+.dapp-actionbar {
     z-index: 20;
     .flex(0 0 @widthToolbar);
     // position: fixed;
