@@ -143,6 +143,10 @@ h2 {
     text-transform: uppercase;
     background: @colorTextSecondary;
     color: @colorWhite;
+
+    + table {
+        margin-top: 0;
+    }
 }
 
 h3 {
@@ -157,6 +161,12 @@ h3 {
 
 table {
     width: 100%;
+    margin: @defaultMargin 0;
+
+    + h2,
+    + h3 {
+        margin-top: @defaultMargin*2;
+    }
 
     tbody {
         tr {
