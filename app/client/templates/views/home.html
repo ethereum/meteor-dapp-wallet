@@ -1,12 +1,19 @@
 <template name="views_home">
     <h1>Account <span>Overview</span></h1>
     <h2>Choose an account to deposit</h2>
+    <br>
 
-    <a href="#" class="wallet-account">
-        <div class="account-pattern"></div>
-        <h3>Savings account</h3>
-        <span>1 456 µΞ</span>
-    </a>
+    {{> elements_account publicKey='214243657890897654321'}}
+
+    {{> elements_account publicKey='654321456432'}}
+
+    {{> elements_account publicKey='987654743213432'}}
+
+    {{> elements_account publicKey='98765474321343232131'}}
+
+    {{> elements_account publicKey='9876547432134321112'}}
+
+    {{> elements_account publicKey='9876547432134323333'}}
     
     <br><br><br> <br><br><br>
     <h2>Pending transactions</h2>

@@ -26,6 +26,7 @@ and link to the `dapp-styles.less` in the any of our less files in the project w
     @import 'public/dapp-styles/dapp-styles.less';
 
 
+
 ## Usage
 
 The main layout consists of the following HTML elements:
@@ -67,6 +68,7 @@ This gives you a basic flex box layout with a fixed header height and footer hei
 You can remove any part (header, footer, asides) of it and still have nice fitting containers.
 
 ### Using overflow auto in containers
+
 If you want the apps area to be maximal the window size and the content of your containers to be `overflow: auto`,
 just add the `dapp-overflow` class to the `dapp-header`, `dapp-content`, `dapp-footer`, `dapp-actions` and/or `dapp-aside` containers and add the following to your main CSS file:
 
@@ -75,5 +77,12 @@ html, body {
     height: 100%;
 }
 ```
+
+### Mixins
+
+When you use the less version, of the framework then you will be able
+to use all its LESS mixins including the LESSHAT mixins (https://github.com/madebysource/lesshat, which are used by the dapp-styles) in your own LESS files.
+
+
 
 

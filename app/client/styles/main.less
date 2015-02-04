@@ -34,17 +34,43 @@ html, body {
 
 
 a.wallet-account {
+    position: relative;
+    display: inline-block;
+    padding-left: @gridWidth + @defaultPaddingHorizontal/2;
+    padding-right: @defaultPaddingHorizontal/2;
+    margin-right: @defaultMargin;
+    margin-bottom: @defaultMargin;
+
+    &:hover {
+        background-color: lighten(@colorBackgroundHeader, 12%);
+    }
+
     .account-pattern {
-        width: @gridWidth;
-        height: 100%;
-        background-color: @colorGray;
-        float: left;
+        position: absolute;
+        .display(flex);
+        .align-items(center);
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: auto;
+        min-width: @gridWidth/3;
+        padding: 0 @gridWidth/3;
+        text-align: center;
+        line-height: 100%;
+        color: @colorWhite;
+        font-size: 1.5em;
     }
 
     h3 {
+        .dapp-shorten-text;
         color: @colorLink;
+        max-width: @gridWidth*5;
+        float: left;
     }
     span {
+        clear: left;
+        float: left;
         color: @colorTextSecondary;
+        font-size: 1.5em;
     }
 }
