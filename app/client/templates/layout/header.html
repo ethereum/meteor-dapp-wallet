@@ -2,11 +2,11 @@
     <nav>
         <ul>
             <li>
-                <a href="#" class="active">
+                <a href="{{pathFor route='dashboard'}}" class="{{isActiveRoute regex='dashboard'}}">
                     <i class="icon-arrow-down3"></i>
                     <span>Receive</span>
                 </a>
-                <a href="#">
+                <a href="{{pathFor route='send'}}" class="{{isActiveRoute regex='send'}}">
                     <i class="icon-arrow-up2"></i>
                     <span>Send</span>
                 </a>
