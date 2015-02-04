@@ -1,6 +1,6 @@
 <template name="views_home">
-    <h1>Account <span>Overview</span></h1>
-    <h2>Choose an account to deposit</h2>
+    <h1>{{{i18n 'wallet.accounts.title'}}}</h1>
+    <h2>{{i18n 'wallet.accounts.accountTitle'}}</h2>
     <br>
 
     {{> elements_account publicKey='214243657890897654321'}}
@@ -15,9 +15,113 @@
 
     {{> elements_account publicKey='9876547432134323333'}}
     
-    <br><br><br> <br><br><br>
     <h2>Pending transactions</h2>
 
-    <br><br><br> <br><br><br>
+    <table>
+        <tbody>
+            <tr>
+                <td class="transaction-amount plus">202 µΞ</td>
+                <td class="account-name">
+                    <span>alexvandesande.eth</span>
+                </td>
+                <td class="transaction-purpose">
+                    <span>Birthday gift</span>
+                </td>
+                <td class="button">
+                    <button class="dapp-block-button approve">
+                        <i class="icon-checkmark"></i>
+                        Approve
+                    </button>
+                </td>
+                <td class="button">
+                    <button class="dapp-block-button reject">
+                        <i class="icon-cross"></i>
+                        Reject
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td class="transaction-amount minus">-4 200 µΞ</td>
+                <td class="account-name">
+                    <span>alexvandesande.eth</span>
+                </td>
+                <td class="transaction-purpose">
+                    <span>Birthday gift</span>
+                </td>
+                <td class="button">
+                    <button class="dapp-block-button approve">
+                        <i class="icon-checkmark"></i>
+                        Approve
+                    </button>
+                </td>
+                <td class="button">
+                    <button class="dapp-block-button reject">
+                        <i class="icon-cross"></i>
+                        Reject
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
     <h2>Latest transactions</h2>
+
+    <table>
+        <tbody>
+            <tr>
+                <td class="transaction-amount plus">200 µΞ</td>
+                <td class="account-name">
+                    <span>alexvandesande.eth</span>
+                </td>
+                <td class="transaction-purpose">
+                    <span>Birthday gift</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="transaction-amount plus">2 200 µΞ</td>
+                <td class="account-name">
+                    <span>alexvandesande.eth</span>
+                </td>
+                <td class="transaction-purpose">
+                    <span>Birthday gift</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="transaction-amount minus">-123 µΞ</td>
+                <td class="account-name">
+                    <span>alexvandesande.eth</span>
+                </td>
+                <td class="transaction-purpose">
+                    <span>Birthday gift</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="transaction-amount plus">533 µΞ</td>
+                <td class="account-name">
+                    <span>alexvandesande.eth</span>
+                </td>
+                <td class="transaction-purpose">
+                    <span>Birthday gift</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="transaction-amount plus">24 566 µΞ</td>
+                <td class="account-name">
+                    <span>alexvandesande.eth</span>
+                </td>
+                <td class="transaction-purpose">
+                    <span>Birthday gift</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="transaction-amount plus">4200 µΞ</td>
+                <td class="account-name">
+                    <span>alexvandesande.eth</span>
+                </td>
+                <td class="transaction-purpose">
+                    <span>Birthday gift</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </template>

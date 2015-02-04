@@ -74,3 +74,44 @@ a.wallet-account {
         font-size: 1.5em;
     }
 }
+
+
+table {
+    td {
+        text-align: center;
+
+        &.transaction-amount {
+            width: 80px;
+            text-align: right;
+
+            &.plus {
+                color: @colorTextSecondary;                
+            }
+            &.minus {
+                color: @colorRed;
+            }
+        }
+        &.account-name {
+            width: 200px;
+            font-style: italic;
+            color: @colorTextSecondary;
+        }
+        &.transaction-purpose {
+            text-align: left;
+            font-weight: 400;
+        }
+        &.button {
+            width: 87px;
+            text-align: right;
+
+            button.approve {
+                background-color: @colorGreen;
+                border-color: darken(@colorGreen, 10%);
+            }
+            button.reject {
+                background-color: @colorRed;
+                border-color: darken(@colorRed, 10%);
+            }
+        }
+    }
+}

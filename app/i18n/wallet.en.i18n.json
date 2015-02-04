@@ -3,6 +3,10 @@
         "app": {
             "buttons": {
             }
+        },
+        "accounts": {
+            "title": "<span>Account</span> Overview",
+            "accountTitle": "Choose an account to deposit"
         }
     }
 }
