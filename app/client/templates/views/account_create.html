@@ -1,24 +1,3 @@
-<template name="elements_account">
-    {{#with account}}
-    <a href="{{pathFor route='account' publicKey=../publicKey}}" class="wallet-account {{#if ../main}}main{{/if}}">
-        {{#if ../main}}
-            <!-- <div class="account-pattern"> -->
-                {{> elements_identicon identity=../publicKey}}
-            <!-- </div> -->
-        {{else}}
-            <div class="account-pattern">
-                
-            </div>
-        {{/if}}
-
-        <h3>Savings account</h3>
-        <span>1 456 µΞ</span>
-        <span class="publicKey">{{../publicKey}}</span>
-    </a>
-    {{/with}}
-</template>
-
-
 <template name="views_account_create">
         <!-- we use a form, which posts into the "dapp-form-helper-iframe" iframe, so that the browser stores inout fields for native autocpmplete -->
     <form class="container new-account" action="about:blank" target="dapp-form-helper-iframe" autocomplete="on">
@@ -43,6 +22,19 @@
                 <h3>{{i18n 'wallet.newAccount.accountType.multisig.title'}}</h3>
                 <span>{{i18n 'wallet.newAccount.accountType.multisig.description'}}</span>
             </label>
+            {{#if showSection "multisig"}}
+                <div class="indented-box">
+                    <h3>Require 2 Signatures for any action.</h3>
+                    <h4>Signee Addresses</h4>
+                    <input type="text" placeholder="Signee address">
+                    <input type="text" placeholder="Signee address">
+                    <input type="text" placeholder="Signee address">
+                    <input type="text" placeholder="Signee address">
+
+                    <button>Add more signees</button>
+                </div>
+                <hr>
+            {{/if}}
         </div>
         
         <div class="row clear">
@@ -51,6 +43,13 @@
                 <h3>{{i18n 'wallet.newAccount.accountType.dailyLimit.title'}}</h3>
                 <span>{{i18n 'wallet.newAccount.accountType.dailyLimit.description'}}</span>
             </label>
+            {{#if showSection "dailyLimit"}}
+                <div class="indented-box">
+                    <h3>Allow a daily limit of at most</h3>
+                    10%
+                </div>
+                <hr>
+            {{/if}}
         </div>
         
         <div class="row clear">
@@ -59,6 +58,9 @@
                 <h3>{{i18n 'wallet.newAccount.accountType.custom.title'}}</h3>
                 <span>{{i18n 'wallet.newAccount.accountType.custom.description'}}</span>
             </label>
+            {{#if showSection "custom"}}
+                cuistom
+            {{/if}}
         </div>
 
         <hr>
