@@ -23,6 +23,10 @@
         bottom: @defaultPaddingVertical;
         text-align: right;
 
+        h3 {
+            margin-bottom: 0;
+        }
+
         span {
             color: @colorTextSecondary;
             font-size: 1.6em;
@@ -34,13 +38,21 @@
 a.wallet-account {
     position: relative;
     display: inline-block;
+    width: @gridWidth * 8;
     padding-left: @gridWidth + @defaultPaddingHorizontal/2;
     padding-right: @defaultPaddingHorizontal/2;
     margin-right: @defaultMargin;
     margin-bottom: @defaultMargin;
+    .box-sizing(border-box);
 
     &:hover {
         background-color: lighten(@colorBackgroundHeader, 12%);
+    }
+
+    &.main {
+        .account-pattern {
+            background-image: none !important;
+        }
     }
 
     .account-pattern {
@@ -57,10 +69,15 @@ a.wallet-account {
         line-height: 100%;
         color: @colorWhite;
         font-size: 1.5em;
+
+        a {
+            margin: 0 -@gridWidth/3;
+        }
     }
 
     h3 {
         .dapp-shorten-text;
+        margin: 0;
         color: @colorLink;
         max-width: @gridWidth*5;
         float: left;
@@ -99,8 +116,12 @@ table {
             font-weight: 400;
         }
         &.button {
-            width: 87px;
+            width: 100px;
             text-align: right;
+
+            button {
+                width: 100px;
+            }
 
             button.approve {
                 background-color: @colorGreen;
@@ -114,24 +135,95 @@ table {
     }
 }
 
+
 .account-send-form {
 
-    .account-send-from,
-    .account-send-to {
-        // .display(flex);
-        // .align-items(center);
-        width: 35%;
-        float: left;
+    > div {
+        clear: both;
+        margin-bottom: @defaultMargin*2;
 
-        a.dapp-profile-image {
-            float: left;
-            margin-right: @defaultMargin;
+        &.fee {
+
+            input {
+                margin-bottom: @defaultMargin*2; 
+            }
+
+            input + span,
+            input + span + span {
+                position: absolute;
+                top: 115px;
+                text-transform: uppercase;
+                font-size: 1em;
+                font-weight: 400;
+            }
+            input + span {
+                position: absolute;
+                left: 0px;
+            }
+            input + span + span {
+                left: 210px;
+            }
         }
 
-        span, button {
-            margin-top: @gridHeight;
+        .account-send-35 {
+            position: relative;
+            // .display(flex);
+            // .align-items(center);
+            width: 70%;
+            min-width: @gridWidth * 3;
             float: left;
-            font-weight: 400;
+
+            a.dapp-profile-image {
+                float: left;
+                margin-right: @defaultMargin;
+            }
+
+            span, button {
+                margin-top: @gridHeight/3;
+                float: left;
+                font-weight: 400;
+            }
+            button {
+                max-width: 100px;
+                text-align: left;
+            }
+
+            .dapp-profile-image {
+                position: relative;
+                margin-left: 4px;
+                z-index: 2;
+            }
+
+            input {
+                z-index: 1;
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 30px;
+                padding-left: @gridWidth*1.5;
+            }
         }
+
+        .account-send-70 {
+            position: relative;
+            float: left;
+            width: 70%;
+            min-width: @gridWidth * 6;
+
+            span {
+                font-size: 1.3em;
+                font-weight: 400;
+                color: @colorTextSecondary;
+            }
+        }
+
+        .account-send-info {
+            margin-top: @defaultMargin;
+            float: left;
+            width: 30%;
+            min-width: @gridWidth * 3;
+            color: @colorTextSecondary;
+        }
+        
     }
 }

@@ -1,9 +1,16 @@
 <template name="elements_account">
     {{#with account}}
-    <a href="{{pathFor route='account' publicKey=../publicKey}}" class="wallet-account">
-        <div class="account-pattern">
-            
-        </div>
+    <a href="{{pathFor route='account' publicKey=../publicKey}}" class="wallet-account {{#if ../main}}main{{/if}}">
+        {{#if ../main}}
+            <div class="account-pattern">
+                {{> elements_profileImage identity=../publicKey class='dapp-small'}}
+            </div>
+        {{else}}
+            <div class="account-pattern">
+                
+            </div>
+        {{/if}}
+
         <h3>Savings account</h3>
         <span>1 456 µΞ</span>
     </a>

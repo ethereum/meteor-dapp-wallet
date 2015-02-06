@@ -50,6 +50,7 @@ minimongo@1.0.6
 mistereo:identicon@1.0.0
 mobile-status-bar@1.0.2
 mongo@1.0.11
+numeral:numeral@1.5.3
 observe-sequence@1.0.4
 ordered-dict@1.0.2
 raix:handlebar-helpers@0.2.4

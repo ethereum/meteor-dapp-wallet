@@ -156,7 +156,7 @@ h2 {
 h3 {
     margin: @defaultMargin 0;
     padding: 0;
-    color: @colorTextSecondary;
+    color: fadeout(@colorTextSecondary, 30%);
     text-transform: uppercase;
     font-weight: 500;
     font-size: 1em;
@@ -192,17 +192,18 @@ table {
 input,
 select,
 textarea {
+    width: 300px;
+    max-width: 100%;
+    margin-top: @gridHeight;
     padding: @defaultPaddingVertical/2 @defaultPaddingHorizontal/2;
-    background-color: transparent;
+    padding-bottom: @defaultPaddingVertical/3;
     border: 0;
+    border-bottom: solid 2px @colorGray;
+    .box-sizing(border-box);
+    background-color: @colorGrayLight;
     font-size: 1em;
     font-weight: 300;
-    width: 250px;
-
     color: @colorLink;
-        margin-top: @gridHeight;
-        background: @colorGrayLight;
-        border-bottom: solid 2px @colorGray;
 
     .placeholder(@colorLink);
 
@@ -210,11 +211,73 @@ textarea {
         outline: 0;
         // border-color: @colorBrand1;
     }
+
+    &.dapp-large {
+        font-size: 1.5em;
+    }
 }
 :disabled {
     color: @colorGrayDark;
     // background-color: @colorGrayLight;
 }
+input[type="range"] {
+    -webkit-appearance: none;
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+
+    &::-webkit-slider-runnable-track {
+        height: 5px;
+        background-color: @colorGray;
+        border: none;
+        .border-radius(3px);
+    }
+
+    &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        border: none;
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        background-color: @colorGrayDark;
+        margin-top: -6px;
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &:focus::-webkit-slider-thumb {
+        background-color: @colorLink;
+    }
+
+    &::-moz-range-track {
+        // width: 300px;
+        height: 5px;
+        background-color: @colorGray;
+        border: none;
+        .border-radius(3px);
+    }
+
+    &::-moz-range-thumb {
+        -webkit-appearance: none;
+        border: none;
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        background-color: @colorGrayDark;
+        margin-top: -4px;
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &:focus::-moz-range-thumb {
+        background-color: @colorLink;
+    }
+}
+
 label {
     font-weight: 300;
 }

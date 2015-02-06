@@ -2,6 +2,9 @@
     "wallet": {
         "app": {
             "buttons": {
+            },
+            "texts": {
+                "balance": "Balance"
             }
         },
         "accounts": {
@@ -9,7 +12,20 @@
             "accountTitle": "Choose an account to deposit"
         },
         "send": {
-            "title": "<span>Send</span> money"
+            "title": "<span>Send</span> money",
+            "yourAddress": "You",
+            "pickAddress": "Pick an address",
+            "to": "To",
+            "from": "From",
+            "amount": "Amount",
+            "fee": "Choose a Fee",
+            "feeFree": "Free",
+            "feeFast": "Fast",
+            "texts": {
+                "sendTo": "Choose from which wallet and to where it will go.  Addresses can be picked up by using the clipboard, the camera, clicking a link or searching visible devices in the vicinity.",
+                "sendAmount": "Currency in the ethereum network is transmitted using the equivalent in Ether, the internal unit of value.<br><br>You are sending<br><strong>__amount__ finney (__amountEther__ ether)</strong>.",
+                "sendFee": "A fee is an incentive for other machines in the network to process your transaction earlier.<br><br>You are sending <strong>__fee__ finney</strong>, at this rate expect your transaction to be processed in 10-30 minutes."
+            }
         }
     }
 }

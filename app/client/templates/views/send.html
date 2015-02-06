@@ -1,23 +1,75 @@
 <template name="views_send">
-    <h1>{{{i18n 'wallet.send.title'}}}</h1>
 
-    <div class="account-send-form">
-        <div class="account-send-from">
-            <h3>From</h3>
-            {{> elements_profileImage identity='22312'}}
+    <!-- we use a form, which posts into the "dapp-form-helper-iframe" iframe, so that the browser stores inout fields for native autocpmplete -->
+    <form class="dapp-container account-send-form" action="about:blank" target="dapp-form-helper-iframe" autocomplete="on">
+        
+        <h1>{{{i18n 'wallet.send.title'}}}</h1>
 
-            <span>You</span>
+        <div>
+            <div class="account-send-35">
+                <h3>{{i18n 'wallet.send.from'}}</h3>
+                {{> elements_profileImage identity='22312' class="dapp-small"}}
+
+                <span>{{i18n 'wallet.send.yourAddress'}}</span>
+            </div>
+
+            <div class="account-send-info">
+                {{i18n 'wallet.send.texts.sendTo'}}
+            </div>
+
+            <div class="account-send-35">
+                <h3>{{i18n 'wallet.send.to'}}</h3>
+                {{> elements_profileImage identity=toPublicKey class="dapp-small"}}
+
+                <!-- <button>{{i18n 'wallet.send.pickAddress'}}</button> -->
+                <input type="text" name="to" class="dapp-large" autofocus="true">
+            </div>
+
+            <div class="dapp-clear-fix"></div>
         </div>
-        <div class="account-send-to">
-            <h3>To</h3>
-            {{> elements_profileImage identity='2231222'}}
 
-            <button>Pick an address</button>
+        <div>
+            <div class="account-send-70">
+                <h3>{{i18n 'wallet.send.amount'}}</h3>
+                <input type="text" name="amount" class="dapp-large"><span> µΞ</span>
+            </div>
+            
+            <div class="account-send-info">
+                {{{i18n 'wallet.send.texts.sendAmount' amount=amount amountEther=amountEther}}}
+            </div>
+
+            <div class="dapp-clear-fix"></div>
         </div>
 
-        <div class="account-send-info">
-            Lorem ipsum Laboris commodo elit culpa mollit in occaecat magna aute ut magna exercitation do sit aliqua Ut officia exercitation.
+        <div class="fee">
+            <div class="account-send-70">
+                <h3>{{i18n 'wallet.send.fee'}}</h3>
+                <span>{{fee}} µΞ</span><br>
+                <input type="range" name="fee" min="0" max="500" step="100" value="{{fee}}" list="volsettings">
+                <span>{{i18n 'wallet.send.feeFree'}}</span>
+                <span>{{i18n 'wallet.send.feeFast'}}</span>
+                <!-- <datalist id=volsettings>
+                    <option>0</option>
+                    <option>100</option>
+                    <option>200</option>
+                    <option>300</option>
+                    <option>400</option>
+                    <option>500</option>
+                </datalist> -->
+            </div>
+            
+            <div class="account-send-info">
+                {{{i18n 'wallet.send.texts.sendFee' fee=feePlusAmount}}}
+            </div>
+
+            <div class="dapp-clear-fix"></div>
         </div>
-    </div>
+
+        <hr>
+
+        <!-- button type="submit" will send the form -->
+        <button type="submit" class="send dapp-block-button">Send</button>
+        
+    </form>
 
 </template>
