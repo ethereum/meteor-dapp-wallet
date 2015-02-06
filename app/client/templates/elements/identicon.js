@@ -7,12 +7,12 @@ Template Controllers
 /**
 Return the user identity icon
 
-@class [template] elements_profileImage
+@class [template] elements_identicon
 @constructor
 */
 
 
-Template['elements_profileImage'].helpers({
+Template['elements_identicon'].helpers({
     /**
     The current users identity
 

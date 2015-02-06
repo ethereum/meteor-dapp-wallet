@@ -8,7 +8,7 @@
         <div>
             <div class="account-send-35">
                 <h3>{{i18n 'wallet.send.from'}}</h3>
-                {{> elements_profileImage identity='22312' class="dapp-small"}}
+                {{> elements_identicon identity='22312' class="dapp-small"}}
 
                 <span>{{i18n 'wallet.send.yourAddress'}}</span>
             </div>
@@ -19,7 +19,7 @@
 
             <div class="account-send-35">
                 <h3>{{i18n 'wallet.send.to'}}</h3>
-                {{> elements_profileImage identity=toPublicKey class="dapp-small"}}
+                {{> elements_identicon identity=toPublicKey class="dapp-small"}}
 
                 <!-- <button>{{i18n 'wallet.send.pickAddress'}}</button> -->
                 <input type="text" name="to" class="dapp-large" autofocus="true">

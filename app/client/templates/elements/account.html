@@ -3,7 +3,7 @@
     <a href="{{pathFor route='account' publicKey=../publicKey}}" class="wallet-account {{#if ../main}}main{{/if}}">
         {{#if ../main}}
             <div class="account-pattern">
-                {{> elements_profileImage identity=../publicKey class='dapp-small'}}
+                {{> elements_identicon identity=../publicKey class='dapp-small'}}
             </div>
         {{else}}
             <div class="account-pattern">
