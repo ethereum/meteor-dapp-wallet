@@ -18,7 +18,7 @@ Template['elements_identicon'].helpers({
 
     @method identity
     */
-    'identity': function(e){
-        return this.identity || 'hj'; // hj creates a nice icon with person
-    }
+    // 'identity': function(e){
+    //     return this.identity || 'hj'; // hj creates a nice icon with person
+    // }
 });

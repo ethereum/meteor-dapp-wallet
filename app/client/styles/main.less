@@ -46,7 +46,7 @@ a.wallet-account {
     .box-sizing(border-box);
 
     &.main {
-        background-color: fadeout(@colorBackgroundAside, 90%);
+        background-color: lighten(@colorBackgroundHeader, 12%);
 
         .account-pattern {
             background-image: none !important;
@@ -67,7 +67,7 @@ a.wallet-account {
         bottom: 0;
         width: auto;
         min-width: @gridWidth/2;
-        padding: 0 @gridWidth/2;
+        padding: 0 @gridWidth/1.5;
         text-align: center;
         line-height: 100%;
         color: @colorWhite;

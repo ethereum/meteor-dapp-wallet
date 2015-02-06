@@ -115,35 +115,18 @@ html, body {
 }
 ```
 
+### Development grid
+
+<img src="https://cloud.githubusercontent.com/assets/232662/6078219/28265c56-adf7-11e4-9568-69675647e894.png" alt="HEX Grid" width="300">
+
+
+To show a HEX grid for element alignment just add the `<div class="dapp-grid"></div>` element to your `<body>` tag.
+
 ### Mixins
 
 When you use the less version of the framework you will be able
 to use all its LESS mixins including the LESSHAT mixins (https://github.com/madebysource/lesshat, which are used by the dapp-styles) in your own LESS files.
 
-### Elements
-
-TODO
-
-#### Menus
-
-To add a header or aside menu just add the follwowing structure to your `.dapp-header` or `dapp-aside` container:
-
-```html
-<nav>
-    <ul>
-        <li>
-            <a href="#" class="active">
-                <i class="icon-arrow-down3"></i>
-                <span>Receive</span>
-            </a>
-            <a href="#">
-                <i class="icon-arrow-up2"></i>
-                <span>Send</span>
-            </a>
-        </li>
-    </ul>
-</nav>
-```
 
 ### Containers
 
@@ -156,7 +139,7 @@ which will center your content and limit it to a max width tof 960px (You can ov
 </div>
 ```
 
-#### Grids
+### Grids
 
 dapp-styles uses the base grid system from Matthew Hartman. For a full documentation see http://matthewhartman.github.io/base/docs/grid.html
 The grid system is based on 12 columns and can be placed anywhere in you HTML.
@@ -195,7 +178,7 @@ To change the column size for mobile and tablets you can use the following class
 - `.mobile-col-1-4` sets column width to 25% for mobile devices
 - `.mobile-col-3-4` sets column width to 75% for mobile devices
 
-##### Breakpoints
+#### Breakpoints
 
 To change change the break points overwrite the following variables:
 
@@ -204,6 +187,30 @@ To change change the break points overwrite the following variables:
 - `@widthMobile` default: 100%; // mobile is everything below the `@widthTablet` breakpoint 
 
 
+### Elements
+
+TODO
+
+#### Menus
+
+To add a header or aside menu just add the follwowing structure to your `.dapp-header` or `dapp-aside` container:
+
+```html
+<nav>
+    <ul>
+        <li>
+            <a href="#" class="active">
+                <i class="icon-arrow-down3"></i>
+                <span>Receive</span>
+            </a>
+            <a href="#">
+                <i class="icon-arrow-up2"></i>
+                <span>Send</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+```
 
 
 
