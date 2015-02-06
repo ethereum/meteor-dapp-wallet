@@ -3,35 +3,20 @@
 
     
     <!-- we use a form, which posts into the "dapp-form-helper-iframe" iframe, so that the browser stores inout fields for native autocpmplete -->
-    <form class="dapp-container account-send-form" action="about:blank" target="dapp-form-helper-iframe" autocomplete="on">
-    <div class="row clear">
-  <div class="col col-1 tablet-col-11 mobile-col-1-2">
-    <span class="no-tablet no-mobile">1</span>
-    <span class="no-desktop show-tablet no-mobile">11</span>
-    <span class="no-desktop no-tablet show-mobile">1-2</span>
-  </div>
-  <div class="col col-11 tablet-col-1 mobile-col-1-2">
-    <span class="no-tablet no-mobile">11</span>
-    <span class="no-desktop show-tablet no-mobile">1</span>
-    <span class="no-desktop no-tablet show-mobile">1-2</span>
-  </div>
-</div>
-        
+    <form class="container account-send-form" action="about:blank" target="dapp-form-helper-iframe" autocomplete="on">
+            
         <h1>{{{i18n 'wallet.send.title'}}}</h1>
 
-        <div>
-            <div class="account-send-35">
+        <div class="row clear">
+            <div class="col col-7 mobile-full account-send-35">
                 <h3>{{i18n 'wallet.send.from'}}</h3>
                 {{> elements_identicon identity='22312' class="dapp-small"}}
 
                 <span>{{i18n 'wallet.send.yourAddress'}}</span>
             </div>
 
-            <div class="account-send-info">
-                {{i18n 'wallet.send.texts.sendTo'}}
-            </div>
 
-            <div class="account-send-35">
+            <div class="col col-7 mobile-full account-send-35">
                 <h3>{{i18n 'wallet.send.to'}}</h3>
                 {{> elements_identicon identity=toPublicKey class="dapp-small"}}
 
@@ -39,24 +24,28 @@
                 <input type="text" name="to" class="dapp-large" autofocus="true">
             </div>
 
+            <div class="col col-5 mobile-full account-send-info">
+                {{i18n 'wallet.send.texts.sendTo'}}
+            </div>
+
             <div class="dapp-clear-fix"></div>
         </div>
 
-        <div>
-            <div class="account-send-70">
+        <div class="row clear">
+            <div class="col col-7 mobile-full account-send-70">
                 <h3>{{i18n 'wallet.send.amount'}}</h3>
                 <input type="text" name="amount" class="dapp-large"><span> µΞ</span>
             </div>
             
-            <div class="account-send-info">
+            <div class="col col-5 mobile-full account-send-info">
                 {{{i18n 'wallet.send.texts.sendAmount' amount=amount amountEther=amountEther}}}
             </div>
 
             <div class="dapp-clear-fix"></div>
         </div>
 
-        <div class="fee">
-            <div class="account-send-70">
+        <div class="row clear fee">
+            <div class="col col-7 mobile-full account-send-70">
                 <h3>{{i18n 'wallet.send.fee'}}</h3>
                 <span>{{fee}} µΞ</span><br>
                 <input type="range" name="fee" min="0" max="500" step="100" value="{{fee}}" list="volsettings">
@@ -72,7 +61,7 @@
                 </datalist> -->
             </div>
             
-            <div class="account-send-info">
+            <div class="col col-5 mobile-full account-send-info">
                 {{{i18n 'wallet.send.texts.sendFee' fee=feePlusAmount}}}
             </div>
 
