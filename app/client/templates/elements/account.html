@@ -2,9 +2,9 @@
     {{#with account}}
     <a href="{{pathFor route='account' publicKey=../publicKey}}" class="wallet-account {{#if ../main}}main{{/if}}">
         {{#if ../main}}
-            <div class="account-pattern">
-                {{> elements_identicon identity=../publicKey class='dapp-small'}}
-            </div>
+            <!-- <div class="account-pattern"> -->
+                {{> elements_identicon identity=../publicKey}}
+            <!-- </div> -->
         {{else}}
             <div class="account-pattern">
                 
@@ -16,4 +16,10 @@
         <span class="publicKey">{{../publicKey}}</span>
     </a>
     {{/with}}
+</template>
+
+
+<template name="views_account_create">
+    CREATE
+
 </template>

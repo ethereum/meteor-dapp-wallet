@@ -39,6 +39,7 @@ a.wallet-account {
     position: relative;
     display: inline-block;
     width: @gridWidth * 6.5;
+    min-height: @gridHeight*4;
     padding-left: @gridWidth + @defaultPaddingHorizontal;
     padding-right: @defaultPaddingHorizontal/2;
     margin-right: @defaultMargin;
@@ -47,10 +48,21 @@ a.wallet-account {
 
     &.main {
         background-color: lighten(@colorBackgroundHeader, 12%);
+        overflow: hidden;
 
-        .account-pattern {
-            background-image: none !important;
+        // .account-pattern {
+        //     background-color: transparent;
+        //     background-image: none !important;
+        // }
+        a.dapp-identicon {
+            position: absolute;
+            left: -30px;
+            top: 5px;
         }
+    }
+    &.create {
+        .display(flex);
+        .align-items(center);
     }
 
     &:hover {
@@ -66,12 +78,14 @@ a.wallet-account {
         top: 0;
         bottom: 0;
         width: auto;
-        min-width: @gridWidth/2;
-        padding: 0 @gridWidth/1.5;
+        min-width: @gridWidth*1.4;
+        padding: 0 @gridWidth/2;
+        background-color: @colorLink;
         text-align: center;
         line-height: 100%;
         color: @colorWhite;
-        font-size: 1.5em;
+        font-size: 1.8em;
+        .box-sizing(border-box);
 
         a {
             margin: 0 -@gridWidth/3;

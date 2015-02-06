@@ -49,6 +49,16 @@ Router.route('/send', {
     name: 'send'
 });
 
+/**
+The create account route.
+
+@method send
+*/
+Router.route('/account/new', {
+    template: 'views_account_create',
+    name: 'createAccount'
+});
+
 
 /**
 The account route.

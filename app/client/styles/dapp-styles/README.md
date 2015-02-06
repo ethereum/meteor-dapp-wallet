@@ -141,8 +141,18 @@ which will center your content and limit it to a max width tof 960px (You can ov
 
 ### Grids
 
-dapp-styles uses the base grid system from Matthew Hartman. For a full documentation see http://matthewhartman.github.io/base/docs/grid.html
+All paddings and margins are based on a 32px by 18.4px grid. You can overwrite this grid by chaging the:
+
+- `@gridWidth`
+- `@gridHeight`
+
+variables.
+
+Additionally dapp-styles uses a grid system from Matthew Hartman. For fluid column layouts. For a full documentation see http://matthewhartman.github.io/base/docs/grid.html
 The grid system is based on 12 columns and can be placed anywhere in you HTML.
+
+**Note** This grid system is not based on the `@gridWidth` and `@gridHeight`, as this are fluid columns.
+
 
 To create a simple grid use the `row`, `col` and `col-x` classes.
 
