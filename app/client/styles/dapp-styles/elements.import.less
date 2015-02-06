@@ -113,6 +113,7 @@ button {
 hr {
     border: 0;
     height: 0;
+    margin: @defaultMargin*2 0;
     background-color: transparent;
     border-bottom: 1px solid @colorGray; 
 }
@@ -195,6 +196,7 @@ table {
 input,
 select,
 textarea {
+    display: block;
     width: 300px;
     max-width: 100%;
     margin-top: @gridHeight;
@@ -208,7 +210,7 @@ textarea {
     font-weight: 300;
     color: @colorLink;
 
-    .placeholder(@colorLink);
+    .placeholder(@colorGray);
 
     &:focus {
         outline: 0;
@@ -222,6 +224,86 @@ textarea {
 :disabled {
     color: @colorGrayDark;
     // background-color: @colorGrayLight;
+}
+input[type="checkbox"], input[type="radio"] {
+    display: inline-block;
+    position: relative;
+    margin: 0;
+    outline: none !important;
+    -webkit-appearance: none;
+    
+    width: auto;
+
+    width:  24px;
+    height: 24px;
+
+    // Radio
+    &::before {
+        content: '';
+        position: relative;
+        top:  0;
+        left: 0;
+        display: block;
+
+        background: @colorGrayLight;
+        border: 1px solid @colorGrayLight;
+        .box-shadow(inset 0 0 2px rgba(0,0,0,0.2));
+        // .dapp-shadow-medium;
+
+        width:  24px;
+        height: 24px;
+    }
+
+    &:active::before {
+        // .dapp-shadow-medium;
+    }
+
+    &:focus::before {
+        border-color: fadeout(@colorLink, 60%);
+        // .dapp-shadow-medium;
+    }
+    &:disabled::before {
+        cursor: not-allowed;
+        background-color: fadeout(@colorGrayLight, 20%);
+        border-color: @colorGrayLight;
+    }
+
+
+    // Radio Pip
+    &:after {
+        content: '';
+        display: inline-block;
+        position: absolute;
+        top: 6px;
+        left: 6px;
+
+        background: @colorLink;
+        .dapp-shadow-small;
+
+        width:  12px;
+        height: 12px;
+
+        .transition(transform @animationSpeed);
+        .scale(0);
+    }
+
+    &:checked:after {
+        .scale(1);
+    }
+
+    &:disabled:after {
+        background: fadeout(@colorLink, 60%);
+    }
+}
+input[type="radio"] {
+    .border-radius(50%);
+    
+    &:before {
+        .border-radius(50%);
+    }
+    &:after {
+        .border-radius(50%);
+    }
 }
 input[type="range"] {
     -webkit-appearance: none;

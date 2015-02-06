@@ -11,6 +11,29 @@
             "title": "<span>Account</span> Overview",
             "accountTitle": "Choose an account to deposit"
         },
+        "newAccount": {
+            "title": "New <span>Account</span>",
+            "accountName": "Account name",
+            "accountType": {
+                "title": "Account type",
+                "simple": {
+                    "title": "Simple account",
+                    "description": "A simple account wuth no special rules."
+                },
+                "multisig": {
+                    "title": "Multisignature account",
+                    "description": "Requires two or more signatures for withdraws."
+                },
+                "dailyLimit": {
+                    "title": "Daily limit account",
+                    "description": "Account with daily safety limits."
+                },
+                "custom": {
+                    "title": "Custom account",
+                    "description": "Setup your own account rules."
+                }
+            }
+        },
         "send": {
             "title": "<span>Send</span> money",
             "yourAddress": "You",

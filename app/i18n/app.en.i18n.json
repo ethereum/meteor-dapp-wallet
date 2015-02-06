@@ -12,6 +12,8 @@
         "cancel": "Cancel",
         "save": "Save",
         "edit": "edit",
+        "send": "Send",
+        "create": "Create",
         "tryToReconnect": "Try to reconnect"
     },
     "commonWords": {

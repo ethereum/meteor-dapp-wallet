@@ -20,6 +20,52 @@
 
 
 <template name="views_account_create">
-    CREATE
+        <!-- we use a form, which posts into the "dapp-form-helper-iframe" iframe, so that the browser stores inout fields for native autocpmplete -->
+    <form class="container new-account" action="about:blank" target="dapp-form-helper-iframe" autocomplete="on">
+            
+        <h1>{{{i18n 'wallet.newAccount.title'}}}</h1>
+
+        <input type="text" name="accountName" placeholder="{{i18n 'wallet.newAccount.accountName'}}" autofocus="true">
+
+        <h2>{{i18n 'wallet.newAccount.accountType.title'}}</h2>
+
+        <div class="row clear">
+            <label>
+                <input type="radio" name="accountType" value="simple">
+                <h3>{{i18n 'wallet.newAccount.accountType.simple.title'}}</h3>
+                <span>{{i18n 'wallet.newAccount.accountType.simple.description'}}</span>
+            </label>
+        </div>
+        
+        <div class="row clear">
+            <label>
+                <input type="radio" name="accountType" value="multisig">
+                <h3>{{i18n 'wallet.newAccount.accountType.multisig.title'}}</h3>
+                <span>{{i18n 'wallet.newAccount.accountType.multisig.description'}}</span>
+            </label>
+        </div>
+        
+        <div class="row clear">
+            <label>
+                <input type="radio" name="accountType" value="dailyLimit">
+                <h3>{{i18n 'wallet.newAccount.accountType.dailyLimit.title'}}</h3>
+                <span>{{i18n 'wallet.newAccount.accountType.dailyLimit.description'}}</span>
+            </label>
+        </div>
+        
+        <div class="row clear">
+            <label>
+                <input type="radio" name="accountType" value="custom">
+                <h3>{{i18n 'wallet.newAccount.accountType.custom.title'}}</h3>
+                <span>{{i18n 'wallet.newAccount.accountType.custom.description'}}</span>
+            </label>
+        </div>
+
+        <hr>
+
+        <!-- button type="submit" will send the form -->
+        <button type="submit" class="dapp-block-button">{{i18n 'buttons.create'}}</button>
+
+    </form>
 
 </template>

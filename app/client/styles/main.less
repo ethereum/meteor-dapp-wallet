@@ -202,6 +202,11 @@ table {
                 font-weight: 400;
                 color: @colorTextSecondary;
             }
+
+            input {
+                margin-top: 0; 
+                display: inline-block;
+            }
         }
 
         &.fee {
@@ -214,7 +219,7 @@ table {
             }
 
             input {
-                margin-bottom: @defaultMargin*2; 
+                margin-bottom: @defaultMargin*2;
             }
 
             input + span,
@@ -236,6 +241,36 @@ table {
 
         .send-info {
             margin-top: @defaultMargin;
+            color: @colorTextSecondary;
+        }
+        
+    }
+}
+
+.new-account {
+
+    h2 {
+        margin-bottom: @defaultMargin*2;
+    }
+
+    label {
+        display: block;
+        position: relative;
+        padding-left: @gridWidth;
+        cursor: pointer;
+
+        input[type="radio"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            margin-right: @defaultMargin;
+        }
+
+        h3 {
+            margin: 0;
+            color: @colorLink;
+        }
+        span {
             color: @colorTextSecondary;
         }
         
