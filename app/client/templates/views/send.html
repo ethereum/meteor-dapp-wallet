@@ -7,16 +7,16 @@
             
         <h1>{{{i18n 'wallet.send.title'}}}</h1>
 
-        <div class="row clear">
-            <div class="col col-7 mobile-full account-send-35">
+        <!-- from/to -->
+        <div class="row clear from-to">
+            <div class="col col-7 mobile-full">
                 <h3>{{i18n 'wallet.send.from'}}</h3>
                 {{> elements_identicon identity='22312' class="dapp-small"}}
 
                 <span>{{i18n 'wallet.send.yourAddress'}}</span>
             </div>
 
-
-            <div class="col col-7 mobile-full account-send-35">
+            <div class="col col-7 mobile-full">
                 <h3>{{i18n 'wallet.send.to'}}</h3>
                 {{> elements_identicon identity=toPublicKey class="dapp-small"}}
 
@@ -24,28 +24,30 @@
                 <input type="text" name="to" class="dapp-large" autofocus="true">
             </div>
 
-            <div class="col col-5 mobile-full account-send-info">
+            <div class="col col-5 mobile-full send-info">
                 {{i18n 'wallet.send.texts.sendTo'}}
             </div>
 
             <div class="dapp-clear-fix"></div>
         </div>
 
-        <div class="row clear">
-            <div class="col col-7 mobile-full account-send-70">
+        <!-- amount -->
+        <div class="row clear amount">
+            <div class="col col-7 mobile-full">
                 <h3>{{i18n 'wallet.send.amount'}}</h3>
                 <input type="text" name="amount" class="dapp-large"><span> µΞ</span>
             </div>
             
-            <div class="col col-5 mobile-full account-send-info">
+            <div class="col col-5 mobile-full send-info">
                 {{{i18n 'wallet.send.texts.sendAmount' amount=amount amountEther=amountEther}}}
             </div>
 
             <div class="dapp-clear-fix"></div>
         </div>
 
+        <!-- fee -->
         <div class="row clear fee">
-            <div class="col col-7 mobile-full account-send-70">
+            <div class="col col-7 mobile-full">
                 <h3>{{i18n 'wallet.send.fee'}}</h3>
                 <span>{{fee}} µΞ</span><br>
                 <input type="range" name="fee" min="0" max="500" step="100" value="{{fee}}" list="volsettings">
@@ -61,7 +63,7 @@
                 </datalist> -->
             </div>
             
-            <div class="col col-5 mobile-full account-send-info">
+            <div class="col col-5 mobile-full send-info">
                 {{{i18n 'wallet.send.texts.sendFee' fee=feePlusAmount}}}
             </div>
 

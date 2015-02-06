@@ -147,76 +147,41 @@ table {
 .account-send-form {
 
     > div {
-        // clear: both;
         margin-bottom: @defaultMargin*2;
 
-        &.fee {
-
-            input {
-                margin-bottom: @defaultMargin*2; 
-            }
-
-            input + span,
-            input + span + span {
-                position: absolute;
-                top: 115px;
-                text-transform: uppercase;
-                font-size: 1em;
-                font-weight: 400;
-            }
-            input + span {
-                position: absolute;
-                left: 0px;
-            }
-            input + span + span {
-                left: 210px;
-            }
-        }
-
-        .account-send-35 {
+        &.from-to {
             position: relative;
             // .display(flex);
             // .align-items(center);
-            // width: 70%;
-            // min-width: @gridWidth * 3;
-            // float: left;
 
-            a.dapp-profile-image {
-                float: left;
-                margin-right: @defaultMargin;
-            }
-
-            span, button {
-                margin-top: @gridHeight/3;
-                float: left;
-                font-weight: 400;
-            }
-            button {
-                max-width: 100px;
-                text-align: left;
-            }
-
-            .dapp-profile-image {
+            > div {
                 position: relative;
-                margin-left: 4px;
-                z-index: 2;
+                margin-bottom: @defaultMargin;
             }
 
+            .dapp-identicon {
+                z-index: 2;
+                position: absolute;
+                margin-top: 4px;
+                margin-left: 4px;
+            }
+
+            span {
+                display: inline-block;
+                margin-top: @gridHeight/2;
+                font-weight: 400;
+                margin-left: @gridWidth*1.5;
+            }
             input {
                 z-index: 1;
-                position: absolute;
-                left: 0;
-                right: 0;
-                top: 30px;
+                margin-top: 0;
                 padding-left: @gridWidth*1.5;
+                width: 100%;
             }
         }
 
-        .account-send-70 {
+        &.amount {
             position: relative;
-            // float: left;
-            // width: 70%;
-            // min-width: @gridWidth * 6;
 
             span {
                 font-size: 1.3em;
@@ -225,11 +190,38 @@ table {
             }
         }
 
-        .account-send-info {
+        &.fee {
+            position: relative;
+
+            span:first-of-type {
+                font-size: 1.3em;
+                font-weight: 400;
+                color: @colorTextSecondary;
+            }
+
+            input {
+                margin-bottom: @defaultMargin*2; 
+            }
+
+            input + span,
+            input + span + span {
+                position: absolute;
+                top: 125px;
+                text-transform: uppercase;
+                font-size: 1em;
+                font-weight: 400;
+            }
+            input + span {
+                position: absolute;
+                left: 10px;
+            }
+            input + span + span {
+                left: 275px;
+            }
+        }
+
+        .send-info {
             margin-top: @defaultMargin;
-            // float: left;
-            // width: 30%;
-            // min-width: @gridWidth * 3;
             color: @colorTextSecondary;
         }
         
