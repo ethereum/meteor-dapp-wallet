@@ -1,7 +1,21 @@
 <template name="views_send">
 
+
+    
     <!-- we use a form, which posts into the "dapp-form-helper-iframe" iframe, so that the browser stores inout fields for native autocpmplete -->
     <form class="dapp-container account-send-form" action="about:blank" target="dapp-form-helper-iframe" autocomplete="on">
+    <div class="row clear">
+  <div class="col col-1 tablet-col-11 mobile-col-1-2">
+    <span class="no-tablet no-mobile">1</span>
+    <span class="no-desktop show-tablet no-mobile">11</span>
+    <span class="no-desktop no-tablet show-mobile">1-2</span>
+  </div>
+  <div class="col col-11 tablet-col-1 mobile-col-1-2">
+    <span class="no-tablet no-mobile">11</span>
+    <span class="no-desktop show-tablet no-mobile">1</span>
+    <span class="no-desktop no-tablet show-mobile">1-2</span>
+  </div>
+</div>
         
         <h1>{{{i18n 'wallet.send.title'}}}</h1>
 

@@ -39,21 +39,24 @@ a.wallet-account {
     position: relative;
     display: inline-block;
     width: @gridWidth * 8;
-    padding-left: @gridWidth + @defaultPaddingHorizontal/2;
+    padding-left: @gridWidth + @defaultPaddingHorizontal;
     padding-right: @defaultPaddingHorizontal/2;
     margin-right: @defaultMargin;
     margin-bottom: @defaultMargin;
     .box-sizing(border-box);
 
-    &:hover {
-        background-color: lighten(@colorBackgroundHeader, 12%);
-    }
-
     &.main {
+        background-color: fadeout(@colorBackgroundAside, 90%);
+
         .account-pattern {
             background-image: none !important;
         }
     }
+
+    &:hover {
+        background-color: lighten(@colorBackgroundHeader, 12%);
+    }
+
 
     .account-pattern {
         position: absolute;
@@ -63,8 +66,8 @@ a.wallet-account {
         top: 0;
         bottom: 0;
         width: auto;
-        min-width: @gridWidth/3;
-        padding: 0 @gridWidth/3;
+        min-width: @gridWidth/2;
+        padding: 0 @gridWidth/2;
         text-align: center;
         line-height: 100%;
         color: @colorWhite;
@@ -87,6 +90,11 @@ a.wallet-account {
         float: left;
         color: @colorTextSecondary;
         font-size: 1.5em;
+
+        &.publicKey {
+            font-size: 0.8em;
+            color: fadeout(@colorTextSecondary, 40%);
+        }
     }
 }
 
