@@ -26,10 +26,12 @@
                 <div class="indented-box">
                     <h3>Require 2 Signatures for any action.</h3>
                     <h4>Signee Addresses</h4>
-                    <input type="text" placeholder="Signee address">
-                    <input type="text" placeholder="Signee address">
-                    <input type="text" placeholder="Signee address">
-                    <input type="text" placeholder="Signee address">
+
+                    {{> dapp_addressInput placeholder="Signee address"}}
+                    {{> dapp_addressInput placeholder="Signee address"}}
+                    {{> dapp_addressInput placeholder="Signee address"}}
+                    {{> dapp_addressInput placeholder="Signee address"}}
+                    {{> dapp_addressInput placeholder="Signee address"}}
 
                     <button>Add more signees</button>
                 </div>
@@ -59,7 +61,7 @@
                 <span>{{i18n 'wallet.newAccount.accountType.custom.description'}}</span>
             </label>
             {{#if showSection "custom"}}
-                cuistom
+                <textarea name="custom-contract" cols="30" rows="10"></textarea>
             {{/if}}
         </div>
 

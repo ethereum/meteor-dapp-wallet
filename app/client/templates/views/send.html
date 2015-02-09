@@ -9,17 +9,16 @@
         <div class="row clear from-to">
             <div class="col col-7 mobile-full">
                 <h3>{{i18n 'wallet.send.from'}}</h3>
-                {{> elements_identicon identity='214243657890897654321' class="dapp-small"}}
+                {{> dapp_identicon identity='214243657890897654321' class="dapp-small"}}
 
                 <span>{{i18n 'wallet.send.yourAddress'}}</span>
             </div>
 
             <div class="col col-7 mobile-full">
                 <h3>{{i18n 'wallet.send.to'}}</h3>
-                {{> elements_identicon identity=toPublicKey class="dapp-small"}}
 
                 <!-- <button>{{i18n 'wallet.send.pickAddress'}}</button> -->
-                <input type="text" name="to" placeholder="0x000000.." class="dapp-large" autofocus="true">
+                {{> dapp_addressInput placeholder="0x000000.." class="dapp-large"}}
             </div>
 
             <div class="col col-5 mobile-full send-info">

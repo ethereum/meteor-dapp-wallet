@@ -158,6 +158,8 @@ table {
 }
 
 
+
+
 .account-send-form {
 
     > div {
@@ -173,25 +175,18 @@ table {
                 margin-bottom: @defaultMargin;
             }
 
-            .dapp-identicon {
-                z-index: 2;
-                position: absolute;
-                margin-top: 4px;
-                margin-left: 4px;
-            }
-
+            
             span {
                 display: inline-block;
                 margin-top: @gridHeight/2;
                 font-weight: 400;
                 margin-left: @gridWidth*1.5;
             }
-            input {
-                z-index: 1;
-                margin-top: 0;
-                padding-left: @gridWidth*1.5;
+
+            .dapp-address-input input {
                 width: 100%;
             }
+            
         }
 
         &.amount {
@@ -285,6 +280,10 @@ table {
 
         button {
             margin-top: @defaultMargin;
+        }
+
+        .dapp-address-input {
+            margin-bottom: @defaultMargin;
         }
     }
 }

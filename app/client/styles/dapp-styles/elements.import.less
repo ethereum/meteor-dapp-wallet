@@ -87,6 +87,38 @@
     }
 }
 
+
+.dapp-address-input {
+    position: relative;
+
+    input {
+        z-index: 1;
+        margin-top: 0;
+        padding-left: @gridWidth*1.5;
+
+        &.dapp-large {
+            font-size: 1.5em;
+
+            & + .dapp-identicon {
+                top: 4px;
+                width: @gridWidth;
+                height: @gridWidth;
+            }
+        }
+
+    }
+    .dapp-identicon {
+        z-index: 2;
+        position: absolute;
+        top: 2px;
+        left: 4px;
+        width: @gridWidth/1.2;
+        height: @gridWidth/1.2;
+    }
+}
+
+
+
 // default elements
 
 a,
