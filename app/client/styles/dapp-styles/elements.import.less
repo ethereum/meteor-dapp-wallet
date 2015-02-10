@@ -2,24 +2,7 @@
     display: none;
 }
 
-.dapp-identicon {
-    display: inline-block;
-    width: @gridWidth * 2;
-    height: @gridWidth * 2;
-    .border-radius(50%);
-    .background-size(cover);
-    background-positon: 50% 50%;
-    .box-shadow(inset rgba(255,255,255,0.5) 0 2px 2px, inset rgba(0,0,0,0.9) 0 -1px 8px);
 
-    &.dapp-small {
-        width: @gridWidth;
-        height: @gridWidth;
-    }
-    &.dapp-medium {
-        width: @gridWidth * 1.5;
-        height: @gridWidth * 1.5;
-    }
-}
 
 .dapp-message {
     position: relative;
@@ -64,58 +47,6 @@
     color: darken(@colorBackgroundAside, 20%);    
 }
 
-.dapp-modal-buttons {
-    position: relative;
-    .display(flex);
-    .justify-content(flex-end);
-    margin-top: @defaultMargin;
-    // background: @colorWhite;
-
-    button, a, a:visited {
-        .flex(1);
-        margin: 0 @defaultMargin/2;
-        height: 2*@gridHeight;
-        line-height: 2*@gridHeight;
-        font-family: @fontFamily;
-        font-size: 0.9em;
-        text-transform: uppercase;
-        font-weight: 400;
-        
-        &.dapp-primary-button {
-            font-weight: 600;
-        }
-    }
-}
-
-
-.dapp-address-input {
-    position: relative;
-
-    input {
-        z-index: 1;
-        margin-top: 0;
-        padding-left: @gridWidth*1.5;
-
-        &.dapp-large {
-            font-size: 1.5em;
-
-            & + .dapp-identicon {
-                top: 4px;
-                width: @gridWidth;
-                height: @gridWidth;
-            }
-        }
-
-    }
-    .dapp-identicon {
-        z-index: 2;
-        position: absolute;
-        top: 2px;
-        left: 4px;
-        width: @gridWidth/1.2;
-        height: @gridWidth/1.2;
-    }
-}
 
 
 
@@ -232,10 +163,30 @@ table {
 }
 
 
+// OVERWRITES for elements from the ethereum:elements package
+.dapp-input {
+    border-bottom: solid 2px @colorGray;
+    background-color: @colorGrayLight;
+    color: @colorLink;
+
+    .placeholder(@colorGray);
+
+    &:disabled {
+        color: @colorGrayDark;
+    }
+}
+
+.dapp-address-input {
+    input {
+        .dapp-input;
+    }
+}
+
 // forms
 input,
 select,
 textarea {
+    .dapp-input;
     display: inline-block;
     width: 300px;
     max-width: 100%;
@@ -243,14 +194,10 @@ textarea {
     padding: @defaultPaddingVertical/2 @defaultPaddingHorizontal/2;
     padding-bottom: @defaultPaddingVertical/3;
     border: 0;
-    border-bottom: solid 2px @colorGray;
     .box-sizing(border-box);
-    background-color: @colorGrayLight;
     font-size: 1em;
     font-weight: 300;
-    color: @colorLink;
 
-    .placeholder(@colorGray);
 
     &:focus {
         outline: 0;

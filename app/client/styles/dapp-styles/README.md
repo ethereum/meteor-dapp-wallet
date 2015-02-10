@@ -224,3 +224,10 @@ To add a header or aside menu just add the follwowing structure to your `.dapp-h
 
 
 
+## Credits and ackowledgements 
+
+
+* Simple Line Icon fonts by [Graphic Burguers](http://graphicburger.com/simple-line-icons-webfont/)
+
+
+

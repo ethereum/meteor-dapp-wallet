@@ -8,16 +8,15 @@ body {
     font: 100 16px 'Source Sans Pro', 'Helvetica Neue', arial, sans-serif;
     color: @colorTextPrimary;
 
-
     // lock scroll and blur content
     &.disable-scroll {
         overflow: hidden;
-
     }
     &.blur {
         .dapp-flex-content,
-        .dapp-footer {
-            .blur(8px);
+        .dapp-footer,
+        .dapp-header {
+            .blur(4px);
         }
     }
 
@@ -85,6 +84,8 @@ body {
                 display: inline-block;
                 padding: @defaultPaddingVertical/2 @defaultPaddingHorizontal;
                 text-align: center;
+                border-bottom: 5px solid transparent;
+                color: darken(@colorLink, 10%);
 
                 &.active {
                     color: darken(@colorBackgroundHeader, 20%);
@@ -178,7 +179,7 @@ body {
                     border-top: darken(@colorBackgroundAside, 8%) solid 1px;
                     .border-radius(3px 0 0 3px);
                     .box-sizing(border-box); // align button and links properties
-                    color: @colorWhite;
+                    color: @colorForegroundAside;
 
 
                     // .dapp-shorten-text;
@@ -208,12 +209,12 @@ body {
                 .dapp-main-button {
                     position: relative;
                     width: 100%;
-                    // position: fixed;
-                    // width: 6 * @gridWidth;
                     margin-bottom: 4*@gridHeight;
                     .border-radius(3px 0 0 3px);
-                    background: darken(@colorBackgroundAside, 8%);
+                    background: @colorBackgroundMainButton;
+                    color: @colorForegroundMainButton;
                     border-top: none;
+
                     
                     i {
                         position: absolute;
@@ -223,9 +224,9 @@ body {
                 }
 
                 &.active a {
-                    background: #FFF;
+                    background: @colorWhite;
                     border-top: none;        
-                    color: darken(@colorBackgroundAside, 8%); 
+                    color: @colorBlack; 
                     font-weight: 500;       
                 }
 
@@ -283,83 +284,10 @@ body {
 }
 
 
-// MODAL
-
-.dapp-modal-overlay {    
-    z-index: 99;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    .display(flex);
-    .align-items(flex-start);
-    .justify-content(center);
-    .dapp-overflow;
-
+// MODAL the full styles are in the ethereum:elements package
+.dapp-modal-overlay {  
     background: fadeout(@colorBackgroundOverlay, 50%);
-
-
-    // ANIMATION
-    .transition(opacity @animationSpeed);
-    &.animate {
-        .opacity(0);
-
-        .dapp-modal-container {
-            .translateY(-20%);
-        }
-    }
 }
-
-
 .dapp-modal-container {
-    position: relative;
-    width: 14*@gridWidth;
-    margin: 6*@gridHeight auto;
-    padding: @defaultPaddingVertical @defaultPaddingHorizontal;
     background: @colorWhite;
-    .box-sizing(border-box);
-    .dapp-shadow-medium;
-    .border-radius(3px);
-
-    text-align: center;
-
-
-    // ANIMATION
-    .transition(transform @animationSpeed);
-
-
-    .dapp-modal-header {
-        position: relative;
-        padding: @defaultPaddingVertical*2 0;
-        margin: -@defaultPaddingVertical -@defaultPaddingHorizontal;
-        margin-bottom: @defaultPaddingVertical;
-        .border-radius(2px 2px 0 0);
-        color: @colorTextPrimary;
-        line-height: 2 * @gridHeight;
-        text-align: center;
-
-        &.dapp-pattern {
-            color: @colorWhite;
-        }
-
-
-        h1 {
-            margin: 0;
-        }
-
-        .dapp-identicon {
-            position: absolute;
-            top: -@gridHeight * 1.9;
-            left: 50%;
-            margin-left: -@gridWidth;
-        }
-    }
-
-
-    p {
-        margin: @defaultPaddingVertical*2 0;
-        line-height: @gridHeight*1.2;
-        font-size: 1.2em;
-    }
 }

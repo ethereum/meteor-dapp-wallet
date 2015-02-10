@@ -7,13 +7,19 @@
 @colorRed: #e74b3c;
 @colorGreen: #8bc34a;
 // @colorWhiteTransparent: rgba(255, 255, 255, 0.95);
-@colorGray: #dddcdb;
+@colorGray: #CCC6C6;
 @colorGrayLight: lighten(#ecebe6, 4%);
 @colorGrayDark: darken(@colorGray, 40%);
 
-@colorBackgroundOverlay: #064A80;
-@colorBackgroundHeader: #d9d0d0;
-@colorBackgroundAside: #05669A;
+@colorBackgroundOverlay: @colorBlack;
+@colorBackgroundHeader: lighten(#d9d0d0, 5%);
+//@colorBackgroundAside: #05669A;
+@colorBackgroundAside: @colorGray;
+@colorForegroundAside: @colorBlack;
+
+@colorBackgroundMainButton: #665F5F;
+@colorForegroundMainButton: @colorWhite;
+
 
 
 @colorTextPrimary: @colorBlack;
