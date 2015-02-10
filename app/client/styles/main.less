@@ -176,10 +176,11 @@ table {
 
             
             span {
+                position: relative;
                 display: inline-block;
-                margin-top: @gridHeight/2;
+                top: -@gridHeight/2;
+                margin-left: @defaultMargin;
                 font-weight: 400;
-                margin-left: @gridWidth*1.5;
             }
 
             .dapp-address-input input {
