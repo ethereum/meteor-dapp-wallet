@@ -11,10 +11,22 @@ The add user template
 @constructor
 */
 
+/**
+Calculates the gas price.
+
+@method calculateGasPrice
+@return {Number}
+*/
+var calculateGasPrice = function(fee){
+    var minimunGasSent = 10000;
+    var suggestedGasPrice = 0.01;
+    return minimunGasSent * suggestedGasPrice * Math.pow(4, fee);
+}
+
 
 Template['views_send'].created = function(){
     // set the default fee
-    TemplateVar.set('selectedFee', 100);
+    TemplateVar.set('selectedFeeMultiplicator', 0);
 
     TemplateVar.set('amount', 0);
 };
@@ -30,22 +42,21 @@ Template['views_send'].helpers({
         return TemplateVar.get('toPublicKey');
     },
     /**
-    Return the currently selected fee value
+    Return the currently selected fee multicalculator value
+
+    @method (feeMultiplicator)
+    */
+    'feeMultiplicator': function(){
+        return TemplateVar.get('selectedFeeMultiplicator');
+    },
+    /**
+    Return the currently selected fee value calculate with gas price
 
     @method (fee)
     */
     'fee': function(){
-        if(_.isFinite(TemplateVar.get('selectedFee')))
-            return numeral(TemplateVar.get('selectedFee')).format();
-    },
-    /**
-    Return the currently selected fee + amount
-
-    @method (feePlusAmount)
-    */
-    'feePlusAmount': function(){
-        if(_.isFinite(TemplateVar.get('selectedFee')))
-            return numeral((TemplateVar.get('amount') || 0) + TemplateVar.get('selectedFee')).format('0,0.[000000]');
+        if(_.isFinite(TemplateVar.get('selectedFeeMultiplicator')))
+            return numeral(calculateGasPrice(TemplateVar.get('selectedFeeMultiplicator'))).format('0,0.[000000]');
     },
     /**
     Return the current sepecified amount (finney)
@@ -68,12 +79,41 @@ Template['views_send'].helpers({
             : 0;
     },
     /**
+    Return the currently selected fee + amount
+
+    @method (total)
+    */
+    'total': function(){
+        if(_.isFinite(TemplateVar.get('selectedFeeMultiplicator')))
+            return numeral((TemplateVar.get('amount') || 0) + calculateGasPrice(TemplateVar.get('selectedFeeMultiplicator'))).format('0,0.[000000]');
+    },
+    /**
+    Calculates the ether amount of any given finey amount
+
+    @method (inEther)
+    */
+    'inEther': function(amount){
+        if(_.isFinite(amount) || _.isString(amount)) {
+            amount = numeral().unformat(amount);
+            return numeral(amount / 1000).format('0,0.[000000]')
+        }
+        return 0;
+    },
+    /**
+    Returns the right time text for the "sendText".
+
+    @method (timeText)
+    */
+    'timeText': function(){
+        return TAPi18n.__('wallet.send.texts.timeTexts.'+ (Number(TemplateVar.get('selectedFeeMultiplicator') * 2)+2));
+    }
+    /**
     Return the currently selected fee in finney
 
     @method (feeFormated)
     */
     // 'feeFormated': function(){
-    //     switch(TemplateVar.get('selectedFee')) {
+    //     switch(TemplateVar.get('selectedFeeMultiplicator')) {
     //         case 1:
     //             return 0;
     //         case 2:
@@ -117,7 +157,7 @@ Template['views_send'].events({
     @event change input[name="fee"], input input[name="fee"]
     */
     'change input[name="fee"], input input[name="fee"]': function(e){
-        TemplateVar.set('selectedFee', Number(e.currentTarget.value));
+        TemplateVar.set('selectedFeeMultiplicator', Number(e.currentTarget.value));
     },
     /**
     Submit the form

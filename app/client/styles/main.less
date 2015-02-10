@@ -1,5 +1,5 @@
 // libs
-@import 'dapp-styles/dapp-styles.less';
+@import 'public/dapp-styles/dapp-styles.less';
 
 
 
@@ -229,16 +229,28 @@ table {
                 left: 10px;
             }
             input + span + span {
-                left: 275px;
+                left: 260px;
             }
         }
+
+        &.total {
+            font-weight: 400;
+            color: @colorTextSecondary;
+
+            span {
+                font-size: 2em;
+            }
+        }
+
 
         .send-info {
             margin-top: @defaultMargin;
             color: @colorTextSecondary;
         }
+
         
     }
+
 }
 
 .new-account {

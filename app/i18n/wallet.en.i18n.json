@@ -42,12 +42,19 @@
             "from": "From",
             "amount": "Amount",
             "fee": "Choose a Fee",
-            "feeFree": "Free",
-            "feeFast": "Fast",
+            "feeLow": "Cheaper",
+            "feeHigh": "Faster",
             "texts": {
                 "sendTo": "Choose from which wallet and to where it will go.  Addresses can be picked up by using the clipboard, the camera, clicking a link or searching visible devices in the vicinity.",
                 "sendAmount": "Currency in the ethereum network is transmitted using the equivalent in Ether, the internal unit of value.<br><br>You are sending<br><strong>__amount__ finney (__amountEther__ ether)</strong>.",
-                "sendFee": "A fee is an incentive for other machines in the network to process your transaction earlier.<br><br>You are sending <strong>__fee__ finney</strong>, at this rate expect your transaction to be processed in 10-30 minutes."
+                "sendFee": "This is the most amount of money that might be used to process this transaction. You will get your change back as soon as a miner picks it up, <strong>__timetext__</strong>.",
+                "timeTexts": {
+                    "0": "in a few minutes or more",
+                    "1": "likely within a few minutes",
+                    "2": "usually within a minute",
+                    "3": "probably within 30 seconds",
+                    "4": "probably within a few seconds"
+                }
             }
         }
     }
