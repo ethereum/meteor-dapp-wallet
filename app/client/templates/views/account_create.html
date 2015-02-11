@@ -24,16 +24,12 @@
             </label>
             {{#if showSection "multisig"}}
                 <div class="indented-box">
-                    <h3>Require 2 Signatures for any action.</h3>
+                    <p>Require {{> InlineForm name="multisigSignatures" items=multisigSignatures value="2"}} Signatures of {{> InlineForm name="multisigSignees" items=multisigSignatures value="2"}} people for any action.</p>
                     <h4>Signee Addresses</h4>
 
-                    {{> dapp_addressInput placeholder="Signee address"}}
-                    {{> dapp_addressInput placeholder="Signee address"}}
-                    {{> dapp_addressInput placeholder="Signee address"}}
-                    {{> dapp_addressInput placeholder="Signee address"}}
-                    {{> dapp_addressInput placeholder="Signee address"}}
-
-                    <button>Add more signees</button>
+                    {{#each signees}}
+                        {{> dapp_addressInput placeholder="Signee address"}}
+                    {{/each}}
                 </div>
                 <hr>
             {{/if}}
@@ -47,8 +43,8 @@
             </label>
             {{#if showSection "dailyLimit"}}
                 <div class="indented-box">
-                    <h3>Allow a daily limit of at most</h3>
-                    10%
+                    <p>An account that allows normal deposits, but only allows a withdrawal limit of at most {{> InlineForm name="dailyLimitAmount" value="10"}} {{> InlineForm name="dailyLimitUnit" items=dailyLimitUnits value="percent"}} per {{> InlineForm name="dailyLimitTime" items=dailyLimitTimes value="month"}}</p>
+                    
                 </div>
                 <hr>
             {{/if}}
