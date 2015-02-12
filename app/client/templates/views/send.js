@@ -31,6 +31,10 @@ Template['views_send'].created = function(){
     TemplateVar.set('amount', 0);
 };
 
+Template['views_send'].rendered = function(){
+    this.$('input[name="to"]').focus();
+};
+
 
 Template['views_send'].helpers({
     /**
@@ -142,14 +146,10 @@ Template['views_send'].events({
     /**
     Set the amount while typing
     
-    @event keyup input[name="amount"]
+    @event keyup input[name="amount"], change input[name="amount"], input input[name="amount"]
     */
-    'keyup input[name="amount"]': function(e){
+    'keyup input[name="amount"], change input[name="amount"], input input[name="amount"]': function(e){
         TemplateVar.set('amount', Number(e.currentTarget.value.replace(',','.')));
-        // Tracker.afterFlush(function(){
-        //     if(_.isFinite(_.last(e.currentTarget.value)) && e.keyCode !== 8 && !e.shiftKey && !e.altKey && !e.ctrlKey && !e.metaKey)
-        //         e.currentTarget.value = numeral(e.currentTarget.value).format('0,0[.]000');
-        // });
     },
     /**
     Change the selected fee
