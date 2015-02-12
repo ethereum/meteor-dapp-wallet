@@ -63,8 +63,9 @@ Template['views_account_create'].helpers({
     @return {Array} e.g. [1,2,3,4]
     */
     'signees': function(){
-        if (TemplateVar.get('multisigSignatures') > TemplateVar.get('multisigSignees'))
+        if (TemplateVar.get('multisigSignatures') > TemplateVar.get('multisigSignees')) {
             TemplateVar.set('multisigSignees', TemplateVar.get('multisigSignatures'));
+        }
 
         return _.range(TemplateVar.get('multisigSignees'));
     },

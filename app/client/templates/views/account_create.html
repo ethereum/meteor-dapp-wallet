@@ -20,11 +20,14 @@
             <label>
                 <input type="radio" name="accountType" value="multisig">
                 <h3>{{i18n 'wallet.newAccount.accountType.multisig.title'}}</h3>
-                <span>{{i18n 'wallet.newAccount.accountType.multisig.description'}}</span>
+                {{#unless showSection "multisig"}}
+                    <span>{{i18n 'wallet.newAccount.accountType.multisig.description'}}</span>
+                {{/unless}}
             </label>
             {{#if showSection "multisig"}}
                 <div class="indented-box">
                     <p>Require {{> InlineForm name="multisigSignatures" items=multisigSignatures value=multisigSignaturesValue}} Signatures of {{> InlineForm name="multisigSignees" items=multisigSignatures value=multisigSigneesValue}} people for any action.</p>
+
                     <h4>Signee Addresses</h4>
 
                     {{#each signees}}
@@ -39,7 +42,9 @@
             <label>
                 <input type="radio" name="accountType" value="dailyLimit">
                 <h3>{{i18n 'wallet.newAccount.accountType.dailyLimit.title'}}</h3>
-                <span>{{i18n 'wallet.newAccount.accountType.dailyLimit.description'}}</span>
+                {{#unless showSection "dailyLimit"}}
+                    <span>{{i18n 'wallet.newAccount.accountType.dailyLimit.description'}}</span>
+                {{/unless}}
             </label>
             {{#if showSection "dailyLimit"}}
                 <div class="indented-box">
