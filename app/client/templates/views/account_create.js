@@ -11,10 +11,16 @@ The account create template
 @constructor
 */
 
+Template['views_account_create'].created = function(){
+    TemplateVar.set('multisigSignees', 2);
+    TemplateVar.set('multisigSignatures', 2);
+};
+
 
 Template['views_account_create'].rendered = function(){
     // focus the input
     this.$('input[name="accountName"]').focus();
+
 };
 
 
@@ -25,14 +31,41 @@ Template['views_account_create'].helpers({
     @method (showSection)
     */
     'showSection': function(section){
+        // var template = Template.instance();
+
+        // Tracker.afterFlush(function(){
+        //     // set the default signee numbers
+        //     TemplateVar.set(template,'multisigSignees', template.$('button[data-name="multisigSignees"]').attr('data-value'));
+        // });
+
         return TemplateVar.get('selectedSection') === section;
     },
     /**
-    Return the signees fields
+    Return the number of signees
+
+    @method (multisigSigneesValue)
+    */
+    'multisigSigneesValue': function(section){
+        return TemplateVar.get('multisigSignees');
+    },
+    /**
+    Return the number of signees
+
+    @method (multisigSignaturesValue)
+    */
+    'multisigSignaturesValue': function(section){
+        return TemplateVar.get('multisigSignatures');
+    },
+    /**
+    Return the number of signees fields
 
     @method (signees)
+    @return {Array} e.g. [1,2,3,4]
     */
     'signees': function(){
+        if (TemplateVar.get('multisigSignatures') > TemplateVar.get('multisigSignees'))
+            TemplateVar.set('multisigSignees', TemplateVar.get('multisigSignatures'));
+
         return _.range(TemplateVar.get('multisigSignees'));
     },
     /**
@@ -124,7 +157,15 @@ Template['views_account_create'].events({
         TemplateVar.set('selectedSection', e.currentTarget.value);
     },
     /**
-    Change the numberof signees
+    Change the number of signatures
+
+    @event click span[name="multisigSignatures"] .simple-modal button
+    */
+    'click span[name="multisigSignatures"] .simple-modal button': function(e){
+        TemplateVar.set('multisigSignatures',  $(e.currentTarget).data('value'));
+    },
+    /**
+    Change the number of signees
 
     @event click span[name="multisigSignees"] .simple-modal button
     */

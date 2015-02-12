@@ -24,7 +24,7 @@
             </label>
             {{#if showSection "multisig"}}
                 <div class="indented-box">
-                    <p>Require {{> InlineForm name="multisigSignatures" items=multisigSignatures value="2"}} Signatures of {{> InlineForm name="multisigSignees" items=multisigSignatures value="2"}} people for any action.</p>
+                    <p>Require {{> InlineForm name="multisigSignatures" items=multisigSignatures value=multisigSignaturesValue}} Signatures of {{> InlineForm name="multisigSignees" items=multisigSignatures value=multisigSigneesValue}} people for any action.</p>
                     <h4>Signee Addresses</h4>
 
                     {{#each signees}}
