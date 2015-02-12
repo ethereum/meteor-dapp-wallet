@@ -70,7 +70,8 @@ body {
 
 .dapp-header {
     height: @heightHeader;
-    .background-image(linear-gradient(to bottom,  lighten(@colorBackgroundHeader, 15%) 0, @colorBackgroundHeader 100px));
+    .box-sizing(content-box);
+    .background-image(linear-gradient(to bottom,  lighten(@colorBackgroundHeader, 15%) 0, @colorBackgroundHeader 90%));
 
     nav {
         position: absolute;
@@ -280,6 +281,35 @@ body {
                 }
         	}
         }
+    }
+}
+
+
+.dapp-box {
+    display: inline-block;
+    float: left;
+    width: @gridWidth * 6;
+    height: @gridHeight * 12;
+    padding-top: @gridHeight;
+    padding-left: @gridWidth/2;
+    padding-bottom: @gridHeight/2;
+    padding-right: @gridWidth/2;
+
+    margin-bottom: @gridHeight/2;
+    margin-right: @gridWidth/2;
+    background-color: @colorWhite;
+    // border: 1px solid @colorGrayDark;
+    .dapp-shadow-medium;
+
+    h2 {
+        margin: 0;
+        padding: 0;
+        background-color: transparent;
+        color: @colorTextSecondary;
+        font-family: @fontFamily;
+        text-transform: none;
+        font-size: 1.5em;
+        font-weight: 100;
     }
 }
 
