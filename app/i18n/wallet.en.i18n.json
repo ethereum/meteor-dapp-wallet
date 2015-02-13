@@ -30,7 +30,9 @@
                 },
                 "dailyLimit": {
                     "title": "Daily limit account",
-                    "description": "Account with daily safety limits."
+                    "description": "Account with daily safety limits.",
+                    "text1": "An account that allows normal deposits, but only allows a withdrawal limit of at most",
+                    "text2": ""
                 },
                 "custom": {
                     "title": "Custom account",

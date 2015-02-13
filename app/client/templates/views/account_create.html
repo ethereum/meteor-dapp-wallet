@@ -47,7 +47,7 @@
             </label>
             {{#if showSection "dailyLimit"}}
                 <div class="indented-box">
-                    <p>An account that allows normal deposits, but only allows a withdrawal limit of at most {{> InlineForm name="dailyLimitAmount" value="10"}} {{> InlineForm name="dailyLimitUnit" items=dailyLimitUnits value="percent"}} per {{> InlineForm name="dailyLimitTime" items=dailyLimitTimes value="month"}}</p>
+                    <p>{{i18n 'wallet.newAccount.accountType.dailyLimit.text1'}} {{> InlineForm name="dailyLimitAmount" value="10"}} {{> InlineForm name="dailyLimitUnit" items=dailyLimitUnits value="percent"}} {{i18n 'commonWords.per'}} {{> InlineForm name="dailyLimitTime" items=dailyLimitTimes value="month"}}</p>
                     
                 </div>
             {{/if}}
