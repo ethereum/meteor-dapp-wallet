@@ -9,7 +9,8 @@
         },
         "accounts": {
             "title": "<span>Account</span> Overview",
-            "accountTitle": "Choose an account to deposit"
+            "accountTitle": "Choose an account to deposit",
+            "defaultName": "Unnamed account"
         },
         "newAccount": {
             "title": "New <span>Account</span>",

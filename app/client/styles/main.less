@@ -102,13 +102,19 @@ a.wallet-account {
         clear: left;
         float: left;
         color: @colorTextSecondary;
-        font-size: 1.5em;
+        font-size: 1.3em;
+        line-height: 1.6em;
+        .dapp-shorten-text;
 
-        &.publicKey {
+        &.account-id {
             font-size: 0.8em;
             color: fadeout(@colorTextSecondary, 40%);
         }
     }
+}
+
+.account-number {
+    width: 100%;
 }
 
 

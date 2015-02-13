@@ -67,3 +67,31 @@ Formats a timestamp to any format given.
 **/
 Template.registerHelper('formatTime', Helpers.formatTime);
 
+
+/**
+Formats a number.
+
+    {{formatNumber myNumber "0,0.0[0000]"}}
+
+@method (formatNumber)
+@param {String} number
+@param {String} format       the format string
+@return {String} The formatted number
+**/
+Template.registerHelper('formatNumber', function(number, format){
+    if(format instanceof Spacebars.kw)
+        format = null;
+
+    format = format || '0,0.0[0000]';
+
+
+    if(!_.isFinite(number))
+        number = numeral().unformat(number);
+
+    // make it finney
+    number = EthTools.convertWei(number, 'finney');
+
+    if(_.isFinite(number))
+        return numeral(number).format(format);
+});
+

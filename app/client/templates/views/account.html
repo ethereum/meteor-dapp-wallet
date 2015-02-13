@@ -2,7 +2,10 @@
 
     <div class="dapp-container">
 
-        {{> elements_account publicKey=publicKey}}
+        {{> elements_account account=account main=true}}
+
+        <input type="text" class="account-number" disabled="disabled" value="{{account}}">
+        <!-- <h3>{{account}}</h3> -->
 
         <div class="dapp-clear-fix"></div>
 

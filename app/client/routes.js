@@ -49,6 +49,7 @@ Router.route('/send', {
     name: 'send'
 });
 
+
 /**
 The create account route.
 
@@ -60,19 +61,24 @@ Router.route('/account/new', {
 });
 
 
+
 /**
 The account route.
 
 @method send
 */
-Router.route('/account/:publicKey', {
+Router.route('/account/:account', {
     template: 'views_account',
     name: 'account',
     data: function() {
         return {
-            publicKey: this.params.publicKey
+            account: this.params.account
         };
     }
+});
+Router.route('/account/:account/profile', {
+    template: 'views_account',
+    name: 'userProfile'
 });
 
 

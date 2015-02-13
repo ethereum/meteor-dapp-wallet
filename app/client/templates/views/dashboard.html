@@ -4,17 +4,9 @@
         <h2>{{i18n 'wallet.accounts.accountTitle'}}</h2>
         <br>
 
-        {{> elements_account publicKey='214243657890897654321' main=true}}
-
-        {{> elements_account publicKey='654321456432'}}
-
-        {{> elements_account publicKey='987654743213432'}}
-
-        {{> elements_account publicKey='98765474321343232131'}}
-
-        {{> elements_account publicKey='9876547432134321112'}}
-
-        {{> elements_account publicKey='9876547432134323333'}}
+        {{#each accounts}}
+            {{> elements_account account=_id main=true}}
+        {{/each}}
 
         <a href="{{pathFor route='createAccount'}}" class="wallet-account create">
             <div class="account-pattern">
