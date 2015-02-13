@@ -22,7 +22,11 @@
                 },
                 "multisig": {
                     "title": "Multisignature account",
-                    "description": "Requires two or more signatures for withdraws."
+                    "description": "Requires two or more signatures for withdraws.",
+                    "text1": "Require",
+                    "text2": "Signatures from",
+                    "text3": "people for any action.",
+                    "text4": "Signee addresses"
                 },
                 "dailyLimit": {
                     "title": "Daily limit account",

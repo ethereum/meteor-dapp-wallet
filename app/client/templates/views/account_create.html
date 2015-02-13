@@ -26,15 +26,14 @@
             </label>
             {{#if showSection "multisig"}}
                 <div class="indented-box">
-                    <p>Require {{> InlineForm name="multisigSignatures" items=multisigSignatures value=multisigSignaturesValue}} Signatures of {{> InlineForm name="multisigSignees" items=multisigSignatures value=multisigSigneesValue}} people for any action.</p>
+                    <p>{{i18n 'wallet.newAccount.accountType.multisig.text1'}} {{> InlineForm name="multisigSignatures" items=multisigSignatures value=multisigSignaturesValue}} {{i18n 'wallet.newAccount.accountType.multisig.text2'}} {{> InlineForm name="multisigSignees" items=multisigSignatures value=multisigSigneesValue}} {{i18n 'wallet.newAccount.accountType.multisig.text3'}}</p>
 
-                    <h4>Signee Addresses</h4>
+                    <h4>{{i18n 'wallet.newAccount.accountType.multisig.text4'}}</h4>
 
                     {{#each signees}}
                         {{> dapp_addressInput placeholder="Signee address"}}
                     {{/each}}
                 </div>
-                <hr>
             {{/if}}
         </div>
         
@@ -51,7 +50,6 @@
                     <p>An account that allows normal deposits, but only allows a withdrawal limit of at most {{> InlineForm name="dailyLimitAmount" value="10"}} {{> InlineForm name="dailyLimitUnit" items=dailyLimitUnits value="percent"}} per {{> InlineForm name="dailyLimitTime" items=dailyLimitTimes value="month"}}</p>
                     
                 </div>
-                <hr>
             {{/if}}
         </div>
         
