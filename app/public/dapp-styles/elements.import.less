@@ -2,24 +2,7 @@
     display: none;
 }
 
-.dapp-profile-image {
-    display: inline-block;
-    width: @gridWidth * 2;
-    height: @gridWidth * 2;
-    .border-radius(50%);
-    .background-size(cover);
-    background-positon: 50% 50%;
-    .box-shadow(inset rgba(255,255,255,0.5) 0 2px 2px, inset rgba(0,0,0,0.9) 0 -1px 8px);
 
-    &.dapp-small {
-        width: @gridWidth;
-        height: @gridWidth;
-    }
-    &.dapp-medium {
-        width: @gridWidth * 1.5;
-        height: @gridWidth * 1.5;
-    }
-}
 
 .dapp-message {
     position: relative;
@@ -59,34 +42,19 @@
         .opacity(0);
     }
 }
-
 .active .dapp-count {
     background-color: @colorGrayLight;
-    color: @colorMainBackground;    
+    color: darken(@colorBackgroundAside, 20%);    
 }
 
-.dapp-modal-buttons {
-    position: relative;
-    .display(flex);
-    .justify-content(flex-end);
-    margin-top: @defaultMargin;
-    // background: @colorWhite;
-
-    button, a, a:visited {
-        .flex(1);
-        margin: 0 @defaultMargin/2;
-        height: 2*@gridHeight;
-        line-height: 2*@gridHeight;
-        font-family: @fontFamily;
-        font-size: 0.9em;
-        text-transform: uppercase;
-        font-weight: 400;
-        
-        &.dapp-primary-button {
-            font-weight: 600;
-        }
-    }
+.dapp-url-bar {
+    display: block;
+    text-align: center;
+    width: 100%;
+    // .calc(width, ~'100% - 64px');    
+    .border-radius(8px);
 }
+
 
 // default elements
 
@@ -94,7 +62,7 @@ a,
 a:visited,
 button {
     text-decoration: none;
-    color: @colorBlue;
+    color: @colorLink;
 
     outline: 0;
 
@@ -114,52 +82,287 @@ button {
 hr {
     border: 0;
     height: 0;
+    margin: @defaultMargin*2 0;
     background-color: transparent;
     border-bottom: 1px solid @colorGray; 
 }
 
 
 h1 {
+    margin: @defaultMargin 0;
+    margin-bottom: @defaultMargin*3;
     font-weight: 100;
     font-size: 2.2em;
+    color: @colorTextSecondary;
+
+    span {
+        font-weight: 500;
+    }
+
+    + h2 {
+        margin-top: 0;
+    }
+
+    strong {
+        font-weight: 400;
+    }
 }
 
 h2 {
-    font-weight: 300;
-    font-size: 1.8em;
-    // text-transform: uppercase;
-    // background: @colorLink;
-    // color: @colorWhite;
+    display: inline-block;
+    padding: 0 @defaultPaddingHorizontal/4;
+    padding-bottom: 1px;
+    margin: @defaultMargin*3 0;
+    font-weight: 500;
+    font-size: 1em;
+    text-transform: uppercase;
+    background: @colorTextSecondary;
+    color: @colorWhite;
+
+    font-family: 'Montserrat';
+    font-weight: 400;
+
+    + table {
+        margin-top: 0;
+    }
 }
 
+h3 {
+    margin: @defaultMargin 0;
+    padding: 0;
+    color: fadeout(@colorTextSecondary, 30%);
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 1em;
+}
+
+h4 {
+    margin: @defaultMargin 0;
+    padding: 0;
+    color: fadeout(@colorTextSecondary, 30%);
+    font-weight: 500;
+    font-size: 1em;
+}
+
+
+table {
+    width: 100%;
+    margin: @defaultMargin 0;
+
+    + h2,
+    + h3 {
+        margin-top: @defaultMargin*2;
+    }
+
+    tbody {
+        tr {
+
+            &:nth-child(odd) {
+                background-color: fadeout(@colorGray, 70%);
+            }
+
+            td {
+                padding: 2px 0;
+
+                span {
+                    .dapp-shorten-text;
+                }
+            }
+        }
+    }
+}
+
+
+// OVERWRITES for elements from the ethereum:elements package
+.dapp-input {
+    border: 0;
+    border-bottom: solid 2px @colorGray;
+    background-color: @colorGrayLight;
+    color: @colorLink;
+
+    .placeholder(@colorGray);
+
+    &:disabled {
+        color: @colorGrayDark;
+    }
+}
+
+.dapp-address-input {
+    input {
+        .dapp-input;
+    }
+}
 
 // forms
 input,
 select,
 textarea {
+    .dapp-input;
+    display: inline-block;
+    width: 300px;
+    max-width: 100%;
+    margin-top: @gridHeight;
     padding: @defaultPaddingVertical/2 @defaultPaddingHorizontal/2;
-    background-color: transparent;
-    border: 0;
+    padding-bottom: @defaultPaddingVertical/3;
+    .box-sizing(border-box);
     font-size: 1em;
     font-weight: 300;
-    width: 250px;
 
-    color: @colorLink;
-        margin-top: @gridHeight;
-        background: @colorGrayLight;
-        border-bottom: solid 2px @colorGray;
-
-    .placeholder(@colorLink);
 
     &:focus {
         outline: 0;
         // border-color: @colorBrand1;
+    }
+
+    &.dapp-large {
+        font-size: 1.5em;
+    }
+    &.dapp-error {
+        border-color: @colorRed;
     }
 }
 :disabled {
     color: @colorGrayDark;
     // background-color: @colorGrayLight;
 }
+input[type="checkbox"], input[type="radio"] {
+    display: inline-block;
+    position: relative;
+    margin: 0;
+    outline: none !important;
+    -webkit-appearance: none;
+    
+    width: auto;
+
+    width:  24px;
+    height: 24px;
+
+    // Radio
+    &::before {
+        content: '';
+        position: relative;
+        top:  0;
+        left: 0;
+        display: block;
+
+        background: @colorGrayLight;
+        border: 1px solid @colorGrayLight;
+        .box-shadow(inset 0 0 2px rgba(0,0,0,0.2));
+        // .dapp-shadow-medium;
+
+        width:  24px;
+        height: 24px;
+    }
+
+    &:active::before {
+        // .dapp-shadow-medium;
+    }
+
+    &:focus::before {
+        border-color: fadeout(@colorLink, 60%);
+        // .dapp-shadow-medium;
+    }
+    &:disabled::before {
+        cursor: not-allowed;
+        background-color: fadeout(@colorGrayLight, 20%);
+        border-color: @colorGrayLight;
+    }
+
+
+    // Radio Pip
+    &:after {
+        content: '';
+        display: inline-block;
+        position: absolute;
+        top: 6px;
+        left: 6px;
+
+        background: @colorLink;
+        .dapp-shadow-small;
+
+        width:  12px;
+        height: 12px;
+
+        .transition(transform @animationSpeed);
+        .scale(0);
+    }
+
+    &:checked:after {
+        .scale(1);
+    }
+
+    &:disabled:after {
+        background: fadeout(@colorLink, 60%);
+    }
+}
+input[type="radio"] {
+    .border-radius(50%);
+    
+    &:before {
+        .border-radius(50%);
+    }
+    &:after {
+        .border-radius(50%);
+    }
+}
+input[type="range"] {
+    -webkit-appearance: none;
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+
+    &::-webkit-slider-runnable-track {
+        height: 5px;
+        background-color: @colorGray;
+        border: none;
+        .border-radius(3px);
+    }
+
+    &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        border: none;
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        background-color: @colorGrayDark;
+        margin-top: -6px;
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &:focus::-webkit-slider-thumb {
+        background-color: @colorLink;
+    }
+
+    &::-moz-range-track {
+        // width: 300px;
+        height: 5px;
+        background-color: @colorGray;
+        border: none;
+        .border-radius(3px);
+    }
+
+    &::-moz-range-thumb {
+        -webkit-appearance: none;
+        border: none;
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        background-color: @colorGrayDark;
+        margin-top: -4px;
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &:focus::-moz-range-thumb {
+        background-color: @colorLink;
+    }
+}
+
 label {
     font-weight: 300;
 }

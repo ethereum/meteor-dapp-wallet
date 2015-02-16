@@ -2,6 +2,66 @@
     "wallet": {
         "app": {
             "buttons": {
+            },
+            "texts": {
+                "balance": "Balance"
+            }
+        },
+        "accounts": {
+            "title": "<span>Account</span> Overview",
+            "accountTitle": "Choose an account to deposit",
+            "defaultName": "Unnamed account"
+        },
+        "newAccount": {
+            "title": "New <span>Account</span>",
+            "accountName": "Account name",
+            "accountType": {
+                "title": "Account type",
+                "simple": {
+                    "title": "Simple account",
+                    "description": "A simple account wuth no special rules."
+                },
+                "multisig": {
+                    "title": "Multisignature account",
+                    "description": "Requires two or more signatures for withdraws.",
+                    "text1": "Require",
+                    "text2": "Signatures from",
+                    "text3": "people for any action.",
+                    "text4": "Signee addresses"
+                },
+                "dailyLimit": {
+                    "title": "Daily limit account",
+                    "description": "Account with daily safety limits.",
+                    "text1": "An account that allows normal deposits, but only allows a withdrawal limit of at most",
+                    "text2": ""
+                },
+                "custom": {
+                    "title": "Custom account",
+                    "description": "Setup your own account rules."
+                }
+            }
+        },
+        "send": {
+            "title": "<span>Send</span> money",
+            "yourAddress": "You",
+            "pickAddress": "Pick an address",
+            "to": "To",
+            "from": "From",
+            "amount": "Amount",
+            "fee": "Choose a Fee",
+            "feeLow": "Cheaper",
+            "feeHigh": "Faster",
+            "texts": {
+                "sendTo": "Choose from which wallet and to where it will go.  Addresses can be picked up by using the clipboard, the camera, clicking a link or searching visible devices in the vicinity.",
+                "sendAmount": "Currency in the ethereum network is transmitted using the equivalent in Ether, the internal unit of value.<br><br>You are sending<br><strong>__amount__ finney (__amountEther__ ether)</strong>.",
+                "sendFee": "This is the most amount of money that might be used to process this transaction. You will get your change back as soon as a miner picks it up, <strong>__timetext__</strong>.",
+                "timeTexts": {
+                    "0": "in a few minutes or more",
+                    "1": "likely within a few minutes",
+                    "2": "usually within a minute",
+                    "3": "probably within 30 seconds",
+                    "4": "probably within a few seconds"
+                }
             }
         }
     }

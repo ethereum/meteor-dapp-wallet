@@ -25,9 +25,12 @@ Meteor.startup(function() {
             // lang = 'en';
         }
     }
-    // change moment language, when language changes
+    // change moment and numeral language, when language changes
     Tracker.autorun(function(){
-        moment.locale(TAPi18n.getLanguage());
+        if(_.isString(TAPi18n.getLanguage())) {
+            moment.locale(TAPi18n.getLanguage().substr(0,2));
+            numeral.language(TAPi18n.getLanguage().substr(0,2));
+        }
     });
 
 });

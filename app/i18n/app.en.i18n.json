@@ -12,6 +12,8 @@
         "cancel": "Cancel",
         "save": "Save",
         "edit": "edit",
+        "send": "Send",
+        "create": "Create",
         "tryToReconnect": "Try to reconnect"
     },
     "commonWords": {
@@ -20,6 +22,7 @@
         "or": "or",
         "with": "with",
         "and": "and",
-        "on": "on"
+        "on": "on",
+        "per": "per"
     }
 }

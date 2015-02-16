@@ -12,6 +12,292 @@
 // Change Default constants
 
 @colorLink: #02A8F3;
-@colorMainBackground: #05669A;
-@colorMainBackgroundDark: #064A80;
+@colorBackgroundHeader: #d9d0d0;
 
+
+.dapp-header {
+    .wallet-balance {
+        position: absolute;
+        right: @defaultPaddingHorizontal;
+        bottom: @defaultPaddingVertical;
+        text-align: right;
+
+        h3 {
+            margin-bottom: 0;
+        }
+
+        span {
+            color: @colorTextSecondary;
+            font-size: 1.6em;
+        }
+    }
+}
+
+
+a.wallet-account {
+    position: relative;
+    display: inline-block;
+    width: @gridWidth * 6.5;
+    min-height: @gridHeight*4;
+    padding-left: @gridWidth + @defaultPaddingHorizontal;
+    padding-right: @defaultPaddingHorizontal/2;
+    margin-right: @defaultMargin;
+    margin-bottom: @defaultMargin;
+    .box-sizing(border-box);
+
+    &.main {
+        background-color: lighten(@colorBackgroundHeader, 12%);
+        overflow: hidden;
+
+        // .account-pattern {
+        //     background-color: transparent;
+        //     background-image: none !important;
+        // }
+        a.dapp-identicon {
+            position: absolute;
+            left: -30px;
+            top: 5px;
+        }
+    }
+    &.create {
+        .display(flex);
+        .align-items(center);
+    }
+
+    &:hover {
+        background-color: lighten(@colorBackgroundHeader, 12%);
+    }
+
+
+    .account-pattern {
+        position: absolute;
+        .display(flex);
+        .align-items(center);
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: auto;
+        min-width: @gridWidth*1.4;
+        padding: 0 @gridWidth/2;
+        background-color: @colorLink;
+        text-align: center;
+        line-height: 100%;
+        color: @colorWhite;
+        font-size: 1.8em;
+        .box-sizing(border-box);
+
+        a {
+            margin: 0 -@gridWidth/3;
+        }
+    }
+
+    h3 {
+        .dapp-shorten-text;
+        margin: 0;
+        color: @colorLink;
+        max-width: @gridWidth*5;
+        float: left;
+    }
+    span {
+        clear: left;
+        float: left;
+        color: @colorTextSecondary;
+        font-size: 1.3em;
+        line-height: 1.6em;
+        .dapp-shorten-text;
+
+        &.account-id {
+            font-size: 0.8em;
+            color: fadeout(@colorTextSecondary, 40%);
+        }
+    }
+}
+
+.account-number {
+    width: 100%;
+}
+
+
+table {
+    td {
+        text-align: center;
+
+        &.transaction-amount {
+            width: 80px;
+            text-align: right;
+
+            &.plus {
+                color: @colorTextSecondary;                
+            }
+            &.minus {
+                color: @colorRed;
+            }
+        }
+        &.account-name {
+            width: 200px;
+            font-style: italic;
+            color: @colorTextSecondary;
+        }
+        &.transaction-purpose {
+            text-align: left;
+            font-weight: 400;
+        }
+        &.button {
+            width: 100px;
+            text-align: right;
+
+            button {
+                width: 100px;
+            }
+
+            button.approve {
+                background-color: @colorGreen;
+                border-color: darken(@colorGreen, 10%);
+            }
+            button.reject {
+                background-color: @colorRed;
+                border-color: darken(@colorRed, 10%);
+            }
+        }
+    }
+}
+
+
+
+
+.account-send-form {
+
+    > div {
+        margin-bottom: @defaultMargin*2;
+
+        &.from-to {
+            position: relative;
+            // .display(flex);
+            // .align-items(center);
+
+            > div {
+                position: relative;
+                margin-bottom: @defaultMargin;
+            }
+
+            
+            span {
+                position: relative;
+                display: inline-block;
+                top: -@gridHeight/2;
+                margin-left: @defaultMargin;
+                font-weight: 400;
+            }
+
+            .dapp-address-input input {
+                width: 100%;
+            }
+            
+        }
+
+        &.amount {
+            position: relative;
+
+            span {
+                font-size: 1.3em;
+                font-weight: 400;
+                color: @colorTextSecondary;
+            }
+
+            input {
+                margin-top: 0; 
+                display: inline-block;
+            }
+        }
+
+        &.fee {
+            position: relative;
+
+            span:first-of-type {
+                font-size: 1.3em;
+                font-weight: 400;
+                color: @colorTextSecondary;
+            }
+
+            input {
+                margin-bottom: @defaultMargin*2;
+            }
+
+            input + span,
+            input + span + span {
+                position: absolute;
+                top: 125px;
+                text-transform: uppercase;
+                font-size: 1em;
+                font-weight: 400;
+            }
+            input + span {
+                position: absolute;
+                left: 10px;
+            }
+            input + span + span {
+                left: 260px;
+            }
+        }
+
+        &.total {
+            font-weight: 400;
+            color: @colorTextSecondary;
+
+            span {
+                font-size: 2em;
+            }
+        }
+
+
+        .send-info {
+            margin-top: @defaultMargin;
+            color: @colorTextSecondary;
+        }
+
+        
+    }
+
+}
+
+.new-account {
+
+    h2 {
+        margin-bottom: @defaultMargin*2;
+    }
+
+    input {
+        display: block;
+    }
+
+    label {
+        display: block;
+        position: relative;
+        padding-left: @gridWidth;
+        cursor: pointer;
+
+        input[type="radio"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            margin-right: @defaultMargin;
+        }
+
+        h3 {
+            margin: 0;
+            color: @colorLink;
+        }
+        span {
+            color: @colorTextSecondary;
+        }
+        
+    }
+
+    .indented-box {
+        margin-left: @defaultMargin*2;
+
+        .dapp-address-input {
+            margin-bottom: @defaultMargin;
+        }
+    }
+}

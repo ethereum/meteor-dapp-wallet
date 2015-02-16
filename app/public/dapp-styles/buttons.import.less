@@ -20,10 +20,11 @@
 .dapp-block-button:visited {
     .dapp-button-reset;
     height: @gridHeight * 2;
-    padding: @gridHeight/4 @gridWidth/4;
+    min-width: 100px;
+    padding: @gridHeight/4 @gridWidth/3;
     background: @colorLink;
     color: @colorWhite;
-    border-bottom: solid 2px darken(@colorLink, 5%);
+    border-bottom: solid 3px darken(@colorLink, 5%);
     .border-radius(2px);
     .dapp-shorten-text;
 
@@ -31,6 +32,15 @@
     font-size: 1em;
     font-weight: 400;
     text-transform: uppercase;
+
+    &:active {
+        border-bottom-width: 3px;
+    }
+
+    i {
+        position: relative;
+        top: 2px;
+    }
 }
 
 

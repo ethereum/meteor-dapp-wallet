@@ -1,0 +1,74 @@
+<template name="views_account_create">
+        <!-- we use a form, which posts into the "dapp-form-helper-iframe" iframe, so that the browser stores inout fields for native autocpmplete -->
+    <form class="container new-account" action="about:blank" target="dapp-form-helper-iframe" autocomplete="on">
+            
+        <h1>{{{i18n 'wallet.newAccount.title'}}}</h1>
+
+        <input type="text" name="accountName" placeholder="{{i18n 'wallet.newAccount.accountName'}}" autofocus="true">
+
+        <h2>{{i18n 'wallet.newAccount.accountType.title'}}</h2>
+
+        <div class="row clear">
+            <label>
+                <input type="radio" name="accountType" value="simple">
+                <h3>{{i18n 'wallet.newAccount.accountType.simple.title'}}</h3>
+                <span>{{i18n 'wallet.newAccount.accountType.simple.description'}}</span>
+            </label>
+        </div>
+        
+        <div class="row clear">
+            <label>
+                <input type="radio" name="accountType" value="multisig">
+                <h3>{{i18n 'wallet.newAccount.accountType.multisig.title'}}</h3>
+                {{#unless showSection "multisig"}}
+                    <span>{{i18n 'wallet.newAccount.accountType.multisig.description'}}</span>
+                {{/unless}}
+            </label>
+            {{#if showSection "multisig"}}
+                <div class="indented-box">
+                    <p>{{i18n 'wallet.newAccount.accountType.multisig.text1'}} {{> InlineForm name="multisigSignatures" items=multisigSignatures value=multisigSignaturesValue}} {{i18n 'wallet.newAccount.accountType.multisig.text2'}} {{> InlineForm name="multisigSignees" items=multisigSignatures value=multisigSigneesValue}} {{i18n 'wallet.newAccount.accountType.multisig.text3'}}</p>
+
+                    <h4>{{i18n 'wallet.newAccount.accountType.multisig.text4'}}</h4>
+
+                    {{#each signees}}
+                        {{> dapp_addressInput placeholder="Signee address"}}
+                    {{/each}}
+                </div>
+            {{/if}}
+        </div>
+        
+        <div class="row clear">
+            <label>
+                <input type="radio" name="accountType" value="dailyLimit">
+                <h3>{{i18n 'wallet.newAccount.accountType.dailyLimit.title'}}</h3>
+                {{#unless showSection "dailyLimit"}}
+                    <span>{{i18n 'wallet.newAccount.accountType.dailyLimit.description'}}</span>
+                {{/unless}}
+            </label>
+            {{#if showSection "dailyLimit"}}
+                <div class="indented-box">
+                    <p>{{i18n 'wallet.newAccount.accountType.dailyLimit.text1'}} {{> InlineForm name="dailyLimitAmount" value="10"}} {{> InlineForm name="dailyLimitUnit" items=dailyLimitUnits value="percent"}} {{i18n 'commonWords.per'}} {{> InlineForm name="dailyLimitTime" items=dailyLimitTimes value="month"}}</p>
+                    
+                </div>
+            {{/if}}
+        </div>
+        
+        <div class="row clear">
+            <label>
+                <input type="radio" name="accountType" value="custom">
+                <h3>{{i18n 'wallet.newAccount.accountType.custom.title'}}</h3>
+                <span>{{i18n 'wallet.newAccount.accountType.custom.description'}}</span>
+            </label>
+            {{#if showSection "custom"}}
+                <textarea name="custom-contract" cols="30" rows="10"></textarea>
+            {{/if}}
+        </div>
+
+        <hr>
+
+        <!-- button type="submit" will send the form -->
+        <button type="submit" class="dapp-block-button">{{i18n 'buttons.create'}}</button>
+
+    </form>
+
+</template>

@@ -4,15 +4,24 @@
 @colorBlue: #0e73b8;
 // @colorOrange: #ff9800;
 // @colorYellow: #ffc107;
-// @colorRed: #ff5722;
-// @colorGreen: #8bc34a;
+@colorRed: #e74b3c;
+@colorGreen: #8bc34a;
 // @colorWhiteTransparent: rgba(255, 255, 255, 0.95);
-@colorGray: #e3e2d5;
+@colorGray: #CCC6C6;
 @colorGrayLight: lighten(#ecebe6, 4%);
 @colorGrayDark: darken(@colorGray, 40%);
 
-@colorMainBackground: #05669A;
-@colorMainBackgroundDark: #064A80;
+@colorBackgroundOverlay: @colorBlack;
+@colorBackgroundHeader: lighten(#d9d0d0, 5%);
+//@colorBackgroundAside: #05669A;
+@colorBackgroundAside: @colorGray;
+@colorForegroundAside: @colorBlack;
+
+@colorBackgroundMainButton: #665F5F;
+@colorForegroundMainButton: @colorWhite;
+
+
+
 @colorTextPrimary: @colorBlack;
 @colorTextSecondary: #827a7a;
 
@@ -26,13 +35,18 @@
 @defaultPaddingVertical: @gridHeight;
 @defaultPaddingHorizontal: @gridWidth;
 
-@circleSizeMedium: 40px;
-@circleSizeLarge: 65px;
+// @circleSizeMedium: 40px;
+// @circleSizeLarge: 65px;
 
-@maxContentWidth: 960px;
+@widthContainer: @gridWidth * 30;
+@widthTablet: @gridWidth * 20;
+@widthMobile: 100%;
 
-@heightHeader: @gridWidth * 4;
-@heightHeaderSmall: @gridWidth * 2;
+@heightHeader: @gridWidth * 2;
+@heightHeaderSmall: @gridWidth;
+
+@heightFooter: @gridWidth * 3;
+@heightFooterSmall: @gridWidth * 2;
 
 @widthSidebar: @gridWidth * 7;
 @widthSidebarSmall: @gridWidth * 2;
@@ -41,7 +55,7 @@
 @widthToolbarSmall: @gridWidth;
 
 // fonts
-@fontFamily: "Source Sans Pro", Helvetica Neue, Helvetica, Arial, Sans;
+@fontFamily: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, Sans;
 
 
 // animations

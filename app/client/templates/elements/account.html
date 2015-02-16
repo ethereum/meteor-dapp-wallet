@@ -1,0 +1,20 @@
+<template name="elements_account">
+    {{#with account}}
+        <a href="{{pathFor route='account' account=_id}}" class="wallet-account {{#if ../main}}main{{/if}}">
+            {{#if ../main}}
+                <!-- <div class="account-pattern"> -->
+                    {{> dapp_identicon identity=_id}}
+                <!-- </div> -->
+            {{else}}
+                <div class="account-pattern">
+                    
+                </div>
+            {{/if}}
+
+            <h3>{{name}}</h3>
+            {{getBalance}}
+            <span>{{formatNumber balance '0,0.00'}} µΞ</span>
+            <span class="account-id">{{_id}}</span>
+        </a>
+    {{/with}}
+</template>
