@@ -98,26 +98,6 @@ Template['views_send'].helpers({
     'timeText': function(){
         return TAPi18n.__('wallet.send.texts.timeTexts.'+ (Number(TemplateVar.get('selectedFeeMultiplicator') * 2)+2));
     }
-    /**
-    Return the currently selected fee in finney
-
-    @method (feeFormated)
-    */
-    // 'feeFormated': function(){
-    //     switch(TemplateVar.get('selectedFeeMultiplicator')) {
-    //         case 1:
-    //             return 0;
-    //         case 2:
-    //             return 100;
-    //         case 3:
-    //             return 200;
-    //         case 4:
-    //             return 300;
-    //         case 5:
-    //             return 400;
-    //     };
-    //     console.log('hallo');
-    // }
 });
 
 
