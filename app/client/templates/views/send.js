@@ -17,10 +17,9 @@ Calculates the gas price.
 @method calculateGasPrice
 @return {Number}
 */
-var calculateGasPrice = function(fee){
-    var minimunGasSent = 10000;
-    var suggestedGasPrice = 0.01;
-    return minimunGasSent * suggestedGasPrice * Math.pow(4, fee);
+var calculateGasPrice = function(fee, ether){
+    var suggestedGasPrice = EthTools.fromWei(web3.eth.gasPrice, ether || LocalStore.get('etherUnit'));
+    return 10000 * suggestedGasPrice * Math.pow(4, fee);
 }
 
 
@@ -38,12 +37,20 @@ Template['views_send'].rendered = function(){
 
 Template['views_send'].helpers({
     /**
+    Get the current unit.
+
+    @method unit
+    */
+    'unit': function(){
+        return LocalStore.get('etherUnit');
+    },
+    /**
     Return the to publicKey
 
-    @method (toPublicKey)
+    @method (toAddress)
     */
-    'toPublicKey': function(){
-        return TemplateVar.get('toPublicKey');
+    'toAddress': function(){
+        return TemplateVar.get('toAddress');
     },
     /**
     Return the currently selected fee multicalculator value
@@ -68,40 +75,20 @@ Template['views_send'].helpers({
     @method (amount)
     */
     'amount': function(){
-        return (_.isFinite(TemplateVar.get('amount')))
-            ? numeral(TemplateVar.get('amount')).format('0,0.[000000]')
-            : 0;
-    },
-    /**
-    Calculates the ether amount of the current sepecified amount (finney)
-
-    @method (amountEther)
-    */
-    'amountEther': function(){
-        return (_.isFinite(TemplateVar.get('amount')))
-            ? numeral(TemplateVar.get('amount') / 1000).format('0,0.[000000]')
-            : 0;
+        var amount = EthTools.fromWei(TemplateVar.get('amount'), LocalStore.get('etherUnit'));
+        return (_.isFinite(amount))
+            ? numeral(amount).format('0,0.[000000]') + ' '+ LocalStore.get('etherUnit')
+            : 0 + ' '+ LocalStore.get('etherUnit');
     },
     /**
     Return the currently selected fee + amount
 
     @method (total)
     */
-    'total': function(){
+    'total': function(ether){
+        var amount = EthTools.fromWei(TemplateVar.get('amount'), ether || LocalStore.get('etherUnit'));
         if(_.isFinite(TemplateVar.get('selectedFeeMultiplicator')))
-            return numeral((TemplateVar.get('amount') || 0) + calculateGasPrice(TemplateVar.get('selectedFeeMultiplicator'))).format('0,0.[000000]');
-    },
-    /**
-    Calculates the ether amount of any given finey amount
-
-    @method (inEther)
-    */
-    'inEther': function(amount){
-        if(_.isFinite(amount) || _.isString(amount)) {
-            amount = numeral().unformat(amount);
-            return numeral(amount / 1000).format('0,0.[000000]')
-        }
-        return 0;
+            return numeral((amount || 0) + calculateGasPrice(TemplateVar.get('selectedFeeMultiplicator'), ether)).format('0,0.[000000]');
     },
     /**
     Returns the right time text for the "sendText".
@@ -111,26 +98,6 @@ Template['views_send'].helpers({
     'timeText': function(){
         return TAPi18n.__('wallet.send.texts.timeTexts.'+ (Number(TemplateVar.get('selectedFeeMultiplicator') * 2)+2));
     }
-    /**
-    Return the currently selected fee in finney
-
-    @method (feeFormated)
-    */
-    // 'feeFormated': function(){
-    //     switch(TemplateVar.get('selectedFeeMultiplicator')) {
-    //         case 1:
-    //             return 0;
-    //         case 2:
-    //             return 100;
-    //         case 3:
-    //             return 200;
-    //         case 4:
-    //             return 300;
-    //         case 5:
-    //             return 400;
-    //     };
-    //     console.log('hallo');
-    // }
 });
 
 
@@ -141,7 +108,7 @@ Template['views_send'].events({
     @event keyup input[name="to"]
     */
     'keyup input[name="to"]': function(e){
-        TemplateVar.set('toPublicKey', e.currentTarget.value);
+        TemplateVar.set('toAddress', e.currentTarget.value);
     },
     /**
     Set the amount while typing
@@ -149,7 +116,7 @@ Template['views_send'].events({
     @event keyup input[name="amount"], change input[name="amount"], input input[name="amount"]
     */
     'keyup input[name="amount"], change input[name="amount"], input input[name="amount"]': function(e){
-        TemplateVar.set('amount', Number(e.currentTarget.value.replace(',','.')));
+        TemplateVar.set('amount', EthTools.toWei(Number(e.currentTarget.value.replace(',','.')), LocalStore.get('etherUnit')));
     },
     /**
     Change the selected fee

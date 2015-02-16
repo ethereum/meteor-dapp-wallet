@@ -1,10 +1,17 @@
 <template name="views_account">
 
-    <div class="dapp-container">
+    <div class="dapp-container accounts-page">
 
-        {{> elements_account account=account main=true}}
+        {{#with accountProperties}}
+            
+            {{> dapp_identicon identity=_id}}
 
-        <input type="text" class="account-number" disabled="disabled" value="{{account}}">
+            <h1><span>{{name}}</span> <em>{{_id}}</em></h1>
+            {{> elements_balance balance=balance changeUnit=true}}
+        {{/with}}
+
+        {{! > elements_account account=account main=true}}
+
         <!-- <h3>{{account}}</h3> -->
 
         <div class="dapp-clear-fix"></div>

@@ -14,7 +14,14 @@ The template to display account information.
 
 
 Template['views_account'].helpers({
+    /**
+    Gets the currents account properties
 
+    @method (accountProperties)
+    */
+    'accountProperties': function(){
+        return Accounts.findOne(this.account);
+    }
 });
 
 Template['views_account'].events({

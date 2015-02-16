@@ -88,9 +88,6 @@ Template.registerHelper('formatNumber', function(number, format){
     if(!_.isFinite(number))
         number = numeral().unformat(number);
 
-    // make it finney
-    number = EthTools.convertWei(number, 'finney');
-
     if(_.isFinite(number))
         return numeral(number).format(format);
 });

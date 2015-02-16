@@ -2,6 +2,8 @@
     "wallet": {
         "app": {
             "buttons": {
+                "send": "Send",
+                "receive": "Receive"
             },
             "texts": {
                 "balance": "Balance"
@@ -53,7 +55,7 @@
             "feeHigh": "Faster",
             "texts": {
                 "sendTo": "Choose from which wallet and to where it will go.  Addresses can be picked up by using the clipboard, the camera, clicking a link or searching visible devices in the vicinity.",
-                "sendAmount": "Currency in the ethereum network is transmitted using the equivalent in Ether, the internal unit of value.<br><br>You are sending<br><strong>__amount__ finney (__amountEther__ ether)</strong>.",
+                "sendAmount": "Currency in the ethereum network is transmitted using the equivalent in Ether, the internal unit of value.<br><br>You want to send<br><strong>__amount__</strong>.",
                 "sendFee": "This is the most amount of money that might be used to process this transaction. You will get your change back as soon as a miner picks it up, <strong>__timetext__</strong>.",
                 "timeTexts": {
                     "0": "in a few minutes or more",
