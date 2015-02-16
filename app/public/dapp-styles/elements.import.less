@@ -48,8 +48,10 @@
 }
 
 .dapp-url-bar {
+    display: block;
     text-align: center;
-    .calc(width, ~'100vw - 64px');    
+    width: 100%;
+    // .calc(width, ~'100% - 64px');    
     .border-radius(8px);
 }
 
@@ -214,6 +216,9 @@ textarea {
 
     &.dapp-large {
         font-size: 1.5em;
+    }
+    &.dapp-error {
+        border-color: @colorRed;
     }
 }
 :disabled {
