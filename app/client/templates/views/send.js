@@ -88,7 +88,7 @@ Template['views_send'].helpers({
     'total': function(ether){
         var amount = EthTools.fromWei(TemplateVar.get('amount'), ether || LocalStore.get('etherUnit'));
         if(_.isFinite(TemplateVar.get('selectedFeeMultiplicator')))
-            return numeral((amount || 0) + calculateGasPrice(TemplateVar.get('selectedFeeMultiplicator'), 'ether')).format('0,0.[000000]');
+            return numeral((amount || 0) + calculateGasPrice(TemplateVar.get('selectedFeeMultiplicator'), ether)).format('0,0.[000000]');
     },
     /**
     Returns the right time text for the "sendText".
