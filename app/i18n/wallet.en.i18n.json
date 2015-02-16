@@ -2,6 +2,8 @@
     "wallet": {
         "app": {
             "buttons": {
+                "send": "Send",
+                "receive": "Receive"
             },
             "texts": {
                 "balance": "Balance"
