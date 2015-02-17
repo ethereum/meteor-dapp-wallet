@@ -185,29 +185,36 @@ table {
     &:disabled {
         color: @colorGrayDark;
     }
+
+    &.dapp-large {
+        font-size: 1.5em;
+    }
+    &.dapp-error {
+        color: @colorError;
+        background: fadeout(@colorError, 90%);
+        border-color: fadeout(@colorError, 85%);
+    }
 }
 
 .dapp-address-input {
     input {
         .dapp-input;
-    }
 
-    .dapp-error + .dapp-identicon {
-        display: none;
+        &.dapp-large {
+            & + .dapp-identicon {
+                top: 4px;
+            }
+            & + .icon-shield {
+                top: 9px;
+            }
+        }
     }
-
+    .dapp-identicon {
+        top: 2px;
+    }
     .icon-shield {
-        display: none;
-        position: absolute;
-        top: 9px;
-        left: 13px;
-        font-size: 1.4em;        
-        color: @colorStrongRed;
-    }
-    
-    .dapp-error + .dapp-identicon + .icon-shield {
-        display: block;
-    }    
+        top: 5px;
+    }  
 }
 
 // forms
@@ -225,19 +232,9 @@ textarea {
     font-size: 1em;
     font-weight: 300;
 
-
     &:focus {
         outline: 0;
         // border-color: @colorBrand1;
-    }
-
-    &.dapp-large {
-        font-size: 1.5em;
-    }
-    &.dapp-error {
-        color: @colorStrongRed;
-        background: @colorLightRed;
-        border-color: @colorRed;
     }
 }
 

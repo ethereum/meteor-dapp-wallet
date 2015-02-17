@@ -16,7 +16,7 @@ coffeescript@1.0.5
 ddp@1.0.14
 deps@1.0.6
 ejson@1.0.5
-ethereum:elements@0.0.8
+ethereum:elements@0.1.0
 ethereum:tools@0.0.6
 fastclick@1.0.2
 follower-livedata@1.0.3
