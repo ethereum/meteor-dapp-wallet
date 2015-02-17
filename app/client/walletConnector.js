@@ -64,9 +64,19 @@ var walletABI = [
     }
 ];
 
-if(_.isArray(web3.eth.accounts)) {
 
-    _.each(web3.eth.accounts, function(address) {
+var accounts = web3.eth.accounts;
+if(_.isArray(accounts)) {
+
+    // disable accounts, which weren't in the given accounts array
+    _.each(Accounts.find({_id: {$nin: accounts}}).fetch(), function(item){
+        Accounts.update(item, {$set: {
+            disabled: true
+        }});
+    });
+
+
+    _.each(accounts, function(address) {
         
         // SETUP accounts
         if(!Accounts.findOne(address)) {
@@ -75,19 +85,33 @@ if(_.isArray(web3.eth.accounts)) {
                 name: null,
                 balance: web3.toDecimal(web3.eth.balanceAt(address))
             });
+
+        // undisbale them
+        } else {
+            Accounts.update(address, {$unset: {
+                disabled: ''
+            }});
         }
 
         // watch for new blocks
-        web3.eth.watch({
-            address: web3.eth.accounts
-        }).changed(function (log) {
+        var updateBalance = function (log) {
             console.log(log); //  {"address":"0x0000000000000000000000000000000000000000","data":"0x0000000000000000000000000000000000000000000000000000000000000000","number":0}
 
 
             Accounts.update(address, {$set: {
                 balance: web3.toDecimal(web3.eth.balanceAt(address))
             }});
-        });
+        };
+
+
+        /*
+        TODO: change later to
+        {
+            address: web3.eth.accounts
+        }
+        */
+        web3.eth.watch('pending').changed(updateBalance);
+        web3.eth.watch('chain').changed(updateBalance);
 
         // look for balance changes
         // Meteor.setInterval(function(){

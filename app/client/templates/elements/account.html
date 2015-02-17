@@ -1,6 +1,6 @@
 <template name="elements_account">
     {{#with account}}
-        <a href="{{pathFor route='account' account=_id}}" class="wallet-account {{#if ../main}}main{{/if}}">
+        <a href="{{pathFor route='account' account=_id}}" class="wallet-account {{#if disabled}}disabled{{/if}} {{#if ../main}}main{{/if}}">
             {{#if ../main}}
                 <!-- <div class="account-pattern"> -->
                     {{> dapp_identicon identity=_id class="dapp-small"}}
