@@ -77,44 +77,53 @@ if(_.isArray(web3.eth.accounts)) {
             });
         }
 
-        // look for balance changes
-        Meteor.setInterval(function(){
+        // watch for new blocks
+        web3.eth.watch({
+            address: web3.eth.accounts
+        }).changed(function (log) {
+            console.log(log); //  {"address":"0x0000000000000000000000000000000000000000","data":"0x0000000000000000000000000000000000000000000000000000000000000000","number":0}
+
+
             Accounts.update(address, {$set: {
                 balance: web3.toDecimal(web3.eth.balanceAt(address))
             }});
-        }, 1000);
+        });
+
+        // look for balance changes
+        // Meteor.setInterval(function(){
+        // }, 1000);
 
 
         // start WATCH for transactions
-        var walletContract = web3.eth.contract(address, walletABI);
+        // var walletContract = web3.eth.contract(address, walletABI);
 
-        // single transactions
-        var singleTxWatcher = walletContract.SingleTransact(),
-            transactionCallback = function(result) {
-                console.log('transaction arrived', result);
-                Transactions.insert(result);
-            };
+        // // single transactions
+        // var singleTxWatcher = walletContract.SingleTransact(),
+        //     transactionCallback = function(result) {
+        //         console.log('transaction arrived', result);
+        //         Transactions.insert(result);
+        //     };
 
-        var pastSingleTransactions = singleTxWatcher.logs();
-        if(_.isArray(pastSingleTransactions)) {
-            _.each(pastSingleTransactions, transactionCallback);
-        }
+        // var pastSingleTransactions = singleTxWatcher.logs();
+        // if(_.isArray(pastSingleTransactions)) {
+        //     _.each(pastSingleTransactions, transactionCallback);
+        // }
 
-        singleTxWatcher.changed(transactionCallback);
+        // singleTxWatcher.changed(transactionCallback);
 
-        // multisig transactions
-        var multiTxWatcher = walletContract.MultiTransact(),
-            transactionCallback = function(result) {
-                console.log('transaction arrived', result);
-                Transactions.insert(result);
-            };
+        // // multisig transactions
+        // var multiTxWatcher = walletContract.MultiTransact(),
+        //     transactionCallback = function(result) {
+        //         console.log('transaction arrived', result);
+        //         Transactions.insert(result);
+        //     };
 
-        var pastMultiTransactions = multiTxWatcher.logs();
-        if(_.isArray(pastMultiTransactions)) {
-            _.each(pastMultiTransactions, transactionCallback);
-        }
+        // var pastMultiTransactions = multiTxWatcher.logs();
+        // if(_.isArray(pastMultiTransactions)) {
+        //     _.each(pastMultiTransactions, transactionCallback);
+        // }
 
-        multiTxWatcher.changed(transactionCallback);
+        // multiTxWatcher.changed(transactionCallback);
     });
 
 }
