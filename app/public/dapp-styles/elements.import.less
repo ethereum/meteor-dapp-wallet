@@ -191,6 +191,23 @@ table {
     input {
         .dapp-input;
     }
+
+    .dapp-error + .dapp-identicon {
+        display: none;
+    }
+
+    .icon-shield {
+        display: none;
+        position: absolute;
+        top: 9px;
+        left: 13px;
+        font-size: 1.4em;        
+        color: @colorStrongRed;
+    }
+    
+    .dapp-error + .dapp-identicon + .icon-shield {
+        display: block;
+    }    
 }
 
 // forms
@@ -218,9 +235,12 @@ textarea {
         font-size: 1.5em;
     }
     &.dapp-error {
+        color: @colorStrongRed;
+        background: @colorLightRed;
         border-color: @colorRed;
     }
 }
+
 :disabled {
     color: @colorGrayDark;
     // background-color: @colorGrayLight;
