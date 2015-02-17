@@ -5,8 +5,11 @@
         {{#with accountProperties}}
             
             {{> dapp_identicon identity=_id}}
-
-            <h1><span>{{name}}</span> <em>{{_id}}</em></h1>
+                
+            <hgroup>
+                <h1><span>{{name}}</span></h1>
+                <h2>{{_id}}</h2>                
+            </hgroup>
             {{> elements_balance balance=balance changeUnit=true}}
         {{/with}}
 

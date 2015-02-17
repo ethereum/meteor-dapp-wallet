@@ -46,28 +46,6 @@
     }
 }
 
-.accounts-page {
-    
-    .dapp-identicon {
-        float: left;
-        margin-right: 20px;
-        margin-top: 18px;
-    }
-
-    h1 {
-        margin-bottom: @defaultMargin;
-
-        em {
-            font-size: 0.5em;
-            font-style: normal;
-        }
-    }
-    .account-balance {
-        font-size: 1.6em;
-        color: @colorTextSecondary;
-    }
-}
-
 a.wallet-account {
     position: relative;
     display: inline-block;
@@ -193,6 +171,32 @@ table {
                 border-color: darken(@colorError, 10%);
             }
         }
+    }
+}
+
+
+.accounts-page {
+    
+    .dapp-identicon {
+        float: left;
+        margin-right: 20px;
+        margin-top: 18px;
+    }
+
+    h1 {
+        margin-bottom: 0;
+
+        + h2 {
+            padding: 0;
+            margin-bottom: 0;
+            background-color: transparent;
+            color: @colorTextTertiary;
+            // font-size: 0.9em; 
+        }
+    }
+    .account-balance {
+        font-size: 1.6em;
+        color: @colorTextSecondary;
     }
 }
 

@@ -21,6 +21,14 @@ Template['views_account'].helpers({
     */
     'accountProperties': function(){
         return Accounts.findOne(this.account);
+    },
+    /**
+    Get the name
+
+    @method (name)
+    */
+    'name': function(){
+        return this.name || TAPi18n.__('wallet.accounts.defaultName');
     }
 });
 

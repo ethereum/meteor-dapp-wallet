@@ -13,7 +13,7 @@ The header template
 
 Template['layout_header'].helpers({
     'totalBalance': function(){
-        var accounts = _.pluck(Accounts.find({}).fetch(), 'balance');
+        var accounts = _.pluck(Accounts.find({disabled: {$exists: false}}).fetch(), 'balance');
 
         accounts = _.reduce(accounts, function(memo, num){ return memo + Number(num); }, 0);
 

@@ -1,69 +1,9 @@
-var walletABI = [
-    {
-        "name":"confirm",
-        "type":"function",
-        "constant":false,
-        "inputs":[
-            {"name":"_h","type":"hash256"}
-        ],
-        "outputs":[]
-    },{
-        "name":"execute",
-        "constant":false,
-        "type":"function",
-        "inputs":[
-            {"name":"_to","type":"address"},
-            {"name":"_value","type":"uint256"},
-            {"name":"_data","type":"bytes"}
-        ],
-        "outputs":[
-            {"name":"_r","type":"hash256"}
-        ]
-    },{
-        "name":"kill",
-        "type":"function",
-        "constant":false,
-        "inputs":[
-            {"name":"_to","type":"address"}
-        ],
-        "outputs":[]
-    },{
-        "name":"changeOwner",
-        "type":"function",
-        "constant":false,
-        "inputs":[
-            {"name":"_from","type":"address"},
-            {"name":"_to","type":"address"}
-        ],
-        "outputs":[]
-    },{
-        "name":"CashIn",
-        "type":"event",
-        "inputs":[
-            {"indexed":false,"name":"value","type":"uint256"}
-        ]
-    },{
-        "name":"SingleTransact",
-        "type":"event",
-        "inputs":[
-            {"indexed":true,"name":"out","type":"string32"},
-            {"indexed":false,"name":"owner","type":"address"},
-            {"indexed":false,"name":"value","type":"uint256"},
-            {"indexed":false,"name":"to","type":"address"}
-        ]
-    },{
-        "name":"MultiTransact",
-        "type":"event",
-        "inputs":[
-            {"indexed":true,"name":"out","type":"string32"},
-            {"indexed":false,"name":"owner","type":"address"},
-            {"indexed":false,"name":"operation","type":"hash256"},
-            {"indexed":false,"name":"value","type":"uint256"},
-            {"indexed":false,"name":"to","type":"address"}
-        ]
-    }
-];
-
+/*
+[17/02/15 20:39:20] gavofyork: Wallet(addressOfTheWalletContract).execute(to, value)
+[17/02/15 20:40:32] gavofyork: from: addressOfTheWalletContract
+[17/02/15 20:41:27] gavofyork: Wallet(addressOfWallet).transact({from: secretKeysAddress}).execute(...)
+[17/02/15 20:41:47] gavofyork: Wallet(addressOfWallet).from(secretKeysAddress).execute(...)
+*/
 
 var accounts = web3.eth.accounts;
 if(_.isArray(accounts)) {
@@ -86,17 +26,21 @@ if(_.isArray(accounts)) {
                 balance: web3.toDecimal(web3.eth.balanceAt(address))
             });
 
-        // undisbale them
+        // undisbale them and update balance
         } else {
-            Accounts.update(address, {$unset: {
-                disabled: ''
-            }});
+            Accounts.update(address, {
+                $set: {
+                    balance: web3.toDecimal(web3.eth.balanceAt(address))
+                },
+                $unset: {
+                    disabled: '',
+                }
+            });
         }
 
         // watch for new blocks
         var updateBalance = function (log) {
             console.log(log); //  {"address":"0x0000000000000000000000000000000000000000","data":"0x0000000000000000000000000000000000000000000000000000000000000000","number":0}
-
 
             Accounts.update(address, {$set: {
                 balance: web3.toDecimal(web3.eth.balanceAt(address))
@@ -112,6 +56,8 @@ if(_.isArray(accounts)) {
         */
         web3.eth.watch('pending').changed(updateBalance);
         web3.eth.watch('chain').changed(updateBalance);
+
+        console.log(web3.eth.watch('chain').logs(function(item){console.log(item);}));
 
         // look for balance changes
         // Meteor.setInterval(function(){

@@ -13,6 +13,7 @@
 
             <h3>{{name}}</h3>
             {{> elements_balance balance=balance}}
+            {{> elements_balance balance=balance pending=true}}
             <span class="account-id">{{_id}}</span>
         </a>
     {{/with}}
