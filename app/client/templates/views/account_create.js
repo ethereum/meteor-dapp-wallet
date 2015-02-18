@@ -12,8 +12,10 @@ The account create template
 */
 
 Template['views_account_create'].created = function(){
-    TemplateVar.set('multisigSignees', 2);
-    TemplateVar.set('multisigSignatures', 2);
+    TemplateVar.set('multisigSignees', 4);      // number of owners of the account
+    TemplateVar.set('multisigSignatures', 2);   // number of required signatures
+
+    TemplateVar.set('selectedSection', 'multisig');
 };
 
 
@@ -63,11 +65,19 @@ Template['views_account_create'].helpers({
     @return {Array} e.g. [1,2,3,4]
     */
     'signees': function(){
-        if (TemplateVar.get('multisigSignatures') > TemplateVar.get('multisigSignees')) {
-            TemplateVar.set('multisigSignees', TemplateVar.get('multisigSignatures'));
+        if ((TemplateVar.get('multisigSignatures')+1) > TemplateVar.get('multisigSignees')) {
+            TemplateVar.set('multisigSignees', TemplateVar.get('multisigSignatures')+1);
         }
 
         return _.range(TemplateVar.get('multisigSignees'));
+    },
+    /**
+    Translates the 'owner address'
+
+    @method (i18Owneraddress)
+    */
+    'i18Owneraddress': function(){
+        return TAPi18n.__('wallet.newAccount.accountType.multisig.owneraddress');
     },
     /**
     Get the number of required multisignatures
@@ -76,6 +86,10 @@ Template['views_account_create'].helpers({
     */
     'multisigSignatures': function() {
         return [{
+            value: '0',
+            text: '0'
+        },
+        {
             value: '1',
             text: '1'
         },
@@ -102,12 +116,9 @@ Template['views_account_create'].helpers({
         {
             value: '7',
             text: '7'
-        },
-        {
-            value: '8',
-            text: '8'
         }];
-    },
+    },    
+
     /**
     Get the daily limit units
 
@@ -116,11 +127,11 @@ Template['views_account_create'].helpers({
     'dailyLimitUnits': function(section){
         return [{
             value: 'percent',
-            text: '%'
+            text: ' %'
         },
         {
             value: 'eth',
-            text: 'ether'
+            text: ' ether'
         }];
     },
     /**
@@ -130,20 +141,20 @@ Template['views_account_create'].helpers({
     */
     'dailyLimitTimes': function(section){
         return [{
-            value: 'day',
-            text: 'day'
+            value: '1',
+            text: 'daily'
         },
         {
-            value: 'week',
-            text: 'week'
+            value: '7',
+            text: 'weekly'
         },
         {
-            value: 'month',
-            text: 'month'
+            value: '30',
+            text: 'monthly'
         },
         {
-            value: 'year',
-            text: 'year'
+            value: '365',
+            text: 'yearly'
         }];
     }
 });
@@ -174,6 +185,3 @@ Template['views_account_create'].events({
         TemplateVar.set('multisigSignees',  $(e.currentTarget).data('value'));
     }
 });
-
-
-

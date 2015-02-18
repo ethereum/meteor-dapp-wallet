@@ -10,28 +10,38 @@
             }
         },
         "accounts": {
-            "title": "<span>Account</span> Overview",
+            "title": "<strong>Account</strong> Overview",
             "accountTitle": "Choose an account to deposit",
             "defaultName": "Unnamed account"
         },
         "newAccount": {
-            "title": "New <span>Account</span>",
+            "title": "New <strong>Account</strong>",
             "accountName": "Account name",
             "accountType": {
                 "title": "Account type",
                 "simple": {
-                    "title": "Simple account",
-                    "description": "A simple account wuth no special rules."
+                    "title": "Unlimited account",
+                    "description": "An account <strong>without any security limits</strong> for those who like to live dangerously.",
+                    "warning": "<strong> Warning: this account has no protections.</strong> If someone has access to your private key, he will be able to access all your funds instantly and you'll have no recourse. Only use this if you know what you're doing."
                 },
                 "multisig": {
-                    "title": "Multisignature account",
-                    "description": "Requires two or more signatures for withdraws.",
+                    "title": "Basic secure account",
+                    "description": "A single-owned account with standard security measures",
                     "text1": "Require",
                     "text2": "Signatures from",
                     "text3": "people for any action.",
-                    "text4": "Signee addresses"
+                    "text4": "Account owners:",
+                    "owneraddress": "Owner's address"
                 },
-                "dailyLimit": {
+                "multiowned": {
+                    "title": "Joint account",
+                    "description": "An account controlled by multiple people",
+                    "text1": "Require",
+                    "text2": "Signatures from",
+                    "text3": "people for any action.",
+                    "text4": "Account owners:",
+                    "owneraddress": "Owner's address"
+                },                "dailyLimit": {
                     "title": "Daily limit account",
                     "description": "Account with daily safety limits.",
                     "text1": "An account that allows normal deposits, but only allows a withdrawal limit of at most",
@@ -44,7 +54,7 @@
             }
         },
         "send": {
-            "title": "<span>Send</span> money",
+            "title": "<strong>Send</strong> money",
             "yourAddress": "You",
             "pickAddress": "Pick an address",
             "to": "To",
