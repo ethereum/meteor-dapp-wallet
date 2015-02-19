@@ -20,7 +20,7 @@ Template['views_account'].helpers({
     @method (accountProperties)
     */
     'accountProperties': function(){
-        return Accounts.findOne(this.account);
+        return Accounts.findOne({address: this.account});
     },
     /**
     Get the name

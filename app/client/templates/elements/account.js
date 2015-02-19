@@ -15,7 +15,7 @@ The account template
 Template['elements_account'].rendered = function(){
 
     // initiate the geo pattern
-    var pattern = GeoPattern.generate(this.data._id);
+    var pattern = GeoPattern.generate(this.data.address);
     this.$('.account-pattern').css('background-image', pattern.toDataUrl());
 };
 

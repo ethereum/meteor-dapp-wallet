@@ -1,42 +1,41 @@
 /*
-[17/02/15 20:39:20] gavofyork: Wallet(addressOfTheWalletContract).execute(to, value)
-[17/02/15 20:40:32] gavofyork: from: addressOfTheWalletContract
-[17/02/15 20:41:27] gavofyork: Wallet(addressOfWallet).transact({from: secretKeysAddress}).execute(...)
-[17/02/15 20:41:47] gavofyork: Wallet(addressOfWallet).from(secretKeysAddress).execute(...)
+Wallet(addressOfTheWalletContract).execute(to, value)
+from: addressOfTheWalletContract
+Wallet(addressOfWallet).transact({from: secretKeysAddress}).execute(...)
+Wallet(addressOfWallet).from(secretKeysAddress).execute(...)
 */
 
 var accounts = web3.eth.accounts;
 if(_.isArray(accounts)) {
 
     // disable accounts, which weren't in the given accounts array
-    _.each(Accounts.find({_id: {$nin: accounts}}).fetch(), function(item){
-        Accounts.update(item, {$set: {
-            disabled: true
-        }});
-    });
-
+    // _.each(Accounts.find({_id: {$nin: accounts}}).fetch(), function(item){
+    //     Accounts.update(item, {$set: {
+    //         disabled: true
+    //     }});
+    // });
 
     _.each(accounts, function(address) {
         
         // SETUP accounts
-        if(!Accounts.findOne(address)) {
-            Accounts.insert({
-                _id: address,
-                name: null,
-                balance: web3.toDecimal(web3.eth.balanceAt(address))
-            });
+        // if(!Accounts.findOne(address)) {
+        //     Accounts.insert({
+        //         _id: address,
+        //         name: null,
+        //         balance: web3.toDecimal(web3.eth.balanceAt(address))
+        //     });
 
-        // undisbale them and update balance
-        } else {
-            Accounts.update(address, {
-                $set: {
-                    balance: web3.toDecimal(web3.eth.balanceAt(address))
-                },
-                $unset: {
-                    disabled: '',
-                }
-            });
-        }
+        // // undisbale them and update balance
+        // } else {
+        //     Accounts.update(address, {
+        //         $set: {
+        //             balance: web3.toDecimal(web3.eth.balanceAt(address))
+        //         },
+        //         $unset: {
+        //             disabled: '',
+        //         }
+        //     });
+        // }
 
         // watch for new blocks
         var updateBalance = function (log) {
@@ -54,14 +53,10 @@ if(_.isArray(accounts)) {
             address: web3.eth.accounts
         }
         */
-        web3.eth.watch('pending').changed(updateBalance);
-        web3.eth.watch('chain').changed(updateBalance);
+        // web3.eth.watch('pending').changed(updateBalance);
+        // web3.eth.watch('chain').changed(updateBalance);
 
-        console.log(web3.eth.watch('chain').logs(function(item){console.log(item);}));
-
-        // look for balance changes
-        // Meteor.setInterval(function(){
-        // }, 1000);
+        // console.log(web3.eth.watch('chain').logs());
 
 
         // start WATCH for transactions
@@ -97,4 +92,78 @@ if(_.isArray(accounts)) {
     });
 
 }
+
+
+/**
+Observe Accounts, listen for new created accounts.
+
+@class Chats.find({}).observe
+@constructor
+*/
+Accounts.find({}).observe({
+    /**
+    This will observe the account creation, to send the contract transaction.
+
+    @method added
+    */
+    added: function(newDocument) {
+        var contract,
+            address;
+
+        if(!newDocument.address) {
+
+
+            address = web3.eth.transact({
+                from: newDocument.owner,
+                data: walletABICompiled,
+                gas: web3.fromDecimal(30400),
+                gasPrice: web3.eth.gasPrice
+            });
+
+
+            // add
+            Accounts.update(newDocument._id, {$set: {
+                address: address
+            }});
+
+            contract = web3.eth.contract(address, walletABI);
+
+
+            // WATCH for a block confirmation, so we can turn the account active
+            var watcher = web3.eth.watch(contract.Created, {}, {latest: -1});
+            watcher.changed(function(result) {
+
+                // remove the disabled state
+                Accounts.update(newDocument._id, {$unset: {
+                    disabled: ''
+                }});
+
+                watcher.uninstall();
+
+                console.log('Created', result);
+            });
+
+
+
+        } else {
+            address = newDocument.address;
+            contract = web3.eth.contract(address, walletABI);
+        }
+
+
+        // WATCH for incoming transactions
+        console.log('Watch for Deposit');
+        var watcher = web3.eth.watch(contract.Deposit);
+        watcher.changed(function(result) {
+            console.log('Deposit', result.args); //result.args.value.toNumber()
+
+            // update balance
+            Accounts.update(newDocument._id, {$set: {
+                balance: web3.toDecimal(web3.eth.balanceAt(address))
+            }});
+        });
+
+        // console.log('log:', web3.eth.logs({address: address}));
+    }
+});
 

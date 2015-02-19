@@ -172,6 +172,20 @@ Template['views_account_create'].events({
     */
     'click span[name="multisigSignees"] .simple-modal button': function(e){
         TemplateVar.set('multisigSignees',  $(e.currentTarget).data('value'));
+    },
+    /**
+    Create the account
+
+    @event click button[type="submit"]
+    */
+    'click button[type="submit"]': function(e, template){
+
+        Accounts.insert({
+            name: template.find('input[name="accountName"]').value,
+            balance: 0,
+            disabled: true
+        });
+
     }
 });
 

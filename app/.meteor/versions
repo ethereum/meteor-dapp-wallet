@@ -17,7 +17,7 @@ ddp@1.0.14
 deps@1.0.6
 ejson@1.0.5
 ethereum:elements@0.1.1
-ethereum:tools@0.0.6
+ethereum:tools@0.0.7
 fastclick@1.0.2
 follower-livedata@1.0.3
 frozeman:animation-helper@0.2.6

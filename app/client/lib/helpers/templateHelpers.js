@@ -82,6 +82,9 @@ Template.registerHelper('formatNumber', function(number, format){
     if(format instanceof Spacebars.kw)
         format = null;
 
+    if(number instanceof BigNumber)
+        number = number.toNumber();
+
     format = format || '0,0.0[0000]';
 
 

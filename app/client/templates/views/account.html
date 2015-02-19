@@ -4,11 +4,11 @@
 
         {{#with accountProperties}}
             
-            {{> dapp_identicon identity=_id}}
+            {{> dapp_identicon identity=address}}
                 
             <hgroup>
                 <h1><span>{{name}}</span></h1>
-                <h2>{{_id}}</h2>                
+                <h2>{{address}}</h2>                
             </hgroup>
             {{> elements_balance balance=balance changeUnit=true}}
         {{/with}}

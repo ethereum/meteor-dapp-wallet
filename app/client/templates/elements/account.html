@@ -1,9 +1,9 @@
 <template name="elements_account">
     {{#with account}}
-        <a href="{{pathFor route='account' account=_id}}" class="wallet-account {{#if disabled}}disabled{{/if}} {{#if ../main}}main{{/if}}">
+        <a href="{{pathFor route='account' account=address}}" class="wallet-account {{#if disabled}}disabled{{/if}} {{#if ../main}}main{{/if}}">
             {{#if ../main}}
                 <!-- <div class="account-pattern"> -->
-                    {{> dapp_identicon identity=_id class="dapp-small"}}
+                    {{> dapp_identicon identity=address class="dapp-small"}}
                 <!-- </div> -->
             {{else}}
                 <div class="account-pattern">
@@ -13,8 +13,8 @@
 
             <h3>{{name}}</h3>
             {{> elements_balance balance=balance}}
-            {{> elements_balance balance=balance pending=true}}
-            <span class="account-id">{{_id}}</span>
+            {{! > elements_balance balance=balance pending=true}}
+            <span class="account-id">{{address}}</span>
         </a>
     {{/with}}
 </template>
