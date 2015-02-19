@@ -148,14 +148,19 @@ Accounts.find({}).observe({
         } else {
             address = newDocument.address;
             contract = web3.eth.contract(address, walletABI);
+
+            // update balance on start
+            Accounts.update(newDocument._id, {$set: {
+                balance: web3.toDecimal(web3.eth.balanceAt(address))
+            }});
         }
 
 
         // WATCH for incoming transactions
         console.log('Watch for Deposit');
-        var watcher = web3.eth.watch(contract.Deposit);
+        var watcher = web3.eth.watch(contract.Deposit, {}, {latest: -1});
         watcher.changed(function(result) {
-            console.log('Deposit', result.args); //result.args.value.toNumber()
+            console.log('Deposit', result); //result.args.value.toNumber()
 
             // update balance
             Accounts.update(newDocument._id, {$set: {
