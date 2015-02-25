@@ -37,7 +37,10 @@ Template['elements_balance'].helpers({
     @method (convertedBalance)
     */
     'convertedBalance': function(){
-        return EthTools.fromWei(TemplateVar.get('balance'), LocalStore.get('etherUnit'));
+        var balance = TemplateVar.get('balance');
+
+        if(balance)
+            return EthTools.fromWei(TemplateVar.get('balance'), LocalStore.get('etherUnit')).toString(10);
     },
     /**
     Get the current balance and count it up/down to the new balance.
@@ -47,18 +50,23 @@ Template['elements_balance'].helpers({
     'getBalance': function(){
         var data = this,
             template = Template.instance(),
-            newBalance = (_.isFinite(this.balance)) ? Number(this.balance) : 0;
+            newBalance = (_.isFinite(this.balance)) ? this.balance : '0';
+
+        // transform to BigNumber
+        newBalance = new BigNumber(newBalance, 10);
+
+        // TODODODODO
 
         Meteor.clearInterval(template._intervalId);
 
         template._intervalId = Meteor.setInterval(function(){
-            var oldBalance = TemplateVar.get(template, 'balance'),
-                calcBalance = Math.floor((newBalance - oldBalance) / 10);
+            var oldBalance = TemplateVar.get(template, 'balance') || 0,
+                calcBalance = newBalance.minus(oldBalance).dividedBy(10).floor();
 
             if(oldBalance &&
-               oldBalance !== newBalance &&
-               (calcBalance > 10000000000 || (calcBalance < 0 && calcBalance < -10000000000)))
-                TemplateVar.set(template, 'balance', oldBalance + calcBalance);
+               !oldBalance.equals(newBalance) &&
+               (calcBalance.greaterThan(10000000000) || (calcBalance.lessThan(0) && calcBalance.lessThan(-10000000000))))
+                TemplateVar.set(template, 'balance', oldBalance.plus(calcBalance));
             else {
                 TemplateVar.set(template, 'balance', newBalance);
                 Meteor.clearInterval(template._intervalId);

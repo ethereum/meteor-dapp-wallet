@@ -22,14 +22,14 @@ if(_.isArray(accounts)) {
         //     Accounts.insert({
         //         _id: address,
         //         name: null,
-        //         balance: web3.toDecimal(web3.eth.balanceAt(address))
+        //         balance: web3.toDecimal(web3.eth.getBalance(address))
         //     });
 
         // // undisbale them and update balance
         // } else {
         //     Accounts.update(address, {
         //         $set: {
-        //             balance: web3.toDecimal(web3.eth.balanceAt(address))
+        //             balance: web3.toDecimal(web3.eth.getBalance(address))
         //         },
         //         $unset: {
         //             disabled: '',
@@ -42,7 +42,7 @@ if(_.isArray(accounts)) {
             console.log(log); //  {"address":"0x0000000000000000000000000000000000000000","data":"0x0000000000000000000000000000000000000000000000000000000000000000","number":0}
 
             Accounts.update(address, {$set: {
-                balance: web3.toDecimal(web3.eth.balanceAt(address))
+                balance: web3.toDecimal(web3.eth.getBalance(address))
             }});
         };
 
@@ -107,68 +107,65 @@ Accounts.find({}).observe({
     @method added
     */
     added: function(newDocument) {
-        var contract,
+        var Contract = web3.eth.contract(walletABI),
             address;
 
         if(!newDocument.address) {
 
 
-            address = web3.eth.transact({
+            address = web3.eth.sendTransaction({
                 from: newDocument.owner,
                 data: walletABICompiled,
-                gas: web3.fromDecimal(30400),
-                gasPrice: web3.eth.gasPrice
+                gas: 30400,
+                gasPrice: 10000000000000//web3.eth.gasPrice
+            }, function(){
+                console.log('contract READY');
             });
 
-
-            // add
+            // add address to account
             Accounts.update(newDocument._id, {$set: {
                 address: address
             }});
 
-            contract = web3.eth.contract(address, walletABI);
-
+            
+            var contractInstance = new Contract(address);
 
             // WATCH for a block confirmation, so we can turn the account active
-            var watcher = web3.eth.watch(contract.Created, {}, {latest: -1});
-            watcher.changed(function(result) {
+            // var filter = web3.eth.filter(contractInstance.Created, {}, {latest: -1});
+            contractInstance.Created().watch(function(result) {
 
                 // remove the disabled state
                 Accounts.update(newDocument._id, {$unset: {
                     disabled: ''
                 }});
 
-                watcher.uninstall();
-
-                console.log('Created', result);
+                contractInstance.Created().stopWatching();
             });
 
 
 
         } else {
             address = newDocument.address;
-            contract = web3.eth.contract(address, walletABI);
+            var contractInstance = new Contract(address);
 
             // update balance on start
             Accounts.update(newDocument._id, {$set: {
-                balance: web3.toDecimal(web3.eth.balanceAt(address))
+                balance: web3.eth.getBalance(address).toString(10)
             }});
         }
 
 
         // WATCH for incoming transactions
-        console.log('Watch for Deposit');
-        var watcher = web3.eth.watch(contract.Deposit, {}, {latest: -1});
-        watcher.changed(function(result) {
-            console.log('Deposit', result); //result.args.value.toNumber()
+        contractInstance.Deposit({}, {}).watch(function(result) {
+            console.log('Deposit', result.args.value.toNumber()); //result.args.value.toNumber()
 
             // update balance
             Accounts.update(newDocument._id, {$set: {
-                balance: web3.toDecimal(web3.eth.balanceAt(address))
+                balance: web3.eth.getBalance(address).toString(10)
             }});
         });
 
-        // console.log('log:', web3.eth.logs({address: address}));
+        console.log(contractInstance.Deposit({}, {}).get());
     }
 });
 

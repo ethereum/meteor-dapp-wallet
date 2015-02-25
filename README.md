@@ -2,8 +2,7 @@
 
 ## Development
 
-Start an eth node using the following,
-or open the http://localhost:3000 in *mist*, *mix* or *alethzero*
+Start an eth node open the http://localhost:3000 in *mist*, *mix* or *alethzero* or run a CPP node as follows:
 
     $ eth -j -b // for a mining node: $ eth -j -b -f -n no -m yes
 
