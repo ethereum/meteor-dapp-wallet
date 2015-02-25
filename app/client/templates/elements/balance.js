@@ -55,8 +55,6 @@ Template['elements_balance'].helpers({
         // transform to BigNumber
         newBalance = new BigNumber(newBalance, 10);
 
-        // TODODODODO
-
         Meteor.clearInterval(template._intervalId);
 
         template._intervalId = Meteor.setInterval(function(){
