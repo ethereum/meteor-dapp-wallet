@@ -53,7 +53,6 @@ var inputTypes = types.inputTypes();
 /// @returns bytes representation of input params
 var formatInput = function (inputs, params) {
     var bytes = "";
-    var padding = c.ETH_PADDING * 2;
 
     /// first we iterate in search for dynamic 
     inputs.forEach(function (input, index) {
@@ -110,6 +109,7 @@ var formatOutput = function (outs, output) {
     output = output.slice(dynamicPartLength);
 
     outs.forEach(function (out, i) {
+        /*jshint maxcomplexity:6 */
         var typeMatch = false;
         for (var j = 0; j < outputTypes.length && !typeMatch; j++) {
             typeMatch = outputTypes[j].type(outs[i].type);
@@ -296,7 +296,6 @@ var web3 = require('./web3');
 var abi = require('./abi');
 var utils = require('./utils');
 var eventImpl = require('./event');
-var filter = require('./filter');
 
 var exportNatspecGlobals = function (vars) {
     // it's used byt natspec.js
@@ -350,6 +349,7 @@ var addFunctionsToContract = function (contract, desc, address) {
         var typeName = utils.extractTypeName(method.name);
 
         var impl = function () {
+            /*jshint maxcomplexity:7 */
             var params = Array.prototype.slice.call(arguments);
             var signature = abi.signatureFromAscii(method.name);
             var parsed = inputParser[displayName][typeName].apply(null, params);
@@ -474,8 +474,8 @@ var addEventsToContract = function (contract, desc, address) {
 var contract = function (abi) {
 
     // return prototype
-    if(Object.prototype.toString.call(abi) === '[object Array]' && arguments.length === 1) {
-        return Contract.bind(this, abi);
+    if(abi instanceof Array && arguments.length === 1) {
+        return Contract.bind(null, abi);
 
     // deprecated: auto initiate contract
     } else {
@@ -513,7 +513,7 @@ function Contract(abi, address) {
 module.exports = contract;
 
 
-},{"./abi":1,"./event":6,"./filter":7,"./utils":15,"./web3":17}],4:[function(require,module,exports){
+},{"./abi":1,"./event":6,"./utils":15,"./web3":17}],4:[function(require,module,exports){
 /*
     This file is part of ethereum.js.
 
@@ -741,9 +741,9 @@ var getArgumentsObject = function (inputs, indexed, notIndexed) {
     return inputs.reduce(function (acc, current) {
         var value;
         if (current.indexed)
-            value = indexed.splice(0, 1)[0];
+            value = indexedCopy.splice(0, 1)[0];
         else
-            value = notIndexed.splice(0, 1)[0];
+            value = notIndexedCopy.splice(0, 1)[0];
 
         acc[current.name] = value;
         return acc;
@@ -886,6 +886,7 @@ var filter = function(options, implementation, formatter) {
     var watch = function(callback) {
         callbacks.push(callback);
     };
+
     var stopWatching = function() {
         implementation.stopPolling(filterId);
         implementation.uninstallFilter(filterId);
@@ -903,27 +904,27 @@ var filter = function(options, implementation, formatter) {
 
         // DEPRECATED methods
         changed:  function(){
-            console.warn('eth.watch().changed() is deprecated please use eth.filter().watch() instead.');
+            console.warn('watch().changed() is deprecated please use filter().watch() instead.');
             return watch.apply(this, arguments);
         },
         arrived:  function(){
-            console.warn('eth.watch().arrived() is deprecated please use eth.filter().watch() instead.');
+            console.warn('watch().arrived() is deprecated please use filter().watch() instead.');
             return watch.apply(this, arguments);
         },
         happened:  function(){
-            console.warn('eth.watch().happened() is deprecated please use eth.filter().watch() instead.');
+            console.warn('watch().happened() is deprecated please use filter().watch() instead.');
             return watch.apply(this, arguments);
         },
         uninstall: function(){
-            console.warn('eth.watch().uninstall() is deprecated please use eth.filter().stopWatching() instead.');
+            console.warn('watch().uninstall() is deprecated please use filter().stopWatching() instead.');
             return stopWatching.apply(this, arguments);
         },
         messages: function(){
-            console.warn('eth.watch().messages() is deprecated please use eth.filter().get() instead.');
+            console.warn('watch().messages() is deprecated please use filter().get() instead.');
             return get.apply(this, arguments);
         },
         logs: function(){
-            console.warn('eth.watch().logs() is deprecated please use eth.filter().get() instead.');
+            console.warn('watch().logs() is deprecated please use filter().get() instead.');
             return get.apply(this, arguments);
         }
     };
@@ -975,6 +976,7 @@ var padLeft = function (string, chars, sign) {
 /// If the value is floating point, round it down
 /// @returns right-aligned byte representation of int
 var formatInputInt = function (value) {
+    /*jshint maxcomplexity:7 */
     var padding = c.ETH_PADDING * 2;
     if (value instanceof BigNumber || typeof value === 'number') {
         if (typeof value === 'number')
@@ -1035,7 +1037,6 @@ var formatOutputInt = function (value) {
     }
     return new BigNumber(value, 16);
 };
-
 
 
 /// Formats big right-aligned input bytes to uint
@@ -1111,7 +1112,8 @@ var inputTransactionFormatter = function(options){
 
 
     // format the following options
-    ['gasPrice', 'value'].forEach(function(key){
+    /*jshint maxcomplexity:5 */
+    ['gasPrice', 'gas', 'value'].forEach(function(key){
 
         // if hex or string integer
         if(typeof options[key] === 'string') {
@@ -1122,16 +1124,13 @@ var inputTransactionFormatter = function(options){
 
         // if number
         } else if(typeof options[key] === 'number') {
-            options[key] = String(options[key]);//String(utils.fromDecimal(options[key]);
+            options[key] = utils.fromDecimal(options[key]);
 
         // if bignumber
         } else if(options[key] instanceof BigNumber) {
             options[key] = '0x'+ options[key].toString(16);
         }
     });
-
-    // format gas to number
-    options.gas = String(options.gas);//Number(options.gas);
 
 
     return options;
@@ -1144,19 +1143,10 @@ Formats the output of a transaction to its proper values
 */
 var outputTransactionFormatter = function(tx){
     // transform to number
-    tx.gas = Number(tx.gas);
+    tx.gas = utils.toDecimal(tx.gas);
 
-    // gasPrice to bignumber
-    if(typeof tx.gasPrice === 'string' && tx.gasPrice.indexOf('0x') === 0)
-        tx.gasPrice = new BigNumber(tx.gasPrice, 16);
-    else
-        tx.gasPrice = new BigNumber(tx.gasPrice.toString(10), 10);
-
-    // value to bignumber
-    if(typeof tx.value === 'string' && tx.value.indexOf('0x') === 0)
-        tx.value = new BigNumber(tx.value, 16);
-    else
-        tx.value = new BigNumber(tx.value.toString(10), 10);
+    tx.gasPrice = utils.toBigNumber(tx.gasPrice);
+    tx.value = utils.toBigNumber(tx.value);
 
     return tx;
 };
@@ -1168,38 +1158,17 @@ Formats the output of a block to its proper values
 @returns object
 */
 var outputBlockFormatter = function(block){
+
     // transform to number
-    block.gasLimit = Number(block.gasLimit);
-    block.gasUsed = Number(block.gasUsed);
-    block.size = Number(block.size);
-    block.timestamp = Number(block.timestamp);
-    block.number = Number(block.number);
+    block.gasLimit = utils.toDecimal(block.gasLimit);
+    block.gasUsed = utils.toDecimal(block.gasUsed);
+    block.size = utils.toDecimal(block.size);
+    block.timestamp = utils.toDecimal(block.timestamp);
+    block.number = utils.toDecimal(block.number);
 
-    // minGasPrice to bignumber
-    if(block.minGasPrice) {
-        if(typeof block.minGasPrice === 'string' && block.minGasPrice.indexOf('0x') === 0)
-            block.minGasPrice = new BigNumber(block.minGasPrice, 16);
-        else
-            block.minGasPrice = new BigNumber(block.minGasPrice.toString(10), 10);
-    }
-
-
-    // difficulty to bignumber
-    if(block.difficulty) {
-        if(typeof block.difficulty === 'string' && block.difficulty.indexOf('0x') === 0)
-            block.difficulty = new BigNumber(block.difficulty, 16);
-        else
-            block.difficulty = new BigNumber(block.difficulty.toString(10), 10);
-    }
-
-
-    // difficulty to bignumber
-    if(block.totalDifficulty) {
-        if(typeof block.totalDifficulty === 'string' && block.totalDifficulty.indexOf('0x') === 0)
-            block.totalDifficulty = new BigNumber(block.totalDifficulty, 16);
-        else
-            block.totalDifficulty = new BigNumber(block.totalDifficulty.toString(10), 10);
-    }
+    block.minGasPrice = utils.toBigNumber(block.minGasPrice);
+    block.difficulty = utils.toBigNumber(block.difficulty);
+    block.totalDifficulty = utils.toBigNumber(block.totalDifficulty);
 
     return block;
 };
@@ -1416,7 +1385,7 @@ var requestManager = function() {
     var provider;
 
     var send = function (data) {
-
+        /*jshint maxcomplexity: 6 */
 
         // format the input before sending
         if(typeof data.inputFormatter === 'function') {
@@ -1424,7 +1393,6 @@ var requestManager = function() {
                 return data.inputFormatter(item);
             });
         }
-
 
         var payload = jsonrpc.toPayload(data.method, data.params);
         
@@ -1442,6 +1410,7 @@ var requestManager = function() {
             return null;
         }
         
+        // format the output
         return (typeof data.outputFormatter === 'function') ? data.outputFormatter(result.result) : result.result;
     };
 
@@ -1449,9 +1418,11 @@ var requestManager = function() {
         provider = p;
     };
 
+    /*jshint maxparams:4 */
     var startPolling = function (data, pollId, callback, uninstall) {
         polls.push({data: data, id: pollId, callback: callback, uninstall: uninstall});
     };
+    /*jshint maxparams:3 */
 
     var stopPolling = function (pollId) {
         for (var i = polls.length; i--;) {
@@ -1646,6 +1617,26 @@ if ("build" !== 'build') {/*
     var BigNumber = require('bignumber.js'); // jshint ignore:line
 */}
 
+var unitMap = {
+    'wei':      '1',
+    'kwei':     '1000',
+    'ada':      '1000',
+    'mwei':     '1000000',
+    'babbage':  '1000000',
+    'gwei':     '1000000000',
+    'shannon':  '1000000000',
+    'szabo':    '1000000000000',
+    'finney':   '1000000000000000',
+    'ether':    '1000000000000000000',
+    'kether':   '1000000000000000000000',
+    'grand':    '1000000000000000000000',
+    'einstein': '1000000000000000000000',
+    'mether':   '1000000000000000000000000',
+    'gether':   '1000000000000000000000000000',
+    'tether':   '1000000000000000000000000000000'
+};
+
+
 /// Finds first index of array element matching pattern
 /// @param array
 /// @param callback pattern
@@ -1730,9 +1721,9 @@ var filterEvents = function (json) {
 /// used to transform value/string to eth string
 /// TODO: use BigNumber.js to parse int
 /// TODO: add tests for it!
+// DEPRECATED
 var toEth = function (str) {
-
-    console.warn('This method is deprecated please use eth.fromWei(number, unit) instead.');
+     /*jshint maxcomplexity:7 */
 
     var val = typeof str === "string" ? str.indexOf('0x') === 0 ? parseInt(str.substr(2), 16) : parseInt(str) : str;
     var unit = 0;
@@ -1758,6 +1749,11 @@ var toEth = function (str) {
 
 
 var toDecimal = function (val) {
+
+    // pass it through is its already a number
+    if(typeof val === 'number' || (typeof val === 'string' && val.indexOf('0x') === -1))
+        return val;
+
     // remove 0x and place 0, if it's required
     val = val.length > 2 ? val.substring(2) : "0";
     return (new BigNumber(val, 16).toString(10));
@@ -1790,59 +1786,30 @@ Possible units are:
 @return {String|Object} When given a BigNumber object it returns one as well, otherwise a number
 */
 var fromWei = function(number, unit) {
+    /*jshint maxcomplexity: 6 */
+    unit = unit.toLowerCase();
+
     var isBigNumber = true;
+
+    if(!unitMap[unit]) {
+        console.warn('This unit doesn\'t exists, please use the one of the following units' , unitMap);
+        return number;
+    }
 
     if(!number)
         return number;
 
-    if(typeof number === 'string' && number.indexOf('0x') === 0)
-        number = toDecimal(number);
+    if(typeof number === 'string' && number.indexOf('0x') === 0) {
+        isBigNumber = false;
+        number = new BigNumber(number, 16);
+    }
     
     if(!(number instanceof BigNumber)) {
         isBigNumber = false;
         number = new BigNumber(number.toString(10), 10); // toString to prevent errors, the user have to handle giving correct bignums themselves
     }
 
-
-    unit = unit.toLowerCase();
-
-    switch(unit) {
-        case 'kwei':
-        case 'ada':
-            number = number.dividedBy(1000);
-            break;
-        case 'mwei':
-        case 'babbage':
-            number = number.dividedBy(1000000);
-            break;
-        case 'gwei':
-        case 'schannon':
-            number = number.dividedBy(1000000000);
-            break;
-        case 'szabo':
-            number = number.dividedBy(1000000000000);
-            break;
-        case 'finney':
-            number = number.dividedBy(1000000000000000);
-            break;
-        case 'ether':
-            number = number.dividedBy(1000000000000000000);
-            break;
-        case 'kether':
-        case 'grand':
-        case 'einstein':
-            number = number.dividedBy(1000000000000000000000);
-            break;
-        case 'mether':
-            number = number.dividedBy(1000000000000000000000000);
-            break;
-        case 'gether':
-            number = number.dividedBy(1000000000000000000000000000);
-            break;
-        case 'tether':
-            number = number.dividedBy(1000000000000000000000000000000);
-            break;
-    }
+    number = number.dividedBy(new BigNumber(unitMap[unit], 10));
 
     return (isBigNumber) ? number : number.toString(10);
 };
@@ -1869,11 +1836,18 @@ Possible units are:
 @return {String|Object} When given a BigNumber object it returns one as well, otherwise a number
 */
 var toWei = function(number, unit) {
+    /*jshint maxcomplexity: 6 */
+    unit = unit.toLowerCase();
+
     var isBigNumber = true;
+
+    if(!unitMap[unit]) {
+        console.warn('This unit doesn\'t exists, please use the one of the following units' , unitMap);
+        return number;
+    }
 
     if(!number)
         return number;
-
 
     if(typeof number === 'string' && number.indexOf('0x') === 0) {
         isBigNumber = false;
@@ -1886,45 +1860,7 @@ var toWei = function(number, unit) {
     }
 
 
-    unit = unit.toLowerCase();
-
-    switch(unit) {
-        case 'kwei':
-        case 'ada':
-            number = number.times(1000);
-            break;
-        case 'mwei':
-        case 'babbage':
-            number = number.times(1000000);
-            break;
-        case 'gwei':
-        case 'schannon':
-            number = number.times(1000000000);
-            break;
-        case 'szabo':
-            number = number.times(1000000000000);
-            break;
-        case 'finney':
-            number = number.times(1000000000000000);
-            break;
-        case 'ether':
-            number = number.times(1000000000000000000);
-            break;
-        case 'kether':
-        case 'grand':
-        case 'einstein':
-            number = number.times(1000000000000000000000);
-            break;
-        case 'mether':
-            number = number.times(1000000000000000000000000);
-            break;
-        case 'gether':
-            number = number.times(1000000000000000000000000000);
-            break;
-        case 'tether':
-            number = number.times(1000000000000000000000000000000);
-            break;
-    }
+    number = number.times(new BigNumber(unitMap[unit], 10));
 
     return (isBigNumber) ? number : number.toString(10);
 };
@@ -1947,6 +1883,28 @@ var isAddress = function(address) {
 };
 
 
+/**
+Takes an input and transforms it into an bignumber
+
+@method toBigNumber
+@param {Number|String|BigNumber} a number, string, HEX string or BigNumber
+@return {Object} BigNumber
+*/
+var toBigNumber = function(number) {
+    if(number instanceof BigNumber)
+        return number;
+
+    if(number) {
+        if(typeof number === 'string' && number.indexOf('0x') === 0)
+            number = new BigNumber(number, 16);
+        else
+            number = new BigNumber(number.toString(10), 10);
+    }
+
+    return number;
+};
+
+
 module.exports = {
     findIndex: findIndex,
     toDecimal: toDecimal,
@@ -1960,6 +1918,7 @@ module.exports = {
     toEth: toEth,
     toWei: toWei,
     fromWei: fromWei,
+    toBigNumber: toBigNumber,
     isAddress: isAddress
 };
 
@@ -2040,10 +1999,6 @@ module.exports = {
  *   Gav Wood <g@ethdev.com>
  * @date 2014
  */
-
-if ("build" !== 'build') {/*
-    var BigNumber = require('bignumber.js');
-*/}
 
 var eth = require('./eth');
 var db = require('./db');
@@ -2135,12 +2090,14 @@ var setupProperties = function (obj, properties) {
     });
 };
 
+/*jshint maxparams:4 */
 var startPolling = function (method, id, callback, uninstall) {
     web3.manager.startPolling({
         method: method, 
         params: [id]
     }, id,  callback, uninstall); 
 };
+/*jshint maxparams:3 */
 
 var stopPolling = function (id) {
     web3.manager.stopPolling(id);
@@ -2183,8 +2140,17 @@ var web3 = {
     /// @returns hex representation (prefixed by 0x) of decimal value
     fromDecimal: utils.fromDecimal,
 
+    /// @returns a BigNumber object
+    toBigNumber: utils.toBigNumber,
+
+    // DEPRECATED
     /// used to transform value/string to eth string
-    toEth: utils.toEth,
+    toEth: function(str) {
+
+        console.warn('This method is deprecated please use eth.fromWei(BigNumberOrNumber, unit) instead.');
+
+        return utils.toEth(str);
+    },
 
     toWei: utils.toWei,
     fromWei: utils.fromWei,
@@ -2210,6 +2176,7 @@ var web3 = {
         /// @param eventParams is optional, this is an object with optional event eventParams params
         /// @param options is optional, this is an object with optional event options ('max'...)
         /// TODO: fix it, 4 params? no way
+        /*jshint maxparams:4 */
         filter: function (fil, eventParams, options, formatter) {
 
             // if its event, treat it differently
@@ -2223,6 +2190,7 @@ var web3 = {
             console.warn('eth.watch() is deprecated please use eth.filter() instead.');
             return this.filter(fil, eventParams, options, formatter);
         }
+        /*jshint maxparams:3 */
     },
 
     /// db object prototype
