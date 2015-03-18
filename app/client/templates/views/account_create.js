@@ -11,19 +11,19 @@ The account create template
 @constructor
 */
 
-Template['views_account_create'].created = function(){
+Template['views_account_create'].onCreated(function(){
     TemplateVar.set('multisigSignees', 4);      // number of owners of the account
     TemplateVar.set('multisigSignatures', 2);   // number of required signatures
 
     TemplateVar.set('selectedSection', 'multisig');
-};
+});
 
 
-Template['views_account_create'].rendered = function(){
+Template['views_account_create'].onRendered(function(){
     // focus the input
     this.$('input[name="accountName"]').focus();
 
-};
+});
 
 
 Template['views_account_create'].helpers({

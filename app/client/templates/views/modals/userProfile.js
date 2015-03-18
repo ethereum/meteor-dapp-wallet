@@ -16,12 +16,12 @@ Inititate the geo pattern.
 
 @method rendered
 */
-Template['view_modals_userProfile'].rendered = function(){
+Template['view_modals_userProfile'].onRendered(function(){
 
     // initiate the geo pattern
     var pattern = GeoPattern.generate(this.data.identity);
     this.$('.dapp-modal-header.dapp-pattern').css('background-image', pattern.toDataUrl());
-};
+});
 
 
 Template['view_modals_userProfile'].helpers({

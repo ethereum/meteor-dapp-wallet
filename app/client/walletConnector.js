@@ -107,8 +107,7 @@ Accounts.find({}).observe({
     @method added
     */
     added: function(newDocument) {
-        var Contract = web3.eth.contract(walletABI),
-            address;
+        var address;
 
         if(!newDocument.address) {
 
@@ -117,9 +116,7 @@ Accounts.find({}).observe({
                 from: newDocument.owner,
                 data: walletABICompiled,
                 gas: 30400,
-                gasPrice: 10000000000000//web3.eth.gasPrice
-            }, function(){
-                console.log('contract READY');
+                gasPrice: web3.eth.gasPrice
             });
 
             // add address to account
@@ -128,7 +125,7 @@ Accounts.find({}).observe({
             }});
 
             
-            var contractInstance = new Contract(address);
+            var contractInstance = new WalletContract(address);
 
             // WATCH for a block confirmation, so we can turn the account active
             // var filter = web3.eth.filter(contractInstance.Created, {}, {latest: -1});
@@ -146,7 +143,7 @@ Accounts.find({}).observe({
 
         } else {
             address = newDocument.address;
-            var contractInstance = new Contract(address);
+            var contractInstance = new WalletContract(address);
 
             // update balance on start
             Accounts.update(newDocument._id, {$set: {
@@ -157,7 +154,7 @@ Accounts.find({}).observe({
 
         // WATCH for incoming transactions
         contractInstance.Deposit({}, {}).watch(function(result) {
-            console.log('Deposit', result.args.value.toNumber()); //result.args.value.toNumber()
+            console.log('Deposit', result); //result.args.value.toNumber()
 
             // update balance
             Accounts.update(newDocument._id, {$set: {
@@ -165,7 +162,7 @@ Accounts.find({}).observe({
             }});
         });
 
-        console.log(contractInstance.Deposit({}, {}).get());
+        // console.log(contractInstance.Deposit({}, {}).get());
     }
 });
 

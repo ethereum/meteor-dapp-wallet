@@ -18,21 +18,21 @@ Calculates the gas price.
 @return {Number}
 */
 var calculateGasPrice = function(fee, ether){
-    var suggestedGasPrice = EthTools.fromWei(web3.eth.gasPrice, ether || LocalStore.get('etherUnit'));
+    var suggestedGasPrice = web3.fromWei(web3.eth.gasPrice, ether || LocalStore.get('etherUnit'));
     return 10000 * suggestedGasPrice * Math.pow(4, fee);
 }
 
 
-Template['views_send'].created = function(){
+Template['views_send'].onCreated(function(){
     // set the default fee
     TemplateVar.set('selectedFeeMultiplicator', 0);
 
     TemplateVar.set('amount', 0);
-};
+});
 
-Template['views_send'].rendered = function(){
+Template['views_send'].onRendered(function(){
     this.$('input[name="to"]').focus();
-};
+});
 
 
 Template['views_send'].helpers({
@@ -75,7 +75,7 @@ Template['views_send'].helpers({
     @method (amount)
     */
     'amount': function(){
-        var amount = EthTools.fromWei(TemplateVar.get('amount'), LocalStore.get('etherUnit'));
+        var amount = web3.fromWei(TemplateVar.get('amount'), LocalStore.get('etherUnit'));
         return (_.isFinite(amount))
             ? numeral(amount).format('0,0.[000000]') + ' '+ LocalStore.get('etherUnit')
             : 0 + ' '+ LocalStore.get('etherUnit');
@@ -86,7 +86,7 @@ Template['views_send'].helpers({
     @method (total)
     */
     'total': function(ether){
-        var amount = EthTools.fromWei(TemplateVar.get('amount'), ether || LocalStore.get('etherUnit'));
+        var amount = web3.fromWei(TemplateVar.get('amount'), ether || LocalStore.get('etherUnit'));
         if(_.isFinite(TemplateVar.get('selectedFeeMultiplicator')))
             return numeral((amount || 0) + calculateGasPrice(TemplateVar.get('selectedFeeMultiplicator'), ether)).format('0,0.[000000]');
     },
@@ -116,7 +116,7 @@ Template['views_send'].events({
     @event keyup input[name="amount"], change input[name="amount"], input input[name="amount"]
     */
     'keyup input[name="amount"], change input[name="amount"], input input[name="amount"]': function(e){
-        TemplateVar.set('amount', EthTools.toWei(Number(e.currentTarget.value.replace(',','.')), LocalStore.get('etherUnit')));
+        TemplateVar.set('amount', web3.toWei(Number(e.currentTarget.value.replace(',','.')), LocalStore.get('etherUnit')));
     },
     /**
     Change the selected fee

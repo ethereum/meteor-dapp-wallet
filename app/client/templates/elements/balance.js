@@ -40,7 +40,7 @@ Template['elements_balance'].helpers({
         var balance = TemplateVar.get('balance');
 
         if(balance)
-            return EthTools.fromWei(TemplateVar.get('balance'), LocalStore.get('etherUnit')).toString(10);
+            return web3.fromWei(TemplateVar.get('balance'), LocalStore.get('etherUnit')).toString(10);
     },
     /**
     Get the current balance and count it up/down to the new balance.

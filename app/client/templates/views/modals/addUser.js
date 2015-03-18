@@ -11,9 +11,9 @@ The add user template
 @constructor
 */
 
-Template['view_modals_addUser'].created = function(){
+Template['view_modals_addUser'].onCreated(function(){
     TemplateVar.set('invitedUsers', []);
-};
+});
 
 
 Template['view_modals_addUser'].helpers({
