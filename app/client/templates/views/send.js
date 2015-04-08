@@ -19,7 +19,7 @@ Calculates the gas price.
 */
 var calculateGasPrice = function(fee, ether){
     var suggestedGasPrice = web3.fromWei(web3.eth.gasPrice, ether || LocalStore.get('etherUnit'));
-    return 10000 * suggestedGasPrice * Math.pow(4, fee);
+    return suggestedGasPrice.times(10000).times(new BigNumber(2).toPower(fee));
 }
 
 
@@ -67,7 +67,7 @@ Template['views_send'].helpers({
     */
     'fee': function(){
         if(_.isFinite(TemplateVar.get('selectedFeeMultiplicator')))
-            return numeral(calculateGasPrice(TemplateVar.get('selectedFeeMultiplicator'))).format('0,0.[000000]');
+            return numeral(calculateGasPrice(TemplateVar.get('selectedFeeMultiplicator')).toString(10)).format('0,0.[000000000000]');
     },
     /**
     Return the current sepecified amount (finney)
@@ -86,9 +86,9 @@ Template['views_send'].helpers({
     @method (total)
     */
     'total': function(ether){
-        var amount = web3.fromWei(TemplateVar.get('amount'), ether || LocalStore.get('etherUnit'));
+        var amount = web3.fromWei(new BigNumber(TemplateVar.get('amount') || 0, 10), ether || LocalStore.get('etherUnit'));
         if(_.isFinite(TemplateVar.get('selectedFeeMultiplicator')))
-            return numeral((amount || 0) + calculateGasPrice(TemplateVar.get('selectedFeeMultiplicator'), ether)).format('0,0.[000000]');
+            return numeral(calculateGasPrice(TemplateVar.get('selectedFeeMultiplicator'), ether || LocalStore.get('etherUnit')).plus(amount).toString(10)).format('0,0.[000000000000]');
     },
     /**
     Returns the right time text for the "sendText".
@@ -116,7 +116,7 @@ Template['views_send'].events({
     @event keyup input[name="amount"], change input[name="amount"], input input[name="amount"]
     */
     'keyup input[name="amount"], change input[name="amount"], input input[name="amount"]': function(e){
-        TemplateVar.set('amount', web3.toWei(Number(e.currentTarget.value.replace(',','.')), LocalStore.get('etherUnit')));
+        TemplateVar.set('amount', web3.toWei(e.currentTarget.value.replace(',','.'), LocalStore.get('etherUnit')));
     },
     /**
     Change the selected fee
