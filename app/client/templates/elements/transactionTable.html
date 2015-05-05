@@ -1,0 +1,53 @@
+<template name="elements_transactions_table">
+    <table class="dapp-zebra">
+        <thead>
+            <tr>
+                <td class="time">{{i18n "wallet.transactions.time"}}</td>
+                <td class="transaction-amount">{{i18n "wallet.transactions.amount"}}</td>
+                <td>{{i18n "wallet.transactions.from"}}</td>
+                {{#if showTo}}
+                    <td>{{i18n "wallet.transactions.to"}}</td>
+                {{/if}}
+                <!-- <td>{{i18n "wallet.transactions.confirmations"}}</td> -->
+            </tr>
+        </thead>
+        <tbody>
+            {{#each items}}
+                {{> elements_transactions_row}}
+            {{/each}}
+        </tbody>
+    </table>
+</template>
+
+<template name="elements_transactions_row">
+    <tr>
+        <td class="time" title="{{formatTime timestamp 'lll'}}">
+            {{#with unConfirmed}}
+                <div class="dapp-progress">
+                    <div class="dapp-bar" style="width: {{percent}}%;"></div>
+                    <span>{{confirmations}} {{i18n "commonWords.of"}} {{totalConfirmations}} {{i18n "wallet.transactions.confirmations"}}</span>
+                </div>
+            {{else}}
+                {{formatTime timestamp "fromNow"}}
+            {{/with}}
+        </td>
+        <td class="transaction-amount {{#if $gte value 0}}plus{{else}}minus{{/if}}">
+            {{formatBalance value '0,0.00[000000]'}}
+        </td>
+        <td class="account-name">
+            <span>{{from}}</span>
+        </td>
+        {{#if ../showTo}}
+            {{#with account}}
+                <td class="account-name">
+                    {{> dapp_identicon identity=address class="dapp-tiny"}} <a href="{{pathFor route='account' account=address}}">{{name}}</a>
+                </td>
+            {{/with}}
+        {{/if}}
+        <!-- <td class="confirmations">
+        </td> -->
+        <!-- <td class="transaction-purpose">
+            <span>Birthday gift</span>
+        </td> -->
+    </tr>
+</template>

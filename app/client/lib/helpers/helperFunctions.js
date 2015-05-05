@@ -199,3 +199,30 @@ Helpers.formatTime = function(time, format) { //parameters
     } else
         return '';
 };
+
+
+/**
+Formats a given number
+
+    Helpers.formatNumber(10000, "0.0[000]")
+
+@method formatNumber
+@param {Number|String|BigNumber} number the number to format
+@param {String} format           the format string e.g. "0.0[000]" see http://numeraljs.com for more.
+@return {String} The formated time
+**/
+Helpers.formatNumber = function(number, format){
+    if(format instanceof Spacebars.kw)
+        format = null;
+
+    if(number instanceof BigNumber)
+        number = number.toString(10);
+
+    format = format || '0,0.0[0000]';
+
+    if(!_.isFinite(number))
+        number = numeral().unformat(number);
+
+    if(_.isFinite(number))
+        return numeral(number).format(format);
+}

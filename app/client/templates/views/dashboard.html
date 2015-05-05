@@ -68,63 +68,6 @@
 
         <h2>Latest transactions</h2>
 
-        <table>
-            <tbody>
-                <tr>
-                    <td class="transaction-amount plus">200 µΞ</td>
-                    <td class="account-name">
-                        <span>alexvandesande.eth</span>
-                    </td>
-                    <td class="transaction-purpose">
-                        <span>Birthday gift</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="transaction-amount plus">2 200 µΞ</td>
-                    <td class="account-name">
-                        <span>alexvandesande.eth</span>
-                    </td>
-                    <td class="transaction-purpose">
-                        <span>Birthday gift</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="transaction-amount minus">-123 µΞ</td>
-                    <td class="account-name">
-                        <span>alexvandesande.eth</span>
-                    </td>
-                    <td class="transaction-purpose">
-                        <span>Birthday gift</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="transaction-amount plus">533 µΞ</td>
-                    <td class="account-name">
-                        <span>alexvandesande.eth</span>
-                    </td>
-                    <td class="transaction-purpose">
-                        <span>Birthday gift</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="transaction-amount plus">24 566 µΞ</td>
-                    <td class="account-name">
-                        <span>alexvandesande.eth</span>
-                    </td>
-                    <td class="transaction-purpose">
-                        <span>Birthday gift</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="transaction-amount plus">4200 µΞ</td>
-                    <td class="account-name">
-                        <span>alexvandesande.eth</span>
-                    </td>
-                    <td class="transaction-purpose">
-                        <span>Birthday gift</span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        {{> elements_transactions_table items=allTransactions showTo=true}}
     </div>
 </template>

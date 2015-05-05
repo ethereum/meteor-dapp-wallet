@@ -78,20 +78,21 @@ Formats a number.
 @param {String} format       the format string
 @return {String} The formatted number
 **/
-Template.registerHelper('formatNumber', function(number, format){
-    if(format instanceof Spacebars.kw)
-        format = null;
-
-    if(number instanceof BigNumber)
-        number = number.toNumber();
-
-    format = format || '0,0.0[0000]';
+Template.registerHelper('formatNumber', Helpers.formatNumber);
 
 
-    if(!_.isFinite(number))
-        number = numeral().unformat(number);
+/**
+Formats a number.
 
-    if(_.isFinite(number))
-        return numeral(number).format(format);
+    {{formatBalance myNumber "0,0.0[0000]"}}
+
+@method (formatBalance)
+@param {String} number
+@param {String} format       the format string
+@return {String} The formatted number
+**/
+Template.registerHelper('formatBalance', function(number, format){
+    number = web3.fromWei(number, LocalStore.get('etherUnit'));
+
+    return Helpers.formatNumber(number, format) +' '+ LocalStore.get('etherUnit');
 });
-

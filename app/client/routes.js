@@ -25,6 +25,10 @@ Router.configure({
     }
 });
 
+var scrollTop = function(){
+    $(window).scrollTop(0);
+    this.next();
+}
 
 // ROUTES
 
@@ -70,10 +74,9 @@ The account route.
 Router.route('/account/:account', {
     template: 'views_account',
     name: 'account',
+    onBeforeAction: scrollTop,
     data: function() {
-        return {
-            account: this.params.account
-        };
+        return Accounts.findOne({address: this.params.account});
     }
 });
 Router.route('/account/:account/profile', {

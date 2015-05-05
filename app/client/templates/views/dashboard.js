@@ -21,6 +21,14 @@ Template['views_dashboard'].helpers({
     'accounts': function(){
         return Accounts.find({});
     },
+    /**
+    Get all transactions
+
+    @method (allTransactions)
+    */
+    'allTransactions': function(){
+        return Transactions.find({}, {sort: {timestamp: -1}});
+    },
 });
 
 

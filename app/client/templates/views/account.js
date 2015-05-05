@@ -15,20 +15,20 @@ The template to display account information.
 
 Template['views_account'].helpers({
     /**
-    Gets the currents account properties
-
-    @method (accountProperties)
-    */
-    'accountProperties': function(){
-        return Accounts.findOne({address: this.account});
-    },
-    /**
     Get the name
 
     @method (name)
     */
     'name': function(){
         return this.name || TAPi18n.__('wallet.accounts.defaultName');
+    },
+    /**
+    Lists the transactions belonging to this account
+
+    @method (transactions)
+    */
+    'transactions': function(){
+        return Transactions.find({_id: {$in: this.transactions}}, {sort: {timestamp: -1}});
     }
 });
 

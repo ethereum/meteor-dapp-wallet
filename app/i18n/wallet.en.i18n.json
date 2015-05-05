@@ -14,6 +14,14 @@
             "accountTitle": "Choose an account to deposit",
             "defaultName": "Unnamed account"
         },
+        "transactions": {
+            "time": "Time",
+            "from": "From",
+            "to": "To",
+            "amount": "Amount",
+            "confirmations": "Confirmations",
+            "unconfirmed": "Unconfirmed"
+        },
         "newAccount": {
             "title": "New <strong>Account</strong>",
             "accountName": "Account name",

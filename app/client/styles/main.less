@@ -134,8 +134,11 @@ table {
     td {
         text-align: center;
 
+        &.time {
+            text-align: left;
+            padding-left: @defaultMargin;
+        }
         &.transaction-amount {
-            width: 80px;
             text-align: right;
 
             &.plus {
@@ -146,7 +149,6 @@ table {
             }
         }
         &.account-name {
-            width: 200px;
             font-style: italic;
             color: @colorTextSecondary;
         }
@@ -169,6 +171,22 @@ table {
             button.reject {
                 background-color: @colorError;
                 border-color: darken(@colorError, 10%);
+            }
+        }
+
+        .dapp-identicon {
+            position: absolute;
+            margin-left: -@gridWidth;
+        }
+
+        .dapp-progress {
+            margin: -@defaultMargin + 2px -@defaultMargin;
+            height: @gridHeight + @defaultMargin - 6px;
+            border: 0;
+
+            > span {
+                line-height: @gridHeight + @defaultMargin - 6px;
+                font-size: 0.8em;
             }
         }
     }
