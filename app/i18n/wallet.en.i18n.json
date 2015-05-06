@@ -12,7 +12,8 @@
         "accounts": {
             "title": "<strong>Account</strong> Overview",
             "accountTitle": "Choose an account to deposit",
-            "defaultName": "Unnamed account"
+            "defaultName": "Unnamed account",
+            "creating": "Creating..."
         },
         "transactions": {
             "latest": "Latest transactions",

@@ -12,8 +12,13 @@
             {{/if}}
 
             <h3>{{name}}</h3>
-            {{> elements_balance balance=balance}}
-            {{! > elements_balance balance=balance pending=true}}
+
+            {{#unless disabled}}
+                {{> elements_balance balance=balance}}
+                {{! > elements_balance balance=balance pending=true}}
+            {{else}}
+                <span>{{i18n "wallet.accounts.creating"}}</span>
+            {{/unless}}
             <span class="account-id">{{address}}</span>
         </a>
     {{/with}}

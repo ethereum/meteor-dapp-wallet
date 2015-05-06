@@ -45,19 +45,23 @@ Template['elements_transactions_table'].helpers({
     */
     'items': function(){
         var template = Template.instance(),
-            searchQuery = TemplateVar.get('search');
+            searchQuery = TemplateVar.get('search'),
+            items = this.items;
 
         // if search
         if(searchQuery) {
             var pattern = new RegExp('^.*'+ searchQuery.replace(/ +/g,'.*') +'.*$','i');
-            this.items = this.items.collection.find({$and: [template._properties.origSelector, {$or: [{dateString: {$regex: pattern }}, {value: {$regex: pattern }}, {from: {$regex: pattern }}]}]}, {sort: {timestamp: -1}});
+            items = this.items.collection.find({$and: [template._properties.origSelector, {$or: [{dateString: {$regex: pattern }}, {value: {$regex: pattern }}, {from: {$regex: pattern }}]}]}, {sort: {timestamp: -1}});
         } else
-            this.items = this.items.collection.find(template._properties.origSelector, {sort: {timestamp: -1}});
+            items = this.items.collection.find(template._properties.origSelector, {sort: {timestamp: -1}});
 
         // set limit
-        this.items.limit = TemplateVar.get('limit');
+        items.limit = TemplateVar.get('limit');
 
-        return this.items.fetch(); // need fetch or throws an error
+        // TODO, doesn't recount
+        console.log(items.count());
+
+        return items.fetch(); // need fetch or throws an error
     },
     /**
     Check if there are more transactions to load

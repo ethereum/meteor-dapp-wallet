@@ -127,34 +127,47 @@ Accounts.find({}).observe({
     */
     added: function(newDocument) {
         var address,
+            contractInstance,
             blockToCheckBack = 1000;
 
         // DEPLOYED NEW CONTRACT
         if(!newDocument.address) {
 
-            var contractInstance = new WalletContract({
-                from: newDocument.owner,
-                data: walletABICompiled,
-                gas: 500000,
-                gasPrice: web3.eth.gasPrice
-            });
+            try {
+                contractInstance = new WalletContract({
+                    from: newDocument.owner,
+                    data: walletABICompiled,
+                    gas: 1500000,
+                    gasPrice: web3.eth.gasPrice
+                });
+                address = contractInstance.address;
 
-            // add address to account
-            Accounts.update(newDocument._id, {$set: {
-                address: contractInstance.address
-            }});
+                // add address to account
+                Accounts.update(newDocument._id, {$set: {
+                    address: address
+                }});
+                
+            } catch(e){
+                console.error(e);
+
+                // remove account, fi something failed
+                Accounts.remove(newDocument._id);
+            }
 
 
         // USE DEPLOYED CONTRACT
         } else {
             address = newDocument.address;
-            var contractInstance = new WalletContract(address);
+            contractInstance = new WalletContract(address);
 
             // update balance on start
             Accounts.update(newDocument._id, {$set: {
                 balance: web3.eth.getBalance(address).toString(10)
             }});
         }
+
+        if(!contractInstance)
+            return;
 
         // SETUP FILTERS
 
@@ -179,7 +192,9 @@ Accounts.find({}).observe({
 
         // WATCH for a block confirmation, so we can turn the account active
         if(newDocument.disabled) {
+            console.log('Checkin Created for '+ address +' from block #', lastBlock);
             contractInstance.Created({},{fromBlock: lastBlock, toBlock: 'latest'}).watch(function(error, result) {
+                console.log('Contract created on '+ address);
 
                 if(!error) {
                     // remove the disabled state

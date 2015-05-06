@@ -66,8 +66,15 @@
             </tbody>
         </table>
 
-        <h2>{{i18n 'wallet.transactions.latest'}}</h2>
 
-        {{> elements_transactions_table items=allTransactions showTo=true limit=10}}
+        {{#if allTransactions.count}}
+            <h2>{{i18n 'wallet.transactions.latest'}}</h2>
+
+            {{> elements_transactions_table items=allTransactions showTo=true limit=10}}
+
+        {{else}}
+
+            <h2>{{i18n 'wallet.transactions.none'}}</h2>
+        {{/if}}
     </div>
 </template>
