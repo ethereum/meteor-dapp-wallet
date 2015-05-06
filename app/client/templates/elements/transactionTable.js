@@ -30,7 +30,7 @@ var defaultLimit = 20;
 
 Template['elements_transactions_table'].onCreated(function(){
     this._properties = {
-        origSelector: this.data.items.matcher._selector
+        cursor: {}
     };
 
     TemplateVar.set('limit', this.data.limit || defaultLimit);
@@ -46,22 +46,16 @@ Template['elements_transactions_table'].helpers({
     'items': function(){
         var template = Template.instance(),
             searchQuery = TemplateVar.get('search'),
-            items = this.items;
+            selector = this.transactionIds ? {_id: {$in: this.transactionIds}} : {};
 
         // if search
         if(searchQuery) {
             var pattern = new RegExp('^.*'+ searchQuery.replace(/ +/g,'.*') +'.*$','i');
-            items = this.items.collection.find({$and: [template._properties.origSelector, {$or: [{dateString: {$regex: pattern }}, {value: {$regex: pattern }}, {from: {$regex: pattern }}]}]}, {sort: {timestamp: -1}});
+            template._properties.cursor = Transactions.find({$and: [selector, {$or: [{dateString: {$regex: pattern }}, {value: {$regex: pattern }}, {from: {$regex: pattern }}]}]}, {sort: {timestamp: -1}, limit: TemplateVar.get('limit')});
         } else
-            items = this.items.collection.find(template._properties.origSelector, {sort: {timestamp: -1}});
+            template._properties.cursor = Transactions.find(selector, {sort: {timestamp: -1}, limit: TemplateVar.get('limit')});
 
-        // set limit
-        items.limit = TemplateVar.get('limit');
-
-        // TODO, doesn't recount
-        console.log(items.count());
-
-        return items.fetch(); // need fetch or throws an error
+        return template._properties.cursor.fetch(); // need fetch or throws an error
     },
     /**
     Check if there are more transactions to load
@@ -70,11 +64,13 @@ Template['elements_transactions_table'].helpers({
     @return {Boolean}
     */
     'hasMore': function(){
+        var template = Template.instance();
+
         // make reactive to the search as well
         TemplateVar.get('search');
 
-        this.items.limit = null;
-        return (this.items.count() > TemplateVar.get('limit'));
+        template._properties.cursor.limit = null;
+        return (template._properties.cursor.count() > TemplateVar.get('limit'));
     }
 });
 

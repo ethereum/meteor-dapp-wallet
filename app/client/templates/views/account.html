@@ -22,7 +22,7 @@
 
             <h2>{{i18n 'wallet.transactions.latest'}}</h2>
 
-            {{> elements_transactions_table items=transactions}}
+            {{> elements_transactions_table transactionIds=transactions}}
         {{else}}
 
             <h2>{{i18n 'wallet.transactions.none'}}</h2>

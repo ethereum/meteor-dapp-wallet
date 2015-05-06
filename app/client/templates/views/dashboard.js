@@ -27,7 +27,7 @@ Template['views_dashboard'].helpers({
     @method (allTransactions)
     */
     'allTransactions': function(){
-        return Transactions.find({}, {sort: {timestamp: -1}});
+        return Transactions.find({}, {sort: {timestamp: -1}}).count();
     },
 });
 

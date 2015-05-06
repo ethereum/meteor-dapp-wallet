@@ -138,10 +138,9 @@ a.wallet-account {
 
 table {
     td {
-        text-align: center;
+        text-align: left;
 
         &.time {
-            text-align: left;
             padding-left: @defaultMargin;
             cursor: help;
         }
@@ -160,7 +159,6 @@ table {
             color: @colorTextSecondary;
         }
         &.transaction-purpose {
-            text-align: left;
             font-weight: 400;
         }
         &.button {
@@ -195,6 +193,11 @@ table {
                 line-height: @gridHeight + @defaultMargin - 6px;
                 font-size: 0.8em;
             }
+        }
+
+        button.show-more {
+            width: 100%;
+            text-align: center;
         }
     }
 }

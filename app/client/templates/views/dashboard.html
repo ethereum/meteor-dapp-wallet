@@ -67,10 +67,10 @@
         </table>
 
 
-        {{#if allTransactions.count}}
+        {{#if allTransactions}}
             <h2>{{i18n 'wallet.transactions.latest'}}</h2>
 
-            {{> elements_transactions_table items=allTransactions showTo=true limit=10}}
+            {{> elements_transactions_table showTo=true limit=10}}
 
         {{else}}
 

@@ -26,15 +26,6 @@ Template['views_account'].helpers({
     */
     'name': function(){
         return this.name || TAPi18n.__('wallet.accounts.defaultName');
-    },
-    /**
-    Lists the transactions belonging to this account
-
-    @method (transactions)
-    */
-    'transactions': function(){
-        if(this.transactions)
-            return Transactions.find({_id: {$in: this.transactions}}, {sort: {timestamp: -1}});
     }
 });
 
