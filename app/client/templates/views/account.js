@@ -12,6 +12,11 @@ The template to display account information.
 */
 
 
+Template['views_account'].onRendered(function(){
+    var qrcodesvg = new Qrcodesvg( this.data.address, 'qrcode', 150, {"ecclevel" : 1});
+    qrcodesvg.draw({"method": "classic", "fill-colors":["#555","#555","#666"]}, {"stroke-width":1});
+});
+
 
 Template['views_account'].helpers({
     /**
@@ -28,17 +33,45 @@ Template['views_account'].helpers({
     @method (transactions)
     */
     'transactions': function(){
-        return Transactions.find({_id: {$in: this.transactions}}, {sort: {timestamp: -1}});
+        if(this.transactions)
+            return Transactions.find({_id: {$in: this.transactions}}, {sort: {timestamp: -1}});
     }
 });
 
 Template['views_account'].events({
     /**
-    Select the current section, based on the radio inputs value.
+    Clicking the name, will make it editable
 
-    @event change input[type="radio"]
+    @event click .edit-name
     */
-    // 'change input[type="radio"]': function(e){
-    //     TemplateVar.set('selectedSection', e.currentTarget.value);
-    // }
+    'click .edit-name': function(e){
+        // make it editable
+        $(e.currentTarget).attr('contenteditable','true');
+    },
+    /**
+    Prevent enter
+
+    @event keypress .edit-name
+    */
+    'keypress .edit-name': function(e){
+        if(e.keyCode === 13)
+            e.preventDefault();
+    },
+    /**
+    Bluring the name, will save it
+
+    @event blur .edit-name, keyup .edit-name
+    */
+    'blur .edit-name, keyup .edit-name': function(e){
+        if(!e.keyCode || e.keyCode === 13) {
+
+            // Save new name
+            Accounts.update(this._id, {$set: {
+                name: $(e.currentTarget).text()
+            }});
+
+            // make it non-editable
+            $(e.currentTarget).attr('contenteditable', null);
+        }
+    }
 });

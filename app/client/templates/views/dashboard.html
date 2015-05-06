@@ -66,8 +66,8 @@
             </tbody>
         </table>
 
-        <h2>Latest transactions</h2>
+        <h2>{{i18n 'wallet.transactions.latest'}}</h2>
 
-        {{> elements_transactions_table items=allTransactions showTo=true}}
+        {{> elements_transactions_table items=allTransactions showTo=true limit=10}}
     </div>
 </template>

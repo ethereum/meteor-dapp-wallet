@@ -4,14 +4,10 @@
 
 // contains blockchain meta data
 Blockchain = new Mongo.Collection('blockchain', {connection: null});
-Blockchain.insert({
-    blockNumber: web3.eth.blockNumber
-});
 
 // Contains the accounts
 Accounts = new Mongo.Collection('accounts', {connection: null});
 new PersistentMinimongo(Accounts);
-
 
 // Contains the transactions
 Transactions = new Mongo.Collection('transactions', {connection: null});

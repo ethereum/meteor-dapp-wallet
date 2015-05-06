@@ -15,12 +15,16 @@
             "defaultName": "Unnamed account"
         },
         "transactions": {
+            "latest": "Latest transactions",
+            "none": "No transactions yet",
             "time": "Time",
             "from": "From",
             "to": "To",
             "amount": "Amount",
             "confirmations": "Confirmations",
-            "unconfirmed": "Unconfirmed"
+            "unconfirmed": "Unconfirmed",
+            "showMore": "Show More",
+            "filter": "Filter transactions"
         },
         "newAccount": {
             "title": "New <strong>Account</strong>",

@@ -33,6 +33,12 @@
     }
 }
 
+#qrcode {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
 .account-balance {
 
     span {
@@ -137,6 +143,7 @@ table {
         &.time {
             text-align: left;
             padding-left: @defaultMargin;
+            cursor: help;
         }
         &.transaction-amount {
             text-align: right;
@@ -203,6 +210,28 @@ table {
 
     h1 {
         margin-bottom: 0;
+
+        .edit-name {
+            outline: 0;
+
+            + .edit-icon {
+                display: none;
+                position: absolute;
+                top: 2px;
+                margin-left: 5px;
+                font-size: 0.4em;
+            }
+
+            &:hover, &:focus {
+                + .edit-icon {
+                    display: inline-block;
+                }
+            }
+
+            &[contenteditable="true"] {
+                border-bottom: 2px dotted @colorTextTertiary;
+            }
+        }
 
         + h2 {
             padding: 0;

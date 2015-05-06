@@ -5,19 +5,27 @@
         {{> dapp_identicon identity=address}}
             
         <hgroup>
-            <h1><span>{{name}}</span></h1>
+            <h1><span class="edit-name">{{name}}</span> <i class="edit-icon icon-pencil"></i></h1>
             <h2>{{address}}</h2>                
         </hgroup>
         {{> elements_balance balance=balance changeUnit=true}}
 
         {{! > elements_account account=account main=true}}
 
+        <div id="qrcode"></div>
+
         <!-- <h3>{{account}}</h3> -->
 
         <div class="dapp-clear-fix"></div>
 
-        <h2>Latest transactions</h2>
+        {{#if transactions}}
 
-        {{> elements_transactions_table items=transactions}}
+            <h2>{{i18n 'wallet.transactions.latest'}}</h2>
+
+            {{> elements_transactions_table items=transactions}}
+        {{else}}
+
+            <h2>{{i18n 'wallet.transactions.none'}}</h2>
+        {{/if}}
     </div>
 </template>

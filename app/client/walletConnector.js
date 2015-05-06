@@ -1,6 +1,10 @@
 // var timer = 0,
 //     timerId = null;
 
+Blockchain.insert({
+    blockNumber: web3.eth.blockNumber
+});
+
 // GET the latest blockchain information
 web3.eth.filter('latest').watch(function(e, res){
     if(!e) {
@@ -133,6 +137,7 @@ Accounts.find({}).observe({
         var address,
             blockToCheckBack = 1000;
 
+        // DEPLOYED NEW CONTRACT
         if(!newDocument.address) {
 
             var contractInstance = new WalletContract({
@@ -148,6 +153,7 @@ Accounts.find({}).observe({
             }});
 
 
+        // USE DEPLOYED CONTRACT
         } else {
             address = newDocument.address;
             var contractInstance = new WalletContract(address);
@@ -158,12 +164,16 @@ Accounts.find({}).observe({
             }});
         }
 
+        // SETUP FILTERS
+
         // get BlockNumber to look from
         var lastBlock = (lastTx = Transactions.findOne({account: newDocument._id}, {sort: {blockNumber: -1}}))
             ? lastTx.blockNumber - blockToCheckBack // check the last 1000 blocks again, to be sure we are not on a fork
             : 0;
+        if(lastBlock < 0)
+            lastBlock = 0;
 
-        console.log('Checkin Deposits from block #', lastBlock);
+        console.log('Checkin Deposits for '+ address +' from block #', lastBlock);
 
         // delete the last tx until block -1000
         // var lastTx = Transactions.findOne({account: newDocument._id}, {sort: {blockNumber: -1}});
@@ -194,7 +204,7 @@ Accounts.find({}).observe({
         // WATCH for incoming transactions
         contractInstance.Deposit({}, {fromBlock: lastBlock, toBlock: 'latest'}).watch(function(error, result) {
             if(!error) {
-                console.log('Deposit in block: #'+ result.blockNumber, result.args.value.toNumber());
+                console.log('Deposit for '+ address +' arrived in block: #'+ result.blockNumber, result.args.value.toNumber());
 
                 txId = result.transactionHash.replace('0x','').substr(0,10); //String(result.blockNumber) + String(result.transactionIndex) + result.args.value.toString(10).substr(0,10);
                 var block = web3.eth.getBlock(result.blockNumber);
@@ -207,6 +217,7 @@ Accounts.find({}).observe({
                         value: result.args.value.toString(10),
                         from: result.args.from,
                         timestamp: block.timestamp,
+                        dateString: moment.unix(block.timestamp).format('LLLL'),
                         blockNumber: result.blockNumber,
                         blockHash: result.blockHash,
                         transactionHash: result.transactionHash,

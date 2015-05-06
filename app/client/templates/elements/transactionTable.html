@@ -1,9 +1,11 @@
 <template name="elements_transactions_table">
+    <br>
+    <input type="text" class="filter-transactions" placeholder="{{i18n 'wallet.transactions.filter'}}">
     <table class="dapp-zebra">
         <thead>
             <tr>
                 <td class="time">{{i18n "wallet.transactions.time"}}</td>
-                <td class="transaction-amount">{{i18n "wallet.transactions.amount"}}</td>
+                <td class="transaction-amount"></td>
                 <td>{{i18n "wallet.transactions.from"}}</td>
                 {{#if showTo}}
                     <td>{{i18n "wallet.transactions.to"}}</td>
@@ -15,13 +17,21 @@
             {{#each items}}
                 {{> elements_transactions_row}}
             {{/each}}
+
+            {{#if hasMore}}
+                <tr>
+                    <td colspan="4">
+                        <button class="show-more">{{i18n "wallet.transactions.showMore"}}</button>
+                    </td>
+                </tr>
+            {{/if}}
         </tbody>
     </table>
 </template>
 
 <template name="elements_transactions_row">
     <tr>
-        <td class="time" title="{{formatTime timestamp 'lll'}}">
+        <td class="time" title="{{! formatTime timestamp 'lll'}}{{dateString}}">
             {{#with unConfirmed}}
                 <div class="dapp-progress">
                     <div class="dapp-bar" style="width: {{percent}}%;"></div>
