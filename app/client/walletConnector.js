@@ -14,14 +14,6 @@ web3.eth.filter('latest').watch(function(e, res){
             blockNumber: block.number
         }});
     }
-//         console.log('Transactions in block #'+ block.number + ' (found in '+ timer +'s)', block.transactions);
-//     }
-
-//     timer = 0;
-//     Meteor.clearInterval(timerId);
-//     timerId = Meteor.setInterval(function(){
-//         timer++;
-//     }, 1000);
 });
 
 
