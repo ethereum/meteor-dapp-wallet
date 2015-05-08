@@ -5,7 +5,7 @@
         <thead>
             <tr>
                 <td class="time">{{i18n "wallet.transactions.time"}}</td>
-                <td class="transaction-amount"></td>
+                <td class="transaction-amount">{{i18n "wallet.transactions.amount"}}</td>
                 <td>{{i18n "wallet.transactions.from"}}</td>
                 {{#if showTo}}
                     <td>{{i18n "wallet.transactions.to"}}</td>
@@ -16,6 +16,12 @@
         <tbody>
             {{#each items}}
                 {{> elements_transactions_row}}
+            {{else}}
+                <tr>
+                    <td colspan="4" style="text-align: center;">
+                        {{i18n "wallet.transactions.noneFound"}}
+                    </td>
+                </tr>
             {{/each}}
 
             {{#if hasMore}}
@@ -31,7 +37,7 @@
 
 <template name="elements_transactions_row">
     <tr>
-        <td class="time" title="{{! formatTime timestamp 'lll'}}{{dateString}}">
+        <td class="time" title="{{formatTime timestamp 'LLLL'}}">
             {{#with unConfirmed}}
                 <div class="dapp-progress">
                     <div class="dapp-bar" style="width: {{percent}}%;"></div>

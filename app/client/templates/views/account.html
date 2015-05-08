@@ -24,8 +24,12 @@
 
             {{> elements_transactions_table transactionIds=transactions}}
         {{else}}
-
-            <h2>{{i18n 'wallet.transactions.none'}}</h2>
+            {{#if $eq type "account"}}
+                <h3>Note</h3>
+                <p>Accounts can't list past transactions and are rather unsafe, please <a href="{{pathFor route='createAccount'}}">create a wallet</a> to store ether.</p>
+            {{else}}
+                <h2>{{i18n 'wallet.transactions.none'}}</h2>
+            {{/if}}
         {{/if}}
     </div>
 </template>

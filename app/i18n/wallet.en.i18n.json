@@ -6,11 +6,12 @@
                 "receive": "Receive"
             },
             "texts": {
-                "balance": "Balance"
+                "balance": "Balance",
+                "connectionError": "Unable to connect. Please start a Geth node with the following options:<br><br><small><code>__node__</code></small>"
             }
         },
         "accounts": {
-            "title": "<strong>Account</strong> Overview",
+            "title": "<strong>Wallet</strong> Overview",
             "accountTitle": "Choose an account to deposit",
             "defaultName": "Unnamed account",
             "creating": "Creating..."
@@ -25,13 +26,14 @@
             "confirmations": "Confirmations",
             "unconfirmed": "Unconfirmed",
             "showMore": "Show More",
-            "filter": "Filter transactions"
+            "filter": "Filter transactions",
+            "noneFound": "No matching transaction found."
         },
         "newAccount": {
-            "title": "New <strong>Account</strong>",
-            "accountName": "Account name",
+            "title": "New <strong>Wallet</strong>",
+            "accountName": "Wallet name",
             "accountType": {
-                "title": "Account type",
+                "title": "Wallet type",
                 "simple": {
                     "title": "Unlimited account",
                     "description": "An account <strong>without any security limits</strong> for those who like to live dangerously.",
@@ -68,7 +70,6 @@
         },
         "send": {
             "title": "<strong>Send</strong> money",
-            "yourAddress": "You",
             "pickAddress": "Pick an address",
             "to": "To",
             "from": "From",

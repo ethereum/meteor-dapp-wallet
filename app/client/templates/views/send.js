@@ -28,6 +28,9 @@ Template['views_send'].onCreated(function(){
     TemplateVar.set('selectedFeeMultiplicator', 0);
 
     TemplateVar.set('amount', 0);
+
+    if(account = Accounts.findOne({},{sort: {type: 1}}))
+        TemplateVar.set('fromAddress', account.address);
 });
 
 Template['views_send'].onRendered(function(){
@@ -37,6 +40,14 @@ Template['views_send'].onRendered(function(){
 
 Template['views_send'].helpers({
     /**
+    Get all current accounts
+
+    @method (accounts)
+    */
+    'accounts': function(){
+        return Accounts.find({}, {sort: {type: -1}});
+    },
+    /**
     Get the current unit.
 
     @method unit
@@ -45,7 +56,15 @@ Template['views_send'].helpers({
         return LocalStore.get('etherUnit');
     },
     /**
-    Return the to publicKey
+    Return the from address
+
+    @method (fromAddress)
+    */
+    'fromAddress': function(){
+        return TemplateVar.get('fromAddress');
+    },
+    /**
+    Return the to address
 
     @method (toAddress)
     */
@@ -103,7 +122,15 @@ Template['views_send'].helpers({
 
 Template['views_send'].events({
     /**
-    Set the to publicKey while typing
+    Set the from address, selected in the select field.
+    
+    @event change select[name="from"]
+    */
+    'change select[name="from"]': function(e){
+        TemplateVar.set('fromAddress', e.currentTarget.value);
+    },
+    /**
+    Set the "to" address while typing
     
     @event keyup input[name="to"]
     */

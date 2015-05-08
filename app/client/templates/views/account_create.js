@@ -192,6 +192,7 @@ Template['views_account_create'].events({
     'click button[type="submit"]': function(e, template){
 
         Accounts.insert({
+            type: 'wallet',
             owner: web3.eth.coinbase,
             name: template.find('input[name="accountName"]').value,
             balance: '0',

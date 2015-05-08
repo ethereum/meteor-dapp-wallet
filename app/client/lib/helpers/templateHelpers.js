@@ -22,34 +22,12 @@ Template.registerHelper('debug', function(object){
 
 
 /**
-Gets the current users name.
+Get all accounts
 
-@method (username)
+@method (accounts)
 **/
-Template.registerHelper('username', function(identity){
-    var user = Users.findOne(identity);
-    
-    // return myself
-    if(Whisper.getIdentity().identity === identity) {
-        return Whisper.getIdentity().name;
-    
-    // return username
-    } else if (user) {
-        return user.name;
-
-    // return anonymous
-    } else {
-        return 'anonymous';
-    }
-});
-
-/**
-Gets the current identity (name and identity).
-
-@method (currentIdentity)
-**/
-Template.registerHelper('currentIdentity', function(identity){
-    return Whisper.getIdentity();
+Template.registerHelper('accounts', function(identity){
+    return Accounts.find({}, {sort: {type: 1}});
 });
 
 
@@ -91,8 +69,4 @@ Formats a number.
 @param {String} format       the format string
 @return {String} The formatted number
 **/
-Template.registerHelper('formatBalance', function(number, format){
-    number = web3.fromWei(number, LocalStore.get('etherUnit'));
-
-    return Helpers.formatNumber(number, format) +' '+ LocalStore.get('etherUnit');
-});
+Template.registerHelper('formatBalance', Helpers.formatBalance);

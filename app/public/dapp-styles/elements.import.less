@@ -95,6 +95,9 @@ button {
     &:focus {
         outline: 0;
     }
+    &:focus {
+        border-bottom: 1px dotted @colorLink;
+    }
     &:active {
         .scale(0.95);
     }
@@ -272,12 +275,13 @@ textarea {
     padding: @defaultPaddingVertical/2 @defaultPaddingHorizontal/2;
     padding-bottom: @defaultPaddingVertical/3;
     .box-sizing(border-box);
+    .border-radius(0);
     font-size: 1em;
     font-weight: 300;
 
     &:focus {
         outline: 0;
-        // border-color: @colorBrand1;
+        border-color: @colorLink;
     }
 }
 

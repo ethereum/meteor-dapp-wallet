@@ -45,20 +45,45 @@ Template['elements_transactions_table'].helpers({
     */
     'items': function(){
         var template = Template.instance(),
+            items = [],
             searchQuery = TemplateVar.get('search'),
+            limit = TemplateVar.get('limit'),
             selector = this.transactionIds ? {_id: {$in: this.transactionIds}} : {};
 
         // if search
         if(searchQuery) {
             var pattern = new RegExp('^.*'+ searchQuery.replace(/ +/g,'.*') +'.*$','i');
-            template._properties.cursor = Transactions.find({$and: [selector, {$or: [{dateString: {$regex: pattern }}, {value: {$regex: pattern }}, {from: {$regex: pattern }}]}]}, {sort: {timestamp: -1}, limit: TemplateVar.get('limit')});
-        } else
-            template._properties.cursor = Transactions.find(selector, {sort: {timestamp: -1}, limit: TemplateVar.get('limit')});
+            template._properties.cursor = Transactions.find(selector, {sort: {blockNumber: -1}});
+            items = template._properties.cursor.fetch();
+            items = _.filter(items, function(item){
+                // search from address
+                if(pattern.test(item.from))
+                    return item;
 
-        return template._properties.cursor.fetch(); // need fetch or throws an error
+                // search to address
+                if(pattern.test(item.to))
+                    return item;
+
+                // search value
+                if(pattern.test(Helpers.formatBalance(item.value, '0,0.00[000000]')))
+                    return item;
+
+                // search date
+                if(pattern.test(moment.unix(item.timestamp).format('LLLL')))
+                    return item;
+
+                return false;
+            });
+            items = items.slice(0, defaultLimit * 4);
+            return items;
+
+        } else {
+            template._properties.cursor = Transactions.find(selector, {sort: {blockNumber: -1}, limit: limit});
+            return template._properties.cursor.fetch();
+        }
     },
     /**
-    Check if there are more transactions to load
+    Check if there are more transactions to load. When searching don't show the show more button.
 
     @method (hasMore)
     @return {Boolean}
@@ -66,11 +91,8 @@ Template['elements_transactions_table'].helpers({
     'hasMore': function(){
         var template = Template.instance();
 
-        // make reactive to the search as well
-        TemplateVar.get('search');
-
         template._properties.cursor.limit = null;
-        return (template._properties.cursor.count() > TemplateVar.get('limit'));
+        return (!TemplateVar.get('search') && template._properties.cursor.count() > TemplateVar.get('limit'));
     }
 });
 
@@ -112,8 +134,8 @@ Template['elements_transactions_row'].helpers({
     */
     'unConfirmed': function() {
         var currentBlockNumber = Blockchain.findOne().blockNumber,
-            confirmations = currentBlockNumber - this.blockNumber;
-        return (this.blockNumber > currentBlockNumber - blocksForConfirmation)
+            confirmations = currentBlockNumber - this.blockNumber + 1;
+        return (this.blockNumber > currentBlockNumber - blocksForConfirmation && (currentBlockNumber - blocksForConfirmation) > 0)
             ? {
                 confirmations: confirmations,
                 percent: (confirmations / (blocksForConfirmation-1)) * 100

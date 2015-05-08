@@ -225,4 +225,21 @@ Helpers.formatNumber = function(number, format){
 
     if(_.isFinite(number))
         return numeral(number).format(format);
-}
+};
+
+
+/**
+Formats a given number toa unit balance
+
+    Helpers.formatBalance(10000, "0.0[000]")
+
+@method formatBalance
+@param {Number|String|BigNumber} number the number to format
+@param {String} format           the format string e.g. "0.0[000]" see http://numeraljs.com for more.
+@return {String} The formated balance including the unit
+**/
+Helpers.formatBalance = function(number, format){
+    number = web3.fromWei(number, LocalStore.get('etherUnit'));
+
+    return Helpers.formatNumber(number, format) +' '+ LocalStore.get('etherUnit');
+};

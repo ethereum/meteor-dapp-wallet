@@ -9,9 +9,14 @@
         <div class="row clear from-to">
             <div class="col col-7 mobile-full">
                 <h3>{{i18n 'wallet.send.from'}}</h3>
-                {{> dapp_identicon identity='214243657890897654321' class="dapp-small"}}
 
-                <span>{{i18n 'wallet.send.yourAddress'}}</span>
+                <select name="from">
+                    {{#each accounts}}
+                        <option value="{{address}}">{{name}} ({{formatBalance balance "0,0.00"}})</option>
+                    {{/each}}
+                </select>
+
+                {{> dapp_identicon identity=fromAddress class="dapp-small"}}
             </div>
 
             <div class="col col-7 mobile-full">

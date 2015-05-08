@@ -4,6 +4,9 @@
 
 // contains blockchain meta data
 Blockchain = new Mongo.Collection('blockchain', {connection: null});
+Blockchain.insert({
+    blockNumber: 0
+});
 
 // Contains the accounts
 Accounts = new Mongo.Collection('accounts', {connection: null});

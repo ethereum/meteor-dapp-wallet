@@ -11,7 +11,14 @@
                 </div>
             {{/if}}
 
-            <h3>{{name}}</h3>
+            <h3>
+                {{#if $eq type "wallet"}}
+                    <i class="icon-wallet"></i>
+                {{else}}
+                    <i class="icon-key"></i>
+                {{/if}}
+                {{name}}
+            </h3>
 
             {{#unless disabled}}
                 {{> elements_balance balance=balance}}
