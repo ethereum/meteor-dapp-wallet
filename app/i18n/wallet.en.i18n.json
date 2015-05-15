@@ -2,6 +2,7 @@
     "wallet": {
         "app": {
             "buttons": {
+                "wallet": "Wallets",
                 "send": "Send",
                 "receive": "Receive"
             },
