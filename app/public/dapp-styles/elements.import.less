@@ -195,7 +195,21 @@ table {
     }
 
     td {
-        padding: 2px @defaultMargin;
+        padding: @defaultPaddingVertical @defaultPaddingHorizontal/2;
+
+        h2 {
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            color: @colorTextSecondary;
+            text-transform: none;
+            font-style: normal;
+        }
+        p {
+            padding-top: @defaultMargin/2;
+            margin: 0;
+            font-size: 0.9em;
+        }
     }
 
     thead {

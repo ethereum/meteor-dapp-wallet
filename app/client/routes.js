@@ -50,7 +50,8 @@ The send route.
 */
 Router.route('/send', {
     template: 'views_send',
-    name: 'send'
+    name: 'send',
+    onBeforeAction: scrollTop
 });
 
 
@@ -62,6 +63,7 @@ The send route.
 Router.route('/send/:address', {
     template: 'views_send',
     name: 'sendTo',
+    onBeforeAction: scrollTop,
     data: function() {
         return this.params;
     }

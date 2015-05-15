@@ -63,7 +63,7 @@ Template['views_send'].onCreated(function(){
 
 Template['views_send'].onRendered(function(){
     // focus address input field
-    if(!this.data.address)
+    if(!this.data || !this.data.address)
         this.$('input[name="to"]').focus();
     else {
         this.find('input[name="to"]').value = this.data.address;

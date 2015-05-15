@@ -4,12 +4,11 @@
     <table class="dapp-zebra">
         <thead>
             <tr>
-                <td></td>
                 <td class="time">{{i18n "wallet.transactions.time"}}</td>
-                <td class="transaction-amount">{{i18n "wallet.transactions.amount"}}</td>
                 <td>{{i18n "wallet.transactions.from"}}</td>
-                <td>{{i18n "wallet.transactions.to"}}</td>
-                <!-- <td>{{i18n "wallet.transactions.confirmations"}}</td> -->
+                <!-- <td>{{i18n "wallet.transactions.to"}}</td> -->
+                <td class="transaction-amount">{{i18n "wallet.transactions.amount"}}</td>
+                <td></td>
             </tr>
         </thead>
         <tbody>
@@ -36,13 +35,6 @@
 
 <template name="elements_transactions_row">
     <tr>
-        <td>
-            {{#if incomingTx ../account}}
-                <i class="icon-arrow-right"></i>
-            {{else}}
-                <i class="icon-arrow-left"></i>
-            {{/if}}
-        </td>
         <td class="time" title="{{formatTime timestamp 'LLLL'}}">
             {{#with unConfirmed}}
                 <div class="dapp-progress">
@@ -50,9 +42,22 @@
                     <span>{{confirmations}} {{i18n "commonWords.of"}} {{totalConfirmations}} {{i18n "wallet.transactions.confirmations"}}</span>
                 </div>
             {{else}}
-                {{formatTime timestamp "fromNow"}}
+                <h2>{{formatTime timestamp "MMM"}}</h2>
+                <p>{{formatTime timestamp "D"}}</p>
             {{/with}}
         </td>
+        <td class="account-name">
+            <h2>{{transactionType}}</h2>
+            <span class="relative-time">{{fromNowTime}}</span>
+            <p>
+                {{> elements_transactions_row_tofrom account=account address=from}}
+                <span class="arrow">→</span> 
+                {{> elements_transactions_row_tofrom account=account address=to}}
+            </p>
+        </td>
+        <!-- <td class="account-name">
+            {{> elements_transactions_row_tofrom account=account address=to}}
+        </td> -->
         {{#if incomingTx ../account}}
             <td class="transaction-amount plus">
                 {{formatBalance value '0,0.00[000000]'}}
@@ -62,11 +67,12 @@
                 -{{formatBalance value '0,0.00[000000]'}}
             </td>
         {{/if}}
-        <td class="account-name">
-            {{> elements_transactions_row_tofrom account=account address=from}}
-        </td>
-        <td class="account-name">
-            {{> elements_transactions_row_tofrom account=account address=to}}
+        <td>
+            {{#if incomingTx ../account}}
+                <i class="icon-arrow-left plus"></i>
+            {{else}}
+                <i class="icon-arrow-right minus"></i>
+            {{/if}}
         </td>
     </tr>
 </template>
@@ -76,7 +82,7 @@
         {{#if type}}
             {{> dapp_identicon identity=address class="dapp-tiny"}} <a href="{{pathFor route='account' account=address}}">{{name}}</a>
         {{else}}
-            <a href="{{pathFor route='sendTo' address=address}}">{{address}}</a>
+            <a href="{{pathFor route='sendTo' address=address}}" title="{{address}}">{{address}}</a>
         {{/if}}
     {{/with}}
 </template>

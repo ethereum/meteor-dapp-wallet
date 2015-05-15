@@ -141,23 +141,45 @@ table {
     td {
         text-align: left;
 
+        &.plus, .plus {
+            color: @colorTextSecondary;                
+        }
+        &.minus, .minus {
+            color: @colorError;
+        }
+
         &.time {
+            text-align: center;
             padding-left: @defaultMargin;
             cursor: help;
+            p {
+                font-size: 2em;
+                padding-top: 0;
+            }
         }
         &.transaction-amount {
             text-align: right;
 
-            &.plus {
-                color: @colorTextSecondary;                
-            }
-            &.minus {
-                color: @colorError;
-            }
         }
         &.account-name {
-            font-style: italic;
             color: @colorTextSecondary;
+
+            span.relative-time {
+                font-size: 0.8em;
+                float: right;
+            }
+
+            a {
+                .dapp-shorten-text;
+                display: inline;
+                max-width: 200px;
+            }
+
+
+            span.arrow {
+                display: inline;
+                padding: 0 4px;
+            }
         }
         &.transaction-purpose {
             font-weight: 400;
@@ -182,6 +204,7 @@ table {
 
         .dapp-identicon {
             position: absolute;
+            margin-top: -3px;
             margin-left: 0;
 
             & + a {
@@ -190,12 +213,14 @@ table {
         }
 
         .dapp-progress {
-            margin: -2px -@defaultMargin;
-            height: @gridHeight + @defaultMargin - 6px;
+            min-width: 200px;
+            margin: -@defaultPaddingVertical -@defaultPaddingHorizontal/2;
+            height: @gridHeight + @defaultPaddingVertical*2 + 4px;
             border: 0;
 
             > span {
-                line-height: @gridHeight + @defaultMargin - 6px;
+                padding: 0 @defaultPaddingHorizontal/2;
+                line-height: @gridHeight + @defaultPaddingVertical*2 + 4px;
                 font-size: 0.8em;
             }
         }

@@ -18,7 +18,7 @@ Block required until a transaction is confirmed.
 @property blocksForConfirmation
 @type Number
 */
-var blocksForConfirmation = 1200;
+var blocksForConfirmation = 120;
 
 /**
 The default limit, of none is given.
@@ -130,7 +130,34 @@ Template['elements_transactions_row'].helpers({
     */
     'incomingTx': function(account){
         return ((account && this.from !== Accounts.findOne(account).address) ||
-                Accounts.findOne({$or: [{address: this.from, address: this.to}]}));
+                (!account && Accounts.findOne({$or: [{address: this.from, address: this.to}]})));
+    },
+    /**
+    Returns the correct text for this transaction
+
+    @method (transactionType)
+    @return {String}
+    */
+    'transactionType': function(){
+        var to = Accounts.findOne({address: this.to}),
+            from = Accounts.findOne({address: this.from});
+
+        if(to && from)
+            return TAPi18n.__('wallet.transactions.types.betweenWallets');
+        else if(to)
+            return TAPi18n.__('wallet.transactions.types.received');
+        else if(from)
+            return TAPi18n.__('wallet.transactions.types.sent');
+    },
+    /**
+    Returns the from now time, if less than 23 hours
+
+    @method (fromNowTime)
+    @return {String}
+    */
+    'fromNowTime': function(){
+        var diff = moment().diff(moment.unix(this.timestamp), 'hours');
+        return (diff < 23) ? ' '+ moment.unix(this.timestamp).fromNow() : '';
     },
     /**
     Returns the confirmations

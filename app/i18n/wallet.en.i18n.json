@@ -27,7 +27,12 @@
             "unconfirmed": "Unconfirmed",
             "showMore": "Show More",
             "filter": "Filter transactions",
-            "noneFound": "No matching transaction found."
+            "noneFound": "No matching transaction found.",
+            "types": {
+                "betweenWallets": "Transfered between wallets",
+                "sent": "Sent",
+                "received": "Received"
+            }
         },
         "newAccount": {
             "title": "New <strong>Wallet</strong>",
