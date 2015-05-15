@@ -86,7 +86,8 @@
                     "1": "likely within a few minutes",
                     "2": "usually within a minute",
                     "3": "probably within 30 seconds",
-                    "4": "probably within a few seconds"
+                    "4": "probably within a few seconds",
+                    "5": "probably within a few seconds"
                 }
             }
         }

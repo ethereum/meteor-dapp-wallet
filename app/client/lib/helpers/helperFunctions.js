@@ -42,6 +42,15 @@ Helpers.getLocalStorageSize = function(){
     return size;
 };
 
+/**
+Make a transaction ID out of its hash
+
+@method makeTransactionId
+@param {String} txHash
+*/
+Helpers.makeTransactionId = function(txHash){
+    return txHash.replace('0x','').substr(0,10);
+};
 
 /**
 Shows the offline mesage

@@ -182,11 +182,15 @@ table {
 
         .dapp-identicon {
             position: absolute;
-            margin-left: -@gridWidth;
+            margin-left: 0;
+
+            & + a {
+                margin-left: @gridWidth/1.2;
+            }
         }
 
         .dapp-progress {
-            margin: -@defaultMargin + 2px -@defaultMargin;
+            margin: -2px -@defaultMargin;
             height: @gridHeight + @defaultMargin - 6px;
             border: 0;
 
@@ -206,7 +210,7 @@ table {
 
 .accounts-page {
     
-    .dapp-identicon {
+    > .dapp-identicon {
         float: left;
         margin-right: 20px;
         margin-top: 18px;
@@ -280,7 +284,7 @@ table {
                 .appearance(none);
             }
 
-            .dapp-identicon {
+            .from .dapp-identicon {
                     position: absolute;
                     left: @gridWidth/2;
                     margin-top: @gridHeight * 1.3;

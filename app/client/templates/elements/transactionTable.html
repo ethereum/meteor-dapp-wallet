@@ -4,12 +4,11 @@
     <table class="dapp-zebra">
         <thead>
             <tr>
+                <td></td>
                 <td class="time">{{i18n "wallet.transactions.time"}}</td>
                 <td class="transaction-amount">{{i18n "wallet.transactions.amount"}}</td>
                 <td>{{i18n "wallet.transactions.from"}}</td>
-                {{#if showTo}}
-                    <td>{{i18n "wallet.transactions.to"}}</td>
-                {{/if}}
+                <td>{{i18n "wallet.transactions.to"}}</td>
                 <!-- <td>{{i18n "wallet.transactions.confirmations"}}</td> -->
             </tr>
         </thead>
@@ -18,7 +17,7 @@
                 {{> elements_transactions_row}}
             {{else}}
                 <tr>
-                    <td colspan="4" style="text-align: center;">
+                    <td colspan="5" style="text-align: center;">
                         {{i18n "wallet.transactions.noneFound"}}
                     </td>
                 </tr>
@@ -26,7 +25,7 @@
 
             {{#if hasMore}}
                 <tr>
-                    <td colspan="4">
+                    <td colspan="5">
                         <button class="show-more">{{i18n "wallet.transactions.showMore"}}</button>
                     </td>
                 </tr>
@@ -37,6 +36,13 @@
 
 <template name="elements_transactions_row">
     <tr>
+        <td>
+            {{#if incomingTx ../account}}
+                <i class="icon-arrow-right"></i>
+            {{else}}
+                <i class="icon-arrow-left"></i>
+            {{/if}}
+        </td>
         <td class="time" title="{{formatTime timestamp 'LLLL'}}">
             {{#with unConfirmed}}
                 <div class="dapp-progress">
@@ -47,23 +53,31 @@
                 {{formatTime timestamp "fromNow"}}
             {{/with}}
         </td>
-        <td class="transaction-amount {{#if $gte value 0}}plus{{else}}minus{{/if}}">
-            {{formatBalance value '0,0.00[000000]'}}
+        {{#if incomingTx ../account}}
+            <td class="transaction-amount plus">
+                {{formatBalance value '0,0.00[000000]'}}
+            </td>
+        {{else}}
+            <td class="transaction-amount minus">
+                -{{formatBalance value '0,0.00[000000]'}}
+            </td>
+        {{/if}}
+        <td class="account-name">
+            {{> elements_transactions_row_tofrom account=account address=from}}
         </td>
         <td class="account-name">
-            <span>{{from}}</span>
+            {{> elements_transactions_row_tofrom account=account address=to}}
         </td>
-        {{#if ../showTo}}
-            {{#with account}}
-                <td class="account-name">
-                    {{> dapp_identicon identity=address class="dapp-tiny"}} <a href="{{pathFor route='account' account=address}}">{{name}}</a>
-                </td>
-            {{/with}}
-        {{/if}}
-        <!-- <td class="confirmations">
-        </td> -->
-        <!-- <td class="transaction-purpose">
-            <span>Birthday gift</span>
-        </td> -->
     </tr>
 </template>
+
+<template name="elements_transactions_row_tofrom">
+    {{#with getAccount}}
+        {{#if type}}
+            {{> dapp_identicon identity=address class="dapp-tiny"}} <a href="{{pathFor route='account' account=address}}">{{name}}</a>
+        {{else}}
+            <a href="{{pathFor route='sendTo' address=address}}">{{address}}</a>
+        {{/if}}
+    {{/with}}
+</template>
+

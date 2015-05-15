@@ -55,6 +55,19 @@ Router.route('/send', {
 
 
 /**
+The send route.
+
+@method send
+*/
+Router.route('/send/:address', {
+    template: 'views_send',
+    name: 'sendTo',
+    data: function() {
+        return this.params;
+    }
+});
+
+/**
 The create account route.
 
 @method send

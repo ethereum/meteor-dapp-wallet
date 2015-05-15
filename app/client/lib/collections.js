@@ -4,8 +4,9 @@
 
 // contains blockchain meta data
 Blockchain = new Mongo.Collection('blockchain', {connection: null});
-Blockchain.insert({
-    blockNumber: 0
+blockchainId = Blockchain.insert({
+    blockNumber: 0,
+    gasPrice: 0
 });
 
 // Contains the accounts

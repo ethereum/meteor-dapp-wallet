@@ -8,6 +8,7 @@
             <h1><span class="edit-name">{{name}}</span> <i class="edit-icon icon-pencil"></i></h1>
             <h2>{{address}}</h2>                
         </hgroup>
+
         {{> elements_balance balance=balance changeUnit=true}}
 
         {{! > elements_account account=account main=true}}
@@ -18,18 +19,17 @@
 
         <div class="dapp-clear-fix"></div>
 
-        {{#if transactions}}
+        {{#if $eq type "account"}}
+            <h3>Note</h3>
+            <p>Accounts can't list past transactions and are rather unsafe, please <a href="{{pathFor route='createAccount'}}">create a wallet</a> to store ether.</p>
+        {{/if}}
 
+        {{#if transactions}}
             <h2>{{i18n 'wallet.transactions.latest'}}</h2>
 
-            {{> elements_transactions_table transactionIds=transactions}}
+            {{> elements_transactions_table transactionIds=transactions account=_id}}
         {{else}}
-            {{#if $eq type "account"}}
-                <h3>Note</h3>
-                <p>Accounts can't list past transactions and are rather unsafe, please <a href="{{pathFor route='createAccount'}}">create a wallet</a> to store ether.</p>
-            {{else}}
-                <h2>{{i18n 'wallet.transactions.none'}}</h2>
-            {{/if}}
+            <h2>{{i18n 'wallet.transactions.none'}}</h2>
         {{/if}}
     </div>
 </template>

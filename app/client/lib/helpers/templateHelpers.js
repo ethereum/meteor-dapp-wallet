@@ -22,6 +22,15 @@ Template.registerHelper('debug', function(object){
 
 
 /**
+Get the current selected unit
+
+@method (unit)
+**/
+Template.registerHelper('unit', function(identity){
+    return LocalStore('unit').value;
+});
+
+/**
 Get all accounts
 
 @method (accounts)

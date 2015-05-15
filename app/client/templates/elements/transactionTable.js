@@ -18,7 +18,7 @@ Block required until a transaction is confirmed.
 @property blocksForConfirmation
 @type Number
 */
-var blocksForConfirmation = 12;
+var blocksForConfirmation = 1200;
 
 /**
 The default limit, of none is given.
@@ -53,7 +53,7 @@ Template['elements_transactions_table'].helpers({
         // if search
         if(searchQuery) {
             var pattern = new RegExp('^.*'+ searchQuery.replace(/ +/g,'.*') +'.*$','i');
-            template._properties.cursor = Transactions.find(selector, {sort: {blockNumber: -1}});
+            template._properties.cursor = Transactions.find(selector, {sort: {timestamp: -1, blockNumber: -1}});
             items = template._properties.cursor.fetch();
             items = _.filter(items, function(item){
                 // search from address
@@ -78,7 +78,7 @@ Template['elements_transactions_table'].helpers({
             return items;
 
         } else {
-            template._properties.cursor = Transactions.find(selector, {sort: {blockNumber: -1}, limit: limit});
+            template._properties.cursor = Transactions.find(selector, {sort: {timestamp: -1, blockNumber: -1}, limit: limit});
             return template._properties.cursor.fetch();
         }
     },
@@ -122,6 +122,17 @@ The transaction row template
 
 Template['elements_transactions_row'].helpers({
     /**
+    Checks if, from the perspective of the selected account
+    the transaction was incoming or outgoing.
+
+    @method (incomingTx)
+    @param {String} account     The _id of the current account
+    */
+    'incomingTx': function(account){
+        return ((account && this.from !== Accounts.findOne(account).address) ||
+                Accounts.findOne({$or: [{address: this.from, address: this.to}]}));
+    },
+    /**
     Returns the confirmations
 
     @method (totalConfirmations)
@@ -133,6 +144,12 @@ Template['elements_transactions_row'].helpers({
     @method (unConfirmed)
     */
     'unConfirmed': function() {
+        if(!this.blockNumber)
+            return {
+                confirmations: 0,
+                percent: 0
+            };
+
         var currentBlockNumber = Blockchain.findOne().blockNumber,
             confirmations = currentBlockNumber - this.blockNumber + 1;
         return (this.blockNumber > currentBlockNumber - blocksForConfirmation && (currentBlockNumber - blocksForConfirmation) > 0)
@@ -141,13 +158,26 @@ Template['elements_transactions_row'].helpers({
                 percent: (confirmations / (blocksForConfirmation-1)) * 100
             }
             : false;
-    },
-    /**
-    Gets the transactions account
-
-    @method (account)
-    */
-    'account': function() {
-        return Accounts.findOne(this.account);
     }
 });
+
+
+/**
+The transaction row template
+
+@class [template] elements_transactions_row_tofrom
+@constructor
+*/
+
+
+Template['elements_transactions_row_tofrom'].helpers({
+    /**
+    Get the account and return the account or address of "from" or "to" property
+
+    @method (getAccount)
+    */
+    'getAccount': function(){
+        return Accounts.findOne({address: this.address}) || {address: this.address};
+    }
+});
+

@@ -20,7 +20,6 @@ if(!LocalStore.get('etherUnit'))
 var connect = function(){
 
     try {
-
         connectNode();
 
     } catch(e) {
