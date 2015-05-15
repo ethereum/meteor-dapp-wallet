@@ -18,7 +18,7 @@ Block required until a transaction is confirmed.
 @property blocksForConfirmation
 @type Number
 */
-var blocksForConfirmation = 120;
+var blocksForConfirmation = 12;
 
 /**
 The default limit, of none is given.
@@ -26,7 +26,7 @@ The default limit, of none is given.
 @property defaultLimit
 @type Number
 */
-var defaultLimit = 20;
+var defaultLimit = 10;
 
 Template['elements_transactions_table'].onCreated(function(){
     this._properties = {
