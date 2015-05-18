@@ -34,7 +34,7 @@
 </template>
 
 <template name="elements_transactions_row">
-    <tr>
+    <tr class="{{#if $eq unConfirmed.confirmations 0}}unconfirmed{{/if}}">
         <td class="time" title="{{formatTime timestamp 'LLLL'}}">
             {{#with unConfirmed}}
                 <div class="dapp-progress">

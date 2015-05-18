@@ -138,6 +138,11 @@ a.wallet-account {
 
 
 table {
+    tr {
+        &.unconfirmed {
+            .opacity(0.4);
+        }
+    }
     td {
         text-align: left;
 
@@ -152,6 +157,7 @@ table {
             text-align: center;
             padding-left: @defaultMargin;
             cursor: help;
+
             p {
                 font-size: 2em;
                 padding-top: 0;
@@ -167,6 +173,7 @@ table {
             span.float-right {
                 font-size: 0.8em;
                 float: right;
+                margin-top: 16px;
             }
 
             a {
