@@ -164,7 +164,7 @@ table {
         &.account-name {
             color: @colorTextSecondary;
 
-            span.relative-time {
+            span.float-right {
                 font-size: 0.8em;
                 float: right;
             }
@@ -213,13 +213,20 @@ table {
         }
 
         .dapp-progress {
-            min-width: 200px;
-            margin: -@defaultPaddingVertical -@defaultPaddingHorizontal/2;
-            height: @gridHeight + @defaultPaddingVertical*2 + 4px;
+            // min-width: 200px;
+            // margin: -@defaultPaddingVertical -@defaultPaddingHorizontal/2;
+            // height: @gridHeight + @defaultPaddingVertical*2 + 4px;
             border: 0;
 
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: 0;
+            margin-top: 62px;
+            height: 10px;
+
             > span {
-                padding: 0 @defaultPaddingHorizontal/2;
+                padding: 0;
                 line-height: @gridHeight + @defaultPaddingVertical*2 + 4px;
                 font-size: 0.8em;
             }

@@ -156,6 +156,8 @@ Template['elements_transactions_row'].helpers({
     @return {String}
     */
     'fromNowTime': function(){
+        Helpers.rerun['10s'].tick();
+
         var diff = moment().diff(moment.unix(this.timestamp), 'hours');
         return (diff < 23) ? ' '+ moment.unix(this.timestamp).fromNow() : '';
     },
@@ -182,7 +184,7 @@ Template['elements_transactions_row'].helpers({
         return (this.blockNumber > currentBlockNumber - blocksForConfirmation && (currentBlockNumber - blocksForConfirmation) > 0)
             ? {
                 confirmations: confirmations,
-                percent: (confirmations / (blocksForConfirmation-1)) * 100
+                percent: (confirmations / (blocksForConfirmation)) * 100
             }
             : false;
     }

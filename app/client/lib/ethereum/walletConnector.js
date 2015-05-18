@@ -178,7 +178,7 @@ connectNode = function(){
         // SETUP FILTERS
 
         // get BlockNumber to look from
-        var lastBlock = (lastTx = Transactions.findOne({account: newDocument._id}, {sort: {blockNumber: -1}}))
+        var lastBlock = (lastTx = Transactions.findOne({$or: [{from: newDocument.address},{to: newDocument.address}]}, {sort: {blockNumber: -1}}))
             ? lastTx.blockNumber - blockToCheckBack // check the last 1000 blocks again, to be sure we are not on a fork
             : 0;
         if(lastBlock < 0)

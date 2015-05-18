@@ -39,16 +39,19 @@
             {{#with unConfirmed}}
                 <div class="dapp-progress">
                     <div class="dapp-bar" style="width: {{percent}}%;"></div>
-                    <span>{{confirmations}} {{i18n "commonWords.of"}} {{totalConfirmations}} {{i18n "wallet.transactions.confirmations"}}</span>
                 </div>
-            {{else}}
-                <h2>{{formatTime timestamp "MMM"}}</h2>
-                <p>{{formatTime timestamp "D"}}</p>
             {{/with}}
+
+            <h2>{{formatTime timestamp "MMM"}}</h2>
+            <p>{{formatTime timestamp "D"}}</p>
         </td>
         <td class="account-name">
             <h2>{{transactionType}}</h2>
-            <span class="relative-time">{{fromNowTime}}</span>
+            {{#with unConfirmed}}
+                <span class="float-right">{{confirmations}} {{i18n "commonWords.of"}} {{totalConfirmations}} {{i18n "wallet.transactions.confirmations"}}</span>
+            {{else}}
+                <span class="float-right">{{fromNowTime}}</span> 
+            {{/with}}
             <p>
                 {{> elements_transactions_row_tofrom account=account address=from}}
                 <span class="arrow">→</span> 
