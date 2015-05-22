@@ -181,7 +181,13 @@ table {
     &.dapp-zebra {
         tbody {
             tr {
-
+                &:nth-child(odd) {
+                    background-color: fadeout(@colorGray, 70%);
+                }
+            }
+        }
+        thead + tbody {
+            tr {
                 &:nth-child(even) {
                     background-color: fadeout(@colorGray, 70%);
                 }

@@ -48,12 +48,13 @@ Template['elements_transactions_table'].helpers({
             items = [],
             searchQuery = TemplateVar.get('search'),
             limit = TemplateVar.get('limit'),
+            collection = window[this.collection] || Transactions,
             selector = this.transactionIds ? {_id: {$in: this.transactionIds}} : {};
 
         // if search
         if(searchQuery) {
             var pattern = new RegExp('^.*'+ searchQuery.replace(/ +/g,'.*') +'.*$','i');
-            template._properties.cursor = Transactions.find(selector, {sort: {timestamp: -1, blockNumber: -1}});
+            template._properties.cursor = collection.find(selector, {sort: {timestamp: -1, blockNumber: -1}});
             items = template._properties.cursor.fetch();
             items = _.filter(items, function(item){
                 // search from address
@@ -78,7 +79,7 @@ Template['elements_transactions_table'].helpers({
             return items;
 
         } else {
-            template._properties.cursor = Transactions.find(selector, {sort: {timestamp: -1, blockNumber: -1}, limit: limit});
+            template._properties.cursor = collection.find(selector, {sort: {timestamp: -1, blockNumber: -1}, limit: limit});
             return template._properties.cursor.fetch();
         }
     },
@@ -140,9 +141,18 @@ Template['elements_transactions_row'].helpers({
     */
     'transactionType': function(){
         var to = Accounts.findOne({address: this.to}),
-            from = Accounts.findOne({address: this.from});
+            from = Accounts.findOne({address: this.from}),
+            initiator = Accounts.findOne({address: this.initiator});
 
-        if(to && from)
+        if(from)
+            from = '<a href="/account/'+ from.address +'">'+ from.name +'</a>';
+        initiator = (initiator)
+            ? '<a href="/account/'+ initiator.address +'">'+ initiator.name +'</a>'
+            : this.initiator;
+
+        if(this.type === 'pendingConfirmation')
+            return new Spacebars.SafeString(TAPi18n.__('wallet.transactions.types.pendingConfirmations', {initiator: initiator, from: from}));
+        else if(to && from)
             return TAPi18n.__('wallet.transactions.types.betweenWallets');
         else if(to)
             return TAPi18n.__('wallet.transactions.types.received');
@@ -187,6 +197,26 @@ Template['elements_transactions_row'].helpers({
                 percent: (confirmations / (blocksForConfirmation)) * 100
             }
             : false;
+    }
+});
+
+
+Template['elements_transactions_row'].events({
+    /**
+    Approve a pending transaction
+
+    @event click button.approve
+    */
+    'click button.approve': function(e){
+        var account = Accounts.findOne({address: this.from});
+        if(account) {
+            console.log(contracts[account._id].confirm.sendTransaction(this.operation, {from: account.owner, gas: 1204633 + 500000}));
+
+            // set in pending mode
+            PendingConfirmations.update(this._id, {$set: {
+                status: 'confirmed'
+            }});
+        }
     }
 });
 

@@ -196,6 +196,8 @@ Template['views_account_create'].events({
             owner: web3.eth.coinbase,
             name: template.find('input[name="accountName"]').value,
             balance: '0',
+            dailyLimit: '100000000000000000000', // 100 ether
+            creationBlock: Blockchain.findOne().blockNumber,
             disabled: true
         });
 

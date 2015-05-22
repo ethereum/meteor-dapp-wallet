@@ -4,10 +4,15 @@
 
 // contains blockchain meta data
 Blockchain = new Mongo.Collection('blockchain', {connection: null});
-blockchainId = Blockchain.insert({
-    blockNumber: 0,
-    gasPrice: 0
-});
+new PersistentMinimongo(Blockchain);
+blockchainId = (!Blockchain.findOne())
+    ? Blockchain.insert({
+        blockNumber: 0,
+        gasPrice: 0,
+        checkpoint: 0
+    })
+    : Blockchain.findOne()._id;
+
 
 // Contains the accounts
 Accounts = new Mongo.Collection('accounts', {connection: null});
@@ -16,3 +21,7 @@ new PersistentMinimongo(Accounts);
 // Contains the transactions
 Transactions = new Mongo.Collection('transactions', {connection: null});
 new PersistentMinimongo(Transactions);
+
+// Contains the pending confirmations
+PendingConfirmations = new Mongo.Collection('pending-confirmations', {connection: null});
+new PersistentMinimongo(PendingConfirmations);

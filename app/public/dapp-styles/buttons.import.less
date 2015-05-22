@@ -24,7 +24,7 @@
     padding: @gridHeight/4 @gridWidth/3;
     background: @colorLink;
     color: @colorWhite;
-    border-bottom: solid 3px darken(@colorLink, 5%);
+    border-bottom: 3px solid darken(@colorLink, 5%);
     .border-radius(2px);
     .dapp-shorten-text;
 
@@ -33,6 +33,9 @@
     font-weight: 400;
     text-transform: uppercase;
 
+    &:focus {
+        border-bottom: 3px solid inherit;
+    }
     &:active {
         border-bottom-width: 3px;
     }

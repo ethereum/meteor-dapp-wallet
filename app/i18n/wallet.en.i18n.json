@@ -19,6 +19,7 @@
         },
         "transactions": {
             "latest": "Latest transactions",
+            "pendingConfirmations": "Confirmation needed",
             "none": "No transactions yet",
             "time": "Time",
             "from": "From",
@@ -32,7 +33,8 @@
             "types": {
                 "betweenWallets": "Transfered between wallets",
                 "sent": "Sent",
-                "received": "Received"
+                "received": "Received",
+                "pendingConfirmations": "__initiator__ wants to send from __from__"
             }
         },
         "newAccount": {

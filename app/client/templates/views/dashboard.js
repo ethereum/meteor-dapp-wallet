@@ -29,6 +29,16 @@ Template['views_dashboard'].helpers({
     'allTransactions': function(){
         return Transactions.find({}, {sort: {timestamp: -1}}).count();
     },
+    /**
+    Returns an array of pending confirmations, from all accounts
+    
+    @method (pendingConfirmations)
+    @return {Array}
+    */
+    'pendingConfirmations': function(){
+        var accounts = Accounts.find().fetch();
+        return _.compact(_.flatten(_.pluck(accounts, 'pendingConfirmations')));
+    }
 });
 
 

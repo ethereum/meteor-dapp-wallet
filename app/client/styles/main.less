@@ -142,9 +142,19 @@ table {
         &.unconfirmed {
             .opacity(0.4);
         }
+        &.full-width {
+            background-color: transparent !important;
+
+            td {
+                position: relative;
+                height: @gridHeight*3;
+                text-align: center;
+            }
+        }
     }
     td {
         text-align: left;
+
 
         &.plus, .plus {
             color: @colorTextSecondary;                
@@ -192,7 +202,8 @@ table {
             font-weight: 400;
         }
         &.button {
-            width: 100px;
+            position: relative;
+            min-width: 100px;
             text-align: right;
 
             button {

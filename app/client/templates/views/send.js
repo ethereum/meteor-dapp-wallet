@@ -198,7 +198,8 @@ Template['views_send'].events({
             gasPrice = new BigNumber(Blockchain.findOne().gasPrice).times(new BigNumber(toPowerFactor).toPower(TemplateVar.get('feeMultiplicator'))).toFixed(0),
             selectedAccount = Accounts.findOne({address: TemplateVar.get('fromAddress')});
 
-        if(amount && web3.isAddress(to)) {
+        if(amount && web3.isAddress(to) && selectedAccount) {
+            
             // simple transaction
             if(selectedAccount.type === 'account') {
 
@@ -211,7 +212,7 @@ Template['views_send'].events({
                 }, function(e, txHash){
                     console.log(e, txHash);
                     if(!e) {
-                        txId = Helpers.makeTransactionId(txHash);
+                        txId = Helpers.makeId('tx', txHash);
 
                         console.log('SEND simple');
 
@@ -241,7 +242,18 @@ Template['views_send'].events({
                 });
 
             } else if(selectedAccount.type === 'wallet') {
-                console.log('send contract');
+                console.log('SEND from contract', amount);
+
+
+                contracts[selectedAccount._id].execute.sendTransaction(to, amount, '', {
+                    from: selectedAccount.owner,
+                    gasPrice: gasPrice,
+                    gas: 1204633 + 500000 // add 100 to be safe
+                }, function(e, txHash){
+                    console.log(e, txHash);
+
+                    Router.go('/');
+                });
             }
         }
     }

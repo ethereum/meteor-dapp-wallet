@@ -43,13 +43,14 @@ Helpers.getLocalStorageSize = function(){
 };
 
 /**
-Make a transaction ID out of its hash
+Make a ID out of a given hash and prefix.
 
-@method makeTransactionId
-@param {String} txHash
+@method makeId
+@param {String} prefix
+@param {String} hash
 */
-Helpers.makeTransactionId = function(txHash){
-    return txHash.replace('0x','').substr(0,10);
+Helpers.makeId = function(prefix, hash){
+    return prefix +'_'+ hash.replace('0x','').substr(0,10);
 };
 
 /**

@@ -7,6 +7,21 @@ The walletConnector
 */
 
 /**
+Contains all wallet contracts
+
+@property contracts
+*/
+contracts = {};
+
+/**
+Number of blocks to rollback, from the last stable point.
+
+@property rollBackBy
+*/
+rollBackBy = 10000;
+
+
+/**
 Connects to a node and setup all the filters for the accounts.
 
 @method connectNode
@@ -21,17 +36,29 @@ connectNode = function(){
     // UPDATE latest BLOCKCHAIN DATA (SYNC!)
     Blockchain.update(blockchainId, {$set: {
         blockNumber: web3.eth.blockNumber,
-        gasPrice: web3.eth.gasPrice.toString(10)
+        gasPrice: web3.eth.gasPrice.toString(10),
+        blockHash: web3.eth.getBlock('latest').hash
     }});
 
     // GET the latest blockchain information
     web3.eth.filter('latest').watch(function(e, res){
         if(!e) {
             var block = web3.eth.getBlock(res, function(e, block){
+                var oldBlock = Blockchain.findOne();
                 // console.log('BLOCK', block.number);
+
+                // CHECK for FORK
+                if(oldBlock.blockNumber+1 === block.number && oldBlock.blockHash !== block.parentHash) {
+                    console.log('FORK detected from Block #'+ oldBlock.blockNumber + ' -> #'+ block.number +', rolling back!');
+                    _.each(Accounts.find({type: 'wallet'}).fetch(), function(account){
+                        contractFilters(account);
+                    });
+                }
                 
                 Blockchain.update(blockchainId, {$set: {
-                    blockNumber: block.number
+                    blockNumber: block.number,
+                    blockHash: block.hash,
+                    checkpoint: block.number // TODO set checkoints more smartly
                 }});
 
                 // update the current gas price
@@ -55,7 +82,7 @@ connectNode = function(){
     });
 
 
-    // ADD accounts
+    // ADD normal accounts
     _.each(web3.eth.accounts, function(item){
         if(!_.contains(_.pluck(Accounts.find().fetch(), 'address'), item))
             Accounts.insert({
@@ -66,188 +93,205 @@ connectNode = function(){
             });
     });
 
+    /**
+    Update checkpoint by comparing the logs blocknumber with the current checkpoint
 
-    /*
-    Wallet(addressOfTheWalletContract).execute(to, value)
-    from: addressOfTheWalletContract
-    Wallet(addressOfWallet).transact({from: secretKeysAddress}).execute(...)
-    Wallet(addressOfWallet).from(secretKeysAddress).execute(...)
     */
 
-    // var accounts = web3.eth.accounts;
-    // if(_.isArray(accounts)) {
 
-    //     // disable accounts, which weren't in the given accounts array
-    //     // _.each(Accounts.find({_id: {$nin: accounts}}).fetch(), function(item){
-    //     //     Accounts.update(item, {$set: {
-    //     //         disabled: true
-    //     //     }});
-    //     // });
+    /**
+    Add new in/outgoing transaction
 
-    //     _.each(accounts, function(address) {
-            
-    //         // SETUP accounts
-    //         // if(!Accounts.findOne(address)) {
-    //         //     Accounts.insert({
-    //         //         _id: address,
-    //         //         name: null,
-    //         //         balance: web3.toDecimal(web3.eth.getBalance(address))
-    //         //     });
+    @method addTransaction
+    @param {Object} log
+    @param {String} from
+    @param {String} to
+    @param {String} value
+    */
+    var addTransaction = function(log, from, to, value){
+        var block = web3.eth.getBlock(log.blockNumber, true, function(err, block){
 
-    //         // // undisbale them and update balance
-    //         // } else {
-    //         //     Accounts.update(address, {
-    //         //         $set: {
-    //         //             balance: web3.toDecimal(web3.eth.getBalance(address))
-    //         //         },
-    //         //         $unset: {
-    //         //             disabled: '',
-    //         //         }
-    //         //     });
-    //         // }
+            if(!err) {
+                var txId = Helpers.makeId('tx', log.transactionHash),
+                    transaction = _.find(block.transactions, function(tx){ return tx.hash === log.transactionHash; }),
+                    tx = Transactions.findOne(txId);
 
-    //         // watch for new blocks
-    //         var updateBalance = function (log) {
-    //             console.log(log); //  {"address":"0x0000000000000000000000000000000000000000","data":"0x0000000000000000000000000000000000000000000000000000000000000000","number":0}
-
-    //             Accounts.update(address, {$set: {
-    //                 balance: web3.toDecimal(web3.eth.getBalance(address))
-    //             }});
-    //         };
+                // add transaction
+                if(!tx) {
+                    Transactions.insert({
+                        _id: txId,
+                        operation: log.args.operation || null,
+                        value: value,
+                        to: to,
+                        from: from,
+                        timestamp: block.timestamp,
+                        blockNumber: log.blockNumber,
+                        blockHash: log.blockHash,
+                        transactionHash: log.transactionHash,
+                        transactionIndex: log.transactionIndex,
+                        fee: transaction.gasPrice.times(new BigNumber(transaction.gas)).toString(10)
+                    });
 
 
-            
-    //         TODO: change later to
-    //         {
-    //             address: web3.eth.accounts
-    //         }
-            
-    //         // web3.eth.watch('pending').changed(updateBalance);
-    //         // web3.eth.watch('chain').changed(updateBalance);
-
-    //         // console.log(web3.eth.watch('chain').logs());
+                // update the operation, if
+                } else if(log.args.operation) {
+                    Transactions.update(txId, {$set: {
+                        operation: log.args.operation
+                    }});
+                }
 
 
-    //         // start WATCH for transactions
-    //         // var walletContract = web3.eth.contract(address, walletABI);
+                // remove pending confirmation, if still present
+                var account = Accounts.findOne({address: log.address});
+                if(account) {
+                    _.each(PendingConfirmations.find({_id: {$in: account.pendingConfirmations || []}, operation: log.args.operation}).fetch(), function(pendingConfirmation){
+                        PendingConfirmations.remove(pendingConfirmation._id);
+                    });
+                }
 
-    //         // // single transactions
-    //         // var singleTxWatcher = walletContract.SingleTransact(),
-    //         //     transactionCallback = function(result) {
-    //         //         console.log('transaction arrived', result);
-    //         //         Transactions.insert(result);
-    //         //     };
+                // update balance
+                web3.eth.getBalance(log.address, function(err, res){
+                    Accounts.update({address: log.address}, {$set: {
+                        balance: res.toString(10)
+                    }});
+                });
+            }
+        });
+    };
 
-    //         // var pastSingleTransactions = singleTxWatcher.logs();
-    //         // if(_.isArray(pastSingleTransactions)) {
-    //         //     _.each(pastSingleTransactions, transactionCallback);
-    //         // }
-
-    //         // singleTxWatcher.changed(transactionCallback);
-
-    //         // // multisig transactions
-    //         // var multiTxWatcher = walletContract.MultiTransact(),
-    //         //     transactionCallback = function(result) {
-    //         //         console.log('transaction arrived', result);
-    //         //         Transactions.insert(result);
-    //         //     };
-
-    //         // var pastMultiTransactions = multiTxWatcher.logs();
-    //         // if(_.isArray(pastMultiTransactions)) {
-    //         //     _.each(pastMultiTransactions, transactionCallback);
-    //         // }
-
-    //         // multiTxWatcher.changed(transactionCallback);
-    //     });
-
-    // }
 
     /**
     Creates filters for a wallet contract, to watch for deposits, or contract creation events.
 
     @method contractFilters
     @param {Object} newDocument
-    @param {Object} contractInstance
-    @param {String} address
-    @param {Number} blockToCheckBack
     */
-    var contractFilters = function(newDocument, contractInstance, address, blockToCheckBack){
+    var contractFilters = function(newDocument){
+        var blockToCheckBack = (Blockchain.findOne().checkpoint || 0) - rollBackBy;
+        if(blockToCheckBack < 0)
+            blockToCheckBack = 0;
+
+        var contractInstance = contracts[newDocument._id];
         if(!contractInstance || newDocument.type === 'account')
             return;
 
+        if(!contractInstance.events)
+            contractInstance.events = [];
+
+        // stop all running events
+        _.each(contractInstance.events, function(event){
+            event.stopWatching();
+        });
+
+
         // SETUP FILTERS
+        console.log('Checking Deposits and ConfirmationNeeded for '+ newDocument.address +' from block #', blockToCheckBack);
 
-        // get BlockNumber to look from
-        var lastBlock = (lastTx = Transactions.findOne({$or: [{from: newDocument.address},{to: newDocument.address}]}, {sort: {blockNumber: -1}}))
-            ? lastTx.blockNumber - blockToCheckBack // check the last 1000 blocks again, to be sure we are not on a fork
-            : 0;
-        if(lastBlock < 0)
-            lastBlock = 0;
-
-        console.log('Checkin Deposits for '+ address +' from block #', lastBlock);
-
-        // delete the last tx until block -1000
-        // var lastTx = Transactions.findOne({account: newDocument._id}, {sort: {blockNumber: -1}});
-        // console.log(lastTx.blockNumber - blockToCheckBack, lastBlock);
-        // if(lastTx.blockNumber - blockToCheckBack === lastBlock) {
-        //     _.each(Transactions.find({account: newDocument._id, blockNumber: {$gt: lastBlock}}).fetch(), function(tx){
-        //         Transactions.remove(tx._id);
-        //     });
-        //     console.log('Deleted, now have', Transactions.find().count());
-        // }
+        // delete the last tx and pc until block -1000
+        _.each(Transactions.find({_id: {$in: newDocument.transactions}, blockNumber: {$gt: blockToCheckBack}}).fetch(), function(tx){
+            Transactions.remove(tx._id);
+        });
+        _.each(PendingConfirmations.find({_id: {$in: newDocument.pendingConfirmations}, blockNumber: {$gt: blockToCheckBack}}).fetch(), function(pc){
+            PendingConfirmations.remove(pc._id);
+        });
 
         // WATCH for a block confirmation, so we can turn the account active
         if(newDocument.disabled) {
-            console.log('Checkin Created for '+ address +' from block #', lastBlock);
-            contractInstance.Created({},{fromBlock: lastBlock, toBlock: 'latest'}).watch(function(error, result) {
-                console.log('Contract created on '+ address);
+            console.log('Checkin Created for '+ newDocument.address +' from block #', blockToCheckBack);
+            var Created = contractInstance.Created({},{fromBlock: blockToCheckBack, toBlock: 'latest'});
+            Created.watch(function(error, result) {
+                console.log('Contract created on '+ newDocument.address);
 
                 if(!error) {
                     // remove the disabled state
                     Accounts.update(newDocument._id, {$unset: {
                         disabled: ''
+                    }, $set: {
+                        creationBlock: result.blockNumber
                     }});
 
+                    // setup daily limit
+                    if(newDocument.dailyLimit)
+                        contractInstance.setDailyLimit(newDocument.dailyLimit, {from: newDocument.owner});
+
                     // remove filter
-                    contractInstance.Created().stopWatching();
+                    Created.stopWatching();
                 }
             });
         }
 
         // WATCH for incoming transactions
-        contractInstance.Deposit({}, {fromBlock: lastBlock, toBlock: 'latest'}).watch(function(error, result) {
+        contractInstance.events.push(contractInstance.Deposit({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
+        contractInstance.events[contractInstance.events.length-1].watch(function(error, log) {
             if(!error) {
-                console.log('Deposit for '+ address +' arrived in block: #'+ result.blockNumber, result.args.value.toNumber());
+                console.log('Deposit for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber());
 
-                var block = web3.eth.getBlock(result.blockNumber, function(err, block){
+                addTransaction(log, log.args.from, newDocument.address, log.args.value.toString(10));
+            }
+        });
+        // WATCH for outgoing transactions
+        contractInstance.events.push(contractInstance.SingleTransact({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
+        contractInstance.events[contractInstance.events.length-1].watch(function(error, log) {
+            if(!error) {
+                console.log('SingleTransact for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber());
+
+                addTransaction(log, newDocument.address, log.args.to, log.args.value.toString(10));
+            }
+        });
+        contractInstance.events.push(contractInstance.MultiTransact({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
+        contractInstance.events[contractInstance.events.length-1].watch(function(error, log) {
+            if(!error) {
+                console.log('MultiTransact for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber() +', Operation '+ log.args.operation);
+                // console.log(log);
+                addTransaction(log, newDocument.address, log.args.to, log.args.value.toString(10));
+
+                // make sure pending confirmations get removed
+                var confirmationId = Helpers.makeId('pc', log.args.operation);
+                PendingConfirmations.remove(confirmationId);
+                Tracker.afterFlush(function(){
+                    Accounts.update({address: newDocument.address}, {$pull: {
+                        pendingConfirmations: confirmationId
+                    }});
+                });
+            }
+        });
+        // WATCH FOR CONFIRMATIONS NEEDED
+        contractInstance.events.push(contractInstance.ConfirmationNeeded({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
+        contractInstance.events[contractInstance.events.length-1].watch(function(error, log) {
+            if(!error) {
+                console.log('ConfirmationNeeded for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber() +', Operation '+ log.args.operation);
+
+                var block = web3.eth.getBlock(log.blockNumber, true, function(err, block){
 
                     if(!err) {
-                        txId = Helpers.makeTransactionId(result.transactionHash);
+                        var confirmationId = Helpers.makeId('pc', log.args.operation),
+                            transaction = _.find(block.transactions, function(tx){ return tx.hash === log.transactionHash; });
 
-                        // add transaction
-                        if(!Transactions.findOne(txId)) {
-                            Transactions.insert({
-                                _id: txId,
-                                value: result.args.value.toString(10),
-                                to: newDocument.address,
-                                from: result.args.from,
+                        var account = Accounts.findOne({address: log.args.to}),
+                            pendingConf = PendingConfirmations.findOne(confirmationId);
+                         
+
+                        // add pending confirmation,
+                        // if not already present, OR transaction already went through
+                        if(!pendingConf &&
+                           !Transactions.findOne({_id: {$in: account.transactions || []}, operation: log.args.operation})) {
+                            PendingConfirmations.insert({
+                                _id: confirmationId,
+                                initiator: log.args.initiator,
+                                operation: log.args.operation,
+                                value: log.args.value.toString(10),
+                                to: log.args.to,
+                                from: newDocument.address,
                                 timestamp: block.timestamp,
-                                blockNumber: result.blockNumber,
-                                blockHash: result.blockHash,
-                                transactionHash: result.transactionHash,
-                                transactionIndex: result.transactionIndex
+                                blockNumber: log.blockNumber,
+                                blockHash: log.blockHash,
+                                transactionHash: log.transactionHash,
+                                transactionIndex: log.transactionIndex,
                             });
-                            Accounts.update(newDocument._id, {$addToSet: {
-                                transactions: txId
-                            }});
-                        }
 
-                        // update balance
-                        web3.eth.getBalance(address, function(err, res){
-                            Accounts.update(newDocument._id, {$set: {
-                                balance: res.toString(10)
-                            }});
-                        });
+                        } else if(pendingConf) {
+                            PendingConfirmations.remove(confirmationId);
+                        }
                     }
 
                 });
@@ -269,9 +313,9 @@ connectNode = function(){
         @method added
         */
         added: function(newDocument) {
-            var address,
-                contractInstance,
-                blockToCheckBack = 1000;
+
+            if(newDocument.type !== 'wallet')
+                return;
 
             // DEPLOYED NEW CONTRACT
             if(!newDocument.address) {
@@ -284,15 +328,15 @@ connectNode = function(){
 
                 }, function(err, contract){
                     if(!err) {
-                        contractInstance = contract;
-                        address = contractInstance.address;
+                        contracts[newDocument._id] = contract;
+                        newDocument.address = contracts[newDocument._id].address;
 
                         // add address to account
                         Accounts.update(newDocument._id, {$set: {
-                            address: address
+                            address: newDocument.address
                         }});
 
-                        contractFilters(newDocument, contractInstance, address, blockToCheckBack);                    
+                        contractFilters(newDocument);                    
                         
                     } else
                         // remove account, if something failed
@@ -301,24 +345,23 @@ connectNode = function(){
 
             // USE DEPLOYED CONTRACT
             } else {
-                address = newDocument.address;
-                contractInstance = WalletContract.at(address);
+                contracts[newDocument._id] = WalletContract.at(newDocument.address);
 
                 // update balance on start
-                web3.eth.getBalance(address, function(err, res){
+                web3.eth.getBalance(newDocument.address, function(err, res){
                     Accounts.update(newDocument._id, {$set: {
                         balance: res.toString(10)
                     }});
                 });
 
-                contractFilters(newDocument, contractInstance, address, blockToCheckBack);
+                contractFilters(newDocument);
             }
-
         }
     });
 
 
     /**
+    Updates a transaction.
 
     @method updateTransaction
     @param {Object} newDocument     The transaction object from our database
@@ -328,14 +371,15 @@ connectNode = function(){
         Transactions.update(newDocument._id, {$set: {
             blockNumber: transaction.blockNumber,
             blockHash: transaction.blockHash,
-            transactionIndex: transaction.transactionIndex
+            transactionIndex: transaction.transactionIndex,
+            fee: transaction.gasPrice.times(new BigNumber(transaction.gas)).toString(10)
         }});
     };
 
     /**
     Observe transactions, listen for new created transactions.
 
-    @class Chats.Transactions({}).observe
+    @class Transactions({}).observe
     @constructor
     */
     Transactions.find({}).observe({
@@ -345,6 +389,12 @@ connectNode = function(){
         @method added
         */
         added: function(newDocument) {
+
+            // add to accounts
+            Accounts.update({address: {$in: [newDocument.from, newDocument.to]}}, {$addToSet: {
+                transactions: newDocument._id
+            }});
+
             if(!newDocument.blockHash) {
 
                 // check first if the transaction was already mined
@@ -359,7 +409,7 @@ connectNode = function(){
                         var filter = web3.eth.filter('latest');
                         filter.watch(function(e, res){
                             if(!e) {
-                                var block = web3.eth.getTransaction(newDocument.transactionHash, function(e, tx){
+                                web3.eth.getTransaction(newDocument.transactionHash, function(e, tx){
                                     if(tx && tx.blockNumber) {
                                         updateTransaction(newDocument, tx);
                                         
@@ -373,6 +423,47 @@ connectNode = function(){
                 });
 
             }
+        },
+        /**
+        Remove transactions confirmations from the accounts
+
+        @method remove
+        */
+        remove: function(document) {
+            Accounts.update({address: {$in: [document.from, document.to]}}, {$pull: {
+                transactions: document._id
+            }});
+        }
+    });
+
+
+    
+    /**
+    Observe PendingConfirmations 
+
+    @class PendingConfirmations({}).observe
+    @constructor
+    */
+    PendingConfirmations.find({}).observe({
+        /**
+        Add pending confirmations to the accounts
+
+        @method added
+        */
+        added: function(document) {
+            Accounts.update({address: document.from}, {$addToSet: {
+                pendingConfirmations: document._id
+            }});
+        },
+        /**
+        Remove pending confirmations from the accounts
+
+        @method remove
+        */
+        remove: function(document) {
+            Accounts.update({address: document.from}, {$pull: {
+                pendingConfirmations: document._id
+            }});
         }
     });
 };

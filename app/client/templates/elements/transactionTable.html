@@ -1,23 +1,25 @@
 <template name="elements_transactions_table">
     <br>
-    <input type="text" class="filter-transactions" placeholder="{{i18n 'wallet.transactions.filter'}}">
+    {{#unless $eq collection "PendingConfirmations"}}
+        <input type="text" class="filter-transactions" placeholder="{{i18n 'wallet.transactions.filter'}}">
+    {{/unless}}
     <table class="dapp-zebra">
-        <thead>
+        <!-- <thead>
             <tr>
                 <td class="time">{{i18n "wallet.transactions.time"}}</td>
-                <td>{{i18n "wallet.transactions.from"}}</td>
-                <!-- <td>{{i18n "wallet.transactions.to"}}</td> -->
+                <td></td>
                 <td class="transaction-amount">{{i18n "wallet.transactions.amount"}}</td>
                 <td></td>
             </tr>
-        </thead>
+        </thead> -->
         <tbody>
             {{#each items}}
                 {{> elements_transactions_row}}
             {{else}}
-                <tr>
-                    <td colspan="5" style="text-align: center;">
-                        {{i18n "wallet.transactions.noneFound"}}
+                <tr class="full-width">
+                    <td colspan="5">
+                        {{> spinner}}
+                        {{! i18n "wallet.transactions.noneFound"}}
                     </td>
                 </tr>
             {{/each}}
@@ -36,11 +38,13 @@
 <template name="elements_transactions_row">
     <tr class="{{#if $eq unConfirmed.confirmations 0}}unconfirmed{{/if}}">
         <td class="time" title="{{formatTime timestamp 'LLLL'}}">
-            {{#with unConfirmed}}
-                <div class="dapp-progress">
-                    <div class="dapp-bar" style="width: {{percent}}%;"></div>
-                </div>
-            {{/with}}
+            {{#unless $eq ../collection "PendingConfirmations"}}
+                {{#with unConfirmed}}
+                    <div class="dapp-progress">
+                        <div class="dapp-bar" style="width: {{percent}}%;"></div>
+                    </div>
+                {{/with}}
+            {{/unless}}
 
             <h2>{{formatTime timestamp "MMM"}}</h2>
             <p>{{formatTime timestamp "D"}}</p>
@@ -63,11 +67,11 @@
         </td> -->
         {{#if incomingTx ../account}}
             <td class="transaction-amount plus">
-                {{formatBalance value '0,0.00[000000]'}}
+                {{formatBalance value '0,0.00[000000]'}} <!-- <small>({{formatBalance fee '0,0.00[000000]'}})</small> -->
             </td>
         {{else}}
             <td class="transaction-amount minus">
-                -{{formatBalance value '0,0.00[000000]'}}
+                -{{formatBalance value '0,0.00[000000]'}} <!-- <small>({{formatBalance fee '0,0.00[000000]'}})</small> -->
             </td>
         {{/if}}
         <td>
@@ -77,6 +81,26 @@
                 <i class="icon-arrow-right minus"></i>
             {{/if}}
         </td>
+        {{#if $eq ../collection "PendingConfirmations"}}
+            {{#if $eq status "confirmed"}}
+                <td colspan="2" class="button">
+                    {{> spinner}}
+                </td>
+            {{else}}
+                <td class="button">
+                    <button class="dapp-block-button approve">
+                        <i class="icon-checkmark"></i>
+                        Approve
+                    </button>
+                </td>
+                <td class="button">
+                    <button class="dapp-block-button reject">
+                        <i class="icon-cross"></i>
+                        Reject
+                    </button>
+                </td>
+            {{/if}}
+        {{/if}}
     </tr>
 </template>
 

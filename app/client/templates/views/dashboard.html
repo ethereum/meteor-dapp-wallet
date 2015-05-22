@@ -17,55 +17,13 @@
 
         <div class="dapp-clear-fix"></div>
         
-        <h2>Pending transactions</h2>
 
-        <table>
-            <tbody>
-                <tr>
-                    <td class="transaction-amount plus">202 µΞ</td>
-                    <td class="account-name">
-                        <span>alexvandesande.eth</span>
-                    </td>
-                    <td class="transaction-purpose">
-                        <span>Birthday gift</span>
-                    </td>
-                    <td class="button">
-                        <button class="dapp-block-button approve">
-                            <i class="icon-checkmark"></i>
-                            Approve
-                        </button>
-                    </td>
-                    <td class="button">
-                        <button class="dapp-block-button reject">
-                            <i class="icon-cross"></i>
-                            Reject
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="transaction-amount minus">-4 200 µΞ</td>
-                    <td class="account-name">
-                        <span>alexvandesande.eth</span>
-                    </td>
-                    <td class="transaction-purpose">
-                        <span>Birthday gift</span>
-                    </td>
-                    <td class="button">
-                        <button class="dapp-block-button approve">
-                            <i class="icon-checkmark"></i>
-                            Approve
-                        </button>
-                    </td>
-                    <td class="button">
-                        <button class="dapp-block-button reject">
-                            <i class="icon-cross"></i>
-                            Reject
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        {{#if pendingConfirmations}}
+            <h2>{{i18n 'wallet.transactions.pendingConfirmations'}}</h2>
 
+            {{> elements_transactions_table transactionIds=pendingConfirmations collection="PendingConfirmations"}}
+
+        {{/if}}
 
         {{#if allTransactions}}
             <h2>{{i18n 'wallet.transactions.latest'}}</h2>
