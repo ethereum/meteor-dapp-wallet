@@ -24,10 +24,11 @@ The estimated gas
 @property estimatedGas
 */
 var estimatedGas = 23000;
-web3.eth.estimateGas({from: Accounts.findOne({type: 'account'}).address, to: Accounts.findOne({type: 'account'}).address, value: 1}, function(e, res){
-    if(!e && res)
-        estimatedGas = res;
-});
+if(Accounts.findOne({type: 'account'}))
+    web3.eth.estimateGas({from: Accounts.findOne({type: 'account'}).address, to: Accounts.findOne({type: 'account'}).address, value: 1}, function(e, res){
+        if(!e && res)
+            estimatedGas = res;
+    });
 
 /**
 Calculates the gas price.
@@ -36,7 +37,7 @@ Calculates the gas price.
 @return {Number}
 */
 var calculateGasPrice = function(fee, ether){
-    var suggestedGasPrice = web3.fromWei(new BigNumber(Blockchain.findOne().gasPrice), ether || LocalStore.get('etherUnit'));
+    var suggestedGasPrice = web3.fromWei(new BigNumber(Blockchain.findOne('latest').gasPrice, 10), ether || LocalStore.get('etherUnit'));
     return suggestedGasPrice.times(estimatedGas).times(new BigNumber(toPowerFactor).toPower(fee));
 }
 
@@ -195,7 +196,7 @@ Template['views_send'].events({
     'submit form': function(e, template){
         var amount = TemplateVar.get('amount'),
             to = template.find('input[name="to"]').value,
-            gasPrice = new BigNumber(Blockchain.findOne().gasPrice).times(new BigNumber(toPowerFactor).toPower(TemplateVar.get('feeMultiplicator'))).toFixed(0),
+            gasPrice = new BigNumber(Blockchain.findOne('latest').gasPrice, 10).times(new BigNumber(toPowerFactor).toPower(TemplateVar.get('feeMultiplicator'))).toFixed(0),
             selectedAccount = Accounts.findOne({address: TemplateVar.get('fromAddress')});
 
         if(amount && web3.isAddress(to) && selectedAccount) {
@@ -212,9 +213,11 @@ Template['views_send'].events({
                 }, function(e, txHash){
                     console.log(e, txHash);
                     if(!e) {
+                        console.log('SEND simple');
+
+
                         txId = Helpers.makeId('tx', txHash);
 
-                        console.log('SEND simple');
 
                         Transactions.insert({
                             _id: txId,
@@ -228,22 +231,12 @@ Template['views_send'].events({
                             // transactionIndex: null,
                             // logIndex: null
                         });
-                        Accounts.update(selectedAccount._id, {$addToSet: {
-                            transactions: txId
-                        }});
-                        // also add to account, if "TO" is one of my own
-                        if(toAccount = Accounts.findOne({address: to}))
-                            Accounts.update(toAccount._id, {$addToSet: {
-                                transactions: txId
-                            }});
 
                         Router.go('/');
                     }
                 });
 
             } else if(selectedAccount.type === 'wallet') {
-                console.log('SEND from contract', amount);
-
 
                 contracts[selectedAccount._id].execute.sendTransaction(to, amount, '', {
                     from: selectedAccount.owner,
@@ -251,8 +244,29 @@ Template['views_send'].events({
                     gas: 1204633 + 500000 // add 100 to be safe
                 }, function(e, txHash){
                     console.log(e, txHash);
+                    if(!e) {
+                        console.log('SEND from contract', amount);
 
-                    Router.go('/');
+                        // txId = Helpers.makeId('tx', txHash);
+
+                        // // TODO: remove after we have pending logs?
+                        // Transactions.insert({
+                        //     _id: txId,
+                        //     value: amount,
+                        //     from: selectedAccount.address,
+                        //     to: to,
+                        //     timestamp: moment().unix(),
+                        //     transactionHash: txHash,
+                        //     // blockNumber: null,
+                        //     // blockHash: null,
+                        //     // transactionIndex: null,
+                        //     // logIndex: null
+                        // });
+
+                        Router.go('/');
+                    }
+
+
                 });
             }
         }

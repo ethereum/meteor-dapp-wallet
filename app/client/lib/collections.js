@@ -5,13 +5,13 @@
 // contains blockchain meta data
 Blockchain = new Mongo.Collection('blockchain', {connection: null});
 new PersistentMinimongo(Blockchain);
-blockchainId = (!Blockchain.findOne())
-    ? Blockchain.insert({
+if(!Blockchain.findOne('latest'))
+    Blockchain.insert({
+        _id: 'latest',
         blockNumber: 0,
         gasPrice: 0,
         checkpoint: 0
     })
-    : Blockchain.findOne()._id;
 
 
 // Contains the accounts

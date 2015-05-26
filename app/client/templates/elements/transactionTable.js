@@ -189,9 +189,9 @@ Template['elements_transactions_row'].helpers({
                 percent: 0
             };
 
-        var currentBlockNumber = Blockchain.findOne().blockNumber,
-            confirmations = currentBlockNumber - this.blockNumber + 1;
-        return (this.blockNumber > currentBlockNumber - blocksForConfirmation && (currentBlockNumber - blocksForConfirmation) > 0)
+        var currentBlockNumber = Blockchain.findOne('latest').blockNumber,
+            confirmations = currentBlockNumber - (this.blockNumber - 1);
+        return (blocksForConfirmation >= confirmations && confirmations >= 0)
             ? {
                 confirmations: confirmations,
                 percent: (confirmations / (blocksForConfirmation)) * 100
