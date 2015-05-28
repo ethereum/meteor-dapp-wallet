@@ -52,7 +52,7 @@
     }
 }
 
-a.wallet-account {
+a.wallet-box {
     position: relative;
     display: inline-block;
     width: @gridWidth * 6.5;
@@ -71,12 +71,22 @@ a.wallet-account {
         //     background-color: transparent;
         //     background-image: none !important;
         // }
-        a.dapp-identicon {
-            position: absolute;
-            left: 12px;
-            top: 20px;
-        }
     }
+    a.dapp-identicon {
+        position: absolute;
+        left: 12px;
+        top: 20px;
+    }
+    .spinner-container {
+        position: absolute;
+        left: -70px;
+    }
+    .dapp-progress {
+        position: absolute;
+        left: 0px;
+        bottom: 0;
+    }
+
     &.disabled {
         .opacity(0.4);
         pointer-events: none;
@@ -84,6 +94,10 @@ a.wallet-account {
     &.create {
         .display(flex);
         .align-items(center);
+
+        h3 {
+            margin-top: 0;
+        }
     }
 
     &:hover {
@@ -122,15 +136,17 @@ a.wallet-account {
         float: left;
     }
     > span {
+        position: relative;
         clear: left;
         float: left;
         color: @colorTextSecondary;
         font-size: 1.3em;
-        line-height: 1.3em;
+        line-height: 1.35em;
         .dapp-shorten-text;
 
         &.account-id {
             font-size: 0.8em;
+            line-height: 1.4em;
             color: fadeout(@colorTextSecondary, 40%);
         }
     }

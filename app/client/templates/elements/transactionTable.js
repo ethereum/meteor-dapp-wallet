@@ -189,7 +189,7 @@ Template['elements_transactions_row'].helpers({
                 percent: 0
             };
 
-        var currentBlockNumber = Blockchain.findOne('latest').blockNumber,
+        var currentBlockNumber = LastBlock.findOne('latest').blockNumber,
             confirmations = currentBlockNumber - (this.blockNumber - 1);
         return (blocksForConfirmation >= confirmations && confirmations >= 0)
             ? {

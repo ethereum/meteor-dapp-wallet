@@ -18,7 +18,15 @@ Number of blocks to rollback, from the last stable point.
 
 @property rollBackBy
 */
-rollBackBy = 100;
+rollBackBy = 500;
+
+
+/**
+Number of blocks to confirm a wallet
+
+@property requiredConfirmations
+*/
+requiredConfirmations = 12;
 
 
 /**
@@ -34,7 +42,7 @@ connectNode = function(){
     web3.setProvider(new web3.providers.HttpProvider("http://localhost:8545")); //8545 8080 10.10.42.116
 
     // UPDATE latest BLOCKCHAIN DATA (SYNC!)
-    Blockchain.update('latest', {$set: {
+    LastBlock.update('latest', {$set: {
         blockNumber: web3.eth.blockNumber,
         blockHash: web3.eth.getBlock('latest').hash,
         gasPrice: web3.eth.gasPrice.toString(10)
@@ -45,12 +53,17 @@ connectNode = function(){
         if(!e) {
             var block = web3.eth.getBlock(res, function(e, block){
                 var oldBlock = Blockchain.findOne({_id: 'bl_'+ (block.number - 1)});
-                console.log('BLOCK', block.number);
+                // console.log('BLOCK', block.number);
 
                 // CHECK for FORK
                 if(oldBlock && oldBlock.blockHash !== block.parentHash) {
                     console.log('FORK detected from Block #'+ oldBlock.blockNumber + ' -> #'+ block.number +', rolling back!');
+                    // Go through all accounts and re-run
                     _.each(Accounts.find({type: 'wallet'}).fetch(), function(account){
+                        // REMOVE ADDRESS for YOUNG ACCOUNTS, so that it tries to get the Created event and correct address again
+                        if(account.creationBlock + requiredConfirmations >= block.number)
+                            delete account.address;
+
                         contractFilters(account);
                     });
                 }
@@ -81,7 +94,7 @@ connectNode = function(){
                     if(!e) {
                         // update the latest blockchain entry
                         var latestBlock = Blockchain.findOne({}, {sort: {blockNumber: -1}});
-                        Blockchain.update('latest', {$set: {
+                        LastBlock.update('latest', {$set: {
                             blockNumber: latestBlock.blockNumber,
                             blockHash: latestBlock.blockHash,
                             gasPrice: gasPrice.toString(10),
@@ -109,7 +122,7 @@ connectNode = function(){
             Accounts.insert({
                 type: 'account',
                 address: item,
-                balance: '0',
+                balance: web3.eth.getBalance(item).toString(10),
                 name: (item === web3.eth.coinbase) ? 'Coinbase' : item
             });
     });
@@ -132,6 +145,79 @@ connectNode = function(){
 
 
     /**
+    Checking for confirmations of created wallets.
+
+    Will only check if the old document, has no address and its inside the confirmations still.
+
+    @method checkWalletConfirmations
+    @param {Object} newDocument
+    @param {Object} oldDocument
+    */
+    var checkWalletConfirmations = function(newDocument, oldDocument){
+        var confirmations = LastBlock.findOne('latest').blockNumber - newDocument.creationBlock;
+
+        if(newDocument.address && !oldDocument.address && confirmations < requiredConfirmations) {
+            var filter = web3.eth.filter('latest');
+            filter.watch(function(e, blockHash){
+                if(!e) {
+                    var confirmations = LastBlock.findOne('latest').blockNumber - newDocument.creationBlock;
+
+                    if(confirmations < requiredConfirmations && confirmations > 0) {
+                        console.log('Checking wallet address '+ newDocument.address +' for code. Currently confirmations: '+ confirmations);
+
+                        // Check if the code is still at the contract address, if not remove the wallet
+                        web3.eth.getCode(newDocument.address, function(e, code){
+                            if(code.length <= 2) {
+                                Accounts.remove(newDocument._id);
+                            }
+                        });
+                    } else if(confirmations > requiredConfirmations) {
+                        filter.stopWatching();
+                    }
+                }
+            });
+        }
+    };
+
+
+
+    /**
+    Checking for confirmations of transactions.
+
+    @method checkTransactionConfirmations
+    @param {Object} newDocument
+    @param {Object} oldDocument
+    */
+    var checkTransactionConfirmations = function(newDocument, oldDocument){
+        var confirmations = LastBlock.findOne('latest').blockNumber - newDocument.blockNumber;
+
+        // check for confirmations
+        if(!oldDocument.blockNumber && newDocument.blockNumber && confirmations < requiredConfirmations) {
+            var filter = web3.eth.filter('latest');
+            filter.watch(function(e, blockHash){
+                if(!e) {
+                    var confirmations = LastBlock.findOne('latest').blockNumber - newDocument.blockNumber;
+
+                    if(confirmations < requiredConfirmations && confirmations > 0) {
+                        console.log('Checking transaction '+ newDocument.transactionHash +'. Current confirmations: '+ confirmations);
+
+                        // Check if the tx still exists, if not remove the tx
+                        web3.eth.getTransaction(newDocument.transactionHash, function(e, tx){
+                            if(tx && tx.blockNumber)
+                                newDocument = updateTransaction(newDocument, tx);
+                            else if(!tx)
+                                Transactions.remove(newDocument._id);
+                        });
+                    } else if(confirmations > requiredConfirmations) {
+                        filter.stopWatching();
+                    }
+                }
+            });
+        }
+    };
+
+
+    /**
     Add new in/outgoing transaction
 
     @method addTransaction
@@ -145,33 +231,20 @@ connectNode = function(){
 
             if(!err) {
                 var txId = Helpers.makeId('tx', log.transactionHash),
-                    transaction = _.find(block.transactions, function(tx){ return tx.hash === log.transactionHash; }),
-                    tx = Transactions.findOne(txId);
+                    transaction = _.find(block.transactions, function(tx){ return tx.hash === log.transactionHash; });
 
-                // add transaction
-                if(!tx) {
-                    Transactions.insert({
-                        _id: txId,
-                        operation: log.args.operation || null,
-                        value: value,
-                        to: to,
-                        from: from,
-                        timestamp: block.timestamp,
-                        blockNumber: log.blockNumber,
-                        blockHash: log.blockHash,
-                        transactionHash: log.transactionHash,
-                        transactionIndex: log.transactionIndex,
-                        fee: transaction.gasPrice.times(new BigNumber(transaction.gas)).toString(10)
-                    });
-
-
-                // update the operation, if
-                } else if(log.args.operation) {
-                    Transactions.update(txId, {$set: {
-                        operation: log.args.operation
-                    }});
-                }
-
+                Transactions.upsert({_id: txId}, {
+                    operation: log.args.operation || null,
+                    value: value,
+                    to: to,
+                    from: from,
+                    timestamp: block.timestamp,
+                    blockNumber: log.blockNumber,
+                    blockHash: log.blockHash,
+                    transactionHash: log.transactionHash,
+                    transactionIndex: log.transactionIndex,
+                    fee: transaction.gasPrice.times(new BigNumber(transaction.gas)).toString(10)
+                });
 
                 // remove pending confirmation, if still present
                 var account = Accounts.findOne({address: log.address});
@@ -199,9 +272,9 @@ connectNode = function(){
     @param {Object} newDocument
     */
     var contractFilters = function(newDocument){
-        var blockToCheckBack = (Blockchain.findOne('latest').checkpoint || 0) - rollBackBy;
+        var blockToCheckBack = (LastBlock.findOne('latest').checkpoint || 0) - rollBackBy;
         if(blockToCheckBack < 0)
-            blockToCheckBack = 0;
+            blockToCheckBack = newDocument.creationBlock;
 
         var contractInstance = contracts[newDocument._id];
         if(!contractInstance || newDocument.type === 'account')
@@ -215,21 +288,28 @@ connectNode = function(){
             event.stopWatching();
         });
 
+
         // WATCH for a block confirmation, so we can turn the account active
-        if(newDocument.disabled) {
+        if(!newDocument.address) {
+
+
             console.log('Checking Created for Identifier: '+ newDocument.createdIdentifier +' from block #'+ newDocument.creationBlock);
-            var Created = web3.eth.filter({topics: [null, newDocument.createdIdentifier], fromBlock: newDocument.creationBlock, toBlock: 'latest'});//contractInstance.Created({},{fromBlock: blockToCheckBack, toBlock: 'latest'});
+            contractInstance.events.push(web3.eth.filter({topics: [null, newDocument.createdIdentifier, null], fromBlock: newDocument.creationBlock, toBlock: 'latest'}));//contractInstance.Created({},{fromBlock: blockToCheckBack, toBlock: 'latest'});
+            var Created = contractInstance.events[contractInstance.events.length-1];
             Created.watch(function(error, log) {
                 console.log('Contract created on '+ log.address);
 
+                console.log(log);
+
                 if(!error) {
-                    // remove the disabled state
+                    // add the address state
                     Accounts.update(newDocument._id, {$unset: {
-                        disabled: ''
+                        createdIdentifier: ''
                     }, $set: {
                         creationBlock: log.blockNumber,
                         address: log.address
                     }});
+                    newDocument = Accounts.findOne(newDocument._id);
 
                     // set address to the contract instance
                     contracts[newDocument._id].address = log.address;
@@ -369,6 +449,7 @@ connectNode = function(){
 
                 // identifier already exisits, so just watch for created and don't re-deploy
                 if(newDocument.createdIdentifier) {
+                    contracts[newDocument._id] = WalletContract.at();
                     contractFilters(newDocument);
                     return;
                 }
@@ -376,12 +457,16 @@ connectNode = function(){
                 WalletContract.new(createdIdentifier, {
                     from: newDocument.owner,
                     data: walletABICompiled,
-                    gas: 1500000,
+                    gas: 2000000,
                     gasPrice: web3.eth.gasPrice
 
                 }, function(err, contract){
                     if(!err) {
                         contracts[newDocument._id] = contract;
+
+                        console.log('Guessed Contract Address: ', contract.address);
+
+
                         // newDocument.address = contracts[newDocument._id].address;
                         newDocument.createdIdentifier = createdIdentifier;
 
@@ -410,8 +495,16 @@ connectNode = function(){
                 });
 
                 contractFilters(newDocument);
+
+                checkWalletConfirmations(newDocument, {});
             }
-        }
+        },
+        /**
+        Will check if the contract is still 
+
+        @method changed
+        */
+        changed: checkWalletConfirmations
     });
 
 
@@ -421,6 +514,7 @@ connectNode = function(){
     @method updateTransaction
     @param {Object} newDocument     The transaction object from our database
     @param {Object} transaction     The transaction object from getTransaction
+    @return {Object} The updated transaction
     */
     var updateTransaction = function(newDocument, transaction){
         Transactions.update(newDocument._id, {$set: {
@@ -429,6 +523,7 @@ connectNode = function(){
             transactionIndex: transaction.transactionIndex,
             fee: transaction.gasPrice.times(new BigNumber(transaction.gas)).toString(10)
         }});
+        return Transactions.findOne(newDocument._id);
     };
 
     /**
@@ -444,6 +539,7 @@ connectNode = function(){
         @method added
         */
         added: function(newDocument) {
+            var confirmations = LastBlock.findOne('latest').blockNumber - newDocument.blockNumber;
 
             // add to accounts
             Accounts.update({address: newDocument.from}, {$addToSet: {
@@ -453,35 +549,23 @@ connectNode = function(){
                 transactions: newDocument._id
             }});
 
-            if(!newDocument.blockHash) {
-
-                // check first if the transaction was already mined
+            // check first if the transaction was already mined
+            if(!newDocument.blockHash || confirmations < requiredConfirmations) {
                 web3.eth.getTransaction(newDocument.transactionHash, function(e, tx){
-                    if(tx && tx.blockNumber)
-                        updateTransaction(newDocument, tx);
+                    if(tx && tx.blockNumber) {
+                        newDocument = updateTransaction(newDocument, tx);
 
-                    // otherwise watch incoming transactions
-                    else {
-
-                        // watch the latest blocks until the transaction is included
-                        var filter = web3.eth.filter('latest');
-                        filter.watch(function(e, res){
-                            if(!e) {
-                                web3.eth.getTransaction(newDocument.transactionHash, function(e, tx){
-                                    if(tx && tx.blockNumber) {
-                                        updateTransaction(newDocument, tx);
-                                        
-                                        filter.stopWatching();
-                                    }
-                                });
-                            }
-                        });
+                        checkTransactionConfirmations(newDocument, {});
                     }
-
                 });
-
             }
         },
+        /**
+        Will check if the transaction is confirmed 
+
+        @method changed
+        */
+        changed: checkTransactionConfirmations,
         /**
         Remove transactions confirmations from the accounts
 

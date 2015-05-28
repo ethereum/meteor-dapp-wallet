@@ -37,7 +37,7 @@ Calculates the gas price.
 @return {Number}
 */
 var calculateGasPrice = function(fee, ether){
-    var suggestedGasPrice = web3.fromWei(new BigNumber(Blockchain.findOne('latest').gasPrice, 10), ether || LocalStore.get('etherUnit'));
+    var suggestedGasPrice = web3.fromWei(new BigNumber(LastBlock.findOne('latest').gasPrice, 10), ether || LocalStore.get('etherUnit'));
     return suggestedGasPrice.times(estimatedGas).times(new BigNumber(toPowerFactor).toPower(fee));
 }
 
@@ -196,7 +196,7 @@ Template['views_send'].events({
     'submit form': function(e, template){
         var amount = TemplateVar.get('amount'),
             to = template.find('input[name="to"]').value,
-            gasPrice = new BigNumber(Blockchain.findOne('latest').gasPrice, 10).times(new BigNumber(toPowerFactor).toPower(TemplateVar.get('feeMultiplicator'))).toFixed(0),
+            gasPrice = new BigNumber(LastBlock.findOne('latest').gasPrice, 10).times(new BigNumber(toPowerFactor).toPower(TemplateVar.get('feeMultiplicator'))).toFixed(0),
             selectedAccount = Accounts.findOne({address: TemplateVar.get('fromAddress')});
 
         if(amount && web3.isAddress(to) && selectedAccount) {

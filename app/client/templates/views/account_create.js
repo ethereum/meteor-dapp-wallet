@@ -197,9 +197,12 @@ Template['views_account_create'].events({
             name: template.find('input[name="accountName"]').value,
             balance: '0',
             dailyLimit: '100000000000000000000', // 100 ether
-            creationBlock: Blockchain.findOne('latest').blockNumber,
+            creationBlock: LastBlock.findOne('latest').blockNumber,
             disabled: true
         });
+
+
+        Router.go('/');
 
     }
 });

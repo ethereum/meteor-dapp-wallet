@@ -11,6 +11,14 @@ The account template
 @constructor
 */
 
+/**
+Block required until a transaction is confirmed.
+
+@property blocksForConfirmation
+@type Number
+*/
+var blocksForConfirmation = 12;
+
 
 Template['elements_account'].rendered = function(){
 
@@ -36,6 +44,38 @@ Template['elements_account'].helpers({
     */
     'name': function(){
         return this.name || TAPi18n.__('wallet.accounts.defaultName');
+    },
+    /**
+    Should the wallet show disabled
+
+    @method (disabled)
+    */
+    'disabled': function(){
+        return (!this.address || blocksForConfirmation >= LastBlock.findOne('latest').blockNumber - (this.creationBlock - 1));
+    },
+    /**
+    Returns the confirmations
+
+    @method (totalConfirmations)
+    */
+    'totalConfirmations': blocksForConfirmation,
+    /**
+    Checks whether the transaction is confirmed ot not.
+
+    @method (unConfirmed)
+    */
+    'unConfirmed': function() {
+        if(!this.creationBlock || this.createdIdentifier)
+            return false;
+
+        var currentBlockNumber = LastBlock.findOne('latest').blockNumber,
+            confirmations = currentBlockNumber - (this.creationBlock - 1);
+        return (blocksForConfirmation >= confirmations && confirmations >= 0)
+            ? {
+                confirmations: confirmations,
+                percent: (confirmations / (blocksForConfirmation)) * 100
+            }
+            : false;
     }
 });
 

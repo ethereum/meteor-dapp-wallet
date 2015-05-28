@@ -5,10 +5,10 @@
         <br>
 
         {{#each accounts}}
-            {{> elements_account account=_id main=true}}
+            {{> elements_account account=_id}}
         {{/each}}
 
-        <a href="{{pathFor route='createAccount'}}" class="wallet-account create">
+        <a href="{{pathFor route='createAccount'}}" class="wallet-box create">
             <div class="account-pattern">
                 +
             </div>

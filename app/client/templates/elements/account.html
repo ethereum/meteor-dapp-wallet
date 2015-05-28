@@ -1,15 +1,25 @@
 <template name="elements_account">
     {{#with account}}
-        <a href="{{pathFor route='account' account=address}}" class="wallet-account {{#if disabled}}disabled{{/if}} {{#if ../main}}main{{/if}}">
-            {{#if ../main}}
+        <a href="{{pathFor route='account' account=address}}" class="wallet-box {{#if disabled}}disabled{{/if}} {{#if ../main}}main{{/if}}">
+            {{#with unConfirmed}}
+                <div class="dapp-progress">
+                    <div class="dapp-bar" style="width: {{percent}}%;"></div>
+                </div>
+            {{/with}}
+
+            {{#unless ../main}}
                 <!-- <div class="account-pattern"> -->
+                {{#if address}}
                     {{> dapp_identicon identity=address class="dapp-small"}}
+                {{else}}
+                    {{> spinner}}
+                {{/if}}
                 <!-- </div> -->
             {{else}}
                 <div class="account-pattern">
                     
                 </div>
-            {{/if}}
+            {{/unless}}
 
             <h3>
                 {{#if $eq type "wallet"}}
@@ -24,7 +34,7 @@
                 {{> elements_balance balance=balance}}
                 {{! > elements_balance balance=balance pending=true}}
             {{else}}
-                <span>{{i18n "wallet.accounts.creating"}}</span>
+                <span class="account-balance">{{i18n "wallet.accounts.creating"}} <span>...</span></span>
             {{/unless}}
             <span class="account-id">{{address}}</span>
         </a>

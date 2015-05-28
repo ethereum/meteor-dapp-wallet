@@ -15,7 +15,7 @@
             "title": "<strong>Wallet</strong> Overview",
             "accountTitle": "Choose an account to deposit",
             "defaultName": "Unnamed account",
-            "creating": "Creating..."
+            "creating": "Creating"
         },
         "transactions": {
             "latest": "Latest transactions",
