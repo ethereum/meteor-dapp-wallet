@@ -256,7 +256,7 @@ contract Wallet is multisig, multiowned, daylimit {
     // Multi-sig transaction going out of the wallet (record who signed for it last, the operation hash, how much, and to whom it's going).
     event MultiTransact(address owner, bytes32 operation, uint value, address to, bytes data);*/
     
-    event Created(bytes32 indexed identifier) anonymous;
+    event Created(bytes32 indexed identifier);
 
     // constructor - just pass on the owner arra to the multiowned.
     function Wallet(bytes32 identifier) {

@@ -51,11 +51,7 @@
         </td>
         <td class="account-name">
             <h2>{{transactionType}}</h2>
-            {{#with unConfirmed}}
-                <span class="float-right">{{confirmations}} {{i18n "commonWords.of"}} {{totalConfirmations}} {{i18n "wallet.transactions.confirmations"}}</span>
-            {{else}}
-                <span class="float-right">{{fromNowTime}}</span> 
-            {{/with}}
+            
             <p>
                 {{> elements_transactions_row_tofrom account=account address=from}}
                 <span class="arrow">→</span> 
@@ -67,6 +63,13 @@
                     {{ownerConfirmations}}
                 </p>
             {{/if}}
+        </td>
+        <td class="info">
+            {{#with unConfirmed}}
+                {{confirmations}} {{i18n "commonWords.of"}} {{totalConfirmations}} {{i18n "wallet.transactions.confirmations"}}
+            {{else}}
+                {{fromNowTime}}
+            {{/with}}
         </td>
         <!-- <td class="account-name">
             {{> elements_transactions_row_tofrom account=account address=to}}
@@ -113,9 +116,9 @@
 <template name="elements_transactions_row_tofrom">
     {{#with getAccount}}
         {{#if type}}
-            {{> dapp_identicon identity=address class="dapp-tiny"}} <a href="{{pathFor route='account' account=address}}">{{name}}</a>
+            {{> dapp_identicon identity=address class="dapp-tiny"}} <a href="{{pathFor route='account' address=address}}">{{name}}</a>
         {{else}}
-            <a href="{{pathFor route='sendTo' address=address}}" title="{{address}}">{{address}}</a>
+            <a href="{{pathFor route='sendTo' identity=address}}" title="{{address}}">{{address}}</a>
         {{/if}}
     {{/with}}
 </template>

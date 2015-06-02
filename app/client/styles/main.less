@@ -18,7 +18,6 @@
     position: fixed;
 }
 
-
 .dapp-header {
     .wallet-balance {
         position: absolute;
@@ -174,7 +173,7 @@ table {
     }
     td {
         text-align: left;
-
+        vertical-align: middle;
 
         &.plus, .plus {
             color: @colorTextSecondary;                
@@ -200,11 +199,6 @@ table {
         &.account-name {
             color: @colorTextSecondary;
 
-            span.float-right {
-                font-size: 0.8em;
-                float: right;
-                margin-top: 16px;
-            }
 
             a {
                 .dapp-shorten-text;
@@ -217,6 +211,10 @@ table {
                 display: inline;
                 padding: 0 4px;
             }
+        }
+        &.info {
+            text-align: right;
+            font-size: 0.8em;
         }
         &.transaction-purpose {
             font-weight: 400;
@@ -355,10 +353,10 @@ table {
             }
 
             .from .dapp-identicon {
-                    position: absolute;
-                    left: @gridWidth/2;
-                    margin-top: @gridHeight * 1.3;
-              }
+                position: absolute;
+                left: @gridWidth/2;
+                margin-top: @gridHeight * 1.3;
+            }
 
             .dapp-address-input input {
                 width: 100%;
@@ -469,6 +467,19 @@ table {
 
         .dapp-address-input {
             margin-bottom: @defaultMargin;
+        }
+    }
+    p {
+        &.valid {
+            color: @colorGreen;
+
+            i {
+                position: relative;
+                top: 1px;
+            }
+        }
+        &.invalid {
+            color: @colorError;
         }
     }
 }

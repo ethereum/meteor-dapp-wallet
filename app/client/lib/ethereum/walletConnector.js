@@ -31,9 +31,14 @@ ethereumConfig = {
 
     @property ethereumConfig.requiredConfirmations
     */
-    requiredConfirmations: 12
-};
+    requiredConfirmations: 12,
+    /**
+    The default daily limit used for simple accounts
 
+    @property ethereumConfig.dailyLimitDefault
+    */
+    dailyLimitDefault: '100000000000000000000000000'
+};
 
 
 /**

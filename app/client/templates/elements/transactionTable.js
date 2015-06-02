@@ -18,7 +18,7 @@ Block required until a transaction is confirmed.
 @property blocksForConfirmation
 @type Number
 */
-var blocksForConfirmation = 12;
+var blocksForConfirmation = ethereumConfig.requiredConfirmations;
 
 /**
 The default limit, of none is given.
@@ -50,6 +50,10 @@ Template['elements_transactions_table'].helpers({
             limit = TemplateVar.get('limit'),
             collection = window[this.collection] || Transactions,
             selector = this.transactionIds ? {_id: {$in: this.transactionIds}} : {};
+
+        // check if it has operation
+        if(this.collection === 'PendingConfirmations')
+            selector.operation = {$exists: true};
 
         // if search
         if(searchQuery) {

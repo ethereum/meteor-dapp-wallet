@@ -54,6 +54,17 @@ Helpers.makeId = function(prefix, hash){
 };
 
 /**
+Display logs in the console for events.
+
+@method eventLogs
+*/
+Helpers.eventLogs = function(){
+    var args = arguments;
+    Array.prototype.unshift.call(args, 'EVENT LOG: ');
+    console.log.apply(console, args);
+}
+
+/**
 Shows the offline mesage
 
 @method displayOffline

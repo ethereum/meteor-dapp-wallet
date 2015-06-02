@@ -87,17 +87,13 @@ The account route.
 
 @method send
 */
-Router.route('/account/:account', {
+Router.route('/account/:address', {
     template: 'views_account',
     name: 'account',
     onBeforeAction: scrollTop,
     data: function() {
-        return Accounts.findOne({address: this.params.account});
+        return Accounts.findOne({address: this.params.address});
     }
-});
-Router.route('/account/:account/profile', {
-    template: 'views_account',
-    name: 'userProfile'
 });
 
 

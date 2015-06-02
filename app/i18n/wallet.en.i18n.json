@@ -15,7 +15,13 @@
             "title": "<strong>Wallet</strong> Overview",
             "accountTitle": "Choose an account to deposit",
             "defaultName": "Unnamed account",
-            "creating": "Creating"
+            "creating": "Creating",
+            "importing": "Importing",
+            "error": {
+                "emptyWallet": "The wallet you want to send from is empty.",
+                "noReceiver": "You didn't specify a receiver.",
+                "noAmount": "You didn't specify an amount to send."
+            }
         },
         "transactions": {
             "latest": "Latest transactions",
@@ -46,7 +52,7 @@
                 "simple": {
                     "title": "Simple Wallet",
                     "description": "A simple wallet without additional security measures.",
-                    "warning": "Note: Everybody who has the privatekey of the owner account can move money from this wallet."
+                    "warning": "Note: If your owner account is compromised your wallet has no protection."
                 },
                 "multisig": {
                     "title": "Multisignature Wallet",
@@ -55,11 +61,16 @@
                     "text2": "Signatures from",
                     "text3": "people for any action.",
                     "text4": "Account owners:",
-                    "owneraddress": "Owner address"
+                    "ownerAddress": "Owner address"
                 },
                 "import": {
                     "title": "Import wallet",
-                    "description": "Import an existing multisignature wallet."
+                    "description": "Import an existing (multisignature) wallet.",
+                    "note": "Note: If you are not an owner of the wallet, it will be imported as \"watch only\".",
+                    "walletAddress": "Owner address",
+                    "youreOwner": "Your __account__ account is an owner of the wallet.",
+                    "watchOnly": "You don't own the wallet, but you can add it as \"WATCH ONLY\" wallet.",
+                    "notWallet": "This address has no wallet contract."
                 },
                 "custom": {
                     "title": "Custom account",
@@ -67,9 +78,7 @@
                 }
             },
             "error": {
-                "emptyWallet": "The wallet you want to send from is empty.",
-                "noReceiver": "You didn't specify a receiver.",
-                "noAmount": "You didn't specify an amount to send."
+                "emptySignees": "You didn't provided all owners."
             }
         },
         "send": {

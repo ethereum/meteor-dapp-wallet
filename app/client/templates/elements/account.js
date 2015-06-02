@@ -51,7 +51,7 @@ Template['elements_account'].helpers({
     @method (disabled)
     */
     'disabled': function(){
-        return (!this.address || blocksForConfirmation >= LastBlock.findOne('latest').blockNumber - (this.creationBlock - 1));
+        return (!this.address || this.imported || blocksForConfirmation >= LastBlock.findOne('latest').blockNumber - (this.creationBlock - 1));
     },
     /**
     Returns the confirmations

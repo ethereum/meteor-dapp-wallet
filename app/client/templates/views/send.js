@@ -208,19 +208,19 @@ Template['views_send'].events({
 
         if(selectedAccount.balance === '0')
             return GlobalNotification.warning({
-                content: 'i18n:wallet.newWallet.error.emptyWallet',
+                content: 'i18n:wallet.accounts.error.emptyWallet',
                 duration: 2
             });
 
         if(!web3.isAddress(to))
             return GlobalNotification.warning({
-                content: 'i18n:wallet.newWallet.error.noReceiver',
+                content: 'i18n:wallet.accounts.error.noReceiver',
                 duration: 2
             });
 
         if(!amount)
             return GlobalNotification.warning({
-                content: 'i18n:wallet.newWallet.error.noAmount',
+                content: 'i18n:wallet.accounts.error.noAmount',
                 duration: 2
             });
         

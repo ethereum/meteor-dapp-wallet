@@ -13,8 +13,10 @@ The template to display account information.
 
 
 Template['views_account'].onRendered(function(){
-    var qrcodesvg = new Qrcodesvg( this.data.address, 'qrcode', 150, {"ecclevel" : 1});
-    qrcodesvg.draw({"method": "classic", "fill-colors":["#555","#555","#666"]}, {"stroke-width":1});
+    if(this.data) {
+        var qrcodesvg = new Qrcodesvg( this.data.address, 'qrcode', 150, {"ecclevel" : 1});
+        qrcodesvg.draw({"method": "classic", "fill-colors":["#555","#555","#666"]}, {"stroke-width":1});
+    }
 });
 
 
@@ -26,6 +28,46 @@ Template['views_account'].helpers({
     */
     'name': function(){
         return this.name || TAPi18n.__('wallet.accounts.defaultName');
+    },
+    /**
+    Show dailyLimit section
+
+    @method (showDailyLimit)
+    */
+    'showDailyLimit': function(){
+        return (this.dailyLimit && this.dailyLimit !== ethereumConfig.dailyLimitDefault);
+    },
+    /**
+    Show requiredSignatures section
+
+    @method (showRequiredSignatures)
+    */
+    'showRequiredSignatures': function(){
+        return (this.requiredSignatures && this.requiredSignatures != 1);
+    },
+    /**
+    Get the owners name
+
+    @method (ownerName)
+    */
+    'ownerName': function(){
+        var owner = String(this);
+        if(account = Accounts.findOne({address: owner}))
+            return account.name;
+        else
+            return owner;
+    },
+    /**
+    Link the owner either to send or to the account itself.
+
+    @method (ownerLink)
+    */
+    'ownerLink': function(){
+        var owner = String(this);
+        if(Accounts.findOne({address: owner}))
+            return Router.routes['account'].path({address: owner});
+        else
+            return Router.routes['sendTo'].path({address: owner});
     }
 });
 

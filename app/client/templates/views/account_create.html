@@ -22,7 +22,7 @@
         
         <div class="row clear">
             <label>
-                <input type="radio" name="accountType" value="simple">
+                <input type="radio" name="accountType" value="simple" checked="checked">
                 <h3>{{i18n 'wallet.newWallet.accountType.simple.title'}}</h3>
                 <span>{{{i18n 'wallet.newWallet.accountType.simple.description'}}}</span>
             </label>
@@ -35,7 +35,7 @@
 
         <div class="row clear">
             <label>
-                <input type="radio" name="accountType" value="multisig" checked="checked">
+                <input type="radio" name="accountType" value="multisig">
                 <h3>{{i18n 'wallet.newWallet.accountType.multisig.title'}}</h3>
                 {{#unless showSection "multisig"}}
                     <span>{{i18n 'wallet.newWallet.accountType.multisig.description'}}</span>
@@ -54,10 +54,10 @@
                         <input type="text" value="{{selectedOwner}}" disabled="disabled">
                     </div> -->
 
-                    {{> dapp_addressInput placeholder=i18Owneraddress class="owners" value=selectedOwner disabled=true}}
+                    {{> dapp_addressInput placeholder=i18nOwnerAddress class="owners" value=selectedOwner disabled=true}}
 
                     {{#each signees}}
-                        {{> dapp_addressInput placeholder=i18Owneraddress class="owners"}}
+                        {{> dapp_addressInput placeholder=i18nOwnerAddress class="owners"}}
                     {{/each}}
                 </div>
             {{/if}}
@@ -67,78 +67,16 @@
             <label>
                 <input type="radio" name="accountType" value="import">
                 <h3>{{i18n 'wallet.newWallet.accountType.import.title'}}</h3>
-                {{#unless showSection "import"}}
-                    <span>{{i18n 'wallet.newWallet.accountType.import.description'}}</span>
-                {{/unless}}
+                <span>{{i18n 'wallet.newWallet.accountType.import.description'}}</span>
             </label>
             {{#if showSection "import"}}
-                
-            {{/if}}
-        </div> 
-
-    <!--        <div class="row clear">
-            <label>
-                <input type="radio" name="accountType" value="multisig" checked="checked">
-                <h3>{{i18n 'wallet.newWallet.accountType.multisig.title'}}</h3>
-                {{#unless showSection "multisig"}}
-                    <span>{{i18n 'wallet.newWallet.accountType.multisig.description'}}</span>
-                {{/unless}}
-            </label>
-            {{#if showSection "multisig"}}
                 <div class="indented-box">
-                    
-                 <p> This is basic account owned by {{> dapp_addressInput placeholder=i18Owneraddress}}. The owner can spend up to a {{> InlineForm name="dailyLimitTime" items=dailyLimitTimes value="1"}} limit of {{> InlineForm name="dailyLimitAmount" value="50"}}  {{> InlineForm name="dailyLimitUnit" items=dailyLimitUnits value="eth"}}. For any value that goes over this amount, you'll need a second factor authentication</p>
-
-                    <p> You have not set up a second factor authentication, <a href="#"> set up one now at Gobit </a></p>
-                   
-
-                    <p> This is a standard account with secutiry limits. It can do any normal purchase until the {{> InlineForm name="dailyLimitTime" items=dailyLimitTimes value="1"}}  withdraw limit of {{> InlineForm name="dailyLimitAmount" value="50"}}  {{> InlineForm name="dailyLimitUnit" items=dailyLimitUnits value="eth"}}. For amounts over that limit, a secondary authentication device will be required.</p>
-
-                    <h4> Your address </h4>
-                    {{> dapp_addressInput placeholder=i18Owneraddress}}
-
-                    <h4> Second Factor Authentication Address </h4>
-                    {{> dapp_addressInput placeholder="2FA Address"}}
-
-
-                    <h4> Backup Address </h4>
-                    {{> dapp_addressInput placeholder="Add a cold wallet"}}
-                    {{> dapp_addressInput placeholder="Add a cold wallet"}}
-
-
+                    <p>{{i18n 'wallet.newWallet.accountType.import.note'}}</p>
+                    {{> dapp_addressInput placeholder=i18nWalletAddress class="import"}}
+                    <p class="{{importValidClass}}">{{{importInfo}}}</p>
                 </div>
             {{/if}}
-        </div> -->
-        
-     
-<!--         <div class="row clear">
-            <label>
-                <input type="radio" name="accountType" value="dailyLimit">
-                <h3>{{i18n 'wallet.newWallet.accountType.dailyLimit.title'}}</h3>
-                {{#unless showSection "dailyLimit"}}
-                    <span>{{i18n 'wallet.newWallet.accountType.dailyLimit.description'}}</span>
-                {{/unless}}
-            </label>
-            {{#if showSection "dailyLimit"}}
-                <div class="indented-box">
-                    <p>{{i18n 'wallet.newWallet.accountType.dailyLimit.text1'}}   {{i18n 'commonWords.per'}} {{> InlineForm name="dailyLimitTime" items=dailyLimitTimes value="month"}}</p>
-                    
-                </div>
-            {{/if}}
-        </div> -->
-
-
-        
-<!--         <div class="row clear">
-            <label>
-                <input type="radio" name="accountType" value="custom">
-                <h3>{{i18n 'wallet.newWallet.accountType.custom.title'}}</h3>
-                <span>{{i18n 'wallet.newWallet.accountType.custom.description'}}</span>
-            </label>
-            {{#if showSection "custom"}}
-                <textarea name="custom-contract" cols="30" rows="10"></textarea>
-            {{/if}}
-        </div> -->
+        </div>
 
         <hr>
 

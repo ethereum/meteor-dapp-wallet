@@ -15,7 +15,7 @@ Template['views_account_create'].onCreated(function(){
     TemplateVar.set('multisigSignees', 3);      // number of owners of the account
     TemplateVar.set('multisigSignatures', 2);   // number of required signatures
 
-    TemplateVar.set('selectedSection', 'multisig');
+    TemplateVar.set('selectedSection', 'simple');
 
     if(account = Accounts.findOne({type: 'account'}, {sort: {name: 1}}))
         TemplateVar.set('selectedOwner', account.address);
@@ -91,12 +91,42 @@ Template['views_account_create'].helpers({
         return _.range(TemplateVar.get('multisigSignees') - 1);
     },
     /**
-    Translates the 'owner address'
+    Translates to 'owner address'
 
-    @method (i18Owneraddress)
+    @method (i18nOwnerAddress)
     */
-    'i18Owneraddress': function(){
-        return TAPi18n.__('wallet.newWallet.accountType.multisig.owneraddress');
+    'i18nOwnerAddress': function(){
+        return TAPi18n.__('wallet.newWallet.accountType.multisig.ownerAddress');
+    },
+    /**
+    Translates to 'wallet address'
+
+    @method (i18nWalletAddress)
+    */
+    'i18nWalletAddress': function(){
+        return TAPi18n.__('wallet.newWallet.accountType.import.walletAddress');
+    },
+    /**
+    Returns the import info text.
+
+    @method (importInfo)
+    */
+    'importInfo': function() {
+        var text = TemplateVar.get('importWalletInfo'),
+            owners = TemplateVar.get('importWalletOwners');
+
+        if(owners)
+            return '<i class="icon-check green"></i> '+ text;
+        else
+            return text;
+    },
+    /**
+    Returns the class valid for valid addresses and invalid for non wallet addresses.
+
+    @method (importValidClass)
+    */
+    'importValidClass': function(){
+        return TemplateVar.get('importWalletOwners') ? 'valid' : 'invalid';
     },
     /**
     Get the number of required multisignees
@@ -179,6 +209,49 @@ Template['views_account_create'].events({
         TemplateVar.set('selectedOwner', e.currentTarget.value);
     },
     /**
+    Check the owner of the imported wallet.
+    
+    @event change input.import, input input.import
+    */
+    'change input.import, input input.import': function(e, template){
+        var address = e.currentTarget.value;
+        if(web3.isAddress(address)) {
+            var myContract = WalletContract.at(address);
+
+            myContract.m_numOwners(function(e, numberOfOwners){
+                if(!e) {
+                    numberOfOwners = numberOfOwners.toNumber();
+                    
+                    console.log('numberOfOwners', numberOfOwners);
+
+                    if(numberOfOwners > 0) {
+                        var owners = [];
+
+                        for (var i = 1; i <= numberOfOwners; i++) {
+                            owners.push(web3.eth.getStorageAt(address, 2+i));
+                        };
+
+                        TemplateVar.set(template, 'importWalletOwners', owners);
+
+                        if(account = Accounts.findOne({address: {$in: owners}})) {
+                            TemplateVar.set(template, 'importWalletInfo', TAPi18n.__('wallet.newWallet.accountType.import.youreOwner', {account: account.name}));
+                        } else {
+                            TemplateVar.set(template, 'importWalletInfo', TAPi18n.__('wallet.newWallet.accountType.import.watchOnly'));
+                        }
+
+                    } else {
+                        TemplateVar.set(template, 'importWalletOwners', false);
+                        TemplateVar.set(template, 'importWalletInfo', TAPi18n.__('wallet.newWallet.accountType.import.notWallet'));
+                    }
+                }
+            })
+
+        } else {
+            TemplateVar.set('importWalletOwners', false);
+            TemplateVar.set('importWalletInfo', '');
+        }
+    },
+    /**
     Select the current section, based on the radio inputs value.
 
     @event change input[type="radio"]
@@ -217,7 +290,6 @@ Template['views_account_create'].events({
                 owners: [template.find('select[name="owner"]').value],
                 name: template.find('input[name="accountName"]').value,
                 balance: '0',
-                dailyLimit: '100000000000000000000000000', // 100 000 000 ether
                 creationBlock: LastBlock.findOne('latest').blockNumber,
                 disabled: true
             });
@@ -235,7 +307,10 @@ Template['views_account_create'].events({
             })));
 
             if(owners.length != formValues.multisigSignees)
-                return;
+                return GlobalNotification.warning({
+                    content: 'i18n:wallet.newWallet.error.emptySignees',
+                    duration: 2
+                });
 
             Accounts.insert({
                 type: 'wallet',
@@ -253,14 +328,23 @@ Template['views_account_create'].events({
 
         // IMPORT
         if(type === 'import') {
+
+            var owners = _.uniq(_.compact(_.map(TemplateVar.get('importWalletOwners'), function(item){
+                if(web3.isAddress(item))
+                    return item;
+            })));
+
+            if(owners.length === 0)
+                return;
+
             Accounts.insert({
                 type: 'wallet',
-                owners: template.find('select[name="owner"]').value,
+                owners: owners,
                 name: template.find('input[name="accountName"]').value,
+                address: template.find('input.import').value,
                 balance: '0',
-                dailyLimit: '100000000000000000000', // 100 ether
-                creationBlock: LastBlock.findOne('latest').blockNumber,
-                disabled: true
+                creationBlock: 0,
+                imported: true
             });
 
             Router.go('/');
