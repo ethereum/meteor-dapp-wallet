@@ -12,10 +12,13 @@ The account create template
 */
 
 Template['views_account_create'].onCreated(function(){
-    TemplateVar.set('multisigSignees', 4);      // number of owners of the account
+    TemplateVar.set('multisigSignees', 3);      // number of owners of the account
     TemplateVar.set('multisigSignatures', 2);   // number of required signatures
 
     TemplateVar.set('selectedSection', 'multisig');
+
+    if(account = Accounts.findOne({type: 'account'}, {sort: {name: 1}}))
+        TemplateVar.set('selectedOwner', account.address);
 });
 
 
@@ -27,6 +30,22 @@ Template['views_account_create'].onRendered(function(){
 
 
 Template['views_account_create'].helpers({
+    /**
+    Get all accounts, which can become owners.
+
+    @method (accounts)
+    */
+    'accounts': function(){
+        return Accounts.find({type: 'account'}, {sort: {name: 1}});
+    },
+    /**
+    Return the selectedOwner
+
+    @method (selectedOwner)
+    */
+    'selectedOwner': function(){
+        return TemplateVar.get('selectedOwner');
+    },
     /**
     Return TRUE, if the current section is selected
 
@@ -66,10 +85,10 @@ Template['views_account_create'].helpers({
     */
     'signees': function(){
         if ((TemplateVar.get('multisigSignatures')+1) > TemplateVar.get('multisigSignees')) {
-            TemplateVar.set('multisigSignees', TemplateVar.get('multisigSignatures')+1);
+            TemplateVar.set('multisigSignees', TemplateVar.get('multisigSignatures'));
         }
 
-        return _.range(TemplateVar.get('multisigSignees'));
+        return _.range(TemplateVar.get('multisigSignees') - 1);
     },
     /**
     Translates the 'owner address'
@@ -77,22 +96,15 @@ Template['views_account_create'].helpers({
     @method (i18Owneraddress)
     */
     'i18Owneraddress': function(){
-        return TAPi18n.__('wallet.newAccount.accountType.multisig.owneraddress');
+        return TAPi18n.__('wallet.newWallet.accountType.multisig.owneraddress');
     },
     /**
-    Get the number of required multisignatures
+    Get the number of required multisignees
 
-    @method (multisigSignatures)
+    @method (multisigSignees)
     */
-    'multisigSignatures': function() {
-        return [{
-            value: '0',
-            text: '0'
-        },
-        {
-            value: '1',
-            text: '1'
-        },
+    'multisigSignees': function() {
+        return [
         {
             value: '2',
             text: '2'
@@ -117,49 +129,55 @@ Template['views_account_create'].helpers({
             value: '7',
             text: '7'
         }];
-    },    
-
-    /**
-    Get the daily limit units
-
-    @method (dailyLimitUnits)
-    */
-    'dailyLimitUnits': function(section){
-        return [{
-            value: 'percent',
-            text: ' %'
-        },
-        {
-            value: 'eth',
-            text: ' ether'
-        }];
     },
     /**
-    Get the daily limit times
+    Get the number of required multisignatures
 
-    @method (dailyLimitTimes)
+    @method (multisigSignatures)
     */
-    'dailyLimitTimes': function(section){
-        return [{
-            value: '1',
-            text: 'daily'
+    'multisigSignatures': function() {
+        var signees = TemplateVar.get('multisigSignees');
+        var returnValue = [
+        {
+            value: '2',
+            text: '2'
+        },
+        {
+            value: '3',
+            text: '3'
+        },
+        {
+            value: '4',
+            text: '4'
+        },
+        {
+            value: '5',
+            text: '5'
+        },
+        {
+            value: '6',
+            text: '6'
         },
         {
             value: '7',
-            text: 'weekly'
-        },
-        {
-            value: '30',
-            text: 'monthly'
-        },
-        {
-            value: '365',
-            text: 'yearly'
+            text: '7'
         }];
+
+        returnValue = returnValue.slice(0, signees-1);
+
+        return returnValue;
     }
 });
 
 Template['views_account_create'].events({
+    /**
+    Set the owner address, selected in the select field.
+    
+    @event change select[name="owner"]
+    */
+    'change select[name="owner"]': function(e){
+        TemplateVar.set('selectedOwner', e.currentTarget.value);
+    },
     /**
     Select the current section, based on the radio inputs value.
 
@@ -187,22 +205,66 @@ Template['views_account_create'].events({
     /**
     Create the account
 
-    @event click button[type="submit"]
+    @event submit
     */
-    'click button[type="submit"]': function(e, template){
+    'submit': function(e, template){
+        var type = TemplateVar.get('selectedSection');
 
-        Accounts.insert({
-            type: 'wallet',
-            owner: web3.eth.coinbase,
-            name: template.find('input[name="accountName"]').value,
-            balance: '0',
-            dailyLimit: '100000000000000000000', // 100 ether
-            creationBlock: LastBlock.findOne('latest').blockNumber,
-            disabled: true
-        });
+        // SIMPLE
+        if(type === 'simple') {
+            Accounts.insert({
+                type: 'wallet',
+                owners: [template.find('select[name="owner"]').value],
+                name: template.find('input[name="accountName"]').value,
+                balance: '0',
+                dailyLimit: '100000000000000000000000000', // 100 000 000 ether
+                creationBlock: LastBlock.findOne('latest').blockNumber,
+                disabled: true
+            });
 
+            Router.go('/');
+        }
 
-        Router.go('/');
+        // MULTISIG
+        if(type === 'multisig') {
+            var formValues = InlineForm('.inline-form');
+
+            var owners = _.uniq(_.compact(_.map(template.findAll('input.owners'), function(item){
+                if(web3.isAddress(item.value))
+                    return item.value;
+            })));
+
+            if(owners.length != formValues.multisigSignees)
+                return;
+
+            Accounts.insert({
+                type: 'wallet',
+                owners: owners,
+                name: template.find('input[name="accountName"]').value,
+                balance: '0',
+                dailyLimit: web3.toWei(formValues.dailyLimitAmount, 'ether'),
+                requiredSignatures: formValues.multisigSignatures,
+                creationBlock: LastBlock.findOne('latest').blockNumber,
+                disabled: true
+            });
+
+            Router.go('/');
+        }
+
+        // IMPORT
+        if(type === 'import') {
+            Accounts.insert({
+                type: 'wallet',
+                owners: template.find('select[name="owner"]').value,
+                name: template.find('input[name="accountName"]').value,
+                balance: '0',
+                dailyLimit: '100000000000000000000', // 100 ether
+                creationBlock: LastBlock.findOne('latest').blockNumber,
+                disabled: true
+            });
+
+            Router.go('/');
+        }
 
     }
 });

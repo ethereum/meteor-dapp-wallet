@@ -12,6 +12,13 @@ The add user template
 */
 
 /**
+The sort option for all account queries
+
+@property sortAccounts
+*/
+var sortAccounts = {sort: {type: -1, balance: -1}};
+
+/**
 The the factor by which the gas price should be changeable.
 
 @property toPowerFactor
@@ -49,7 +56,7 @@ Template['views_send'].onCreated(function(){
     TemplateVar.set('feeMultiplicator', 0);
     TemplateVar.set('amount', 0);
 
-    if(account = Accounts.findOne({}, {sort: {type: -1}}))
+    if(account = Accounts.findOne({}, sortAccounts))
         TemplateVar.set('fromAddress', account.address);
 
     // change the amount when the currency unit is changed
@@ -80,7 +87,7 @@ Template['views_send'].helpers({
     @method (accounts)
     */
     'accounts': function(){
-        return Accounts.find({}, {sort: {type: -1}});
+        return Accounts.find({}, sortAccounts);
     },
     /**
     Get the current unit.
@@ -199,7 +206,26 @@ Template['views_send'].events({
             gasPrice = new BigNumber(LastBlock.findOne('latest').gasPrice, 10).times(new BigNumber(toPowerFactor).toPower(TemplateVar.get('feeMultiplicator'))).toFixed(0),
             selectedAccount = Accounts.findOne({address: TemplateVar.get('fromAddress')});
 
-        if(amount && web3.isAddress(to) && selectedAccount) {
+        if(selectedAccount.balance === '0')
+            return GlobalNotification.warning({
+                content: 'i18n:wallet.newWallet.error.emptyWallet',
+                duration: 2
+            });
+
+        if(!web3.isAddress(to))
+            return GlobalNotification.warning({
+                content: 'i18n:wallet.newWallet.error.noReceiver',
+                duration: 2
+            });
+
+        if(!amount)
+            return GlobalNotification.warning({
+                content: 'i18n:wallet.newWallet.error.noAmount',
+                duration: 2
+            });
+        
+
+        if(selectedAccount) {
             
             // simple transaction
             if(selectedAccount.type === 'account') {
@@ -239,7 +265,7 @@ Template['views_send'].events({
             } else if(selectedAccount.type === 'wallet') {
 
                 contracts[selectedAccount._id].execute.sendTransaction(to, amount, '', {
-                    from: selectedAccount.owner,
+                    from: selectedAccount.owners[0],
                     gasPrice: gasPrice,
                     gas: 1204633 + 500000 // add 100 to be safe
                 }, function(e, txHash){

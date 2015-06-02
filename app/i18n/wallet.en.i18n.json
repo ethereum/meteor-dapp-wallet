@@ -37,43 +37,39 @@
                 "pendingConfirmations": "__initiator__ wants to send from __from__"
             }
         },
-        "newAccount": {
+        "newWallet": {
             "title": "New <strong>Wallet</strong>",
             "accountName": "Wallet name",
+            "selectOwner": "Select owner",
             "accountType": {
                 "title": "Wallet type",
                 "simple": {
-                    "title": "Unlimited account",
-                    "description": "An account <strong>without any security limits</strong> for those who like to live dangerously.",
-                    "warning": "<strong> Warning: this account has no protections.</strong> If someone has access to your private key, he will be able to access all your funds instantly and you'll have no recourse. Only use this if you know what you're doing."
+                    "title": "Simple Wallet",
+                    "description": "A simple wallet without additional security measures.",
+                    "warning": "Note: Everybody who has the privatekey of the owner account can move money from this wallet."
                 },
                 "multisig": {
-                    "title": "Basic secure account",
-                    "description": "A single-owned account with standard security measures",
-                    "text1": "Require",
-                    "text2": "Signatures from",
-                    "text3": "people for any action.",
-                    "text4": "Account owners:",
-                    "owneraddress": "Owner's address"
-                },
-                "multiowned": {
-                    "title": "Joint account",
+                    "title": "Multisignature Wallet",
                     "description": "An account controlled by multiple people",
                     "text1": "Require",
                     "text2": "Signatures from",
                     "text3": "people for any action.",
                     "text4": "Account owners:",
-                    "owneraddress": "Owner's address"
-                },                "dailyLimit": {
-                    "title": "Daily limit account",
-                    "description": "Account with daily safety limits.",
-                    "text1": "An account that allows normal deposits, but only allows a withdrawal limit of at most",
-                    "text2": ""
+                    "owneraddress": "Owner address"
+                },
+                "import": {
+                    "title": "Import wallet",
+                    "description": "Import an existing multisignature wallet."
                 },
                 "custom": {
                     "title": "Custom account",
                     "description": "Setup your own account rules."
                 }
+            },
+            "error": {
+                "emptyWallet": "The wallet you want to send from is empty.",
+                "noReceiver": "You didn't specify a receiver.",
+                "noAmount": "You didn't specify an amount to send."
             }
         },
         "send": {

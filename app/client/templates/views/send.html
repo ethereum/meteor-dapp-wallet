@@ -12,7 +12,7 @@
 
                 <select name="from">
                     {{#each accounts}}
-                        <option value="{{address}}">{{name}} ({{formatBalance balance "0,0.00"}})</option>
+                        <option value="{{address}}">{{#if $eq type "account"}}🔑{{/if}} {{name}} ({{formatBalance balance "0,0.00"}})</option>
                     {{/each}}
                 </select>
 
@@ -23,7 +23,7 @@
                 <h3>{{i18n 'wallet.send.to'}}</h3>
 
                 <!-- <button>{{i18n 'wallet.send.pickAddress'}}</button> -->
-                {{> dapp_addressInput placeholder="0x000000.." name="to" class="dapp-large"}}
+                {{> dapp_addressInput placeholder="0x000000.." name="to" class="dapp-large" autofocus=true}}
             </div>
 
             <div class="col col-5 mobile-full send-info">

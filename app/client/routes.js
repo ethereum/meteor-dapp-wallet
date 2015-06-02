@@ -39,7 +39,8 @@ The receive route, showing the wallet overview
 */
 Router.route('/', {
     template: 'views_dashboard',
-    name: 'dashboard'
+    name: 'dashboard',
+    onBeforeAction: scrollTop
 });
 
 

@@ -61,6 +61,12 @@
                 <span class="arrow">→</span> 
                 {{> elements_transactions_row_tofrom account=account address=to}}
             </p>
+
+            {{#if ownerConfirmations}}
+                <p>
+                    {{ownerConfirmations}}
+                </p>
+            {{/if}}
         </td>
         <!-- <td class="account-name">
             {{> elements_transactions_row_tofrom account=account address=to}}

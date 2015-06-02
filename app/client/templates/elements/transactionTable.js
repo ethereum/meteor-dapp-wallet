@@ -197,6 +197,17 @@ Template['elements_transactions_row'].helpers({
                 percent: (confirmations / (blocksForConfirmation)) * 100
             }
             : false;
+    },
+    /**
+    Return the number of owner confirmations
+
+    @method (ownerConfirmations)
+    */
+    'ownerConfirmations': function(){
+        var account = Accounts.findOne({address: this.from});
+
+        if(account && this.confirmedOwners)
+            return this.confirmedOwners.length +'/'+ account.requiredSignatures;
     }
 });
 
@@ -210,7 +221,7 @@ Template['elements_transactions_row'].events({
     'click button.approve': function(e){
         var account = Accounts.findOne({address: this.from});
         if(account) {
-            console.log(contracts[account._id].confirm.sendTransaction(this.operation, {from: account.owner, gas: 1204633 + 500000}));
+            console.log(contracts[account._id].confirm.sendTransaction(this.operation, {from: account.owners[0], gas: 1204633 + 500000}));
 
             // set in pending mode
             PendingConfirmations.update(this._id, {$set: {
