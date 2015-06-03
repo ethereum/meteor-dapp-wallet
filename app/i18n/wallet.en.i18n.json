@@ -17,6 +17,9 @@
             "defaultName": "Unnamed account",
             "creating": "Creating",
             "importing": "Importing",
+            "modal": {
+                "deleteText": "Do you really want to delete the wallet?<br>If you lose the wallet address, you will lose the funds on it!<br><br>Type the name of the wallet to confirm the deletion."
+            },
             "error": {
                 "emptyWallet": "The wallet you want to send from is empty.",
                 "noReceiver": "You didn't specify a receiver.",
@@ -66,10 +69,9 @@
                 "import": {
                     "title": "Import wallet",
                     "description": "Import an existing (multisignature) wallet.",
-                    "note": "Note: If you are not an owner of the wallet, it will be imported as \"watch only\".",
-                    "walletAddress": "Owner address",
-                    "youreOwner": "Your __account__ account is an owner of the wallet.",
-                    "watchOnly": "You don't own the wallet, but you can add it as \"WATCH ONLY\" wallet.",
+                    "walletAddress": "Wallet address",
+                    "youreOwner": "Your \"__account__\" account is an owner of the wallet.",
+                    "watchOnly": "You don't own the wallet, but you can add it as a \"WATCH ONLY\" wallet.",
                     "notWallet": "This address has no wallet contract."
                 },
                 "custom": {
@@ -78,7 +80,8 @@
                 }
             },
             "error": {
-                "emptySignees": "You didn't provided all owners."
+                "emptySignees": "You didn't provided all owners.",
+                "alreadyExists": "Wallet already exists."
             }
         },
         "send": {

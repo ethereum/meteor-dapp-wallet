@@ -211,6 +211,34 @@ table {
                 display: inline;
                 padding: 0 4px;
             }
+
+            .owner-confirmations {
+                margin-top: @defaultMargin/2;
+
+                > div {
+                    position: relative;
+                    display: inline-block;
+                }
+                > div + span {
+                    margin-left: @defaultMargin/2;
+                }
+                a {
+                    display: block;
+                    position: relative;
+                    margin-top: 0;
+                    margin-left: 0;
+                }
+                i {
+                    position: absolute;
+                    z-index: 2;
+                    color: darken(@colorGreen, 25%);
+                    background-color: fadeout(@colorGreen, 20%);
+                    .border-radius(50%);
+                    margin-top: -1px;
+                    margin-left: 0;
+                    font-size: 22px;
+                }
+            }
         }
         &.info {
             text-align: right;
@@ -226,6 +254,10 @@ table {
 
             button {
                 width: 100px;
+
+                &.selected {
+                    .opacity(0.5);
+                }
             }
 
             button.approve {
@@ -289,6 +321,18 @@ table {
         .dapp-shorten-text;
         display: block;
         max-width: 60%;
+
+        &:hover {
+            button.delete {
+                display: inline-block;
+            }
+        }
+
+        button.delete {
+            display: none;
+            font-size: 0.4em;
+            margin-left: 4px;
+        }
 
         .edit-name {
             outline: 0;

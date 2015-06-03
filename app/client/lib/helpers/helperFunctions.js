@@ -65,6 +65,16 @@ Helpers.eventLogs = function(){
 }
 
 /**
+Check if the given wallet is a watch only wallet, by checking if we are one of owners in the wallet.
+
+@method isWatchOnly
+@param {String} id the id of the wallet to check
+*/
+Helpers.isWatchOnly = function(id) {
+    return !Accounts.findOne({_id: id, owners: {$in: _.pluck(Accounts.find({type: 'account'}).fetch(), 'address')}});
+};
+
+/**
 Shows the offline mesage
 
 @method displayOffline

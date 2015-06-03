@@ -52,8 +52,10 @@ Template['elements_transactions_table'].helpers({
             selector = this.transactionIds ? {_id: {$in: this.transactionIds}} : {};
 
         // check if it has operation
-        if(this.collection === 'PendingConfirmations')
+        if(this.collection === 'PendingConfirmations') {
             selector.operation = {$exists: true};
+            selector.confirmedOwners = {$ne: []};
+        }
 
         // if search
         if(searchQuery) {
@@ -205,13 +207,42 @@ Template['elements_transactions_row'].helpers({
     /**
     Return the number of owner confirmations
 
-    @method (ownerConfirmations)
+    @method (ownerConfirmationCount)
     */
-    'ownerConfirmations': function(){
+    'ownerConfirmationCount': function(){
         var account = Accounts.findOne({address: this.from});
 
         if(account && this.confirmedOwners)
             return this.confirmedOwners.length +'/'+ account.requiredSignatures;
+    },
+    /**
+    Get the owners of the current pending transactions wallet.
+
+    @method (owners)
+    */
+    'owners': function(){
+        var account = Accounts.findOne({address: this.from});
+        return (account) ? account.owners : [];
+    },
+    /**
+    Check if the current owner is confirmed
+
+    @method (ownerIsConfirmed)
+    */
+    'ownerIsConfirmed': function(){
+        var owner = String(this);
+        return (_.contains(Template.parentData(1).confirmedOwners, owner));
+    },
+    /**
+    Check if the current owner has already approved the transaction
+
+    @method (approved)
+    */
+    'approved': function(){
+        if(!this.confirmedOwners)
+            return;
+
+        return Accounts.findOne({address: {$in: this.confirmedOwners}});
     }
 });
 
@@ -224,13 +255,19 @@ Template['elements_transactions_row'].events({
     */
     'click button.approve': function(e){
         var account = Accounts.findOne({address: this.from});
-        if(account) {
-            console.log(contracts[account._id].confirm.sendTransaction(this.operation, {from: account.owners[0], gas: 1204633 + 500000}));
+        if(account && !$(e.currentTarget).hasClass('selected')) {
+            console.log('Confirm', contracts[account._id].confirm.sendTransaction(this.operation, {from: account.owners[0], gas: 1204633 + 900000}));
+        }
+    },
+    /**
+    Revoke approvment of a pending transaction
 
-            // set in pending mode
-            PendingConfirmations.update(this._id, {$set: {
-                status: 'confirmed'
-            }});
+    @event click button.reject
+    */
+    'click button.reject': function(e){
+        var account = Accounts.findOne({address: this.from});
+        if(account && !$(e.currentTarget).hasClass('selected')) {
+            console.log('Revoke', contracts[account._id].revoke.sendTransaction(this.operation, {from: account.owners[0], gas: 1204633 + 900000}));
         }
     }
 });

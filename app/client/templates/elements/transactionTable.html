@@ -58,10 +58,16 @@
                 {{> elements_transactions_row_tofrom account=account address=to}}
             </p>
 
-            {{#if ownerConfirmations}}
-                <p>
-                    {{ownerConfirmations}}
-                </p>
+            {{#if ownerConfirmationCount}}
+                <div class="owner-confirmations">
+                    {{#each owners}}
+                        <div data-tooltip="{{accountNameOrAddress this}}" class="simptip-position-bottom simptip-movable">
+                            {{#if ownerIsConfirmed}}<i class="icon-check"></i>{{/if}}
+                            {{> dapp_identicon identity=this class="dapp-tiny"}}
+                        </div>
+                    {{/each}}
+                    <span>{{ownerConfirmationCount}}</span>
+                </div>
             {{/if}}
         </td>
         <td class="info">
@@ -91,24 +97,22 @@
             {{/if}}
         </td>
         {{#if $eq ../collection "PendingConfirmations"}}
-            {{#if $eq status "confirmed"}}
-                <td colspan="2" class="button">
-                    {{> spinner}}
-                </td>
-            {{else}}
-                <td class="button">
-                    <button class="dapp-block-button approve">
-                        <i class="icon-checkmark"></i>
-                        Approve
-                    </button>
-                </td>
-                <td class="button">
-                    <button class="dapp-block-button reject">
-                        <i class="icon-cross"></i>
-                        Reject
-                    </button>
-                </td>
-            {{/if}}
+            <td class="button">
+                <button class="dapp-block-button approve {{#if approved}}selected{{/if}}">
+                    {{#if approved}}
+                        <i class="icon-check"></i>
+                    {{/if}}
+                    Approve
+                </button>
+            </td>
+            <td class="button">
+                <button class="dapp-block-button reject {{#unless approved}}selected{{/unless}}">
+                    {{#unless approved}}
+                        <i class="icon-check"></i>
+                    {{/unless}}
+                    Reject
+                </button>
+            </td>
         {{/if}}
     </tr>
 </template>

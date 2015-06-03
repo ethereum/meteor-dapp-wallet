@@ -22,14 +22,6 @@ Template['views_account'].onRendered(function(){
 
 Template['views_account'].helpers({
     /**
-    Get the name
-
-    @method (name)
-    */
-    'name': function(){
-        return this.name || TAPi18n.__('wallet.accounts.defaultName');
-    },
-    /**
     Show dailyLimit section
 
     @method (showDailyLimit)
@@ -46,18 +38,6 @@ Template['views_account'].helpers({
         return (this.requiredSignatures && this.requiredSignatures != 1);
     },
     /**
-    Get the owners name
-
-    @method (ownerName)
-    */
-    'ownerName': function(){
-        var owner = String(this);
-        if(account = Accounts.findOne({address: owner}))
-            return account.name;
-        else
-            return owner;
-    },
-    /**
     Link the owner either to send or to the account itself.
 
     @method (ownerLink)
@@ -72,6 +52,35 @@ Template['views_account'].helpers({
 });
 
 Template['views_account'].events({
+    /**
+    Clicking the delete button will show delete modal
+
+    @event click button.delete
+    */
+    'click button.delete': function(e, template){
+        Router.current().render('dapp_modal', {
+            to: 'modal',
+            // data: {
+            //     closeable: false
+            // }
+        });
+        Router.current().render('dapp_modal_question', {
+            to: 'modalContent',
+            data: {
+                text: new Spacebars.SafeString(TAPi18n.__('wallet.accounts.modal.deleteText') + 
+                    '<br><input type="text" class="deletionConfirmation">'),
+                ok: function(){
+                    console.log(template.data, $('input.deletionConfirmation').value);
+                    if(Accounts.findOne({_id: template.data._id}).name === $('input.deletionConfirmation').val()) {
+                        Accounts.remove(template.data._id);
+                        Router.go('/');
+                        return true;
+                    }
+                },
+                cancel: true
+            }
+        });
+    },
     /**
     Clicking the name, will make it editable
 

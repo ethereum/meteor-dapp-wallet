@@ -33,4 +33,25 @@ observePendingConfirmations = function(){
             }});
         }
     });
+
+    /**
+    Observe PendingConfirmations 
+
+    @class PendingConfirmations({}).observe
+    @constructor
+    */
+    PendingConfirmations.find({}).observeChanges({
+        /**
+        Add pending confirmations to the accounts
+
+        @method changed
+        */
+        changed: function(id, fields) {
+            if(fields.operation) {
+                Accounts.update({address: document.from}, {$addToSet: {
+                    pendingConfirmations: document._id
+                }});
+            }
+        }
+    });
 };

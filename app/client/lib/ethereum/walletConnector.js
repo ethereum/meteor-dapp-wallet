@@ -54,16 +54,28 @@ connectNode = function(){
     web3.setProvider(new web3.providers.HttpProvider("http://localhost:8545")); //8545 8080 10.10.42.116
 
 
-    // ADD normal accounts
-    _.each(web3.eth.accounts, function(item){
-        if(!_.contains(_.pluck(Accounts.find().fetch(), 'address'), item))
-            Accounts.insert({
-                type: 'account',
-                address: item,
-                balance: web3.eth.getBalance(item).toString(10),
-                name: (item === web3.eth.coinbase) ? 'Coinbase' : item
-            });
+    // UPDATE normal accounts
+    var accounts = web3.eth.accounts;
+    _.each(Accounts.find({type: 'account'}).fetch(), function(account){
+        if(!_.contains(accounts, account.address)) {
+            Accounts.remove(account._id);
+        } else
+            Accounts.update(account._id, {$set: {
+                balance: web3.eth.getBalance(account.address).toString(10),
+            }});
+
+        accounts = _.without(accounts, account.address);
     });
+    // ADD missing accounts
+    _.each(accounts, function(address){
+        Accounts.insert({
+            type: 'account',
+            address: address,
+            balance: web3.eth.getBalance(address).toString(10),
+            name: (address === web3.eth.coinbase) ? 'Coinbase' : address
+        });
+    });
+
 
     observeLatestBlocks();
 

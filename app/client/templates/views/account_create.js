@@ -115,10 +115,14 @@ Template['views_account_create'].helpers({
         var text = TemplateVar.get('importWalletInfo'),
             owners = TemplateVar.get('importWalletOwners');
 
-        if(owners)
-            return '<i class="icon-check green"></i> '+ text;
-        else
-            return text;
+        if(!text) {
+            return '';
+        } else {
+            if(owners)
+                return '<i class="icon-check"></i> '+ text;
+            else
+                return '<i class="icon-close"></i> '+ text;
+        }
     },
     /**
     Returns the class valid for valid addresses and invalid for non wallet addresses.
@@ -288,7 +292,7 @@ Template['views_account_create'].events({
             Accounts.insert({
                 type: 'wallet',
                 owners: [template.find('select[name="owner"]').value],
-                name: template.find('input[name="accountName"]').value,
+                name: template.find('input[name="accountName"]').value || TAPi18n.__('wallet.accounts.defaultName'),
                 balance: '0',
                 creationBlock: LastBlock.findOne('latest').blockNumber,
                 disabled: true
@@ -315,7 +319,7 @@ Template['views_account_create'].events({
             Accounts.insert({
                 type: 'wallet',
                 owners: owners,
-                name: template.find('input[name="accountName"]').value,
+                name: template.find('input[name="accountName"]').value || TAPi18n.__('wallet.accounts.defaultName'),
                 balance: '0',
                 dailyLimit: web3.toWei(formValues.dailyLimitAmount, 'ether'),
                 requiredSignatures: formValues.multisigSignatures,
@@ -337,11 +341,19 @@ Template['views_account_create'].events({
             if(owners.length === 0)
                 return;
 
+
+            var address = template.find('input.import').value;
+            if(Accounts.findOne({address: address}))
+                return GlobalNotification.warning({
+                    content: 'i18n:wallet.newWallet.error.alreadyExists',
+                    duration: 2
+                });
+
             Accounts.insert({
                 type: 'wallet',
                 owners: owners,
-                name: template.find('input[name="accountName"]').value,
-                address: template.find('input.import').value,
+                name: template.find('input[name="accountName"]').value || TAPi18n.__('wallet.accounts.defaultName'),
+                address: address,
                 balance: '0',
                 creationBlock: 0,
                 imported: true

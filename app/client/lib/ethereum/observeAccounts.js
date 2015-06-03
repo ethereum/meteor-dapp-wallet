@@ -35,6 +35,54 @@ var updateContractData = function(newDocument){
     });
 };
 
+
+/**
+Update the pending confirmations with either adding or removing the owner.
+
+It will check first if the incoming log is newer than the already stored data.
+
+@method confirmOrRevoke
+@param {Object} log
+@param {Object} newDocument
+@param {string} type "confirm" or "revoke"
+*/
+confirmOrRevoke = function(log, newDocument, type){
+    var confirmationId = Helpers.makeId('pc', log.args.operation),
+        pendingConf = PendingConfirmations.findOne(confirmationId);
+
+    if(pendingConf &&
+       (!pendingConf.lastActivityBlock || 
+        log.blockNumber > pendingConf.lastActivityBlock ||
+        (log.blockNumber === pendingConf.lastActivityBlock && log.transactionIndex > pendingConf.lastActivityTxIndex))) {
+        
+        var data = {$set:{
+            from: newDocument.address,
+            lastActivityBlock: log.blockNumber,
+            lastActivityTxIndex: log.transactionIndex
+        }};
+
+        if(type === 'confirm')
+            data['$addToSet'] = {
+                confirmedOwners: log.args.owner
+            };
+        else
+            data['$pull'] = {
+                confirmedOwners: log.args.owner
+            };
+
+        PendingConfirmations.update(confirmationId, data);
+
+    } else if(!pendingConf) {
+        PendingConfirmations.insert({
+            _id: confirmationId,
+            confirmedOwners: [log.args.owner],
+            from: newDocument.address,
+            lastActivityBlock: log.blockNumber,
+            lastActivityTxIndex: log.transactionIndex
+        });
+    }
+};
+
 /**
 Creates filters for a wallet contract, to watch for deposits, pending confirmations, or contract creation events.
 
@@ -217,7 +265,7 @@ setupContractFilters = function(newDocument){
                             PendingConfirmations.remove(confirmationId);
                         
                         } else {
-                            PendingConfirmations.upsert(confirmationId, {
+                            PendingConfirmations.upsert(confirmationId, {$set: {
                                 confirmedOwners: pendingConf ? pendingConf.confirmedOwners : [],
                                 initiator: log.args.initiator,
                                 operation: log.args.operation,
@@ -229,7 +277,10 @@ setupContractFilters = function(newDocument){
                                 blockHash: log.blockHash,
                                 transactionHash: log.transactionHash,
                                 transactionIndex: log.transactionIndex,
-                            });
+                                // only filled when confirmations or revokes come in
+                                // lastActivityBlock: log.blockNumber,
+                                // lastActivityTxIndex: log.transactionIndex
+                            }});
                         }
                     }
                     
@@ -276,21 +327,18 @@ setupContractFilters = function(newDocument){
 
                 // delay a little to prevent race conditions
                 Tracker.afterFlush(function(){
-                    var confirmationId = Helpers.makeId('pc', log.args.operation);
-                    //     accounts = Accounts.findOne({address: log.address}),
-                    //     depositTx;
+                    confirmOrRevoke(log, newDocument, 'confirm');
+                });
+            }
+        });
+        events.push(contractInstance.Revoke({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
+        events[events.length-1].watch(function(error, log) {
+            if(!error) {
+                Helpers.eventLogs('Operation revokation for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
 
-                    // if(accounts[0] && accounts[0].transactions) {
-                    //     var txs = _.flatten(_.pluck(accounts, 'transactions'));
-                    //     depositTx = Transactions.findOne({_id: {$in: txs || []}, operation: log.args.operation});
-                    // }
-
-                    // if(!depositTx)
-                        PendingConfirmations.upsert(confirmationId, {$addToSet: {
-                            confirmedOwners: log.args.owner
-                        }, $set:{
-                            from: newDocument.address,
-                        }});
+                // delay a little to prevent race conditions
+                Tracker.afterFlush(function(){
+                    confirmOrRevoke(log, newDocument, 'revoke');
                 });
             }
         });

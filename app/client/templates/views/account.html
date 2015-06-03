@@ -5,8 +5,15 @@
         {{> dapp_identicon identity=address}}
             
         <hgroup>
-            <h1><span class="edit-name">{{name}}</span> <i class="edit-icon icon-pencil"></i></h1>
-            <h2>{{address}}</h2>                
+            <h1>
+                <span class="edit-name">{{name}}</span> <i class="edit-icon icon-pencil"></i>
+
+                <button class="dapp-icon-button delete icon-trash"></button>
+            </h1>
+            <h2>
+                {{walletIcon}}
+                {{address}}
+            </h2>
         </hgroup>
 
         {{> elements_balance balance=balance changeUnit=true}}
@@ -32,7 +39,7 @@
                 <div class="col col-4 mobile-full">
                     <h3>Owners</h3>
                     {{#each owners}}
-                        <span data-tooltip="{{ownerName}}" class="simptip-position-bottom simptip-movable">
+                        <span data-tooltip="{{accountNameOrAddress this}}" class="simptip-position-bottom simptip-movable">
                             {{> dapp_identicon identity=this class="dapp-tiny" link=ownerLink}}
                         </span>
                     {{/each}}

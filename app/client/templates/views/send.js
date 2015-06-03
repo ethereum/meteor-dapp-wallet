@@ -12,11 +12,22 @@ The add user template
 */
 
 /**
-The sort option for all account queries
+The query and sort option for all account queries
 
-@property sortAccounts
+Set in the created callback.
+
+@property accountQuery
 */
-var sortAccounts = {sort: {type: -1, balance: -1}};
+var accountQuery;
+
+/**
+The query and sort option for all account queries
+
+Set in the created callback.
+
+@property accountSort
+*/
+var accountSort;
 
 /**
 The the factor by which the gas price should be changeable.
@@ -52,11 +63,15 @@ var calculateGasPrice = function(fee, ether){
 Template['views_send'].onCreated(function(){
     var template = this;
 
+    // set account queries
+    accountQuery = {$or: [{owners: {$in: _.pluck(Accounts.find({type: 'account'}).fetch(), 'address')}}, {type: 'account'}]};
+    accountSort = {sort: {type: -1, balance: -1}};
+
     // set the default fee
     TemplateVar.set('feeMultiplicator', 0);
     TemplateVar.set('amount', 0);
 
-    if(account = Accounts.findOne({}, sortAccounts))
+    if(account = Accounts.findOne(accountQuery, accountSort))
         TemplateVar.set('fromAddress', account.address);
 
     // change the amount when the currency unit is changed
@@ -87,7 +102,7 @@ Template['views_send'].helpers({
     @method (accounts)
     */
     'accounts': function(){
-        return Accounts.find({}, sortAccounts);
+        return Accounts.find(accountQuery, accountSort);
     },
     /**
     Get the current unit.
@@ -236,9 +251,9 @@ Template['views_send'].events({
                     value: amount,
                     gasPrice: gasPrice,
                     gas: estimatedGas + 100 // add 100 to be safe
-                }, function(e, txHash){
-                    console.log(e, txHash);
-                    if(!e) {
+                }, function(error, txHash){
+                    console.log(error, txHash);
+                    if(!error) {
                         console.log('SEND simple');
 
 
@@ -259,6 +274,11 @@ Template['views_send'].events({
                         });
 
                         Router.go('/');
+                    } else {
+                        GlobalNotification.error({
+                            content: error.message,
+                            duration: 8
+                        });
                     }
                 });
 
@@ -268,9 +288,9 @@ Template['views_send'].events({
                     from: selectedAccount.owners[0],
                     gasPrice: gasPrice,
                     gas: 1204633 + 500000 // add 100 to be safe
-                }, function(e, txHash){
-                    console.log(e, txHash);
-                    if(!e) {
+                }, function(error, txHash){
+                    console.log(error, txHash);
+                    if(!error) {
                         console.log('SEND from contract', amount);
 
                         // txId = Helpers.makeId('tx', txHash);
@@ -290,9 +310,13 @@ Template['views_send'].events({
                         // });
 
                         Router.go('/');
+
+                    } else {
+                        GlobalNotification.error({
+                            content: error.message,
+                            duration: 8
+                        });
                     }
-
-
                 });
             }
         }
