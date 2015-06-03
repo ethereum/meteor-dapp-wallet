@@ -1,0 +1,10 @@
+<template name="elements_selectAccount">
+    <div class="select-account">
+        <select name="select-accounts">
+            {{#each accounts}}
+                <option value="{{address}}">{{#if $eq type "account"}}🔑{{/if}} {{name}} ({{formatBalance balance "0,0.00"}})</option>
+            {{/each}}
+        </select>
+        {{> dapp_identicon identity=selectedAccount class="dapp-small"}}
+    </div>
+</template>

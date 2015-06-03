@@ -7,15 +7,8 @@
         <input type="text" name="accountName" placeholder="{{i18n 'wallet.newWallet.accountName'}}" autofocus="true">
 
         <h2>{{i18n 'wallet.newWallet.selectOwner'}}</h2>
-        <p>
-            <select name="owner">
-                {{#each accounts}}
-                    <option value="{{address}}">{{name}} ({{formatBalance balance "0,0.00"}})</option>
-                {{/each}}
-            </select>
-        </p>
 
-        {{> dapp_identicon identity=fromAddress class="dapp-small"}}
+        {{> elements_selectAccount accounts=ownerAccounts}}
 
 
         <h2>{{i18n 'wallet.newWallet.accountType.title'}}</h2>

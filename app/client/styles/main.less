@@ -371,7 +371,20 @@ table {
     }
 }
 
+.select-account {
+    position: relative;
 
+    select {
+        padding-left: @gridWidth*1.5 !important;
+        .appearance(none);
+    }
+
+    .dapp-identicon {
+        position: absolute;
+        left: @gridWidth / 3;
+        top: @gridHeight * 1.3;
+    }
+}
 
 
 .account-send-form {
@@ -389,18 +402,8 @@ table {
                 margin-bottom: @defaultMargin;
             }
 
-            
             select {
-                width: 100%;
-                padding-left: @gridWidth*1.5 !important;
-                .appearance(none);
-            }
-
-            .from .dapp-identicon {
-                position: absolute;
-                left: @gridWidth/2;
-                // top: @gridHeight * 4.15;
-                margin-top: -@gridHeight * 2.1;
+                width: auto;
             }
 
             .dapp-address-input input {
