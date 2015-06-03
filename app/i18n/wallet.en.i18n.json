@@ -59,7 +59,7 @@
                 },
                 "multisig": {
                     "title": "Multisignature Wallet",
-                    "description": "An account controlled by multiple people",
+                    "description": "A wallet controlled by multiple accounts",
                     "text1": "Require",
                     "text2": "Signatures from",
                     "text3": "people for any action.",

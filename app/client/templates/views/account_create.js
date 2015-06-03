@@ -59,6 +59,10 @@ Template['views_account_create'].helpers({
         //     TemplateVar.set(template,'multisigSignees', template.$('button[data-name="multisigSignees"]').attr('data-value'));
         // });
 
+        // reset import wallet
+        TemplateVar.set('importWalletOwners', false);
+        TemplateVar.set('importWalletInfo', '');
+
         return TemplateVar.get('selectedSection') === section;
     },
     /**
@@ -226,14 +230,20 @@ Template['views_account_create'].events({
                 if(!e) {
                     numberOfOwners = numberOfOwners.toNumber();
                     
-                    console.log('numberOfOwners', numberOfOwners);
-
                     if(numberOfOwners > 0) {
                         var owners = [];
 
-                        for (var i = 1; i <= numberOfOwners; i++) {
-                            owners.push(web3.eth.getStorageAt(address, 2+i));
-                        };
+                        // go through all 250 storage slots and get addresses,
+                        // once we reach the number of owners we stop
+                        _.find(_.range(250), function(i){
+                            var address = web3.eth.getStorageAt(address, 2+i);
+                            if(web3.isAddress(address))
+                                owners.push(web3.eth.getStorageAt(address, 2+i));
+
+                            if(owners.length === numberOfOwners)
+                                return true;
+                            else return false;
+                        });
 
                         TemplateVar.set(template, 'importWalletOwners', owners);
 
@@ -348,6 +358,11 @@ Template['views_account_create'].events({
                     content: 'i18n:wallet.newWallet.error.alreadyExists',
                     duration: 2
                 });
+
+            // reorganize owners, so that yourself is at place one
+            var account = Accounts.findOne({address: {$in: owners || []}});
+            owners = _.without(owners, account.address);
+            owners.unshift(account.address);
 
             Accounts.insert({
                 type: 'wallet',
