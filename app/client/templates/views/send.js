@@ -71,9 +71,6 @@ Template['views_send'].onCreated(function(){
     TemplateVar.set('feeMultiplicator', 0);
     TemplateVar.set('amount', 0);
 
-    if(account = Accounts.findOne(accountQuery, accountSort))
-        TemplateVar.set('fromAddress', account.address);
-
     // change the amount when the currency unit is changed
     this.autorun(function(c){
         var unit = LocalStore.get('etherUnit');
@@ -99,9 +96,9 @@ Template['views_send'].helpers({
     /**
     Get all current accounts
 
-    @method (accounts)
+    @method (fromAccounts)
     */
-    'accounts': function(){
+    'fromAccounts': function(){
         return Accounts.find(accountQuery, accountSort);
     },
     /**
@@ -111,14 +108,6 @@ Template['views_send'].helpers({
     */
     'unit': function(){
         return LocalStore.get('etherUnit');
-    },
-    /**
-    Return the from address
-
-    @method (fromAddress)
-    */
-    'fromAddress': function(){
-        return TemplateVar.get('fromAddress');
     },
     /**
     Return the to address
@@ -179,14 +168,6 @@ Template['views_send'].helpers({
 
 Template['views_send'].events({
     /**
-    Set the from address, selected in the select field.
-    
-    @event change select[name="from"]
-    */
-    'change select[name="from"]': function(e){
-        TemplateVar.set('fromAddress', e.currentTarget.value);
-    },
-    /**
     Set the "to" address while typing
     
     @event keyup input[name="to"]
@@ -219,28 +200,27 @@ Template['views_send'].events({
         var amount = TemplateVar.get('amount'),
             to = template.find('input[name="to"]').value,
             gasPrice = new BigNumber(LastBlock.findOne('latest').gasPrice, 10).times(new BigNumber(toPowerFactor).toPower(TemplateVar.get('feeMultiplicator'))).toFixed(0),
-            selectedAccount = Accounts.findOne({address: TemplateVar.get('fromAddress')});
-
-        if(selectedAccount.balance === '0')
-            return GlobalNotification.warning({
-                content: 'i18n:wallet.accounts.error.emptyWallet',
-                duration: 2
-            });
-
-        if(!web3.isAddress(to))
-            return GlobalNotification.warning({
-                content: 'i18n:wallet.accounts.error.noReceiver',
-                duration: 2
-            });
-
-        if(!amount)
-            return GlobalNotification.warning({
-                content: 'i18n:wallet.accounts.error.noAmount',
-                duration: 2
-            });
-        
+            selectedAccount = Accounts.findOne({address: template.find('select[name="select-accounts"]').value});
 
         if(selectedAccount) {
+
+            if(selectedAccount.balance === '0')
+                return GlobalNotification.warning({
+                    content: 'i18n:wallet.accounts.error.emptyWallet',
+                    duration: 2
+                });
+
+            if(!web3.isAddress(to))
+                return GlobalNotification.warning({
+                    content: 'i18n:wallet.accounts.error.noReceiver',
+                    duration: 2
+                });
+
+            if(!amount)
+                return GlobalNotification.warning({
+                    content: 'i18n:wallet.accounts.error.noAmount',
+                    duration: 2
+                });
             
             // simple transaction
             if(selectedAccount.type === 'account') {

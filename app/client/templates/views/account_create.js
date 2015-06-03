@@ -33,9 +33,9 @@ Template['views_account_create'].helpers({
     /**
     Get all accounts, which can become owners.
 
-    @method (accounts)
+    @method (ownerAccounts)
     */
-    'accounts': function(){
+    'ownerAccounts': function(){
         return Accounts.find({type: 'account'}, {sort: {name: 1}});
     },
     /**
@@ -44,7 +44,7 @@ Template['views_account_create'].helpers({
     @method (selectedOwner)
     */
     'selectedOwner': function(){
-        return TemplateVar.get('selectedOwner');
+        return TemplateVar.getFrom('.select-account', 'selectedAccount');
     },
     /**
     Return TRUE, if the current section is selected
@@ -209,14 +209,6 @@ Template['views_account_create'].helpers({
 
 Template['views_account_create'].events({
     /**
-    Set the owner address, selected in the select field.
-    
-    @event change select[name="owner"]
-    */
-    'change select[name="owner"]': function(e){
-        TemplateVar.set('selectedOwner', e.currentTarget.value);
-    },
-    /**
     Check the owner of the imported wallet.
     
     @event change input.import, input input.import
@@ -301,7 +293,7 @@ Template['views_account_create'].events({
         if(type === 'simple') {
             Accounts.insert({
                 type: 'wallet',
-                owners: [template.find('select[name="owner"]').value],
+                owners: [template.find('select[name="select-accounts"]').value],
                 name: template.find('input[name="accountName"]').value || TAPi18n.__('wallet.accounts.defaultName'),
                 balance: '0',
                 creationBlock: LastBlock.findOne('latest').blockNumber,
