@@ -17,7 +17,7 @@ Template['views_account_create'].onCreated(function(){
 
     TemplateVar.set('selectedSection', 'simple');
 
-    if(account = Accounts.findOne({type: 'account'}, {sort: {name: 1}}))
+    if(account = Accounts.findOne({type: 'account'}, {sort: {balance: -1}}))
         TemplateVar.set('selectedOwner', account.address);
 });
 
@@ -36,7 +36,7 @@ Template['views_account_create'].helpers({
     @method (ownerAccounts)
     */
     'ownerAccounts': function(){
-        return Accounts.find({type: 'account'}, {sort: {name: 1}});
+        return Accounts.find({type: 'account'}, {sort: {balance: -1}});
     },
     /**
     Return the selectedOwner
