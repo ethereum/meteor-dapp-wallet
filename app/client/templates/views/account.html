@@ -8,7 +8,9 @@
             <h1>
                 <span class="edit-name">{{name}}</span> <i class="edit-icon icon-pencil"></i>
 
-                <button class="dapp-icon-button delete icon-trash"></button>
+                {{#if $eq type "wallet"}}
+                    <button class="dapp-icon-button delete icon-trash"></button>
+                {{/if}}
             </h1>
             <h2>
                 {{walletIcon}}
