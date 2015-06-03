@@ -391,7 +391,7 @@ table {
 
             
             select {
-                width: auto;
+                width: 100%;
                 padding-left: @gridWidth*1.5 !important;
                 .appearance(none);
             }
@@ -399,7 +399,8 @@ table {
             .from .dapp-identicon {
                 position: absolute;
                 left: @gridWidth/2;
-                margin-top: @gridHeight * 1.3;
+                // top: @gridHeight * 4.15;
+                margin-top: -@gridHeight * 2.1;
             }
 
             .dapp-address-input input {
