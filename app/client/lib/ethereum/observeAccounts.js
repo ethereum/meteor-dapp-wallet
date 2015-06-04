@@ -430,8 +430,8 @@ observeAccounts = function(){
                     gas: 2000000,
                     gasPrice: web3.eth.gasPrice
 
-                }, function(err, contract){
-                    if(!err) {
+                }, function(error, contract){
+                    if(!error) {
                         contracts[newDocument._id] = contract;
 
                         Helpers.eventLogs('Guessed Contract Address: ', contract.address);
@@ -448,9 +448,15 @@ observeAccounts = function(){
 
                         setupContractFilters(newDocument);                    
                         
-                    } else
+                    } else {
+                        GlobalNotification.error({
+                            content: error.message,
+                            duration: 8
+                        });
+
                         // remove account, if something failed
                         Accounts.remove(newDocument._id);
+                    }
                 });
 
             // USE DEPLOYED CONTRACT
