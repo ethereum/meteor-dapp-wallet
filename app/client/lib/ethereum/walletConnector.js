@@ -44,9 +44,9 @@ ethereumConfig = {
 /**
 Connects to a node and setup all the filters for the accounts.
 
-@method connectNode
+@method connectToNode
 */
-connectNode = function(){
+connectToNode = function(){
 
     console.log('Connect to node...');
 
