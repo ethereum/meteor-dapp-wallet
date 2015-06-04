@@ -96,13 +96,15 @@ observeTransactions = function(){
     @return {Object} The updated transaction
     */
     var updateTransaction = function(newDocument, transaction){
-        Transactions.update(newDocument._id, {$set: {
-            blockNumber: transaction.blockNumber,
-            blockHash: transaction.blockHash,
-            transactionIndex: transaction.transactionIndex,
-            fee: transaction.gasPrice.times(new BigNumber(transaction.gas)).toString(10)
-        }});
-        return Transactions.findOne(newDocument._id);
+
+        newDocument.blockNumber = transaction.blockNumber;
+        newDocument.blockHash = transaction.blockHash;
+        newDocument.transactionIndex = transaction.transactionIndex;
+        newDocument.fee = transaction.gasPrice.times(new BigNumber(transaction.gas)).toString(10);
+
+        Transactions.update(newDocument._id, newDocument);
+
+        return newDocument;
     };
 
     /**

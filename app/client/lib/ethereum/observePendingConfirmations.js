@@ -17,7 +17,7 @@ observePendingConfirmations = function(){
         @method added
         */
         added: function(document) {
-            if(document.operation)
+            if(document.operation && (!document.confirmedOwners || document.confirmedOwners.length > 0))
                 Accounts.update({address: document.from}, {$addToSet: {
                     pendingConfirmations: document._id
                 }});
@@ -47,8 +47,15 @@ observePendingConfirmations = function(){
         @method changed
         */
         changed: function(id, fields) {
-            if(fields.operation) {
+            var document = PendingConfirmations.findOne(id);
+
+            if(fields.operation || (fields.confirmedOwners && fields.confirmedOwners.length > 0)) {
                 Accounts.update({address: document.from}, {$addToSet: {
+                    pendingConfirmations: document._id
+                }});
+            }
+            if(fields.confirmedOwners && fields.confirmedOwners.length === 0) {
+                Accounts.update({address: document.from}, {$pull: {
                     pendingConfirmations: document._id
                 }});
             }

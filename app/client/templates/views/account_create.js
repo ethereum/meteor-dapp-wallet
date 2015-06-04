@@ -355,8 +355,10 @@ Template['views_account_create'].events({
 
             // reorganize owners, so that yourself is at place one
             var account = Accounts.findOne({address: {$in: owners || []}});
-            owners = _.without(owners, account.address);
-            owners.unshift(account.address);
+            if(account) {
+                owners = _.without(owners, account.address);
+                owners.unshift(account.address);
+            }
 
             Accounts.insert({
                 type: 'wallet',

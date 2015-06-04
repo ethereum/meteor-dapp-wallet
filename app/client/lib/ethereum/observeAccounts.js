@@ -95,7 +95,7 @@ setupContractFilters = function(newDocument){
         blockToCheckBack = newDocument.creationBlock;
 
     var contractInstance = contracts[newDocument._id];
-    if(!contractInstance || newDocument.type === 'account')
+    if(newDocument.type === 'account' || !contractInstance)
         return;
 
     if(!contractInstance.events)
@@ -249,9 +249,13 @@ setupContractFilters = function(newDocument){
 
                     if(!err) {
                         var confirmationId = Helpers.makeId('pc', log.args.operation),
-                            accounts = Accounts.find({$or: [{address: log.args.initiator}, {address: log.args.to}]}).fetch(),
+                            accounts = Accounts.find({$or: [{address: log.address}, {address: log.args.to}]}).fetch(),
                             pendingConf = PendingConfirmations.findOne(confirmationId),
                             depositTx;
+
+                        // PREVENT SHOWING pending confirmations, of WATCH ONLY WALLETS
+                        if(!(from = Accounts.findOne({address: log.address})) || !Accounts.findOne({address: {$in: from.owners}}))
+                            return;
 
                         if(accounts[0] && accounts[0].transactions) {
                             var txs = _.flatten(_.pluck(accounts, 'transactions'));
@@ -480,7 +484,27 @@ observeAccounts = function(){
 
         @method changed
         */
-        changed: checkWalletConfirmations
+        changed: checkWalletConfirmations,
+        /**
+        Stop filters, when accounts are removed
+
+        @method removed
+        */
+        removed: function(newDocument){
+            var contractInstance = contracts[newDocument._id];
+            if(newDocument.type === 'account' || !contractInstance)
+                return;
+
+            if(!contractInstance.events)
+                contractInstance.events = [];
+
+            // stop all running events
+            _.each(contractInstance.events, function(event){
+                event.stopWatching();
+            });
+
+            delete contracts[newDocument._id];
+        }
     });
 
 };

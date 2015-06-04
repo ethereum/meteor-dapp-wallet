@@ -75,7 +75,13 @@
         <hr>
 
         <!-- button type="submit" will send the form -->
-        <button type="submit" class="dapp-block-button">{{i18n 'buttons.send'}}</button>
+        <button type="submit" class="dapp-block-button">
+            {{! #if TemplateVar.get "sending"}}
+                {{! i18n 'buttons.sending'}}
+            {{! else}}
+                {{i18n 'buttons.send'}}
+            {{! /if}}
+        </button>
         
     </form>
 

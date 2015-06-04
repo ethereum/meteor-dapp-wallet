@@ -162,6 +162,14 @@ Template['views_send'].helpers({
     */
     'timeText': function(){
         return TAPi18n.__('wallet.send.texts.timeTexts.'+ ((Number(TemplateVar.get('feeMultiplicator')) + 5) / 2).toFixed(0));
+    },
+    /**
+    Return template var "sending"
+
+    @method (sending)
+    */
+    'sending': function(){
+        return TemplateVar.get('sending');
     }
 });
 
@@ -202,7 +210,7 @@ Template['views_send'].events({
             gasPrice = new BigNumber(LastBlock.findOne('latest').gasPrice, 10).times(new BigNumber(toPowerFactor).toPower(TemplateVar.get('feeMultiplicator'))).toFixed(0),
             selectedAccount = Accounts.findOne({address: template.find('select[name="select-accounts"]').value});
 
-        if(selectedAccount) {
+        if(selectedAccount && !TemplateVar.get('sending')) {
 
             if(selectedAccount.balance === '0')
                 return GlobalNotification.warning({
@@ -223,6 +231,9 @@ Template['views_send'].events({
                     content: 'i18n:wallet.accounts.error.noAmount',
                     duration: 2
                 });
+
+
+            TemplateVar.set('sending', true);
             
             // simple transaction
             if(selectedAccount.type === 'account') {
@@ -234,6 +245,9 @@ Template['views_send'].events({
                     gasPrice: gasPrice,
                     gas: estimatedGas + 100 // add 100 to be safe
                 }, function(error, txHash){
+
+                    TemplateVar.set(template, 'sending', false);
+
                     console.log(error, txHash);
                     if(!error) {
                         console.log('SEND simple');
@@ -271,6 +285,9 @@ Template['views_send'].events({
                     gasPrice: gasPrice,
                     gas: 1204633 + 500000 // add 100 to be safe
                 }, function(error, txHash){
+
+                    TemplateVar.set(template, 'sending', false);
+
                     console.log(error, txHash);
                     if(!error) {
                         console.log('SEND from contract', amount);

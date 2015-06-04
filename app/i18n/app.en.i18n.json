@@ -13,6 +13,7 @@
         "save": "Save",
         "edit": "edit",
         "send": "Send",
+        "sending": "Sending...",
         "create": "Create",
         "tryToReconnect": "Try to reconnect"
     },
