@@ -23,7 +23,7 @@ To create a build version of your app run:
 
     // bundle dapp
     $ cd meteor-dapp-wallet/app
-    $ meteor-build-client ../build --path "/"
+    $ meteor-build-client ../build --path ""
 
 This will generate the files in the `../build` folder. Double click the index.html to start the app.
 To make routing work properly you need to build it using:
