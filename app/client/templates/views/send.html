@@ -14,7 +14,6 @@
             </div>
 
             <div class="col col-5 mobile-full send-info">
-                {{i18n 'wallet.send.texts.sendTo'}}
             </div>
 
             <div class="col col-7 mobile-full">
@@ -35,6 +34,7 @@
             </div>
             
             <div class="col col-5 mobile-full send-info">
+                <br><br>
                 {{{i18n 'wallet.send.texts.sendAmount' amount=amount}}}
                 {{TemplateVar.get "dailyLimitText"}}
             </div>
@@ -54,6 +54,7 @@
             </div>
             
             <div class="col col-5 mobile-full send-info">
+                <br><br>
                 {{{i18n 'wallet.send.texts.sendFee' timetext=timeText}}}
             </div>
 

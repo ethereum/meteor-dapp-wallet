@@ -96,11 +96,10 @@
             "feeLow": "Cheaper",
             "feeHigh": "Faster",
             "texts": {
-                "overDailyLimit": "<p class=\"over-daily\">The amount is over the daily limit of __limit__, this means you need __count__ other account to confirm.</p>",
-                "overDailyLimit_plural": "<p class=\"over-daily\">The amount is over the daily limit of __limit__, this means you need __count__ other accounts to confirm.</p>",
-                "underDailyLimit": "<p class=\"under-daily\">The amount is under the daily limit of __limit__, so it will send immediately.</p>",
-                "sendTo": "Choose from which wallet and to where it will go.",
-                "sendAmount": "You want to send<br><strong>__amount__</strong>.",
+                "sendAmount": "You want to send <strong>__amount__</strong>.",
+                "overDailyLimit": "<p class=\"over-daily\">This amount is over the daily limit of __limit__, this means you need __count__ other account to confirm.</p>",
+                "overDailyLimit_plural": "<p class=\"over-daily\">This amount is over the daily limit of __limit__, this means you need __count__ other accounts to confirm.</p>",
+                "underDailyLimit": "<p class=\"under-daily\">This amount is under the daily limit of __limit__, so it will send immediately.</p>",
                 "sendFee": "This is the most amount of money that might be used to process this transaction. You will get your change back as soon as your transaction is mined, <strong>__timetext__</strong>.",
                 "timeTexts": {
                     "0": "in a few minutes or more",
