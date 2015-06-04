@@ -13,15 +13,15 @@
                 {{> elements_selectAccount accounts=fromAccounts}}
             </div>
 
+            <div class="col col-5 mobile-full send-info">
+                {{i18n 'wallet.send.texts.sendTo'}}
+            </div>
+
             <div class="col col-7 mobile-full">
                 <h3>{{i18n 'wallet.send.to'}}</h3>
 
                 <!-- <button>{{i18n 'wallet.send.pickAddress'}}</button> -->
-                {{> dapp_addressInput placeholder="0x000000.." name="to" class="dapp-large" autofocus=true}}
-            </div>
-
-            <div class="col col-5 mobile-full send-info">
-                {{i18n 'wallet.send.texts.sendTo'}}
+                {{> dapp_addressInput placeholder="0x000000.." name="to" autofocus=true}}
             </div>
 
             <div class="dapp-clear-fix"></div>

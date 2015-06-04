@@ -228,13 +228,14 @@ Template['views_account_create'].events({
                         // go through all 250 storage slots and get addresses,
                         // once we reach the number of owners we stop
                         _.find(_.range(250), function(i){
-                            var address = web3.eth.getStorageAt(address, 2+i);
-                            if(web3.isAddress(address))
-                                owners.push(web3.eth.getStorageAt(address, 2+i));
+                            var ownerAddress = web3.eth.getStorageAt(address, 2+i);
+                            if(web3.isAddress(ownerAddress))
+                                owners.push(ownerAddress);
 
                             if(owners.length === numberOfOwners)
                                 return true;
-                            else return false;
+                            else
+                                return false;
                         });
 
                         TemplateVar.set(template, 'importWalletOwners', owners);
