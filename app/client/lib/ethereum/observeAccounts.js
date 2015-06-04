@@ -48,10 +48,16 @@ confirmOrRevoke = function(contract, log){
     var confirmationId = Helpers.makeId('pc', log.args.operation);
 
     contract.hasConfirmed(log.args.operation, log.args.owner,function(e, res){
-        var setDocument = {$set:{
-            from: log.address
-        }};
-        // console.log('OPERATION: '+ log.args.operation +' owner: '+ log.args.owner, res);
+        var pendingConf = PendingConfirmations.findOne(confirmationId),
+            setDocument = {$set:{
+                from: log.address
+            }};
+
+        // remove the sending property
+        if(pendingConf && pendingConf.sending === log.args.owner)
+            setDocument['$unset'] = {sending: ''};
+
+        console.log('OPERATION: '+ log.args.operation +' owner: '+ log.args.owner, res);
         if(res)
             setDocument['$addToSet'] = {confirmedOwners: log.args.owner};
         else
@@ -60,46 +66,44 @@ confirmOrRevoke = function(contract, log){
         PendingConfirmations.upsert(confirmationId, setDocument);
     });
 
-    return;
+    // var confirmationId = Helpers.makeId('pc', log.args.operation),
+    //     pendingConf = PendingConfirmations.findOne(confirmationId);
 
-    var confirmationId = Helpers.makeId('pc', log.args.operation),
-        pendingConf = PendingConfirmations.findOne(confirmationId);
-
-    if(pendingConf &&
-       (!pendingConf.lastActivityBlock || 
-        log.blockNumber > pendingConf.lastActivityBlock ||
-        (log.blockNumber === pendingConf.lastActivityBlock && log.transactionIndex > pendingConf.lastActivityTxIndex))) {
+    // if(pendingConf &&
+    //    (!pendingConf.lastActivityBlock || 
+    //     log.blockNumber > pendingConf.lastActivityBlock ||
+    //     (log.blockNumber === pendingConf.lastActivityBlock && log.transactionIndex > pendingConf.lastActivityTxIndex))) {
         
-        var data = {$set:{
-            from: log.address,
-            lastActivityBlock: log.blockNumber,
-            lastActivityTxIndex: log.transactionIndex
-        }};
+    //     var data = {$set:{
+    //         from: log.address,
+    //         lastActivityBlock: log.blockNumber,
+    //         lastActivityTxIndex: log.transactionIndex
+    //     }};
 
-        // remove the sending property
-        if(pendingConf.sending === log.args.owner)
-            data['$unset'] = {sending: ''};
+    //     // remove the sending property
+    //     if(pendingConf.sending === log.args.owner)
+    //         data['$unset'] = {sending: ''};
 
-        if(type === 'confirm')
-            data['$addToSet'] = {
-                confirmedOwners: log.args.owner
-            };
-        else
-            data['$pull'] = {
-                confirmedOwners: log.args.owner
-            };
+    //     if(type === 'confirm')
+    //         data['$addToSet'] = {
+    //             confirmedOwners: log.args.owner
+    //         };
+    //     else
+    //         data['$pull'] = {
+    //             confirmedOwners: log.args.owner
+    //         };
 
-        PendingConfirmations.update(confirmationId, data);
+    //     PendingConfirmations.update(confirmationId, data);
 
-    } else if(!pendingConf) {
-        PendingConfirmations.insert({
-            _id: confirmationId,
-            confirmedOwners: [log.args.owner],
-            from: log.address,
-            lastActivityBlock: log.blockNumber,
-            lastActivityTxIndex: log.transactionIndex
-        });
-    }
+    // } else if(!pendingConf) {
+    //     PendingConfirmations.insert({
+    //         _id: confirmationId,
+    //         confirmedOwners: [log.args.owner],
+    //         from: log.address,
+    //         lastActivityBlock: log.blockNumber,
+    //         lastActivityTxIndex: log.transactionIndex
+    //     });
+    // }
 };
 
 /**
@@ -227,7 +231,7 @@ setupContractFilters = function(newDocument){
         _.each(Transactions.find({_id: {$in: newDocument.transactions || []}, blockNumber: {$gt: blockToCheckBack}}).fetch(), function(tx){
             Transactions.remove(tx._id);
         });
-        _.each(PendingConfirmations.find({_id: {$in: newDocument.pendingConfirmations || []}, blockNumber: {$gt: blockToCheckBack}}).fetch(), function(pc){
+        _.each(PendingConfirmations.find({from: newDocument.address, blockNumber: {$gt: blockToCheckBack}}).fetch(), function(pc){
             PendingConfirmations.remove(pc._id);
         });
 
@@ -524,6 +528,15 @@ observeAccounts = function(){
             });
 
             delete contracts[newDocument._id];
+
+            // delete the all tx and pending conf
+            _.each(Transactions.find({from: newDocument.address}).fetch(), function(tx){
+                if(!Accounts.findOne({transactions: tx._id}))
+                    Transactions.remove(tx._id);
+            });
+            _.each(PendingConfirmations.find({from: newDocument.address}).fetch(), function(pc){
+                PendingConfirmations.remove(pc._id);
+            });
         }
     });
 

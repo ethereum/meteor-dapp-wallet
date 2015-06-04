@@ -16,22 +16,22 @@ observePendingConfirmations = function(){
 
         @method added
         */
-        added: function(document) {
-            if(document.operation && (!document.confirmedOwners || document.confirmedOwners.length > 0))
-                Accounts.update({address: document.from}, {$addToSet: {
-                    pendingConfirmations: document._id
-                }});
-        },
+        // added: function(document) {
+        //     if(document.operation && (!document.confirmedOwners || document.confirmedOwners.length > 0))
+        //         Accounts.update({address: document.from}, {$addToSet: {
+        //             pendingConfirmations: document._id
+        //         }});
+        // },
         /**
         Remove pending confirmations from the accounts
 
         @method removed
         */
-        removed: function(document) {
-            Accounts.update({address: document.from}, {$pull: {
-                pendingConfirmations: document._id
-            }});
-        }
+        // removed: function(document) {
+        //     Accounts.update({address: document.from}, {$pull: {
+        //         pendingConfirmations: document._id
+        //     }});
+        // }
     });
 
     /**
@@ -46,19 +46,19 @@ observePendingConfirmations = function(){
 
         @method changed
         */
-        changed: function(id, fields) {
-            var document = PendingConfirmations.findOne(id);
+        // changed: function(id, fields) {
+        //     var document = PendingConfirmations.findOne(id);
 
-            if(fields.operation || (fields.confirmedOwners && fields.confirmedOwners.length > 0)) {
-                Accounts.update({address: document.from}, {$addToSet: {
-                    pendingConfirmations: document._id
-                }});
-            }
-            if(fields.confirmedOwners && fields.confirmedOwners.length === 0) {
-                Accounts.update({address: document.from}, {$pull: {
-                    pendingConfirmations: document._id
-                }});
-            }
-        }
+        //     if(fields.operation || (fields.confirmedOwners && fields.confirmedOwners.length > 0)) {
+        //         Accounts.update({address: document.from}, {$addToSet: {
+        //             pendingConfirmations: document._id
+        //         }});
+        //     }
+        //     if(fields.confirmedOwners && fields.confirmedOwners.length === 0) {
+        //         Accounts.update({address: document.from}, {$pull: {
+        //             pendingConfirmations: document._id
+        //         }});
+        //     }
+        // }
     });
 };

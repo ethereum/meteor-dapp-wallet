@@ -59,13 +59,13 @@
         {{#if pendingConfirmations}}
             <h2>{{i18n 'wallet.transactions.pendingConfirmations'}}</h2>
 
-            {{> elements_transactions_table transactionIds=pendingConfirmations collection="PendingConfirmations" account=_id}}
+            {{> elements_transactions_table collection="PendingConfirmations" ids=pendingConfirmations account=_id}}
         {{/if}}
 
         {{#if transactions}}
             <h2>{{i18n 'wallet.transactions.latest'}}</h2>
 
-            {{> elements_transactions_table transactionIds=transactions account=_id}}
+            {{> elements_transactions_table ids=transactions account=_id}}
         {{else}}
             <h2>{{i18n 'wallet.transactions.none'}}</h2>
         {{/if}}

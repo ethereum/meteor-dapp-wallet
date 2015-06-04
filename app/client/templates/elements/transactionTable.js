@@ -49,13 +49,7 @@ Template['elements_transactions_table'].helpers({
             searchQuery = TemplateVar.get('search'),
             limit = TemplateVar.get('limit'),
             collection = window[this.collection] || Transactions,
-            selector = this.transactionIds ? {_id: {$in: this.transactionIds}} : {};
-
-        // check if it has operation
-        if(this.collection === 'PendingConfirmations') {
-            selector.operation = {$exists: true};
-            selector.confirmedOwners = {$ne: []};
-        }
+            selector = this.ids ? {_id: {$in: this.ids}} : {};
 
         // if search
         if(searchQuery) {
@@ -254,7 +248,9 @@ Template['elements_transactions_row'].events({
     @event click click button.approve, click button.reject
     */
     'click button.approve, click button.reject': function(e){
-        var account = Accounts.findOne({address: this.from});
+        var _this = this,
+            account = Accounts.findOne({address: _this.from});
+
         if(account && !$(e.currentTarget).hasClass('selected')) {
             var owner = account.owners[0];
 
@@ -262,12 +258,11 @@ Template['elements_transactions_row'].events({
                 ? 'confirm'
                 : 'revoke';
 
-
-            contracts[account._id][type].sendTransaction(this.operation, {from: owner, gas: 1204633 + 900000}, function(e, hash){
+            contracts[account._id][type].sendTransaction(_this.operation, {from: owner, gas: 1204633 + 900000}, function(e, hash){
                 if(!e) {
                     console.log(type, hash);
                     
-                    PendingConfirmations.update(this._id, {$set: {
+                    PendingConfirmations.update(_this._id, {$set: {
                         sending: owner
                     }});
                 }

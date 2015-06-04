@@ -6,11 +6,19 @@ Observe the latest blocks
 observeLatestBlocks = function(){
 
     // UPDATE latest BLOCKCHAIN DATA (SYNC!)
-    LastBlock.update('latest', {$set: {
-        blockNumber: web3.eth.blockNumber,
-        blockHash: web3.eth.getBlock('latest').hash,
-        gasPrice: web3.eth.gasPrice.toString(10)
-    }});
+    web3.eth.getBlock('latest', function(e, block){
+        if(!e) {
+            web3.eth.getGasPrice(function(e, gasPrice){
+                if(!e) {
+                    LastBlock.update('latest', {$set: {
+                        blockNumber: block.number,
+                        blockHash: block.hash,
+                        gasPrice: gasPrice.toString(10)
+                    }});
+                }
+            });
+        }
+    });
 
     // GET the latest blockchain information
     web3.eth.filter('latest').watch(function(e, res){
