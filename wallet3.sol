@@ -177,6 +177,21 @@ contract multiowned {
     function isOwner(address _addr) returns (bool) {
         return m_ownerIndex[uint(_addr)] > 0;
     }
+    function hasConfirmed(bytes32 _operation, address _owner) constant returns (bool) {
+        var pending = m_pending[_operation];
+        uint ownerIndex = m_ownerIndex[uint(_owner)];
+
+        // make sure they're an owner
+        if (ownerIndex == 0) return false;
+
+        // determine the bit to set for this owner.
+        uint ownerIndexBit = 2**ownerIndex;
+        if (pending.ownersDone & ownerIndexBit == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
 
 // inheritable "property" contract that enables methods to be protected by placing a linear limit (specifiable)

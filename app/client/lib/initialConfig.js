@@ -57,7 +57,7 @@ var connect = function(){
                     to: 'modalContent',
                     data: {
                         text: new Spacebars.SafeString(TAPi18n.__('wallet.app.texts.connectionError', 
-                            {node: 'geth --rpc --rpccorsdomain "'+window.location.protocol + '//' + window.location.host+'" --unlock <yourAccount>'})), // --rpcaddr "localhost"
+                            {node: 'geth --rpc --rpccorsdomain "'+window.location.protocol + '//' + window.location.host+'" --unlock &ltyourAccount&gt;'})), // --rpcaddr "localhost"
                         ok: function(){
                             Tracker.afterFlush(function(){
                                 connect();

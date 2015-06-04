@@ -310,7 +310,7 @@ Template['views_account_create'].events({
 
             var owners = _.uniq(_.compact(_.map(template.findAll('input.owners'), function(item){
                 if(web3.isAddress(item.value))
-                    return item.value;
+                    return '0x'+ item.value.replace('0x','');
             })));
 
             if(owners.length != formValues.multisigSignees)
@@ -346,6 +346,7 @@ Template['views_account_create'].events({
 
 
             var address = template.find('input.import').value;
+            address = '0x'+ address.replace('0x','');
             if(Accounts.findOne({address: address}))
                 return GlobalNotification.warning({
                     content: 'i18n:wallet.newWallet.error.alreadyExists',
@@ -354,8 +355,10 @@ Template['views_account_create'].events({
 
             // reorganize owners, so that yourself is at place one
             var account = Accounts.findOne({address: {$in: owners || []}});
-            owners = _.without(owners, account.address);
-            owners.unshift(account.address);
+            if(account) {
+                owners = _.without(owners, account.address);
+                owners.unshift(account.address);
+            }
 
             Accounts.insert({
                 type: 'wallet',

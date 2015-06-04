@@ -14,7 +14,6 @@
             </div>
 
             <div class="col col-5 mobile-full send-info">
-                {{i18n 'wallet.send.texts.sendTo'}}
             </div>
 
             <div class="col col-7 mobile-full">
@@ -35,8 +34,11 @@
             </div>
             
             <div class="col col-5 mobile-full send-info">
+                <br><br>
                 {{{i18n 'wallet.send.texts.sendAmount' amount=amount}}}
+                {{TemplateVar.get "dailyLimitText"}}
             </div>
+
 
             <div class="dapp-clear-fix"></div>
         </div>
@@ -46,12 +48,13 @@
             <div class="col col-7 mobile-full">
                 <h3>{{i18n 'wallet.send.fee'}}</h3>
                 <span>{{fee}} {{unit}}</span><br>
-                <input type="range" name="fee" min="-5" max="5" step="1" value="{{feeMultiplicator}}">
+                <input type="range" name="fee" min="-5" max="5" step="1" value="{{TemplateVar.get 'feeMultiplicator'}}">
                 <span>{{i18n 'wallet.send.feeLow'}}</span>
                 <span>{{i18n 'wallet.send.feeHigh'}}</span>
             </div>
             
             <div class="col col-5 mobile-full send-info">
+                <br><br>
                 {{{i18n 'wallet.send.texts.sendFee' timetext=timeText}}}
             </div>
 
@@ -73,9 +76,14 @@
         </div>
 
         <hr>
-
         <!-- button type="submit" will send the form -->
-        <button type="submit" class="dapp-block-button">{{i18n 'buttons.send'}}</button>
+        <button type="submit" class="dapp-block-button">
+            {{#if TemplateVar.get "sending"}} 
+                {{i18n 'buttons.sending'}}
+            {{else}}
+                {{i18n 'buttons.send'}}
+            {{/if}}
+        </button>
         
     </form>
 

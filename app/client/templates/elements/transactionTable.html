@@ -36,7 +36,7 @@
 </template>
 
 <template name="elements_transactions_row">
-    <tr class="{{#if $eq unConfirmed.confirmations 0}}unconfirmed{{/if}}">
+    <tr class="{{#if $eq unConfirmed.confirmations 0}}unconfirmed{{/if}}" data-operation="{{operation}}">
         <td class="time" title="{{formatTime timestamp 'LLLL'}}">
             {{#unless $eq ../collection "PendingConfirmations"}}
                 {{#with unConfirmed}}
@@ -97,22 +97,28 @@
             {{/if}}
         </td>
         {{#if $eq ../collection "PendingConfirmations"}}
-            <td class="button">
-                <button class="dapp-block-button approve {{#if approved}}selected{{/if}}">
-                    {{#if approved}}
-                        <i class="icon-check"></i>
-                    {{/if}}
-                    Approve
-                </button>
-            </td>
-            <td class="button">
-                <button class="dapp-block-button reject {{#unless approved}}selected{{/unless}}">
-                    {{#unless approved}}
-                        <i class="icon-check"></i>
-                    {{/unless}}
-                    Reject
-                </button>
-            </td>
+            {{#if sending}}
+                <td colspan="2" class="button">
+                    {{> spinner}}
+                </td>
+            {{else}}
+                <td class="button">
+                    <button class="dapp-block-button approve {{#if approved}}selected{{/if}}">
+                        {{#if approved}}
+                            <i class="icon-check"></i>
+                        {{/if}}
+                        Approve
+                    </button>
+                </td>
+                <td class="button">
+                    <button class="dapp-block-button reject {{#unless approved}}selected{{/unless}}">
+                        {{#unless approved}}
+                            <i class="icon-check"></i>
+                        {{/unless}}
+                        Reject
+                    </button>
+                </td>
+            {{/if}}
         {{/if}}
     </tr>
 </template>

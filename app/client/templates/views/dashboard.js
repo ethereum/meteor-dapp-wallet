@@ -36,8 +36,7 @@ Template['views_dashboard'].helpers({
     @return {Array}
     */
     'pendingConfirmations': function(){
-        var accounts = Accounts.find().fetch();
-        return _.compact(_.flatten(_.pluck(accounts, 'pendingConfirmations')));
+        return _.pluck(PendingConfirmations.find({operation: {$exists: true}, confirmedOwners: {$ne: []}}).fetch(), '_id');
     }
 });
 

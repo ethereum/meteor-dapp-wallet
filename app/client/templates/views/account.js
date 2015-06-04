@@ -22,6 +22,14 @@ Template['views_account'].onRendered(function(){
 
 Template['views_account'].helpers({
     /**
+    Get the pending confirmations of this account.
+
+    @method (pendingConfirmations)
+    */
+    'pendingConfirmations': function(){
+        return _.pluck(PendingConfirmations.find({operation: {$exists: true}, confirmedOwners: {$ne: []}, from: this.address}).fetch(), '_id');
+    },
+    /**
     Show dailyLimit section
 
     @method (showDailyLimit)

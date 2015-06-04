@@ -49,13 +49,7 @@ Template['elements_transactions_table'].helpers({
             searchQuery = TemplateVar.get('search'),
             limit = TemplateVar.get('limit'),
             collection = window[this.collection] || Transactions,
-            selector = this.transactionIds ? {_id: {$in: this.transactionIds}} : {};
-
-        // check if it has operation
-        if(this.collection === 'PendingConfirmations') {
-            selector.operation = {$exists: true};
-            selector.confirmedOwners = {$ne: []};
-        }
+            selector = this.ids ? {_id: {$in: this.ids}} : {};
 
         // if search
         if(searchQuery) {
@@ -249,25 +243,30 @@ Template['elements_transactions_row'].helpers({
 
 Template['elements_transactions_row'].events({
     /**
-    Approve a pending transaction
+    Reject or Approve a pending transactions
 
-    @event click button.approve
+    @event click click button.approve, click button.reject
     */
-    'click button.approve': function(e){
-        var account = Accounts.findOne({address: this.from});
-        if(account && !$(e.currentTarget).hasClass('selected')) {
-            console.log('Confirm', contracts[account._id].confirm.sendTransaction(this.operation, {from: account.owners[0], gas: 1204633 + 900000}));
-        }
-    },
-    /**
-    Revoke approvment of a pending transaction
+    'click button.approve, click button.reject': function(e){
+        var _this = this,
+            account = Accounts.findOne({address: _this.from});
 
-    @event click button.reject
-    */
-    'click button.reject': function(e){
-        var account = Accounts.findOne({address: this.from});
         if(account && !$(e.currentTarget).hasClass('selected')) {
-            console.log('Revoke', contracts[account._id].revoke.sendTransaction(this.operation, {from: account.owners[0], gas: 1204633 + 900000}));
+            var owner = account.owners[0];
+
+            var type = ($(e.currentTarget).hasClass('approve'))
+                ? 'confirm'
+                : 'revoke';
+
+            contracts[account._id][type].sendTransaction(_this.operation, {from: owner, gas: 1204633 + 900000}, function(e, hash){
+                if(!e) {
+                    console.log(type, hash);
+                    
+                    PendingConfirmations.update(_this._id, {$set: {
+                        sending: owner
+                    }});
+                }
+            });
         }
     }
 });

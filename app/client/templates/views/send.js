@@ -49,6 +49,25 @@ if(Accounts.findOne({type: 'account'}))
     });
 
 /**
+Check if the amount accounts daily limit  and sets the correct text.
+
+@property checkOverDailyLimit
+*/
+var checkOverDailyLimit = function(address, wei, template){
+
+    // check if under or over dailyLimit
+    account = Accounts.findOne({address: address});
+
+    if(account && account.dailyLimit && account.dailyLimit !== ethereumConfig.dailyLimitDefault && Number(wei) !== 0) {
+        if(Number(account.dailyLimit) < Number(wei))
+            TemplateVar.set('dailyLimitText', new Spacebars.SafeString(TAPi18n.__('wallet.send.texts.overDailyLimit', {limit: Helpers.formatBalance(account.dailyLimit), count: account.requiredSignatures - 1})));
+        else
+            TemplateVar.set('dailyLimitText', new Spacebars.SafeString(TAPi18n.__('wallet.send.texts.underDailyLimit', {limit: Helpers.formatBalance(account.dailyLimit)})));
+    } else
+        TemplateVar.set('dailyLimitText', false);
+};
+
+/**
 Calculates the gas price.
 
 @method calculateGasPrice
@@ -72,7 +91,7 @@ Template['views_send'].onCreated(function(){
     TemplateVar.set('amount', 0);
 
     // change the amount when the currency unit is changed
-    this.autorun(function(c){
+    template.autorun(function(c){
         var unit = LocalStore.get('etherUnit');
 
         if(!c.firstRun) {
@@ -82,6 +101,8 @@ Template['views_send'].onCreated(function(){
 });
 
 Template['views_send'].onRendered(function(){
+    var template = this;
+
     // focus address input field
     if(!this.data || !this.data.address)
         this.$('input[name="to"]').focus();
@@ -89,6 +110,15 @@ Template['views_send'].onRendered(function(){
         this.find('input[name="to"]').value = this.data.address;
         this.$('input[name="to"]').trigger('change');
     }
+
+    template.autorun(function(c){
+        var address = TemplateVar.getFrom('.select-account', 'selectedAccount');
+
+        if(!c.firstRun) {
+            var wei = web3.toWei(template.find('input[name="amount"]').value.replace(',','.'), LocalStore.get('etherUnit'));
+            checkOverDailyLimit(address, wei, template);
+        }
+    });
 });
 
 
@@ -108,22 +138,6 @@ Template['views_send'].helpers({
     */
     'unit': function(){
         return LocalStore.get('etherUnit');
-    },
-    /**
-    Return the to address
-
-    @method (toAddress)
-    */
-    'toAddress': function(){
-        return TemplateVar.get('toAddress');
-    },
-    /**
-    Return the currently selected fee multicalculator value
-
-    @method (feeMultiplicator)
-    */
-    'feeMultiplicator': function(){
-        return TemplateVar.get('feeMultiplicator');
     },
     /**
     Return the currently selected fee value calculate with gas price
@@ -168,20 +182,15 @@ Template['views_send'].helpers({
 
 Template['views_send'].events({
     /**
-    Set the "to" address while typing
-    
-    @event keyup input[name="to"]
-    */
-    'keyup input[name="to"]': function(e){
-        TemplateVar.set('toAddress', e.currentTarget.value);
-    },
-    /**
     Set the amount while typing
     
     @event keyup input[name="amount"], change input[name="amount"], input input[name="amount"]
     */
-    'keyup input[name="amount"], change input[name="amount"], input input[name="amount"]': function(e){
-        TemplateVar.set('amount', web3.toWei(e.currentTarget.value.replace(',','.'), LocalStore.get('etherUnit')));
+    'keyup input[name="amount"], change input[name="amount"], input input[name="amount"]': function(e, template){
+        var wei = web3.toWei(e.currentTarget.value.replace(',','.'), LocalStore.get('etherUnit'));
+        TemplateVar.set('amount', wei);
+
+        checkOverDailyLimit(template.find('select[name="select-accounts"]').value, wei, template);
     },
     /**
     Change the selected fee
@@ -202,7 +211,7 @@ Template['views_send'].events({
             gasPrice = new BigNumber(LastBlock.findOne('latest').gasPrice, 10).times(new BigNumber(toPowerFactor).toPower(TemplateVar.get('feeMultiplicator'))).toFixed(0),
             selectedAccount = Accounts.findOne({address: template.find('select[name="select-accounts"]').value});
 
-        if(selectedAccount) {
+        if(selectedAccount && !TemplateVar.get('sending')) {
 
             if(selectedAccount.balance === '0')
                 return GlobalNotification.warning({
@@ -215,12 +224,17 @@ Template['views_send'].events({
                     content: 'i18n:wallet.accounts.error.noReceiver',
                     duration: 2
                 });
+            else
+                to = '0x'+ to.replace('0x','');
 
             if(!amount)
                 return GlobalNotification.warning({
                     content: 'i18n:wallet.accounts.error.noAmount',
                     duration: 2
                 });
+
+
+            TemplateVar.set('sending', true);
             
             // simple transaction
             if(selectedAccount.type === 'account') {
@@ -232,6 +246,9 @@ Template['views_send'].events({
                     gasPrice: gasPrice,
                     gas: estimatedGas + 100 // add 100 to be safe
                 }, function(error, txHash){
+
+                    TemplateVar.set(template, 'sending', false);
+
                     console.log(error, txHash);
                     if(!error) {
                         console.log('SEND simple');
@@ -269,6 +286,9 @@ Template['views_send'].events({
                     gasPrice: gasPrice,
                     gas: 1204633 + 500000 // add 100 to be safe
                 }, function(error, txHash){
+
+                    TemplateVar.set(template, 'sending', false);
+
                     console.log(error, txHash);
                     if(!error) {
                         console.log('SEND from contract', amount);

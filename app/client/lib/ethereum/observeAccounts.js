@@ -43,44 +43,67 @@ It will check first if the incoming log is newer than the already stored data.
 
 @method confirmOrRevoke
 @param {Object} log
-@param {Object} newDocument
-@param {string} type "confirm" or "revoke"
 */
-confirmOrRevoke = function(log, newDocument, type){
-    var confirmationId = Helpers.makeId('pc', log.args.operation),
-        pendingConf = PendingConfirmations.findOne(confirmationId);
+confirmOrRevoke = function(contract, log){
+    var confirmationId = Helpers.makeId('pc', log.args.operation);
 
-    if(pendingConf &&
-       (!pendingConf.lastActivityBlock || 
-        log.blockNumber > pendingConf.lastActivityBlock ||
-        (log.blockNumber === pendingConf.lastActivityBlock && log.transactionIndex > pendingConf.lastActivityTxIndex))) {
-        
-        var data = {$set:{
-            from: newDocument.address,
-            lastActivityBlock: log.blockNumber,
-            lastActivityTxIndex: log.transactionIndex
-        }};
+    contract.hasConfirmed(log.args.operation, log.args.owner,function(e, res){
+        var pendingConf = PendingConfirmations.findOne(confirmationId),
+            setDocument = {$set:{
+                from: log.address
+            }};
 
-        if(type === 'confirm')
-            data['$addToSet'] = {
-                confirmedOwners: log.args.owner
-            };
+        // remove the sending property
+        if(pendingConf && pendingConf.sending === log.args.owner)
+            setDocument['$unset'] = {sending: ''};
+
+        console.log('CHECK OPERATION: '+ log.args.operation +' owner: '+ log.args.owner, res);
+        if(res)
+            setDocument['$addToSet'] = {confirmedOwners: log.args.owner};
         else
-            data['$pull'] = {
-                confirmedOwners: log.args.owner
-            };
+            setDocument['$pull'] = {confirmedOwners: log.args.owner};
 
-        PendingConfirmations.update(confirmationId, data);
+        PendingConfirmations.upsert(confirmationId, setDocument);
+    });
 
-    } else if(!pendingConf) {
-        PendingConfirmations.insert({
-            _id: confirmationId,
-            confirmedOwners: [log.args.owner],
-            from: newDocument.address,
-            lastActivityBlock: log.blockNumber,
-            lastActivityTxIndex: log.transactionIndex
-        });
-    }
+    // var confirmationId = Helpers.makeId('pc', log.args.operation),
+    //     pendingConf = PendingConfirmations.findOne(confirmationId);
+
+    // if(pendingConf &&
+    //    (!pendingConf.lastActivityBlock || 
+    //     log.blockNumber > pendingConf.lastActivityBlock ||
+    //     (log.blockNumber === pendingConf.lastActivityBlock && log.transactionIndex > pendingConf.lastActivityTxIndex))) {
+        
+    //     var data = {$set:{
+    //         from: log.address,
+    //         lastActivityBlock: log.blockNumber,
+    //         lastActivityTxIndex: log.transactionIndex
+    //     }};
+
+    //     // remove the sending property
+    //     if(pendingConf.sending === log.args.owner)
+    //         data['$unset'] = {sending: ''};
+
+    //     if(type === 'confirm')
+    //         data['$addToSet'] = {
+    //             confirmedOwners: log.args.owner
+    //         };
+    //     else
+    //         data['$pull'] = {
+    //             confirmedOwners: log.args.owner
+    //         };
+
+    //     PendingConfirmations.update(confirmationId, data);
+
+    // } else if(!pendingConf) {
+    //     PendingConfirmations.insert({
+    //         _id: confirmationId,
+    //         confirmedOwners: [log.args.owner],
+    //         from: log.address,
+    //         lastActivityBlock: log.blockNumber,
+    //         lastActivityTxIndex: log.transactionIndex
+    //     });
+    // }
 };
 
 /**
@@ -95,7 +118,7 @@ setupContractFilters = function(newDocument){
         blockToCheckBack = newDocument.creationBlock;
 
     var contractInstance = contracts[newDocument._id];
-    if(!contractInstance || newDocument.type === 'account')
+    if(newDocument.type === 'account' || !contractInstance)
         return;
 
     if(!contractInstance.events)
@@ -208,7 +231,7 @@ setupContractFilters = function(newDocument){
         _.each(Transactions.find({_id: {$in: newDocument.transactions || []}, blockNumber: {$gt: blockToCheckBack}}).fetch(), function(tx){
             Transactions.remove(tx._id);
         });
-        _.each(PendingConfirmations.find({_id: {$in: newDocument.pendingConfirmations || []}, blockNumber: {$gt: blockToCheckBack}}).fetch(), function(pc){
+        _.each(PendingConfirmations.find({from: newDocument.address, blockNumber: {$gt: blockToCheckBack}}).fetch(), function(pc){
             PendingConfirmations.remove(pc._id);
         });
 
@@ -249,9 +272,13 @@ setupContractFilters = function(newDocument){
 
                     if(!err) {
                         var confirmationId = Helpers.makeId('pc', log.args.operation),
-                            accounts = Accounts.find({$or: [{address: log.args.initiator}, {address: log.args.to}]}).fetch(),
+                            accounts = Accounts.find({$or: [{address: log.address}, {address: log.args.to}]}).fetch(),
                             pendingConf = PendingConfirmations.findOne(confirmationId),
                             depositTx;
+
+                        // PREVENT SHOWING pending confirmations, of WATCH ONLY WALLETS
+                        if(!(from = Accounts.findOne({address: log.address})) || !Accounts.findOne({address: {$in: from.owners}}))
+                            return;
 
                         if(accounts[0] && accounts[0].transactions) {
                             var txs = _.flatten(_.pluck(accounts, 'transactions'));
@@ -326,9 +353,7 @@ setupContractFilters = function(newDocument){
                 Helpers.eventLogs('Operation confirmation for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
 
                 // delay a little to prevent race conditions
-                Tracker.afterFlush(function(){
-                    confirmOrRevoke(log, newDocument, 'confirm');
-                });
+                confirmOrRevoke(contractInstance, log);
             }
         });
         events.push(contractInstance.Revoke({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
@@ -337,9 +362,7 @@ setupContractFilters = function(newDocument){
                 Helpers.eventLogs('Operation revokation for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
 
                 // delay a little to prevent race conditions
-                Tracker.afterFlush(function(){
-                    confirmOrRevoke(log, newDocument, 'revoke');
-                });
+                confirmOrRevoke(contractInstance, log);
             }
         });
     }
@@ -420,6 +443,11 @@ observeAccounts = function(){
                 // identifier already exisits, so just watch for created and don't re-deploy
                 if(newDocument.createdIdentifier) {
                     contracts[newDocument._id] = WalletContract.at();
+
+                    // remove account, if something its searching since more than 30 blocks
+                    if(newDocument.creationBlock + 30 <= LastBlock.findOne('latest').blockNumber)
+                        Accounts.remove(newDocument._id);
+
                     setupContractFilters(newDocument);
                     return;
                 }
@@ -480,7 +508,36 @@ observeAccounts = function(){
 
         @method changed
         */
-        changed: checkWalletConfirmations
+        changed: checkWalletConfirmations,
+        /**
+        Stop filters, when accounts are removed
+
+        @method removed
+        */
+        removed: function(newDocument){
+            var contractInstance = contracts[newDocument._id];
+            if(newDocument.type === 'account' || !contractInstance)
+                return;
+
+            if(!contractInstance.events)
+                contractInstance.events = [];
+
+            // stop all running events
+            _.each(contractInstance.events, function(event){
+                event.stopWatching();
+            });
+
+            delete contracts[newDocument._id];
+
+            // delete the all tx and pending conf
+            _.each(Transactions.find({from: newDocument.address}).fetch(), function(tx){
+                if(!Accounts.findOne({transactions: tx._id}))
+                    Transactions.remove(tx._id);
+            });
+            _.each(PendingConfirmations.find({from: newDocument.address}).fetch(), function(pc){
+                PendingConfirmations.remove(pc._id);
+            });
+        }
     });
 
 };
