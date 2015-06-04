@@ -57,7 +57,7 @@ confirmOrRevoke = function(contract, log){
         if(pendingConf && pendingConf.sending === log.args.owner)
             setDocument['$unset'] = {sending: ''};
 
-        console.log('OPERATION: '+ log.args.operation +' owner: '+ log.args.owner, res);
+        console.log('CHECK OPERATION: '+ log.args.operation +' owner: '+ log.args.owner, res);
         if(res)
             setDocument['$addToSet'] = {confirmedOwners: log.args.owner};
         else

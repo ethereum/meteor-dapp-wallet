@@ -36,7 +36,7 @@ Template['views_dashboard'].helpers({
     @return {Array}
     */
     'pendingConfirmations': function(){
-        return _.pluck(PendingConfirmations.find({operation: {$exists: true}}).fetch(), '_id'); //confirmedOwners: {$ne: []}
+        return _.pluck(PendingConfirmations.find({operation: {$exists: true}, confirmedOwners: {$ne: []}}).fetch(), '_id');
     }
 });
 

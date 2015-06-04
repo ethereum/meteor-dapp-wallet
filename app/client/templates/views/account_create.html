@@ -36,12 +36,12 @@
             </label>
             {{#if showSection "multisig"}}
                 <div class="indented-box">
-                    <p>This is a joint wallet controlled by {{> InlineForm name="multisigSignees" items=multisigSignees value=multisigSigneesValue}} owners. Any of the owners can any withdraw, up to {{> InlineForm name="dailyLimitAmount" value="1000"}} ether per day.</p>
-                    <p>Any transaction that goes over the limit will require the autorization of {{> InlineForm name="multisigSignatures" items=multisigSignatures value=multisigSignaturesValue}} extra account owners.</p>
+                    <p>{{i18n 'wallet.newWallet.accountType.multisig.text1'}} {{> InlineForm name="multisigSignees" items=multisigSignees value=multisigSigneesValue}} {{i18n 'wallet.newWallet.accountType.multisig.text2'}} {{> InlineForm name="dailyLimitAmount" value="1000"}} {{i18n 'wallet.newWallet.accountType.multisig.text3'}}</p>
+                    <p>{{i18n 'wallet.newWallet.accountType.multisig.text4'}} {{> InlineForm name="multisigSignatures" items=multisigSignatures value=multisigSignaturesValue}} {{i18n 'wallet.newWallet.accountType.multisig.text5'}}</p>
 
                    <!--  <p>{{i18n 'wallet.newWallet.accountType.multisig.text1'}}      {{i18n 'wallet.newWallet.accountType.multisig.text2'}}  {{i18n 'wallet.newWallet.accountType.multisig.text3'}}</p> -->
 
-                    <h4>{{i18n 'wallet.newWallet.accountType.multisig.text4'}}</h4>
+                    <h4>{{i18n 'wallet.newWallet.accountType.multisig.accountOwnersTitle'}}</h4>
 
                     <!-- <div class="dapp-address-input">
                         <input type="text" value="{{selectedOwner}}" disabled="disabled">

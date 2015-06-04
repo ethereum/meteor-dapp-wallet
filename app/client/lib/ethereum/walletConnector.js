@@ -25,7 +25,7 @@ ethereumConfig = {
 
     @property ethereumConfig.rollBackBy
     */
-    rollBackBy: 2000,
+    rollBackBy: 500,
     /**
     Number of blocks to confirm a wallet
 
