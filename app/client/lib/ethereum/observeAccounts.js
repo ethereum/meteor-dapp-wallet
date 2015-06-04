@@ -43,10 +43,25 @@ It will check first if the incoming log is newer than the already stored data.
 
 @method confirmOrRevoke
 @param {Object} log
-@param {Object} newDocument
-@param {string} type "confirm" or "revoke"
 */
-confirmOrRevoke = function(log, newDocument, type){
+confirmOrRevoke = function(contract, log){
+    var confirmationId = Helpers.makeId('pc', log.args.operation);
+
+    contract.hasConfirmed(log.args.operation, log.args.owner,function(e, res){
+        var setDocument = {$set:{
+            from: log.address
+        }};
+        // console.log('OPERATION: '+ log.args.operation +' owner: '+ log.args.owner, res);
+        if(res)
+            setDocument['$addToSet'] = {confirmedOwners: log.args.owner};
+        else
+            setDocument['$pull'] = {confirmedOwners: log.args.owner};
+
+        PendingConfirmations.upsert(confirmationId, setDocument);
+    });
+
+    return;
+
     var confirmationId = Helpers.makeId('pc', log.args.operation),
         pendingConf = PendingConfirmations.findOne(confirmationId);
 
@@ -56,10 +71,14 @@ confirmOrRevoke = function(log, newDocument, type){
         (log.blockNumber === pendingConf.lastActivityBlock && log.transactionIndex > pendingConf.lastActivityTxIndex))) {
         
         var data = {$set:{
-            from: newDocument.address,
+            from: log.address,
             lastActivityBlock: log.blockNumber,
             lastActivityTxIndex: log.transactionIndex
         }};
+
+        // remove the sending property
+        if(pendingConf.sending === log.args.owner)
+            data['$unset'] = {sending: ''};
 
         if(type === 'confirm')
             data['$addToSet'] = {
@@ -76,7 +95,7 @@ confirmOrRevoke = function(log, newDocument, type){
         PendingConfirmations.insert({
             _id: confirmationId,
             confirmedOwners: [log.args.owner],
-            from: newDocument.address,
+            from: log.address,
             lastActivityBlock: log.blockNumber,
             lastActivityTxIndex: log.transactionIndex
         });
@@ -330,9 +349,7 @@ setupContractFilters = function(newDocument){
                 Helpers.eventLogs('Operation confirmation for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
 
                 // delay a little to prevent race conditions
-                Tracker.afterFlush(function(){
-                    confirmOrRevoke(log, newDocument, 'confirm');
-                });
+                confirmOrRevoke(contractInstance, log);
             }
         });
         events.push(contractInstance.Revoke({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
@@ -341,9 +358,7 @@ setupContractFilters = function(newDocument){
                 Helpers.eventLogs('Operation revokation for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
 
                 // delay a little to prevent race conditions
-                Tracker.afterFlush(function(){
-                    confirmOrRevoke(log, newDocument, 'revoke');
-                });
+                confirmOrRevoke(contractInstance, log);
             }
         });
     }
@@ -424,6 +439,11 @@ observeAccounts = function(){
                 // identifier already exisits, so just watch for created and don't re-deploy
                 if(newDocument.createdIdentifier) {
                     contracts[newDocument._id] = WalletContract.at();
+
+                    // remove account, if something its searching since more than 30 blocks
+                    if(newDocument.creationBlock + 30 <= LastBlock.findOne('latest').blockNumber)
+                        Accounts.remove(newDocument._id);
+
                     setupContractFilters(newDocument);
                     return;
                 }
