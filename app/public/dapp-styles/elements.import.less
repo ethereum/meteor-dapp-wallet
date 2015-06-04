@@ -2,7 +2,32 @@
     display: none;
 }
 
+.dapp-progress {
+    position: relative;
+    width: 100%;
+    height: @gridHeight;
+    border-bottom: 1px solid @colorGreen;
 
+    > span {
+        display: block;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        line-height: @gridHeight;
+        text-align: center;
+        font-size: 0.7em;
+    }
+
+    .dapp-bar {
+        height: 100%;
+        .background-image(linear-gradient(to top, @colorGreen 0%, lighten(@colorGreen, 20%) 100%));
+
+        // ANIMATION
+        .transition(width @animationSpeed*26 linear);
+    }
+}
 
 .dapp-message {
     position: relative;
@@ -70,8 +95,12 @@ button {
     &:focus {
         outline: 0;
     }
+    &:focus {
+        border-bottom: 1px dotted @colorLink;
+    }
     &:active {
         .scale(0.95);
+        border-bottom: 0;
     }
 }
 button {
@@ -149,21 +178,59 @@ table {
     width: 100%;
     margin: @defaultMargin 0;
 
+    &.dapp-zebra {
+        tbody {
+            tr {
+                &:nth-child(odd) {
+                    background-color: fadeout(@colorGray, 70%);
+                }
+            }
+        }
+        thead + tbody {
+            tr {
+                &:nth-child(even) {
+                    background-color: fadeout(@colorGray, 70%);
+                }
+            }
+        }
+    }
+
     + h2,
     + h3 {
         margin-top: @defaultMargin*2;
     }
 
+    td {
+        padding: @defaultPaddingVertical @defaultPaddingHorizontal/2;
+
+        h2 {
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            color: @colorTextSecondary;
+            text-transform: none;
+            font-style: normal;
+        }
+        p {
+            padding-top: @defaultMargin/2;
+            margin: 0;
+            font-size: 0.9em;
+        }
+    }
+
+    thead {
+        background-color: @colorTextSecondary;
+        color: @colorWhite;
+        text-transform: uppercase;
+
+        // tr {
+        //     border-bottom: @gridHeight/2 solid transparent;
+        // }
+    }
+
     tbody {
         tr {
-
-            &:nth-child(odd) {
-                background-color: fadeout(@colorGray, 70%);
-            }
-
             td {
-                padding: 2px 0;
-
                 span {
                     .dapp-shorten-text;
                 }
@@ -199,22 +266,7 @@ table {
 .dapp-address-input {
     input {
         .dapp-input;
-
-        &.dapp-large {
-            & + .dapp-identicon {
-                top: 4px;
-            }
-            & + .icon-shield {
-                top: 9px;
-            }
-        }
     }
-    .dapp-identicon {
-        top: 2px;
-    }
-    .icon-shield {
-        top: 5px;
-    }  
 }
 
 // forms
@@ -229,12 +281,13 @@ textarea {
     padding: @defaultPaddingVertical/2 @defaultPaddingHorizontal/2;
     padding-bottom: @defaultPaddingVertical/3;
     .box-sizing(border-box);
+    .border-radius(0);
     font-size: 1em;
     font-weight: 300;
 
     &:focus {
         outline: 0;
-        // border-color: @colorBrand1;
+        border-color: @colorLink;
     }
 }
 

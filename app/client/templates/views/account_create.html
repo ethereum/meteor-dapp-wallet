@@ -2,107 +2,74 @@
         <!-- we use a form, which posts into the "dapp-form-helper-iframe" iframe, so that the browser stores inout fields for native autocpmplete -->
     <form class="container new-account" action="about:blank" target="dapp-form-helper-iframe" autocomplete="on">
             
-        <h1>{{{i18n 'wallet.newAccount.title'}}}</h1>
+        <h1>{{{i18n 'wallet.newWallet.title'}}}</h1>
 
-        <input type="text" name="accountName" placeholder="{{i18n 'wallet.newAccount.accountName'}}" autofocus="true">
+        <input type="text" name="accountName" placeholder="{{i18n 'wallet.newWallet.accountName'}}" autofocus="true">
 
-        <h2>{{i18n 'wallet.newAccount.accountType.title'}}</h2>
+        <h2>{{i18n 'wallet.newWallet.selectOwner'}}</h2>
+
+        {{> elements_selectAccount accounts=ownerAccounts}}
+
+
+        <h2>{{i18n 'wallet.newWallet.accountType.title'}}</h2>
         
         <div class="row clear">
             <label>
-                <input type="radio" name="accountType" value="multisig" checked="checked">
-                <h3>{{i18n 'wallet.newAccount.accountType.multisig.title'}}</h3>
+                <input type="radio" name="accountType" value="simple" checked="checked">
+                <h3>{{i18n 'wallet.newWallet.accountType.simple.title'}}</h3>
+                <span>{{{i18n 'wallet.newWallet.accountType.simple.description'}}}</span>
+            </label>
+            {{#if showSection "simple"}}
+                <div class="indented-box">
+                   <br><span>{{{i18n 'wallet.newWallet.accountType.simple.warning'}}}</span>
+                </div>
+            {{/if}}
+        </div>
+
+        <div class="row clear">
+            <label>
+                <input type="radio" name="accountType" value="multisig">
+                <h3>{{i18n 'wallet.newWallet.accountType.multisig.title'}}</h3>
                 {{#unless showSection "multisig"}}
-                    <span>{{i18n 'wallet.newAccount.accountType.multisig.description'}}</span>
+                    <span>{{i18n 'wallet.newWallet.accountType.multisig.description'}}</span>
                 {{/unless}}
             </label>
             {{#if showSection "multisig"}}
                 <div class="indented-box">
-                    
-<!--                     <p> This is basic account owned by {{> dapp_addressInput placeholder=i18Owneraddress}}. The owner can spend up to a {{> InlineForm name="dailyLimitTime" items=dailyLimitTimes value="1"}} limit of {{> InlineForm name="dailyLimitAmount" value="50"}}  {{> InlineForm name="dailyLimitUnit" items=dailyLimitUnits value="eth"}}. For any value that goes over this amount, you'll need a second factor authentication</p>
+                    <p>This is a joint wallet controlled by {{> InlineForm name="multisigSignees" items=multisigSignees value=multisigSigneesValue}} owners. Any of the owners can any withdraw, up to {{> InlineForm name="dailyLimitAmount" value="1000"}} ether per day.</p>
+                    <p>Any transaction that goes over the limit will require the autorization of {{> InlineForm name="multisigSignatures" items=multisigSignatures value=multisigSignaturesValue}} extra account owners.</p>
 
-                    <p> You have not set up a second factor authentication, <a href="#"> set up one now at Gobit </a></p> -->
-                   
+                   <!--  <p>{{i18n 'wallet.newWallet.accountType.multisig.text1'}}      {{i18n 'wallet.newWallet.accountType.multisig.text2'}}  {{i18n 'wallet.newWallet.accountType.multisig.text3'}}</p> -->
 
-                    <p> This is a standard account with secutiry limits. It can do any normal purchase until the {{> InlineForm name="dailyLimitTime" items=dailyLimitTimes value="1"}}  withdraw limit of {{> InlineForm name="dailyLimitAmount" value="50"}}  {{> InlineForm name="dailyLimitUnit" items=dailyLimitUnits value="eth"}}. For amounts over that limit, a secondary authentication device will be required.</p>
+                    <h4>{{i18n 'wallet.newWallet.accountType.multisig.text4'}}</h4>
 
-                    <h4> Your address </h4>
-                    {{> dapp_addressInput placeholder=i18Owneraddress}}
+                    <!-- <div class="dapp-address-input">
+                        <input type="text" value="{{selectedOwner}}" disabled="disabled">
+                    </div> -->
 
-                    <h4> Second Factor Authentication Address </h4>
-                    {{> dapp_addressInput placeholder="2FA Address"}}
+                    {{> dapp_addressInput placeholder=i18nOwnerAddress class="owners" value=selectedOwner disabled=true}}
 
-
-                   <!--  <h4> Backup Address </h4>
-                    {{> dapp_addressInput placeholder="Add a cold wallet"}}
-                    {{> dapp_addressInput placeholder="Add a cold wallet"}}
- -->
-
-                </div>
-            {{/if}}
-        </div>
-        
-        <div class="row clear">
-            <label>
-                <input type="radio" name="accountType" value="multiowned" >
-                <h3>{{i18n 'wallet.newAccount.accountType.multiowned.title'}}</h3>
-                {{#unless showSection "multiowned"}}
-                    <span>{{i18n 'wallet.newAccount.accountType.multiowned.description'}}</span>
-                {{/unless}}
-            </label>
-            {{#if showSection "multiowned"}}
-                <div class="indented-box">
-                    <p>This is joint account controlled by {{> InlineForm name="multisigSignees" items=multisigSignatures value=multisigSigneesValue}} addresses. Any of the owners can any withdraw, up to the {{> InlineForm name="dailyLimitTime" items=dailyLimitTimes value="1"}} limit of {{> InlineForm name="dailyLimitAmount" value="1000"}}  {{> InlineForm name="dailyLimitUnit" items=dailyLimitUnits value="eth"}}. Any transaction that goes over the limit will require the autorization of {{> InlineForm name="multisigSignatures" items=multisigSignatures value=multisigSignaturesValue}} extra account owners.</p>
-
-                   <!--  <p>{{i18n 'wallet.newAccount.accountType.multisig.text1'}}      {{i18n 'wallet.newAccount.accountType.multisig.text2'}}  {{i18n 'wallet.newAccount.accountType.multisig.text3'}}</p> -->
-
-                    <h4>{{i18n 'wallet.newAccount.accountType.multisig.text4'}}</h4>
-
-                    {{#each signees }}
-                        {{> dapp_addressInput placeholder=i18Owneraddress}}
+                    {{#each signees}}
+                        {{> dapp_addressInput placeholder=i18nOwnerAddress class="owners"}}
                     {{/each}}
                 </div>
             {{/if}}
-        </div>      
-<!--         <div class="row clear">
-            <label>
-                <input type="radio" name="accountType" value="dailyLimit">
-                <h3>{{i18n 'wallet.newAccount.accountType.dailyLimit.title'}}</h3>
-                {{#unless showSection "dailyLimit"}}
-                    <span>{{i18n 'wallet.newAccount.accountType.dailyLimit.description'}}</span>
-                {{/unless}}
-            </label>
-            {{#if showSection "dailyLimit"}}
-                <div class="indented-box">
-                    <p>{{i18n 'wallet.newAccount.accountType.dailyLimit.text1'}}   {{i18n 'commonWords.per'}} {{> InlineForm name="dailyLimitTime" items=dailyLimitTimes value="month"}}</p>
-                    
-                </div>
-            {{/if}}
-        </div> -->
+        </div>
 
         <div class="row clear">
             <label>
-                <input type="radio" name="accountType" value="simple">
-                <h3>{{i18n 'wallet.newAccount.accountType.simple.title'}}</h3>
-                <span>{{{i18n 'wallet.newAccount.accountType.simple.description'}}}</span>
+                <input type="radio" name="accountType" value="import">
+                <h3>{{i18n 'wallet.newWallet.accountType.import.title'}}</h3>
+                <span>{{i18n 'wallet.newWallet.accountType.import.description'}}</span>
             </label>
-            {{#if showSection "simple"}}
+            {{#if showSection "import"}}
                 <div class="indented-box">
-                   <br><span>{{{i18n 'wallet.newAccount.accountType.simple.warning'}}}</span>
+                    <br>
+                    {{> dapp_addressInput placeholder=i18nWalletAddress class="import"}}
+                    <p class="{{importValidClass}}">{{{importInfo}}}</p>
                 </div>
             {{/if}}
         </div>
-        
-<!--         <div class="row clear">
-            <label>
-                <input type="radio" name="accountType" value="custom">
-                <h3>{{i18n 'wallet.newAccount.accountType.custom.title'}}</h3>
-                <span>{{i18n 'wallet.newAccount.accountType.custom.description'}}</span>
-            </label>
-            {{#if showSection "custom"}}
-                <textarea name="custom-contract" cols="30" rows="10"></textarea>
-            {{/if}}
-        </div> -->
 
         <hr>
 

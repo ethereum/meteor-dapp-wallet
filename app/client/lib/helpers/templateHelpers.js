@@ -22,37 +22,63 @@ Template.registerHelper('debug', function(object){
 
 
 /**
-Gets the current users name.
+Get the current selected unit
 
-@method (username)
+@method (unit)
 **/
-Template.registerHelper('username', function(identity){
-    var user = Users.findOne(identity);
-    
-    // return myself
-    if(Whisper.getIdentity().identity === identity) {
-        return Whisper.getIdentity().name;
-    
-    // return username
-    } else if (user) {
-        return user.name;
-
-    // return anonymous
-    } else {
-        return 'anonymous';
-    }
+Template.registerHelper('unit', function(identity){
+    return LocalStore('unit').value;
 });
 
 /**
-Gets the current identity (name and identity).
+Get all accounts
 
-@method (currentIdentity)
+@method (accounts)
 **/
-Template.registerHelper('currentIdentity', function(identity){
-    return Whisper.getIdentity();
+Template.registerHelper('accounts', function(identity){
+    return Accounts.find({}, {sort: {type: 1, balance: -1, name: 1}});
+});
+
+/**
+Check if the given wallet is a watch only wallet, by checking if we are one of owners in the wallet.
+
+@method (isWatchOnly)
+@param {String} id the id of the wallet to check
+**/
+Template.registerHelper('isWatchOnly', Helpers.isWatchOnly);
+
+/**
+Return the right wallet icon
+
+@method (walletIcon)
+**/
+Template.registerHelper('walletIcon', function(){
+    var icon = '';
+
+    if(this.type === 'wallet') {
+        if(Helpers.isWatchOnly(this._id))
+            icon = '<i class="icon-eye" title="Watch only"></i>';
+        else
+            icon = '<i class="icon-wallet" title="Wallet"></i>';
+    } else if(this.type === 'account')
+        icon = '<i class="icon-key" title="Account"></i>';
+
+    return new Spacebars.SafeString(icon);
 });
 
 
+/**
+Get the account name or display the address
+
+@method (accountNameOrAddress)
+@param {String} address
+*/
+Template.registerHelper('accountNameOrAddress', function(address){
+    if(account = Accounts.findOne({address: address}))
+        return account.name;
+    else
+        return address;
+});
 
 /**
 Formats a timestamp to any format given.
@@ -78,20 +104,17 @@ Formats a number.
 @param {String} format       the format string
 @return {String} The formatted number
 **/
-Template.registerHelper('formatNumber', function(number, format){
-    if(format instanceof Spacebars.kw)
-        format = null;
-
-    if(number instanceof BigNumber)
-        number = number.toNumber();
-
-    format = format || '0,0.0[0000]';
+Template.registerHelper('formatNumber', Helpers.formatNumber);
 
 
-    if(!_.isFinite(number))
-        number = numeral().unformat(number);
+/**
+Formats a number.
 
-    if(_.isFinite(number))
-        return numeral(number).format(format);
-});
+    {{formatBalance myNumber "0,0.0[0000]"}}
 
+@method (formatBalance)
+@param {String} number
+@param {String} format       the format string
+@return {String} The formatted number
+**/
+Template.registerHelper('formatBalance', Helpers.formatBalance);

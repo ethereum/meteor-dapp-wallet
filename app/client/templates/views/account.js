@@ -12,33 +12,108 @@ The template to display account information.
 */
 
 
+Template['views_account'].onRendered(function(){
+    if(this.data) {
+        var qrcodesvg = new Qrcodesvg( this.data.address, 'qrcode', 150, {"ecclevel" : 1});
+        qrcodesvg.draw({"method": "classic", "fill-colors":["#555","#555","#666"]}, {"stroke-width":1});
+    }
+});
+
 
 Template['views_account'].helpers({
     /**
-    Gets the currents account properties
+    Show dailyLimit section
 
-    @method (accountProperties)
+    @method (showDailyLimit)
     */
-    'accountProperties': function(){
-        return Accounts.findOne({address: this.account});
+    'showDailyLimit': function(){
+        return (this.dailyLimit && this.dailyLimit !== ethereumConfig.dailyLimitDefault);
     },
     /**
-    Get the name
+    Show requiredSignatures section
 
-    @method (name)
+    @method (showRequiredSignatures)
     */
-    'name': function(){
-        return this.name || TAPi18n.__('wallet.accounts.defaultName');
+    'showRequiredSignatures': function(){
+        return (this.requiredSignatures && this.requiredSignatures != 1);
+    },
+    /**
+    Link the owner either to send or to the account itself.
+
+    @method (ownerLink)
+    */
+    'ownerLink': function(){
+        var owner = String(this);
+        if(Accounts.findOne({address: owner}))
+            return Router.routes['account'].path({address: owner});
+        else
+            return Router.routes['sendTo'].path({address: owner});
     }
 });
 
 Template['views_account'].events({
     /**
-    Select the current section, based on the radio inputs value.
+    Clicking the delete button will show delete modal
 
-    @event change input[type="radio"]
+    @event click button.delete
     */
-    // 'change input[type="radio"]': function(e){
-    //     TemplateVar.set('selectedSection', e.currentTarget.value);
-    // }
+    'click button.delete': function(e, template){
+        Router.current().render('dapp_modal', {
+            to: 'modal',
+            // data: {
+            //     closeable: false
+            // }
+        });
+        Router.current().render('dapp_modal_question', {
+            to: 'modalContent',
+            data: {
+                text: new Spacebars.SafeString(TAPi18n.__('wallet.accounts.modal.deleteText') + 
+                    '<br><input type="text" class="deletionConfirmation">'),
+                ok: function(){
+                    console.log(template.data, $('input.deletionConfirmation').value);
+                    if(Accounts.findOne({_id: template.data._id}).name === $('input.deletionConfirmation').val()) {
+                        Accounts.remove(template.data._id);
+                        Router.go('/');
+                        return true;
+                    }
+                },
+                cancel: true
+            }
+        });
+    },
+    /**
+    Clicking the name, will make it editable
+
+    @event click .edit-name
+    */
+    'click .edit-name': function(e){
+        // make it editable
+        $(e.currentTarget).attr('contenteditable','true');
+    },
+    /**
+    Prevent enter
+
+    @event keypress .edit-name
+    */
+    'keypress .edit-name': function(e){
+        if(e.keyCode === 13)
+            e.preventDefault();
+    },
+    /**
+    Bluring the name, will save it
+
+    @event blur .edit-name, keyup .edit-name
+    */
+    'blur .edit-name, keyup .edit-name': function(e){
+        if(!e.keyCode || e.keyCode === 13) {
+
+            // Save new name
+            Accounts.update(this._id, {$set: {
+                name: $(e.currentTarget).text()
+            }});
+
+            // make it non-editable
+            $(e.currentTarget).attr('contenteditable', null);
+        }
+    }
 });

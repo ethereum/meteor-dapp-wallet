@@ -2,60 +2,90 @@
     "wallet": {
         "app": {
             "buttons": {
+                "wallet": "Wallets",
                 "send": "Send",
                 "receive": "Receive"
             },
             "texts": {
-                "balance": "Balance"
+                "balance": "Balance",
+                "connectionError": "Unable to connect. Please start a Geth node with the following options:<br><br><small><code>__node__</code></small>"
             }
         },
         "accounts": {
-            "title": "<strong>Account</strong> Overview",
+            "title": "<strong>Wallet</strong> Overview",
             "accountTitle": "Choose an account to deposit",
-            "defaultName": "Unnamed account"
+            "defaultName": "Unnamed account",
+            "creating": "Creating",
+            "importing": "Importing",
+            "modal": {
+                "deleteText": "Do you really want to delete the wallet?<br>If you lose the wallet address, you will lose the funds on it!<br><br>Type the name of the wallet to confirm the deletion."
+            },
+            "error": {
+                "emptyWallet": "The wallet you want to send from is empty.",
+                "noReceiver": "You didn't specify a receiver.",
+                "noAmount": "You didn't specify an amount to send."
+            }
         },
-        "newAccount": {
-            "title": "New <strong>Account</strong>",
-            "accountName": "Account name",
+        "transactions": {
+            "latest": "Latest transactions",
+            "pendingConfirmations": "Confirmation needed",
+            "none": "No transactions yet",
+            "time": "Time",
+            "from": "From",
+            "to": "To",
+            "amount": "Amount",
+            "confirmations": "Confirmations",
+            "unconfirmed": "Unconfirmed",
+            "showMore": "Show More",
+            "filter": "Filter transactions",
+            "noneFound": "No matching transaction found.",
+            "types": {
+                "betweenWallets": "Transfered between wallets",
+                "sent": "Sent",
+                "received": "Received",
+                "pendingConfirmations": "__initiator__ wants to send from __from__"
+            }
+        },
+        "newWallet": {
+            "title": "New <strong>Wallet</strong>",
+            "accountName": "Wallet name",
+            "selectOwner": "Select owner",
             "accountType": {
-                "title": "Account type",
+                "title": "Wallet type",
                 "simple": {
-                    "title": "Unlimited account",
-                    "description": "An account <strong>without any security limits</strong> for those who like to live dangerously.",
-                    "warning": "<strong> Warning: this account has no protections.</strong> If someone has access to your private key, he will be able to access all your funds instantly and you'll have no recourse. Only use this if you know what you're doing."
+                    "title": "Simple Wallet",
+                    "description": "A simple wallet without additional security measures.",
+                    "warning": "Note: If your owner account is compromised your wallet has no protection."
                 },
                 "multisig": {
-                    "title": "Basic secure account",
-                    "description": "A single-owned account with standard security measures",
+                    "title": "Multisignature Wallet",
+                    "description": "A wallet controlled by multiple accounts",
                     "text1": "Require",
                     "text2": "Signatures from",
                     "text3": "people for any action.",
                     "text4": "Account owners:",
-                    "owneraddress": "Owner's address"
+                    "ownerAddress": "Owner address"
                 },
-                "multiowned": {
-                    "title": "Joint account",
-                    "description": "An account controlled by multiple people",
-                    "text1": "Require",
-                    "text2": "Signatures from",
-                    "text3": "people for any action.",
-                    "text4": "Account owners:",
-                    "owneraddress": "Owner's address"
-                },                "dailyLimit": {
-                    "title": "Daily limit account",
-                    "description": "Account with daily safety limits.",
-                    "text1": "An account that allows normal deposits, but only allows a withdrawal limit of at most",
-                    "text2": ""
+                "import": {
+                    "title": "Import wallet",
+                    "description": "Import an existing (multisignature) wallet.",
+                    "walletAddress": "Wallet address",
+                    "youreOwner": "Your \"__account__\" account is an owner of the wallet.",
+                    "watchOnly": "You don't own the wallet, but you can add it as a \"WATCH ONLY\" wallet.",
+                    "notWallet": "This address has no wallet contract."
                 },
                 "custom": {
                     "title": "Custom account",
                     "description": "Setup your own account rules."
                 }
+            },
+            "error": {
+                "emptySignees": "You didn't provided all owners.",
+                "alreadyExists": "Wallet already exists."
             }
         },
         "send": {
             "title": "<strong>Send</strong> money",
-            "yourAddress": "You",
             "pickAddress": "Pick an address",
             "to": "To",
             "from": "From",
@@ -72,7 +102,8 @@
                     "1": "likely within a few minutes",
                     "2": "usually within a minute",
                     "3": "probably within 30 seconds",
-                    "4": "probably within a few seconds"
+                    "4": "probably within a few seconds",
+                    "5": "probably within a few seconds"
                 }
             }
         }

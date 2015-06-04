@@ -2,132 +2,72 @@
 
     <div class="dapp-container accounts-page">
 
-        {{#with accountProperties}}
+        {{> dapp_identicon identity=address}}
             
-            {{> dapp_identicon identity=address}}
-                
-            <hgroup>
-                <h1><span>{{name}}</span></h1>
-                <h2>{{address}}</h2>                
-            </hgroup>
-            {{> elements_balance balance=balance changeUnit=true}}
-        {{/with}}
+        <hgroup>
+            <h1>
+                <span class="edit-name">{{name}}</span> <i class="edit-icon icon-pencil"></i>
 
-        {{! > elements_account account=account main=true}}
+                {{#if $eq type "wallet"}}
+                    <button class="dapp-icon-button delete icon-trash"></button>
+                {{/if}}
+            </h1>
+            <h2>
+                {{walletIcon}}
+                {{address}}
+            </h2>
+        </hgroup>
+
+        {{> elements_balance balance=balance changeUnit=true}}
+
+        <div id="qrcode"></div>
 
         <!-- <h3>{{account}}</h3> -->
 
+
+        {{#if $eq type "wallet"}}
+            <div class="row clear">
+                {{#if showDailyLimit}}
+                    <div class="col col-4 mobile-full">
+                        <h3>Daily limit</h3>
+                        {{formatBalance dailyLimit "0,0.00"}}
+                    </div>
+                {{/if}}
+                {{#if showRequiredSignatures}}
+                    <div class="col col-4 mobile-full">
+                        <h3>Required Signatures</h3> {{requiredSignatures}}
+                    </div>
+                {{/if}}
+                <div class="col col-4 mobile-full">
+                    <h3>Owners</h3>
+                    {{#each owners}}
+                        <span data-tooltip="{{accountNameOrAddress this}}" class="simptip-position-bottom simptip-movable">
+                            {{> dapp_identicon identity=this class="dapp-tiny" link=ownerLink}}
+                        </span>
+                    {{/each}}
+                </div>
+            </div>
+        {{/if}}
+
         <div class="dapp-clear-fix"></div>
 
-        <!-- <h2>Pending transactions</h2>
+        {{#if $eq type "account"}}
+            <h3>Note</h3>
+            <p>Accounts can't list past transactions and are rather unsafe, please <a href="{{pathFor route='createAccount'}}">create a wallet</a> to store ether.</p>
+        {{/if}}
 
-        <table>
-            <tbody>
-                <tr>
-                    <td class="transaction-amount plus">202 µΞ</td>
-                    <td class="account-name">
-                        <span>alexvandesande.eth</span>
-                    </td>
-                    <td class="transaction-purpose">
-                        <span>Birthday gift</span>
-                    </td>
-                    <td class="button">
-                        <button class="dapp-block-button approve">
-                            <i class="icon-checkmark"></i>
-                            Approve
-                        </button>
-                    </td>
-                    <td class="button">
-                        <button class="dapp-block-button reject">
-                            <i class="icon-cross"></i>
-                            Reject
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="transaction-amount minus">-4 200 µΞ</td>
-                    <td class="account-name">
-                        <span>alexvandesande.eth</span>
-                    </td>
-                    <td class="transaction-purpose">
-                        <span>Birthday gift</span>
-                    </td>
-                    <td class="button">
-                        <button class="dapp-block-button approve">
-                            <i class="icon-checkmark"></i>
-                            Approve
-                        </button>
-                    </td>
-                    <td class="button">
-                        <button class="dapp-block-button reject">
-                            <i class="icon-cross"></i>
-                            Reject
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table> -->
+        {{#if pendingConfirmations}}
+            <h2>{{i18n 'wallet.transactions.pendingConfirmations'}}</h2>
 
-        <h2>Latest transactions</h2>
+            {{> elements_transactions_table transactionIds=pendingConfirmations collection="PendingConfirmations" account=_id}}
+        {{/if}}
 
-        <table>
-            <tbody>
-                <tr>
-                    <td class="transaction-amount plus">200 µΞ</td>
-                    <td class="account-name">
-                        <span>alexvandesande.eth</span>
-                    </td>
-                    <td class="transaction-purpose">
-                        <span>Birthday gift</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="transaction-amount plus">2 200 µΞ</td>
-                    <td class="account-name">
-                        <span>alexvandesande.eth</span>
-                    </td>
-                    <td class="transaction-purpose">
-                        <span>Birthday gift</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="transaction-amount minus">-123 µΞ</td>
-                    <td class="account-name">
-                        <span>alexvandesande.eth</span>
-                    </td>
-                    <td class="transaction-purpose">
-                        <span>Birthday gift</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="transaction-amount plus">533 µΞ</td>
-                    <td class="account-name">
-                        <span>alexvandesande.eth</span>
-                    </td>
-                    <td class="transaction-purpose">
-                        <span>Birthday gift</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="transaction-amount plus">24 566 µΞ</td>
-                    <td class="account-name">
-                        <span>alexvandesande.eth</span>
-                    </td>
-                    <td class="transaction-purpose">
-                        <span>Birthday gift</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="transaction-amount plus">4200 µΞ</td>
-                    <td class="account-name">
-                        <span>alexvandesande.eth</span>
-                    </td>
-                    <td class="transaction-purpose">
-                        <span>Birthday gift</span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        
+        {{#if transactions}}
+            <h2>{{i18n 'wallet.transactions.latest'}}</h2>
+
+            {{> elements_transactions_table transactionIds=transactions account=_id}}
+        {{else}}
+            <h2>{{i18n 'wallet.transactions.none'}}</h2>
+        {{/if}}
     </div>
 </template>

@@ -7,22 +7,21 @@
 
         <!-- from/to -->
         <div class="row clear from-to">
-            <div class="col col-7 mobile-full">
+            <div class="col col-7 mobile-full from">
                 <h3>{{i18n 'wallet.send.from'}}</h3>
-                {{> dapp_identicon identity='214243657890897654321' class="dapp-small"}}
 
-                <span>{{i18n 'wallet.send.yourAddress'}}</span>
+                {{> elements_selectAccount accounts=fromAccounts}}
+            </div>
+
+            <div class="col col-5 mobile-full send-info">
+                {{i18n 'wallet.send.texts.sendTo'}}
             </div>
 
             <div class="col col-7 mobile-full">
                 <h3>{{i18n 'wallet.send.to'}}</h3>
 
                 <!-- <button>{{i18n 'wallet.send.pickAddress'}}</button> -->
-                {{> dapp_addressInput placeholder="0x000000.." class="dapp-large"}}
-            </div>
-
-            <div class="col col-5 mobile-full send-info">
-                {{i18n 'wallet.send.texts.sendTo'}}
+                {{> dapp_addressInput placeholder="0x000000.." name="to" autofocus=true}}
             </div>
 
             <div class="dapp-clear-fix"></div>
@@ -47,7 +46,7 @@
             <div class="col col-7 mobile-full">
                 <h3>{{i18n 'wallet.send.fee'}}</h3>
                 <span>{{fee}} {{unit}}</span><br>
-                <input type="range" name="fee" min="-2" max="2" step="1" value="{{feeMultiplicator}}">
+                <input type="range" name="fee" min="-5" max="5" step="1" value="{{feeMultiplicator}}">
                 <span>{{i18n 'wallet.send.feeLow'}}</span>
                 <span>{{i18n 'wallet.send.feeHigh'}}</span>
             </div>
@@ -64,8 +63,10 @@
             <div class="col col-12 mobile-full">
                 <h3>Total</h3>
                 <span class="amount">{{total}} {{unit}}</span>
-                <br>
-                ({{total 'ether'}} ether)
+                {{#if $neq unit 'ether'}}
+                    <br>
+                    ({{total 'ether'}} ether)
+                {{/if}}
             </div>
 
             <div class="dapp-clear-fix"></div>

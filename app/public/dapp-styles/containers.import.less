@@ -88,13 +88,17 @@ body {
                 border-bottom: 5px solid transparent;
                 color: darken(@colorLink, 10%);
 
+                &:focus {
+                    border-color: @colorWhite;
+                }
                 &.active {
+                    .transform-origin(50% 100%);
                     color: darken(@colorBackgroundHeader, 20%);
 
                     border-bottom: 5px solid @colorWhite;
                 }
-                &.active {
-                    .transform-origin(50% 100%);
+                &:active {
+                    border-bottom: transparent;
                 }
 
                 i {

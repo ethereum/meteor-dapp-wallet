@@ -1,0 +1,129 @@
+<template name="elements_transactions_table">
+    <br>
+    {{#unless $eq collection "PendingConfirmations"}}
+        <input type="text" class="filter-transactions" placeholder="{{i18n 'wallet.transactions.filter'}}">
+    {{/unless}}
+    <table class="dapp-zebra">
+        <!-- <thead>
+            <tr>
+                <td class="time">{{i18n "wallet.transactions.time"}}</td>
+                <td></td>
+                <td class="transaction-amount">{{i18n "wallet.transactions.amount"}}</td>
+                <td></td>
+            </tr>
+        </thead> -->
+        <tbody>
+            {{#each items}}
+                {{> elements_transactions_row}}
+            {{else}}
+                <tr class="full-width">
+                    <td colspan="5">
+                        {{> spinner}}
+                        {{! i18n "wallet.transactions.noneFound"}}
+                    </td>
+                </tr>
+            {{/each}}
+
+            {{#if hasMore}}
+                <tr>
+                    <td colspan="5">
+                        <button class="show-more">{{i18n "wallet.transactions.showMore"}}</button>
+                    </td>
+                </tr>
+            {{/if}}
+        </tbody>
+    </table>
+</template>
+
+<template name="elements_transactions_row">
+    <tr class="{{#if $eq unConfirmed.confirmations 0}}unconfirmed{{/if}}">
+        <td class="time" title="{{formatTime timestamp 'LLLL'}}">
+            {{#unless $eq ../collection "PendingConfirmations"}}
+                {{#with unConfirmed}}
+                    <div class="dapp-progress">
+                        <div class="dapp-bar" style="width: {{percent}}%;"></div>
+                    </div>
+                {{/with}}
+            {{/unless}}
+
+            <h2>{{formatTime timestamp "MMM"}}</h2>
+            <p>{{formatTime timestamp "D"}}</p>
+        </td>
+        <td class="account-name">
+            <h2>{{transactionType}}</h2>
+            
+            <p>
+                {{> elements_transactions_row_tofrom account=account address=from}}
+                <span class="arrow">→</span> 
+                {{> elements_transactions_row_tofrom account=account address=to}}
+            </p>
+
+            {{#if ownerConfirmationCount}}
+                <div class="owner-confirmations">
+                    {{#each owners}}
+                        <div data-tooltip="{{accountNameOrAddress this}}" class="simptip-position-bottom simptip-movable">
+                            {{#if ownerIsConfirmed}}<i class="icon-check"></i>{{/if}}
+                            {{> dapp_identicon identity=this class="dapp-tiny"}}
+                        </div>
+                    {{/each}}
+                    <span>{{ownerConfirmationCount}}</span>
+                </div>
+            {{/if}}
+        </td>
+        <td class="info">
+            {{#with unConfirmed}}
+                {{confirmations}} {{i18n "commonWords.of"}} {{totalConfirmations}} {{i18n "wallet.transactions.confirmations"}}
+            {{else}}
+                {{fromNowTime}}
+            {{/with}}
+        </td>
+        <!-- <td class="account-name">
+            {{> elements_transactions_row_tofrom account=account address=to}}
+        </td> -->
+        {{#if incomingTx ../account}}
+            <td class="transaction-amount plus">
+                {{formatBalance value '0,0.00[000000]'}} <!-- <small>({{formatBalance fee '0,0.00[000000]'}})</small> -->
+            </td>
+        {{else}}
+            <td class="transaction-amount minus">
+                -{{formatBalance value '0,0.00[000000]'}} <!-- <small>({{formatBalance fee '0,0.00[000000]'}})</small> -->
+            </td>
+        {{/if}}
+        <td>
+            {{#if incomingTx ../account}}
+                <i class="icon-arrow-left plus"></i>
+            {{else}}
+                <i class="icon-arrow-right minus"></i>
+            {{/if}}
+        </td>
+        {{#if $eq ../collection "PendingConfirmations"}}
+            <td class="button">
+                <button class="dapp-block-button approve {{#if approved}}selected{{/if}}">
+                    {{#if approved}}
+                        <i class="icon-check"></i>
+                    {{/if}}
+                    Approve
+                </button>
+            </td>
+            <td class="button">
+                <button class="dapp-block-button reject {{#unless approved}}selected{{/unless}}">
+                    {{#unless approved}}
+                        <i class="icon-check"></i>
+                    {{/unless}}
+                    Reject
+                </button>
+            </td>
+        {{/if}}
+    </tr>
+</template>
+
+<template name="elements_transactions_row_tofrom">
+    {{#with getAccount}}
+        {{#if type}}
+            {{> dapp_identicon identity=address class="dapp-tiny"}} <a href="{{pathFor route='account' address=address}}">{{name}}</a>
+        {{else}}
+            <a href="{{pathFor route='sendTo' identity=address}}" title="{{address}}">{{address}}</a>
+        {{/if}}
+    {{/with}}
+</template>
+

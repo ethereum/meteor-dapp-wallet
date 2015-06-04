@@ -13,14 +13,32 @@ The dashboard template
 
 
 Template['views_dashboard'].helpers({
-    /**
-    Get all current accounts
+    // /**
+    // Get all current accounts
 
-    @method (accounts)
+    // @method (accounts)
+    // */
+    // 'accounts': function(){
+    //     return Accounts.find({}, {sort: {type: 1}});
+    // },
+    /**
+    Get all transactions
+
+    @method (allTransactions)
     */
-    'accounts': function(){
-        return Accounts.find({});
+    'allTransactions': function(){
+        return Transactions.find({}, {sort: {timestamp: -1}}).count();
     },
+    /**
+    Returns an array of pending confirmations, from all accounts
+    
+    @method (pendingConfirmations)
+    @return {Array}
+    */
+    'pendingConfirmations': function(){
+        var accounts = Accounts.find().fetch();
+        return _.compact(_.flatten(_.pluck(accounts, 'pendingConfirmations')));
+    }
 });
 
 

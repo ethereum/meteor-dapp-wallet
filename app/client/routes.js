@@ -25,6 +25,10 @@ Router.configure({
     }
 });
 
+var scrollTop = function(){
+    $(window).scrollTop(0);
+    this.next();
+}
 
 // ROUTES
 
@@ -35,7 +39,8 @@ The receive route, showing the wallet overview
 */
 Router.route('/', {
     template: 'views_dashboard',
-    name: 'dashboard'
+    name: 'dashboard',
+    onBeforeAction: scrollTop
 });
 
 
@@ -46,9 +51,24 @@ The send route.
 */
 Router.route('/send', {
     template: 'views_send',
-    name: 'send'
+    name: 'send',
+    onBeforeAction: scrollTop
 });
 
+
+/**
+The send route.
+
+@method send
+*/
+Router.route('/send/:address', {
+    template: 'views_send',
+    name: 'sendTo',
+    onBeforeAction: scrollTop,
+    data: function() {
+        return this.params;
+    }
+});
 
 /**
 The create account route.
@@ -67,18 +87,13 @@ The account route.
 
 @method send
 */
-Router.route('/account/:account', {
+Router.route('/account/:address', {
     template: 'views_account',
     name: 'account',
+    onBeforeAction: scrollTop,
     data: function() {
-        return {
-            account: this.params.account
-        };
+        return Accounts.findOne({address: this.params.address});
     }
-});
-Router.route('/account/:account/profile', {
-    template: 'views_account',
-    name: 'userProfile'
 });
 
 

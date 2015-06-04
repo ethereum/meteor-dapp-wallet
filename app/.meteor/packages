@@ -5,7 +5,8 @@
 
 meteor-platform
 fastclick
-iron:router
+iron:router@=1.0.7
+iron:url@=1.0.7
 less
 chuangbo:cookie
 jeeeyul:moment-with-langs
@@ -21,4 +22,8 @@ markdown
 numeral:numeral
 frozeman:inline-form
 ethereum:elements
-ethereum:js
+ethereum:web3
+mrt:qrcodesvg
+sacha:spin
+frozeman:global-notifications
+agnito:simptip

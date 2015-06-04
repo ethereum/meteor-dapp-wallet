@@ -42,6 +42,37 @@ Helpers.getLocalStorageSize = function(){
     return size;
 };
 
+/**
+Make a ID out of a given hash and prefix.
+
+@method makeId
+@param {String} prefix
+@param {String} hash
+*/
+Helpers.makeId = function(prefix, hash){
+    return prefix +'_'+ hash.replace('0x','').substr(0,10);
+};
+
+/**
+Display logs in the console for events.
+
+@method eventLogs
+*/
+Helpers.eventLogs = function(){
+    var args = arguments;
+    Array.prototype.unshift.call(args, 'EVENT LOG: ');
+    console.log.apply(console, args);
+}
+
+/**
+Check if the given wallet is a watch only wallet, by checking if we are one of owners in the wallet.
+
+@method isWatchOnly
+@param {String} id the id of the wallet to check
+*/
+Helpers.isWatchOnly = function(id) {
+    return !Accounts.findOne({_id: id, owners: {$in: _.pluck(Accounts.find({type: 'account'}).fetch(), 'address')}});
+};
 
 /**
 Shows the offline mesage
@@ -198,4 +229,48 @@ Helpers.formatTime = function(time, format) { //parameters
 
     } else
         return '';
+};
+
+
+/**
+Formats a given number
+
+    Helpers.formatNumber(10000, "0.0[000]")
+
+@method formatNumber
+@param {Number|String|BigNumber} number the number to format
+@param {String} format           the format string e.g. "0.0[000]" see http://numeraljs.com for more.
+@return {String} The formated time
+**/
+Helpers.formatNumber = function(number, format){
+    if(format instanceof Spacebars.kw)
+        format = null;
+
+    if(number instanceof BigNumber)
+        number = number.toString(10);
+
+    format = format || '0,0.0[0000]';
+
+    if(!_.isFinite(number))
+        number = numeral().unformat(number);
+
+    if(_.isFinite(number))
+        return numeral(number).format(format);
+};
+
+
+/**
+Formats a given number toa unit balance
+
+    Helpers.formatBalance(10000, "0.0[000]")
+
+@method formatBalance
+@param {Number|String|BigNumber} number the number to format
+@param {String} format           the format string e.g. "0.0[000]" see http://numeraljs.com for more.
+@return {String} The formated balance including the unit
+**/
+Helpers.formatBalance = function(number, format){
+    number = web3.fromWei(number, LocalStore.get('etherUnit'));
+
+    return Helpers.formatNumber(number, format) +' '+ LocalStore.get('etherUnit');
 };
