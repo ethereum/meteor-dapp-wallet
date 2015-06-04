@@ -215,6 +215,8 @@ Template['views_send'].events({
                     content: 'i18n:wallet.accounts.error.noReceiver',
                     duration: 2
                 });
+            else
+                to = '0x'+ to.replace('0x','');
 
             if(!amount)
                 return GlobalNotification.warning({
