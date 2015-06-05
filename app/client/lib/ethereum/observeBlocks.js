@@ -23,6 +23,7 @@ observeLatestBlocks = function(){
     // GET the latest blockchain information
     web3.eth.filter('latest').watch(function(e, res){
         if(!e) {
+
             var block = web3.eth.getBlock(res, function(e, block){
                 var oldBlock = Blockchain.findOne({_id: 'bl_'+ (block.number - 1)});
                 // console.log('BLOCK', block.number);
