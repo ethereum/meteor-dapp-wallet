@@ -54,38 +54,35 @@ connectToNode = function(){
     web3.setProvider(new web3.providers.HttpProvider("http://localhost:8545")); //8545 8080 10.10.42.116
 
 
-    // UPDATE normal accounts
-    web3.eth.getAccounts(function(e, accounts){
-        if(!e) {
-            _.each(Accounts.find({type: 'account'}).fetch(), function(account){
-                if(!_.contains(accounts, account.address)) {
-                    Accounts.remove(account._id);
-                } else {
-                    web3.eth.getBalance(account.address, function(e, balance){
-                        if(!e) {
-                            Accounts.update(account._id, {$set: {
-                                balance: balance.toString(10)
-                            }});
-                        }
-                    });
+    // UPDATE normal accounts (only sync request, to throw error on no connection)
+    var accounts = web3.eth.accounts;
+    _.each(Accounts.find({type: 'account'}).fetch(), function(account){
+        if(!_.contains(accounts, account.address)) {
+            Accounts.remove(account._id);
+        } else {
+            web3.eth.getBalance(account.address, function(e, balance){
+                if(!e) {
+                    Accounts.update(account._id, {$set: {
+                        balance: balance.toString(10)
+                    }});
                 }
-
-                accounts = _.without(accounts, account.address);
-            });
-            // ADD missing accounts
-            _.each(accounts, function(address){
-                web3.eth.getBalance(address, function(e, balance){
-                    if(!e) {
-                        Accounts.insert({
-                            type: 'account',
-                            address: address,
-                            balance: balance.toString(10),
-                            name: (address === web3.eth.coinbase) ? 'Coinbase' : address
-                        });
-                    }
-                });
             });
         }
+
+        accounts = _.without(accounts, account.address);
+    });
+    // ADD missing accounts
+    _.each(accounts, function(address){
+        web3.eth.getBalance(address, function(e, balance){
+            if(!e) {
+                Accounts.insert({
+                    type: 'account',
+                    address: address,
+                    balance: balance.toString(10),
+                    name: (address === web3.eth.coinbase) ? 'Coinbase' : address
+                });
+            }
+        });
     });
 
 
