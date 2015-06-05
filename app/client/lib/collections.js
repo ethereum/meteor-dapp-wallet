@@ -4,6 +4,7 @@
 
 // contains blockchain meta data
 LastBlock = new Mongo.Collection('lastblock', {connection: null});
+new PersistentMinimongo(LastBlock);
 if(!LastBlock.findOne('latest'))
     LastBlock.insert({
         _id: 'latest',

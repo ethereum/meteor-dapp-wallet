@@ -58,10 +58,17 @@ confirmOrRevoke = function(contract, log){
             setDocument['$unset'] = {sending: ''};
 
         console.log('CHECK OPERATION: '+ log.args.operation +' owner: '+ log.args.owner, res);
-        if(res)
-            setDocument['$addToSet'] = {confirmedOwners: log.args.owner};
-        else
-            setDocument['$pull'] = {confirmedOwners: log.args.owner};
+        if(res){
+            if(pendingConf)
+                setDocument['$addToSet'] = {confirmedOwners: log.args.owner};
+            else
+                setDocument['$set'].confirmedOwners = [log.args.owner];
+        } else {
+            if(pendingConf)
+                setDocument['$pull'] = {confirmedOwners: log.args.owner};
+            else
+                setDocument['$set'].confirmedOwners = [];
+        }
 
         PendingConfirmations.upsert(confirmationId, setDocument);
     });
