@@ -1,7 +1,7 @@
 <template name="views_dashboard">
     <div class="dapp-container">
-        <h1>{{{i18n 'wallet.accounts.title'}}}</h1>
-        <h2>{{i18n 'wallet.accounts.accountTitle'}}</h2>
+        <h1>{{{i18n "wallet.accounts.title"}}}</h1>
+        <h2>{{i18n "wallet.accounts.accountTitle"}}</h2>
         <br>
 
         {{#each accounts}}
@@ -12,7 +12,7 @@
             <div class="account-pattern">
                 +
             </div>
-            <h3>Add Account</h3>
+            <h3>{{i18n "wallet.app.buttons.addWallet"}}</h3>
         </a>
 
         <div class="dapp-clear-fix"></div>

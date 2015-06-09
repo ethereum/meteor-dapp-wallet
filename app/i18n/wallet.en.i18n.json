@@ -4,7 +4,8 @@
             "buttons": {
                 "wallet": "Wallets",
                 "send": "Send",
-                "receive": "Receive"
+                "receive": "Receive",
+                "addWallet": "Add wallet"
             },
             "texts": {
                 "balance": "Balance",
@@ -13,8 +14,8 @@
         },
         "accounts": {
             "title": "<strong>Wallet</strong> Overview",
-            "accountTitle": "Choose an account to deposit",
-            "defaultName": "Unnamed account",
+            "accountTitle": "Choose a wallet to deposit",
+            "defaultName": "Unnamed wallet",
             "creating": "Creating",
             "importing": "Importing",
             "modal": {
@@ -65,7 +66,7 @@
                     "text3": "ether per day.",
                     "text4": "Any transaction over that daily limit requires the confirmation of",
                     "text5": "owners.",
-                    "accountOwnersTitle": "Account owners",
+                    "accountOwnersTitle": "Wallet owners",
                     "ownerAddress": "Owner address"
                 },
                 "import": {
@@ -75,10 +76,6 @@
                     "youreOwner": "Your \"__account__\" account is an owner of the wallet.",
                     "watchOnly": "You don't own the wallet, but you can add it as a \"WATCH ONLY\" wallet.",
                     "notWallet": "This address has no wallet contract."
-                },
-                "custom": {
-                    "title": "Custom account",
-                    "description": "Setup your own account rules."
                 }
             },
             "error": {
