@@ -14,7 +14,7 @@ if(!LastBlock.findOne('latest'))
     });
 
 Blockchain = new Mongo.Collection('blockchain', {connection: null});
-new PersistentMinimongo(Blockchain);
+// new PersistentMinimongo(Blockchain);
 
 // Contains the accounts
 Accounts = new Mongo.Collection('accounts', {connection: null});

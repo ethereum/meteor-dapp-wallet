@@ -258,13 +258,18 @@ Template['elements_transactions_row'].events({
                 ? 'confirm'
                 : 'revoke';
 
-            contracts[account._id][type].sendTransaction(_this.operation, {from: owner, gas: 1204633 + 900000}, function(e, hash){
-                if(!e) {
+            contracts[account._id][type].sendTransaction(_this.operation, {from: owner, gas: 1204633 + 900000}, function(error, hash){
+                if(!error) {
                     console.log(type, hash);
                     
                     PendingConfirmations.update(_this._id, {$set: {
                         sending: owner
                     }});
+                } else {
+                    GlobalNotification.error({
+                        content: error.message,
+                        duration: 8
+                    });
                 }
             });
         }
