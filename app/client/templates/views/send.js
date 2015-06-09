@@ -83,7 +83,7 @@ Template['views_send'].onCreated(function(){
     var template = this;
 
     // set account queries
-    accountQuery = {$or: [{owners: {$in: _.pluck(Accounts.find({type: 'account'}).fetch(), 'address')}}, {type: 'account'}]};
+    accountQuery = {$or: [{owners: {$in: _.pluck(Accounts.find({type: 'account'}).fetch(), 'address')}, address: {$exists: true}}, {type: 'account', address: {$exists: true}}]};
     accountSort = {sort: {type: -1, balance: -1}};
 
     // set the default fee
