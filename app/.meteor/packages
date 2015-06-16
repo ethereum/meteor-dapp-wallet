@@ -22,6 +22,7 @@ markdown
 numeral:numeral
 frozeman:inline-form
 ethereum:elements
+ethereum:web3
 mrt:qrcodesvg
 sacha:spin
 frozeman:global-notifications
