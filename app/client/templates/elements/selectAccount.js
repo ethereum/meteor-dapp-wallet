@@ -20,14 +20,6 @@ Template['elements_selectAccount'].onCreated(function(){
 
 Template['elements_selectAccount'].helpers({
     /**
-    Use this method, to overwrite the global accounts helper.
-
-    @method (accounts)
-    */
-    'accounts': function(){
-        return this.accounts;
-    },
-    /**
     Return the selected address
 
     @method (selectedAccount)

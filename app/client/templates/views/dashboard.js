@@ -13,14 +13,14 @@ The dashboard template
 
 
 Template['views_dashboard'].helpers({
-    // /**
-    // Get all current accounts
+    /**
+    Get all current accounts
 
-    // @method (accounts)
-    // */
-    // 'accounts': function(){
-    //     return Accounts.find({}, {sort: {type: 1}});
-    // },
+    @method (accounts)
+    */
+    'accounts': function(){
+        return Accounts.find({}, {sort: {type: 1, balance: -1, name: 1}}).fetch();
+    },
     /**
     Get all transactions
 

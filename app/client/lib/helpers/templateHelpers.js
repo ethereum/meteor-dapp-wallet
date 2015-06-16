@@ -31,15 +31,6 @@ Template.registerHelper('unit', function(identity){
 });
 
 /**
-Get all accounts
-
-@method (accounts)
-**/
-Template.registerHelper('accounts', function(identity){
-    return Accounts.find({}, {sort: {type: 1, balance: -1, name: 1}});
-});
-
-/**
 Check if the given wallet is a watch only wallet, by checking if we are one of owners in the wallet.
 
 @method (isWatchOnly)
