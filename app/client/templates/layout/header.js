@@ -20,6 +20,11 @@ Template['layout_header'].helpers({
         // update also the meta tag balance
         $('meta[name="ethereum-dapp-info"]').prop('content', Helpers.formatBalance(accounts, '0,0.00'));
 
+        // set total balance in Mist menu
+        if(typeof mist !== 'undefined') {
+            mist.menu.setBadge(Helpers.formatBalance(accounts, '0 a'));
+        }
+
         return accounts;
     }
 });
