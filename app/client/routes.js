@@ -42,7 +42,9 @@ Router.route('/', {
     name: 'dashboard',
     onBeforeAction: scrollTop,
     onAfterAction: function(){
-        updateMistMenu();
+        Tracker.nonreactive(function(){
+            updateMistMenu();
+        });
     },
 });
 
@@ -57,7 +59,9 @@ Router.route('/send', {
     name: 'send',
     onBeforeAction: scrollTop,
     onAfterAction: function(){
-        updateMistMenu();
+        Tracker.nonreactive(function(){
+            updateMistMenu();
+        });
     }
 });
 
@@ -72,7 +76,9 @@ Router.route('/send/:address', {
     name: 'sendTo',
     onBeforeAction: scrollTop,
     onAfterAction: function(){
-        updateMistMenu();
+        Tracker.nonreactive(function(){
+            updateMistMenu();
+        });
     },
     data: function() {
         return this.params;
@@ -88,7 +94,9 @@ Router.route('/account/new', {
     template: 'views_account_create',
     name: 'createAccount',
     onAfterAction: function(){
-        updateMistMenu();
+        Tracker.nonreactive(function(){
+            updateMistMenu();
+        });
     }
 });
 
@@ -104,7 +112,9 @@ Router.route('/account/:address', {
     name: 'account',
     onBeforeAction: scrollTop,
     onAfterAction: function(){
+        Tracker.nonreactive(function(){
             updateMistMenu();
+        });
     },
     data: function() {
         return Accounts.findOne({address: this.params.address});

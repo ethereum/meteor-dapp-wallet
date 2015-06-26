@@ -1,6 +1,6 @@
 
 // set providor
-if(!web3.currentProvidor)
+if(!web3.currentProvider)
     web3.setProvider(new web3.providers.HttpProvider("http://localhost:8545")); //8545 8080 10.10.42.116
 
 
@@ -39,11 +39,11 @@ Meteor.Spinner.options = {
 
 var connect = function(){
 
-    try {
+    if(web3.isConnected()) {
+
         connectToNode();
 
-    } catch(e) {
-        console.log(e);
+    } else {
 
         Meteor.startup(function(){
             // make sure the modal is rendered after all routes are executed
