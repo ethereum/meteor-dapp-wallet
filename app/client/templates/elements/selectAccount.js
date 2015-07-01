@@ -12,7 +12,7 @@ The select account template
 */
 
 Template['elements_selectAccount'].onCreated(function(){
-    if(this.data && this.data.accounts) {
+    if(this.data && this.data.accounts && this.data.accounts.fetch()[0]) {
         TemplateVar.set('selectedAccount', this.data.accounts.fetch()[0].address);
     }
 });

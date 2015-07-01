@@ -258,7 +258,7 @@ Template['elements_transactions_row'].events({
                 ? 'confirm'
                 : 'revoke';
 
-            contracts[account._id][type].sendTransaction(_this.operation, {from: owner, gas: 1204633 + 900000}, function(error, hash){
+            contracts['ct_'+ account._id][type].sendTransaction(_this.operation, {from: owner, gas: 1204633 + 900000}, function(error, hash){
                 if(!error) {
                     console.log(type, hash);
                     

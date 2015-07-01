@@ -10,7 +10,6 @@ Add new in/outgoing transaction
 */
 addTransaction = function(log, from, to, value){
     var block = web3.eth.getBlock(log.blockNumber, true, function(err, block){
-
         if(!err) {
             var txId = Helpers.makeId('tx', log.transactionHash),
                 transaction = _.find(block.transactions, function(tx){ return tx.hash === log.transactionHash; });

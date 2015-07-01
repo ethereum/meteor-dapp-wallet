@@ -281,7 +281,7 @@ Template['views_send'].events({
 
             } else if(selectedAccount.type === 'wallet') {
 
-                contracts[selectedAccount._id].execute.sendTransaction(to, amount, '', {
+                contracts['ct_'+ selectedAccount._id].execute.sendTransaction(to, amount, '', {
                     from: selectedAccount.owners[0],
                     gasPrice: gasPrice,
                     gas: 1204633 + 500000 // add 100 to be safe

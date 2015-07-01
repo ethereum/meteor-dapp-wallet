@@ -21,7 +21,7 @@ Update the contract data, like dailyLimit and required signatures.
 @method updateContractData
 */
 var updateContractData = function(newDocument){
-    var contractInstance = contracts[newDocument._id];
+    var contractInstance = contracts['ct_'+ newDocument._id];
 
     contractInstance.m_dailyLimit(function(err, result){
         Accounts.update(newDocument._id, {$set: {
@@ -124,7 +124,7 @@ setupContractFilters = function(newDocument){
     if(blockToCheckBack < 0)
         blockToCheckBack = newDocument.creationBlock;
 
-    var contractInstance = contracts[newDocument._id];
+    var contractInstance = contracts['ct_'+ newDocument._id];
     if(newDocument.type === 'account' || !contractInstance)
         return;
 
@@ -189,7 +189,7 @@ setupContractFilters = function(newDocument){
                 newDocument = Accounts.findOne(newDocument._id);
 
                 // set address to the contract instance
-                contracts[newDocument._id].address = log.address;
+                contracts['ct_'+ newDocument._id].address = log.address;
 
                 // SETUP DAILY LIMIT
                 if(newDocument.dailyLimit && newDocument.dailyLimit !== ethereumConfig.dailyLimitDefault)
@@ -449,7 +449,7 @@ observeAccounts = function(){
 
                 // identifier already exisits, so just watch for created and don't re-deploy
                 if(newDocument.createdIdentifier) {
-                    contracts[newDocument._id] = WalletContract.at();
+                    contracts['ct_'+ newDocument._id] = WalletContract.at();
 
                     // remove account, if something its searching since more than 30 blocks
                     if(newDocument.creationBlock + 30 <= LastBlock.findOne('latest').blockNumber)
@@ -467,12 +467,12 @@ observeAccounts = function(){
 
                 }, function(error, contract){
                     if(!error) {
-                        contracts[newDocument._id] = contract;
+                        contracts['ct_'+ newDocument._id] = contract;
 
                         Helpers.eventLogs('Guessed Contract Address: ', contract.address);
 
 
-                        // newDocument.address = contracts[newDocument._id].address;
+                        // newDocument.address = contracts['ct_'+ newDocument._id].address;
                         newDocument.createdIdentifier = createdIdentifier;
 
                         // add createdIdentifier to account
@@ -496,7 +496,7 @@ observeAccounts = function(){
 
             // USE DEPLOYED CONTRACT
             } else {
-                contracts[newDocument._id] = WalletContract.at(newDocument.address);
+                contracts['ct_'+ newDocument._id] = WalletContract.at(newDocument.address);
 
                 // update balance on start
                 web3.eth.getBalance(newDocument.address, function(err, res){
@@ -522,7 +522,7 @@ observeAccounts = function(){
         @method removed
         */
         removed: function(newDocument){
-            var contractInstance = contracts[newDocument._id];
+            var contractInstance = contracts['ct_'+ newDocument._id];
             if(newDocument.type === 'account' || !contractInstance)
                 return;
 
@@ -534,7 +534,7 @@ observeAccounts = function(){
                 event.stopWatching();
             });
 
-            delete contracts[newDocument._id];
+            delete contracts['ct_'+ newDocument._id];
 
             // delete the all tx and pending conf
             _.each(Transactions.find({from: newDocument.address}).fetch(), function(tx){

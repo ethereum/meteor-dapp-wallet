@@ -72,11 +72,13 @@ connectToNode = function(){
         _.each(accounts, function(address){
             web3.eth.getBalance(address, function(e, balance){
                 if(!e) {
-                    Accounts.insert({
-                        type: 'account',
-                        address: address,
-                        balance: balance.toString(10),
-                        name: (address === web3.eth.coinbase) ? 'Coinbase' : address
+                    web3.eth.getCoinbase(function(e, coinbase){
+                        Accounts.insert({
+                            type: 'account',
+                            address: address,
+                            balance: balance.toString(10),
+                            name: (address === coinbase) ? 'Coinbase' : address
+                        });
                     });
                 }
             });
