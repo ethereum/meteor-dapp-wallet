@@ -51,7 +51,7 @@ Template.registerHelper('walletIcon', function(){
             icon = '<i class="icon-eye" title="Watch only"></i>';
         else
             icon = '<i class="icon-wallet" title="Wallet"></i>';
-    } else if(this.type === 'account')
+    } else
         icon = '<i class="icon-key" title="Account"></i>';
 
     return new Spacebars.SafeString(icon);

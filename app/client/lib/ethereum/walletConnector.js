@@ -50,43 +50,23 @@ connectToNode = function(){
 
     console.log('Connect to node...');
 
+    Accounts.init();
+    Blocks.init();
 
-    // UPDATE normal accounts
-    web3.eth.getAccounts(function(e, accounts){
-        _.each(Accounts.find({type: 'account'}).fetch(), function(account){
-            if(!_.contains(accounts, account.address)) {
-                Accounts.remove(account._id);
-            } else {
-                web3.eth.getBalance(account.address, function(e, balance){
-                    if(!e) {
-                        Accounts.update(account._id, {$set: {
-                            balance: balance.toString(10)
-                        }});
-                    }
-                });
-            }
 
-            accounts = _.without(accounts, account.address);
-        });
-        // ADD missing accounts
-        _.each(accounts, function(address){
-            web3.eth.getBalance(address, function(e, balance){
-                if(!e) {
-                    web3.eth.getCoinbase(function(e, coinbase){
-                        Accounts.insert({
-                            type: 'account',
-                            address: address,
-                            balance: balance.toString(10),
-                            name: (address === coinbase) ? 'Coinbase' : address
-                        });
-                    });
-                }
-            });
+    Blocks.detectFork(function(oldBlock, block){
+        console.log('FORK detected from Block #'+ oldBlock.number + ' -> #'+ block.number +', rolling back!');
+        
+        // Go through all accounts and re-run
+        _.each(Accounts.find({type: 'wallet'}).fetch(), function(account){
+            // REMOVE ADDRESS for YOUNG ACCOUNTS, so that it tries to get the Created event and correct address again
+            if(account.creationBlock + ethereumConfig.requiredConfirmations >= block.number)
+                delete account.address;
+
+            setupContractFilters(account);
         });
     });
 
-
-    observeLatestBlocks();
 
     observeAccounts();
 

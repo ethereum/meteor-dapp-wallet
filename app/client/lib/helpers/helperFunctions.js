@@ -71,7 +71,7 @@ Check if the given wallet is a watch only wallet, by checking if we are one of o
 @param {String} id the id of the wallet to check
 */
 Helpers.isWatchOnly = function(id) {
-    return !Accounts.findOne({_id: id, owners: {$in: _.pluck(Accounts.find({type: 'account'}).fetch(), 'address')}});
+    return !Accounts.findOne({_id: id, owners: {$in: _.pluck(Accounts.find({type: {$exists: false}}).fetch(), 'address')}});
 };
 
 /**

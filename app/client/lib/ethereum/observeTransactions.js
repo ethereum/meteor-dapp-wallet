@@ -56,14 +56,14 @@ observeTransactions = function(){
     var checkTransactionConfirmations = function(newDocument, oldDocument){
         // Tracker.afterFlush(function(){
 
-            var confirmations = LastBlock.findOne('latest').blockNumber - newDocument.blockNumber;
+            var confirmations = Blocks.latest.number - newDocument.blockNumber;
 
             // check for confirmations
             if(!oldDocument.blockNumber && newDocument.blockNumber && confirmations < ethereumConfig.requiredConfirmations) {
                 var filter = web3.eth.filter('latest');
                 filter.watch(function(e, blockHash){
                     if(!e) {
-                        var confirmations = LastBlock.findOne('latest').blockNumber - newDocument.blockNumber;
+                        var confirmations = Blocks.latest.number - newDocument.blockNumber;
 
                         if(confirmations < ethereumConfig.requiredConfirmations && confirmations > 0) {
                             Helpers.eventLogs('Checking transaction '+ newDocument.transactionHash +'. Current confirmations: '+ confirmations);
@@ -119,7 +119,7 @@ observeTransactions = function(){
         @method added
         */
         added: function(newDocument) {
-            var confirmations = LastBlock.findOne('latest').blockNumber - newDocument.blockNumber;
+            var confirmations = Blocks.latest.number - newDocument.blockNumber;
 
             // add to accounts
             Accounts.update({address: newDocument.from}, {$addToSet: {

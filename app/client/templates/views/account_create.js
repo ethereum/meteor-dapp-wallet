@@ -17,7 +17,7 @@ Template['views_account_create'].onCreated(function(){
 
     TemplateVar.set('selectedSection', 'simple');
 
-    if(account = Accounts.findOne({type: 'account'}, {sort: {balance: -1}}))
+    if(account = Accounts.findOne({type: {$exists: false}}, {sort: {balance: -1}}))
         TemplateVar.set('selectedOwner', account.address);
 });
 
@@ -36,7 +36,7 @@ Template['views_account_create'].helpers({
     @method (ownerAccounts)
     */
     'ownerAccounts': function(){
-        return Accounts.find({type: 'account'}, {sort: {balance: -1}});
+        return Accounts.find({type: {$exists: false}}, {sort: {balance: -1}});
     },
     /**
     Return the selectedOwner
@@ -297,7 +297,7 @@ Template['views_account_create'].events({
                 owners: [template.find('select[name="select-accounts"]').value],
                 name: template.find('input[name="accountName"]').value || TAPi18n.__('wallet.accounts.defaultName'),
                 balance: '0',
-                creationBlock: LastBlock.findOne('latest').blockNumber,
+                creationBlock: Blocks.latest.number,
                 disabled: true
             });
 
@@ -326,7 +326,7 @@ Template['views_account_create'].events({
                 balance: '0',
                 dailyLimit: web3.toWei(formValues.dailyLimitAmount, 'ether'),
                 requiredSignatures: formValues.multisigSignatures,
-                creationBlock: LastBlock.findOne('latest').blockNumber,
+                creationBlock: Blocks.latest.number,
                 disabled: true
             });
 

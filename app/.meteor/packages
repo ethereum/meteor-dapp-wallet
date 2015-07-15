@@ -21,9 +21,11 @@ zimme:iron-router-active
 markdown
 numeral:numeral
 frozeman:inline-form
-ethereum:elements
-ethereum:web3
 mrt:qrcodesvg
 sacha:spin
 frozeman:global-notifications
 agnito:simptip
+ethereum:elements
+ethereum:web3
+ethereum:blocks
+ethereum:accounts

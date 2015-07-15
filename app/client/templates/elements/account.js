@@ -51,7 +51,7 @@ Template['elements_account'].helpers({
     @method (disabled)
     */
     'disabled': function(){
-        return (!this.address || this.imported || blocksForConfirmation >= LastBlock.findOne('latest').blockNumber - (this.creationBlock - 1));
+        return (!this.address || this.imported || blocksForConfirmation >= Blocks.latest.number - (this.creationBlock - 1));
     },
     /**
     Returns the confirmations
@@ -68,7 +68,7 @@ Template['elements_account'].helpers({
         if(!this.creationBlock || this.createdIdentifier)
             return false;
 
-        var currentBlockNumber = LastBlock.findOne('latest').blockNumber,
+        var currentBlockNumber = Blocks.latest.number,
             confirmations = currentBlockNumber - (this.creationBlock - 1);
         return (blocksForConfirmation >= confirmations && confirmations >= 0)
             ? {

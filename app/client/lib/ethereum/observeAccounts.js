@@ -120,12 +120,12 @@ Creates filters for a wallet contract, to watch for deposits, pending confirmati
 @param {Object} newDocument
 */
 setupContractFilters = function(newDocument){
-    var blockToCheckBack = (LastBlock.findOne('latest').checkpoint || 0) - ethereumConfig.rollBackBy;
+    var blockToCheckBack = (Blocks.latest.number || 0) - ethereumConfig.rollBackBy;
     if(blockToCheckBack < 0)
         blockToCheckBack = newDocument.creationBlock;
 
     var contractInstance = contracts['ct_'+ newDocument._id];
-    if(newDocument.type === 'account' || !contractInstance)
+    if(newDocument.type !== 'wallet' || !contractInstance)
         return;
 
     if(!contractInstance.events)
@@ -394,13 +394,13 @@ observeAccounts = function(){
     @param {Object} oldDocument
     */
     var checkWalletConfirmations = function(newDocument, oldDocument){
-        var confirmations = LastBlock.findOne('latest').blockNumber - newDocument.creationBlock;
+        var confirmations = Blocks.latest.number - newDocument.creationBlock;
 
         if(newDocument.address && !oldDocument.address && confirmations < ethereumConfig.requiredConfirmations) {
             var filter = web3.eth.filter('latest');
             filter.watch(function(e, blockHash){
                 if(!e) {
-                    var confirmations = LastBlock.findOne('latest').blockNumber - newDocument.creationBlock;
+                    var confirmations = Blocks.latest.number - newDocument.creationBlock;
 
                     if(confirmations < ethereumConfig.requiredConfirmations && confirmations > 0) {
                         Helpers.eventLogs('Checking wallet address '+ newDocument.address +' for code. Current confirmations: '+ confirmations);
@@ -452,7 +452,7 @@ observeAccounts = function(){
                     contracts['ct_'+ newDocument._id] = WalletContract.at();
 
                     // remove account, if something its searching since more than 30 blocks
-                    if(newDocument.creationBlock + 30 <= LastBlock.findOne('latest').blockNumber)
+                    if(newDocument.creationBlock + 30 <= Blocks.latest.number)
                         Accounts.remove(newDocument._id);
 
                     setupContractFilters(newDocument);
@@ -500,9 +500,11 @@ observeAccounts = function(){
 
                 // update balance on start
                 web3.eth.getBalance(newDocument.address, function(err, res){
-                    Accounts.update(newDocument._id, {$set: {
-                        balance: res.toString(10)
-                    }});
+                    if(!err) {
+                        Accounts.update(newDocument._id, {$set: {
+                            balance: res.toString(10)
+                        }});
+                    }
                 });
 
                 setupContractFilters(newDocument);
@@ -523,7 +525,7 @@ observeAccounts = function(){
         */
         removed: function(newDocument){
             var contractInstance = contracts['ct_'+ newDocument._id];
-            if(newDocument.type === 'account' || !contractInstance)
+            if(newDocument.type !== 'wallet' || !contractInstance)
                 return;
 
             if(!contractInstance.events)

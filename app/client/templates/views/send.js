@@ -36,14 +36,25 @@ The the factor by which the gas price should be changeable.
 */
 var toPowerFactor = 1.1
 
+
+/**
+currentGasPrice.function
+Is bignumber.
+
+TODO: change to be updated dynamically, e.g. in Blocks???
+
+@property currentGasPrice
+*/
+var currentGasPrice = web3.eth.gasPrice;
+
 /**
 The estimated gas
 
 @property estimatedGas
 */
 var estimatedGas = 23000;
-if(Accounts.findOne({type: 'account'}))
-    web3.eth.estimateGas({from: Accounts.findOne({type: 'account'}).address, to: Accounts.findOne({type: 'account'}).address, value: 1}, function(e, res){
+if(Accounts.findOne({type: {$exists: false}}))
+    web3.eth.estimateGas({from: Accounts.findOne({type: {$exists: false}}).address, to: Accounts.findOne({type: {$exists: false}}).address, value: 1}, function(e, res){
         if(!e && res)
             estimatedGas = res;
     });
@@ -74,7 +85,7 @@ Calculates the gas price.
 @return {Number}
 */
 var calculateGasPrice = function(fee, ether){
-    var suggestedGasPrice = web3.fromWei(new BigNumber(LastBlock.findOne('latest').gasPrice, 10), ether || LocalStore.get('etherUnit'));
+    var suggestedGasPrice = web3.fromWei(currentGasPrice, ether || LocalStore.get('etherUnit'));
     return suggestedGasPrice.times(estimatedGas).times(new BigNumber(toPowerFactor).toPower(fee));
 }
 
@@ -83,7 +94,7 @@ Template['views_send'].onCreated(function(){
     var template = this;
 
     // set account queries
-    accountQuery = {$or: [{owners: {$in: _.pluck(Accounts.find({type: 'account'}).fetch(), 'address')}, address: {$exists: true}}, {type: 'account', address: {$exists: true}}]};
+    accountQuery = {$or: [{owners: {$in: _.pluck(Accounts.find({type: {$exists: false}}).fetch(), 'address')}, address: {$exists: true}}, {type: {$exists: false}, address: {$exists: true}}]};
     accountSort = {sort: {type: -1, balance: -1}};
 
     // set the default fee
@@ -208,7 +219,7 @@ Template['views_send'].events({
     'submit form': function(e, template){
         var amount = TemplateVar.get('amount'),
             to = template.find('input[name="to"]').value,
-            gasPrice = new BigNumber(LastBlock.findOne('latest').gasPrice, 10).times(new BigNumber(toPowerFactor).toPower(TemplateVar.get('feeMultiplicator'))).toFixed(0),
+            gasPrice = currentGasPrice.times(new BigNumber(toPowerFactor).toPower(TemplateVar.get('feeMultiplicator'))).toFixed(0),
             selectedAccount = Accounts.findOne({address: template.find('select[name="select-accounts"]').value});
 
         if(selectedAccount && !TemplateVar.get('sending')) {
@@ -237,7 +248,7 @@ Template['views_send'].events({
             TemplateVar.set('sending', true);
             
             // simple transaction
-            if(selectedAccount.type === 'account') {
+            if(selectedAccount.type !== 'wallet') {
 
                 web3.eth.sendTransaction({
                     from: selectedAccount.address,
