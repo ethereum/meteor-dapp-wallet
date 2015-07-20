@@ -46,7 +46,7 @@ Return the right wallet icon
 Template.registerHelper('walletIcon', function(){
     var icon = '';
 
-    if(this.type === 'wallet') {
+    if(!_.isUndefined(this.owners)) {
         if(Helpers.isWatchOnly(this._id))
             icon = '<i class="icon-eye" title="Watch only"></i>';
         else
@@ -65,7 +65,7 @@ Get the account name or display the address
 @param {String} address
 */
 Template.registerHelper('accountNameOrAddress', function(address){
-    if(account = Accounts.findOne({address: address}))
+    if(account = Helpers.getAccountByAddress(address))
         return account.name;
     else
         return address;

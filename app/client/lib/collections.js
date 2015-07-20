@@ -3,9 +3,8 @@
 // we use {connection: null} to prevent them from syncing with our not existing Meteor server
 
 
-Blockchain = new Mongo.Collection('blockchain', {connection: null});
-// new PersistentMinimongo(Blockchain);
-
+Wallets = new Mongo.Collection('wallets', {connection: null});
+new PersistentMinimongo(Wallets);
 
 // Contains the transactions
 Transactions = new Mongo.Collection('transactions', {connection: null});

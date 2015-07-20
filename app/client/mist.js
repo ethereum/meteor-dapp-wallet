@@ -1,6 +1,6 @@
 // ADD MIST MENU
 updateMistMenu = function(){
-    var accounts = Accounts.find({}, {sort: {type: 1, balance: -1, name: 1}}).fetch(),
+    var accounts = Wallets.find({}, {sort: {type: 1, balance: -1, name: 1}}).fetch(),
         balance = 0;
 
     Meteor.setTimeout(function(){

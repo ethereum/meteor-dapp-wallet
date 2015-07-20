@@ -52,7 +52,7 @@ Template['views_account'].helpers({
     */
     'ownerLink': function(){
         var owner = String(this);
-        if(Accounts.findOne({address: owner}))
+        if(Helpers.getAccountByAddress(owner))
             return Router.routes['account'].path({address: owner});
         else
             return Router.routes['sendTo'].path({address: owner});
@@ -79,8 +79,8 @@ Template['views_account'].events({
                     '<br><input type="text" class="deletionConfirmation">'),
                 ok: function(){
                     console.log(template.data, $('input.deletionConfirmation').value);
-                    if(Accounts.findOne({_id: template.data._id}).name === $('input.deletionConfirmation').val()) {
-                        Accounts.remove(template.data._id);
+                    if(Wallets.findOne(template.data._id).name === $('input.deletionConfirmation').val()) {
+                        Wallets.remove(template.data._id);
                         Router.go('/');
                         return true;
                     }
@@ -116,7 +116,10 @@ Template['views_account'].events({
         if(!e.keyCode || e.keyCode === 13) {
 
             // Save new name
-            Accounts.update(this._id, {$set: {
+            Wallets.update(this._id, {$set: {
+                name: $(e.currentTarget).text()
+            }});
+            EthAccounts.update(this._id, {$set: {
                 name: $(e.currentTarget).text()
             }});
 

@@ -71,109 +71,18 @@ Check if the given wallet is a watch only wallet, by checking if we are one of o
 @param {String} id the id of the wallet to check
 */
 Helpers.isWatchOnly = function(id) {
-    return !Accounts.findOne({_id: id, owners: {$in: _.pluck(Accounts.find({type: {$exists: false}}).fetch(), 'address')}});
+    return !Wallets.findOne({_id: id, owners: {$in: _.pluck(EthAccounts.find({}).fetch(), 'address')}});
 };
 
 /**
-Shows the offline mesage
+Gets the docuement matching the given addess from the EthAccounts or Wallets collection.
 
-@method displayOffline
-**/
-// Helpers.displayOffline = function(){
-//     return GlobalNotification.warning({
-//         content: 'i18n:app.offline',
-//         okText: TAPi18n.__('buttons.tryToReconnect'),
-//         ok: function(){
-//             Meteor.reconnect();
-//         }
-//     });
-// };
-
-/**
-Displays an error as global notification
-
-@method displayError
-@param {Object} error The error object
-@param {Boolean} accounts will show the accounts errors
-@return {Boolean}
-**/
-// Helpers.displayError = function(error, accounts) {
-//     var duration = 8;
-
-//     if(error) {
-
-//         if(error.reason){
-//             // hack to make account errors still work
-//             if(accounts) {
-//                 GlobalNotification.error({
-//                     content: 'i18n:accounts.error.' + error.reason.toLowerCase().replace(/[ ]+/g, ''),
-//                     duration: duration
-//                 });
-
-//             } else {
-//                 GlobalNotification.error({
-//                     content: 'i18n:'+ error.reason,
-//                     duration: duration
-//                 });
-//             }
-//         } else if(error.message) {
-//             GlobalNotification.error({
-//                 content: error.message,
-//                 duration: duration
-//             });
-//         } else {
-//             GlobalNotification.error({
-//                 content: error,
-//                 duration: duration
-//             });
-//         }
-
-//         return true;
-
-//     } else
-//         return false;
-// };
-
-
-/**
-Get form values and build a parameters object out of it.
-
-@method formValuesToParameters
-@param {Element} elements   DOM-Elements elements, selects, inputs and textareas, to get values from. Must have a name tag
-@return {Object} An object with parameters to pass to the API Controller e.g.:
-
-    {
-        key1: 'value1',
-        key2: 'value2'
-    }
-**/
-// Helpers.formValuesToParameters = function(elements) {
-//     var parameters = {};
-
-//     $(elements).each(function(){
-//         var $element = $(this),
-//             name = $element.attr('name'),
-//             value = $element.val();
-
-//         // add only values wich are not null or empty
-//         if(name && !_.isEmpty(value) && value !== 'null' && value !== 'NULL') {
-//             if(_.isFinite(value))
-//                 parameters[name] = parseInt(value);
-//             else if(_.isBoolean(value))
-//                 parameters[name] = (value === 'true' || value === 'True' || value === 'TRUE') ? true : false;
-//             else if($element.attr('type') === 'radio')
-//                 parameters[name] = ($element.is(':checked')) ? true : false;
-//             else if($element.attr('type') === 'checkbox')
-//                 parameters[name] = ($element.is(':checked')) ? true : false;
-//             else
-//                 parameters[name] = value;
-//         }
-//         $element = null;
-//     });
-
-//     return parameters;
-// };
-
+@method getAccountByAddress
+@param {String} address
+*/
+Helpers.getAccountByAddress = function(address) {
+    return EthAccounts.findOne({address: address}) || Wallets.findOne({address: address});
+};
 
 /**
 Reactive wrapper for the moment package.

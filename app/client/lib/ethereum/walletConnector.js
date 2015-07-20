@@ -50,25 +50,25 @@ connectToNode = function(){
 
     console.log('Connect to node...');
 
-    Accounts.init();
-    Blocks.init();
+    EthAccounts.init();
+    EthBlocks.init();
 
 
-    Blocks.detectFork(function(oldBlock, block){
+    EthBlocks.detectFork(function(oldBlock, block){
         console.log('FORK detected from Block #'+ oldBlock.number + ' -> #'+ block.number +', rolling back!');
         
         // Go through all accounts and re-run
-        _.each(Accounts.find({type: 'wallet'}).fetch(), function(account){
+        _.each(Wallets.find({}).fetch(), function(wallet){
             // REMOVE ADDRESS for YOUNG ACCOUNTS, so that it tries to get the Created event and correct address again
-            if(account.creationBlock + ethereumConfig.requiredConfirmations >= block.number)
-                delete account.address;
+            if(wallet.creationBlock + ethereumConfig.requiredConfirmations >= block.number)
+                delete wallet.address;
 
-            setupContractFilters(account);
+            setupContractFilters(wallet);
         });
     });
 
 
-    observeAccounts();
+    observeWallets();
 
     observeTransactions();
 

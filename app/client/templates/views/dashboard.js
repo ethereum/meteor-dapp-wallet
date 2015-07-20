@@ -19,7 +19,7 @@ Template['views_dashboard'].helpers({
     @method (accounts)
     */
     'accounts': function(){
-        return Accounts.find({}, {sort: {type: 1, balance: -1, name: 1}}).fetch();
+        return _.union(EthAccounts.find({}, {sort: {balance: -1, name: 1}}).fetch(), Wallets.find({}, {sort: {balance: -1, name: 1}}).fetch());
     },
     /**
     Get all transactions

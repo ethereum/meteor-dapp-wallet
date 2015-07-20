@@ -117,7 +117,7 @@ Router.route('/account/:address', {
         });
     },
     data: function() {
-        return Accounts.findOne({address: this.params.address});
+        return Helpers.getAccountByAddress(this.params.address);
     }
 });
 

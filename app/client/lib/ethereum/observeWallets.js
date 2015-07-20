@@ -24,12 +24,12 @@ var updateContractData = function(newDocument){
     var contractInstance = contracts['ct_'+ newDocument._id];
 
     contractInstance.m_dailyLimit(function(err, result){
-        Accounts.update(newDocument._id, {$set: {
+        Wallets.update(newDocument._id, {$set: {
             dailyLimit: result.toString(10)
         }});
     });
     contractInstance.m_required(function(err, result){
-        Accounts.update(newDocument._id, {$set: {
+        Wallets.update(newDocument._id, {$set: {
             requiredSignatures: result.toString(10)
         }});
     });
@@ -120,12 +120,12 @@ Creates filters for a wallet contract, to watch for deposits, pending confirmati
 @param {Object} newDocument
 */
 setupContractFilters = function(newDocument){
-    var blockToCheckBack = (Blocks.latest.number || 0) - ethereumConfig.rollBackBy;
+    var blockToCheckBack = (EthBlocks.latest.number || 0) - ethereumConfig.rollBackBy;
     if(blockToCheckBack < 0)
         blockToCheckBack = newDocument.creationBlock;
 
     var contractInstance = contracts['ct_'+ newDocument._id];
-    if(newDocument.type !== 'wallet' || !contractInstance)
+    if(!contractInstance)
         return;
 
     if(!contractInstance.events)
@@ -150,12 +150,12 @@ setupContractFilters = function(newDocument){
             if(!error) {
 
                 // add the address state
-                Accounts.update(newDocument._id, {$unset: {
+                Wallets.update(newDocument._id, {$unset: {
                     imported: '',
                 }, $set: {
                     creationBlock: log.blockNumber
                 }});
-                newDocument = Accounts.findOne(newDocument._id);
+                newDocument = Wallets.findOne(newDocument._id);
 
                 // remove filter
                 Created.stopWatching();
@@ -180,13 +180,13 @@ setupContractFilters = function(newDocument){
 
             if(!error) {
                 // add the address state
-                Accounts.update(newDocument._id, {$unset: {
+                Wallets.update(newDocument._id, {$unset: {
                     createdIdentifier: ''
                 }, $set: {
                     creationBlock: log.blockNumber,
                     address: log.address
                 }});
-                newDocument = Accounts.findOne(newDocument._id);
+                newDocument = Wallets.findOne(newDocument._id);
 
                 // set address to the contract instance
                 contracts['ct_'+ newDocument._id].address = log.address;
@@ -205,7 +205,7 @@ setupContractFilters = function(newDocument){
                         if(newDocument.owners[0] !== owner) {
                             contractInstance.addOwner(owner, {from: newDocument.owners[0], gas: 1000000});
                             // remove owner, so that log can re-add it
-                            Accounts.update(newDocument._id, {$pull: {
+                            Wallets.update(newDocument._id, {$pull: {
                                 owners: owner
                             }});
                         }
@@ -224,7 +224,7 @@ setupContractFilters = function(newDocument){
                 Created.stopWatching();
 
                 // add contract filters
-                setupContractFilters(Accounts.findOne(newDocument._id));
+                setupContractFilters(Wallets.findOne(newDocument._id));
             }
         });
 
@@ -279,12 +279,12 @@ setupContractFilters = function(newDocument){
 
                     if(!err) {
                         var confirmationId = Helpers.makeId('pc', log.args.operation),
-                            accounts = Accounts.find({$or: [{address: log.address}, {address: log.args.to}]}).fetch(),
+                            accounts = Wallets.find({$or: [{address: log.address}, {address: log.args.to}]}).fetch(),
                             pendingConf = PendingConfirmations.findOne(confirmationId),
                             depositTx;
 
                         // PREVENT SHOWING pending confirmations, of WATCH ONLY WALLETS
-                        if(!(from = Accounts.findOne({address: log.address})) || !Accounts.findOne({address: {$in: from.owners}}))
+                        if(!(from = Wallets.findOne({address: log.address})) || !Wallets.findOne({address: {$in: from.owners}}))
                             return;
 
                         if(accounts[0] && accounts[0].transactions) {
@@ -331,7 +331,7 @@ setupContractFilters = function(newDocument){
                 Helpers.eventLogs('OwnerAdded for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
 
                 // re-add owner from log
-                Accounts.update(newDocument._id, {$addToSet: {
+                Wallets.update(newDocument._id, {$addToSet: {
                     owners: log.args.newOwner
                 }});
             }
@@ -342,7 +342,7 @@ setupContractFilters = function(newDocument){
                 Helpers.eventLogs('OwnerRemoved for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
 
                 // re-add owner from log
-                Accounts.update(newDocument._id, {$pull: {
+                Wallets.update(newDocument._id, {$pull: {
                     owners: log.args.oldOwner
                 }});
             }
@@ -380,9 +380,9 @@ setupContractFilters = function(newDocument){
 /**
 Observe accounts and setup filters
 
-@method observeAccounts
+@method observeWallets
 */
-observeAccounts = function(){
+observeWallets = function(){
 
     /**
     Checking for confirmations of created wallets.
@@ -394,13 +394,13 @@ observeAccounts = function(){
     @param {Object} oldDocument
     */
     var checkWalletConfirmations = function(newDocument, oldDocument){
-        var confirmations = Blocks.latest.number - newDocument.creationBlock;
+        var confirmations = EthBlocks.latest.number - newDocument.creationBlock;
 
         if(newDocument.address && !oldDocument.address && confirmations < ethereumConfig.requiredConfirmations) {
             var filter = web3.eth.filter('latest');
             filter.watch(function(e, blockHash){
                 if(!e) {
-                    var confirmations = Blocks.latest.number - newDocument.creationBlock;
+                    var confirmations = EthBlocks.latest.number - newDocument.creationBlock;
 
                     if(confirmations < ethereumConfig.requiredConfirmations && confirmations > 0) {
                         Helpers.eventLogs('Checking wallet address '+ newDocument.address +' for code. Current confirmations: '+ confirmations);
@@ -408,7 +408,7 @@ observeAccounts = function(){
                         // Check if the code is still at the contract address, if not remove the wallet
                         web3.eth.getCode(newDocument.address, function(e, code){
                             if(code.length <= 2) {
-                                Accounts.remove(newDocument._id);
+                                Wallets.remove(newDocument._id);
                                 filter.stopWatching();
 
                             // check for wallet data
@@ -425,21 +425,18 @@ observeAccounts = function(){
     };
 
     /**
-    Observe Accounts, listen for new created accounts.
+    Observe Wallets, listen for new created accounts.
 
-    @class Accounts.find({}).observe
+    @class Wallets.find({}).observe
     @constructor
     */
-    Accounts.find({}).observe({
+    Wallets.find({}).observe({
         /**
         This will observe the account creation, to send the contract creation transaction.
 
         @method added
         */
         added: function(newDocument) {
-
-            if(newDocument.type !== 'wallet')
-                return;
 
             // DEPLOYED NEW CONTRACT
             if(!newDocument.address) {
@@ -452,8 +449,8 @@ observeAccounts = function(){
                     contracts['ct_'+ newDocument._id] = WalletContract.at();
 
                     // remove account, if something its searching since more than 30 blocks
-                    if(newDocument.creationBlock + 30 <= Blocks.latest.number)
-                        Accounts.remove(newDocument._id);
+                    if(newDocument.creationBlock + 30 <= EthBlocks.latest.number)
+                        Wallets.remove(newDocument._id);
 
                     setupContractFilters(newDocument);
                     return;
@@ -463,25 +460,28 @@ observeAccounts = function(){
                     from: newDocument.owners[0],
                     data: walletABICompiled,
                     gas: 2000000,
-                    gasPrice: web3.eth.gasPrice
+                    gasPrice: EthBlocks.latest.gasPrice
 
                 }, function(error, contract){
                     if(!error) {
-                        contracts['ct_'+ newDocument._id] = contract;
 
-                        Helpers.eventLogs('Guessed Contract Address: ', contract.address);
+                        if(contract.address) {
+                            contracts['ct_'+ newDocument._id] = contract;
+
+                            Helpers.eventLogs('Guessed Contract Address: ', contract.address);
 
 
-                        // newDocument.address = contracts['ct_'+ newDocument._id].address;
-                        newDocument.createdIdentifier = createdIdentifier;
+                            // newDocument.address = contracts['ct_'+ newDocument._id].address;
+                            newDocument.createdIdentifier = createdIdentifier;
 
-                        // add createdIdentifier to account
-                        Accounts.update(newDocument._id, {$set: {
-                            createdIdentifier: createdIdentifier
-                            // address: newDocument.address
-                        }});
+                            // add createdIdentifier to account
+                            Wallets.update(newDocument._id, {$set: {
+                                createdIdentifier: createdIdentifier
+                                // address: newDocument.address
+                            }});
 
-                        setupContractFilters(newDocument);                    
+                            setupContractFilters(newDocument);                    
+                        }
                         
                     } else {
                         GlobalNotification.error({
@@ -490,7 +490,7 @@ observeAccounts = function(){
                         });
 
                         // remove account, if something failed
-                        Accounts.remove(newDocument._id);
+                        Wallets.remove(newDocument._id);
                     }
                 });
 
@@ -501,7 +501,7 @@ observeAccounts = function(){
                 // update balance on start
                 web3.eth.getBalance(newDocument.address, function(err, res){
                     if(!err) {
-                        Accounts.update(newDocument._id, {$set: {
+                        Wallets.update(newDocument._id, {$set: {
                             balance: res.toString(10)
                         }});
                     }
@@ -525,7 +525,7 @@ observeAccounts = function(){
         */
         removed: function(newDocument){
             var contractInstance = contracts['ct_'+ newDocument._id];
-            if(newDocument.type !== 'wallet' || !contractInstance)
+            if(!contractInstance)
                 return;
 
             if(!contractInstance.events)
@@ -540,7 +540,7 @@ observeAccounts = function(){
 
             // delete the all tx and pending conf
             _.each(Transactions.find({from: newDocument.address}).fetch(), function(tx){
-                if(!Accounts.findOne({transactions: tx._id}))
+                if(!Wallets.findOne({transactions: tx._id}))
                     Transactions.remove(tx._id);
             });
             _.each(PendingConfirmations.find({from: newDocument.address}).fetch(), function(pc){

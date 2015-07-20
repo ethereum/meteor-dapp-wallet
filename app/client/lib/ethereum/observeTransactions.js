@@ -29,7 +29,7 @@ addTransaction = function(log, from, to, value){
 
             // update balance
             web3.eth.getBalance(log.address, function(err, res){
-                Accounts.update({address: log.address}, {$set: {
+                Wallets.update({address: log.address}, {$set: {
                     balance: res.toString(10)
                 }});
             });
@@ -41,7 +41,7 @@ addTransaction = function(log, from, to, value){
 /**
 Observe transactions and pending confirmations
 
-@method observeAccounts
+@method observeTransactions
 */
 observeTransactions = function(){
 
@@ -56,14 +56,14 @@ observeTransactions = function(){
     var checkTransactionConfirmations = function(newDocument, oldDocument){
         // Tracker.afterFlush(function(){
 
-            var confirmations = Blocks.latest.number - newDocument.blockNumber;
+            var confirmations = EthBlocks.latest.number - newDocument.blockNumber;
 
             // check for confirmations
             if(!oldDocument.blockNumber && newDocument.blockNumber && confirmations < ethereumConfig.requiredConfirmations) {
                 var filter = web3.eth.filter('latest');
                 filter.watch(function(e, blockHash){
                     if(!e) {
-                        var confirmations = Blocks.latest.number - newDocument.blockNumber;
+                        var confirmations = EthBlocks.latest.number - newDocument.blockNumber;
 
                         if(confirmations < ethereumConfig.requiredConfirmations && confirmations > 0) {
                             Helpers.eventLogs('Checking transaction '+ newDocument.transactionHash +'. Current confirmations: '+ confirmations);
@@ -119,13 +119,13 @@ observeTransactions = function(){
         @method added
         */
         added: function(newDocument) {
-            var confirmations = Blocks.latest.number - newDocument.blockNumber;
+            var confirmations = EthBlocks.latest.number - newDocument.blockNumber;
 
             // add to accounts
-            Accounts.update({address: newDocument.from}, {$addToSet: {
+            Wallets.update({address: newDocument.from}, {$addToSet: {
                 transactions: newDocument._id
             }});
-            Accounts.update({address: newDocument.to}, {$addToSet: {
+            Wallets.update({address: newDocument.to}, {$addToSet: {
                 transactions: newDocument._id
             }});
 
@@ -159,10 +159,10 @@ observeTransactions = function(){
         @method removed
         */
         removed: function(document) {
-            Accounts.update({address: document.from}, {$pull: {
+            Wallets.update({address: document.from}, {$pull: {
                 transactions: document._id
             }});
-            Accounts.update({address: document.to}, {$pull: {
+            Wallets.update({address: document.to}, {$pull: {
                 transactions: document._id
             }});
         }

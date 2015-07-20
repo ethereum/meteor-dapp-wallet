@@ -35,7 +35,7 @@ Template['elements_account'].helpers({
     @method (account)
     */
     'account': function(){
-        return Accounts.findOne(this.account);
+        return EthAccounts.findOne(this.account) || Wallets.findOne(this.account);
     },
     /**
     Get the name
@@ -51,7 +51,7 @@ Template['elements_account'].helpers({
     @method (disabled)
     */
     'disabled': function(){
-        return (!this.address || this.imported || blocksForConfirmation >= Blocks.latest.number - (this.creationBlock - 1));
+        return (!this.address || this.imported || blocksForConfirmation >= EthBlocks.latest.number - (this.creationBlock - 1));
     },
     /**
     Returns the confirmations
@@ -68,7 +68,7 @@ Template['elements_account'].helpers({
         if(!this.creationBlock || this.createdIdentifier)
             return false;
 
-        var currentBlockNumber = Blocks.latest.number,
+        var currentBlockNumber = EthBlocks.latest.number,
             confirmations = currentBlockNumber - (this.creationBlock - 1);
         return (blocksForConfirmation >= confirmations && confirmations >= 0)
             ? {
