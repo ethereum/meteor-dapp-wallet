@@ -275,7 +275,7 @@ setupContractFilters = function(newDocument){
                                 depositTx;
 
                             // PREVENT SHOWING pending confirmations, of WATCH ONLY WALLETS
-                            if(!(from = Wallets.findOne({address: log.address})) || !Wallets.findOne({address: {$in: from.owners}}))
+                            if(!(from = Wallets.findOne({address: log.address})) || !EthAccounts.findOne({address: {$in: from.owners}}))
                                 return;
 
                             if(accounts[0] && accounts[0].transactions) {
