@@ -47,7 +47,7 @@ It will check first if the incoming log is newer than the already stored data.
 confirmOrRevoke = function(contract, log){
     var confirmationId = Helpers.makeId('pc', log.args.operation);
 
-    contract.hasConfirmed(log.args.operation, log.args.owner,function(e, res){
+    contract.hasConfirmed(log.args.operation, log.args.owner, function(e, res){
         var pendingConf = PendingConfirmations.findOne(confirmationId),
             setDocument = {$set:{
                 from: log.address
@@ -136,24 +136,24 @@ setupContractFilters = function(newDocument){
     // stop all running events
     _.each(contractInstance.events, function(event){
         event.stopWatching();
+        contractInstance.events.shift();
     });
 
     // WATCH for the created event, to get the creation block
     if(newDocument.imported) {
 
         Helpers.eventLogs('Checking Created for address: '+ newDocument.address +' from block #'+ newDocument.creationBlock);
-        events.push(contractInstance.Created({}, {fromBlock: newDocument.creationBlock, toBlock: 'latest'}));
-        var Created = events[events.length-1];
-        Created.watch(function(error, log) {
-            Helpers.eventLogs('Contract created on block #'+ log.blockNumber);
+        var foundCreated = false;
+        events.push(web3.filter({address: newDocument.address, fromBlock: newDocument.creationBlock, toBlock: 'latest'}, function(error, log) {
+            Helpers.eventLogs('Contract event found on block #'+ log.blockNumber);
 
-            if(!error) {
+            if(!error && !foundCreated) {
 
                 // add the address state
                 Wallets.update(newDocument._id, {$unset: {
                     imported: '',
                 }, $set: {
-                    creationBlock: log.blockNumber
+                    creationBlock: log.blockNumber - 1000
                 }});
                 newDocument = Wallets.findOne(newDocument._id);
 
@@ -165,66 +165,74 @@ setupContractFilters = function(newDocument){
 
                 // add contract filters
                 setupContractFilters(newDocument);
+
+                foundCreated = true;
             }
-        });
+        }));
 
     // WATCH for a block confirmation, so we can turn the account active
     } else if(!newDocument.address) {
 
-
-        Helpers.eventLogs('Checking Created for Identifier: '+ newDocument.createdIdentifier +' from block #'+ newDocument.creationBlock);
-        events.push(web3.eth.filter({topics: [null, newDocument.createdIdentifier], fromBlock: newDocument.creationBlock, toBlock: 'latest'}));//contractInstance.Created({},{fromBlock: blockToCheckBack, toBlock: 'latest'});
-        var Created = events[events.length-1];
-        Created.watch(function(error, log) {
-            Helpers.eventLogs('Contract created on '+ log.address);
-
+        Helpers.eventLogs('Contract address not set, checking for contract receipt');
+        web3.eth.getReceipt(newDocument.transactionHash, function(error, receipt) {
             if(!error) {
-                // add the address state
-                Wallets.update(newDocument._id, {$unset: {
-                    createdIdentifier: ''
-                }, $set: {
-                    creationBlock: log.blockNumber,
-                    address: log.address
-                }});
-                newDocument = Wallets.findOne(newDocument._id);
+                web3.eth.getCode(receipt.contractAddress, function(error, code) {
+                    Helpers.eventLogs('Contract created on '+ receipt.contractAddress);
 
-                // set address to the contract instance
-                contracts['ct_'+ newDocument._id].address = log.address;
+                    if(!error && code.length > 2) {
 
-                // SETUP DAILY LIMIT
-                if(newDocument.dailyLimit && newDocument.dailyLimit !== ethereumConfig.dailyLimitDefault)
-                    contractInstance.setDailyLimit(newDocument.dailyLimit, {from: newDocument.owners[0], gas: 1000000});
-                // set simple wallet daily limit 100 000 000 ether
-                else
-                    contractInstance.setDailyLimit(ethereumConfig.dailyLimitDefault, {from: newDocument.owners[0], gas: 1000000});
-                    
+                        // add the address state
+                        Wallets.update(newDocument._id, {$set: {
+                            creationBlock: receipt.blockNumber,
+                            address: receipt.contractAddress
+                        }});
+                        newDocument = Wallets.findOne(newDocument._id);
 
-                // ADD OWNERS
-                if(newDocument.owners.length > 1) {
-                    _.each(newDocument.owners, function(owner){
-                        if(newDocument.owners[0] !== owner) {
-                            contractInstance.addOwner(owner, {from: newDocument.owners[0], gas: 1000000});
-                            // remove owner, so that log can re-add it
-                            Wallets.update(newDocument._id, {$pull: {
-                                owners: owner
-                            }});
+                        // set address to the contract instance
+                        contracts['ct_'+ newDocument._id].address = receipt.contractAddress;
+
+                        // SETUP DAILY LIMIT
+                        if(newDocument.dailyLimit && newDocument.dailyLimit !== ethereumConfig.dailyLimitDefault)
+                            contractInstance.setDailyLimit(newDocument.dailyLimit, {from: newDocument.owners[0], gas: 1000000});
+                        // set simple wallet daily limit 100 000 000 ether
+                        else
+                            contractInstance.setDailyLimit(ethereumConfig.dailyLimitDefault, {from: newDocument.owners[0], gas: 1000000});
+
+
+                        // ADD OWNERS
+                        if(newDocument.owners.length > 1) {
+                            _.each(newDocument.owners, function(owner){
+                                if(newDocument.owners[0] !== owner) {
+                                    contractInstance.addOwner(owner, {from: newDocument.owners[0], gas: 1000000});
+                                    // remove owner, so that log can re-add it
+                                    Wallets.update(newDocument._id, {$pull: {
+                                        owners: owner
+                                    }});
+                                }
+                            });
                         }
-                    });
-                }
 
-                // ADD REQUIRED SIGNATURES
-                if(newDocument.requiredSignatures && newDocument.requiredSignatures != 1) {
-                    Tracker.afterFlush(function(){
-                        contractInstance.changeRequirement(newDocument.requiredSignatures, {from: newDocument.owners[0], gas: 500000});
-                    });
-                }
+                        // ADD REQUIRED SIGNATURES
+                        if(newDocument.requiredSignatures && newDocument.requiredSignatures != 1) {
+                            Tracker.afterFlush(function(){
+                                contractInstance.changeRequirement(newDocument.requiredSignatures, {from: newDocument.owners[0], gas: 500000});
+                            });
+                        }
 
 
-                // remove filter
-                Created.stopWatching();
+                        // remove filter
+                        Created.stopWatching();
 
-                // add contract filters
-                setupContractFilters(Wallets.findOne(newDocument._id));
+                        // add contract filters
+                        setupContractFilters(Wallets.findOne(newDocument._id));
+
+                    } else {
+                        Helpers.eventLogs('Contract created on '+ receipt.contractAddress + ', but didn\'t stored the code!');
+
+                        // remove account, if something failed
+                        Wallets.remove(newDocument._id);
+                    }
+                });
             }
         });
 
@@ -243,135 +251,229 @@ setupContractFilters = function(newDocument){
         });
 
 
-        // WATCH for incoming transactions
-        events.push(contractInstance.Deposit({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
-        events[events.length-1].watch(function(error, log) {
+        events.push(contractInstance.allEvents({fromBlock: blockToCheckBack, toBlock: 'latest'}, function(error, log){
             if(!error) {
-                Helpers.eventLogs('Deposit for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber());
+                if(log.event === 'Deposit') {
+                    Helpers.eventLogs('Deposit for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber());
 
-                addTransaction(log, log.args.from, newDocument.address, log.args.value.toString(10));
-            }
-        });
-        // WATCH for outgoing transactions
-        events.push(contractInstance.SingleTransact({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
-        events[events.length-1].watch(function(error, log) {
-            if(!error) {
-                Helpers.eventLogs('SingleTransact for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber());
+                    addTransaction(log, log.args.from, newDocument.address, log.args.value.toString(10));
+                }
+                if(log.event === 'SingleTransact' || log.event === 'MultiTransact') {
+                    Helpers.eventLogs(log.event +' for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber());
 
-                addTransaction(log, newDocument.address, log.args.to, log.args.value.toString(10));
-            }
-        });
-        events.push(contractInstance.MultiTransact({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
-        events[events.length-1].watch(function(error, log) {
-            if(!error) {
-                Helpers.eventLogs('MultiTransact for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber() +', Operation '+ log.args.operation);
-                // Helpers.eventLogs(log);
-                addTransaction(log, newDocument.address, log.args.to, log.args.value.toString(10));
-            }
-        });
-        // WATCH FOR CONFIRMATIONS NEEDED
-        events.push(contractInstance.ConfirmationNeeded({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
-        events[events.length-1].watch(function(error, log) {
-            if(!error) {
-                Helpers.eventLogs('ConfirmationNeeded for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber() +', Operation '+ log.args.operation);
+                    addTransaction(log, newDocument.address, log.args.to, log.args.value.toString(10));
+                }
+                if(log.event === 'ConfirmationNeeded') {
+                    Helpers.eventLogs('ConfirmationNeeded for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber() +', Operation '+ log.args.operation);
 
-                var block = web3.eth.getBlock(log.blockNumber, true, function(err, block){
+                    var block = web3.eth.getBlock(log.blockNumber, true, function(err, block){
 
-                    if(!err) {
-                        var confirmationId = Helpers.makeId('pc', log.args.operation),
-                            accounts = Wallets.find({$or: [{address: log.address}, {address: log.args.to}]}).fetch(),
-                            pendingConf = PendingConfirmations.findOne(confirmationId),
-                            depositTx;
+                        if(!err) {
+                            var confirmationId = Helpers.makeId('pc', log.args.operation),
+                                accounts = Wallets.find({$or: [{address: log.address}, {address: log.args.to}]}).fetch(),
+                                pendingConf = PendingConfirmations.findOne(confirmationId),
+                                depositTx;
 
-                        // PREVENT SHOWING pending confirmations, of WATCH ONLY WALLETS
-                        if(!(from = Wallets.findOne({address: log.address})) || !Wallets.findOne({address: {$in: from.owners}}))
-                            return;
+                            // PREVENT SHOWING pending confirmations, of WATCH ONLY WALLETS
+                            if(!(from = Wallets.findOne({address: log.address})) || !Wallets.findOne({address: {$in: from.owners}}))
+                                return;
 
-                        if(accounts[0] && accounts[0].transactions) {
-                            var txs = _.flatten(_.pluck(accounts, 'transactions'));
-                            depositTx = Transactions.findOne({_id: {$in: txs || []}, operation: log.args.operation});
+                            if(accounts[0] && accounts[0].transactions) {
+                                var txs = _.flatten(_.pluck(accounts, 'transactions'));
+                                depositTx = Transactions.findOne({_id: {$in: txs || []}, operation: log.args.operation});
+                            }
+
+
+                            // add pending confirmation,
+                            // if not already present, OR transaction already went through
+                            if(depositTx) {
+                                PendingConfirmations.remove(confirmationId);
+                            
+                            } else {
+                                PendingConfirmations.upsert(confirmationId, {$set: {
+                                    confirmedOwners: pendingConf ? pendingConf.confirmedOwners : [],
+                                    initiator: log.args.initiator,
+                                    operation: log.args.operation,
+                                    value: log.args.value.toString(10),
+                                    to: log.args.to,
+                                    from: newDocument.address,
+                                    timestamp: block.timestamp,
+                                    blockNumber: log.blockNumber,
+                                    blockHash: log.blockHash,
+                                    transactionHash: log.transactionHash,
+                                    transactionIndex: log.transactionIndex,
+                                    // only filled when confirmations or revokes come in
+                                    // lastActivityBlock: log.blockNumber,
+                                    // lastActivityTxIndex: log.transactionIndex
+                                }});
+                            }
                         }
-
-
-                        // add pending confirmation,
-                        // if not already present, OR transaction already went through
-                        if(depositTx) {
-                            PendingConfirmations.remove(confirmationId);
                         
-                        } else {
-                            PendingConfirmations.upsert(confirmationId, {$set: {
-                                confirmedOwners: pendingConf ? pendingConf.confirmedOwners : [],
-                                initiator: log.args.initiator,
-                                operation: log.args.operation,
-                                value: log.args.value.toString(10),
-                                to: log.args.to,
-                                from: newDocument.address,
-                                timestamp: block.timestamp,
-                                blockNumber: log.blockNumber,
-                                blockHash: log.blockHash,
-                                transactionHash: log.transactionHash,
-                                transactionIndex: log.transactionIndex,
-                                // only filled when confirmations or revokes come in
-                                // lastActivityBlock: log.blockNumber,
-                                // lastActivityTxIndex: log.transactionIndex
-                            }});
-                        }
-                    }
+                    });
+                }
+                if(log.event === 'OwnerAdded') {
+                    Helpers.eventLogs('OwnerAdded for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
+
+                    // re-add owner from log
+                    Wallets.update(newDocument._id, {$addToSet: {
+                        owners: log.args.newOwner
+                    }});
+                }
+                if(log.event === 'OwnerRemoved') {
+                    Helpers.eventLogs('OwnerRemoved for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
+
+                    // re-add owner from log
+                    Wallets.update(newDocument._id, {$pull: {
+                        owners: log.args.oldOwner
+                    }});
+                }
+                if(log.event === 'RequirementChanged') {
+                    Helpers.eventLogs('RequirementChanged for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
+                }
+                if(log.event === 'Confirmation') {
+                    Helpers.eventLogs('Operation confirmation for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
+
+                    // delay a little to prevent race conditions
+                    confirmOrRevoke(contractInstance, log);
+                }
+                if(log.event === 'Revoke') {
+                    Helpers.eventLogs('Operation revokation for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
+
+                    // delay a little to prevent race conditions
+                    confirmOrRevoke(contractInstance, log);
+                }
+            }
+        }));
+
+        // // WATCH for incoming transactions
+        // events.push(contractInstance.Deposit({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
+        // events[events.length-1].watch(function(error, log) {
+        //     if(!error) {
+        //         Helpers.eventLogs('Deposit for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber());
+
+        //         addTransaction(log, log.args.from, newDocument.address, log.args.value.toString(10));
+        //     }
+        // });
+        // // WATCH for outgoing transactions
+        // events.push(contractInstance.SingleTransact({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
+        // events[events.length-1].watch(function(error, log) {
+        //     if(!error) {
+        //         Helpers.eventLogs('SingleTransact for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber());
+
+        //         addTransaction(log, newDocument.address, log.args.to, log.args.value.toString(10));
+        //     }
+        // });
+        // events.push(contractInstance.MultiTransact({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
+        // events[events.length-1].watch(function(error, log) {
+        //     if(!error) {
+        //         Helpers.eventLogs('MultiTransact for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber() +', Operation '+ log.args.operation);
+        //         // Helpers.eventLogs(log);
+        //         addTransaction(log, newDocument.address, log.args.to, log.args.value.toString(10));
+        //     }
+        // });
+        // // WATCH FOR CONFIRMATIONS NEEDED
+        // events.push(contractInstance.ConfirmationNeeded({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
+        // events[events.length-1].watch(function(error, log) {
+        //     if(!error) {
+        //         Helpers.eventLogs('ConfirmationNeeded for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber() +', Operation '+ log.args.operation);
+
+        //         var block = web3.eth.getBlock(log.blockNumber, true, function(err, block){
+
+        //             if(!err) {
+        //                 var confirmationId = Helpers.makeId('pc', log.args.operation),
+        //                     accounts = Wallets.find({$or: [{address: log.address}, {address: log.args.to}]}).fetch(),
+        //                     pendingConf = PendingConfirmations.findOne(confirmationId),
+        //                     depositTx;
+
+        //                 // PREVENT SHOWING pending confirmations, of WATCH ONLY WALLETS
+        //                 if(!(from = Wallets.findOne({address: log.address})) || !Wallets.findOne({address: {$in: from.owners}}))
+        //                     return;
+
+        //                 if(accounts[0] && accounts[0].transactions) {
+        //                     var txs = _.flatten(_.pluck(accounts, 'transactions'));
+        //                     depositTx = Transactions.findOne({_id: {$in: txs || []}, operation: log.args.operation});
+        //                 }
+
+
+        //                 // add pending confirmation,
+        //                 // if not already present, OR transaction already went through
+        //                 if(depositTx) {
+        //                     PendingConfirmations.remove(confirmationId);
+                        
+        //                 } else {
+        //                     PendingConfirmations.upsert(confirmationId, {$set: {
+        //                         confirmedOwners: pendingConf ? pendingConf.confirmedOwners : [],
+        //                         initiator: log.args.initiator,
+        //                         operation: log.args.operation,
+        //                         value: log.args.value.toString(10),
+        //                         to: log.args.to,
+        //                         from: newDocument.address,
+        //                         timestamp: block.timestamp,
+        //                         blockNumber: log.blockNumber,
+        //                         blockHash: log.blockHash,
+        //                         transactionHash: log.transactionHash,
+        //                         transactionIndex: log.transactionIndex,
+        //                         // only filled when confirmations or revokes come in
+        //                         // lastActivityBlock: log.blockNumber,
+        //                         // lastActivityTxIndex: log.transactionIndex
+        //                     }});
+        //                 }
+        //             }
                     
-                });
+        //         });
 
-            }
-        });
+        //     }
+        // });
 
 
-        // WATCH for OWNER changes
-        events.push(contractInstance.OwnerAdded({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
-        events[events.length-1].watch(function(error, log) {
-            if(!error) {
-                Helpers.eventLogs('OwnerAdded for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
+        // // WATCH for OWNER changes
+        // events.push(contractInstance.OwnerAdded({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
+        // events[events.length-1].watch(function(error, log) {
+        //     if(!error) {
+        //         Helpers.eventLogs('OwnerAdded for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
 
-                // re-add owner from log
-                Wallets.update(newDocument._id, {$addToSet: {
-                    owners: log.args.newOwner
-                }});
-            }
-        });
-        events.push(contractInstance.OwnerRemoved({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
-        events[events.length-1].watch(function(error, log) {
-            if(!error) {
-                Helpers.eventLogs('OwnerRemoved for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
+        //         // re-add owner from log
+        //         Wallets.update(newDocument._id, {$addToSet: {
+        //             owners: log.args.newOwner
+        //         }});
+        //     }
+        // });
+        // events.push(contractInstance.OwnerRemoved({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
+        // events[events.length-1].watch(function(error, log) {
+        //     if(!error) {
+        //         Helpers.eventLogs('OwnerRemoved for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
 
-                // re-add owner from log
-                Wallets.update(newDocument._id, {$pull: {
-                    owners: log.args.oldOwner
-                }});
-            }
-        });
-        events.push(contractInstance.RequirementChanged({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
-        events[events.length-1].watch(function(error, log) {
-            if(!error) {
-                Helpers.eventLogs('RequirementChanged for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
+        //         // re-add owner from log
+        //         Wallets.update(newDocument._id, {$pull: {
+        //             owners: log.args.oldOwner
+        //         }});
+        //     }
+        // });
+        // events.push(contractInstance.RequirementChanged({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
+        // events[events.length-1].watch(function(error, log) {
+        //     if(!error) {
+        //         Helpers.eventLogs('RequirementChanged for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
 
-            }
-        });
-        events.push(contractInstance.Confirmation({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
-        events[events.length-1].watch(function(error, log) {
-            if(!error) {
-                Helpers.eventLogs('Operation confirmation for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
+        //     }
+        // });
+        // events.push(contractInstance.Confirmation({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
+        // events[events.length-1].watch(function(error, log) {
+        //     if(!error) {
+        //         Helpers.eventLogs('Operation confirmation for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
 
-                // delay a little to prevent race conditions
-                confirmOrRevoke(contractInstance, log);
-            }
-        });
-        events.push(contractInstance.Revoke({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
-        events[events.length-1].watch(function(error, log) {
-            if(!error) {
-                Helpers.eventLogs('Operation revokation for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
+        //         // delay a little to prevent race conditions
+        //         confirmOrRevoke(contractInstance, log);
+        //     }
+        // });
+        // events.push(contractInstance.Revoke({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
+        // events[events.length-1].watch(function(error, log) {
+        //     if(!error) {
+        //         Helpers.eventLogs('Operation revokation for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
 
-                // delay a little to prevent race conditions
-                confirmOrRevoke(contractInstance, log);
-            }
-        });
+        //         // delay a little to prevent race conditions
+        //         confirmOrRevoke(contractInstance, log);
+        //     }
+        // });
     }
 
 };
@@ -440,23 +542,43 @@ observeWallets = function(){
 
             // DEPLOYED NEW CONTRACT
             if(!newDocument.address) {
-                var createdIdentifier = '0x'+ random32Bytes();
-
-                Helpers.eventLogs('Generated Identifier: '+ createdIdentifier);
 
                 // identifier already exisits, so just watch for created and don't re-deploy
-                if(newDocument.createdIdentifier) {
+                if(newDocument.transactionHash) {
                     contracts['ct_'+ newDocument._id] = WalletContract.at();
 
-                    // remove account, if something its searching since more than 30 blocks
-                    if(newDocument.creationBlock + 30 <= EthBlocks.latest.number)
+                    // remove account, if something is searching since more than 30 blocks
+                    if(newDocument.creationBlock + 50 <= EthBlocks.latest.number)
                         Wallets.remove(newDocument._id);
 
                     setupContractFilters(newDocument);
                     return;
                 }
 
-                WalletContract.new(createdIdentifier, {
+
+
+                // ADD OWNERS
+                // if(newDocument.owners.length > 1) {
+                //     _.each(newDocument.owners, function(owner){
+                //         if(newDocument.owners[0] !== owner) {
+                //             contractInstance.addOwner(owner, {from: newDocument.owners[0], gas: 1000000});
+                //             // remove owner, so that log can re-add it
+                //             Wallets.update(newDocument._id, {$pull: {
+                //                 owners: owner
+                //             }});
+                //         }
+                //     });
+                // }
+
+                // ADD REQUIRED SIGNATURES
+                // if(newDocument.requiredSignatures && newDocument.requiredSignatures != 1) {
+                //     Tracker.afterFlush(function(){
+                //         contractInstance.changeRequirement(newDocument.requiredSignatures, {from: newDocument.owners[0], gas: 500000});
+                //     });
+                // }
+
+
+                WalletContract.new(newDocument.owners, newDocument.requiredSignatures, (newDocument.dailyLimit || ethereumConfig.dailyLimitDefault), {
                     from: newDocument.owners[0],
                     data: walletABICompiled,
                     gas: 2000000,
@@ -465,22 +587,35 @@ observeWallets = function(){
                 }, function(error, contract){
                     if(!error) {
 
-                        if(contract.address) {
-                            contracts['ct_'+ newDocument._id] = contract;
+                        // TX HASH arrived
+                        if(!contract.address) {
 
-                            Helpers.eventLogs('Guessed Contract Address: ', contract.address);
+                            // add transactionHash to account
+                            newDocument.transactionHash = contract.transactionHash;
 
-
-                            // newDocument.address = contracts['ct_'+ newDocument._id].address;
-                            newDocument.createdIdentifier = createdIdentifier;
-
-                            // add createdIdentifier to account
                             Wallets.update(newDocument._id, {$set: {
-                                createdIdentifier: createdIdentifier
-                                // address: newDocument.address
+                                transactionHash: contract.transactionHash
                             }});
 
-                            setupContractFilters(newDocument);                    
+                        // CONTRACT DEPLOYED
+                        } else {
+
+                            contracts['ct_'+ newDocument._id] = contract;
+
+                            Helpers.eventLogs('Contract Address: ', contract.address);
+
+                            // add transactionHash to account
+                            newDocument.address = contract.address;
+
+                            Wallets.update(newDocument._id, {$set: {
+                                creationBlock: EthBlocks.latest.number - 1,
+                                address: contract.address
+                            }});
+
+
+                            updateContractData(newDocument);
+
+                            setupContractFilters(newDocument);
                         }
                         
                     } else {
@@ -534,6 +669,7 @@ observeWallets = function(){
             // stop all running events
             _.each(contractInstance.events, function(event){
                 event.stopWatching();
+                contractInstance.events.shift();
             });
 
             delete contracts['ct_'+ newDocument._id];

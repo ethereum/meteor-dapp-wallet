@@ -16,9 +16,6 @@ Template['views_account_create'].onCreated(function(){
     TemplateVar.set('multisigSignatures', 2);   // number of required signatures
 
     TemplateVar.set('selectedSection', 'simple');
-
-    if(account = EthAccounts.findOne({}, {sort: {balance: -1}}))
-        TemplateVar.set('selectedOwner', account.address);
 });
 
 
@@ -36,7 +33,7 @@ Template['views_account_create'].helpers({
     @method (ownerAccounts)
     */
     'ownerAccounts': function(){
-        return EthAccounts.find({}, {sort: {balance: -1}});
+        return EthAccounts.find({}, {sort: {balance: -1}}).fetch();
     },
     /**
     Return the selectedOwner

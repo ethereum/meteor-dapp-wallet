@@ -23,6 +23,7 @@
             },
             "error": {
                 "emptyWallet": "The wallet you want to send from is empty.",
+                "notEnoughFunds": "You have not enough funds in the wallet.",
                 "noReceiver": "You didn't specify a receiver.",
                 "noAmount": "You didn't specify an amount to send."
             }

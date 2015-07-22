@@ -214,6 +214,14 @@ Template['views_send'].events({
 
         if(selectedAccount && !TemplateVar.get('sending')) {
 
+            console.log(amount, selectedAccount.balance);
+
+            if(new BigNumber(amount, 10).gt(new BigNumber(selectedAccount.balance, 10)))
+                return GlobalNotification.warning({
+                    content: 'i18n:wallet.accounts.error.notEnoughFunds',
+                    duration: 2
+                });
+
             if(selectedAccount.balance === '0')
                 return GlobalNotification.warning({
                     content: 'i18n:wallet.accounts.error.emptyWallet',

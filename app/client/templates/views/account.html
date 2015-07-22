@@ -8,7 +8,7 @@
             <h1>
                 <span class="edit-name">{{name}}</span> <i class="edit-icon icon-pencil"></i>
 
-                {{#if $eq type "wallet"}}
+                {{#if owners}}
                     <button class="dapp-icon-button delete icon-trash"></button>
                 {{/if}}
             </h1>
@@ -25,7 +25,7 @@
         <!-- <h3>{{account}}</h3> -->
 
 
-        {{#if $eq type "wallet"}}
+        {{#if owners}}
             <div class="row clear">
                 {{#if showDailyLimit}}
                     <div class="col col-4 mobile-full">
@@ -51,10 +51,10 @@
 
         <div class="dapp-clear-fix"></div>
 
-        {{#if $eq type "account"}}
+        {{#unless owners}}
             <h3>Note</h3>
             <p>Accounts can't list past transactions and are rather unsafe, please <a href="{{pathFor route='createAccount'}}">create a wallet</a> to store ether.</p>
-        {{/if}}
+        {{/unless}}
 
         {{#if pendingConfirmations}}
             <h2>{{i18n 'wallet.transactions.pendingConfirmations'}}</h2>

@@ -53,9 +53,9 @@
             <h2>{{transactionType}}</h2>
             
             <p>
-                {{> elements_transactions_row_tofrom account=account address=from}}
+                {{> elements_transactions_row_tofrom address=from}}
                 <span class="arrow">→</span> 
-                {{> elements_transactions_row_tofrom account=account address=to}}
+                {{> elements_transactions_row_tofrom address=to}}
             </p>
 
             {{#if ownerConfirmationCount}}
@@ -125,7 +125,7 @@
 
 <template name="elements_transactions_row_tofrom">
     {{#with getAccount}}
-        {{#if type}}
+        {{#if name}}
             {{> dapp_identicon identity=address class="dapp-tiny"}} <a href="{{pathFor route='account' address=address}}">{{name}}</a>
         {{else}}
             <a href="{{pathFor route='sendTo' identity=address}}" title="{{address}}">{{address}}</a>
