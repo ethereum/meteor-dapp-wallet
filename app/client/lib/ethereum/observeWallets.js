@@ -170,11 +170,11 @@ setupContractFilters = function(newDocument){
             }
         }));
 
-    // WATCH for a block confirmation, so we can turn the account active
+    // CHECK if for the contract address
     } else if(!newDocument.address) {
 
         Helpers.eventLogs('Contract address not set, checking for contract receipt');
-        web3.eth.getReceipt(newDocument.transactionHash, function(error, receipt) {
+        web3.eth.getTransactionReceipt(newDocument.transactionHash, function(error, receipt) {
             if(!error) {
                 web3.eth.getCode(receipt.contractAddress, function(error, code) {
                     Helpers.eventLogs('Contract created on '+ receipt.contractAddress);
@@ -192,36 +192,33 @@ setupContractFilters = function(newDocument){
                         contracts['ct_'+ newDocument._id].address = receipt.contractAddress;
 
                         // SETUP DAILY LIMIT
-                        if(newDocument.dailyLimit && newDocument.dailyLimit !== ethereumConfig.dailyLimitDefault)
-                            contractInstance.setDailyLimit(newDocument.dailyLimit, {from: newDocument.owners[0], gas: 1000000});
-                        // set simple wallet daily limit 100 000 000 ether
-                        else
-                            contractInstance.setDailyLimit(ethereumConfig.dailyLimitDefault, {from: newDocument.owners[0], gas: 1000000});
+                        // if(newDocument.dailyLimit && newDocument.dailyLimit !== ethereumConfig.dailyLimitDefault)
+                        //     contractInstance.setDailyLimit(newDocument.dailyLimit, {from: newDocument.owners[0], gas: 1000000});
+                        // // set simple wallet daily limit 100 000 000 ether
+                        // else
+                        //     contractInstance.setDailyLimit(ethereumConfig.dailyLimitDefault, {from: newDocument.owners[0], gas: 1000000});
 
 
-                        // ADD OWNERS
-                        if(newDocument.owners.length > 1) {
-                            _.each(newDocument.owners, function(owner){
-                                if(newDocument.owners[0] !== owner) {
-                                    contractInstance.addOwner(owner, {from: newDocument.owners[0], gas: 1000000});
-                                    // remove owner, so that log can re-add it
-                                    Wallets.update(newDocument._id, {$pull: {
-                                        owners: owner
-                                    }});
-                                }
-                            });
-                        }
+                        // // ADD OWNERS
+                        // if(newDocument.owners.length > 1) {
+                        //     _.each(newDocument.owners, function(owner){
+                        //         if(newDocument.owners[0] !== owner) {
+                        //             contractInstance.addOwner(owner, {from: newDocument.owners[0], gas: 1000000});
+                        //             // remove owner, so that log can re-add it
+                        //             Wallets.update(newDocument._id, {$pull: {
+                        //                 owners: owner
+                        //             }});
+                        //         }
+                        //     });
+                        // }
 
-                        // ADD REQUIRED SIGNATURES
-                        if(newDocument.requiredSignatures && newDocument.requiredSignatures != 1) {
-                            Tracker.afterFlush(function(){
-                                contractInstance.changeRequirement(newDocument.requiredSignatures, {from: newDocument.owners[0], gas: 500000});
-                            });
-                        }
+                        // // ADD REQUIRED SIGNATURES
+                        // if(newDocument.requiredSignatures && newDocument.requiredSignatures != 1) {
+                        //     Tracker.afterFlush(function(){
+                        //         contractInstance.changeRequirement(newDocument.requiredSignatures, {from: newDocument.owners[0], gas: 500000});
+                        //     });
+                        // }
 
-
-                        // remove filter
-                        Created.stopWatching();
 
                         // add contract filters
                         setupContractFilters(Wallets.findOne(newDocument._id));

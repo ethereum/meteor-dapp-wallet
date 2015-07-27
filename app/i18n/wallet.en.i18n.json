@@ -9,7 +9,8 @@
             },
             "texts": {
                 "balance": "Balance",
-                "connectionError": "Unable to connect. Please start a Geth node with the following options:<br><br><small><code>__node__</code></small>"
+                "connectionError": "Unable to connect. Please start a Geth node with the following options:<br><br><small><code>__node__</code></small>",
+                "pendingConfirmationsBadge": "Pending Confirmation!"
             }
         },
         "accounts": {

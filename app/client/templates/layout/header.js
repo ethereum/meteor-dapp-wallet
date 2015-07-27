@@ -17,8 +17,8 @@ Template['layout_header'].helpers({
 
         accounts = _.reduce(accounts, function(memo, num){ return memo + Number(num); }, 0);
 
-        // set total balance in Mist menu
-        if(typeof mist !== 'undefined') {
+        // set total balance in Mist menu, of no pending confirmation is Present
+        if(typeof mist !== 'undefined' && !PendingConfirmations.findOne({operation: {$exists: true}})) {
             mist.menu.setBadge(Helpers.formatBalance(accounts, '0 a'));
         }
 

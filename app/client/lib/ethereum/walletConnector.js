@@ -54,18 +54,18 @@ connectToNode = function(){
     EthBlocks.init();
 
 
-    EthBlocks.detectFork(function(oldBlock, block){
-        console.log('FORK detected from Block #'+ oldBlock.number + ' -> #'+ block.number +', rolling back!');
+    // EthBlocks.detectFork(function(oldBlock, block){
+    //     console.log('FORK detected from Block #'+ oldBlock.number + ' -> #'+ block.number +', rolling back!');
         
-        // Go through all accounts and re-run
-        _.each(Wallets.find({}).fetch(), function(wallet){
-            // REMOVE ADDRESS for YOUNG ACCOUNTS, so that it tries to get the Created event and correct address again
-            if(wallet.creationBlock + ethereumConfig.requiredConfirmations >= block.number)
-                delete wallet.address;
+    //     // Go through all accounts and re-run
+    //     _.each(Wallets.find({}).fetch(), function(wallet){
+    //         // REMOVE ADDRESS for YOUNG ACCOUNTS, so that it tries to get the Created event and correct address again
+    //         if(wallet.creationBlock + ethereumConfig.requiredConfirmations >= block.number)
+    //             delete wallet.address;
 
-            setupContractFilters(wallet);
-        });
-    });
+    //         setupContractFilters(wallet);
+    //     });
+    // });
 
 
     observeWallets();

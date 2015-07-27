@@ -40,6 +40,15 @@ updateMistMenu = function(){
     }, 10);
 };
 
+Tracker.autorun(function(){
+    var pendingConfirmation = PendingConfirmations.findOne({operation: {$exists: true}});
+
+    if(typeof mist !== 'undefined' && pendingConfirmation) {
+        mist.menu.setBadge(TAPi18n.__('wallet.app.texts.pendingConfirmationsBadge'));
+    }
+
+});
+
 
 Meteor.startup(function() {
 

@@ -261,7 +261,7 @@ Template['elements_transactions_row'].events({
 
             contracts['ct_'+ account._id][type].sendTransaction(_this.operation, {from: owner, gas: 1204633 + 900000}, function(error, hash){
                 if(!error) {
-                    console.log(type, hash);
+                    console.log(type,'TX hash: '+ hash);
                     
                     PendingConfirmations.update(_this._id, {$set: {
                         sending: owner
