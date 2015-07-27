@@ -31,15 +31,6 @@ Template.registerHelper('unit', function(identity){
 });
 
 /**
-Get all accounts
-
-@method (accounts)
-**/
-Template.registerHelper('accounts', function(identity){
-    return Accounts.find({}, {sort: {type: 1, balance: -1, name: 1}});
-});
-
-/**
 Check if the given wallet is a watch only wallet, by checking if we are one of owners in the wallet.
 
 @method (isWatchOnly)
@@ -55,12 +46,12 @@ Return the right wallet icon
 Template.registerHelper('walletIcon', function(){
     var icon = '';
 
-    if(this.type === 'wallet') {
+    if(!_.isUndefined(this.owners)) {
         if(Helpers.isWatchOnly(this._id))
             icon = '<i class="icon-eye" title="Watch only"></i>';
         else
             icon = '<i class="icon-wallet" title="Wallet"></i>';
-    } else if(this.type === 'account')
+    } else
         icon = '<i class="icon-key" title="Account"></i>';
 
     return new Spacebars.SafeString(icon);
@@ -74,7 +65,7 @@ Get the account name or display the address
 @param {String} address
 */
 Template.registerHelper('accountNameOrAddress', function(address){
-    if(account = Accounts.findOne({address: address}))
+    if(account = Helpers.getAccountByAddress(address))
         return account.name;
     else
         return address;

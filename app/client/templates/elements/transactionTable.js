@@ -130,8 +130,9 @@ Template['elements_transactions_row'].helpers({
     @param {String} account     The _id of the current account
     */
     'incomingTx': function(account){
-        return ((account && this.from !== Accounts.findOne(account).address) ||
-                (!account && Accounts.findOne({$or: [{address: this.from, address: this.to}]})));
+        var account = EthAccounts.findOne(account) || Wallets.findOne(account);
+        return ((account && this.from !== account.address) ||
+                (!account && (EthAccounts.findOne({$or: [{address: this.from, address: this.to}]}) || Wallets.findOne({$or: [{address: this.from, address: this.to}]}))));
     },
     /**
     Returns the correct text for this transaction
@@ -140,9 +141,9 @@ Template['elements_transactions_row'].helpers({
     @return {String}
     */
     'transactionType': function(){
-        var to = Accounts.findOne({address: this.to}),
-            from = Accounts.findOne({address: this.from}),
-            initiator = Accounts.findOne({address: this.initiator});
+        var to = Helpers.getAccountByAddress(this.to),
+            from = Helpers.getAccountByAddress(this.from),
+            initiator = Helpers.getAccountByAddress(this.initiator);
 
         if(from)
             from = '<a href="/account/'+ from.address +'">'+ from.name +'</a>';
@@ -189,7 +190,7 @@ Template['elements_transactions_row'].helpers({
                 percent: 0
             };
 
-        var currentBlockNumber = LastBlock.findOne('latest').blockNumber,
+        var currentBlockNumber = EthBlocks.latest.number,
             confirmations = currentBlockNumber - (this.blockNumber - 1);
         return (blocksForConfirmation >= confirmations && confirmations >= 0)
             ? {
@@ -204,7 +205,7 @@ Template['elements_transactions_row'].helpers({
     @method (ownerConfirmationCount)
     */
     'ownerConfirmationCount': function(){
-        var account = Accounts.findOne({address: this.from});
+        var account = Helpers.getAccountByAddress(this.from);
 
         if(account && this.confirmedOwners)
             return this.confirmedOwners.length +'/'+ account.requiredSignatures;
@@ -215,7 +216,7 @@ Template['elements_transactions_row'].helpers({
     @method (owners)
     */
     'owners': function(){
-        var account = Accounts.findOne({address: this.from});
+        var account = Helpers.getAccountByAddress(this.from);
         return (account) ? account.owners : [];
     },
     /**
@@ -236,7 +237,7 @@ Template['elements_transactions_row'].helpers({
         if(!this.confirmedOwners)
             return;
 
-        return Accounts.findOne({address: {$in: this.confirmedOwners}});
+        return Helpers.getAccountByAddress({$in: this.confirmedOwners});
     }
 });
 
@@ -249,7 +250,7 @@ Template['elements_transactions_row'].events({
     */
     'click button.approve, click button.reject': function(e){
         var _this = this,
-            account = Accounts.findOne({address: _this.from});
+            account = Helpers.getAccountByAddress(_this.from);
 
         if(account && !$(e.currentTarget).hasClass('selected')) {
             var owner = account.owners[0];
@@ -258,13 +259,18 @@ Template['elements_transactions_row'].events({
                 ? 'confirm'
                 : 'revoke';
 
-            contracts[account._id][type].sendTransaction(_this.operation, {from: owner, gas: 1204633 + 900000}, function(e, hash){
-                if(!e) {
-                    console.log(type, hash);
+            contracts['ct_'+ account._id][type].sendTransaction(_this.operation, {from: owner, gas: 1204633 + 900000}, function(error, hash){
+                if(!error) {
+                    console.log(type,'TX hash: '+ hash);
                     
                     PendingConfirmations.update(_this._id, {$set: {
                         sending: owner
                     }});
+                } else {
+                    GlobalNotification.error({
+                        content: error.message,
+                        duration: 8
+                    });
                 }
             });
         }
@@ -287,7 +293,7 @@ Template['elements_transactions_row_tofrom'].helpers({
     @method (getAccount)
     */
     'getAccount': function(){
-        return Accounts.findOne({address: this.address}) || {address: this.address};
+        return Helpers.getAccountByAddress(this.address) || {address: this.address};
     }
 });
 

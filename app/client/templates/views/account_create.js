@@ -16,9 +16,6 @@ Template['views_account_create'].onCreated(function(){
     TemplateVar.set('multisigSignatures', 2);   // number of required signatures
 
     TemplateVar.set('selectedSection', 'simple');
-
-    if(account = Accounts.findOne({type: 'account'}, {sort: {balance: -1}}))
-        TemplateVar.set('selectedOwner', account.address);
 });
 
 
@@ -36,7 +33,7 @@ Template['views_account_create'].helpers({
     @method (ownerAccounts)
     */
     'ownerAccounts': function(){
-        return Accounts.find({type: 'account'}, {sort: {balance: -1}});
+        return EthAccounts.find({}, {sort: {balance: -1}}).fetch();
     },
     /**
     Return the selectedOwner
@@ -240,7 +237,7 @@ Template['views_account_create'].events({
 
                         TemplateVar.set(template, 'importWalletOwners', owners);
 
-                        if(account = Accounts.findOne({address: {$in: owners}})) {
+                        if(account = Helpers.getAccountByAddress({$in: owners})) {
                             TemplateVar.set(template, 'importWalletInfo', TAPi18n.__('wallet.newWallet.accountType.import.youreOwner', {account: account.name}));
                         } else {
                             TemplateVar.set(template, 'importWalletInfo', TAPi18n.__('wallet.newWallet.accountType.import.watchOnly'));
@@ -292,12 +289,11 @@ Template['views_account_create'].events({
 
         // SIMPLE
         if(type === 'simple') {
-            Accounts.insert({
-                type: 'wallet',
+            Wallets.insert({
                 owners: [template.find('select[name="select-accounts"]').value],
                 name: template.find('input[name="accountName"]').value || TAPi18n.__('wallet.accounts.defaultName'),
                 balance: '0',
-                creationBlock: LastBlock.findOne('latest').blockNumber,
+                creationBlock: EthBlocks.latest.number,
                 disabled: true
             });
 
@@ -319,14 +315,13 @@ Template['views_account_create'].events({
                     duration: 2
                 });
 
-            Accounts.insert({
-                type: 'wallet',
+            Wallets.insert({
                 owners: owners,
                 name: template.find('input[name="accountName"]').value || TAPi18n.__('wallet.accounts.defaultName'),
                 balance: '0',
                 dailyLimit: web3.toWei(formValues.dailyLimitAmount, 'ether'),
                 requiredSignatures: formValues.multisigSignatures,
-                creationBlock: LastBlock.findOne('latest').blockNumber,
+                creationBlock: EthBlocks.latest.number,
                 disabled: true
             });
 
@@ -347,21 +342,20 @@ Template['views_account_create'].events({
 
             var address = template.find('input.import').value;
             address = '0x'+ address.replace('0x','');
-            if(Accounts.findOne({address: address}))
+            if(Wallets.findOne({address: address}))
                 return GlobalNotification.warning({
                     content: 'i18n:wallet.newWallet.error.alreadyExists',
                     duration: 2
                 });
 
             // reorganize owners, so that yourself is at place one
-            var account = Accounts.findOne({address: {$in: owners || []}});
+            var account = Helpers.getAccountByAddress({$in: owners || []});
             if(account) {
                 owners = _.without(owners, account.address);
                 owners.unshift(account.address);
             }
 
-            Accounts.insert({
-                type: 'wallet',
+            Wallets.insert({
                 owners: owners,
                 name: template.find('input[name="accountName"]').value || TAPi18n.__('wallet.accounts.defaultName'),
                 address: address,

@@ -4,17 +4,19 @@
             "buttons": {
                 "wallet": "Wallets",
                 "send": "Send",
-                "receive": "Receive"
+                "receive": "Receive",
+                "addWallet": "Add wallet"
             },
             "texts": {
                 "balance": "Balance",
-                "connectionError": "Unable to connect. Please start a Geth node with the following options:<br><br><small><code>__node__</code></small>"
+                "connectionError": "Unable to connect. Please start a Geth node with the following options:<br><br><small><code>__node__</code></small>",
+                "pendingConfirmationsBadge": "Pending Confirmation!"
             }
         },
         "accounts": {
             "title": "<strong>Wallet</strong> Overview",
-            "accountTitle": "Choose an account to deposit",
-            "defaultName": "Unnamed account",
+            "accountTitle": "Choose a wallet to deposit",
+            "defaultName": "Unnamed wallet",
             "creating": "Creating",
             "importing": "Importing",
             "modal": {
@@ -22,6 +24,7 @@
             },
             "error": {
                 "emptyWallet": "The wallet you want to send from is empty.",
+                "notEnoughFunds": "You have not enough funds in the wallet.",
                 "noReceiver": "You didn't specify a receiver.",
                 "noAmount": "You didn't specify an amount to send."
             }
@@ -65,7 +68,7 @@
                     "text3": "ether per day.",
                     "text4": "Any transaction over that daily limit requires the confirmation of",
                     "text5": "owners.",
-                    "accountOwnersTitle": "Account owners",
+                    "accountOwnersTitle": "Wallet owners",
                     "ownerAddress": "Owner address"
                 },
                 "import": {
@@ -75,10 +78,6 @@
                     "youreOwner": "Your \"__account__\" account is an owner of the wallet.",
                     "watchOnly": "You don't own the wallet, but you can add it as a \"WATCH ONLY\" wallet.",
                     "notWallet": "This address has no wallet contract."
-                },
-                "custom": {
-                    "title": "Custom account",
-                    "description": "Setup your own account rules."
                 }
             },
             "error": {

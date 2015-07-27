@@ -50,48 +50,25 @@ connectToNode = function(){
 
     console.log('Connect to node...');
 
-    // set providor
-    web3.setProvider(new web3.providers.HttpProvider("http://localhost:8545")); //8545 8080 10.10.42.116
+    EthAccounts.init();
+    EthBlocks.init();
 
 
-    // UPDATE normal accounts
-    web3.eth.getAccounts(function(e, accounts){
-        if(!e) {
-            _.each(Accounts.find({type: 'account'}).fetch(), function(account){
-                if(!_.contains(accounts, account.address)) {
-                    Accounts.remove(account._id);
-                } else {
-                    web3.eth.getBalance(account.address, function(e, balance){
-                        if(!e) {
-                            Accounts.update(account._id, {$set: {
-                                balance: balance.toString(10)
-                            }});
-                        }
-                    });
-                }
+    // EthBlocks.detectFork(function(oldBlock, block){
+    //     console.log('FORK detected from Block #'+ oldBlock.number + ' -> #'+ block.number +', rolling back!');
+        
+    //     // Go through all accounts and re-run
+    //     _.each(Wallets.find({}).fetch(), function(wallet){
+    //         // REMOVE ADDRESS for YOUNG ACCOUNTS, so that it tries to get the Created event and correct address again
+    //         if(wallet.creationBlock + ethereumConfig.requiredConfirmations >= block.number)
+    //             delete wallet.address;
 
-                accounts = _.without(accounts, account.address);
-            });
-            // ADD missing accounts
-            _.each(accounts, function(address){
-                web3.eth.getBalance(address, function(e, balance){
-                    if(!e) {
-                        Accounts.insert({
-                            type: 'account',
-                            address: address,
-                            balance: balance.toString(10),
-                            name: (address === web3.eth.coinbase) ? 'Coinbase' : address
-                        });
-                    }
-                });
-            });
-        }
-    });
+    //         setupContractFilters(wallet);
+    //     });
+    // });
 
 
-    observeLatestBlocks();
-
-    observeAccounts();
+    observeWallets();
 
     observeTransactions();
 

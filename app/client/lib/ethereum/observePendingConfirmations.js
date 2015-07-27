@@ -1,7 +1,7 @@
 /**
 Observe pending confirmations
 
-@method observeAccounts
+@method observePendingConfirmations
 */
 observePendingConfirmations = function(){
     /**

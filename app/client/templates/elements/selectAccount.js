@@ -12,21 +12,13 @@ The select account template
 */
 
 Template['elements_selectAccount'].onCreated(function(){
-    if(this.data && this.data.accounts) {
-        TemplateVar.set('selectedAccount', this.data.accounts.fetch()[0].address);
+    if(this.data && this.data.accounts && this.data.accounts[0]) {
+        TemplateVar.set('selectedAccount', this.data.accounts[0].address);
     }
 });
 
 
 Template['elements_selectAccount'].helpers({
-    /**
-    Use this method, to overwrite the global accounts helper.
-
-    @method (accounts)
-    */
-    'accounts': function(){
-        return this.accounts;
-    },
     /**
     Return the selected address
 

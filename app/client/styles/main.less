@@ -18,6 +18,10 @@
     position: fixed;
 }
 
+.dapp-content {
+    margin-bottom: @defaultPaddingVertical*2;
+}
+
 .dapp-header {
     .wallet-balance {
         position: absolute;
@@ -318,9 +322,10 @@ table {
 
     h1 {
         margin-bottom: 0;
-        .dapp-shorten-text;
+        // .dapp-shorten-text;
         display: block;
         max-width: 60%;
+        word-break: break-all;
 
         &:hover {
             button.delete {

@@ -36,14 +36,15 @@ The the factor by which the gas price should be changeable.
 */
 var toPowerFactor = 1.1
 
+
 /**
 The estimated gas
 
 @property estimatedGas
 */
 var estimatedGas = 23000;
-if(Accounts.findOne({type: 'account'}))
-    web3.eth.estimateGas({from: Accounts.findOne({type: 'account'}).address, to: Accounts.findOne({type: 'account'}).address, value: 1}, function(e, res){
+if(EthAccounts.findOne({}))
+    web3.eth.estimateGas({from: EthAccounts.findOne({}).address, to: EthAccounts.findOne({}).address, value: 1}, function(e, res){
         if(!e && res)
             estimatedGas = res;
     });
@@ -56,7 +57,7 @@ Check if the amount accounts daily limit  and sets the correct text.
 var checkOverDailyLimit = function(address, wei, template){
 
     // check if under or over dailyLimit
-    account = Accounts.findOne({address: address});
+    account = Helpers.getAccountByAddress(address);
 
     if(account && account.dailyLimit && account.dailyLimit !== ethereumConfig.dailyLimitDefault && Number(wei) !== 0) {
         if(Number(account.dailyLimit) < Number(wei))
@@ -74,7 +75,7 @@ Calculates the gas price.
 @return {Number}
 */
 var calculateGasPrice = function(fee, ether){
-    var suggestedGasPrice = web3.fromWei(new BigNumber(LastBlock.findOne('latest').gasPrice, 10), ether || LocalStore.get('etherUnit'));
+    var suggestedGasPrice = web3.fromWei(new BigNumber(EthBlocks.latest.gasPrice, 10), ether || LocalStore.get('etherUnit'));
     return suggestedGasPrice.times(estimatedGas).times(new BigNumber(toPowerFactor).toPower(fee));
 }
 
@@ -83,8 +84,8 @@ Template['views_send'].onCreated(function(){
     var template = this;
 
     // set account queries
-    accountQuery = {$or: [{owners: {$in: _.pluck(Accounts.find({type: 'account'}).fetch(), 'address')}}, {type: 'account'}]};
-    accountSort = {sort: {type: -1, balance: -1}};
+    accountQuery = {owners: {$in: _.pluck(EthAccounts.find({}).fetch(), 'address')}, address: {$exists: true}};
+    accountSort = {sort: {balance: -1}};
 
     // set the default fee
     TemplateVar.set('feeMultiplicator', 0);
@@ -129,7 +130,7 @@ Template['views_send'].helpers({
     @method (fromAccounts)
     */
     'fromAccounts': function(){
-        return Accounts.find(accountQuery, accountSort);
+        return _.union(Wallets.find(accountQuery, accountSort).fetch(), EthAccounts.find({}, accountSort).fetch());
     },
     /**
     Get the current unit.
@@ -208,10 +209,18 @@ Template['views_send'].events({
     'submit form': function(e, template){
         var amount = TemplateVar.get('amount'),
             to = template.find('input[name="to"]').value,
-            gasPrice = new BigNumber(LastBlock.findOne('latest').gasPrice, 10).times(new BigNumber(toPowerFactor).toPower(TemplateVar.get('feeMultiplicator'))).toFixed(0),
-            selectedAccount = Accounts.findOne({address: template.find('select[name="select-accounts"]').value});
+            gasPrice = new BigNumber(EthBlocks.latest.gasPrice, 10).times(new BigNumber(toPowerFactor).toPower(TemplateVar.get('feeMultiplicator'))).toFixed(0),
+            selectedAccount = Helpers.getAccountByAddress(template.find('select[name="select-accounts"]').value);
 
         if(selectedAccount && !TemplateVar.get('sending')) {
+
+            console.log(amount, selectedAccount.balance);
+
+            if(new BigNumber(amount, 10).gt(new BigNumber(selectedAccount.balance, 10)))
+                return GlobalNotification.warning({
+                    content: 'i18n:wallet.accounts.error.notEnoughFunds',
+                    duration: 2
+                });
 
             if(selectedAccount.balance === '0')
                 return GlobalNotification.warning({
@@ -237,7 +246,7 @@ Template['views_send'].events({
             TemplateVar.set('sending', true);
             
             // simple transaction
-            if(selectedAccount.type === 'account') {
+            if(_.isUndefined(selectedAccount.owners)) {
 
                 web3.eth.sendTransaction({
                     from: selectedAccount.address,
@@ -257,8 +266,7 @@ Template['views_send'].events({
                         txId = Helpers.makeId('tx', txHash);
 
 
-                        Transactions.insert({
-                            _id: txId,
+                        Transactions.upsert(txId, {
                             value: amount,
                             from: selectedAccount.address,
                             to: to,
@@ -270,6 +278,11 @@ Template['views_send'].events({
                             // logIndex: null
                         });
 
+                        // add to Account
+                        EthAccounts.update(selectedAccount._id, {$addToSet: {
+                            transactions: txId
+                        }});
+
                         Router.go('/');
                     } else {
                         GlobalNotification.error({
@@ -279,9 +292,9 @@ Template['views_send'].events({
                     }
                 });
 
-            } else if(selectedAccount.type === 'wallet') {
+            } else {
 
-                contracts[selectedAccount._id].execute.sendTransaction(to, amount, '', {
+                contracts['ct_'+ selectedAccount._id].execute.sendTransaction(to, amount, '', {
                     from: selectedAccount.owners[0],
                     gasPrice: gasPrice,
                     gas: 1204633 + 500000 // add 100 to be safe

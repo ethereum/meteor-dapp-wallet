@@ -40,7 +40,12 @@ The receive route, showing the wallet overview
 Router.route('/', {
     template: 'views_dashboard',
     name: 'dashboard',
-    onBeforeAction: scrollTop
+    onBeforeAction: scrollTop,
+    onAfterAction: function(){
+        Tracker.nonreactive(function(){
+            updateMistMenu();
+        });
+    },
 });
 
 
@@ -52,7 +57,12 @@ The send route.
 Router.route('/send', {
     template: 'views_send',
     name: 'send',
-    onBeforeAction: scrollTop
+    onBeforeAction: scrollTop,
+    onAfterAction: function(){
+        Tracker.nonreactive(function(){
+            updateMistMenu();
+        });
+    }
 });
 
 
@@ -65,6 +75,11 @@ Router.route('/send/:address', {
     template: 'views_send',
     name: 'sendTo',
     onBeforeAction: scrollTop,
+    onAfterAction: function(){
+        Tracker.nonreactive(function(){
+            updateMistMenu();
+        });
+    },
     data: function() {
         return this.params;
     }
@@ -77,7 +92,12 @@ The create account route.
 */
 Router.route('/account/new', {
     template: 'views_account_create',
-    name: 'createAccount'
+    name: 'createAccount',
+    onAfterAction: function(){
+        Tracker.nonreactive(function(){
+            updateMistMenu();
+        });
+    }
 });
 
 
@@ -91,8 +111,13 @@ Router.route('/account/:address', {
     template: 'views_account',
     name: 'account',
     onBeforeAction: scrollTop,
+    onAfterAction: function(){
+        Tracker.nonreactive(function(){
+            updateMistMenu();
+        });
+    },
     data: function() {
-        return Accounts.findOne({address: this.params.address});
+        return Helpers.getAccountByAddress(this.params.address);
     }
 });
 
