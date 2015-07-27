@@ -1,5 +1,10 @@
 # Wallet Ðapp
 
+The ethereum wallet Ðapp.
+
+**NOTE** The wallet is not yet official released,
+can contain severe bugs and shouldn't be used to store any real value!
+
 ## Development
 
 Start an `geth` node and and the app using meteor and open http://localhost:3000 in your browser:
