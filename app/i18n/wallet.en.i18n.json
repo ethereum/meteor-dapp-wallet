@@ -13,6 +13,11 @@
                 "pendingConfirmationsBadge": "Pending Confirmation!"
             }
         },
+        "modals": {
+            "selectAccount": {
+                "title": "Select account for this action"
+            }
+        },
         "accounts": {
             "title": "<strong>Wallet</strong> Overview",
             "accountTitle": "Choose a wallet to deposit",

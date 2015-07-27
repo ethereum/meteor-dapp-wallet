@@ -15,6 +15,7 @@
         "send": "Send",
         "sending": "Sending...",
         "create": "Create",
+        "select": "Select",
         "tryToReconnect": "Try to reconnect"
     },
     "commonWords": {

@@ -253,26 +253,50 @@ Template['elements_transactions_row'].events({
             account = Helpers.getAccountByAddress(_this.from);
 
         if(account && !$(e.currentTarget).hasClass('selected')) {
-            var owner = account.owners[0];
 
             var type = ($(e.currentTarget).hasClass('approve'))
-                ? 'confirm'
-                : 'revoke';
+                    ? 'confirm'
+                    : 'revoke';
 
-            contracts['ct_'+ account._id][type].sendTransaction(_this.operation, {from: owner, gas: 1204633 + 900000}, function(error, hash){
-                if(!error) {
-                    console.log(type,'TX hash: '+ hash);
-                    
-                    PendingConfirmations.update(_this._id, {$set: {
-                        sending: owner
-                    }});
-                } else {
-                    GlobalNotification.error({
-                        content: error.message,
-                        duration: 8
-                    });
-                }
-            });
+            var owner = account.owners[0];
+
+            var sendConfirmation = function(owner){
+
+                contracts['ct_'+ account._id][type].sendTransaction(_this.operation, {from: owner, gas: 1204633 + 900000}, function(error, hash){
+                    if(!error) {
+                        console.log(type,'TX hash: '+ hash);
+                        
+                        PendingConfirmations.update(_this._id, {$set: {
+                            sending: owner
+                        }});
+                    } else {
+                        GlobalNotification.error({
+                            content: error.message,
+                            duration: 8
+                        });
+                    }
+                });
+            };
+
+            // check if the wallet has multiple accounts which are on this device
+            var accounts = EthAccounts.find({address: {$in: account.owners}});
+
+            // if only one, use this one to approve/reject
+            if(accounts.length === 1)
+                sendConfirmation(accounts[0]);
+
+            // if multiple ask, which one to use
+            else if(accounts.length > 1) {
+                // show modal
+                Router.current().render('dapp_modal', {to: 'modal'});
+                Router.current().render('views_modals_selectAccount', {
+                    to: 'modalContent',
+                    data: {
+                        accounts: accounts,
+                        callback: sendConfirmation
+                    }
+                });
+            }
         }
     }
 });
