@@ -226,7 +226,7 @@ Template['views_account_create'].events({
                         // once we reach the number of owners we stop
                         _.find(_.range(250), function(i){
                             var ownerAddress = web3.eth.getStorageAt(address, 2+i).replace('0x000000000000000000000000','0x');
-                            if(web3.isAddress(ownerAddress))
+                            if(web3.isAddress(ownerAddress) && ownerAddress !== '0x0000000000000000000000000000000000000000')
                                 owners.push(ownerAddress);
 
                             if(owners.length === numberOfOwners)
