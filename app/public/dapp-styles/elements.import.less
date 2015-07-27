@@ -83,63 +83,41 @@
 
 
 .dapp-account-list {
+    @dappPaddingVertical:  @gridHeight * 0.5;
+    @dappPaddinghorizontal:  @gridWidth * 1.5;
+
     // flex-grow: 2;
-    width: @gridWidth*24;
     list-style-type: none;
     overflow: auto;
     padding-left: 0;
 
     li {
-        padding: @gridHeight*0.25 @gridWidth * 1.5;
+        padding: @dappPaddingVertical/2 0;
+        padding-left: @dappPaddinghorizontal;
         min-height: @gridHeight * 2.5;
         position: relative;
         overflow: hidden;
         border-bottom: solid 1px @colorWhite;
-        .background-image(linear-gradient(to top, trasnparent 0%, lighten(@colorGrayLight, 0%) 100%));
+        .background-image(linear-gradient(to top, transparent 0%, lighten(@colorGrayLight, 0%) 100%));
+        font-family: @fontFamily;
 
-        .dapp-identicon {
-            position: absolute;
-            top: @gridHeight/3;
-            left: @gridWidth/4;
-        }
 
-        h3 {
-            padding: 0;
-            margin: 0;
-            color: @colorLink;
-            text-transform: none;
-            font-weight: 400;
-            font-size: 90%;
-            text-shadow: #fff 0 1px 0;
-        }
-
-        .account-id {
-            position: relative;
-            top: -0.25 * @gridHeight;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            font-size: 75%;
-            opacity: 0.5;
-        }
-
-        &:hover {
-            background: @colorWhite;
-        }
-
-        &.selected {
+        &.selected,
+        button.selected {
             background: @colorLink;
-            
-              font-family: 'Simple-Line-Icons';
-              -webkit-font-smoothing: antialiased;
+            min-height: @gridHeight * 2;
+
+            &:hover,
+            &:focus {
+                background: @colorLink;
+            }
 
             h3, span {
                 color: @colorWhite;
                 text-shadow: rgba(0, 0, 0, 0.2) 0 -1px 0;
             }
 
-            &:before {
-                content: "\e080";
+            figure {
                 position: absolute;
                 color: @colorWhite;
                 right: 0;
@@ -152,6 +130,56 @@
                 padding: 9px 10px;
                 background: linear-gradient(to right, transparent, @colorLink 50%);
             }
+        }
+
+        button {
+            position: relative;
+            display: block;
+            padding: @dappPaddingVertical/2 0;
+            padding-left: @dappPaddinghorizontal;
+            margin: -@dappPaddingVertical/2 0;
+            margin-left: -@dappPaddinghorizontal;
+            width: 100%;
+            height: 100%;
+
+            font-family: @fontFamily;
+            text-align: left;
+
+            &:hover,
+            &:focus {
+                background: @colorWhite;
+                border: 0;
+            }
+
+        }
+
+        .dapp-identicon {
+            position: absolute;
+            top: @gridHeight/3;
+            left: @gridWidth/4;
+        }
+
+        h3 {
+            .dapp-shorten-text;
+            display: block;
+            padding: 0;
+            margin: 0;
+            color: @colorLink;
+            text-transform: none;
+            font-weight: 400;
+            font-size: 90%;
+            text-shadow: #fff 0 1px 0;
+        }
+
+        h3 + span {
+            // position: relative;
+            // top: -0.25 * @gridHeight;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 75%;
+            opacity: 0.5;
+            color: @colorTextSecondary;
         }
     }
 }

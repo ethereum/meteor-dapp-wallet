@@ -250,9 +250,10 @@ Template['elements_transactions_row'].events({
     */
     'click button.approve, click button.reject': function(e){
         var _this = this,
-            account = Helpers.getAccountByAddress(_this.from);
+            account = Helpers.getAccountByAddress(_this.from),
+            ownerAccounts = _.pluck(EthAccounts.find({address: {$in: account.owners}}).fetch(), 'address');
 
-        if(account && !$(e.currentTarget).hasClass('selected')) {
+        if(account && (!$(e.currentTarget).hasClass('selected') || ownerAccounts.length > 1)) {
 
             var type = ($(e.currentTarget).hasClass('approve'))
                     ? 'confirm'
@@ -278,21 +279,21 @@ Template['elements_transactions_row'].events({
                 });
             };
 
+
             // check if the wallet has multiple accounts which are on this device
-            var accounts = EthAccounts.find({address: {$in: account.owners}});
 
             // if only one, use this one to approve/reject
-            if(accounts.length === 1)
-                sendConfirmation(accounts[0]);
+            if(ownerAccounts.length === 1)
+                sendConfirmation(ownerAccounts[0]);
 
             // if multiple ask, which one to use
-            else if(accounts.length > 1) {
+            else if(ownerAccounts.length > 1) {
                 // show modal
                 Router.current().render('dapp_modal', {to: 'modal'});
                 Router.current().render('views_modals_selectAccount', {
                     to: 'modalContent',
                     data: {
-                        accounts: accounts,
+                        accounts: ownerAccounts,
                         callback: sendConfirmation
                     }
                 });

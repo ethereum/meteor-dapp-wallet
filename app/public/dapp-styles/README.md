@@ -201,6 +201,51 @@ To change change the break points overwrite the following variables:
 
 TODO
 
+#### dapp-account-list
+
+![dapp-account-list](/screenshots/dapp-account-list-small.png?raw=true)
+
+A list of accounts with name and address. Either clickable, with the `<button>` tag, or as simple list.
+
+The `a.dapp-identicon` can be an image icon. (If you use the `ethereum:elements` Meteor package, you can use `{{> dapp_identicon identity=address class="dapp-small"}}`)
+
+The `<span>` is optional.
+
+Selected items need the `<figure class="icon-check"></figure>` to show a checkmark.
+
+```html
+<ul class="dapp-account-list">
+    <!-- Clickable accounts use <button> -->
+    <li>
+        <button>
+            <a class="dapp-identicon dapp-small" style="background-image: url(identiconimage.png)"></a>
+            <h3>My clickable account</h3>
+            <span>0x343c98e2b6e49bc0fed722c2a269f3814ddd1533</span>
+        </button>         
+    </li>
+    <li>
+        <button class="selected">
+            <a class="dapp-identicon dapp-small" style="background-image: url(identiconimage.png)"></a>
+            <h3>My clickable selected account</h3>
+            <span>0x343c98e2b6e49bc0fed722c2a269f3814ddd1533</span>
+            <figure class="icon-check"></figure>
+        </button>         
+    </li>
+    <!-- Unclickable accounts -->
+    <li>
+        <a class="dapp-identicon dapp-small" style="background-image: url(identiconimage.png)"></a>
+        <h3>My unclickable account</h3>
+        <span>0x343c98e2b6e49bc0fed722c2a269f3814ddd1533</span>
+    </li>
+    <li class="selected">
+        <a class="dapp-identicon dapp-small" style="background-image: url(identiconimage.png)"></a>
+        <h3>My unclickable selected account</h3>
+        <span>0x343c98e2b6e49bc0fed722c2a269f3814ddd1533</span>
+        <figure class="icon-check"></figure>
+    </li>
+</ul>
+```
+
 #### Menus
 
 To add a header or aside menu just add the follwowing structure to your `.dapp-header` or `dapp-aside` container:

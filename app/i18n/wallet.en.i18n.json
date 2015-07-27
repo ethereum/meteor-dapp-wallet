@@ -15,7 +15,7 @@
         },
         "modals": {
             "selectAccount": {
-                "title": "Select account for this action"
+                "title": "Select an account"
             }
         },
         "accounts": {
