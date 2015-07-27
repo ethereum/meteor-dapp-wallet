@@ -14,17 +14,21 @@ addTransaction = function(log, from, to, value){
             var txId = Helpers.makeId('tx', log.transactionHash),
                 transaction = _.find(block.transactions, function(tx){ return tx.hash === log.transactionHash; });
 
-            Transactions.upsert({_id: txId}, {
-                operation: log.args.operation || null,
-                value: value,
-                to: to,
-                from: from,
-                timestamp: block.timestamp,
-                blockNumber: log.blockNumber,
-                blockHash: log.blockHash,
-                transactionHash: log.transactionHash,
-                transactionIndex: log.transactionIndex,
-                fee: transaction.gasPrice.times(new BigNumber(transaction.gas)).toString(10)
+            web3.eth.getTransactionReceipt(log.transactionHash, function(err, receipt){
+                if(!err) {
+                    Transactions.upsert({_id: txId}, {
+                        operation: log.args.operation || null,
+                        value: value,
+                        to: to,
+                        from: from,
+                        timestamp: block.timestamp,
+                        blockNumber: log.blockNumber,
+                        blockHash: log.blockHash,
+                        transactionHash: log.transactionHash,
+                        transactionIndex: log.transactionIndex,
+                        fee: transaction.gasPrice.times(new BigNumber(receipt.gasUsed)).toString(10)
+                    });
+                }
             });
 
             // update balance
@@ -53,37 +57,43 @@ observeTransactions = function(){
     @param {Object} newDocument
     @param {Object} oldDocument
     */
-    var checkTransactionConfirmations = function(newDocument, oldDocument){
-        // Tracker.afterFlush(function(){
+    var checkTransactionConfirmations = function(tx){
+        // check for confirmations
+        if(!tx.confirmed) {
+            var filter = web3.eth.filter('latest');
+            filter.watch(function(e, blockHash){
+                if(!e) {
+                    var confirmations = (tx.blockNumber) ? EthBlocks.latest.number - tx.blockNumber : 0;
 
-            var confirmations = EthBlocks.latest.number - newDocument.blockNumber;
+                    if(confirmations < ethereumConfig.requiredConfirmations && confirmations > 0) {
+                        Helpers.eventLogs('Checking transaction '+ tx.transactionHash +'. Current confirmations: '+ confirmations);
 
-            // check for confirmations
-            if(!oldDocument.blockNumber && newDocument.blockNumber && confirmations < ethereumConfig.requiredConfirmations) {
-                var filter = web3.eth.filter('latest');
-                filter.watch(function(e, blockHash){
-                    if(!e) {
-                        var confirmations = EthBlocks.latest.number - newDocument.blockNumber;
+                        // Check if the tx still exists, if not remove the tx
+                        web3.eth.getTransaction(tx.transactionHash, function(e, transaction){
+                            web3.eth.getTransactionReceipt(tx.transactionHash, function(e, receipt){
+                                if(!e)
+                                    return;
 
-                        if(confirmations < ethereumConfig.requiredConfirmations && confirmations > 0) {
-                            Helpers.eventLogs('Checking transaction '+ newDocument.transactionHash +'. Current confirmations: '+ confirmations);
+                                if(transaction && transaction.blockNumber)
+                                    updateTransaction(tx, transaction, receipt);
 
-                            // Check if the tx still exists, if not remove the tx
-                            web3.eth.getTransaction(newDocument.transactionHash, function(e, tx){
-                                if(tx && tx.blockNumber)
-                                    newDocument = updateTransaction(newDocument, tx);
-                                else if(!tx) {
-                                    Transactions.remove(newDocument._id);
+                                // delete transacrion if gone
+                                else if(!transaction.blockNumber) {
+                                    // TODO: better check for removed transactions, e.g. check for block number if this block then still matches the block hash
+                                    //  really remove?
+                                    Transactions.remove(tx._id);
                                     filter.stopWatching();
                                 }
                             });
-                        } else if(confirmations > ethereumConfig.requiredConfirmations) {
-                            filter.stopWatching();
-                        }
+                        });
+
+                    } else if(confirmations > ethereumConfig.requiredConfirmations) {
+                        Transactions.update(tx._id, {$set: {confirmed: true}});
+                        filter.stopWatching();
                     }
-                });
-            }
-        // });
+                }
+            });
+        }
     };
 
     /**
@@ -92,14 +102,15 @@ observeTransactions = function(){
     @method updateTransaction
     @param {Object} newDocument     The transaction object from our database
     @param {Object} transaction     The transaction object from getTransaction
+    @param {Object} receipt     The transaction object from getTransactionReceipt
     @return {Object} The updated transaction
     */
-    var updateTransaction = function(newDocument, transaction){
+    var updateTransaction = function(newDocument, transaction, receipt){
 
         newDocument.blockNumber = transaction.blockNumber;
         newDocument.blockHash = transaction.blockHash;
         newDocument.transactionIndex = transaction.transactionIndex;
-        newDocument.fee = transaction.gasPrice.times(new BigNumber(transaction.gas)).toString(10);
+        newDocument.fee = transaction.gasPrice.times(new BigNumber(receipt.gasUsed)).toString(10);
 
         Transactions.update(newDocument._id, newDocument);
 
@@ -137,14 +148,14 @@ observeTransactions = function(){
 
 
             // check first if the transaction was already mined
-            if(!newDocument.blockHash || confirmations < ethereumConfig.requiredConfirmations) {
-                web3.eth.getTransaction(newDocument.transactionHash, function(e, tx){
-                    if(tx && tx.blockNumber) {
-                        newDocument = updateTransaction(newDocument, tx);
-
-                        checkTransactionConfirmations(newDocument, {});
-                    }
+            if(!newDocument.confirmed) {
+                web3.eth.getTransaction(newDocument.transactionHash, function(e, transaction){
+                    web3.eth.getTransactionReceipt(newDocument.transactionHash, function(e, receipt){
+                        if(!e && receipt)
+                            updateTransaction(newDocument, transaction, receipt);
+                    });
                 });
+                checkTransactionConfirmations(newDocument, {});
             }
         },
         /**
@@ -152,7 +163,15 @@ observeTransactions = function(){
 
         @method changed
         */
-        changed: checkTransactionConfirmations,
+        changed: function(newDocument){
+            // add to accounts
+            Wallets.update({address: newDocument.from}, {$addToSet: {
+                transactions: newDocument._id
+            }});
+            Wallets.update({address: newDocument.to}, {$addToSet: {
+                transactions: newDocument._id
+            }});
+        },
         /**
         Remove transactions confirmations from the accounts
 

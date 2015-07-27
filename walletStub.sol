@@ -1,5 +1,5 @@
 contract Wallet {
-    function WalletCopy(address[] _owners, uint _required) {
+    function Wallet(address[] _owners, uint _required, uint _dailyLimit) {
         m_numOwners = _owners.length + 1;
         m_owners[1] = uint(msg.sender);
         m_ownerIndex[uint(msg.sender)] = 1;
@@ -10,6 +10,8 @@ contract Wallet {
         }
         m_required = _required;
         m_lastDay = now / 1 days;
+
+        m_dailyLimit = _dailyLimit;
     }
 
     function() {

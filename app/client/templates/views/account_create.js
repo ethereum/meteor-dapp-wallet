@@ -225,7 +225,7 @@ Template['views_account_create'].events({
                         // go through all 250 storage slots and get addresses,
                         // once we reach the number of owners we stop
                         _.find(_.range(250), function(i){
-                            var ownerAddress = web3.eth.getStorageAt(address, 2+i);
+                            var ownerAddress = web3.eth.getStorageAt(address, 2+i).replace('0x000000000000000000000000','0x');
                             if(web3.isAddress(ownerAddress))
                                 owners.push(ownerAddress);
 
