@@ -594,7 +594,7 @@ observeWallets = function(){
 
                 WalletContract.new(newDocument.owners, newDocument.requiredSignatures, (newDocument.dailyLimit || ethereumConfig.dailyLimitDefault), {
                     from: newDocument.owners[0],
-                    data: walletABICompiled, // walletStubABICompiled
+                    data: walletStubABICompiled, // walletStubABICompiled walletABICompiled
                     gas: 2000000,
                     gasPrice: EthBlocks.latest.gasPrice
 
