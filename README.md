@@ -5,6 +5,15 @@ The ethereum wallet Ðapp.
 **NOTE** The wallet is not yet official released,
 can contain severe bugs and shouldn't be used to store any real value!
 
+## Gas usage statistics
+
+- Deploy original wallet: 1 230 162
+- Deploy wallet stub: 184 280
+- Simple Wallet transaction: 64 280
+- Multisig Wallet transaction below daily limit: 79 280
+- Multisig Wallet transaction above daily limit: 171 096
+- 1 Multisig confirmation: 48 363
+
 
 ## Development
 

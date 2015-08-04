@@ -68,6 +68,8 @@ connectToNode = function(){
     // });
 
 
+    observeLatestBlocks();
+
     observeWallets();
 
     observeTransactions();

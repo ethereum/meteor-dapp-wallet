@@ -36,7 +36,7 @@
 </template>
 
 <template name="elements_transactions_row">
-    <tr class="{{#if $eq unConfirmed.confirmations 0}}unconfirmed{{/if}}" data-operation="{{operation}}">
+    <tr class="{{#if $eq unConfirmed.confirmations 0}}unconfirmed{{/if}}" data-operation="{{operation}}" data-transaction-hash="{{transactionHash}}" data-block-hash="{{blockHash}}">
         <td class="time" title="{{formatTime timestamp 'LLLL'}}">
             {{#unless $eq ../collection "PendingConfirmations"}}
                 {{#with unConfirmed}}

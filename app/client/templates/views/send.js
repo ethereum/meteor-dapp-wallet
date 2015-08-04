@@ -38,18 +38,6 @@ var toPowerFactor = 1.1
 
 
 /**
-The estimated gas
-
-@property estimatedGas
-*/
-var estimatedGas = 23000;
-if(EthAccounts.findOne({}))
-    web3.eth.estimateGas({from: EthAccounts.findOne({}).address, to: EthAccounts.findOne({}).address, value: 1}, function(e, res){
-        if(!e && res)
-            estimatedGas = res;
-    });
-
-/**
 Check if the amount accounts daily limit  and sets the correct text.
 
 @property checkOverDailyLimit
@@ -59,7 +47,7 @@ var checkOverDailyLimit = function(address, wei, template){
     // check if under or over dailyLimit
     account = Helpers.getAccountByAddress(address);
 
-    if(account && account.dailyLimit && account.dailyLimit !== ethereumConfig.dailyLimitDefault && Number(wei) !== 0) {
+    if(account && account.requiredSignatures > 1 && account.dailyLimit && account.dailyLimit !== ethereumConfig.dailyLimitDefault && Number(wei) !== 0) {
         if(Number(account.dailyLimit) < Number(wei))
             TemplateVar.set('dailyLimitText', new Spacebars.SafeString(TAPi18n.__('wallet.send.texts.overDailyLimit', {limit: Helpers.formatBalance(account.dailyLimit), count: account.requiredSignatures - 1})));
         else
@@ -74,9 +62,10 @@ Calculates the gas price.
 @method calculateGasPrice
 @return {Number}
 */
-var calculateGasPrice = function(fee, ether){
+var calculateGasPrice = function(template, ether){
+    console.log('Estimated gas: ', TemplateVar.get(template, 'estimatedGas'));
     var suggestedGasPrice = web3.fromWei(new BigNumber(EthBlocks.latest.gasPrice, 10), ether || LocalStore.get('etherUnit'));
-    return suggestedGasPrice.times(estimatedGas).times(new BigNumber(toPowerFactor).toPower(fee));
+    return suggestedGasPrice.times(TemplateVar.get(template, 'estimatedGas')).times(new BigNumber(toPowerFactor).toPower(TemplateVar.get(template, 'feeMultiplicator')));
 }
 
 // Set basic variables
@@ -90,6 +79,7 @@ Template['views_send'].onCreated(function(){
     // set the default fee
     TemplateVar.set('feeMultiplicator', 0);
     TemplateVar.set('amount', 0);
+    TemplateVar.set('estimatedGas', 0);
 
     // change the amount when the currency unit is changed
     template.autorun(function(c){
@@ -118,7 +108,34 @@ Template['views_send'].onRendered(function(){
         if(!c.firstRun) {
             var wei = web3.toWei(template.find('input[name="amount"]').value.replace(',','.'), LocalStore.get('etherUnit'));
             checkOverDailyLimit(address, wei, template);
+
         }
+
+        var amount = TemplateVar.get(template, 'amount'),
+            to = TemplateVar.get(template, 'to');
+
+        if(!web3.isAddress(to))
+            to = '0x0000000000000000000000000000000000000000';
+
+        // get gasprice estimation
+        if(EthAccounts.findOne({address: address}))
+            web3.eth.estimateGas({
+                from: address,
+                to: to,
+                value: amount
+            }, function(e, res){
+                if(!e && res)
+                    TemplateVar.set(template, 'estimatedGas', res.toString(10));
+                console.log(res.toString(10));
+            });
+        else if(wallet = Wallets.findOne({address: address}))
+            contracts['ct_'+ wallet._id].execute.estimateGas(to, amount, '',{
+                from: wallet.owners[0]
+            }, function(e, res){
+                if(!e && res)
+                    TemplateVar.set(template, 'estimatedGas', res.toString(10));
+                console.log(res.toString(10));
+            });
     });
 });
 
@@ -147,7 +164,7 @@ Template['views_send'].helpers({
     */
     'fee': function(){
         if(_.isFinite(TemplateVar.get('feeMultiplicator')))
-            return numeral(calculateGasPrice(TemplateVar.get('feeMultiplicator')).toString(10)).format('0,0.[000000000000]');
+            return numeral(calculateGasPrice(Template.instance()).toString(10)).format('0,0.[000000000000]');
     },
     /**
     Return the current sepecified amount (finney)
@@ -168,7 +185,7 @@ Template['views_send'].helpers({
     'total': function(ether){
         var amount = web3.fromWei(new BigNumber(TemplateVar.get('amount') || 0, 10), ether || LocalStore.get('etherUnit'));
         if(_.isFinite(TemplateVar.get('feeMultiplicator')))
-            return numeral(calculateGasPrice(TemplateVar.get('feeMultiplicator'), ether || LocalStore.get('etherUnit')).plus(amount).toString(10)).format('0,0.[00000000]');
+            return numeral(calculateGasPrice(Template.instance(), ether || LocalStore.get('etherUnit')).plus(amount).toString(10)).format('0,0.[00000000]');
     },
     /**
     Returns the right time text for the "sendText".
@@ -194,6 +211,14 @@ Template['views_send'].events({
         checkOverDailyLimit(template.find('select[name="select-accounts"]').value, wei, template);
     },
     /**
+    Set to while typing
+    
+    @event keyup input[name="to"], change input[name="to"], input input[name="to"]
+    */
+    'keyup input[name="to"], change input[name="to"], input input[name="to"]': function(e, template){
+        TemplateVar.set('to', e.currentTarget.value);
+    },
+    /**
     Change the selected fee
     
     @event change input[name="fee"], input input[name="fee"]
@@ -214,7 +239,7 @@ Template['views_send'].events({
 
         if(selectedAccount && !TemplateVar.get('sending')) {
 
-            console.log(amount, selectedAccount.balance);
+            console.log('Amount to send: ', amount, 'Current balance: ', selectedAccount.balance, 'Providing gas: ', TemplateVar.get('estimatedGas'));
 
             if(new BigNumber(amount, 10).gt(new BigNumber(selectedAccount.balance, 10)))
                 return GlobalNotification.warning({
@@ -253,7 +278,7 @@ Template['views_send'].events({
                     to: to,
                     value: amount,
                     gasPrice: gasPrice,
-                    gas: estimatedGas + 100 // add 100 to be safe
+                    gas: TemplateVar.get('estimatedGas') + 100000 // add 50000 to be safe // should be 22423
                 }, function(error, txHash){
 
                     TemplateVar.set(template, 'sending', false);
@@ -297,7 +322,7 @@ Template['views_send'].events({
                 contracts['ct_'+ selectedAccount._id].execute.sendTransaction(to, amount, '', {
                     from: selectedAccount.owners[0],
                     gasPrice: gasPrice,
-                    gas: 1204633 + 500000 // add 100 to be safe
+                    gas: TemplateVar.get('estimatedGas') + 100000 // should be 36094
                 }, function(error, txHash){
 
                     TemplateVar.set(template, 'sending', false);

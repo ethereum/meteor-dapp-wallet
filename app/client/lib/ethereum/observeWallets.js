@@ -267,6 +267,8 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
 
         events.push(contractInstance.allEvents({fromBlock: blockToCheckBack, toBlock: 'latest'}, function(error, log){
             if(!error) {
+                console.log(log);
+
                 if(log.event === 'Deposit') {
                     Helpers.eventLogs('Deposit for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber());
 
@@ -594,7 +596,7 @@ observeWallets = function(){
 
                 WalletContract.new(newDocument.owners, newDocument.requiredSignatures, (newDocument.dailyLimit || ethereumConfig.dailyLimitDefault), {
                     from: newDocument.owners[0],
-                    data: walletStubABICompiled, // walletStubABICompiled walletABICompiled
+                    data: walletStubABICompiled, // walletStubABICompiled 184 280 walletABICompiled ~1 842 800
                     gas: 2000000,
                     gasPrice: EthBlocks.latest.gasPrice
 
