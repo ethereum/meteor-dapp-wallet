@@ -118,23 +118,27 @@ Template['views_send'].onRendered(function(){
             to = '0x0000000000000000000000000000000000000000';
 
         // get gasprice estimation
-        if(EthAccounts.findOne({address: address}))
+        if(EthAccounts.findOne({address: address}, {reactive: false}))
             web3.eth.estimateGas({
                 from: address,
                 to: to,
-                value: amount
+                value: amount,
+                gas: 500000000 // TODO remove, once issue #1590 is fixed
             }, function(e, res){
-                if(!e && res)
-                    TemplateVar.set(template, 'estimatedGas', res.toString(10));
-                console.log(res.toString(10));
+                if(!e && res) {
+                    TemplateVar.set(template, 'estimatedGas', res);
+                    console.log(res);
+                }
             });
-        else if(wallet = Wallets.findOne({address: address}))
+        else if(wallet = Wallets.findOne({address: address}, {reactive: false}))
             contracts['ct_'+ wallet._id].execute.estimateGas(to, amount, '',{
-                from: wallet.owners[0]
+                from: wallet.owners[0],
+                gas: 500000000 // TODO remove, once issue #1590 is fixed
             }, function(e, res){
-                if(!e && res)
-                    TemplateVar.set(template, 'estimatedGas', res.toString(10));
-                console.log(res.toString(10));
+                if(!e && res) {
+                    TemplateVar.set(template, 'estimatedGas', res);
+                    console.log(res);
+                }
             });
     });
 });
