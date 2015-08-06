@@ -20,15 +20,15 @@ Template.registerHelper('debug', function(object){
     console.log(object);
 });
 
-
 /**
-Get the current selected unit
+Return the current unit
 
 @method (unit)
 **/
-Template.registerHelper('unit', function(identity){
-    return LocalStore('unit').value;
+Template.registerHelper('unit', function(){
+    return LocalStore.get('dapp_etherUnit');
 });
+
 
 /**
 Check if the given wallet is a watch only wallet, by checking if we are one of owners in the wallet.
@@ -84,28 +84,3 @@ Formats a timestamp to any format given.
 **/
 Template.registerHelper('formatTime', Helpers.formatTime);
 
-
-/**
-Formats a number.
-
-    {{formatNumber myNumber "0,0.0[0000]"}}
-
-@method (formatNumber)
-@param {String} number
-@param {String} format       the format string
-@return {String} The formatted number
-**/
-Template.registerHelper('formatNumber', Helpers.formatNumber);
-
-
-/**
-Formats a number.
-
-    {{formatBalance myNumber "0,0.0[0000]"}}
-
-@method (formatBalance)
-@param {String} number
-@param {String} format       the format string
-@return {String} The formatted number
-**/
-Template.registerHelper('formatBalance', Helpers.formatBalance);

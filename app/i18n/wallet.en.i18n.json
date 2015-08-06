@@ -1,4 +1,10 @@
 {
+    "elements": {
+        "selectGasPrice": {
+            "high": "Faster",
+            "low": "Cheaper"
+        }
+    },
     "wallet": {
         "app": {
             "buttons": {

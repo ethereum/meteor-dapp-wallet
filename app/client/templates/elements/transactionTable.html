@@ -82,11 +82,11 @@
         </td> -->
         {{#if incomingTx ../account}}
             <td class="transaction-amount plus">
-                {{formatBalance value '0,0.00[000000]'}} <!-- <small>({{formatBalance fee '0,0.00[000000]'}})</small> -->
+                {{dapp_formatBalance value '0,0.00[000000]'}} <!-- <small>({{dapp_formatBalance fee '0,0.00[000000]'}})</small> -->
             </td>
         {{else}}
             <td class="transaction-amount minus">
-                -{{formatBalance value '0,0.00[000000]'}} <!-- <small>({{formatBalance fee '0,0.00[000000]'}})</small> -->
+                -{{dapp_formatBalance value '0,0.00[000000]'}} <!-- <small>({{dapp_formatBalance fee '0,0.00[000000]'}})</small> -->
             </td>
         {{/if}}
         <td>

@@ -22,8 +22,9 @@ Meteor.startup(function() {
     // change moment and numeral language, when language changes
     Tracker.autorun(function(){
         if(_.isString(TAPi18n.getLanguage())) {
-            moment.locale(TAPi18n.getLanguage().substr(0,2));
-            numeral.language(TAPi18n.getLanguage().substr(0,2));
+            var lang = TAPi18n.getLanguage().substr(0,2);
+            moment.locale(lang);
+            EthTools.locale(lang);
         }
     });
 

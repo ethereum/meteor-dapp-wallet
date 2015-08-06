@@ -41,7 +41,7 @@ Template['views_account_create'].helpers({
     @method (selectedOwner)
     */
     'selectedOwner': function(){
-        return TemplateVar.getFrom('.select-account', 'selectedAccount');
+        return TemplateVar.getFrom('.dapp-select-account', 'value');
     },
     /**
     Return TRUE, if the current section is selected

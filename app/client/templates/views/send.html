@@ -10,7 +10,7 @@
             <div class="col col-7 mobile-full from">
                 <h3>{{i18n 'wallet.send.from'}}</h3>
 
-                {{> elements_selectAccount accounts=fromAccounts}}
+                {{> dapp_selectAccount accounts=fromAccounts showAccountTypes=true}}
             </div>
 
             <div class="col col-5 mobile-full send-info">
@@ -44,13 +44,11 @@
         </div>
 
         <!-- fee -->
-        <div class="row clear fee">
+        <div class="row clear">
             <div class="col col-7 mobile-full">
                 <h3>{{i18n 'wallet.send.fee'}}</h3>
-                <span>{{fee}} {{unit}}</span><br>
-                <input type="range" name="fee" min="-5" max="5" step="1" value="{{TemplateVar.get 'feeMultiplicator'}}">
-                <span>{{i18n 'wallet.send.feeLow'}}</span>
-                <span>{{i18n 'wallet.send.feeHigh'}}</span>
+
+                {{> dapp_selectGasPrice gas=estimatedGas}}
             </div>
             
             <div class="col col-5 mobile-full send-info">

@@ -40,7 +40,7 @@ Template['elements_balance'].helpers({
         var balance = TemplateVar.get('balance');
 
         if(balance)
-            return web3.fromWei(TemplateVar.get('balance'), LocalStore.get('etherUnit')).toString(10);
+            return web3.fromWei(TemplateVar.get('balance'), LocalStore.get('dapp_etherUnit')).toString(10);
     },
     /**
     Get the current balance and count it up/down to the new balance.
@@ -78,7 +78,7 @@ Template['elements_balance'].helpers({
     */
     'selectedUnit': function(){
         var unit = _.find(units, function(unit){
-            return unit.value === LocalStore.get('etherUnit');
+            return unit.value === LocalStore.get('dapp_etherUnit');
         });
 
         if(unit)
@@ -101,6 +101,6 @@ Template['elements_balance'].events({
     @event change .inline-form
     */
     'change .inline-form': function(e, template, value){
-        LocalStore.set('etherUnit', value);
+        LocalStore.set('dapp_etherUnit', value);
     }
 });

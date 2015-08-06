@@ -66,7 +66,7 @@ Template['elements_transactions_table'].helpers({
                     return item;
 
                 // search value
-                if(pattern.test(Helpers.formatBalance(item.value, '0,0.00[000000]')))
+                if(pattern.test(EthTools.formatBalance(item.value, '0,0.00[000000]')))
                     return item;
 
                 // search date
