@@ -48,7 +48,7 @@
             <div class="col col-7 mobile-full">
                 <h3>{{i18n 'wallet.send.fee'}}</h3>
 
-                {{> dapp_selectGasPrice gas=estimatedGas}}
+                {{> dapp_selectGasPrice gas=estimatedGas gasPrice=latestBlock.gasPrice}}
             </div>
             
             <div class="col col-5 mobile-full send-info">
@@ -63,10 +63,10 @@
         <div class="row clear total">
             <div class="col col-12 mobile-full">
                 <h3>Total</h3>
-                <span class="amount">{{total}} {{unit}}</span>
+                <span class="amount">{{total}}</span>
                 {{#if $neq unit 'ether'}}
                     <br>
-                    ({{total 'ether'}} ether)
+                    ({{total 'ether'}})
                 {{/if}}
             </div>
 

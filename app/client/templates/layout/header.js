@@ -19,7 +19,7 @@ Template['layout_header'].helpers({
 
         // set total balance in Mist menu, of no pending confirmation is Present
         if(typeof mist !== 'undefined' && !PendingConfirmations.findOne({operation: {$exists: true}})) {
-            mist.menu.setBadge(EthTools.formatBalance(accounts, '0 a'));
+            mist.menu.setBadge(EthTools.formatBalance(accounts, '0 a unit'));
         }
 
         return accounts;

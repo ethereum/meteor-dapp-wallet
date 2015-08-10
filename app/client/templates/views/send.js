@@ -57,6 +57,7 @@ var checkOverDailyLimit = function(address, wei, template){
 };
 
 
+
 // Set basic variables
 Template['views_send'].onCreated(function(){
     var template = this;
@@ -71,10 +72,10 @@ Template['views_send'].onCreated(function(){
 
     // change the amount when the currency unit is changed
     template.autorun(function(c){
-        var unit = LocalStore.get('dapp_etherUnit');
+        var unit = EthTools.getUnit();
 
         if(!c.firstRun) {
-            TemplateVar.set('amount', web3.toWei(template.find('input[name="amount"]').value.replace(',','.'), unit));
+            TemplateVar.set('amount', EthTools.toWei(template.find('input[name="amount"]').value.replace(',','.'), unit));
         }
     });
 });
@@ -95,9 +96,8 @@ Template['views_send'].onRendered(function(){
         var to = TemplateVar.getFrom('.dapp-address-input', 'value');
 
         if(!c.firstRun) {
-            var wei = web3.toWei(template.find('input[name="amount"]').value.replace(',','.'), LocalStore.get('dapp_etherUnit'));
+            var wei = EthTools.toWei(template.find('input[name="amount"]').value.replace(',','.'));
             checkOverDailyLimit(address, wei, template);
-
         }
 
         var amount = TemplateVar.get(template, 'amount');
@@ -111,23 +111,25 @@ Template['views_send'].onRendered(function(){
                 from: address,
                 to: to,
                 value: amount,
-                gas: 500000000 // TODO remove, once issue #1590 is fixed
+                // gas: 500000000 // TODO remove, once issue #1590 is fixed
             }, function(e, res){
                 if(!e && res) {
                     TemplateVar.set(template, 'estimatedGas', res);
-                    console.log(res);
+                    // console.log(res);
                 }
             });
-        else if(wallet = Wallets.findOne({address: address}, {reactive: false}))
-            contracts['ct_'+ wallet._id].execute.estimateGas(to, amount, '',{
-                from: wallet.owners[0],
-                gas: 500000000 // TODO remove, once issue #1590 is fixed
-            }, function(e, res){
-                if(!e && res) {
-                    TemplateVar.set(template, 'estimatedGas', res);
-                    console.log(res);
-                }
-            });
+        else if(wallet = Wallets.findOne({address: address}, {reactive: false})) {
+            if(contracts['ct_'+ wallet._id])
+                contracts['ct_'+ wallet._id].execute.estimateGas(to, amount, '',{
+                    from: wallet.owners[0],
+                    // gas: 500000000 // TODO remove, once issue #1590 is fixed
+                }, function(e, res){
+                    if(!e && res) {
+                        TemplateVar.set(template, 'estimatedGas', res);
+                        // console.log(res);
+                    }
+                });
+        }
     });
 });
 
@@ -155,10 +157,7 @@ Template['views_send'].helpers({
     @method (amount)
     */
     'amount': function(){
-        var amount = web3.fromWei(TemplateVar.get('amount'), LocalStore.get('dapp_etherUnit'));
-        return (_.isFinite(amount))
-            ? EthTools.formatNumber(amount, '0,0.[000000]') + ' '+ LocalStore.get('dapp_etherUnit')
-            : 0 + ' '+ LocalStore.get('dapp_etherUnit');
+        return EthTools.formatBalance(TemplateVar.get('amount'), '0,0.[000000] UNIT')
     },
     /**
     Return the currently selected fee + amount
@@ -166,9 +165,14 @@ Template['views_send'].helpers({
     @method (total)
     */
     'total': function(ether){
+        if(!_.isFinite(TemplateVar.get('amount')))
+            return '0';
+
         var gasInWei = TemplateVar.getFrom('.dapp-select-gas-price', 'gasInWei') || '0';
-        var amount = web3.fromWei(new BigNumber(TemplateVar.get('amount'), 10).plus(new BigNumber(gasInWei, 10)), ether || LocalStore.get('dapp_etherUnit'));
-        return EthTools.formatNumber(amount, '0,0.[00000000]');
+        var amount = new BigNumber(TemplateVar.get('amount'), 10).plus(new BigNumber(gasInWei, 10));
+        return (ether)
+            ? EthTools.formatBalance(amount, '0,0.[00000000] UNIT', ether)
+            : EthTools.formatBalance(amount, '0,0.[00000000] UNIT');
     },
     /**
     Returns the right time text for the "sendText".
@@ -188,8 +192,8 @@ Template['views_send'].events({
     @event keyup input[name="amount"], change input[name="amount"], input input[name="amount"]
     */
     'keyup input[name="amount"], change input[name="amount"], input input[name="amount"]': function(e, template){
-        var wei = web3.toWei(e.currentTarget.value.replace(',','.'), LocalStore.get('dapp_etherUnit'));
-        TemplateVar.set('amount', wei);
+        var wei = EthTools.toWei(e.currentTarget.value.replace(',','.'));
+        TemplateVar.set('amount', wei || '0');
 
         checkOverDailyLimit(template.find('select[name="dapp-select-account"]').value, wei, template);
     },
@@ -202,11 +206,14 @@ Template['views_send'].events({
         var amount = TemplateVar.get('amount'),
             to = template.find('input[name="to"]').value,
             gasPrice = TemplateVar.getFrom('.dapp-select-gas-price', 'gasPrice'),
-            selectedAccount = Helpers.getAccountByAddress(template.find('select[name="select-accounts"]').value);
+            selectedAccount = Helpers.getAccountByAddress(template.find('select[name="dapp-select-account"]').value);
 
         if(selectedAccount && !TemplateVar.get('sending')) {
 
-            console.log('Amount to send: ', amount, 'Current balance: ', selectedAccount.balance, 'Providing gas: ', TemplateVar.get('estimatedGas'));
+            console.log('Amount to send: ', amount,
+                        'Current balance: ', selectedAccount.balance,
+                        'Providing gas: ', TemplateVar.get('estimatedGas') ,' + 100000',
+                        'Gas price: ', gasPrice);
 
             if(new BigNumber(amount, 10).gt(new BigNumber(selectedAccount.balance, 10)))
                 return GlobalNotification.warning({
@@ -220,6 +227,13 @@ Template['views_send'].events({
                     duration: 2
                 });
 
+
+            if(_.isEmpty(amount) || amount === '0')
+                return GlobalNotification.warning({
+                    content: 'i18n:wallet.accounts.error.noAmount',
+                    duration: 2
+                });
+
             if(!web3.isAddress(to))
                 return GlobalNotification.warning({
                     content: 'i18n:wallet.accounts.error.noReceiver',
@@ -227,12 +241,6 @@ Template['views_send'].events({
                 });
             else
                 to = '0x'+ to.replace('0x','');
-
-            if(!amount)
-                return GlobalNotification.warning({
-                    content: 'i18n:wallet.accounts.error.noAmount',
-                    duration: 2
-                });
 
 
             TemplateVar.set('sending', true);
@@ -258,7 +266,7 @@ Template['views_send'].events({
                         txId = Helpers.makeId('tx', txHash);
 
 
-                        Transactions.upsert(txId, {
+                        Transactions.upsert(txId, {$set: {
                             value: amount,
                             from: selectedAccount.address,
                             to: to,
@@ -268,7 +276,7 @@ Template['views_send'].events({
                             // blockHash: null,
                             // transactionIndex: null,
                             // logIndex: null
-                        });
+                        }});
 
                         // add to Account
                         EthAccounts.update(selectedAccount._id, {$addToSet: {

@@ -16,7 +16,7 @@ addTransaction = function(log, from, to, value){
 
             web3.eth.getTransactionReceipt(log.transactionHash, function(err, receipt){
                 if(!err) {
-                    Transactions.upsert({_id: txId}, {
+                    Transactions.upsert({_id: txId}, {$set: {
                         operation: log.args.operation || null,
                         value: value,
                         to: to,
@@ -27,7 +27,7 @@ addTransaction = function(log, from, to, value){
                         transactionHash: log.transactionHash,
                         transactionIndex: log.transactionIndex,
                         fee: transaction.gasPrice.times(new BigNumber(receipt.gasUsed)).toString(10)
-                    });
+                    }});
                 }
             });
 

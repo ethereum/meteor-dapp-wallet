@@ -26,8 +26,18 @@ Return the current unit
 @method (unit)
 **/
 Template.registerHelper('unit', function(){
-    return LocalStore.get('dapp_etherUnit');
+    return EthTools.getUnit();
 });
+
+/**
+Return the latest block
+
+@method (latestBlock)
+**/
+Template.registerHelper('latestBlock', function(){
+    return EthBlocks.latest;
+});
+
 
 
 /**

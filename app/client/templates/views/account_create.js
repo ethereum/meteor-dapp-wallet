@@ -290,7 +290,7 @@ Template['views_account_create'].events({
         // SIMPLE
         if(type === 'simple') {
             Wallets.insert({
-                owners: [template.find('select[name="select-accounts"]').value],
+                owners: [template.find('select[name="dapp-select-account"]').value],
                 name: template.find('input[name="accountName"]').value || TAPi18n.__('wallet.accounts.defaultName'),
                 balance: '0',
                 creationBlock: EthBlocks.latest.number,

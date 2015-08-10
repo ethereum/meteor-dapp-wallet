@@ -17,17 +17,30 @@ The available units
 @property units
 */
 var units = [{
-    text: 'finney', //(µΞ)
-    value: 'finney'
-},{
     text: 'ether',
     value: 'ether'
+},
+{
+    text: 'finney', //(µΞ)
+    value: 'finney'
+},
+{
+    text: 'BTC',
+    value: 'btc'
+},
+{
+    text: 'USD',
+    value: 'usd'
+},
+{
+    text: 'EUR',
+    value: 'eur'
 }];
 
 
-Template['elements_balance'].created = function(){
+Template['elements_balance'].onCreated(function(){
     this._intervalId = null;
-};
+});
 
 
 Template['elements_balance'].helpers({
@@ -39,8 +52,11 @@ Template['elements_balance'].helpers({
     'convertedBalance': function(){
         var balance = TemplateVar.get('balance');
 
-        if(balance)
-            return web3.fromWei(TemplateVar.get('balance'), LocalStore.get('dapp_etherUnit')).toString(10);
+        if(balance){
+            return (EthTools.getUnit() === 'btc')
+                ? EthTools.formatBalance(TemplateVar.get('balance'), '0,0.00[000000]')
+                : EthTools.formatBalance(TemplateVar.get('balance'), '0,0.00');
+        }
     },
     /**
     Get the current balance and count it up/down to the new balance.
@@ -76,13 +92,13 @@ Template['elements_balance'].helpers({
 
     @method (selectedUnit)
     */
-    'selectedUnit': function(){
+    'selectedUnit': function(returnText){
         var unit = _.find(units, function(unit){
-            return unit.value === LocalStore.get('dapp_etherUnit');
+            return unit.value === EthTools.getUnit();
         });
 
         if(unit)
-            return unit.text;
+            return (returnText === true) ? unit.text : unit.value;
     },
     /**
     Return the selectable units
@@ -101,6 +117,6 @@ Template['elements_balance'].events({
     @event change .inline-form
     */
     'change .inline-form': function(e, template, value){
-        LocalStore.set('dapp_etherUnit', value);
+        EthTools.setUnit(value);
     }
 });

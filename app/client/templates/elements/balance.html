@@ -1,6 +1,6 @@
 <template name="elements_balance">
     <span class="account-balance">
-        {{dapp_formatNumber convertedBalance '0,0.00'}}
+        {{convertedBalance}}
 
         {{! getBalance is necessary to make the count up/down animation work}}
         {{getBalance}}
@@ -9,7 +9,7 @@
             {{> InlineForm name="unit" items=units value=selectedUnit}}
         {{else}}
             <span>
-                {{selectedUnit}}
+                {{selectedUnit true}}
             </span>
         {{/if}}
     </span>
