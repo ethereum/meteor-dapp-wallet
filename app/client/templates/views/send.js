@@ -187,6 +187,24 @@ Template['views_send'].helpers({
 
 Template['views_send'].events({
     /**
+    Show the extra data field
+    
+    @event click button.show-data
+    */
+    'click button.show-data': function(e){
+        e.preventDefault();
+        TemplateVar.set('showData', true);
+    },
+    /**
+    Show the extra data field
+    
+    @event click button.hide-data
+    */
+    'click button.hide-data': function(e){
+        e.preventDefault();
+        TemplateVar.set('showData', false);
+    },
+    /**
     Set the amount while typing
     
     @event keyup input[name="amount"], change input[name="amount"], input input[name="amount"]
@@ -204,16 +222,19 @@ Template['views_send'].events({
     */
     'submit form': function(e, template){
         var amount = TemplateVar.get('amount'),
-            to = template.find('input[name="to"]').value,
+            to = TemplateVar.getFrom('.dapp-address-input', 'value'),
+            data = TemplateVar.getFrom('.dapp-data-textarea', 'value');
             gasPrice = TemplateVar.getFrom('.dapp-select-gas-price', 'gasPrice'),
             selectedAccount = Helpers.getAccountByAddress(template.find('select[name="dapp-select-account"]').value);
 
         if(selectedAccount && !TemplateVar.get('sending')) {
 
-            console.log('Amount to send: ', amount,
-                        'Current balance: ', selectedAccount.balance,
-                        'Providing gas: ', TemplateVar.get('estimatedGas') ,' + 100000',
-                        'Gas price: ', gasPrice);
+            console.log('From: ', selectedAccount.address);
+            console.log('To: ', to);
+            console.log('Amount to send: ', amount + ' (Current balance: ', selectedAccount.balance + ')');
+            console.log('Providing gas: ', TemplateVar.get('estimatedGas') ,' + 100000');
+            console.log('Gas price: ', gasPrice);
+            console.log('Data: ', data);
 
             if(new BigNumber(amount, 10).gt(new BigNumber(selectedAccount.balance, 10)))
                 return GlobalNotification.warning({
@@ -234,13 +255,11 @@ Template['views_send'].events({
                     duration: 2
                 });
 
-            if(!web3.isAddress(to))
+            if(!web3.isAddress(to) && !data)
                 return GlobalNotification.warning({
                     content: 'i18n:wallet.accounts.error.noReceiver',
                     duration: 2
                 });
-            else
-                to = '0x'+ to.replace('0x','');
 
 
             TemplateVar.set('sending', true);
@@ -251,6 +270,7 @@ Template['views_send'].events({
                 web3.eth.sendTransaction({
                     from: selectedAccount.address,
                     to: to,
+                    data: data,
                     value: amount,
                     gasPrice: gasPrice,
                     gas: TemplateVar.get('estimatedGas') + 100000 // add 50000 to be safe // should be 22423

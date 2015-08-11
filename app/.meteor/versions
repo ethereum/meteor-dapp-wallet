@@ -18,9 +18,9 @@ deps@1.0.7
 ejson@1.0.6
 ethereum:accounts@0.2.5
 ethereum:blocks@0.1.7
-ethereum:elements@0.3.6
-ethereum:tools@0.2.1
-ethereum:web3@0.10.0
+ethereum:elements@0.3.9
+ethereum:tools@0.2.3
+ethereum:web3@0.12.1
 fastclick@1.0.3
 frozeman:animation-helper@0.2.6
 frozeman:global-notifications@0.1.4
@@ -29,7 +29,7 @@ frozeman:persistent-minimongo@0.1.4
 frozeman:reactive-timer@0.1.7
 frozeman:simple-modal@0.0.7
 frozeman:storage@0.1.8
-frozeman:template-var@1.1.7
+frozeman:template-var@1.2.0
 geojson-utils@1.0.3
 html-tools@1.0.4
 htmljs@1.0.4
