@@ -29,7 +29,7 @@ frozeman:persistent-minimongo@0.1.4
 frozeman:reactive-timer@0.1.7
 frozeman:simple-modal@0.0.7
 frozeman:storage@0.1.8
-frozeman:template-var@1.2.0
+frozeman:template-var@1.2.1
 geojson-utils@1.0.3
 html-tools@1.0.4
 htmljs@1.0.4
