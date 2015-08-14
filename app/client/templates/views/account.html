@@ -52,8 +52,8 @@
         <div class="dapp-clear-fix"></div>
 
         {{#unless owners}}
-            <h3>Note</h3>
-            <p>Accounts can't list past transactions and are rather unsafe, please <a href="{{pathFor route='createAccount'}}">create a wallet</a> to store ether.</p>
+            <h3>{{i18n "wallet.app.texts.note"}}</h3>
+            <p>{{{i18n "wallet.accounts.accountNote"}}}</p>
         {{/unless}}
 
         {{#if pendingConfirmations}}

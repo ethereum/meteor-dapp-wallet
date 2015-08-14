@@ -14,6 +14,7 @@
                 "addWallet": "Add wallet"
             },
             "texts": {
+                "note": "Note",
                 "balance": "Balance",
                 "connectionError": "Unable to connect. Please start a Geth node with the following options:<br><br><small><code>__node__</code></small>",
                 "pendingConfirmationsBadge": "Pending Confirmation!"
@@ -30,6 +31,7 @@
             "defaultName": "Unnamed wallet",
             "creating": "Creating",
             "importing": "Importing",
+            "accountNote": "Accounts can't list incoming transactions and are rather unsafe, please <a href=\"/account/new\">create a wallet</a> to store ether.",
             "modal": {
                 "deleteText": "Do you really want to delete the wallet?<br>If you lose the wallet address, you will lose the funds on it!<br><br>Type the name of the wallet to confirm the deletion."
             }
