@@ -73,6 +73,14 @@ body {
     .box-sizing(content-box);
     .background-image(linear-gradient(to bottom,  lighten(@colorBackgroundHeader, 15%) 0, @colorBackgroundHeader 90%));
 
+    &.dapp-small {
+        height: @gridHeight * 1;
+
+        nav li a i {
+            .opacity(0);
+        }
+    }
+
     nav {
         position: absolute;
         bottom: 0;
@@ -115,14 +123,6 @@ body {
                 }
 
             }
-        }
-    }
-
-    &.dapp-small {
-        height: @gridHeight * 1;
-
-        nav li a i {
-            .opacity(0);
         }
     }
 }
