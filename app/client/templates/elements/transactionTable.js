@@ -157,7 +157,9 @@ Template['elements_transactions_row'].helpers({
             return TAPi18n.__('wallet.transactions.types.betweenWallets');
         else if(to)
             return TAPi18n.__('wallet.transactions.types.received');
-        else if(from)
+        else if(!to)
+            return TAPi18n.__('wallet.transactions.types.createdContract');
+        else
             return TAPi18n.__('wallet.transactions.types.sent');
     },
     /**
@@ -244,9 +246,27 @@ Template['elements_transactions_row'].helpers({
 
 Template['elements_transactions_row'].events({
     /**
+    Open transaction details on click of the <tr>
+
+    @event click tr
+    */
+    'click tr': function(e) {
+        var $element = $(e.target);
+        if(!$element.is('button') && !$element.is('a')) {
+            EthElements.Modal.show({
+                template: 'views_modals_transactionInfo',
+                data: {
+                    _id: this._id
+                }
+            },{
+                class: 'transaction-info'
+            });
+        }
+    },
+    /**
     Reject or Approve a pending transactions
 
-    @event click click button.approve, click button.reject
+    @event click button.approve, click button.reject
     */
     'click button.approve, click button.reject': function(e){
         var _this = this,
@@ -289,36 +309,16 @@ Template['elements_transactions_row'].events({
             // if multiple ask, which one to use
             else if(ownerAccounts.length > 1) {
                 // show modal
-                Router.current().render('dapp_modal', {to: 'modal'});
-                Router.current().render('views_modals_selectAccount', {
-                    to: 'modalContent',
+                EthElements.Modal.question({
+                    template: 'views_modals_selectAccount',
                     data: {
                         accounts: ownerAccounts,
                         callback: sendConfirmation
-                    }
+                    },
+                    cancel: true
                 });
             }
         }
-    }
-});
-
-
-/**
-The transaction row template
-
-@class [template] elements_transactions_row_tofrom
-@constructor
-*/
-
-
-Template['elements_transactions_row_tofrom'].helpers({
-    /**
-    Get the account and return the account or address of "from" or "to" property
-
-    @method (getAccount)
-    */
-    'getAccount': function(){
-        return Helpers.getAccountByAddress(this.address) || {address: this.address};
     }
 });
 

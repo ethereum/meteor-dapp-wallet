@@ -66,27 +66,17 @@ Template['views_account'].events({
     @event click button.delete
     */
     'click button.delete': function(e, template){
-        Router.current().render('dapp_modal', {
-            to: 'modal',
-            // data: {
-            //     closeable: false
-            // }
-        });
-        Router.current().render('dapp_modal_question', {
-            to: 'modalContent',
-            data: {
-                text: new Spacebars.SafeString(TAPi18n.__('wallet.accounts.modal.deleteText') + 
-                    '<br><input type="text" class="deletionConfirmation">'),
-                ok: function(){
-                    console.log(template.data, $('input.deletionConfirmation').value);
-                    if(Wallets.findOne(template.data._id).name === $('input.deletionConfirmation').val()) {
-                        Wallets.remove(template.data._id);
-                        Router.go('/');
-                        return true;
-                    }
-                },
-                cancel: true
-            }
+        EthElements.Modal.question({
+            text: new Spacebars.SafeString(TAPi18n.__('wallet.accounts.modal.deleteText') + 
+                '<br><input type="text" class="deletionConfirmation" autofocus="true">'),
+            ok: function(){
+                if(Wallets.findOne(template.data._id).name === $('input.deletionConfirmation').val()) {
+                    Wallets.remove(template.data._id);
+                    Router.go('/');
+                    return true;
+                }
+            },
+            cancel: true
         });
     },
     /**

@@ -16,18 +16,21 @@ addTransaction = function(log, from, to, value){
 
             web3.eth.getTransactionReceipt(log.transactionHash, function(err, receipt){
                 if(!err) {
-                    Transactions.upsert({_id: txId}, {$set: {
-                        operation: log.args.operation || null,
-                        value: value,
+
+                    transaction.blockNumber = log.blockNumber;
+                    transaction.blockHash = log.blockHash;
+                    transaction.transactionHash = log.transactionHash;
+                    transaction.transactionIndex = log.transactionIndex;
+
+                    updateTransaction({
+                        _id: txId,
                         to: to,
                         from: from,
+                        value: value,
+                        operation: log.args.operation || null,
                         timestamp: block.timestamp,
-                        blockNumber: log.blockNumber,
-                        blockHash: log.blockHash,
-                        transactionHash: log.transactionHash,
-                        transactionIndex: log.transactionIndex,
-                        fee: transaction.gasPrice.times(new BigNumber(receipt.gasUsed)).toString(10)
-                    }});
+                    }, transaction, receipt);
+
                 }
             });
 
@@ -65,14 +68,13 @@ observeTransactions = function(){
                 if(!e) {
                     var confirmations = (tx.blockNumber) ? EthBlocks.latest.number - tx.blockNumber : 0;
 
-                    if(confirmations < ethereumConfig.requiredConfirmations && confirmations > 0) {
+                    if(confirmations < ethereumConfig.requiredConfirmations && confirmations >= 0) {
                         Helpers.eventLogs('Checking transaction '+ tx.transactionHash +'. Current confirmations: '+ confirmations);
 
                         // Check if the tx still exists, if not remove the tx
                         web3.eth.getTransaction(tx.transactionHash, function(e, transaction){
                             web3.eth.getTransactionReceipt(tx.transactionHash, function(e, receipt){
-                                if(!e)
-                                    return;
+                                if(e || !receipt) return;
 
                                 if(transaction && transaction.blockNumber)
                                     updateTransaction(tx, transaction, receipt);
@@ -106,13 +108,35 @@ observeTransactions = function(){
     @return {Object} The updated transaction
     */
     var updateTransaction = function(newDocument, transaction, receipt){
+        var id = newDocument._id;
 
         newDocument.blockNumber = transaction.blockNumber;
         newDocument.blockHash = transaction.blockHash;
         newDocument.transactionIndex = transaction.transactionIndex;
-        newDocument.fee = transaction.gasPrice.times(new BigNumber(receipt.gasUsed)).toString(10);
+        if(transaction.transactionHash)
+            newDocument.transactionHash = transaction.transactionHash;
 
-        Transactions.update(newDocument._id, newDocument);
+        newDocument.data = transaction.input || transaction.data || null;
+        newDocument.gasPrice = transaction.gasPrice.toString(10);
+
+        if(receipt) {
+            newDocument.contractAddress = receipt.contractAddress;
+            newDocument.gasUsed = receipt.gasUsed;
+            newDocument.fee = transaction.gasPrice.times(new BigNumber(receipt.gasUsed)).toString(10);
+
+            // check for code on the address
+            if(receipt.contractAddress) {
+                web3.eth.getCode(receipt.contractAddress, function(e, code) {
+                    if(code.length > 2)
+                         Transactions.update(id, {$set: {
+                            deployedData: code
+                         }});
+                })
+            }
+        }
+
+        delete newDocument._id;
+        Transactions.update(id, {$set: newDocument});
 
         return newDocument;
     };
@@ -155,7 +179,7 @@ observeTransactions = function(){
                             updateTransaction(newDocument, transaction, receipt);
                     });
                 });
-                checkTransactionConfirmations(newDocument, {});
+                checkTransactionConfirmations(newDocument);
             }
         },
         /**

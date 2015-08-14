@@ -1,0 +1,90 @@
+<template name="views_modals_transactionInfo">
+    {{#with transaction}}
+        <h1>
+            {{i18n "wallet.transactions.transactionInfoTitle"}}
+            <a href="https://etherchain.org/tx/{{transactionHash}}" target="_blank" style="font-size: 0.4em;">{{transactionHash}}</a>
+        </h1>
+
+        <p>
+            {{formatTime timestamp "LLLL"}}
+            <br>
+            <small>({{formatTime timestamp "fromNow"}}, <strong>{{confirmations}}</strong> {{i18n "wallet.transactions.confirmations"}})</small>
+        </p>
+
+        <table class="dapp-zebra">
+            <!-- <thead>
+                
+            </thead> -->
+            <tbody>
+                <tr>
+                    <td>{{i18n "wallet.transactions.amount"}}</td>
+                    <td>
+                        {{dapp_formatBalance value "0,0.00[000000] UNIT"}}
+                        {{#if $neq unit 'ether'}}
+                            <br>
+                            <small>
+                                ({{dapp_formatBalance value "0,0.00[000000] unit" "ether"}})
+                            </small>
+                        {{/if}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{i18n "wallet.transactions.from"}}</td>
+                    <td>
+                        {{> elements_account_link address=from}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{i18n "wallet.transactions.to"}}</td>
+                    <td>
+                        {{#if to}}
+                            {{> elements_account_link address=to}}
+                        {{else}}
+                            {{> elements_createdContractAt contractAddress=contractAddress deployedData=deployedData}}
+                        {{/if}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{i18n "wallet.transactions.feePaid"}}</td>
+                    <td>{{dapp_formatBalance fee "0,0.0[000000] unit"}}</td>
+                </tr>
+                <tr>
+                    <td>{{i18n "wallet.transactions.gasUsed"}}</td>
+                    <td>{{dapp_formatNumber gasUsed "0,0.0[000000]"}}</td>
+                </tr>
+                <tr>
+                    <td>{{i18n "wallet.transactions.gasPrice"}}</td>
+                    <td>{{dapp_formatBalance gasPrice "0,0.0[00000000000000000] unit"}}</td>
+                </tr>
+                {{#if blockHash}}
+                    <tr>
+                        <td>Block</td>
+                        <td>
+                            <a href="https://etherchain.org/tx/{{block}}" title="{{blockHash}}" target="_blank" class="dapp-shorten-text">
+                                {{blockNumber}}
+                                <br>
+                                {{blockHash.substr 0 40}}...
+                            </a>
+                        </td>
+                    </tr>
+                {{/if}}
+                {{#if deployedData}}
+                    <tr>
+                        <td>{{i18n "wallet.transactions.deployedData"}}</td>
+                        <td>
+                            <pre>{{deployedData}}</pre>
+                        </td>
+                    </tr>
+                {{/if}}
+                {{#if data}}
+                    <tr>
+                        <td>{{i18n "wallet.transactions.data"}}</td>
+                        <td>
+                            <pre>{{data}}</pre>
+                        </td>
+                    </tr>
+                {{/if}}
+            </tbody>
+        </table>
+    {{/with}}
+</template>

@@ -28,21 +28,12 @@ Template['views_modals_selectAccount'].helpers({
 
 Template['views_modals_selectAccount'].events({
     /**
-    Close the modal
-
-    @event click button.cancel
-    */
-    'click button.cancel': function(){
-        Router.current().render(null, {to: 'modal'});
-    },
-    /**
     Select an account
 
     @event click .dapp-account-list button
     */
     'click .dapp-account-list button': function(e, template){
         template.data.callback(this.address);
-        Router.current().render(null, {to: 'modal'});
-    },
-
+        EthElements.Modal.hide();
+    }
 });

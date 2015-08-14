@@ -16,11 +16,11 @@ coffeescript@1.0.6
 ddp@1.1.0
 deps@1.0.7
 ejson@1.0.6
-ethereum:accounts@0.2.5
+ethereum:accounts@0.2.7
 ethereum:blocks@0.1.7
-ethereum:elements@0.3.9
-ethereum:tools@0.2.3
-ethereum:web3@0.12.1
+ethereum:elements@0.4.0
+ethereum:tools@0.2.6
+ethereum:web3@0.12.2
 fastclick@1.0.3
 frozeman:animation-helper@0.2.6
 frozeman:global-notifications@0.1.4

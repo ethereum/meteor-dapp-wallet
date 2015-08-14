@@ -30,7 +30,7 @@
         <div class="row clear amount">
             <div class="col col-7 mobile-full">
                 <h3>{{i18n 'wallet.send.amount'}}</h3>
-                <input type="number" min="0" step="0.01" name="amount" placeholder="0.0" class="dapp-large"><span> {{unit.toUpperCase}}</span>
+                <input type="number" min="0" step="any" name="amount" placeholder="0.0" class="dapp-large"><span> {{unit.toUpperCase}}</span>
             </div>
             
             <div class="col col-5 mobile-full send-info">
@@ -54,6 +54,8 @@
 
                     <h3>{{i18n 'wallet.send.data'}}</h3>
                     {{> dapp_dataTextarea cols="20" rows="4"}}
+
+                    {{TemplateVar.set "dataShown" true}}
                 {{else}}
                     <button class="show-data">{{{i18n 'wallet.send.addData'}}}</button>
                 {{/if}}

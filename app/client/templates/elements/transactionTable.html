@@ -3,7 +3,7 @@
     {{#unless $eq collection "PendingConfirmations"}}
         <input type="text" class="filter-transactions" placeholder="{{i18n 'wallet.transactions.filter'}}">
     {{/unless}}
-    <table class="dapp-zebra">
+    <table class="dapp-zebra transactions">
         <!-- <thead>
             <tr>
                 <td class="time">{{i18n "wallet.transactions.time"}}</td>
@@ -37,7 +37,7 @@
 
 <template name="elements_transactions_row">
     <tr class="{{#if $eq unConfirmed.confirmations 0}}unconfirmed{{/if}}" data-operation="{{operation}}" data-transaction-hash="{{transactionHash}}" data-block-hash="{{blockHash}}">
-        <td class="time" title="{{formatTime timestamp 'LLLL'}}">
+        <td class="time simptip-position-right simptip-movable" data-tooltip="{{formatTime timestamp 'LLLL'}}">
             {{#unless $eq ../collection "PendingConfirmations"}}
                 {{#with unConfirmed}}
                     <div class="dapp-progress">
@@ -53,9 +53,13 @@
             <h2>{{transactionType}}</h2>
             
             <p>
-                {{> elements_transactions_row_tofrom address=from}}
+                {{> elements_account_link address=from}}
                 <span class="arrow">→</span> 
-                {{> elements_transactions_row_tofrom address=to}}
+                {{#if to}}
+                    {{> elements_account_link address=to}}
+                {{else}}
+                    {{> elements_createdContractAt contractAddress=contractAddress deployedData=deployedData}}
+                {{/if}}
             </p>
 
             {{#if ownerConfirmationCount}}
@@ -78,7 +82,7 @@
             {{/with}}
         </td>
         <!-- <td class="account-name">
-            {{> elements_transactions_row_tofrom account=account address=to}}
+            {{> elements_account_link account=account address=to}}
         </td> -->
         {{#if incomingTx ../account}}
             <td class="transaction-amount plus">
@@ -121,15 +125,5 @@
             {{/if}}
         {{/if}}
     </tr>
-</template>
-
-<template name="elements_transactions_row_tofrom">
-    {{#with getAccount}}
-        {{#if name}}
-            {{> dapp_identicon identity=address class="dapp-tiny"}} <a href="{{pathFor route='account' address=address}}">{{name}}</a>
-        {{else}}
-            <a href="{{pathFor route='sendTo' identity=address}}" title="{{address}}">{{address}}</a>
-        {{/if}}
-    {{/with}}
 </template>
 

@@ -32,15 +32,10 @@
             "importing": "Importing",
             "modal": {
                 "deleteText": "Do you really want to delete the wallet?<br>If you lose the wallet address, you will lose the funds on it!<br><br>Type the name of the wallet to confirm the deletion."
-            },
-            "error": {
-                "emptyWallet": "The wallet you want to send from is empty.",
-                "notEnoughFunds": "You have not enough funds in the wallet.",
-                "noReceiver": "You didn't specify a receiver.",
-                "noAmount": "You didn't specify an amount to send."
             }
         },
         "transactions": {
+            "transactionInfoTitle": "Transaction",
             "latest": "Latest transactions",
             "pendingConfirmations": "Confirmation needed",
             "none": "No transactions yet",
@@ -48,15 +43,24 @@
             "from": "From",
             "to": "To",
             "amount": "Amount",
+            "gasPrice": "Gas price",
+            "gasUsed": "Gas used",
+            "feePaid": "Fee paid",
+            "data": "Send data",
+            "deployedData": "Deployed data",
             "confirmations": "Confirmations",
             "unconfirmed": "Unconfirmed",
             "showMore": "Show More",
             "filter": "Filter transactions",
             "noneFound": "No matching transaction found.",
+            "error": {
+                "noDataDeployed": "No data is deployed on the contract address!"    
+            },
             "types": {
                 "betweenWallets": "Transfered between wallets",
                 "sent": "Sent",
                 "received": "Received",
+                "createdContract": "Created contract",
                 "pendingConfirmations": "__initiator__ wants to send from __from__"
             }
         },
@@ -98,6 +102,7 @@
         },
         "send": {
             "title": "<strong>Send</strong> money",
+            "sendInfoTitle": "Send",
             "pickAddress": "Pick an address",
             "to": "To",
             "from": "From",
@@ -106,8 +111,16 @@
             "fee": "Choose a Fee",
             "feeLow": "Cheaper",
             "feeHigh": "Faster",
-            "addData": "Add data +",
-            "removeData": "Remove data -",
+            "addData": "+ Add data",
+            "removeData": "- Remove data",
+            "estimatedFee": "Estimated fee",
+            "createContract": "Create contract",
+            "error": {
+                "emptyWallet": "The wallet you want to send from is empty.",
+                "notEnoughFunds": "You have not enough funds in the wallet.",
+                "noReceiver": "You didn't specify a receiver.",
+                "noAmount": "You didn't specify an amount to send."
+            },
             "texts": {
                 "sendAmount": "You want to send <strong>__amount__</strong>.",
                 "overDailyLimit": "<p class=\"over-daily\">This amount is over the daily limit of __limit__, this means you need __count__ other account to confirm.</p>",

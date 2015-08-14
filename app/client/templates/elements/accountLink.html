@@ -1,0 +1,12 @@
+<template name="elements_account_link">
+    <span class="address">
+        {{#with getAccount}}
+            {{#if name}}
+                {{> dapp_identicon identity=address class="dapp-tiny"}} 
+                <a href="{{pathFor route='account' address=address}}">{{name}}</a>
+            {{else}}
+                <a href="{{pathFor route='sendTo' identity=address}}" title="{{address}}">{{address}}</a>
+            {{/if}}
+        {{/with}}
+    </span>
+</template>

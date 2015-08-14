@@ -1,6 +1,8 @@
 // libs
 @import 'public/dapp-styles/dapp-styles.less';
 
+@import 'elements.import.less';
+
 
 
 
@@ -12,18 +14,42 @@
 // Change Default constants
 
 @colorLink: #02A8F3;
-@colorBackgroundHeader: #d9d0d0;
+
+// Platform specifics
+// Mac OSX
+@colorOSBackgroundFocus: #D2D2D2;
+@colorOSBackgroundBlur: #F6F6F6;
+
+
+&.red {
+    color: @colorError;
+}
+
+
+
+body {
+    background-color: @colorOSBackgroundFocus;
+}
 
 .global-notifications {
     position: fixed;
-    bottom: 20px;
+    bottom: @defaultPaddingVertical*2;
+    right: @defaultPaddingVertical*2;
 }
 
+// MODALS
+.transaction-info {
+    width: 600px;
+}
+
+
 .dapp-content {
-    margin-bottom: @defaultPaddingVertical*2;
+    padding-bottom: @defaultPaddingVertical*2;
 }
 
 .dapp-header {
+    .background-image(linear-gradient(to bottom,  @colorOSBackgroundFocus 0, lighten(@colorBackgroundHeader, 10%) 0%, darken(@colorBackgroundHeader, 0%) 80%));
+
     .wallet-balance {
         position: absolute;
         right: @defaultPaddingHorizontal;
@@ -41,11 +67,6 @@
     }
 }
 
-#qrcode {
-    position: absolute;
-    top: 0;
-    right: 0;
-}
 
 .account-balance {
 
@@ -56,258 +77,6 @@
     .inline-form {
         button {
             border: 0;
-        }
-    }
-}
-
-a.wallet-box {
-    position: relative;
-    display: inline-block;
-    width: @gridWidth * 6.5;
-    min-height: @gridHeight*4;
-    padding-left: @gridWidth + @defaultPaddingHorizontal;
-    padding-right: @defaultPaddingHorizontal/2;
-    margin-right: @defaultMargin;
-    margin-bottom: @defaultMargin;
-    .box-sizing(border-box);
-
-    &.main {
-        background-color: lighten(@colorBackgroundHeader, 12%);
-        overflow: hidden;
-
-        // .account-pattern {
-        //     background-color: transparent;
-        //     background-image: none !important;
-        // }
-    }
-    a.dapp-identicon {
-        position: absolute;
-        left: 12px;
-        top: 20px;
-    }
-    .spinner-container {
-        position: absolute;
-        left: -70px;
-    }
-    .dapp-progress {
-        position: absolute;
-        left: 0px;
-        bottom: 0;
-    }
-
-    &.disabled {
-        .opacity(0.4);
-        pointer-events: none;
-    }
-    &.create {
-        .display(flex);
-        .align-items(center);
-
-        h3 {
-            margin-top: 0;
-        }
-    }
-
-    &:hover {
-        background-color: lighten(@colorBackgroundHeader, 12%);
-    }
-
-
-    .account-pattern {
-        position: absolute;
-        .display(flex);
-        .align-items(center);
-        left: 0;
-        top: 0;
-        bottom: 0;
-        width: auto;
-        min-width: @gridWidth*1.4;
-        padding: 0 @gridWidth/2;
-        background-color: @colorLink;
-        text-align: center;
-        line-height: 100%;
-        color: @colorWhite;
-        font-size: 1.8em;
-        .box-sizing(border-box);
-
-        a {
-            margin: 0 -@gridWidth/3;
-        }
-    }
-
-    h3 {
-        .dapp-shorten-text;
-        margin: 0;
-        margin-top: 4px;
-        color: @colorLink;
-        max-width: @gridWidth*4.4;
-        float: left;
-    }
-    > span {
-        position: relative;
-        clear: left;
-        float: left;
-        color: @colorTextSecondary;
-        font-size: 1.3em;
-        line-height: 1.35em;
-        .dapp-shorten-text;
-
-        &.account-id {
-            font-size: 0.8em;
-            line-height: 1.4em;
-            color: fadeout(@colorTextSecondary, 40%);
-        }
-    }
-}
-
-
-table {
-    tr {
-        &.unconfirmed {
-            .opacity(0.4);
-        }
-        &.full-width {
-            background-color: transparent !important;
-
-            td {
-                position: relative;
-                height: @gridHeight*3;
-                text-align: center;
-            }
-        }
-    }
-    td {
-        text-align: left;
-        vertical-align: middle;
-
-        &.plus, .plus {
-            color: @colorTextSecondary;                
-        }
-        &.minus, .minus {
-            color: @colorError;
-        }
-
-        &.time {
-            text-align: center;
-            padding-left: @defaultMargin;
-            cursor: help;
-
-            p {
-                font-size: 2em;
-                padding-top: 0;
-            }
-        }
-        &.transaction-amount {
-            text-align: right;
-
-        }
-        &.account-name {
-            color: @colorTextSecondary;
-
-
-            a {
-                .dapp-shorten-text;
-                display: inline;
-                max-width: 200px;
-            }
-
-
-            span.arrow {
-                display: inline;
-                padding: 0 4px;
-            }
-
-            .owner-confirmations {
-                margin-top: @defaultMargin/2;
-
-                > div {
-                    position: relative;
-                    display: inline-block;
-                }
-                > div + span {
-                    margin-left: @defaultMargin/2;
-                }
-                a {
-                    display: block;
-                    position: relative;
-                    margin-top: 0;
-                    margin-left: 0;
-                }
-                i {
-                    position: absolute;
-                    z-index: 2;
-                    color: darken(@colorGreen, 25%);
-                    background-color: fadeout(@colorGreen, 20%);
-                    .border-radius(50%);
-                    margin-top: -1px;
-                    margin-left: 0;
-                    font-size: 22px;
-                }
-            }
-        }
-        &.info {
-            text-align: right;
-            font-size: 0.8em;
-        }
-        &.transaction-purpose {
-            font-weight: 400;
-        }
-        &.button {
-            position: relative;
-            min-width: 100px;
-            text-align: right;
-
-            button {
-                width: 100px;
-
-                &.selected {
-                    .opacity(0.5);
-                }
-            }
-
-            button.approve {
-                background-color: @colorGreen;
-                border-color: darken(@colorGreen, 10%);
-            }
-            button.reject {
-                background-color: @colorError;
-                border-color: darken(@colorError, 10%);
-            }
-        }
-
-        .dapp-identicon {
-            position: absolute;
-            margin-top: -2px;
-            margin-left: 0;
-
-            & + a {
-                margin-left: @gridWidth/1.2;
-            }
-        }
-
-        .dapp-progress {
-            // min-width: 200px;
-            // margin: -@defaultPaddingVertical -@defaultPaddingHorizontal/2;
-            // height: @gridHeight + @defaultPaddingVertical*2 + 4px;
-            border: 0;
-
-            position: absolute;
-            left: 0;
-            right: 0;
-            margin: 0;
-            margin-top: 67px;
-            height: 5px;
-
-            > span {
-                padding: 0;
-                line-height: @gridHeight + @defaultPaddingVertical*2 + 4px;
-                font-size: 0.8em;
-            }
-        }
-
-        button.show-more {
-            width: 100%;
-            text-align: center;
         }
     }
 }
@@ -448,6 +217,46 @@ table {
         
     }
 
+}
+
+.transaction-info,
+.send-transaction-info {
+    pre {
+        max-height: 100px;
+    }
+}
+
+.send-transaction-info {
+    h1 {
+        margin-bottom: @defaultMargin*2;
+        small {
+            font-size: 0.6em;
+        }
+    }
+    p {
+        margin: @defaultMargin/2;
+
+        &.tx-info {
+            margin-top: @defaultMargin*2;
+
+            small {
+                font-weight: 400;
+
+                &.gas-price {
+                    font-size: 0.7em;
+                    font-weight: 300;
+                    color: @colorGray;
+                }
+            }
+        }
+    }
+    i {
+        position: relative;
+        top: 4px;
+        margin-left: -3px;
+        font-size: 1.5em;
+        color: @colorGray;
+    }
 }
 
 .new-account {

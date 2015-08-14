@@ -26,6 +26,9 @@ Router.configure({
 });
 
 var scrollTop = function(){
+
+    EthElements.Modal.hide();
+
     $(window).scrollTop(0);
     this.next();
 }
