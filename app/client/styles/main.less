@@ -47,10 +47,11 @@
 }
 
 body {
-    background: @colorOSBackgroundFocus;;
+    background: @colorOSBackgroundFocus;
 
     &.app-blur {
         background: @colorOSBackgroundBlur;
+
         .dapp-header {
             background: @colorOSBackgroundBlur;
         }
@@ -58,7 +59,7 @@ body {
 }
 
 .dapp-header {
-    background: @colorOSBackgroundFocus;
+    background-color: @colorOSBackgroundFocus;
     .background-image(linear-gradient(to bottom,  @colorOSBackgroundFocus 50%, #ddd9d9 90%));
     
     // ANIMATION
