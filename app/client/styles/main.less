@@ -61,6 +61,19 @@ body {
     background: @colorOSBackgroundFocus;
     .background-image(linear-gradient(to bottom,  @colorOSBackgroundFocus 50%, #ddd9d9 90%));
     
+    // ANIMATION
+    .transition(box-shadow @animationSpeed / 2);
+
+    &.dapp-small {
+        z-index: 11;
+        position: fixed;
+        top:0;
+        left: 0;
+        right: 0;
+        .dapp-shadow-medium;
+    }
+
+
     nav ul a.active {
         color: @colorTextSecondary;
     }
@@ -71,6 +84,7 @@ body {
         bottom: @defaultPaddingVertical;
         text-align: right;
 
+
         h3 {
             margin-bottom: 0;
         }
@@ -78,18 +92,6 @@ body {
         span.account-balance {
             color: @colorTextSecondary;
             font-size: 1.6em;
-        }
-    }
-
-    &.dapp-compact {
-        position: fixed;
-        top:0;
-        left: 0;
-        right: 0;
-        z-index: 100;
-
-        .wallet-balance h3 {
-            display: none;
         }
     }
 }

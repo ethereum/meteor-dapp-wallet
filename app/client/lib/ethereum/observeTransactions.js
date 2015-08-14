@@ -110,14 +110,16 @@ observeTransactions = function(){
     var updateTransaction = function(newDocument, transaction, receipt){
         var id = newDocument._id;
 
-        newDocument.blockNumber = transaction.blockNumber;
-        newDocument.blockHash = transaction.blockHash;
-        newDocument.transactionIndex = transaction.transactionIndex;
-        if(transaction.transactionHash)
-            newDocument.transactionHash = transaction.transactionHash;
+        if(transaction) {
+            newDocument.blockNumber = transaction.blockNumber;
+            newDocument.blockHash = transaction.blockHash;
+            newDocument.transactionIndex = transaction.transactionIndex;
+            if(transaction.transactionHash)
+                newDocument.transactionHash = transaction.transactionHash;
 
-        newDocument.data = transaction.input || transaction.data || null;
-        newDocument.gasPrice = transaction.gasPrice.toString(10);
+            newDocument.data = transaction.input || transaction.data || null;
+            newDocument.gasPrice = transaction.gasPrice.toString(10);
+        }
 
         if(receipt) {
             newDocument.contractAddress = receipt.contractAddress;

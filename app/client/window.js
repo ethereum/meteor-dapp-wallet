@@ -11,3 +11,13 @@ $(window).on('blur', function(e){
 $(window).on('focus', function(e){ 
     $('body').removeClass('app-blur');
 });
+
+
+// add class to the header when scrolling
+$(window).on('scroll', function() {
+    if($(window).scrollTop() > 46 ) {
+        $('.dapp-header').addClass('dapp-small');
+    } else {
+        $('.dapp-header').removeClass('dapp-small');
+    }
+})

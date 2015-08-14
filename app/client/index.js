@@ -28,13 +28,4 @@ Meteor.startup(function() {
         }
     });
 
-    // On Scroll
-    $(window).on('scroll', function() {
-        if($(window).scrollTop() > 48 ) {
-            $('.dapp-header').addClass('dapp-compact');
-        } else {
-            $('.dapp-header').removeClass('dapp-compact');
-        }
-    })
-
 });

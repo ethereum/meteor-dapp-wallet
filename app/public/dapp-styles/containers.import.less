@@ -103,6 +103,9 @@ body {
 
                 i {
                     font-size: 1.5em;
+
+                    // ANIMATION
+                    .transition(opacity @animationSpeed / 4);
                 }
 
                 span {
@@ -115,11 +118,11 @@ body {
         }
     }
 
-    &.dapp-compact {
+    &.dapp-small {
         height: @gridHeight * 1;
 
         nav li a i {
-            display: none;
+            .opacity(0);
         }
     }
 }
