@@ -155,9 +155,9 @@ Template['elements_transactions_row'].helpers({
             return new Spacebars.SafeString(TAPi18n.__('wallet.transactions.types.pendingConfirmations', {initiator: initiator, from: from}));
         else if(to && from)
             return TAPi18n.__('wallet.transactions.types.betweenWallets');
-        else if(to)
+        else if(to && !from)
             return TAPi18n.__('wallet.transactions.types.received');
-        else if(!to)
+        else if(!this.to)
             return TAPi18n.__('wallet.transactions.types.createdContract');
         else
             return TAPi18n.__('wallet.transactions.types.sent');
