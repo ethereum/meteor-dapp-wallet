@@ -15,21 +15,20 @@
 
 @colorLink: #02A8F3;
 
-// Platform specifics
-// Mac OSX
-@colorOSBackgroundFocus: #D2D2D2;
-@colorOSBackgroundBlur: #F6F6F6;
-
 
 &.red {
     color: @colorError;
 }
 
+// Platform specifics
+// Mac OSX
+@colorOSBackgroundFocus: #D2D2D2;
+@colorOSBackgroundBlur: #F6F6F6;
+
+// Windows
+// @colorOSBackgroundFocus windows F0F0F0
 
 
-body {
-    background-color: @colorOSBackgroundFocus;
-}
 
 .global-notifications {
     position: fixed;
@@ -47,9 +46,25 @@ body {
     padding-bottom: @defaultPaddingVertical*2;
 }
 
-.dapp-header {
-    .background-image(linear-gradient(to bottom,  @colorOSBackgroundFocus 0, lighten(@colorBackgroundHeader, 10%) 0%, darken(@colorBackgroundHeader, 0%) 80%));
+body {
+    background: @colorOSBackgroundFocus;;
 
+    &.app-blur {
+        background: @colorOSBackgroundBlur;
+        .dapp-header {
+            background: @colorOSBackgroundBlur;
+        }
+    }
+}
+
+.dapp-header {
+    background: @colorOSBackgroundFocus;
+    .background-image(linear-gradient(to bottom,  @colorOSBackgroundFocus 50%, #ddd9d9 90%));
+    
+    nav ul a.active {
+        color: @colorTextSecondary;
+    }
+    
     .wallet-balance {
         position: absolute;
         right: @defaultPaddingHorizontal;
@@ -65,6 +80,22 @@ body {
             font-size: 1.6em;
         }
     }
+
+    &.dapp-compact {
+        position: fixed;
+        top:0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+
+        .wallet-balance h3 {
+            display: none;
+        }
+    }
+}
+
+.dapp-header.dapp-compact + .dapp-flex-content {
+    margin-top: @gridHeight * 5;
 }
 
 
