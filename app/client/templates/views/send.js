@@ -31,9 +31,19 @@ var accountSort;
 
 
 /**
+The default gas to provide for estimates. This is set manually,
+so that invalid data etsimates this value and we can later set it down and show a warning,
+when the user actually wants to send the dummy data.
+
+@property defaultEstimateGas
+*/
+var defaultEstimateGas = 5000000;
+
+
+/**
 Check if the amount accounts daily limit  and sets the correct text.
 
-@property checkOverDailyLimit
+@method checkOverDailyLimit
 */
 var checkOverDailyLimit = function(address, wei, template){
 
@@ -49,6 +59,38 @@ var checkOverDailyLimit = function(address, wei, template){
         TemplateVar.set('dailyLimitText', false);
 };
 
+/**
+Add a pending transaction to the transaction list, after sending
+
+@method addTransaction
+*/
+var addTransaction = function(txHash, amount, from, to, gasPrice, estimatedGas, data) {
+                                
+    txId = Helpers.makeId('tx', txHash);
+
+
+    Transactions.upsert(txId, {$set: {
+        value: amount,
+        from: selectedAccount.address,
+        to: to,
+        timestamp: moment().unix(),
+        transactionHash: txHash,
+        gasPrice: gasPrice,
+        gasUsed: estimatedGas,
+        fee: String(gasPrice * estimatedGas),
+        data: data
+    }});
+
+    // add to Account
+    EthAccounts.update(selectedAccount._id, {$addToSet: {
+        transactions: txId
+    }});
+
+    // add from Account
+    EthAccounts.update({address: from}, {$addToSet: {
+        transactions: txId
+    }});
+};
 
 
 // Set basic variables
@@ -110,22 +152,24 @@ Template['views_send'].onRendered(function(){
                 to: to,
                 value: amount,
                 data: data,
-                gas: 3000000 // TODO remove, once issue #1590 is fixed
+                gas: defaultEstimateGas
             }, function(e, res){
+                console.log('Estimated gas: ', res, e);
                 if(!e && res) {
+                    // TODO show note if its defaultEstimateGas, that the data is not executeable
                     TemplateVar.set(template, 'estimatedGas', res);
-                    console.log('Estimated gas: ', res);
                 }
             });
         } else if(wallet = Wallets.findOne({address: address}, {reactive: false})) {
             if(contracts['ct_'+ wallet._id])
                 contracts['ct_'+ wallet._id].execute.estimateGas(to, amount, data || '',{
                     from: wallet.owners[0],
-                    gas: 3000000 // TODO remove, once issue #1590 is fixed
+                    gas: defaultEstimateGas
                 }, function(e, res){
+                    console.log('Estimated gas: ', res, e);
                     if(!e && res) {
+                        // TODO show note if its defaultEstimateGas, that the data is not executeable
                         TemplateVar.set(template, 'estimatedGas', res);
-                        console.log('Estimated gas: ', res);
                     }
                 });
         }
@@ -232,6 +276,11 @@ Template['views_send'].events({
 
         if(selectedAccount && !TemplateVar.get('sending')) {
 
+            // set gas down to 80k, if its invalid data, to prevent high gas usage.
+            if(estimatedGas === defaultEstimateGas || estimatedGas === 0)
+                estimatedGas = 100000;
+
+
             console.log('Providing gas: ', estimatedGas ,' + 100000');
 
 
@@ -261,6 +310,9 @@ Template['views_send'].events({
                 });
 
 
+            // increase the provided gas by 100k
+            estimatedGas += 100000;
+
 
             EthElements.Modal.question({
                 template: 'views_modals_sendTransactionInfo',
@@ -276,13 +328,17 @@ Template['views_send'].events({
 
                     TemplateVar.set(template, 'sending', true);
 
+                    // use gas set in the input field
+                    estimatedGas = Number($('.send-transaction-info input.gas').val());
+                    console.log('Finally choosen gas', estimatedGas);
+
                     // CONTRACT TX
                     if(contracts['ct_'+ selectedAccount._id]) {
 
                         contracts['ct_'+ selectedAccount._id].execute.sendTransaction(to, amount, data || '', {
                             from: selectedAccount.owners[0],
                             gasPrice: gasPrice,
-                            gas: estimatedGas + 100000 // should be 36094
+                            gas: estimatedGas
                         }, function(error, txHash){
 
                             TemplateVar.set(template, 'sending', false);
@@ -291,21 +347,7 @@ Template['views_send'].events({
                             if(!error) {
                                 console.log('SEND from contract', amount);
 
-                                // txId = Helpers.makeId('tx', txHash);
-
-                                // // TODO: remove after we have pending logs?
-                                // Transactions.insert({
-                                //     _id: txId,
-                                //     value: amount,
-                                //     from: selectedAccount.address,
-                                //     to: to,
-                                //     timestamp: moment().unix(),
-                                //     transactionHash: txHash,
-                                //     // blockNumber: null,
-                                //     // blockHash: null,
-                                //     // transactionIndex: null,
-                                //     // logIndex: null
-                                // });
+                                addTransaction(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
 
                                 Router.go('/');
 
@@ -326,7 +368,7 @@ Template['views_send'].events({
                             data: data,
                             value: amount,
                             gasPrice: gasPrice,
-                            gas: estimatedGas + 100000 // add 50000 to be safe // should be 22423
+                            gas: estimatedGas
                         }, function(error, txHash){
 
                             TemplateVar.set(template, 'sending', false);
@@ -335,30 +377,7 @@ Template['views_send'].events({
                             if(!error) {
                                 console.log('SEND simple');
 
-
-                                txId = Helpers.makeId('tx', txHash);
-
-
-                                Transactions.upsert(txId, {$set: {
-                                    value: amount,
-                                    from: selectedAccount.address,
-                                    to: to,
-                                    timestamp: moment().unix(),
-                                    transactionHash: txHash,
-                                    gasPrice: gasPrice,
-                                    gasUsed: estimatedGas,
-                                    fee: String(gasPrice * estimatedGas),
-                                    data: data
-                                    // blockNumber: null,
-                                    // blockHash: null,
-                                    // transactionIndex: null,
-                                    // logIndex: null
-                                }});
-
-                                // add to Account
-                                EthAccounts.update(selectedAccount._id, {$addToSet: {
-                                    transactions: txId
-                                }});
+                                addTransaction(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
 
                                 Router.go('/');
                             } else {

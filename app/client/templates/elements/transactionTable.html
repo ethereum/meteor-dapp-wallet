@@ -4,14 +4,6 @@
         <input type="text" class="filter-transactions" placeholder="{{i18n 'wallet.transactions.filter'}}">
     {{/unless}}
     <table class="dapp-zebra transactions">
-        <!-- <thead>
-            <tr>
-                <td class="time">{{i18n "wallet.transactions.time"}}</td>
-                <td></td>
-                <td class="transaction-amount">{{i18n "wallet.transactions.amount"}}</td>
-                <td></td>
-            </tr>
-        </thead> -->
         <tbody>
             {{#each items}}
                 {{> elements_transactions_row}}
@@ -37,14 +29,14 @@
 
 <template name="elements_transactions_row">
     <tr class="{{#if $eq unConfirmed.confirmations 0}}unconfirmed{{/if}}" data-operation="{{operation}}" data-transaction-hash="{{transactionHash}}" data-block-hash="{{blockHash}}">
+        {{#unless $eq ../collection "PendingConfirmations"}}
+            {{#with unConfirmed}}
+                <div class="dapp-progress">
+                    <div class="dapp-bar" style="width: {{percent}}%;"></div>
+                </div>
+            {{/with}}
+        {{/unless}}
         <td class="time simptip-position-right simptip-movable" data-tooltip="{{formatTime timestamp 'LLLL'}}">
-            {{#unless $eq ../collection "PendingConfirmations"}}
-                {{#with unConfirmed}}
-                    <div class="dapp-progress">
-                        <div class="dapp-bar" style="width: {{percent}}%;"></div>
-                    </div>
-                {{/with}}
-            {{/unless}}
 
             <h2>{{formatTime timestamp "MMM"}}</h2>
             <p>{{formatTime timestamp "D"}}</p>
@@ -88,18 +80,17 @@
             <td class="transaction-amount plus">
                 {{dapp_formatBalance value '0,0.00[000000] UNIT'}}
             </td>
+            <td>
+                <i class="icon-arrow-left plus"></i>
+            </td>
         {{else}}
             <td class="transaction-amount minus">
                 -{{dapp_formatBalance value '0,0.00[000000] UNIT'}}
             </td>
-        {{/if}}
-        <td>
-            {{#if incomingTx ../account}}
-                <i class="icon-arrow-left plus"></i>
-            {{else}}
+            <td>
                 <i class="icon-arrow-right minus"></i>
-            {{/if}}
-        </td>
+            </td>
+        {{/if}}
         {{#if $eq ../collection "PendingConfirmations"}}
             {{#if sending}}
                 <td colspan="2" class="button">

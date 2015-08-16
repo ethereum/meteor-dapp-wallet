@@ -1,4 +1,11 @@
 
+.orange {
+    color: @colorOrange;
+}
+
+.green {
+    color: @colorGreen;
+}
 
 #qrcode {
     position: absolute;
@@ -145,6 +152,22 @@ table {
             &.unconfirmed {
                 .opacity(0.4);
             }
+
+            .dapp-progress {
+                position: absolute;
+                left: 0;
+                right: 0;
+                margin: 0;
+                // top: 0;
+                height: 5px;
+                border: 0;
+
+                > span {
+                    padding: 0;
+                    line-height: @gridHeight + @defaultPaddingVertical*2 + 4px;
+                    font-size: 0.8em;
+                }
+            }
         }
 
         td {
@@ -240,27 +263,6 @@ table {
                 button.reject {
                     background-color: @colorError;
                     border-color: darken(@colorError, 10%);
-                }
-            }
-
-
-            .dapp-progress {
-                // min-width: 200px;
-                // margin: -@defaultPaddingVertical -@defaultPaddingHorizontal/2;
-                // height: @gridHeight + @defaultPaddingVertical*2 + 4px;
-                border: 0;
-
-                position: absolute;
-                left: 0;
-                right: 0;
-                margin: 0;
-                top: 0;
-                height: 5px;
-
-                > span {
-                    padding: 0;
-                    line-height: @gridHeight + @defaultPaddingVertical*2 + 4px;
-                    font-size: 0.8em;
                 }
             }
 

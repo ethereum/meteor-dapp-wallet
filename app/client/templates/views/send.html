@@ -19,7 +19,6 @@
             <div class="col col-7 mobile-full">
                 <h3>{{i18n 'wallet.send.to'}}</h3>
 
-                <!-- <button>{{i18n 'wallet.send.pickAddress'}}</button> -->
                 {{> dapp_addressInput placeholder="0x000000.." name="to" autofocus=true}}
             </div>
 
@@ -83,6 +82,12 @@
             <div class="col col-5 mobile-full send-info">
                 <br><br>
                 {{{i18n 'wallet.send.texts.sendFee' timetext=timeText}}}
+
+                {{#if $eq estimatedGas 0}}
+                    <p class="orange">
+                        {{{i18n 'wallet.send.texts.cantEstimateGas'}}}
+                    </p>
+                {{/if}}
             </div>
 
             <div class="dapp-clear-fix"></div>

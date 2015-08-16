@@ -318,10 +318,12 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
                                     blockHash: log.blockHash,
                                     transactionHash: log.transactionHash,
                                     transactionIndex: log.transactionIndex,
-                                    // only filled when confirmations or revokes come in
-                                    // lastActivityBlock: log.blockNumber,
-                                    // lastActivityTxIndex: log.transactionIndex
                                 }});
+
+                                // remove pending transactions, as they now have to be approved
+                                // TODO: re-inserts tx in confirmation process!!
+                                var extistingTxId = Helpers.makeId('tx', log.transactionHash);
+                                Transactions.remove(extistingTxId);
                             }
                         }
                         

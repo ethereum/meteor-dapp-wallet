@@ -32,7 +32,7 @@ Template['views_modals_transactionInfo'].helpers({
     */
     'confirmations': function(){
         return (EthBlocks.latest && this.blockNumber)
-            ? EthBlocks.latest.number - this.blockNumber : 0;
+            ? EthBlocks.latest.number + 1 - this.blockNumber : 0;
     }
 });
 

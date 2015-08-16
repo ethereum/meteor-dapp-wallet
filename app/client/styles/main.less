@@ -97,8 +97,8 @@ body {
     }
 }
 
-.dapp-header.dapp-compact + .dapp-flex-content {
-    margin-top: @gridHeight * 5;
+.dapp-header.dapp-small + .dapp-flex-content {
+    margin-top: @gridHeight * 5 - 3px;
 }
 
 
@@ -184,12 +184,12 @@ body {
 .account-send-form {
 
     p.over-daily {
+        .orange;
         font-weight: 400;
-        color: @colorOrange;
     }
     p.under-daily {
+        .green;
         font-weight: 400;
-        color: @colorGreen;
     }
 
     > div {
@@ -290,6 +290,10 @@ body {
         margin-left: -3px;
         font-size: 1.5em;
         color: @colorGray;
+    }
+    input.gas {
+        width: 120px;
+        font-size: 0.8em;
     }
 }
 

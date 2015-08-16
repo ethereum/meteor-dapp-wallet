@@ -131,8 +131,8 @@ Template['elements_transactions_row'].helpers({
     */
     'incomingTx': function(account){
         var account = EthAccounts.findOne(account) || Wallets.findOne(account);
-        return ((account && this.from !== account.address) ||
-                (!account && (EthAccounts.findOne({$or: [{address: this.from, address: this.to}]}) || Wallets.findOne({$or: [{address: this.from, address: this.to}]}))));
+        return !!((account && this.from !== account.address) ||
+                (!account && (EthAccounts.findOne({address: this.to}) || Wallets.findOne({address: this.to}))));
     },
     /**
     Returns the correct text for this transaction
@@ -186,14 +186,14 @@ Template['elements_transactions_row'].helpers({
     @method (unConfirmed)
     */
     'unConfirmed': function() {
-        if(!this.blockNumber)
+        if(!this.blockNumber || !EthBlocks.latest.number)
             return {
                 confirmations: 0,
                 percent: 0
             };
 
-        var currentBlockNumber = EthBlocks.latest.number,
-            confirmations = currentBlockNumber - (this.blockNumber - 1);
+        var currentBlockNumber = EthBlocks.latest.number + 1,
+            confirmations = currentBlockNumber - this.blockNumber;
         return (blocksForConfirmation >= confirmations && confirmations >= 0)
             ? {
                 confirmations: confirmations,
@@ -312,7 +312,7 @@ Template['elements_transactions_row'].events({
                 EthElements.Modal.question({
                     template: 'views_modals_selectAccount',
                     data: {
-                        accounts: ownerAccounts,
+                        accounts: (type === 'confirm') ? _.difference(ownerAccounts, this.confirmedOwners) : _.difference(this.confirmedOwners, ownerAccounts),
                         callback: sendConfirmation
                     },
                     cancel: true

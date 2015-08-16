@@ -44,6 +44,54 @@ addTransaction = function(log, from, to, value){
     });
 };
 
+/**
+Updates a transaction.
+
+@method updateTransaction
+@param {Object} newDocument     The transaction object from our database
+@param {Object} transaction     The transaction object from getTransaction
+@param {Object} receipt     The transaction object from getTransactionReceipt
+@return {Object} The updated transaction
+*/
+var updateTransaction = function(newDocument, transaction, receipt){
+    var id = newDocument._id || Helpers.makeId('tx', transaction.transactionHash || newDocument.transactionHash);
+
+    if(transaction) {
+        newDocument.blockNumber = transaction.blockNumber;
+        newDocument.blockHash = transaction.blockHash;
+        newDocument.transactionIndex = transaction.transactionIndex;
+        if(transaction.transactionHash)
+            newDocument.transactionHash = transaction.transactionHash;
+
+        newDocument.data = transaction.input || transaction.data || null;
+        if(_.isString(newDocument.data) && newDocument.data === '0x')
+            newDocument.data = null;
+
+        newDocument.gasPrice = transaction.gasPrice.toString(10);
+    }
+
+    if(receipt && transaction) {
+        newDocument.contractAddress = receipt.contractAddress;
+        newDocument.gasUsed = receipt.gasUsed;
+        newDocument.fee = transaction.gasPrice.times(new BigNumber(receipt.gasUsed)).toString(10);
+
+        // check for code on the address
+        if(receipt.contractAddress) {
+            web3.eth.getCode(receipt.contractAddress, function(e, code) {
+                if(code.length > 2)
+                     Transactions.update(id, {$set: {
+                        deployedData: code
+                     }});
+            })
+        }
+    }
+
+    delete newDocument._id;
+    Transactions.upsert(id, {$set: newDocument});
+
+    return newDocument;
+};
+
 
 /**
 Observe transactions and pending confirmations
@@ -66,7 +114,7 @@ observeTransactions = function(){
             var filter = web3.eth.filter('latest');
             filter.watch(function(e, blockHash){
                 if(!e) {
-                    var confirmations = (tx.blockNumber) ? EthBlocks.latest.number - tx.blockNumber : 0;
+                    var confirmations = (tx.blockNumber && EthBlocks.latest.number) ? (EthBlocks.latest.number + 1) - tx.blockNumber : 0;
 
                     if(confirmations < ethereumConfig.requiredConfirmations && confirmations >= 0) {
                         Helpers.eventLogs('Checking transaction '+ tx.transactionHash +'. Current confirmations: '+ confirmations);
@@ -74,7 +122,7 @@ observeTransactions = function(){
                         // Check if the tx still exists, if not remove the tx
                         web3.eth.getTransaction(tx.transactionHash, function(e, transaction){
                             web3.eth.getTransactionReceipt(tx.transactionHash, function(e, receipt){
-                                if(e || !receipt) return;
+                                if(e || !receipt || !transaction) return;
 
                                 if(transaction && transaction.blockNumber)
                                     updateTransaction(tx, transaction, receipt);
@@ -96,51 +144,6 @@ observeTransactions = function(){
                 }
             });
         }
-    };
-
-    /**
-    Updates a transaction.
-
-    @method updateTransaction
-    @param {Object} newDocument     The transaction object from our database
-    @param {Object} transaction     The transaction object from getTransaction
-    @param {Object} receipt     The transaction object from getTransactionReceipt
-    @return {Object} The updated transaction
-    */
-    var updateTransaction = function(newDocument, transaction, receipt){
-        var id = newDocument._id;
-
-        if(transaction) {
-            newDocument.blockNumber = transaction.blockNumber;
-            newDocument.blockHash = transaction.blockHash;
-            newDocument.transactionIndex = transaction.transactionIndex;
-            if(transaction.transactionHash)
-                newDocument.transactionHash = transaction.transactionHash;
-
-            newDocument.data = transaction.input || transaction.data || null;
-            newDocument.gasPrice = transaction.gasPrice.toString(10);
-        }
-
-        if(receipt) {
-            newDocument.contractAddress = receipt.contractAddress;
-            newDocument.gasUsed = receipt.gasUsed;
-            newDocument.fee = transaction.gasPrice.times(new BigNumber(receipt.gasUsed)).toString(10);
-
-            // check for code on the address
-            if(receipt.contractAddress) {
-                web3.eth.getCode(receipt.contractAddress, function(e, code) {
-                    if(code.length > 2)
-                         Transactions.update(id, {$set: {
-                            deployedData: code
-                         }});
-                })
-            }
-        }
-
-        delete newDocument._id;
-        Transactions.update(id, {$set: newDocument});
-
-        return newDocument;
     };
 
     /**
