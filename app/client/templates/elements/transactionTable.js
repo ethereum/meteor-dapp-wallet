@@ -130,9 +130,9 @@ Template['elements_transactions_row'].helpers({
     @param {String} account     The _id of the current account
     */
     'incomingTx': function(account){
-        var account = EthAccounts.findOne(account) || Wallets.findOne(account);
+        var account = EthAccounts.findOne({_id: account}) || Wallets.findOne({_id: account});
         return !!((account && this.from !== account.address) ||
-                (!account && (EthAccounts.findOne({address: this.to}) || Wallets.findOne({address: this.to}))));
+                  (!account && (EthAccounts.findOne({address: this.to}) || Wallets.findOne({address: this.to}))));
     },
     /**
     Returns the correct text for this transaction
@@ -312,7 +312,7 @@ Template['elements_transactions_row'].events({
                 EthElements.Modal.question({
                     template: 'views_modals_selectAccount',
                     data: {
-                        accounts: (type === 'confirm') ? _.difference(ownerAccounts, this.confirmedOwners) : _.difference(this.confirmedOwners, ownerAccounts),
+                        accounts: (type === 'confirm') ? _.difference(ownerAccounts, this.confirmedOwners) : this.confirmedOwners,
                         callback: sendConfirmation
                     },
                     cancel: true

@@ -320,10 +320,12 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
                                     transactionIndex: log.transactionIndex,
                                 }});
 
+
                                 // remove pending transactions, as they now have to be approved
-                                // TODO: re-inserts tx in confirmation process!!
                                 var extistingTxId = Helpers.makeId('tx', log.transactionHash);
-                                Transactions.remove(extistingTxId);
+                                Meteor.setTimeout(function() {
+                                    Transactions.remove(extistingTxId);
+                                }, 500);
                             }
                         }
                         

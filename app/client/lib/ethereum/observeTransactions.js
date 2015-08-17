@@ -78,10 +78,12 @@ var updateTransaction = function(newDocument, transaction, receipt){
         // check for code on the address
         if(receipt.contractAddress) {
             web3.eth.getCode(receipt.contractAddress, function(e, code) {
-                if(code.length > 2)
-                     Transactions.update(id, {$set: {
+                if(!e && code.length > 2) {
+                    Transactions.update(id, {$set: {
                         deployedData: code
-                     }});
+                    }});
+                    newDocument.deployedData = code;
+                }
             })
         }
     }
@@ -89,6 +91,8 @@ var updateTransaction = function(newDocument, transaction, receipt){
     delete newDocument._id;
     Transactions.upsert(id, {$set: newDocument});
 
+    // re-add the id
+    newDocument._id = id;
     return newDocument;
 };
 
@@ -109,37 +113,99 @@ observeTransactions = function(){
     @param {Object} oldDocument
     */
     var checkTransactionConfirmations = function(tx){
+        var confCount = 0;
+
         // check for confirmations
         if(!tx.confirmed) {
             var filter = web3.eth.filter('latest');
             filter.watch(function(e, blockHash){
                 if(!e) {
                     var confirmations = (tx.blockNumber && EthBlocks.latest.number) ? (EthBlocks.latest.number + 1) - tx.blockNumber : 0;
+                    confCount++;
+
+                    // get the latest tx data
+                    tx = Transactions.findOne(tx._id);
+
+                    // stop if tx was removed
+                    if(!tx) {
+                        filter.stopWatching();
+                        return;
+                    }
+
 
                     if(confirmations < ethereumConfig.requiredConfirmations && confirmations >= 0) {
                         Helpers.eventLogs('Checking transaction '+ tx.transactionHash +'. Current confirmations: '+ confirmations);
 
-                        // Check if the tx still exists, if not remove the tx
+
+                        // Check if the tx still exists, if not disable the tx
                         web3.eth.getTransaction(tx.transactionHash, function(e, transaction){
                             web3.eth.getTransactionReceipt(tx.transactionHash, function(e, receipt){
                                 if(e || !receipt || !transaction) return;
 
-                                if(transaction && transaction.blockNumber)
-                                    updateTransaction(tx, transaction, receipt);
+                                // update with receipt
+                                if(transaction.blockNumber !== tx.blockNumber)
+                                    tx = updateTransaction(tx, transaction, receipt);
 
-                                // delete transacrion if gone
+                                // enable transaction, if it was disabled
+                                else if(transaction.blockNumber && tx.disabled)
+                                    Transactions.update(tx._id, {$unset:{
+                                        disabled: ''
+                                    }});
+
+                                // disable transaction if gone (wait for it to come back)
                                 else if(!transaction.blockNumber) {
-                                    // TODO: better check for removed transactions, e.g. check for block number if this block then still matches the block hash
-                                    //  really remove?
-                                    Transactions.remove(tx._id);
-                                    filter.stopWatching();
+                                    Transactions.update(tx._id, {$set:{
+                                        disabled: true
+                                    }});
                                 }
                             });
                         });
 
-                    } else if(confirmations > ethereumConfig.requiredConfirmations) {
-                        Transactions.update(tx._id, {$set: {confirmed: true}});
-                        filter.stopWatching();
+                    }
+
+                    if(confirmations > ethereumConfig.requiredConfirmations || confCount > ethereumConfig.requiredConfirmations*2) {
+
+                        // confirm after a last check
+                        web3.eth.getTransaction(tx.transactionHash, function(e, transaction){
+                            web3.eth.getTransactionReceipt(tx.transactionHash, function(e, receipt){
+                                if(!e) {
+
+                                    // if still not mined, remove tx
+                                    if(!transaction || !transaction.blockNumber) {
+                                        Transactions.remove(tx._id);
+                                        filter.stopWatching();
+
+                                    } else if(transaction.blockNumber) {
+
+
+                                        // check if parent block changed
+                                        // TODO remove if later tx.blockNumber can be null again
+                                        web3.eth.getBlock(transaction.blockNumber, function(e, block) {
+                                            if(!e) {
+
+                                                if(block.hash === transaction.blockHash) {
+                                                    tx.confirmed = true;
+                                                    updateTransaction(tx, transaction, receipt);
+
+                                                    // remove disabled
+                                                    if(tx.disabled)
+                                                        Transactions.update(tx._id, {$unset:{
+                                                            disabled: ''
+                                                        }});
+
+                                                // remove if the parent block is not in the chain anymore.
+                                                } else {
+                                                    Transactions.remove(tx._id);
+                                                }
+
+                                                filter.stopWatching();
+                                            }
+                                        });
+
+                                    }
+                                }
+                            });
+                        });
                     }
                 }
             });

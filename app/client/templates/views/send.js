@@ -87,7 +87,7 @@ var addTransaction = function(txHash, amount, from, to, gasPrice, estimatedGas, 
     }});
 
     // add from Account
-    EthAccounts.update({address: from}, {$addToSet: {
+    EthAccounts.update({address: to}, {$addToSet: {
         transactions: txId
     }});
 };
@@ -310,9 +310,6 @@ Template['views_send'].events({
                 });
 
 
-            // increase the provided gas by 100k
-            estimatedGas += 100000;
-
 
             EthElements.Modal.question({
                 template: 'views_modals_sendTransactionInfo',
@@ -322,6 +319,7 @@ Template['views_send'].events({
                     amount: amount,
                     gasPrice: gasPrice,
                     estimatedGas: estimatedGas,
+                    estimatedGasPlusAddition: estimatedGas += 100000, // increase the provided gas by 100k
                     data: data
                 },
                 ok: function(){

@@ -117,7 +117,7 @@
             "removeData": "- Remove data",
             "estimatedFee": "Estimated fee",
             "createContract": "Create contract",
-            "provideGas": "Provided gas",
+            "provideGas": "Provide gas",
             "error": {
                 "emptyWallet": "The wallet you want to send from is empty.",
                 "notEnoughFunds": "You have not enough funds in the wallet.",
@@ -132,6 +132,7 @@
                 "sendFee": "This is the most amount of money that might be used to process this transaction. You will get your change back as soon as your transaction is mined, <strong>__timetext__</strong>.",
                 "addData": "You can add extra data to send along with your transaction. If you leave the \"to\" field empty it will try to generate a contract from your data.",
                 "cantEstimateGas": "We can't estimate your gas usage properly, as you need at least 1 ether in your account.",
+                "estimatedGas": "Estimated required gas",
                 "timeTexts": {
                     "0": "in a few minutes or more",
                     "1": "likely within a few minutes",
