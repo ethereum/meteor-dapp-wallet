@@ -25,6 +25,11 @@ Clone/Update the [dapp-styles](https://github.com/ethereum/dapp-styles) in the `
 
 Starting the wall dapp using meteor
 
+    $ apt-get install nodejs-legacy
+    $ apt-get install npm 
+    $ npm update
+    $ npm install -g meteor
+    $ meteor update
     $ cd meteor-dapp-wallet/app
     $ meteor
 
