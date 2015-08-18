@@ -14,12 +14,20 @@ The dashboard template
 
 Template['views_dashboard'].helpers({
     /**
+    Get all current wallets
+
+    @method (wallets)
+    */
+    'wallets': function(){
+        return Wallets.find({}, {sort: {balance: -1, name: 1}});
+    },
+    /**
     Get all current accounts
 
     @method (accounts)
     */
     'accounts': function(){
-        return _.union(EthAccounts.find({}, {sort: {balance: -1, name: 1}}).fetch(), Wallets.find({}, {sort: {balance: -1, name: 1}}).fetch());
+        return EthAccounts.find({}, {sort: {balance: -1, name: 1}});
     },
     /**
     Get all transactions

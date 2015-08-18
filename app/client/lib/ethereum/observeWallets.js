@@ -635,6 +635,15 @@ observeWallets = function(){
                             updateContractData(newDocument);
 
                             setupContractFilters(newDocument);
+
+                            // Show backup note
+                            EthElements.Modal.question({
+                                text: new Spacebars.SafeString(TAPi18n.__('wallet.accounts.modal.backupWallet', 
+                                    {address: contract.address})),
+                                ok: true
+                            },{
+                                closeable: false
+                            });
                         }
                         
                     } else {

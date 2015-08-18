@@ -4,6 +4,10 @@
         <h2>{{i18n "wallet.accounts.accountTitle"}}</h2>
         <br>
 
+        {{#each wallets}}
+            {{> elements_account account=_id wallets=true}}
+        {{/each}}
+        <div class="dapp-clear-fix"></div>
         {{#each accounts}}
             {{> elements_account account=_id}}
         {{/each}}
@@ -14,6 +18,7 @@
             </div>
             <h3>{{i18n "wallet.app.buttons.addWallet"}}</h3>
         </a>
+
 
         <div class="dapp-clear-fix"></div>
         

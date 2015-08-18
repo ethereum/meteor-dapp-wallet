@@ -1,6 +1,6 @@
 <template name="elements_account">
     {{#with account}}
-        <a href="{{pathFor route='account' address=address}}" class="wallet-box {{#if disabled}}disabled{{/if}} {{#if ../main}}main{{/if}}">
+        <a href="{{pathFor route='account' address=address}}" class="wallet-box {{#if disabled}}disabled{{/if}} {{#if ../wallets}}wallets{{/if}}">
             {{#with unConfirmed}}
                 <div class="dapp-progress">
                     <div class="dapp-bar" style="width: {{percent}}%;"></div>
@@ -17,7 +17,11 @@
                 <!-- </div> -->
             {{else}}
                 <div class="account-pattern">
-                    
+                    {{#if address}}
+                        {{> dapp_identicon identity=address class="dapp-small"}}
+                    {{else}}
+                        {{> spinner}}
+                    {{/if}}
                 </div>
             {{/unless}}
 

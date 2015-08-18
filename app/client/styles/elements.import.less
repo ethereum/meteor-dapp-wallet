@@ -37,8 +37,9 @@ a.wallet-box {
     margin-bottom: @defaultMargin;
     .box-sizing(border-box);
 
-    &.main {
-        background-color: lighten(@colorBackgroundHeader, 12%);
+    &.wallets {
+        // background-color: lighten(@colorBackgroundHeader, 12%);
+        .background-image(linear-gradient(to right,  lighten(@colorBackgroundHeader, 12%) 0%, rgba(255,255,255, 0.1) 100%));
         overflow: hidden;
 
         // .account-pattern {
