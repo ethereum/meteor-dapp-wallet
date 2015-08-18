@@ -23,6 +23,10 @@
         "modals": {
             "selectAccount": {
                 "title": "Select an account"
+            },
+            "testnetWallet": {
+                "walletNeedsDeployment": "No original wallet found, we need to deploy a testnet wallet from address __account__, please make sure this address has at least 1 ether.",
+                "testnetWalletDeployed": "Wallet deployed, we use now a testnet wallet on address: __address__."
             }
         },
         "accounts": {
@@ -131,6 +135,7 @@
                 "underDailyLimit": "<p class=\"under-daily\">This amount is under the daily limit of __limit__, so it will send immediately.</p>",
                 "sendFee": "This is the most amount of money that might be used to process this transaction. You will get your change back as soon as your transaction is mined, <strong>__timetext__</strong>.",
                 "addData": "You can add extra data to send along with your transaction. If you leave the \"to\" field empty it will try to generate a contract from your data.",
+                "dataNotExecutable": "The data seems not to be executabe, that means this transaction will use up all the gas you provide.",
                 "cantEstimateGas": "We can't estimate your gas usage properly, as you need at least 1 ether in your account.",
                 "estimatedGas": "Estimated required gas",
                 "timeTexts": {

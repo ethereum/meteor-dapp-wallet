@@ -156,21 +156,31 @@ Template['views_send'].onRendered(function(){
             }, function(e, res){
                 console.log('Estimated gas: ', res, e);
                 if(!e && res) {
-                    // TODO show note if its defaultEstimateGas, that the data is not executeable
                     TemplateVar.set(template, 'estimatedGas', res);
+
+                    // show note if its defaultEstimateGas, as the data is not executeable
+                    if(res === defaultEstimateGas)
+                        TemplateVar.set(template, 'codeNotExecutable', true);
+                    else
+                        TemplateVar.set(template, 'codeNotExecutable', false);
                 }
             });
         } else if(wallet = Wallets.findOne({address: address}, {reactive: false})) {
             if(contracts['ct_'+ wallet._id])
-                contracts['ct_'+ wallet._id].execute.estimateGas(to, amount, data || '',{
+                contracts['ct_'+ wallet._id].execute.estimateGas(to || '', amount || '', data || '',{
                     from: wallet.owners[0],
                     gas: defaultEstimateGas
                 }, function(e, res){
                     console.log('Estimated gas: ', res, e);
                     if(!e && res) {
-                        // TODO show note if its defaultEstimateGas, that the data is not executeable
                         TemplateVar.set(template, 'estimatedGas', res);
-                    }
+
+                        // show note if its defaultEstimateGas, as the data is not executeable
+                        if(res === defaultEstimateGas)
+                            TemplateVar.set(template, 'codeNotExecutable', true);
+                        else
+                            TemplateVar.set(template, 'codeNotExecutable', false);
+                        }
                 });
         }
     });
@@ -276,9 +286,9 @@ Template['views_send'].events({
 
         if(selectedAccount && !TemplateVar.get('sending')) {
 
-            // set gas down to 80k, if its invalid data, to prevent high gas usage.
+            // set gas down to 21 000, if its invalid data, to prevent high gas usage.
             if(estimatedGas === defaultEstimateGas || estimatedGas === 0)
-                estimatedGas = 100000;
+                estimatedGas = 21000;
 
 
             console.log('Providing gas: ', estimatedGas ,' + 100000');
@@ -319,7 +329,7 @@ Template['views_send'].events({
                     amount: amount,
                     gasPrice: gasPrice,
                     estimatedGas: estimatedGas,
-                    estimatedGasPlusAddition: estimatedGas += 100000, // increase the provided gas by 100k
+                    estimatedGasPlusAddition: estimatedGas + 100000, // increase the provided gas by 100k
                     data: data
                 },
                 ok: function(){
@@ -333,7 +343,7 @@ Template['views_send'].events({
                     // CONTRACT TX
                     if(contracts['ct_'+ selectedAccount._id]) {
 
-                        contracts['ct_'+ selectedAccount._id].execute.sendTransaction(to, amount, data || '', {
+                        contracts['ct_'+ selectedAccount._id].execute.sendTransaction(to || '', amount || '', data || '', {
                             from: selectedAccount.owners[0],
                             gasPrice: gasPrice,
                             gas: estimatedGas

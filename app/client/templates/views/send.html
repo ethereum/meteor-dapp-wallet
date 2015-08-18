@@ -64,6 +64,12 @@
                 {{#if TemplateVar.get "showData"}}
                     <br><br>
                     {{{i18n 'wallet.send.texts.addData'}}}
+
+                    {{#if TemplateVar.get "codeNotExecutable"}}
+                        <p class="orange">
+                            <i class="icon-shield"></i> {{i18n 'wallet.send.texts.dataNotExecutable'}}
+                        </p>
+                    {{/if}}
                 {{/if}}
             </div>
 
@@ -85,7 +91,7 @@
 
                 {{#if $eq estimatedGas 0}}
                     <p class="orange">
-                        {{{i18n 'wallet.send.texts.cantEstimateGas'}}}
+                        <i class="icon-info"></i> {{i18n 'wallet.send.texts.cantEstimateGas'}}
                     </p>
                 {{/if}}
             </div>

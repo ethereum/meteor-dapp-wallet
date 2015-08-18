@@ -602,7 +602,6 @@ observeWallets = function(){
                     from: newDocument.owners[0],
                     data: walletStubABICompiled, // walletStubABICompiled 184 280 walletABICompiled ~1 842 800
                     gas: 2000000,
-                    gasPrice: EthBlocks.latest.gasPrice
 
                 }, function(error, contract){
                     if(!error) {

@@ -40,24 +40,21 @@ var connect = function(){
 
     } else {
 
-        Meteor.startup(function(){
-            // make sure the modal is rendered after all routes are executed
-            Tracker.afterFlush(function(){
+        // make sure the modal is rendered after all routes are executed
+        Tracker.afterFlush(function(){
 
-                EthElements.Modal.question({
-                    text: new Spacebars.SafeString(TAPi18n.__('wallet.app.texts.connectionError', 
-                        {node: 'geth --rpc --rpccorsdomain "'+window.location.protocol + '//' + window.location.host+'" --unlock &ltyourAccount&gt;'})), // --rpcaddr "localhost"
-                    ok: function(){
-                        Tracker.afterFlush(function(){
-                            connect();
-                        });
-                    },
-                    close: false
-                }, {
-                    closeable: false
-                });
-
+            EthElements.Modal.question({
+                text: new Spacebars.SafeString(TAPi18n.__('wallet.app.texts.connectionError', 
+                    {node: 'geth --rpc --rpccorsdomain "'+window.location.protocol + '//' + window.location.host+'" --unlock &ltyourAccount&gt;'})), // --rpcaddr "localhost"
+                ok: function(){
+                    Tracker.afterFlush(function(){
+                        connect();
+                    });
+                }
+            }, {
+                closeable: false
             });
+
         });
     }
 }

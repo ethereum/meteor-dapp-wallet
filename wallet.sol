@@ -306,6 +306,8 @@ contract multisig {
 // Wallet(w).from(anotherOwner).confirm(h);
 contract Wallet is multisig, multiowned, daylimit {
 
+    uint8 public version = 1;
+
     // TYPES
 
     // Transaction structure to remember details of transaction lest it need be saved for a later call.

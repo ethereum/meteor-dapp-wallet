@@ -53,6 +53,7 @@ connectToNode = function(){
     EthAccounts.init();
     EthBlocks.init();
 
+    checkForOriginalWallet();
 
     // EthBlocks.detectFork(function(oldBlock, block){
     //     console.log('FORK detected from Block #'+ oldBlock.number + ' -> #'+ block.number +', rolling back!');
