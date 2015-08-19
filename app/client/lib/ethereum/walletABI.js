@@ -1,5 +1,6 @@
 var walletABI = [{"constant":false,"inputs":[{"name":"_owner","type":"address"}],"name":"removeOwner","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"_addr","type":"address"}],"name":"isOwner","outputs":[{"name":"","type":"bool"}],"type":"function"},{"constant":true,"inputs":[],"name":"m_numOwners","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":true,"inputs":[],"name":"version","outputs":[{"name":"","type":"uint8"}],"type":"function"},{"constant":false,"inputs":[],"name":"resetSpentToday","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"_owner","type":"address"}],"name":"addOwner","outputs":[],"type":"function"},{"constant":true,"inputs":[],"name":"m_required","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[{"name":"_h","type":"bytes32"}],"name":"confirm","outputs":[{"name":"","type":"bool"}],"type":"function"},{"constant":false,"inputs":[{"name":"_newLimit","type":"uint256"}],"name":"setDailyLimit","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"},{"name":"_data","type":"bytes"}],"name":"execute","outputs":[{"name":"_r","type":"bytes32"}],"type":"function"},{"constant":false,"inputs":[{"name":"_operation","type":"bytes32"}],"name":"revoke","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"_newRequired","type":"uint256"}],"name":"changeRequirement","outputs":[],"type":"function"},{"constant":true,"inputs":[{"name":"_operation","type":"bytes32"},{"name":"_owner","type":"address"}],"name":"hasConfirmed","outputs":[{"name":"","type":"bool"}],"type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"}],"name":"kill","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"}],"name":"changeOwner","outputs":[],"type":"function"},{"constant":true,"inputs":[],"name":"m_dailyLimit","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"inputs":[{"name":"_owners","type":"address[]"},{"name":"_required","type":"uint256"},{"name":"_daylimit","type":"uint256"}],"type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"owner","type":"address"},{"indexed":false,"name":"operation","type":"bytes32"}],"name":"Confirmation","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"owner","type":"address"},{"indexed":false,"name":"operation","type":"bytes32"}],"name":"Revoke","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"oldOwner","type":"address"},{"indexed":false,"name":"newOwner","type":"address"}],"name":"OwnerChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"newOwner","type":"address"}],"name":"OwnerAdded","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"oldOwner","type":"address"}],"name":"OwnerRemoved","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"newRequirement","type":"uint256"}],"name":"RequirementChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"from","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Deposit","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"owner","type":"address"},{"indexed":false,"name":"value","type":"uint256"},{"indexed":false,"name":"to","type":"address"},{"indexed":false,"name":"data","type":"bytes"}],"name":"SingleTransact","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"owner","type":"address"},{"indexed":false,"name":"operation","type":"bytes32"},{"indexed":false,"name":"value","type":"uint256"},{"indexed":false,"name":"to","type":"address"},{"indexed":false,"name":"data","type":"bytes"}],"name":"MultiTransact","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"operation","type":"bytes32"},{"indexed":false,"name":"initiator","type":"address"},{"indexed":false,"name":"value","type":"uint256"},{"indexed":false,"name":"to","type":"address"},{"indexed":false,"name":"data","type":"bytes"}],"name":"ConfirmationNeeded","type":"event"}];
-var origContractAddress = '0x7d9584ef803f614e18a324883c99cae7672cbbe3';
+// MAIN-NET CONTRACT ADDRESS
+var origContractAddress = '0x4efc6389b88569a375668b7b3bd4a9b6c8f4a942';
 
 WalletContract = web3.eth.contract(walletABI);
 
@@ -15,7 +16,7 @@ var deployTestnetWallet = function() {
     var account = web3.eth.accounts[0];
 
     EthElements.Modal.question({
-        text: TAPi18n.__('wallet.modals.testnetWallet.walletNeedsDeployment', {account: account}),
+        text: new Spacebars.SafeString(TAPi18n.__('wallet.modals.testnetWallet.walletNeedsDeployment', {account: account})),
         ok: function() {
 
             // show loading
@@ -29,19 +30,23 @@ var deployTestnetWallet = function() {
             }, function (e, contract) {
                 if(!e) {
                     if(contract.address) {
+                        console.log('Contract created at: ', contract.address);
+
                         LocalStore.set('ethereum_testnetWalletContractAddress', contract.address);
                         walletStubABICompiled = walletStubABICompiled.replace('cafecafecafecafecafecafecafecafecafecafe', contract.address.replace('0x',''));
 
                         EthElements.Modal.question({
-                            text: TAPi18n.__('wallet.modals.testnetWallet.testnetWalletDeployed', {address: contract.address}),
+                            text: new Spacebars.SafeString(TAPi18n.__('wallet.modals.testnetWallet.testnetWalletDeployed', {address: contract.address})),
                             ok: true
                         });
 
+                    } else {
+                        console.log('Contract creation transaction hash: ', contract.transactionHash);
                     }
 
                 } else {
                     GlobalNotification.error({
-                        content: error.message,
+                        content: e.message,
                         duration: 8
                     });
                 }
@@ -63,24 +68,38 @@ Checks if the original wallet exists, if not deploys it
 checkForOriginalWallet = function() {
     // see if the original wallet is deployed, if not re-deploy on testnet
     web3.eth.getCode(origContractAddress, function(e, code) {
-        if(!e && code.length > 2) {
-            walletStubABICompiled = walletStubABICompiled.replace('cafecafecafecafecafecafecafecafecafecafe', origContractAddress.replace('0x',''));
-            console.log('Use original wallet on address: ', origContractAddress);
-        
-        // use testnet address, or re-deploy
-        } else {
-            var testnetAddress = LocalStore.get('ethereum_testnetWalletContractAddress');
+        if(!e) {
+            if(code.length > 2) {
+                walletStubABICompiled = walletStubABICompiled.replace('cafecafecafecafecafecafecafecafecafecafe', origContractAddress.replace('0x',''));
+                console.log('Use Mainnet original wallet on address: ', origContractAddress);
+            
+            // use testnet address, or re-deploy
+            } else {
+                var testnetAddress = LocalStore.get('ethereum_testnetWalletContractAddress');
 
-            if(testnetAddress)
-                web3.eth.getCode(testnetAddress, function(e, code) {
-                    if(!e && code.length > 2) {
-                        walletStubABICompiled = walletStubABICompiled.replace('cafecafecafecafecafecafecafecafecafecafe', testnetAddress.replace('0x',''));
-                        console.log('Use testnet wallet on address: ', testnetAddress);
-                    } else
-                        deployTestnetWallet();
-                });
-            else
-                deployTestnetWallet();
+                if(testnetAddress)
+                    web3.eth.getCode(testnetAddress, function(e, code) {
+                        if(!e) {
+                            if(code.length > 2) {
+                                walletStubABICompiled = walletStubABICompiled.replace('cafecafecafecafecafecafecafecafecafecafe', testnetAddress.replace('0x',''));
+                                console.log('Use Testnet original wallet on address: ', testnetAddress);
+                            } else
+                                deployTestnetWallet();
+                        } else {
+                            GlobalNotification.error({
+                                content: e.message,
+                                duration: 8
+                            });
+                        }
+                    });
+                else
+                    deployTestnetWallet();
+            }
+        } else {
+            GlobalNotification.error({
+                content: e.message,
+                duration: 8
+            });
         }
     });
 }

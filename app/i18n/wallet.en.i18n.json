@@ -26,8 +26,8 @@
                 "title": "Select an account"
             },
             "testnetWallet": {
-                "walletNeedsDeployment": "No original wallet found, we need to deploy a testnet wallet from address your __account__, please make sure this address is unlocked and has at least 1 ether.",
-                "testnetWalletDeployed": "Original wallet deployed. The original testnet wallet is on address: __address__."
+                "walletNeedsDeployment": "You seem to be on a testnet.<br><br>There is no original wallet found, we need to deploy a wallet, which can be used by the wallet stub contracts, from your address: <br><br><small><code>__account__</code></small>,<br><br>please make sure this address is unlocked and has at least 1 ether!",
+                "testnetWalletDeployed": "Original wallet deployed!<br>An original wallet was deployed on the address:<br><br><small><code>__address__</code></small>."
             }
         },
         "accounts": {
