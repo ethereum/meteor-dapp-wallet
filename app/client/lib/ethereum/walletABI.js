@@ -27,13 +27,22 @@ var deployTestnetWallet = function() {
                 data: walletABICompiled,
                 gas: 2000000,
             }, function (e, contract) {
-                if(!e && contract.address) {
-                    LocalStore.set('ethereum_testnetWalletContractAddress', contract.address);
-                    walletStubABICompiled = walletStubABICompiled.replace('cafecafecafecafecafecafecafecafecafecafe', contract.address.replace('0x',''));
+                if(!e) {
+                    if(contract.address) {
+                        LocalStore.set('ethereum_testnetWalletContractAddress', contract.address);
+                        walletStubABICompiled = walletStubABICompiled.replace('cafecafecafecafecafecafecafecafecafecafe', contract.address.replace('0x',''));
 
-                    EthElements.Modal.question({
-                        text: TAPi18n.__('wallet.modals.testnetWallet.testnetWalletDeployed', {address: contract.address}),
-                        ok: true
+                        EthElements.Modal.question({
+                            text: TAPi18n.__('wallet.modals.testnetWallet.testnetWalletDeployed', {address: contract.address}),
+                            ok: true
+                        });
+
+                    }
+
+                } else {
+                    GlobalNotification.error({
+                        content: error.message,
+                        duration: 8
                     });
                 }
             });

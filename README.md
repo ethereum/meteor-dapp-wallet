@@ -33,21 +33,20 @@ Go to http://localhost:3000
 
 ## Deployment
 
-To create a build version of your app install:
+To create a build version of your app run:
     
     // install meteor-build-client
     $ npm install -g meteor-build-client
 
-    // install gulp
-    $ npm install -g gulp
+    // bundle dapp
+    $ cd meteor-dapp-wallet/app
+    $ meteor-build-client ../build --path "/"
 
-To generate the `asar.app` files electron needs run:
+This will generate the files in the `../build` folder. Double click the index.html to start the app.
+To make routing work properly you need to build it using:
 
-    $ cd mist
-    $ gulp mist
+    $ meteor-build-client ../build
 
-    // Or to generate the wallet
-    $ gulp wallet
-
-This will generate the `asar.app` inside the `dist_mist` and `dist_wallet` folder.
+And start a local server which points with its document root into the `../build` folder,
+so that you can open the app using `http://localhost:80/`
 
