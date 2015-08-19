@@ -17,11 +17,11 @@ The available units
 @property units
 */
 var units = [{
-    text: 'ether',
+    text: 'ETHER',
     value: 'ether'
 },
 {
-    text: 'finney', //(µΞ)
+    text: 'FINNEY', //(µΞ)
     value: 'finney'
 },
 {

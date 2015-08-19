@@ -39,7 +39,7 @@
             "accountNote": "Accounts can't list incoming transactions and are rather unsafe, please <a href=\"/account/new\">create a wallet</a> to store ether.",
             "modal": {
                 "deleteText": "Do you really want to delete the wallet?<br>If you lose the wallet address, you will lose the funds on it!<br><br>Type the name of the wallet to confirm the deletion.",
-                "backupWallet": "<h1>Backup your wallet!</h1>Make sure to write the address down, so you can import it always again.<br><pre style=\"font-size: 0.75em;\">__address__</pre>"
+                "backupWallet": "<h1>Backup your wallet!</h1>Make sure to write the address down, so you can import it again, if you need to.<br><pre style=\"font-size: 0.75em;\">__address__</pre>"
             }
         },
         "transactions": {

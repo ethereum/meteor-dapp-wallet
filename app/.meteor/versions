@@ -19,7 +19,7 @@ ejson@1.0.6
 ethereum:accounts@0.2.7
 ethereum:blocks@0.1.7
 ethereum:elements@0.4.3
-ethereum:tools@0.2.7
+ethereum:tools@0.2.8
 ethereum:web3@0.12.2
 fastclick@1.0.3
 frozeman:animation-helper@0.2.6
