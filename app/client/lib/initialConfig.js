@@ -35,17 +35,18 @@ Meteor.Spinner.options = {
 var connect = function(){
 
     if(web3.isConnected()) {
-
         connectToNode();
 
     } else {
 
         // make sure the modal is rendered after all routes are executed
-        Tracker.afterFlush(function(){
+        Meteor.setTimeout(function(){
+            // if in mist, tell to start geth, otherwise start with RPC
+            var gethRPC = (web3.admin) ? 'geth' : 'geth --rpc --rpccorsdomain "'+window.location.protocol + '//' + window.location.host+'"';
 
             EthElements.Modal.question({
-                text: new Spacebars.SafeString(TAPi18n.__('wallet.app.texts.connectionError', 
-                    {node: 'geth --rpc --rpccorsdomain "'+window.location.protocol + '//' + window.location.host+'" --unlock &ltyourAccount&gt;'})), // --rpcaddr "localhost"
+                text: new Spacebars.SafeString(TAPi18n.__('wallet.app.texts.connectionError' + (web3.admin ? 'Mist' : 'Browser'), 
+                    {node: gethRPC})),
                 ok: function(){
                     Tracker.afterFlush(function(){
                         connect();
@@ -55,7 +56,7 @@ var connect = function(){
                 closeable: false
             });
 
-        });
+        }, 600);
     }
 }
 Meteor.startup(function(){
