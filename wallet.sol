@@ -274,8 +274,8 @@ contract daylimit is multiowned {
     // FIELDS
 
     uint public m_dailyLimit;
-    uint m_spentToday;
-    uint m_lastDay;
+    uint public m_spentToday;
+    uint public m_lastDay;
 }
 
 // interface contract for multisig proxy contracts; see below for docs.
@@ -306,7 +306,7 @@ contract multisig {
 // Wallet(w).from(anotherOwner).confirm(h);
 contract Wallet is multisig, multiowned, daylimit {
 
-    uint8 public version = 1;
+    uint public version = 2;
 
     // TYPES
 

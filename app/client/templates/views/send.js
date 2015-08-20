@@ -46,15 +46,18 @@ Check if the amount accounts daily limit  and sets the correct text.
 @method checkOverDailyLimit
 */
 var checkOverDailyLimit = function(address, wei, template){
-
     // check if under or over dailyLimit
     account = Helpers.getAccountByAddress(address);
 
+    // check whats left
+    var restDailyLimit = new BigNumber(account.dailyLimit || '0', 10).minus(new BigNumber(account.dailyLimitSpent || '0', 10));
+
     if(account && account.requiredSignatures > 1 && account.dailyLimit && account.dailyLimit !== ethereumConfig.dailyLimitDefault && Number(wei) !== 0) {
-        if(Number(account.dailyLimit) < Number(wei))
-            TemplateVar.set('dailyLimitText', new Spacebars.SafeString(TAPi18n.__('wallet.send.texts.overDailyLimit', {limit: EthTools.formatBalance(account.dailyLimit), count: account.requiredSignatures - 1})));
+        console.log(restDailyLimit.toString(10), wei);
+        if(restDailyLimit.lt(new BigNumber(wei, 10)))
+            TemplateVar.set('dailyLimitText', new Spacebars.SafeString(TAPi18n.__('wallet.send.texts.overDailyLimit', {limit: EthTools.formatBalance(restDailyLimit.toString(10)), total: EthTools.formatBalance(account.dailyLimit), count: account.requiredSignatures - 1})));
         else
-            TemplateVar.set('dailyLimitText', new Spacebars.SafeString(TAPi18n.__('wallet.send.texts.underDailyLimit', {limit: EthTools.formatBalance(account.dailyLimit)})));
+            TemplateVar.set('dailyLimitText', new Spacebars.SafeString(TAPi18n.__('wallet.send.texts.underDailyLimit', {limit: EthTools.formatBalance(restDailyLimit.toString(10)), total: EthTools.formatBalance(account.dailyLimit)})));
     } else
         TemplateVar.set('dailyLimitText', false);
 };
@@ -334,6 +337,9 @@ Template['views_send'].events({
                 },
                 ok: function(){
 
+                    // show loading
+                    EthElements.Modal.show('views_modals_loading');
+
                     TemplateVar.set(template, 'sending', true);
 
                     // use gas set in the input field
@@ -360,6 +366,8 @@ Template['views_send'].events({
                                 Router.go('/');
 
                             } else {
+                                EthElements.Modal.hide();
+
                                 GlobalNotification.error({
                                     content: error.message,
                                     duration: 8
@@ -389,6 +397,9 @@ Template['views_send'].events({
 
                                 Router.go('/');
                             } else {
+
+                                EthElements.Modal.hide();
+
                                 GlobalNotification.error({
                                     content: error.message,
                                     duration: 8

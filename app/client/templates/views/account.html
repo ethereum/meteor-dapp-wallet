@@ -29,17 +29,22 @@
             <div class="row clear">
                 {{#if showDailyLimit}}
                     <div class="col col-4 mobile-full">
-                        <h3>Daily limit</h3>
-                        {{dapp_formatBalance dailyLimit "0,0.00 unit"}}
+                        {{#if $gte version 1}}
+                            <h3>{{i18n "wallet.accounts.dailyLimit"}} <span style="font-weight: 200;">{{dapp_formatBalance dailyLimit "0,0.00 unit"}}</span></h3>
+                            {{dapp_formatBalance availableToday "0,0.00 unit"}} {{i18n "wallet.accounts.dailyLimitRemaining"}}
+                        {{else}}
+                            <h3>{{i18n "wallet.accounts.dailyLimit"}}</h3>
+                            {{dapp_formatBalance dailyLimit "0,0.00 unit"}}
+                        {{/if}}
                     </div>
                 {{/if}}
                 {{#if showRequiredSignatures}}
                     <div class="col col-4 mobile-full">
-                        <h3>Required Signatures</h3> {{requiredSignatures}}
+                        <h3>{{i18n "wallet.accounts.requiredSignatures"}}</h3> {{requiredSignatures}}
                     </div>
                 {{/if}}
                 <div class="col col-4 mobile-full">
-                    <h3>Owners</h3>
+                    <h3>{{i18n "wallet.accounts.owners"}}</h3>
                     {{#each owners}}
                         <span data-tooltip="{{accountNameOrAddress this}}" class="simptip-position-bottom simptip-movable">
                             {{> dapp_identicon identity=this class="dapp-tiny" link=ownerLink}}

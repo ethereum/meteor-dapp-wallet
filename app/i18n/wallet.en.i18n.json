@@ -32,11 +32,16 @@
         },
         "accounts": {
             "title": "<strong>Wallet</strong> Overview",
-            "accountTitle": "Choose a wallet to deposit",
+            "walletsTitle": "Contract based wallets",
+            "accountsTitle": "Accounts",
             "defaultName": "Unnamed wallet",
             "creating": "Creating",
             "importing": "Importing",
             "accountNote": "Accounts can't list incoming transactions and are rather unsafe, please <a href=\"/account/new\">create a wallet</a> to store ether.",
+            "dailyLimit": "Daily limit",
+            "dailyLimitRemaining": "remaining today",
+            "requiredSignatures": "Required signatures",
+            "owners": "Owners",
             "modal": {
                 "deleteText": "Do you really want to delete the wallet?<br>If you lose the wallet address, you will lose the funds on it!<br><br>Type the name of the wallet to confirm the deletion.",
                 "backupWallet": "<h1>Backup your wallet!</h1>Make sure to write the address down, so you can import it again, if you need to.<br><pre style=\"font-size: 0.75em;\">__address__</pre>"
@@ -65,7 +70,7 @@
                 "noDataDeployed": "No data is deployed on the contract address!"    
             },
             "types": {
-                "betweenWallets": "Transfered between wallets",
+                "betweenWallets": "Transfer between wallets",
                 "sent": "Sent",
                 "received": "Received",
                 "createdContract": "Created contract",
@@ -105,7 +110,8 @@
             },
             "error": {
                 "emptySignees": "You didn't provided all owners.",
-                "alreadyExists": "Wallet already exists."
+                "alreadyExists": "Wallet already exists.",
+                "stubHasNoOrigWalletAddress": "Your stub contract has no original wallet address set, please restart your wallet!"
             }
         },
         "send": {
@@ -132,9 +138,9 @@
             },
             "texts": {
                 "sendAmount": "You want to send <strong>__amount__</strong>.",
-                "overDailyLimit": "<p class=\"over-daily\">This amount is over the daily limit of __limit__, this means you need __count__ other account to confirm.</p>",
-                "overDailyLimit_plural": "<p class=\"over-daily\">This amount is over the daily limit of __limit__, this means you need __count__ other accounts to confirm.</p>",
-                "underDailyLimit": "<p class=\"under-daily\">This amount is under the daily limit of __limit__, so it will send immediately.</p>",
+                "overDailyLimit": "<p class=\"over-daily\">This amount is over the remaining daily limit of __limit__ (of __total__ per day), so you need __count__ other account to confirm.</p>",
+                "overDailyLimit_plural": "<p class=\"over-daily\">This amount is over the remaining daily limit of __limit__ (of __total__ per day), so you need __count__ other accounts to confirm.</p>",
+                "underDailyLimit": "<p class=\"under-daily\">This amount is under the remaining daily limit of __limit__ (of __total__ per day), means it will send immediately.</p>",
                 "sendFee": "This is the most amount of money that might be used to process this transaction. You will get your change back as soon as your transaction is mined, <strong>__timetext__</strong>.",
                 "addData": "You can add extra data to send along with your transaction. If you leave the \"to\" field empty it will try to generate a contract from your data.",
                 "dataNotExecutable": "The data seems not to be executabe, that means this transaction will use up all the gas you provide.",

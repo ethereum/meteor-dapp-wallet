@@ -20,19 +20,67 @@ Update the contract data, like dailyLimit and required signatures.
 
 @method updateContractData
 */
-var updateContractData = function(newDocument){
+updateContractData = function(newDocument){
     var contractInstance = contracts['ct_'+ newDocument._id];
 
-    contractInstance.m_dailyLimit(function(err, result){
-        Wallets.update(newDocument._id, {$set: {
-            dailyLimit: result.toString(10)
-        }});
+    if(!contractInstance)
+        return;
+
+    contractInstance.m_dailyLimit(function(e, result){
+        if(!e)
+            Wallets.update(newDocument._id, {$set: {
+                dailyLimit: result.toString(10)
+            }});
     });
-    contractInstance.m_required(function(err, result){
-        Wallets.update(newDocument._id, {$set: {
-            requiredSignatures: result.toString(10)
-        }});
+    contractInstance.m_required(function(e, result){
+        if(!e)
+            Wallets.update(newDocument._id, {$set: {
+                requiredSignatures: result.toString(10)
+            }});
     });
+
+    // UPDATE THE DAILYLIMITSPENT
+    if(newDocument.version >= 1) {
+        contractInstance.m_spentToday(function(e, spent) {
+            contractInstance.m_lastDay(function(e, lastDay) {
+                if(!e && spent && _.isFinite(spent.toString(10))) {
+
+                    var now = new Date();
+                    var fullDaysSinceEpoch = Math.floor(now/8.64e7);
+
+                    // update the daily limit, when its still the same day
+                    Wallets.update(newDocument._id, {$set: {
+                        dailyLimitSpent: (fullDaysSinceEpoch === lastDay.toNumber()) ? spent.toString(10) : '0'
+                    }});
+                }
+
+            });
+        });
+    }
+
+    // check for version
+    if(_.isUndefined(newDocument.version) && newDocument.address) {
+        contractInstance.version(function(e, version){
+            if(!e && version.toString(10)) {
+                // var sha3 = web3.sha3(code, true);
+
+                // // find version
+                // index = 0;
+                // _.find(contractVersions, function(contract, i){
+                //     if(contract.original === sha3 || contract.stub === sha3) {
+                //         index = i;
+                //         return true;
+                //     } else
+                //         return false;
+                // });
+
+                Wallets.update(newDocument._id, {$set: {
+                    version: version.toNumber()
+                }});
+                newDocument.version = version.toNumber();
+            }
+        });
+    }
 };
 
 
@@ -57,7 +105,8 @@ confirmOrRevoke = function(contract, log){
         if(pendingConf && pendingConf.sending === log.args.owner)
             setDocument['$unset'] = {sending: ''};
 
-        console.log('CHECK OPERATION: '+ log.args.operation +' owner: '+ log.args.owner, res);
+        Helpers.eventLogs('CHECK OPERATION: '+ log.args.operation +' owner: '+ log.args.owner, res);
+
         if(res){
             if(pendingConf)
                 setDocument['$addToSet'] = {confirmedOwners: log.args.owner};
@@ -122,10 +171,8 @@ Creates filters for a wallet contract, to watch for deposits, pending confirmati
 */
 setupContractFilters = function(newDocument, checkFromCreationBlock){
     var blockToCheckBack = (EthBlocks.latest.number || 0) - ethereumConfig.rollBackBy;
-    if(blockToCheckBack < 0)
-        blockToCheckBack = newDocument.creationBlock;
-
-    if(checkFromCreationBlock)
+    
+    if(checkFromCreationBlock || blockToCheckBack < 0)
         blockToCheckBack = newDocument.creationBlock;
 
     var contractInstance = contracts['ct_'+ newDocument._id];
@@ -192,7 +239,7 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
 
         Helpers.eventLogs('Contract address not set, checking for contract receipt');
         web3.eth.getTransactionReceipt(newDocument.transactionHash, function(error, receipt) {
-            if(!error) {
+            if(!error && receipt) {
                 web3.eth.getCode(receipt.contractAddress, function(error, code) {
                     Helpers.eventLogs('Contract created on '+ receipt.contractAddress);
 
@@ -256,18 +303,19 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
         // SETUP FILTERS
         Helpers.eventLogs('Checking Deposits and ConfirmationNeeded for '+ newDocument.address +' from block #', blockToCheckBack);
 
+
         // delete the last tx and pc until block -1000
-        _.each(Transactions.find({_id: {$in: newDocument.transactions || []}, blockNumber: {$gt: blockToCheckBack}}).fetch(), function(tx){
+        _.each(Transactions.find({_id: {$in: newDocument.transactions || []}, blockNumber: {$exists: true, $gt: blockToCheckBack}}).fetch(), function(tx){
             Transactions.remove(tx._id);
         });
-        _.each(PendingConfirmations.find({from: newDocument.address, blockNumber: {$gt: blockToCheckBack}}).fetch(), function(pc){
+        _.each(PendingConfirmations.find({from: newDocument.address, blockNumber: {$exists: true, $gt: blockToCheckBack}}).fetch(), function(pc){
             PendingConfirmations.remove(pc._id);
         });
 
 
         events.push(contractInstance.allEvents({fromBlock: blockToCheckBack, toBlock: 'latest'}, function(error, log){
             if(!error) {
-                console.log(log);
+                Helpers.eventLogs(log);
 
                 if(log.event === 'Deposit') {
                     Helpers.eventLogs('Deposit for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber());
@@ -389,7 +437,7 @@ observeWallets = function(){
     var checkWalletConfirmations = function(newDocument, oldDocument){
         var confirmations = EthBlocks.latest.number - newDocument.creationBlock;
 
-        if(newDocument.address && !oldDocument.address && confirmations < ethereumConfig.requiredConfirmations) {
+        if(newDocument.address && (!oldDocument || (oldDocument && !oldDocument.address)) && confirmations < ethereumConfig.requiredConfirmations) {
             var filter = web3.eth.filter('latest');
             filter.watch(function(e, blockHash){
                 if(!e) {
@@ -398,15 +446,19 @@ observeWallets = function(){
                     if(confirmations < ethereumConfig.requiredConfirmations && confirmations > 0) {
                         Helpers.eventLogs('Checking wallet address '+ newDocument.address +' for code. Current confirmations: '+ confirmations);
 
+                        // TODO make smarter?
+
                         // Check if the code is still at the contract address, if not remove the wallet
                         web3.eth.getCode(newDocument.address, function(e, code){
-                            if(code.length <= 2) {
-                                Wallets.remove(newDocument._id);
-                                filter.stopWatching();
+                            if(!e) {
+                                if(code.length > 2) {
+                                    updateContractData(newDocument);                                
 
-                            // check for wallet data
-                            } else {
-                                updateContractData(newDocument);                                
+                                // check for wallet data
+                                } else {
+                                    Wallets.remove(newDocument._id);
+                                    filter.stopWatching();
+                                }
                             }
                         });
                     } else if(confirmations > ethereumConfig.requiredConfirmations) {
@@ -469,6 +521,15 @@ observeWallets = function(){
                 // }
                 if(_.isEmpty(newDocument.owners))
                     return;
+
+                if(walletStubABICompiled.indexOf('cafecafecafecafecafecafecafecafecafecafe') !== -1) {
+                    GlobalNotification.error({
+                        content: TAPi18n.__('wallet.newWallet.error.stubHasNoOrigWalletAddress'),
+                        closeable: false
+                    });
+                    Wallets.remove(newDocument._id);
+                    return;
+                }
 
 
                 WalletContract.new(newDocument.owners, newDocument.requiredSignatures, (newDocument.dailyLimit || ethereumConfig.dailyLimitDefault), {
@@ -543,17 +604,21 @@ observeWallets = function(){
                     }
                 });
 
+                updateContractData(newDocument);
+
                 setupContractFilters(newDocument);
 
                 checkWalletConfirmations(newDocument, {});
             }
         },
         /**
-        Will check if the contract is still 
+        Will check if the contract is still there and update the today spend if a new tx is added
 
         @method changed
         */
-        changed: checkWalletConfirmations,
+        changed: function(newDocument, oldDocument){
+            checkWalletConfirmations(newDocument, oldDocument);
+        },
         /**
         Stop filters, when accounts are removed
 
@@ -577,7 +642,7 @@ observeWallets = function(){
 
             // delete the all tx and pending conf
             _.each(Transactions.find({from: newDocument.address}).fetch(), function(tx){
-                if(!Wallets.findOne({transactions: tx._id}))
+                if(!Wallets.findOne({transactions: tx._id}) && !EthAccounts.findOne({transactions: tx._id}))
                     Transactions.remove(tx._id);
             });
             _.each(PendingConfirmations.find({from: newDocument.address}).fetch(), function(pc){

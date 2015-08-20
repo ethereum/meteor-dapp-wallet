@@ -13,15 +13,16 @@ The header template
 
 Template['layout_header'].helpers({
     'totalBalance': function(){
-        var accounts = _.pluck(_.union(EthAccounts.find({}).fetch(), Wallets.find({}).fetch()), 'balance');
+        var accounts = EthAccounts.find({}).fetch();
+        var wallets = Wallets.find({owners: {$in: _.pluck(accounts, 'address')}}).fetch();
 
-        accounts = _.reduce(accounts, function(memo, num){ return memo + Number(num); }, 0);
+        var balance = _.reduce(_.pluck(_.union(accounts, wallets), 'balance'), function(memo, num){ return memo + Number(num); }, 0);
 
         // set total balance in Mist menu, of no pending confirmation is Present
         if(typeof mist !== 'undefined' && !PendingConfirmations.findOne({operation: {$exists: true}})) {
-            mist.menu.setBadge(EthTools.formatBalance(accounts, '0 a unit'));
+            mist.menu.setBadge(EthTools.formatBalance(balance, '0 a unit'));
         }
 
-        return accounts;
+        return balance;
     }
 });

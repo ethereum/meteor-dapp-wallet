@@ -30,6 +30,14 @@ Template['views_account'].helpers({
         return _.pluck(PendingConfirmations.find({operation: {$exists: true}, confirmedOwners: {$ne: []}, from: this.address}).fetch(), '_id');
     },
     /**
+    Return the daily limit available today.
+
+    @method (availableToday)
+    */
+    'availableToday': function() {
+        return new BigNumber(this.dailyLimit || '0', 10).minus(new BigNumber(this.dailyLimitSpent || '0', '10')).toString(10);  
+    },
+    /**
     Show dailyLimit section
 
     @method (showDailyLimit)
@@ -43,7 +51,7 @@ Template['views_account'].helpers({
     @method (showRequiredSignatures)
     */
     'showRequiredSignatures': function(){
-        return (this.requiredSignatures && this.requiredSignatures != 1);
+        return (this.requiredSignatures && this.requiredSignatures > 1);
     },
     /**
     Link the owner either to send or to the account itself.

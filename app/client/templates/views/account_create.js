@@ -293,8 +293,7 @@ Template['views_account_create'].events({
                 owners: [template.find('select[name="dapp-select-account"]').value],
                 name: template.find('input[name="accountName"]').value || TAPi18n.__('wallet.accounts.defaultName'),
                 balance: '0',
-                creationBlock: EthBlocks.latest.number,
-                disabled: true
+                creationBlock: EthBlocks.latest.number
             });
 
             Router.go('/');
@@ -321,8 +320,7 @@ Template['views_account_create'].events({
                 balance: '0',
                 dailyLimit: web3.toWei(formValues.dailyLimitAmount, 'ether'),
                 requiredSignatures: formValues.multisigSignatures,
-                creationBlock: EthBlocks.latest.number,
-                disabled: true
+                creationBlock: EthBlocks.latest.number
             });
 
             Router.go('/');

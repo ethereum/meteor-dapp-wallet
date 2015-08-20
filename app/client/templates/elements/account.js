@@ -20,6 +20,8 @@ Block required until a transaction is confirmed.
 var blocksForConfirmation = 12;
 
 
+
+
 Template['elements_account'].rendered = function(){
 
     // initiate the geo pattern
