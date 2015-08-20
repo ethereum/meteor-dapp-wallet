@@ -72,17 +72,51 @@ body {
         left: 0;
         right: 0;
         .dapp-shadow-medium;
+
+        .block-info {
+            bottom: @defaultPaddingVertical - 1px;
+
+            .red {
+                display: none;
+            }
+        }
     }
 
 
     nav ul a.active {
         color: @colorTextSecondary;
     }
+
+    .block-info {
+        position: absolute;
+        bottom: @defaultPaddingVertical - 1px;
+        display: inline-block;
+        left: 50%;
+        width: 300px;
+        margin-left: -150px;
+        color: @colorGrayDark;
+        .opacity(0.3);
+        text-align: center;
+
+        // ANIMATION
+        .transition(bottom @animationSpeed / 2);
+
+        i {
+            font-size: 0.7em;
+        }
+
+        .red {
+            position: relative;
+            top: 5px;
+            font-weight: 400;
+        }
+        
+    }
     
     .wallet-balance {
         position: absolute;
         right: @defaultPaddingHorizontal;
-        bottom: @defaultPaddingVertical;
+        bottom: @defaultPaddingVertical - 2px;
         text-align: right;
 
 

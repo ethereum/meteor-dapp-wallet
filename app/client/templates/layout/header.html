@@ -14,6 +14,13 @@
         </ul>
     </nav>
 
+    <div class="block-info">
+        <i class="icon-layers"></i> {{latestBlock.number}} <i class="icon-clock" style="margin-left: 10px;"></i> {{formatTime latestBlock.timestamp "HH:mm:ss"}} | {{formatTime latestBlock.timestamp "ll"}}
+
+        <br>
+        <span class="red">Warning! Don't use it on the mainnet just yet, as you could lose money!</span>
+    </div>
+
     <div class="wallet-balance">
         <h3>{{i18n 'wallet.app.texts.balance'}}</h3>
         <span>{{> elements_balance balance=totalBalance changeUnit=true}}</span>

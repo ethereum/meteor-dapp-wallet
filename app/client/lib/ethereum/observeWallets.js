@@ -365,135 +365,6 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
             }
         }));
 
-        // // WATCH for incoming transactions
-        // events.push(contractInstance.Deposit({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
-        // events[events.length-1].watch(function(error, log) {
-        //     if(!error) {
-        //         Helpers.eventLogs('Deposit for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber());
-
-        //         addTransaction(log, log.args.from, newDocument.address, log.args.value.toString(10));
-        //     }
-        // });
-        // // WATCH for outgoing transactions
-        // events.push(contractInstance.SingleTransact({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
-        // events[events.length-1].watch(function(error, log) {
-        //     if(!error) {
-        //         Helpers.eventLogs('SingleTransact for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber());
-
-        //         addTransaction(log, newDocument.address, log.args.to, log.args.value.toString(10));
-        //     }
-        // });
-        // events.push(contractInstance.MultiTransact({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
-        // events[events.length-1].watch(function(error, log) {
-        //     if(!error) {
-        //         Helpers.eventLogs('MultiTransact for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber() +', Operation '+ log.args.operation);
-        //         // Helpers.eventLogs(log);
-        //         addTransaction(log, newDocument.address, log.args.to, log.args.value.toString(10));
-        //     }
-        // });
-        // // WATCH FOR CONFIRMATIONS NEEDED
-        // events.push(contractInstance.ConfirmationNeeded({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
-        // events[events.length-1].watch(function(error, log) {
-        //     if(!error) {
-        //         Helpers.eventLogs('ConfirmationNeeded for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber() +', Operation '+ log.args.operation);
-
-        //         var block = web3.eth.getBlock(log.blockNumber, true, function(err, block){
-
-        //             if(!err) {
-        //                 var confirmationId = Helpers.makeId('pc', log.args.operation),
-        //                     accounts = Wallets.find({$or: [{address: log.address}, {address: log.args.to}]}).fetch(),
-        //                     pendingConf = PendingConfirmations.findOne(confirmationId),
-        //                     depositTx;
-
-        //                 // PREVENT SHOWING pending confirmations, of WATCH ONLY WALLETS
-        //                 if(!(from = Wallets.findOne({address: log.address})) || !Wallets.findOne({address: {$in: from.owners}}))
-        //                     return;
-
-        //                 if(accounts[0] && accounts[0].transactions) {
-        //                     var txs = _.flatten(_.pluck(accounts, 'transactions'));
-        //                     depositTx = Transactions.findOne({_id: {$in: txs || []}, operation: log.args.operation});
-        //                 }
-
-
-        //                 // add pending confirmation,
-        //                 // if not already present, OR transaction already went through
-        //                 if(depositTx) {
-        //                     PendingConfirmations.remove(confirmationId);
-                        
-        //                 } else {
-        //                     PendingConfirmations.upsert(confirmationId, {$set: {
-        //                         confirmedOwners: pendingConf ? pendingConf.confirmedOwners : [],
-        //                         initiator: log.args.initiator,
-        //                         operation: log.args.operation,
-        //                         value: log.args.value.toString(10),
-        //                         to: log.args.to,
-        //                         from: newDocument.address,
-        //                         timestamp: block.timestamp,
-        //                         blockNumber: log.blockNumber,
-        //                         blockHash: log.blockHash,
-        //                         transactionHash: log.transactionHash,
-        //                         transactionIndex: log.transactionIndex,
-        //                         // only filled when confirmations or revokes come in
-        //                         // lastActivityBlock: log.blockNumber,
-        //                         // lastActivityTxIndex: log.transactionIndex
-        //                     }});
-        //                 }
-        //             }
-                    
-        //         });
-
-        //     }
-        // });
-
-
-        // // WATCH for OWNER changes
-        // events.push(contractInstance.OwnerAdded({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
-        // events[events.length-1].watch(function(error, log) {
-        //     if(!error) {
-        //         Helpers.eventLogs('OwnerAdded for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
-
-        //         // re-add owner from log
-        //         Wallets.update(newDocument._id, {$addToSet: {
-        //             owners: log.args.newOwner
-        //         }});
-        //     }
-        // });
-        // events.push(contractInstance.OwnerRemoved({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
-        // events[events.length-1].watch(function(error, log) {
-        //     if(!error) {
-        //         Helpers.eventLogs('OwnerRemoved for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
-
-        //         // re-add owner from log
-        //         Wallets.update(newDocument._id, {$pull: {
-        //             owners: log.args.oldOwner
-        //         }});
-        //     }
-        // });
-        // events.push(contractInstance.RequirementChanged({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
-        // events[events.length-1].watch(function(error, log) {
-        //     if(!error) {
-        //         Helpers.eventLogs('RequirementChanged for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
-
-        //     }
-        // });
-        // events.push(contractInstance.Confirmation({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
-        // events[events.length-1].watch(function(error, log) {
-        //     if(!error) {
-        //         Helpers.eventLogs('Operation confirmation for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
-
-        //         // delay a little to prevent race conditions
-        //         confirmOrRevoke(contractInstance, log);
-        //     }
-        // });
-        // events.push(contractInstance.Revoke({}, {fromBlock: blockToCheckBack, toBlock: 'latest'}));
-        // events[events.length-1].watch(function(error, log) {
-        //     if(!error) {
-        //         Helpers.eventLogs('Operation revokation for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
-
-        //         // delay a little to prevent race conditions
-        //         confirmOrRevoke(contractInstance, log);
-        //     }
-        // });
     }
 
 };
@@ -596,12 +467,14 @@ observeWallets = function(){
                 //         contractInstance.changeRequirement(newDocument.requiredSignatures, {from: newDocument.owners[0], gas: 500000});
                 //     });
                 // }
+                if(_.isEmpty(newDocument.owners))
+                    return;
 
 
                 WalletContract.new(newDocument.owners, newDocument.requiredSignatures, (newDocument.dailyLimit || ethereumConfig.dailyLimitDefault), {
                     from: newDocument.owners[0],
-                    data: walletABICompiled, // walletStubABICompiled 184 280 walletABICompiled ~1 842 800
-                    gas: 2000000,
+                    data: walletStubABICompiled, // walletStubABICompiled 184 280 walletABICompiled ~1 842 800
+                    gas: 1000000,
 
                 }, function(error, contract){
                     if(!error) {

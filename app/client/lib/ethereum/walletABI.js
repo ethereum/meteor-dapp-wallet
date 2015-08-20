@@ -23,7 +23,7 @@ var deployTestnetWallet = function() {
             EthElements.Modal.show('views_modals_loading', {closeable: false});
 
             // deploy testnet wallet
-            WalletContract.new('','','', {
+            WalletContract.new([],'','', {
                 from: account,
                 data: walletABICompiled,
                 gas: 2000000,
@@ -49,6 +49,8 @@ var deployTestnetWallet = function() {
                         content: e.message,
                         duration: 8
                     });
+
+                    EthElements.Modal.hide();
                 }
             });
         }

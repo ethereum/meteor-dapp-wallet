@@ -10,7 +10,7 @@ observeLatestBlocks = function(){
         if(!e) {
 
             // UPDATE WALLETS ACCOUNTS balance
-            _.each(Wallets.find().fetch(), function(wallet){
+            _.each(Wallets.find({disabled: {$exists: false}}).fetch(), function(wallet){
                 web3.eth.getBalance(wallet.address, function(err, res){
                     if(!err) {
                         Wallets.update(wallet._id, {$set: {
