@@ -4,12 +4,12 @@
 
 
 Wallets = new Mongo.Collection('wallets', {connection: null});
-new PersistentMinimongo(Wallets);
+new PersistentMinimongo(Wallets, 'ethereum_wallet');
 
 // Contains the transactions
 Transactions = new Mongo.Collection('transactions', {connection: null});
-new PersistentMinimongo(Transactions);
+new PersistentMinimongo(Transactions, 'ethereum_wallet');
 
 // Contains the pending confirmations
 PendingConfirmations = new Mongo.Collection('pending-confirmations', {connection: null});
-new PersistentMinimongo(PendingConfirmations);
+new PersistentMinimongo(PendingConfirmations, 'ethereum_wallet');

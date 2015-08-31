@@ -17,7 +17,7 @@ ddp@1.1.0
 deps@1.0.7
 ejson@1.0.6
 ethereum:accounts@0.2.7
-ethereum:blocks@0.1.7
+ethereum:blocks@0.1.8
 ethereum:elements@0.4.3
 ethereum:tools@0.2.8
 ethereum:web3@0.12.2
@@ -26,6 +26,7 @@ frozeman:animation-helper@0.2.6
 frozeman:global-notifications@0.1.4
 frozeman:inline-form@0.0.6
 frozeman:persistent-minimongo@0.1.4
+frozeman:persistent-minimongo2@0.2.2
 frozeman:reactive-timer@0.1.7
 frozeman:simple-modal@0.0.7
 frozeman:storage@0.1.8
@@ -66,6 +67,7 @@ observe-sequence@1.0.6
 ordered-dict@1.0.3
 raix:eventemitter@0.1.3
 raix:handlebar-helpers@0.2.4
+raix:localforage@1.2.6
 random@1.0.3
 reactive-dict@1.1.0
 reactive-var@1.0.5

@@ -522,7 +522,7 @@ observeWallets = function(){
                 if(_.isEmpty(newDocument.owners))
                     return;
 
-                if(walletStubABICompiled.indexOf('cafecafecafecafecafecafecafecafecafecafe') !== -1) {
+                if(newDocument.code.indexOf('cafecafecafecafecafecafecafecafecafecafe') !== -1) {
                     GlobalNotification.error({
                         content: TAPi18n.__('wallet.newWallet.error.stubHasNoOrigWalletAddress'),
                         closeable: false
@@ -534,7 +534,7 @@ observeWallets = function(){
 
                 WalletContract.new(newDocument.owners, newDocument.requiredSignatures, (newDocument.dailyLimit || ethereumConfig.dailyLimitDefault), {
                     from: newDocument.owners[0],
-                    data: walletStubABICompiled, // walletStubABICompiled 184 280 walletABICompiled ~1 842 800
+                    data: newDocument.code,
                     gas: 1000000,
 
                 }, function(error, contract){
@@ -554,6 +554,7 @@ observeWallets = function(){
                         } else {
 
                             contracts['ct_'+ newDocument._id] = contract;
+                            delete newDocument.code;
 
                             Helpers.eventLogs('Contract Address: ', contract.address);
 
@@ -563,6 +564,8 @@ observeWallets = function(){
                             Wallets.update(newDocument._id, {$set: {
                                 creationBlock: EthBlocks.latest.number - 1,
                                 address: contract.address
+                            }, $unset: {
+                                code: ''
                             }});
 
 

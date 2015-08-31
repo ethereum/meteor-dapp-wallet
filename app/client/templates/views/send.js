@@ -53,7 +53,6 @@ var checkOverDailyLimit = function(address, wei, template){
     var restDailyLimit = new BigNumber(account.dailyLimit || '0', 10).minus(new BigNumber(account.dailyLimitSpent || '0', 10));
 
     if(account && account.requiredSignatures > 1 && account.dailyLimit && account.dailyLimit !== ethereumConfig.dailyLimitDefault && Number(wei) !== 0) {
-        console.log(restDailyLimit.toString(10), wei);
         if(restDailyLimit.lt(new BigNumber(wei, 10)))
             TemplateVar.set('dailyLimitText', new Spacebars.SafeString(TAPi18n.__('wallet.send.texts.overDailyLimit', {limit: EthTools.formatBalance(restDailyLimit.toString(10)), total: EthTools.formatBalance(account.dailyLimit), count: account.requiredSignatures - 1})));
         else

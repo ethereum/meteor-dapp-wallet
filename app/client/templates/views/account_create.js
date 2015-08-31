@@ -285,6 +285,7 @@ Template['views_account_create'].events({
     @event submit
     */
     'submit': function(e, template){
+        var code = walletStubABICompiled; // walletStubABICompiled 184 280 walletABICompiled ~1 842 800
         var type = TemplateVar.get('selectedSection');
 
         // SIMPLE
@@ -293,7 +294,8 @@ Template['views_account_create'].events({
                 owners: [template.find('select[name="dapp-select-account"]').value],
                 name: template.find('input[name="accountName"]').value || TAPi18n.__('wallet.accounts.defaultName'),
                 balance: '0',
-                creationBlock: EthBlocks.latest.number
+                creationBlock: EthBlocks.latest.number,
+                code: code
             });
 
             Router.go('/');
@@ -320,7 +322,8 @@ Template['views_account_create'].events({
                 balance: '0',
                 dailyLimit: web3.toWei(formValues.dailyLimitAmount, 'ether'),
                 requiredSignatures: formValues.multisigSignatures,
-                creationBlock: EthBlocks.latest.number
+                creationBlock: EthBlocks.latest.number,
+                code: code
             });
 
             Router.go('/');

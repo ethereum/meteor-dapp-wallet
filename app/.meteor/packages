@@ -14,7 +14,7 @@ tap:i18n
 raix:handlebar-helpers
 frozeman:animation-helper
 frozeman:template-var
-frozeman:persistent-minimongo
+frozeman:persistent-minimongo2
 frozeman:reactive-timer
 frozeman:storage
 zimme:iron-router-active
