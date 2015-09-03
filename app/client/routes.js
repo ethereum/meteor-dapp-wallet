@@ -13,7 +13,8 @@ The app routes
 
 
 // Change the URLS to use #! instead of real paths
-// Iron.Location.configure({useHashPaths: true});
+if(location.origin === "file://")
+    Iron.Location.configure({useHashPaths: true});
 
 
 // Router defaults
