@@ -25,6 +25,9 @@
 @colorOSBackgroundFocus: #D2D2D2;
 @colorOSBackgroundBlur: #F6F6F6;
 
+@colorWinBackgroundFocus: #F0F0F0;
+@colorWinBackgroundBlur: #F0F0F0;
+
 // Windows
 // @colorOSBackgroundFocus windows F0F0F0
 
@@ -51,13 +54,25 @@ body {
 
     &.app-blur {
         background: @colorOSBackgroundBlur;
-
-        .dapp-header {
-            background: @colorOSBackgroundBlur;
-        }
     }
 }
 
+.win32 .dapp-header {
+    background-color: @colorWinBackgroundFocus;
+    background-image: none;
+
+    &.dapp-small {
+        .box-shadow(none);
+        .dapp-shadow-small;
+    }
+}
+.darwin .dapp-header {
+    background-color: @colorOSBackgroundFocus;
+    .background-image(linear-gradient(to bottom,  @colorOSBackgroundFocus 50%, #ddd9d9 90%));
+}
+.app-blur .dapp-header {
+    background: @colorOSBackgroundBlur;
+}
 .dapp-header {
     background-color: @colorOSBackgroundFocus;
     .background-image(linear-gradient(to bottom,  @colorOSBackgroundFocus 50%, #ddd9d9 90%));
