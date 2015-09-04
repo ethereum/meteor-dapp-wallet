@@ -9,8 +9,6 @@ if(location.host !== 'localhost:3000' && location.host !== '127.0.0.1:3000')
     Meteor.disconnect();
 
 
-// Change the URLS to use #! instead of real paths
-// Iron.Location.configure({useHashPaths: true});
 
 Meteor.Spinner.options = {
     lines: 17, // The number of lines to draw

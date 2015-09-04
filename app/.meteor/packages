@@ -5,8 +5,11 @@
 
 meteor-platform
 fastclick
-iron:router@=1.0.7
-iron:url@=1.0.7
+iron:router
+iron:url
+zimme:iron-router-active
+kadira:flow-router
+kadira:blaze-layout
 less
 chuangbo:cookie
 jeeeyul:moment-with-langs
@@ -17,7 +20,6 @@ frozeman:template-var
 frozeman:persistent-minimongo2
 frozeman:reactive-timer
 frozeman:storage
-zimme:iron-router-active
 markdown
 frozeman:inline-form
 mrt:qrcodesvg
