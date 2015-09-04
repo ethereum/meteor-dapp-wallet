@@ -11,6 +11,7 @@ Global template helpers
 @constructor
 **/
 
+
 /**
 A simple template helper to log objects in the console.
 

@@ -3,14 +3,16 @@
 	<!-- <div class="dapp-grid"></div> -->
 
 	<header class="dapp-header">
-		{{> yield region="header"}}
+		{{> Template.dynamic template=header}}
+		{{! > yield region=header}}
 	</header>
 
 	<div class="dapp-flex-content">
 
 		<!-- content -->
 		<main class="dapp-content">
-			{{> yield}}
+			{{> Template.dynamic template=main}}
+			{{! > yield}}
 		</main>
 
 	</div>

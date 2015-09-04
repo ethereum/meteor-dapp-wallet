@@ -4,7 +4,7 @@ updateMistMenu = function(){
         balance = 0;
 
     Meteor.setTimeout(function(){
-        var routeName = Router.current() ? Router.current().route.getName() : '';
+        var routeName = FlowRouter.current().route.name;
 
         // add/update mist menu
         if(typeof mist !== 'undefined') {
@@ -14,14 +14,14 @@ updateMistMenu = function(){
                 name: TAPi18n.__('wallet.app.buttons.wallet'),
                 selected: routeName === 'dashboard'
             }, function(){
-                Router.go('/');
+                FlowRouter.go('/');
             });
             mist.menu.add('send',{
                 position: 2,
                 name: TAPi18n.__('wallet.app.buttons.send'),
                 selected: routeName === 'send' || routeName === 'sendTo'
             }, function(){
-                Router.go('/send');
+                FlowRouter.go('/send');
             });
 
             _.each(accounts, function(account, index){
@@ -31,7 +31,7 @@ updateMistMenu = function(){
                     badge: EthTools.formatBalance(account.balance, "0 a unit"),
                     selected: (location.pathname === '/account/'+ account.address)
                 }, function(){
-                    Router.go('/account/'+ account.address);
+                    FlowRouter.go('/account/'+ account.address);
                 });
             });
 

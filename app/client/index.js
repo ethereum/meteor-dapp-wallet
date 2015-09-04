@@ -1,10 +1,3 @@
-
-// IF its FILE PATH ORIGIN to "/""
-if(location.origin === 'file://')
-    Router.go('/');
-
-
-
 Meteor.startup(function() {
 
     // SET default language

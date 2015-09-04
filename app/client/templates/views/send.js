@@ -121,10 +121,10 @@ Template['views_send'].onRendered(function(){
     var template = this;
 
     // focus address input field
-    if(!this.data || !this.data.address)
+    if(!this.data || !FlowRouter.getParam('address'))
         this.$('input[name="to"]').focus();
     else {
-        this.find('input[name="to"]').value = this.data.address;
+        this.find('input[name="to"]').value = FlowRouter.getParam('address');
         this.$('input[name="to"]').trigger('change');
     }
 
@@ -362,7 +362,7 @@ Template['views_send'].events({
 
                                 addTransaction(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
 
-                                Router.go('/');
+                                FlowRouter.go('dashboard');
 
                             } else {
                                 EthElements.Modal.hide();
@@ -394,7 +394,7 @@ Template['views_send'].events({
 
                                 addTransaction(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
 
-                                Router.go('/');
+                                FlowRouter.go('dashboard');
                             } else {
 
                                 EthElements.Modal.hide();

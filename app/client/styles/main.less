@@ -51,32 +51,53 @@
 
 
 body {
-    background: @colorOSBackgroundFocus;
+    background: @colorWinBackgroundFocus;
 
     &.app-blur {
-        background: @colorOSBackgroundBlur;
+        background: @colorWinBackgroundBlur;
+    }
+}
+.app-blur {
+    .dapp-header {
+        background: @colorWinBackgroundBlur;
     }
 }
 
-.win32 .dapp-header {
-    background-color: @colorWinBackgroundFocus;
-    background-image: none;
+// WINDOWS
+.win32 {
+    .dapp-header {
+        background-color: @colorWinBackgroundFocus;
+        background-image: none;
 
-    &.dapp-small {
-        .box-shadow(none);
-        .dapp-shadow-small;
+        &.dapp-small {
+            .box-shadow(none);
+            .dapp-shadow-small;
+        }
     }
 }
-.darwin .dapp-header {
-    background-color: @colorOSBackgroundFocus;
-    .background-image(linear-gradient(to bottom,  @colorOSBackgroundFocus 50%, #ddd9d9 90%));
+// MAC
+.darwin {
+    body {
+        background: @colorOSBackgroundFocus;
+
+        &.app-blur {
+            background: @colorOSBackgroundBlur;
+
+            .dapp-header {
+                background: @colorOSBackgroundBlur;
+            }
+        }
+    }
+    .dapp-header {
+        background-color: @colorOSBackgroundFocus;
+        .background-image(linear-gradient(to bottom,  @colorOSBackgroundFocus 50%, #ddd9d9 90%));
+    }
 }
-.app-blur .dapp-header {
-    background: @colorOSBackgroundBlur;
-}
+
+
 .dapp-header {
-    background-color: @colorOSBackgroundFocus;
-    .background-image(linear-gradient(to bottom,  @colorOSBackgroundFocus 50%, #ddd9d9 90%));
+    background-color: @colorWinBackgroundFocus;
+    .background-image(linear-gradient(to bottom,  @colorWinBackgroundFocus 50%, #ddd9d9 90%));
     
     // ANIMATION
     .transition(box-shadow @animationSpeed / 2);

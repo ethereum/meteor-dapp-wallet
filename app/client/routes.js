@@ -1,38 +1,30 @@
-/**
-Template Controllers
+// configure
+BlazeLayout.setRoot('body');
 
-@module Routes
-*/
-
-/**
-The app routes
-
-@class App routes
-@constructor
-*/
-
-
-// Change the URLS to use #! instead of real paths
-if(location.origin === 'file://')
-    Iron.Location.configure({useHashPaths: true});
-
-
-// Router defaults
-Router.configure({
-    layoutTemplate: 'layout_main',
-    notFoundTemplate: 'layout_notFound',
-    yieldRegions: {
-        'layout_header': {to: 'header'}
+FlowRouter.notFound = {
+    action: function() {
+        BlazeLayout.render('layout_main', {
+            header: 'layout_header',
+            main: 'layout_notFound'
+        });
     }
-});
+};
 
-var scrollTop = function(){
-
-    EthElements.Modal.hide();
-
-    $(window).scrollTop(0);
-    this.next();
+// redirect on start to dahsboard on file protocol
+if(location.origin === 'file://') {
+    FlowRouter.hashbang = true;
+    Meteor.startup(function() {
+        FlowRouter.go('dashboard');
+    });
 }
+
+
+FlowRouter.triggers.enter([function(){
+    EthElements.Modal.hide();
+    $(window).scrollTop(0);
+}, updateMistMenu]);
+
+
 
 // ROUTES
 
@@ -41,30 +33,12 @@ The receive route, showing the wallet overview
 
 @method dashboard
 */
-Router.route('/', {
-    template: 'views_dashboard',
+FlowRouter.route('/', {
     name: 'dashboard',
-    onBeforeAction: scrollTop,
-    onAfterAction: function(){
-        Tracker.nonreactive(function(){
-            updateMistMenu();
-        });
-    },
-});
-
-
-/**
-The send route.
-
-@method send
-*/
-Router.route('/send', {
-    template: 'views_send',
-    name: 'send',
-    onBeforeAction: scrollTop,
-    onAfterAction: function(){
-        Tracker.nonreactive(function(){
-            updateMistMenu();
+    action: function(params, queryParams) {
+        BlazeLayout.render('layout_main', {
+            header: 'layout_header',
+            main: 'views_dashboard'
         });
     }
 });
@@ -75,17 +49,30 @@ The send route.
 
 @method send
 */
-Router.route('/send/:address', {
-    template: 'views_send',
-    name: 'sendTo',
-    onBeforeAction: scrollTop,
-    onAfterAction: function(){
-        Tracker.nonreactive(function(){
-            updateMistMenu();
+FlowRouter.route('/send', {
+    name: 'send',
+    action: function(params, queryParams) {
+        BlazeLayout.render('layout_main', {
+            header: 'layout_header',
+            main: 'views_send'
         });
-    },
-    data: function() {
-        return this.params;
+    }
+});
+
+
+
+/**
+The send route.
+
+@method send
+*/
+FlowRouter.route('/send/:address', {
+    name: 'sendTo',
+    action: function(params, queryParams) {
+        BlazeLayout.render('layout_main', {
+            header: 'layout_header',
+            main: 'views_send'
+        });
     }
 });
 
@@ -94,12 +81,12 @@ The create account route.
 
 @method send
 */
-Router.route('/account/new', {
-    template: 'views_account_create',
+FlowRouter.route('/account/new', {
     name: 'createAccount',
-    onAfterAction: function(){
-        Tracker.nonreactive(function(){
-            updateMistMenu();
+    action: function(params, queryParams) {
+        BlazeLayout.render('layout_main', {
+            header: 'layout_header',
+            main: 'views_account_create'
         });
     }
 });
@@ -111,20 +98,13 @@ The account route.
 
 @method send
 */
-Router.route('/account/:address', {
-    template: 'views_account',
+FlowRouter.route('/account/:address', {
     name: 'account',
-    onBeforeAction: scrollTop,
-    onAfterAction: function(){
-        Tracker.nonreactive(function(){
-            updateMistMenu();
+    action: function(params, queryParams) {
+        BlazeLayout.render('layout_main', {
+            header: 'layout_header',
+            main: 'views_account'
         });
-    },
-    data: function() {
-        return Helpers.getAccountByAddress(this.params.address);
     }
 });
-
-
-
 

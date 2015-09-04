@@ -5,11 +5,9 @@
 
 meteor-platform
 fastclick
-iron:router
-iron:url
-zimme:iron-router-active
 kadira:flow-router
 kadira:blaze-layout
+arillo:flow-router-helpers
 less
 chuangbo:cookie
 jeeeyul:moment-with-langs

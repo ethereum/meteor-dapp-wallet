@@ -13,14 +13,23 @@ The template to display account information.
 
 
 Template['views_account'].onRendered(function(){
-    if(this.data) {
-        var qrcodesvg = new Qrcodesvg( this.data.address, 'qrcode', 150, {"ecclevel" : 1});
+    var address = FlowRouter.getParam('address');
+    if(address) {
+        var qrcodesvg = new Qrcodesvg( address, 'qrcode', 150, {"ecclevel" : 1});
         qrcodesvg.draw({"method": "classic", "fill-colors":["#555","#555","#666"]}, {"stroke-width":1});
     }
 });
 
 
 Template['views_account'].helpers({
+    /**
+    Get the current selected account
+
+    @method (account)
+    */
+    'account': function() {
+          return Helpers.getAccountByAddress(FlowRouter.getParam('address'));
+    },
     /**
     Get the pending confirmations of this account.
 
@@ -61,9 +70,9 @@ Template['views_account'].helpers({
     'ownerLink': function(){
         var owner = String(this);
         if(Helpers.getAccountByAddress(owner))
-            return Router.routes['account'].path({address: owner});
+            return FlowRouter.path('account', {address: owner});
         else
-            return Router.routes['sendTo'].path({address: owner});
+            return FlowRouter.path('sendTo', {address: owner});
     }
 });
 
@@ -80,7 +89,7 @@ Template['views_account'].events({
             ok: function(){
                 if(Wallets.findOne(template.data._id).name === $('input.deletionConfirmation').val()) {
                     Wallets.remove(template.data._id);
-                    Router.go('/');
+                    FlowRouter.go('dashboard');
                     return true;
                 }
             },

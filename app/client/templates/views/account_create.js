@@ -298,7 +298,7 @@ Template['views_account_create'].events({
                 code: code
             });
 
-            Router.go('/');
+            FlowRouter.go('dashboard');
         }
 
         // MULTISIG
@@ -326,7 +326,7 @@ Template['views_account_create'].events({
                 code: code
             });
 
-            Router.go('/');
+            FlowRouter.go('dashboard');
         }
 
         // IMPORT
@@ -365,7 +365,7 @@ Template['views_account_create'].events({
                 imported: true
             });
 
-            Router.go('/');
+            FlowRouter.go('dashboard');
         }
 
     }
