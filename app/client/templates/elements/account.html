@@ -1,6 +1,6 @@
 <template name="elements_account">
     {{#with account}}
-        <a href="{{pathFor route='account' address=address}}" class="wallet-box {{#if disabled}}disabled{{/if}} {{#if ../wallets}}wallets{{/if}}">
+        <a href="{{pathFor route='account' address=address}}" class="wallet-box {{#if $or creating disabled}}disabled{{/if}} {{#if ../wallets}}wallets{{/if}}">
             {{#with unConfirmed}}
                 <div class="dapp-progress">
                     <div class="dapp-bar" style="width: {{percent}}%;"></div>
@@ -30,7 +30,7 @@
                 {{name}}
             </h3>
 
-            {{#unless disabled}}
+            {{#unless creating}}
                 {{> elements_balance balance=balance}}
             {{else}}
                 {{#if imported}}

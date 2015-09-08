@@ -19,6 +19,9 @@
                 "connectionErrorMist": "Unable to connect. Please start geth using:<br><br><small><code>__node__</code><br><br>Make sure you set your IPC path to the default one, when using a different <code>datadir</code>, e.g.<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/geth.ipc</code><br>or<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/geth.ipc</code>. <br><br>Optional add: <code>--unlock &lt;yourAccount&gt;.</code></small>",
                 "connectionErrorBrowser": "Unable to connect. Please start geth with the following options:<br><br><small><code>__node__</code><br><br>Optional add: <code>--unlock &lt;yourAccount&gt;.</code></small>",
                 "pendingConfirmationsBadge": "Pending Confirmation!"
+            },
+            "error": {
+                "wrongChain": "You seem on a different chain, please restart the wallet!"
             }
         },
         "modals": {
@@ -44,7 +47,7 @@
             "owners": "Owners",
             "modal": {
                 "deleteText": "Do you really want to delete the wallet?<br>If you lose the wallet address, you will lose the funds on it!<br><br>Type the name of the wallet to confirm the deletion.",
-                "backupWallet": "<h1>Backup your wallet!</h1>Make sure to write the address down, so you can import it again, if you need to.<br><pre style=\"font-size: 0.75em;\">__address__</pre>"
+                "backupWallet": "<h1>Backup your wallet!</h1>Make sure to write down the address so you can import it again, if needed.<br><pre style=\"font-size: 0.75em;\">__address__</pre>"
             }
         },
         "transactions": {

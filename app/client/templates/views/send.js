@@ -107,6 +107,11 @@ Template['views_send'].onCreated(function(){
     TemplateVar.set('amount', 0);
     TemplateVar.set('estimatedGas', 0);
 
+
+    // check if we are still on the correct chain
+    Helpers.checkChain();
+
+
     // change the amount when the currency unit is changed
     template.autorun(function(c){
         var unit = EthTools.getUnit();

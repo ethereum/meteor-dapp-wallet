@@ -50,9 +50,9 @@ Template['elements_account'].helpers({
     /**
     Should the wallet show disabled
 
-    @method (disabled)
+    @method (creating)
     */
-    'disabled': function(){
+    'creating': function(){
         return (!this.address || this.imported || blocksForConfirmation >= EthBlocks.latest.number - (this.creationBlock - 1));
     },
     /**

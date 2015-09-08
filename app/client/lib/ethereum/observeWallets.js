@@ -499,29 +499,12 @@ observeWallets = function(){
                 }
 
 
-
-                // ADD OWNERS
-                // if(newDocument.owners.length > 1) {
-                //     _.each(newDocument.owners, function(owner){
-                //         if(newDocument.owners[0] !== owner) {
-                //             contractInstance.addOwner(owner, {from: newDocument.owners[0], gas: 1000000});
-                //             // remove owner, so that log can re-add it
-                //             Wallets.update(newDocument._id, {$pull: {
-                //                 owners: owner
-                //             }});
-                //         }
-                //     });
-                // }
-
-                // ADD REQUIRED SIGNATURES
-                // if(newDocument.requiredSignatures && newDocument.requiredSignatures != 1) {
-                //     Tracker.afterFlush(function(){
-                //         contractInstance.changeRequirement(newDocument.requiredSignatures, {from: newDocument.owners[0], gas: 500000});
-                //     });
-                // }
                 if(_.isEmpty(newDocument.owners))
                     return;
 
+                // SAFETY
+
+                // 1. check if stub code has a proper address
                 if(newDocument.code.indexOf('cafecafecafecafecafecafecafecafecafecafe') !== -1) {
                     GlobalNotification.error({
                         content: TAPi18n.__('wallet.newWallet.error.stubHasNoOrigWalletAddress'),
@@ -531,68 +514,77 @@ observeWallets = function(){
                     return;
                 }
 
-
-                WalletContract.new(newDocument.owners, newDocument.requiredSignatures, (newDocument.dailyLimit || ethereumConfig.dailyLimitDefault), {
-                    from: newDocument.owners[0],
-                    data: newDocument.code,
-                    gas: 1000000,
-
-                }, function(error, contract){
-                    if(!error) {
-
-                        // TX HASH arrived
-                        if(!contract.address) {
-
-                            // add transactionHash to account
-                            newDocument.transactionHash = contract.transactionHash;
-
-                            Wallets.update(newDocument._id, {$set: {
-                                transactionHash: contract.transactionHash
-                            }});
-
-                        // CONTRACT DEPLOYED
-                        } else {
-
-                            contracts['ct_'+ newDocument._id] = contract;
-                            delete newDocument.code;
-
-                            Helpers.eventLogs('Contract Address: ', contract.address);
-
-                            // add transactionHash to account
-                            newDocument.address = contract.address;
-
-                            Wallets.update(newDocument._id, {$set: {
-                                creationBlock: EthBlocks.latest.number - 1,
-                                address: contract.address
-                            }, $unset: {
-                                code: ''
-                            }});
-
-
-                            updateContractData(newDocument);
-
-                            setupContractFilters(newDocument);
-
-                            // Show backup note
-                            EthElements.Modal.question({
-                                text: new Spacebars.SafeString(TAPi18n.__('wallet.accounts.modal.backupWallet', 
-                                    {address: contract.address})),
-                                ok: true
-                            },{
-                                closeable: false
-                            });
-                        }
-                        
-                    } else {
-                        GlobalNotification.error({
-                            content: error.message,
-                            duration: 8
-                        });
-
-                        // remove account, if something failed
+                // 2. check if we ares still on the right chain, before creating a wallet
+                Helpers.checkChain(function(e) {
+                    if(e) {
                         Wallets.remove(newDocument._id);
+
+                    } else {
+                        WalletContract.new(newDocument.owners, newDocument.requiredSignatures, (newDocument.dailyLimit || ethereumConfig.dailyLimitDefault), {
+                            from: newDocument.owners[0],
+                            data: newDocument.code,
+                            gas: 1000000,
+
+                        }, function(error, contract){
+                            if(!error) {
+
+                                // TX HASH arrived
+                                if(!contract.address) {
+
+                                    // add transactionHash to account
+                                    newDocument.transactionHash = contract.transactionHash;
+
+                                    Wallets.update(newDocument._id, {$set: {
+                                        transactionHash: contract.transactionHash
+                                    }});
+
+                                // CONTRACT DEPLOYED
+                                } else {
+
+                                    contracts['ct_'+ newDocument._id] = contract;
+                                    delete newDocument.code;
+
+                                    Helpers.eventLogs('Contract Address: ', contract.address);
+
+                                    // add transactionHash to account
+                                    newDocument.address = contract.address;
+
+                                    Wallets.update(newDocument._id, {$set: {
+                                        creationBlock: EthBlocks.latest.number - 1,
+                                        address: contract.address
+                                    }, $unset: {
+                                        code: ''
+                                    }});
+
+
+                                    updateContractData(newDocument);
+
+                                    setupContractFilters(newDocument);
+
+                                    // Show backup note
+                                    EthElements.Modal.question({
+                                        text: new Spacebars.SafeString(TAPi18n.__('wallet.accounts.modal.backupWallet', 
+                                            {address: contract.address})),
+                                        ok: true
+                                    },{
+                                        closeable: false
+                                    });
+                                }
+                                
+                            } else {
+                                GlobalNotification.error({
+                                    content: error.message,
+                                    duration: 8
+                                });
+
+                                // remove account, if something failed
+                                Wallets.remove(newDocument._id);
+                            }
+                        });
                     }
                 });
+
+
 
             // USE DEPLOYED CONTRACT
             } else {
@@ -603,6 +595,19 @@ observeWallets = function(){
                     if(!err) {
                         Wallets.update(newDocument._id, {$set: {
                             balance: res.toString(10)
+                        }});
+                    }
+                });
+
+                // check if wallet is at address
+                web3.eth.getCode(newDocument.address, function(e, code) {
+                    if(code && code.length > 2){
+                        Wallets.update(newDocument._id, {$unset: {
+                            disabled: ''
+                        }});
+                    } else {
+                        Wallets.update(newDocument._id, {$set: {
+                            disabled: true
                         }});
                     }
                 });

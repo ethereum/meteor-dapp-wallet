@@ -12,7 +12,9 @@ FlowRouter.notFound = {
 
 // redirect on start to dahsboard on file protocol
 if(location.origin === 'file://') {
-    FlowRouter.hashbang = true;
+    FlowRouter.wait();
+    FlowRouter.initialize({hashbang: true});
+
     Meteor.startup(function() {
         FlowRouter.go('dashboard');
     });

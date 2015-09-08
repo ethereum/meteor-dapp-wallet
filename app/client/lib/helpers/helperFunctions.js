@@ -65,6 +65,28 @@ Helpers.eventLogs = function(){
 }
 
 /**
+Check if we are on the correct chain and display an error.
+
+@method checkChain
+@param {Function} callback provide a callback, to get notified if successfull or error (will contain an error object as first parameter, if error)
+*/
+Helpers.checkChain = function(callback){
+    web3.eth.getCode(originalContractAddress, function(e, code){
+        if(code && code.length <= 2) {
+            GlobalNotification.error({
+                content: TAPi18n.__('wallet.app.error.wrongChain'),
+                closeable: false
+            });
+
+            if(_.isFunction(callback))
+                callback('Wrong chain!');
+
+        } else if(_.isFunction(callback))
+            callback(null);
+    });
+};
+
+/**
 Check if the given wallet is a watch only wallet, by checking if we are one of owners in the wallet.
 
 @method isWatchOnly
