@@ -28,6 +28,9 @@
 @colorWinBackgroundFocus: #F0F0F0;
 @colorWinBackgroundBlur: #F0F0F0;
 
+@colorLinuxBackgroundFocus: #403F3A;
+@colorLinuxBackgroundBlur: #3C3B36;
+
 // Windows
 // @colorOSBackgroundFocus windows F0F0F0
 
@@ -37,6 +40,7 @@
     position: fixed;
     bottom: @defaultPaddingVertical*2;
     right: @defaultPaddingVertical*2;
+    font-weight: 400;
 }
 
 // MODALS
@@ -72,6 +76,32 @@ body {
         &.dapp-small {
             .box-shadow(none);
             .dapp-shadow-small;
+        }
+    }
+}
+// LINUX
+.linux {
+    body {
+        background: @colorLinuxBackgroundFocus;
+
+        &.app-blur {
+            background: @colorLinuxBackgroundBlur;
+
+            .dapp-header {
+                background: @colorLinuxBackgroundBlur;
+            }
+        }
+    }
+    .dapp-header {
+        background-color: @colorLinuxBackgroundFocus;
+        .background-image(linear-gradient(to bottom,  @colorLinuxBackgroundFocus 20%, lighten(@colorLinuxBackgroundFocus, 5%) 90%));
+        color: @colorWhite;
+
+        nav a,
+        div.block-info,
+        .wallet-balance h3,
+        .wallet-balance span.account-balance {
+            color: @colorWhite;
         }
     }
 }
