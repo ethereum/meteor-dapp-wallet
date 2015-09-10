@@ -28,4 +28,4 @@ ethereum:elements
 ethereum:web3
 ethereum:blocks
 ethereum:accounts
-http
+numeral:numeral
