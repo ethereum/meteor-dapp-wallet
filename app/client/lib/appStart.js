@@ -35,36 +35,6 @@ var connect = function(){
 
     if(web3.isConnected()) {
 
-        // Stop app operation, when the node is syncing
-        web3.eth.isSyncing(function(error, syncing) {
-            if(!error) {
-
-                if(syncing === true) {
-                    console.log('Node started syncing, stopping app operation');
-                    web3.reset();
-
-                
-                } else if(_.isObject(syncing)) {
-
-                    syncing.currentBlock = numeral(syncing.currentBlock).format('0,0');
-                    syncing.highestBlock = numeral(syncing.highestBlock).format('0,0');
-                    
-                    EthElements.Modal.question({
-                        text: new Spacebars.SafeString('<i class="icon-clock"></i><br><br>'+ TAPi18n.__('wallet.app.texts.nodeSyncing', syncing))
-                    }, {
-                        closeable: false
-                    });
-
-                } else {
-                    console.log('Restart app operation again');
-
-                    EthElements.Modal.hide();
-
-                    connectToNode();
-                }
-            }
-        });
-
         // only start app operation, when the node is not syncing
         web3.eth.getSyncing(function(e, sync) {
             if(!e && !sync)

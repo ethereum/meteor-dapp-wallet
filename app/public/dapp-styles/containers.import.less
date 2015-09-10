@@ -19,7 +19,6 @@ body {
             .blur(4px);
         }
     }
-
 }
 
 // Special cases on a full screen dapp in mist
@@ -70,8 +69,11 @@ body {
 
 .dapp-header {
     height: @heightHeader;
+    margin-top: -5px; // necessary to make sure, that its looks good, when blurred
+    padding-top: @defaultPaddingVertical + 5px; 
     .box-sizing(content-box);
     .background-image(linear-gradient(to bottom,  lighten(@colorBackgroundHeader, 15%) 0, @colorBackgroundHeader 90%));
+
 
     &.dapp-small {
         height: @gridHeight * 1;
@@ -113,7 +115,7 @@ body {
                     font-size: 1.5em;
 
                     // ANIMATION
-                    .transition(opacity @animationSpeed / 4);
+                    .transition(opacity @animationSpeed / 2);
                 }
 
                 span {

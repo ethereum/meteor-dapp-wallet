@@ -113,6 +113,10 @@ body {
         .block-info {
             bottom: @defaultPaddingVertical - 1px;
 
+            .text {
+                display: none;
+            }
+
             .red {
                 display: none;
             }
@@ -129,14 +133,22 @@ body {
         bottom: @defaultPaddingVertical - 1px;
         display: inline-block;
         left: 50%;
-        width: 300px;
-        margin-left: -150px;
+        width: 350px;
+        margin-left: -175px;
         color: @colorGrayDark;
-        .opacity(0.5);
+        .opacity(0.6);
         text-align: center;
 
         // ANIMATION
         .transition(bottom @animationSpeed / 2);
+
+        &.syncing {
+            .opacity(0.9);
+
+            progress {
+                width: 200px;
+            }
+        }
 
         i {
             font-size: 0.7em;

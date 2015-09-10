@@ -2,11 +2,57 @@
     display: none;
 }
 
+/* PROGRESSBAR */
+progress {
+    -webkit-appearance: none;
+    appearance: none;
+    height: @gridHeight/2;
+    margin: @gridHeight/4;
+    color: @colorBlue;
+
+    @shadow: inset 0 1px 4px rgba(0, 0, 0, 0.2);
+    @radius: 2px;
+
+    // bar
+    &::-webkit-progress-bar {
+        background-color: fadeout(@colorGrayLight, 10%);
+        border-radius: @radius;
+        box-shadow: @shadow
+    }
+    &::-moz-progress-bar {
+        background-color: fadeout(@colorGrayLight, 10%);
+        border-radius: @radius;
+        box-shadow: @shadow
+    }
+    &::progress-bar {
+        background-color: fadeout(@colorGrayLight, 10%);
+        border-radius: @radius;
+        box-shadow: @shadow
+    }
+
+    // value
+    &::-webkit-progress-value {
+        background-color: @colorBlue;
+        opacity: 0.8;
+        border-radius: @radius;
+    }
+    &::-moz-progress-value {
+        background-color: @colorBlue;
+        opacity: 0.8;
+        border-radius: @radius;
+    }
+    &::progress-value {
+        background-color: @colorBlue;
+        opacity: 0.8;
+        border-radius: @radius;
+    }
+}
+
 .dapp-progress {
     position: relative;
     width: 100%;
     height: @gridHeight;
-    border-bottom: 1px solid @colorGreen;
+    border-bottom: 1px solid @colorBlue;
 
     > span {
         display: block;
@@ -22,7 +68,7 @@
 
     .dapp-bar {
         height: 100%;
-        .background-image(linear-gradient(to top, @colorGreen 0%, lighten(@colorGreen, 20%) 100%));
+        .background-image(linear-gradient(to top, @colorBlue 0%, lighten(@colorBlue, 20%) 100%));
 
         // ANIMATION
         .transition(width @animationSpeed*26 linear);

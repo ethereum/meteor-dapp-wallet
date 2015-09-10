@@ -14,13 +14,27 @@
         </ul>
     </nav>
 
-    <div class="block-info">
+    <div class="block-info {{#if TemplateVar.get 'syncing'}}syncing{{/if}}">
         {{#unless $.Session.get "isMainNet"}}
-        <span class="orange" style="font-weight: 400;">TESTNET</span> | 
+            <span class="orange" style="font-weight: 400;">TESTNET</span> | 
         {{/unless}}
-        <i class="icon-layers"></i> {{latestBlock.number}} <i class="icon-clock" style="margin-left: 10px;"></i> {{formatTime latestBlock.timestamp "HH:mm:ss"}} | {{formatTime latestBlock.timestamp "ll"}}
-        <br>
-        <span class="red">Warning! Don't use it on the mainnet just yet, as you could lose money!</span>
+
+        {{#with TemplateVar.get "syncing"}}
+            <span class="text">
+                <i class="icon-layers"></i> {{{i18n "wallet.app.texts.nodeSyncing" blockDiff=blockDiff}}}
+                &nbsp;&nbsp;|&nbsp;&nbsp;
+                <i class="icon-cloud-download"></i> {{progress}}%
+                <br>
+            </span>
+            <progress max="100" value="{{progress}}"></progress>
+        {{else}}
+            <i class="icon-layers"></i> {{latestBlock.number}} <i class="icon-clock" style="margin-left: 10px;"></i> {{formatTime latestBlock.timestamp "HH:mm:ss"}} | {{formatTime latestBlock.timestamp "ll"}}
+        {{/with}}
+
+        {{#if $.Session.get "isMainNet"}}
+            <br>
+            <span class="red">Warning! Don't use it on the mainnet just yet, as you could lose money!</span>
+        {{/if}}
     </div>
 
     <div class="wallet-balance">
