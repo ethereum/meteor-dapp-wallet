@@ -19,7 +19,7 @@ Template['views_dashboard'].helpers({
     @method (wallets)
     */
     'wallets': function(){
-        return Wallets.find({}, {sort: {balance: -1, creationBlock: 1, name: 1}});
+        return Wallets.find({}, {sort: {disabled: 1, creationBlock: 1}});
     },
     /**
     Get all current accounts

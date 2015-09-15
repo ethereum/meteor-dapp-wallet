@@ -124,6 +124,10 @@ a.wallet-box {
             font-size: 0.8em;
             line-height: 1.4em;
             color: fadeout(@colorTextSecondary, 40%);
+
+            &.creating {
+                color: @colorWhite;
+            }
         }
     }
 }
@@ -157,6 +161,13 @@ table {
             &.disabled {
                 .opacity(0.2);
             }
+            &:hover {
+                border-left: 2px solid @colorGray;
+                border-right: 2px solid @colorGray;
+            }
+
+            border-left: 2px solid transparent;
+            border-right: 2px solid transparent;
 
             .dapp-progress {
                 position: absolute;

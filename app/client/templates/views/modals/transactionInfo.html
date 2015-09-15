@@ -2,7 +2,7 @@
     {{#with transaction}}
         <h1>
             {{i18n "wallet.transactions.transactionInfoTitle"}}
-            <a href="https://etherchain.org/tx/{{transactionHash}}" target="_blank" style="font-size: 0.4em;">{{transactionHash}}</a>
+            <a href="http://etherscan.io/tx/{{transactionHash}}" target="_blank" style="font-size: 0.4em;">{{transactionHash}}</a>
         </h1>
 
         <p>
@@ -60,7 +60,7 @@
                     <tr>
                         <td>Block</td>
                         <td>
-                            <a href="https://etherchain.org/tx/{{block}}" title="{{blockHash}}" target="_blank" class="dapp-shorten-text">
+                            <a href="http://etherscan.io/block/{{blockHash}}" title="{{blockHash}}" target="_blank" class="dapp-shorten-text">
                                 {{blockNumber}}
                                 <br>
                                 {{blockHash.substr 0 40}}...

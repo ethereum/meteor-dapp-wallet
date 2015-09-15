@@ -39,7 +39,7 @@
                     <span class="account-balance">{{i18n "wallet.accounts.creating"}} <span>...</span></span>
                 {{/if}}
             {{/unless}}
-            <span class="account-id">{{address}}</span>
+            <span class="account-id {{#if creating}}creating{{/if}}">{{address}}</span>
         </a>
     {{/with}}
 </template>
