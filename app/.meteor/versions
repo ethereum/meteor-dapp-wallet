@@ -22,7 +22,7 @@ ethereum:accounts@0.2.9
 ethereum:blocks@0.1.9
 ethereum:elements@0.4.6
 ethereum:tools@0.2.9
-ethereum:web3@0.12.2
+ethereum:web3@0.13.0
 fastclick@1.0.3
 frozeman:animation-helper@0.2.6
 frozeman:global-notifications@0.1.4

@@ -20,7 +20,7 @@ Template['layout_header'].onCreated(function(){
 
             if(syncing === true) {
                 console.log('Node started syncing, stopping app operation');
-                web3.reset();
+                web3.reset(true);
 
             
             } else if(_.isObject(syncing)) {
