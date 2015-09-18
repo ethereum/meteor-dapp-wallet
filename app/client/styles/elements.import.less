@@ -36,6 +36,11 @@ a.wallet-box {
     margin-right: @defaultMargin;
     margin-bottom: @defaultMargin;
     .box-sizing(border-box);
+    border: 0;
+
+    &:active {
+        border: 0;
+    }
 
     &.wallets {
         // background-color: lighten(@colorBackgroundHeader, 12%);

@@ -26,9 +26,19 @@
         
         <h2>{{i18n "wallet.accounts.accountsTitle"}}</h2>
         <div class="dapp-clear-fix"></div>
+
         {{#each accounts}}
             {{> elements_account account=_id}}
         {{/each}}
+
+        {{#if isMist}}
+            <a href="#" class="wallet-box create account">
+                <div class="account-pattern">
+                    +
+                </div>
+                <h3>{{i18n "wallet.app.buttons.addAccount"}}</h3>
+            </a>
+        {{/if}}
 
 
 

@@ -22,6 +22,15 @@ Template.registerHelper('debug', function(object){
 });
 
 /**
+Check if in mist
+
+@method (isMist)
+**/
+Template.registerHelper('isMist', function(object){
+    return typeof mist !== 'undefined';
+});
+
+/**
 Return the current unit
 
 @method (unit)

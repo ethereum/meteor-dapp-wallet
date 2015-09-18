@@ -27,7 +27,7 @@ Template['views_dashboard'].helpers({
     @method (accounts)
     */
     'accounts': function(){
-        return EthAccounts.find({}, {sort: {balance: -1, name: 1}});
+        return EthAccounts.find({}, {sort: {name: 1}});
     },
     /**
     Get all transactions
@@ -51,11 +51,12 @@ Template['views_dashboard'].helpers({
 
 Template['views_dashboard'].events({
     /**
-    Set the to publicKey while typing
+    Request to create an account in mist
     
-    @event keyup input[name="to"]
+    @event click a.create.account
     */
-    // 'keyup input[name="to"]': function(e){
-    //     TemplateVar.set('toPublicKey', e.currentTarget.value);
-    // },
+    'click a.create.account': function(e){
+        e.preventDefault();
+        mist.requestAccount();
+    },
 });
