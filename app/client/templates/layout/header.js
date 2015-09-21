@@ -60,9 +60,17 @@ Template['layout_header'].helpers({
     'timeSinceBlock': function () {
         var timeSince = moment(EthBlocks.latest.timestamp, "X");
         var now = moment();
+        var diff = now.diff(timeSince, "seconds")
 
-        Helpers.rerun["1s"].tick();
-        
-        return now.diff(timeSince, "seconds");
+        if (diff>120) {
+            Helpers.rerun["10s"].tick();
+            return timeSince.fromNow(true) + " since last block";
+        } else if (diff<3) {
+            Helpers.rerun["1s"].tick();
+            return " New block loaded"
+        } else {
+            Helpers.rerun["1s"].tick();
+            return diff + "s since last block"
+        }
     }
 });
