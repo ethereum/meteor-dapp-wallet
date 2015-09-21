@@ -56,5 +56,13 @@ Template['layout_header'].helpers({
         }
 
         return balance;
+    }, 
+    'timeSinceBlock': function () {
+        var timeSince = moment(EthBlocks.latest.timestamp, "X");
+        var now = moment();
+
+        Helpers.rerun["1s"].tick();
+        
+        return now.diff(timeSince, "seconds");
     }
 });
