@@ -33,7 +33,7 @@
             </span>
             <progress max="100" value="{{progress}}"></progress>
         {{else}}
-            <i class="icon-layers"></i> {{latestBlock.number}} <i class="icon-clock" style="margin-left: 10px;"></i> {{formatTime latestBlock.timestamp "HH:mm:ss"}} | {{formatTime latestBlock.timestamp "ll"}}
+            <i class="icon-layers"></i> {{latestBlock.number}} <i class="icon-clock" style="margin-left: 10px;"></i> <!-- {{! formatTime latestBlock.timestamp "HH:mm:ss"}} {{! formatTime latestBlock.timestamp "ll"}} --> {{timeSinceBlock}} 
         {{/with}}
     </div>
 
