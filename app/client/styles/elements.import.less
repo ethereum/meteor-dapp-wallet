@@ -176,12 +176,17 @@ table {
 
             .dapp-progress {
                 position: absolute;
-                left: 0;
-                right: 0;
+                left: 1px;
+                right: 1px;
                 margin: 0;
-                margin-top: 1px;
-                height: 5px;
+                height: 84px;
+                width: auto;
                 border: 0;
+                .opacity(0.1);
+
+                .dapp-bar {
+                    .background-image(linear-gradient(to bottom, @colorBlue 0%, fadeout(@colorBlue, 100%) 100%));
+                }
 
                 > span {
                     padding: 0;

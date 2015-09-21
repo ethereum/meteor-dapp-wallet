@@ -12,6 +12,7 @@ less
 chuangbo:cookie
 jeeeyul:moment-with-langs
 tap:i18n
+tap:i18n-bundler
 raix:handlebar-helpers
 frozeman:animation-helper
 frozeman:template-var

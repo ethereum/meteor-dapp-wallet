@@ -2,7 +2,7 @@
     <i class="icon-docs"></i> {{i18n "wallet.transactions.types.createdContract"}}
     {{#if contractAddress}}
         {{i18n "commonWords.at"}} 
-        <a href="https://etherchain.org/account/{{contractAddress}}" target="_blank">{{contractAddress}}</a>
+        <a href="http://etherscan.io/address/{{contractAddress}}" target="_blank">{{contractAddress}}</a>
         {{#unless deployedData}}
             <br>
             <small class="red">

@@ -101,7 +101,7 @@ Template['views_send'].onCreated(function(){
 
     // set account queries
     accountQuery = {owners: {$in: _.pluck(EthAccounts.find({}).fetch(), 'address')}, address: {$exists: true}};
-    accountSort = {sort: {balance: -1}};
+    accountSort = {sort: {name: 1}};
 
     // set the default fee
     TemplateVar.set('amount', 0);
