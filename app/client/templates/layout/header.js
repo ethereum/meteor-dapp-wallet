@@ -64,13 +64,13 @@ Template['layout_header'].helpers({
 
         if (diff>120) {
             Helpers.rerun["10s"].tick();
-            return timeSince.fromNow(true) + " since last block";
+            return timeSince.fromNow(true) + " " + TAPi18n.__('wallet.app.texts.timeSinceBlock');
         } else if (diff<3) {
             Helpers.rerun["1s"].tick();
-            return " New block loaded"
+            return " " + TAPi18n.__('wallet.app.texts.blockReceived')
         } else {
             Helpers.rerun["1s"].tick();
-            return diff + "s since last block"
+            return diff + "s " + TAPi18n.__('wallet.app.texts.timeSinceBlock')
         }
     }
 });

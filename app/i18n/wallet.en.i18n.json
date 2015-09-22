@@ -20,7 +20,9 @@
                 "connectionErrorMist": "Unable to connect. Please start geth using:<br><br><small><code>__node__</code><br><br>Make sure you set your IPC path to the default one, when using a different <code>datadir</code>, e.g.<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/geth.ipc</code><br>or<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/geth.ipc</code>. <br><br>Optional add: <code>--unlock &lt;yourAccount&gt;.</code></small>",
                 "connectionErrorBrowser": "Unable to connect. Please start geth with the following options:<br><br><small><code>__node__</code><br><br>Optional add: <code>--unlock &lt;yourAccount&gt;.</code></small>",
                 "pendingConfirmationsBadge": "Pending Confirmation!",
-                "nodeSyncing": "__blockDiff__ blocks left"
+                "nodeSyncing": "__blockDiff__ blocks left",
+                "blockReceived": "New Block Received",
+                "timeSinceBlock": "since last block"
             },
             "error": {
                 "wrongChain": "You seem on a different chain, please restart the wallet!"
@@ -137,7 +139,7 @@
             "provideGas": "Provide gas",
             "error": {
                 "emptyWallet": "The wallet you want to send from is empty.",
-                "notEnoughFunds": "You have not enough funds in the wallet.",
+                "notEnoughFunds": "You don't have enough funds in the wallet.",
                 "noReceiver": "You didn't specify a receiver.",
                 "noAmount": "You didn't specify an amount to send."
             },
