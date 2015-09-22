@@ -131,7 +131,7 @@ body {
     
 
     &.dapp-small {
-        z-index: 11;
+        z-index: 30;
         position: fixed;
         top:0;
         left: 0;
@@ -228,6 +228,16 @@ body {
 
 
 .accounts-page {
+    display: flex;
+    flex-flow: row wrap;
+
+    .accounts-page-summary {
+        flex: 1 auto;
+    }
+
+    .accounts-transactions {
+        flex: 1 100%;
+    }
     
     > .dapp-identicon {
         float: left;
@@ -291,6 +301,11 @@ body {
     }
 }
 
+.dapp-actionbar nav ul li button, 
+.dapp-actionbar nav ul li a, 
+.dapp-actionbar nav ul li a:visited {
+    color: @colorLink;
+}
 
 .account-send-form {
 
@@ -462,3 +477,5 @@ body {
         }
     }
 }
+
+

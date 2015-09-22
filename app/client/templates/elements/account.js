@@ -83,11 +83,16 @@ Template['elements_account'].helpers({
 
 Template['elements_account'].events({
     /**
-    Select the whole text of the input
-
-    @event click input[type="text"]
+    Click to reveal QR Code
+    
+    @event click a.create.account
     */
-    // 'click input[type="text"]': function(e){
-    //     $(e.currentTarget).focus().select();
-    // }
+    'click a.qrcode-button': function(e){
+        e.preventDefault();
+        
+        // Open a modal showing the QR Code
+        // EthElements.Modal.show('qrcode_modal');
+
+        
+    },
 });

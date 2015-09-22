@@ -2,78 +2,104 @@
     {{#with account}}
         <div class="dapp-container accounts-page">
 
-            {{> dapp_identicon identity=address}}
+            <div class="accounts-page-summary">
+
+                {{> dapp_identicon identity=address}}
+                    
+                <hgroup>
+                    <h1>
+                        <span class="edit-name">{{name}}</span> <i class="edit-icon icon-pencil"></i>
+
+                        {{#if owners}}
+                            <button class="dapp-icon-button delete icon-trash"></button>
+                        {{/if}}
+                    </h1>
+                    <h2>
+                        {{walletIcon}}
+                        {{address}}
+                    </h2>
+                </hgroup>
+
+                {{> elements_balance balance=balance changeUnit=true}}
+
+            </div>
+
+            <aside class="dapp-actionbar">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="{{pathFor route='sendTo' identity=address}}" title="{{address}}">
+                                <i class="icon-arrow-down"></i>
+                                Deposit
+                            </a>
+                        </li>
+                        <li>
+                            <a class="qrcode-button" href="#qrcode">
+                                <i class="icon-camera"></i>
+                                Scan Code
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
                 
-            <hgroup>
-                <h1>
-                    <span class="edit-name">{{name}}</span> <i class="edit-icon icon-pencil"></i>
+            <div class="accounts-transactions">
+                <!-- <h3>{{account}}</h3> -->
 
-                    {{#if owners}}
-                        <button class="dapp-icon-button delete icon-trash"></button>
-                    {{/if}}
-                </h1>
-                <h2>
-                    {{walletIcon}}
-                    {{address}}
-                </h2>
-            </hgroup>
-
-            {{> elements_balance balance=balance changeUnit=true}}
-
-            <div id="qrcode"></div>
-
-            <!-- <h3>{{account}}</h3> -->
-
-
-            {{#if owners}}
-                <div class="row clear">
-                    {{#if showDailyLimit}}
+                {{#if owners}}
+                    <div class="row clear">
+                        {{#if showDailyLimit}}
+                            <div class="col col-4 mobile-full">
+                                {{#if $gte version 1}}
+                                    <h3>{{i18n "wallet.accounts.dailyLimit"}} <span style="font-weight: 200;">{{dapp_formatBalance dailyLimit "0,0.00 unit"}}</span></h3>
+                                    {{dapp_formatBalance availableToday "0,0.00 unit"}} {{i18n "wallet.accounts.dailyLimitRemaining"}}
+                                {{else}}
+                                    <h3>{{i18n "wallet.accounts.dailyLimit"}}</h3>
+                                    {{dapp_formatBalance dailyLimit "0,0.00 unit"}}
+                                {{/if}}
+                            </div>
+                        {{/if}}
+                        {{#if showRequiredSignatures}}
+                            <div class="col col-4 mobile-full">
+                                <h3>{{i18n "wallet.accounts.requiredSignatures"}}</h3> {{requiredSignatures}}
+                            </div>
+                        {{/if}}
                         <div class="col col-4 mobile-full">
-                            {{#if $gte version 1}}
-                                <h3>{{i18n "wallet.accounts.dailyLimit"}} <span style="font-weight: 200;">{{dapp_formatBalance dailyLimit "0,0.00 unit"}}</span></h3>
-                                {{dapp_formatBalance availableToday "0,0.00 unit"}} {{i18n "wallet.accounts.dailyLimitRemaining"}}
-                            {{else}}
-                                <h3>{{i18n "wallet.accounts.dailyLimit"}}</h3>
-                                {{dapp_formatBalance dailyLimit "0,0.00 unit"}}
-                            {{/if}}
+                            <h3>{{i18n "wallet.accounts.owners"}}</h3>
+                            {{#each owners}}
+                                <span data-tooltip="{{accountNameOrAddress this}}" class="simptip-position-bottom simptip-movable">
+                                    {{> dapp_identicon identity=this class="dapp-tiny" link=ownerLink}}
+                                </span>
+                            {{/each}}
                         </div>
-                    {{/if}}
-                    {{#if showRequiredSignatures}}
-                        <div class="col col-4 mobile-full">
-                            <h3>{{i18n "wallet.accounts.requiredSignatures"}}</h3> {{requiredSignatures}}
-                        </div>
-                    {{/if}}
-                    <div class="col col-4 mobile-full">
-                        <h3>{{i18n "wallet.accounts.owners"}}</h3>
-                        {{#each owners}}
-                            <span data-tooltip="{{accountNameOrAddress this}}" class="simptip-position-bottom simptip-movable">
-                                {{> dapp_identicon identity=this class="dapp-tiny" link=ownerLink}}
-                            </span>
-                        {{/each}}
                     </div>
-                </div>
-            {{/if}}
+                {{/if}}
 
-            <div class="dapp-clear-fix"></div>
+                <div class="dapp-clear-fix"></div>
 
-            {{#unless owners}}
-                <h3>{{i18n "wallet.app.texts.note"}}</h3>
-                <p>{{{i18n "wallet.accounts.accountNote"}}}</p>
-            {{/unless}}
+                {{#unless owners}}
+                    <h3>{{i18n "wallet.app.texts.note"}}</h3>
+                    <p>{{{i18n "wallet.accounts.accountNote"}}}</p>
+                {{/unless}}
 
-            {{#if pendingConfirmations}}
-                <h2>{{i18n 'wallet.transactions.pendingConfirmations'}}</h2>
+                {{#if pendingConfirmations}}
+                    <h2>{{i18n 'wallet.transactions.pendingConfirmations'}}</h2>
 
-                {{> elements_transactions_table collection="PendingConfirmations" ids=pendingConfirmations account=_id}}
-            {{/if}}
+                    {{> elements_transactions_table collection="PendingConfirmations" ids=pendingConfirmations account=_id}}
+                {{/if}}
 
-            {{#if transactions}}
-                <h2>{{i18n 'wallet.transactions.latest'}}</h2>
+                {{#if transactions}}
+                    <h2>{{i18n 'wallet.transactions.latest'}}</h2>
 
-                {{> elements_transactions_table ids=transactions account=_id}}
-            {{else}}
-                <h2>{{i18n 'wallet.transactions.none'}}</h2>
-            {{/if}}
+                    {{> elements_transactions_table ids=transactions account=_id}}
+                {{else}}
+                    <h2>{{i18n 'wallet.transactions.none'}}</h2>
+                {{/if}}
+            </div>
         </div>
     {{/with}}
+</template>
+
+<template name="qrcode_modal">
+  <p><div id="qrcode"></div></p>
 </template>
