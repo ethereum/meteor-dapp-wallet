@@ -82,17 +82,5 @@ Template['elements_account'].helpers({
 });
 
 Template['elements_account'].events({
-    /**
-    Click to reveal QR Code
-    
-    @event click a.create.account
-    */
-    'click a.qrcode-button': function(e){
-        e.preventDefault();
-        
-        // Open a modal showing the QR Code
-        // EthElements.Modal.show('qrcode_modal');
 
-        
-    },
 });

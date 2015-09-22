@@ -14,7 +14,7 @@
                             <button class="dapp-icon-button delete icon-trash"></button>
                         {{/if}}
                     </h1>
-                    <h2>
+                    <h2 class="copyable-address">
                         {{walletIcon}}
                         {{address}}
                     </h2>
@@ -34,11 +34,18 @@
                             </a>
                         </li>
                         <li>
+                            <a class="copy-to-clipboard-button">
+                                <i class="icon-docs"></i>
+                                Copy Code
+                            </a>
+                        </li>                        
+                        <li>
                             <a class="qrcode-button" href="#qrcode">
                                 <i class="icon-camera"></i>
                                 Scan Code
                             </a>
-                        </li>
+                        </li>                        
+
                     </ul>
                 </nav>
             </aside>
@@ -102,4 +109,5 @@
 
 <template name="qrcode_modal">
   <p><div id="qrcode"></div></p>
+  <p> {{i18n 'wallet.accounts.qrCodeLabel'}} </p>
 </template>

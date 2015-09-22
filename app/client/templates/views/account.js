@@ -12,7 +12,7 @@ The template to display account information.
 */
 
 
-Template['views_account'].onRendered(function(){
+Template['qrcode_modal'].onRendered(function(){
     var address = FlowRouter.getParam('address');
     if(address) {
         var qrcodesvg = new Qrcodesvg( address, 'qrcode', 150, {"ecclevel" : 1});
@@ -133,5 +133,50 @@ Template['views_account'].events({
             // make it non-editable
             $(e.currentTarget).attr('contenteditable', null);
         }
+    },
+    /**
+    Click to copy the code to the clipboard
+    
+    @event click a.create.account
+    */
+    'click a.copy-to-clipboard-button': function(e){
+        e.preventDefault();
+        
+        var copyTextarea = document.querySelector('.copyable-address');
+        
+        var selection = window.getSelection();            
+        var range = document.createRange();
+        range.selectNodeContents(copyTextarea);
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        try {
+        var successful = document.execCommand('copy');
+        var msg = successful ? 'successful' : 'unsuccessful';
+            console.log('Copying text command was ' + msg);
+        } catch (err) {
+            console.log('Oops, unable to copy');
+        }
+
+        selection.removeAllRanges();
+        
+        return GlobalNotification.warning({
+               content: 'i18n:wallet.accounts.addressCopiedToClipboard',
+               duration: 2
+           });
+        
+    },
+    /**
+    Click to reveal QR Code
+    
+    @event click a.create.account
+    */
+    'click a.qrcode-button': function(e){
+        e.preventDefault();
+        
+        // Open a modal showing the QR Code
+        EthElements.Modal.show('qrcode_modal');
+
+        
     }
 });

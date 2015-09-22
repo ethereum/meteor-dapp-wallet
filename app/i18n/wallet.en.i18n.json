@@ -45,6 +45,8 @@
             "creating": "Creating",
             "importing": "Importing",
             "accountNote": "Accounts can't list incoming transactions and are rather unsafe, please <a href=\"/account/new\">create a wallet</a> to store ether.",
+            "addressCopiedToClipboard": "Code was copied to clipboard",
+            "qrCodeLabel": "Point a compatible mobile app to this code",
             "dailyLimit": "Daily limit",
             "dailyLimitRemaining": "remaining today",
             "requiredSignatures": "Required signatures",

@@ -24,6 +24,16 @@
     aside.dapp-main {
         .flex(0 0 @widthSidebarSmall);
     }
+
+    .dapp-actionbar {
+        flex: 1 auto;
+        nav ul {
+            display: flex;        
+            li {
+                flex: 1
+            } 
+        }
+    }
 }
 
 @media screen and (max-width: 800px){
@@ -54,7 +64,7 @@
 
 /* #### Mobile Phones Portrait or Landscape #### */
 @media screen and (max-device-width: 640px){
-
+    
 }
 
 /* #### iPhone 4+ Portrait or Landscape #### */
