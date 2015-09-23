@@ -82,12 +82,5 @@ Template['elements_account'].helpers({
 });
 
 Template['elements_account'].events({
-    /**
-    Select the whole text of the input
 
-    @event click input[type="text"]
-    */
-    // 'click input[type="text"]': function(e){
-    //     $(e.currentTarget).focus().select();
-    // }
 });
