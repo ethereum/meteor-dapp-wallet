@@ -4,22 +4,6 @@ Template Controllers
 @module Templates
 */
 
-/**
-The template to display account information.
-
-@class [template] views_account
-@constructor
-*/
-
-
-Template['qrcode_modal'].onRendered(function(){
-    var address = FlowRouter.getParam('address');
-    if(address) {
-        var qrcodesvg = new Qrcodesvg( address, 'qrcode', 150, {"ecclevel" : 1});
-        qrcodesvg.draw({"method": "classic", "fill-colors":["#555","#555","#666"]}, {"stroke-width":1});
-    }
-});
-
 
 Template['views_account'].helpers({
     /**
@@ -139,7 +123,7 @@ Template['views_account'].events({
     
     @event click a.create.account
     */
-    'click a.copy-to-clipboard-button': function(e){
+    'click .copy-to-clipboard-button': function(e){
         e.preventDefault();
         
         var copyTextarea = document.querySelector('.copyable-address');
@@ -171,11 +155,11 @@ Template['views_account'].events({
     
     @event click a.create.account
     */
-    'click a.qrcode-button': function(e){
+    'click .qrcode-button': function(e){
         e.preventDefault();
         
         // Open a modal showing the QR Code
-        EthElements.Modal.show('qrcode_modal');
+        EthElements.Modal.show('views_modals_qrCode');
 
         
     }

@@ -14,10 +14,7 @@
                             <button class="dapp-icon-button delete icon-trash"></button>
                         {{/if}}
                     </h1>
-                    <h2 class="copyable-address">
-                        {{walletIcon}}
-                        {{address}}
-                    </h2>
+                    <h2 class="copyable-address">{{walletIcon}}{{address}}</h2>
                 </hgroup>
 
                 {{> elements_balance balance=balance changeUnit=true}}
@@ -28,22 +25,22 @@
                 <nav>
                     <ul>
                         <li>
-                            <a href="{{pathFor route='sendTo' identity=address}}" title="{{address}}">
+                            <a href="{{pathFor route='sendTo' address=address}}" title="{{address}}">
                                 <i class="icon-arrow-down"></i>
                                 Deposit
                             </a>
                         </li>
                         <li>
-                            <a class="copy-to-clipboard-button">
+                            <button class="copy-to-clipboard-button">
                                 <i class="icon-docs"></i>
                                 Copy Code
-                            </a>
+                            </button>
                         </li>                        
                         <li>
-                            <a class="qrcode-button" href="#qrcode">
+                            <button class="qrcode-button">
                                 <i class="icon-camera"></i>
                                 Scan Code
-                            </a>
+                            </button>
                         </li>                        
 
                     </ul>
@@ -105,9 +102,4 @@
             </div>
         </div>
     {{/with}}
-</template>
-
-<template name="qrcode_modal">
-  <p><div id="qrcode"></div></p>
-  <p> {{i18n 'wallet.accounts.qrCodeLabel'}} </p>
 </template>
