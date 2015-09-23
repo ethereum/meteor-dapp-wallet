@@ -12,6 +12,18 @@ Global template helpers
 **/
 
 
+
+/**
+A simple template helper to log objects in the console.
+
+@method (debug)
+**/
+Template.registerHelper('i18n', function(key, object){
+    return TAPi18n.__(key, object.hash);
+});
+
+
+
 /**
 A simple template helper to log objects in the console.
 
