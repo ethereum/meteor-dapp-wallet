@@ -6,6 +6,8 @@
                     <i class="icon-wallet"></i>
                     <span>{{i18n 'wallet.app.buttons.wallet'}}</span>
                 </a>
+            </li>
+            <li>
                 <a href="{{pathFor route='send'}}" class="{{isActiveRoute regex='send'}}">
                     <i class="icon-arrow-up"></i>
                     <span>{{i18n 'wallet.app.buttons.send'}}</span>
@@ -14,7 +16,7 @@
         </ul>
     </nav>
 
-    <div class="block-info {{#if TemplateVar.get 'syncing'}}syncing{{/if}}">
+    <div class="block-info dapp-flex-item  {{#if TemplateVar.get 'syncing'}}syncing{{/if}}">
 
         {{#unless $.Session.get "isMainNet"}}
             <span class="orange" style="font-weight: 400;">TESTNET</span> | 

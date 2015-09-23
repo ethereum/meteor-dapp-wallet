@@ -68,9 +68,12 @@ body {
 }
 
 .dapp-header {
+    display: flex;
+    align-items: flex-end;
     height: @heightHeader;
     margin-top: -5px; // necessary to make sure, that its looks good, when blurred
     padding-top: @defaultPaddingVertical + 5px; 
+    padding-bottom: 0;
     .box-sizing(content-box);
     .background-image(linear-gradient(to bottom,  lighten(@colorBackgroundHeader, 15%) 0, @colorBackgroundHeader 90%));
 
@@ -83,11 +86,11 @@ body {
         }
     }
 
+    &>.dapp-flex-item {
+        flex: 1;
+    }
+
     nav {
-        position: absolute;
-        bottom: 0;
-
-
         ul {
             .dapp-horizontal-menu;
 

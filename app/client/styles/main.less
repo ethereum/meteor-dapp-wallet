@@ -137,9 +137,10 @@ body {
         left: 0;
         right: 0;
         .dapp-shadow-medium;
-
+  
+        .wallet-balance ,
         .block-info {
-            bottom: @defaultPaddingVertical - 1px;
+            padding-bottom: @defaultPaddingVertical/2 - 1px;
 
             .text {
                 display: none;
@@ -157,18 +158,13 @@ body {
     }
 
     .block-info {
-        position: absolute;
-        bottom: @defaultPaddingVertical - 1px;
-        display: inline-block;
-        left: 50%;
-        width: 350px;
-        margin-left: -175px;
+        padding-bottom: @defaultPaddingVertical;        
         color: @colorGrayDark;
         .opacity(0.6);
         text-align: center;
 
         // ANIMATION
-        .transition(bottom @animationSpeed / 2);
+        .transition(padding-bottom @animationSpeed / 2);
 
         &.syncing {
             .opacity(0.9);
@@ -191,11 +187,10 @@ body {
     }
     
     .wallet-balance {
-        position: absolute;
-        right: @defaultPaddingHorizontal;
-        bottom: @defaultPaddingVertical - 2px;
+        padding-bottom: @defaultPaddingVertical;
+        padding-left: @defaultPaddingHorizontal;
         text-align: right;
-
+        .transition(padding-bottom @animationSpeed / 2);
 
         h3 {
             margin-bottom: 0;
@@ -208,8 +203,8 @@ body {
     }
 }
 
-.dapp-header.dapp-small + .dapp-flex-content {
-    margin-top: @gridHeight * 5 - 3px;
+.dapp-header.dapp-small + .dapp-flex-content > .dapp-content {
+    padding-top: @gridHeight * 5 - 3px;
 }
 
 
@@ -478,4 +473,16 @@ body {
     }
 }
 
+
+
+/* #### All small phone screens landscape #### */
+@media screen and (max-width: 576px){
+    .block-info {
+        visibility: hidden;
+    }
+  
+    .wallet-balance {
+        font-size: 75%;
+    }
+}
 
