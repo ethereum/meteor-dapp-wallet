@@ -1,0 +1,56 @@
+<template name="views_tokens">
+     <!-- we use a form, which posts into the "dapp-form-helper-iframe" iframe, so that the browser stores inout fields for native autocpmplete -->
+    <form class="container account-send-form" action="about:blank" target="dapp-form-helper-iframe" autocomplete="on">
+        
+        <h1> Custom Tokens </h1>
+        
+        <h2> Tokens being used</h2>
+
+        {{> elements_transactions_table limit=5}}
+
+        <h2> Add Tokens </h2>
+
+        <!-- Add Coin -->
+        <div class="row clear">
+            <div class="col col-7 mobile-full">
+                <h3>Token Contract Address</h3>
+
+                {{> dapp_addressInput placeholder="0x000000.." name="address" autofocus=true}}
+            </div>
+            <div class="dapp-clear-fix"></div>
+        </div>
+
+
+        <!-- symbol -->
+        <div class="row clear">
+            <div class="col col-7 mobile-full">
+                <h3>Token symbol</h3>
+                <input type="string" name="symbol" placeholder="ABC$" class="dapp-large symbol">
+            </div>
+            <div class="dapp-clear-fix"></div>
+        </div>
+
+
+        <!-- divisor -->
+        <div class="row clear amount">
+            <div class="col col-7 mobile-full">
+                <h3>Base unit is divisable by</h3>
+                <input type="number" min="0" step="any" name="division" value="100" class="dapp-large division">
+            </div>
+            <div class="dapp-clear-fix"></div>
+        </div>
+       
+        <hr>
+        <!-- button type="submit" will send the form -->
+        <button type="submit" class="dapp-block-button">
+            {{#if TemplateVar.get "sending"}} 
+                Adding token..
+            {{else}}
+                Add token
+            {{/if}}
+        </button>
+
+    </form>
+   
+
+</template>

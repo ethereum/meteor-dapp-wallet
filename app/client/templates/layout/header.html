@@ -12,6 +12,12 @@
                     <i class="icon-arrow-up"></i>
                     <span>{{i18n 'wallet.app.buttons.send'}}</span>
                 </a>
+            </li>            
+            <li>
+                <a href="{{pathFor route='tokens'}}" class="{{isActiveRoute regex='tokens'}}">
+                    <i class="icon-settings"></i>
+                    <span>{{i18n 'wallet.app.buttons.tokens'}}</span>
+                </a>
             </li>
         </ul>
     </nav>
@@ -29,7 +35,7 @@
         {{#with TemplateVar.get "syncing"}}
             <span class="text">
                 <i class="icon-layers"></i> {{{i18n "wallet.app.texts.nodeSyncing" blockDiff=blockDiff}}}
-                &nbsp;&nbsp;|&nbsp;&nbsp;
+            &nbsp;&nbsp;|&nbsp;&nbsp;
                 <i class="icon-cloud-download"></i> {{progress}}%
                 <br>
             </span>

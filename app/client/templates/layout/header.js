@@ -65,7 +65,7 @@ Template['layout_header'].helpers({
         if (diff>120) {
             Helpers.rerun["10s"].tick();
             return timeSince.fromNow(true) + " " + TAPi18n.__('wallet.app.texts.timeSinceBlock');
-        } else if (diff<3) {
+        } else if (diff<2) {
             Helpers.rerun["1s"].tick();
             return " " + TAPi18n.__('wallet.app.texts.blockReceived')
         } else {

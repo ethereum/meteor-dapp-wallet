@@ -10,6 +10,7 @@
             "buttons": {
                 "wallet": "Wallets",
                 "send": "Send",
+                "tokens": "Tokens",
                 "receive": "Receive",
                 "addWallet": "Add wallet",
                 "addAccount": "Add account"
