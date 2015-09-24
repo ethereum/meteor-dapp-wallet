@@ -39,7 +39,14 @@
                     <span class="account-balance">{{i18n "wallet.accounts.creating"}} <span>...</span></span>
                 {{/if}}
             {{/unless}}
-            <span class="account-id {{#if creating}}creating{{/if}}">{{address}}</span>
-        </a>
+            <!-- {{#if tokens}}
+                {{#each tokens}} 
+                    {{#if formattedCoinBalance}}
+                        <span class="token-balances">{{formattedCoinBalance account}}</span>
+                    {{/if}}
+                {{/each}}
+            {{/if}} -->
+            <span class="account-id {{#if creating}}creating{{/if}}">{{address}}</span>                
+            </a>
     {{/with}}
 </template>

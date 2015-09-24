@@ -6,7 +6,25 @@
         
         <h2> Tokens being used</h2>
 
-        {{> elements_transactions_table limit=5}}
+        <table class="dapp-zebra token-list">
+            <tbody>
+                {{#each tokens}}
+                    <tr>
+                        <td>{{symbol}}</td>
+                        <td>divisible by {{division}}</td>
+                        <td><a href="{{pathFor route='sendTo' address=address}}" title="{{address}}">   
+                            {{address}}
+                        </a></td>
+                        <td>
+                            <button class="edit-token"><i class='icon-note'></i></button>
+                            <button class="delete-token"><i class="icon-trash"></i></button>
+                        </td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+
+
 
         <h2> Add Tokens </h2>
 

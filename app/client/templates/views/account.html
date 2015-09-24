@@ -19,6 +19,20 @@
 
                 {{> elements_balance balance=balance changeUnit=true}}
 
+                {{#if tokens}}
+                 <table class="dapp-zebra token-list">
+                    <tbody>
+                        {{#each tokens}}
+                            {{#if formattedCoinBalance}}
+                            <tr>
+                                <td>{{formattedCoinBalance}}</td>
+                            </tr>
+                            {{/if}}
+                        {{/each}}
+                    </tbody>
+                </table>
+                {{/if}}
+
             </div>
 
             <aside class="dapp-actionbar">

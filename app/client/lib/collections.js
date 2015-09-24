@@ -16,5 +16,5 @@ new PersistentMinimongo(PendingConfirmations, 'ethereum_wallet');
 
 
 // Contains Coin Information
-Coins = new Mongo.Collection('coins', {connection: null});
-new PersistentMinimongo(Coins, 'ethereum_wallet');
+Tokens = new Mongo.Collection('tokens', {connection: null});
+new PersistentMinimongo(Tokens, 'ethereum_wallet');

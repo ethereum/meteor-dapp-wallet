@@ -1,0 +1,15 @@
+<template name="dapp_addressInput">
+    <div class="dapp-address-input">
+        <input type="text" name="{{name}}" placeholder="{{placeholder}}" class="{{class}} {{#unless TemplateVar.get 'isValid'}}dapp-error{{/unless}}" {{additionalAttributes}} value="{{value}}">
+        {{#if TemplateVar.get "isValid"}}
+            {{> dapp_identicon identity=address class="dapp-small"}}
+        {{else}}
+            <i class="icon-shield"></i>
+        {{/if}}
+
+        {{#if TemplateVar.get "showAddressBook"}}
+            <button class="app-address-book" type="button"><i class="icon-notebook"></i></button>
+        {{/if}}        
+
+    </div>
+</template>
