@@ -82,7 +82,7 @@ Template['views_account'].helpers({
             return false;
         } else {
             // return Number(token.coinBalanceOf(FlowRouter.getParam('address'))) / Number(this.division);
-            return numeral(balance).format('00.00') + this.symbol;
+            return numeral(balance).format('0,0.00[000000]') + this.symbol;
         }
     }
 });

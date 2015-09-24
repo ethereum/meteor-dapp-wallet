@@ -30,12 +30,14 @@
         <div class="row clear amount">
             <div class="col col-7 mobile-full">
                 <h3>{{i18n 'wallet.send.amount'}}</h3>
-                <input type="number" min="0" step="any" name="amount" placeholder="0.0" class="dapp-large"><span> {{unit.toUpperCase}}</span>
+                <input type="number" min="0" step="any" name="amount" placeholder="0.0" class="dapp-large">
+                {{> InlineForm name="token-switcher" items=unitsAndTokens value=selectedToken}}
             </div>
             
             <div class="col col-5 mobile-full send-info">
                 <br><br>
                 {{{i18n 'wallet.send.texts.sendAmount' amount=amount}}}
+                {{{i18n 'wallet.send.texts.sendAmountEquivalent' amount=amount}}}
                 {{TemplateVar.get "dailyLimitText"}}
             </div>
 

@@ -147,7 +147,8 @@
                 "noAmount": "You didn't specify an amount to send."
             },
             "texts": {
-                "sendAmount": "You want the equivalent of <strong>__amount__</strong> in ether.",
+                "sendAmount": "You want <strong>__amount__</strong> in ether.",
+                "sendAmountEquivalent": "You want the equivalent of <strong>__amount__</strong> in ether, using Kraken.com current exchange rate.",
                 "overDailyLimit": "<p class=\"over-daily\">This amount is over the remaining daily limit of __limit__ (of __total__ per day), so you need __count__ other account to confirm.</p>",
                 "overDailyLimit_plural": "<p class=\"over-daily\">This amount is over the remaining daily limit of __limit__ (of __total__ per day), so you need __count__ other accounts to confirm.</p>",
                 "underDailyLimit": "<p class=\"under-daily\">This amount is under the remaining daily limit of __limit__ (of __total__ per day), means it will send immediately.</p>",

@@ -39,7 +39,6 @@ when the user actually wants to send the dummy data.
 */
 var defaultEstimateGas = 5000000;
 
-
 /**
 Check if the amount accounts daily limit  and sets the correct text.
 
@@ -241,6 +240,56 @@ Template['views_send'].helpers({
     */
     'timeText': function(){
         return TAPi18n.__('wallet.send.texts.timeTexts.'+ ((Number(TemplateVar.getFrom('.dapp-select-gas-price', 'feeMultiplicator')) + 5) / 2).toFixed(0));
+    },
+    /**
+    Gets currently selected unit
+
+    @method (selectedUnit)
+    */
+    'selectedToken': function(returnText){
+        console.log(returnText)
+        // var unit = _.find(units, function(unit){
+        //     return unit.value === EthTools.getUnit();
+        // });
+
+        // if(unit)
+        //     return (returnText === true) ? unit.text : unit.value;
+    },
+    /**
+
+    */
+    'unitsAndTokens' : function(){
+        units = [{
+            text: 'ETHER',
+            value: 'ether'
+        },
+        {
+            text: 'FINNEY',
+            value: 'finney'
+        },
+        {
+            text: 'BTC*',
+            value: 'btc'
+        },
+        {
+            text: 'USD*',
+            value: 'usd'
+        },
+        {
+            text: 'EUR*',
+            value: 'eur'
+        }];
+
+        var tokens = Tokens.find({},{sort:{symbol:1}});
+        tokens.forEach(function(token){
+            var el = { 
+                text: token.symbol.toUpperCase(),
+                value: token.symbol
+            }
+            units.push(el);
+        })
+
+        return units;
     }
 });
 

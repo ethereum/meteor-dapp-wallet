@@ -224,7 +224,6 @@ body {
     }
 }
 
-
 .accounts-page {
     display: flex;
     flex-flow: row wrap;
@@ -343,9 +342,15 @@ body {
             position: relative;
 
             span {
-                font-size: 1.3em;
                 font-weight: 400;
-                color: @colorTextSecondary;
+                .simple-modal {
+                    font-size: 0.8em;
+                    min-width: @gridWidth * 4;
+                }
+                button[data-value='usd'],button[data-value='eur'],button[data-value='btc']{
+                    font-style: italic;
+                    font-weight: 200;
+                }
             }
 
             input {
@@ -371,7 +376,6 @@ body {
             margin-top: @defaultMargin;
             color: @colorTextSecondary;
         }
-
         
     }
 
