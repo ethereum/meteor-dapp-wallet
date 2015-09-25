@@ -32,8 +32,15 @@ a.wallet-box {
     .box-sizing(border-box);
     border: 0;
 
+    // ANIMATION
+    .transition(background-color @animationSpeed*4);
+
     &:active {
         border: 0;
+    }
+
+    &.new {
+        background-color: fadeout(@colorGreen, 20%);
     }
 
     &.wallets {

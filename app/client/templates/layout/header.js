@@ -80,7 +80,7 @@ Template['layout_header'].helpers({
     'timeSinceBlock': function () {
         var timeSince = moment(EthBlocks.latest.timestamp, "X");
         var now = moment();
-        var diff = now.diff(timeSince, "seconds")
+        var diff = now.diff(timeSince, "seconds");
 
         if (diff>60) {
             Helpers.rerun["10s"].tick();

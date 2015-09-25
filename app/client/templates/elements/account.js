@@ -48,6 +48,23 @@ Template['elements_account'].helpers({
         return this.name || TAPi18n.__('wallet.accounts.defaultName');
     },
     /**
+    Account was just added. Retrun true and eemove the "new" field.
+
+    @method (new)
+    */
+    'new': function() {
+        if(this.new) {
+            // remove the "new" field
+            var id = this._id;
+            Meteor.setTimeout(function() {
+                EthAccounts.update(id, {$unset: {new: ''}});
+                Wallets.update(id, {$unset: {new: ''}});
+            }, 1000);
+
+            return true;
+        }
+    },
+    /**
     Should the wallet show disabled
 
     @method (creating)
