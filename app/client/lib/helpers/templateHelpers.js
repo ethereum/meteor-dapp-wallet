@@ -14,9 +14,9 @@ Global template helpers
 
 
 /**
-A simple template helper to log objects in the console.
+TODO: remove after tap:i18n is fixed
 
-@method (debug)
+@method (i18n)
 **/
 Template.registerHelper('i18n', function(key, object){
     return TAPi18n.__(key, object.hash);

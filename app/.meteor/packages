@@ -43,4 +43,5 @@ ethereum:elements
 ethereum:web3
 ethereum:blocks
 ethereum:accounts
+ethereum:dapp-styles
 numeral:numeral

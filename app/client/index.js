@@ -24,6 +24,7 @@ Meteor.startup(function() {
         if(_.isString(TAPi18n.getLanguage())) {
             var lang = TAPi18n.getLanguage().substr(0,2);
             moment.locale(lang);
+            numeral.language(lang);
             EthTools.setLocale(lang);
         }
     });
