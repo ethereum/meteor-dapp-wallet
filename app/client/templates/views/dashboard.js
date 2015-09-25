@@ -57,6 +57,14 @@ Template['views_dashboard'].events({
     */
     'click a.create.account': function(e){
         e.preventDefault();
-        mist.requestAccount();
+
+        mist.requestAccount(function(e, account) {
+            if(!e) {
+                EthAccounts.upsert({address: account}, {$set: {
+                    address: account,
+                    new: true
+                }});
+            }
+        });
     },
 });

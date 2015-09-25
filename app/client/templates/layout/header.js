@@ -44,6 +44,12 @@ Template['layout_header'].onCreated(function(){
 
 
 Template['layout_header'].helpers({
+    /**
+    Calculates the total balance of all accounts + wallets.
+
+    @method (totalBalance)
+    @return {String}
+    */
     'totalBalance': function(){
         var accounts = EthAccounts.find({}).fetch();
         var wallets = Wallets.find({owners: {$in: _.pluck(accounts, 'address')}}).fetch();
@@ -56,13 +62,27 @@ Template['layout_header'].helpers({
         }
 
         return balance;
-    }, 
+    },
+    /**
+    Formats the last block number
+
+    @method (formattedBlockNumber)
+    @return {String}
+    */
+    'formattedBlockNumber': function() {
+        return numeral(EthBlocks.latest.number).format('0,0');
+    },
+    /**
+    Formats the time since the last block
+
+    @method (timeSinceBlock)
+    */
     'timeSinceBlock': function () {
         var timeSince = moment(EthBlocks.latest.timestamp, "X");
         var now = moment();
         var diff = now.diff(timeSince, "seconds")
 
-        if (diff>120) {
+        if (diff>60) {
             Helpers.rerun["10s"].tick();
             return timeSince.fromNow(true) + " " + TAPi18n.__('wallet.app.texts.timeSinceBlock');
         } else if (diff<3) {
