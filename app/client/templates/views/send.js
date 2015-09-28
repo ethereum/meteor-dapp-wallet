@@ -327,95 +327,105 @@ Template['views_send'].events({
                 });
 
 
+            // The function to send the transaction
+            var sendTransaction = function(estimatedGas){
 
-            EthElements.Modal.question({
-                template: 'views_modals_sendTransactionInfo',
-                data: {
-                    from: selectedAccount.address,
-                    to: to,
-                    amount: amount,
-                    gasPrice: gasPrice,
-                    estimatedGas: estimatedGas,
-                    estimatedGasPlusAddition: estimatedGas + 100000, // increase the provided gas by 100k
-                    data: data
-                },
-                ok: function(){
+                // show loading
+                EthElements.Modal.show('views_modals_loading');
 
-                    // show loading
-                    EthElements.Modal.show('views_modals_loading');
+                TemplateVar.set(template, 'sending', true);
 
-                    TemplateVar.set(template, 'sending', true);
 
-                    // use gas set in the input field
-                    estimatedGas = Number($('.send-transaction-info input.gas').val());
-                    console.log('Finally choosen gas', estimatedGas);
+                // use gas set in the input field
+                estimatedGas = estimatedGas || Number($('.send-transaction-info input.gas').val());
+                console.log('Finally choosen gas', estimatedGas);
 
-                    // CONTRACT TX
-                    if(contracts['ct_'+ selectedAccount._id]) {
+                // CONTRACT TX
+                if(contracts['ct_'+ selectedAccount._id]) {
 
-                        contracts['ct_'+ selectedAccount._id].execute.sendTransaction(to || '', amount || '', data || '', {
-                            from: selectedAccount.owners[0],
-                            gasPrice: gasPrice,
-                            gas: estimatedGas
-                        }, function(error, txHash){
+                    contracts['ct_'+ selectedAccount._id].execute.sendTransaction(to || '', amount || '', data || '', {
+                        from: selectedAccount.owners[0],
+                        gasPrice: gasPrice,
+                        gas: estimatedGas
+                    }, function(error, txHash){
 
-                            TemplateVar.set(template, 'sending', false);
+                        TemplateVar.set(template, 'sending', false);
 
-                            console.log(error, txHash);
-                            if(!error) {
-                                console.log('SEND from contract', amount);
+                        console.log(error, txHash);
+                        if(!error) {
+                            console.log('SEND from contract', amount);
 
-                                addTransaction(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
+                            addTransaction(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
 
-                                FlowRouter.go('dashboard');
+                            FlowRouter.go('dashboard');
 
-                            } else {
-                                EthElements.Modal.hide();
+                        } else {
+                            EthElements.Modal.hide();
 
-                                GlobalNotification.error({
-                                    content: error.message,
-                                    duration: 8
-                                });
-                            }
-                        });
+                            GlobalNotification.error({
+                                content: error.message,
+                                duration: 8
+                            });
+                        }
+                    });
 
-                    // SIMPLE TX
-                    } else {
+                // SIMPLE TX
+                } else {
 
-                        web3.eth.sendTransaction({
-                            from: selectedAccount.address,
-                            to: to,
-                            data: data,
-                            value: amount,
-                            gasPrice: gasPrice,
-                            gas: estimatedGas
-                        }, function(error, txHash){
+                    web3.eth.sendTransaction({
+                        from: selectedAccount.address,
+                        to: to,
+                        data: data,
+                        value: amount,
+                        gasPrice: gasPrice,
+                        gas: estimatedGas
+                    }, function(error, txHash){
 
-                            TemplateVar.set(template, 'sending', false);
+                        TemplateVar.set(template, 'sending', false);
 
-                            console.log(error, txHash);
-                            if(!error) {
-                                console.log('SEND simple');
+                        console.log(error, txHash);
+                        if(!error) {
+                            console.log('SEND simple');
 
-                                addTransaction(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
+                            addTransaction(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
 
-                                FlowRouter.go('dashboard');
-                            } else {
+                            FlowRouter.go('dashboard');
+                        } else {
 
-                                EthElements.Modal.hide();
+                            EthElements.Modal.hide();
 
-                                GlobalNotification.error({
-                                    content: error.message,
-                                    duration: 8
-                                });
-                            }
-                        });
-                    }
-                },
-                cancel: true
-            },{
-                class: 'send-transaction-info'
-            });
+                            GlobalNotification.error({
+                                content: error.message,
+                                duration: 8
+                            });
+                        }
+                    });
+                }
+            };
+
+            // SHOW CONFIRMATION WINDOW when NOT MIST
+            if(typeof mist === 'undefined') {
+                EthElements.Modal.question({
+                    template: 'views_modals_sendTransactionInfo',
+                    data: {
+                        from: selectedAccount.address,
+                        to: to,
+                        amount: amount,
+                        gasPrice: gasPrice,
+                        estimatedGas: estimatedGas,
+                        estimatedGasPlusAddition: estimatedGas + 100000, // increase the provided gas by 100k
+                        data: data
+                    },
+                    ok: sendTransaction,
+                    cancel: true
+                },{
+                    class: 'send-transaction-info'
+                });
+
+            // LET MIST HANDLE the CONFIRMATION
+            } else {
+                sendTransaction(estimatedGas + 100000);
+            }
         }
     }
 });
