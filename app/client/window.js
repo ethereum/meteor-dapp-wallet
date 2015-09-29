@@ -15,7 +15,7 @@ $(window).on('focus', function(e){
 
 // add class to the header when scrolling
 $(window).on('scroll', function() {
-    if($(window).scrollTop() > 46 ) {
+    if($(window).scrollTop() > 35 ) {
         $('.dapp-header').addClass('dapp-small');
     } else {
         $('.dapp-header').removeClass('dapp-small');

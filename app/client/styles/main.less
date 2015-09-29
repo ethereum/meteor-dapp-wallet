@@ -140,8 +140,6 @@ body {
   
         .wallet-balance ,
         .block-info {
-            padding-bottom: @defaultPaddingVertical/2 - 1px;
-
             .text {
                 display: none;
             }
@@ -158,13 +156,10 @@ body {
     }
 
     .block-info {
-        padding-bottom: @defaultPaddingVertical;        
+        padding-bottom: @defaultPaddingVertical - 2px;        
         color: @colorGrayDark;
         .opacity(0.6);
         text-align: center;
-
-        // ANIMATION
-        .transition(padding-bottom @animationSpeed / 2);
 
         &.syncing {
             .opacity(0.9);
@@ -187,10 +182,9 @@ body {
     }
     
     .wallet-balance {
-        padding-bottom: @defaultPaddingVertical;
+        padding-bottom: @defaultPaddingVertical - 5px;
         padding-left: @defaultPaddingHorizontal;
         text-align: right;
-        .transition(padding-bottom @animationSpeed / 2);
 
         h3 {
             margin-bottom: 0;
