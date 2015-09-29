@@ -21,9 +21,7 @@ Start an `geth` node and and the app using meteor and open http://localhost:3000
 
     $ geth --rpccorsdomain "http://localhost:3000" --rpc --unlock <your account>
 
-Clone/Update the [dapp-styles](https://github.com/ethereum/dapp-styles) in the `meteor-dapp-wallet/app/public/dapp-styles` folder.
-
-Starting the wall dapp using meteor
+Starting the wall dapp using [Meteor](http://meteor.com/install)
 
     $ cd meteor-dapp-wallet/app
     $ meteor

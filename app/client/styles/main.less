@@ -1,4 +1,5 @@
 // libs
+@import '{ethereum:dapp-styles}/dapp-styles.less';
 
 @import 'elements.import.less';
 
@@ -139,8 +140,6 @@ body {
   
         .wallet-balance ,
         .block-info {
-            padding-bottom: @defaultPaddingVertical/2 - 1px;
-
             .text {
                 display: none;
             }
@@ -157,13 +156,10 @@ body {
     }
 
     .block-info {
-        padding-bottom: @defaultPaddingVertical;        
+        padding-bottom: @defaultPaddingVertical - 2px;        
         color: @colorGrayDark;
         .opacity(0.6);
         text-align: center;
-
-        // ANIMATION
-        .transition(padding-bottom @animationSpeed / 2);
 
         &.syncing {
             .opacity(0.9);
@@ -186,10 +182,9 @@ body {
     }
     
     .wallet-balance {
-        padding-bottom: @defaultPaddingVertical;
+        padding-bottom: @defaultPaddingVertical - 5px;
         padding-left: @defaultPaddingHorizontal;
         text-align: right;
-        .transition(padding-bottom @animationSpeed / 2);
 
         h3 {
             margin-bottom: 0;
@@ -222,6 +217,7 @@ body {
         }
     }
 }
+
 
 .accounts-page {
     display: flex;
@@ -341,15 +337,9 @@ body {
             position: relative;
 
             span {
+                font-size: 1.3em;
                 font-weight: 400;
-                .simple-modal {
-                    font-size: 0.8em;
-                    min-width: @gridWidth * 4;
-                }
-                button[data-value='usd'],button[data-value='eur'],button[data-value='btc']{
-                    font-style: italic;
-                    font-weight: 200;
-                }
+                color: @colorTextSecondary;
             }
 
             input {
@@ -375,6 +365,7 @@ body {
             margin-top: @defaultMargin;
             color: @colorTextSecondary;
         }
+
         
     }
 

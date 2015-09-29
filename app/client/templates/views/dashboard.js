@@ -27,7 +27,8 @@ Template['views_dashboard'].helpers({
     @method (accounts)
     */
     'accounts': function(){
-        return EthAccounts.find({}, {sort: {name: 1}});
+        // balance need to be present, to show only full inserted accounts (not ones added by mist.requestAccount)
+        return EthAccounts.find({name: {$exists: true}}, {sort: {name: 1}});
     },
     /**
     Get all transactions
@@ -57,6 +58,14 @@ Template['views_dashboard'].events({
     */
     'click a.create.account': function(e){
         e.preventDefault();
-        mist.requestAccount();
+
+        mist.requestAccount(function(e, account) {
+            if(!e) {
+                EthAccounts.upsert({address: account}, {$set: {
+                    address: account,
+                    new: true
+                }});
+            }
+        });
     },
 });

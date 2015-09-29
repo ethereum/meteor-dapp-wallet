@@ -3,7 +3,21 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-meteor-platform
+standard-minifiers
+meteor-base
+mobile-experience
+mongo
+blaze-html-templates
+session
+jquery
+tracker
+logging
+reload
+random
+ejson
+spacebars
+check
+
 fastclick
 kadira:flow-router
 kadira:blaze-layout
@@ -29,4 +43,5 @@ ethereum:elements
 ethereum:web3
 ethereum:blocks
 ethereum:accounts
+ethereum:dapp-styles
 numeral:numeral
