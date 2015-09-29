@@ -29,6 +29,13 @@ Set in the created callback.
 */
 var accountSort;
 
+/**
+The ABI for the custom Token Contract
+
+@property coinABI
+*/
+coinABI = [{constant:false,inputs:[{name:'receiver',type:'address'},{name:'amount',type:'uint256'}],name:'sendCoin',outputs:[{name:'sufficient',type:'bool'}],type:'function'},{constant:true,inputs:[{name:'',type:'address'}],name:'coinBalanceOf',outputs:[{name:'',type:'uint256'}],type:'function'},{inputs:[{name:'supply',type:'uint256'}],type:'constructor'},{anonymous:false,inputs:[{indexed:false,name:'sender',type:'address'},{indexed:false,name:'receiver',type:'address'},{indexed:false,name:'amount',type:'uint256'}],name:'CoinTransfer',type:'event'}];
+
 
 /**
 The default gas to provide for estimates. This is set manually,
@@ -105,7 +112,9 @@ Template['views_send'].onCreated(function(){
     // set the default fee
     TemplateVar.set('amount', 0);
     TemplateVar.set('estimatedGas', 0);
-
+    
+    //Selects ether by default
+    TemplateVar.set('sendType','et');
 
     // check if we are still on the correct chain
     Helpers.checkChain();
@@ -242,6 +251,36 @@ Template['views_send'].helpers({
         return TAPi18n.__('wallet.send.texts.timeTexts.'+ ((Number(TemplateVar.getFrom('.dapp-select-gas-price', 'feeMultiplicator')) + 5) / 2).toFixed(0));
     },
     /**
+    Shows correct explanation for token type
+
+    @method (sendExplanation)
+    */
+    'sendExplanation': function(e, amount){
+
+      
+        if (TemplateVar.get('sendType')=='et') {
+            // return "send ether";    
+            return Spacebars.SafeString(TAPi18n.__('wallet.send.texts.sendAmount', {amount:amount})); 
+            //wallet.send.texts.sendAmount' amount=amount   
+        
+        } else if (TemplateVar.get('sendType')=='am') {
+            return Spacebars.SafeString(TAPi18n.__('wallet.send.texts.sendAmountEquivalent', {amount:amount})); 
+            // {{{i18n 'wallet.send.texts.sendAmountEquivalent' amount=amount}}}
+
+        } else {
+
+            var selectedAccount = Helpers.getAccountByAddress(template.find('select[name="dapp-select-account"]').value);
+            // token = web3.eth.contract(coinABI).at(TemplateVar.get('tokenAddress'));
+            // var balance = Number(token.coinBalanceOf(selectedAccount.address)) / 100;
+
+            console.log(selectedAccount);
+            // console.log(balance);
+
+
+            return Spacebars.SafeString(TAPi18n.__('wallet.send.texts.sendToken', {amount:amount, balance: 100, symbol: "UZ$"})); 
+        }
+    },
+    /**
     Gets currently selected unit
 
     @method (selectedUnit)
@@ -261,33 +300,34 @@ Template['views_send'].helpers({
     'unitsAndTokens' : function(){
         units = [{
             text: 'ETHER',
-            value: 'ether'
+            value: 'et_ether'
         },
         {
             text: 'FINNEY',
-            value: 'finney'
+            value: 'et_finney'
         },
         {
             text: 'BTC*',
-            value: 'btc'
+            value: 'am_btc'
         },
         {
             text: 'USD*',
-            value: 'usd'
+            value: 'am_usd'
         },
         {
             text: 'EUR*',
-            value: 'eur'
+            value: 'am_eur'
         }];
 
         var tokens = Tokens.find({},{sort:{symbol:1}});
         tokens.forEach(function(token){
             var el = { 
                 text: token.symbol.toUpperCase(),
-                value: token.symbol
+                value: "tk_"+ token.address 
             }
             units.push(el);
         })
+
 
         return units;
     }
@@ -466,5 +506,14 @@ Template['views_send'].events({
                 class: 'send-transaction-info'
             });
         }
+    },
+    // catch the "onchange" event for the .inline-form element you want to observe
+    'change [name="token-switcher"]': function(e, template, value, text){
+        // do something with the selected "value" and "text"
+        TemplateVar.set('sendType', value.substring(0,2));
+        TemplateVar.set('tokenAddress', value.substring(3));
+
     }
 });
+
+
