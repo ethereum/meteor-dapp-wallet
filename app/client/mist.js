@@ -1,6 +1,6 @@
 // ADD MIST MENU
 updateMistMenu = function(){
-    var accounts = Wallets.find({}, {sort: {type: 1, balance: -1, name: 1}}).fetch(),
+    var accounts = _.union(Wallets.find({}, {sort: {name: 1}}).fetch(), EthAccounts.find({}, {sort: {name: 1}}).fetch()),
         balance = 0;
 
     Meteor.setTimeout(function(){
@@ -28,7 +28,7 @@ updateMistMenu = function(){
                 mist.menu.add(account._id,{
                     position: 2 + index,
                     name: account.name,
-                    badge: EthTools.formatBalance(account.balance, "0 a unit"),
+                    badge: EthTools.formatBalance(account.balance, "0 a", 'ether')+ ' ETH',
                     selected: (location.pathname === '/account/'+ account.address)
                 }, function(){
                     FlowRouter.go('/account/'+ account.address);
