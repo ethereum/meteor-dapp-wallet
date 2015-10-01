@@ -279,6 +279,19 @@ Template['views_account_create'].events({
     'click span[name="multisigSignees"] .simple-modal button': function(e){
         TemplateVar.set('multisigSignees',  $(e.currentTarget).data('value'));
     },
+    // 'click button.compile': function(e, template) {
+    //     web3.eth.compile.solidity(template.find('textarea.compile').value, function(e, res) {
+    //         if(!e) {
+    //             console.log(res);
+    //         } else {
+    //             GlobalNotification.error({
+    //                 content: 'Couldn\'t compile code' , //TAPi18n.__('wallet.newWallet.error.stubHasNoOrigWalletAddress'),
+    //                 duration: 5
+    //             });
+    //         }
+
+    //     })
+    // },
     /**
     Create the account
 

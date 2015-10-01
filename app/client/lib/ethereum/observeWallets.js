@@ -599,12 +599,18 @@ observeWallets = function(){
                     }
                 });
 
-                // check if wallet is at address
+                // check if wallet has code
                 web3.eth.getCode(newDocument.address, function(e, code) {
                     if(code && code.length > 2){
                         Wallets.update(newDocument._id, {$unset: {
                             disabled: ''
                         }});
+
+                        // init wallet events, only if existing wallet
+                        updateContractData(newDocument);
+                        setupContractFilters(newDocument);
+                        checkWalletConfirmations(newDocument, {});
+
                     } else {
                         Wallets.update(newDocument._id, {$set: {
                             disabled: true
@@ -612,11 +618,6 @@ observeWallets = function(){
                     }
                 });
 
-                updateContractData(newDocument);
-
-                setupContractFilters(newDocument);
-
-                checkWalletConfirmations(newDocument, {});
             }
         },
         /**

@@ -26,10 +26,6 @@
 
         {{#unless $.Session.get "isMainNet"}}
             <span class="orange" style="font-weight: 400;">TESTNET</span> | 
-        {{else}}
-            <!-- TODO remove on launch -->
-            <span class="red">This is a pre-release! Don't put large amounts of ether in wallets on the mainnet just yet!</span>
-            <br>
         {{/unless}}
 
         {{#with TemplateVar.get "syncing"}}

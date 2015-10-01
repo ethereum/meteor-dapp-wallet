@@ -420,7 +420,7 @@ Template['views_send'].events({
             var sendTransaction = function(estimatedGas){
 
                 // show loading
-                EthElements.Modal.show('views_modals_loading');
+                // EthElements.Modal.show('views_modals_loading');
 
                 TemplateVar.set(template, 'sending', true);
 
@@ -449,7 +449,7 @@ Template['views_send'].events({
                             FlowRouter.go('dashboard');
 
                         } else {
-                            EthElements.Modal.hide();
+                            // EthElements.Modal.hide();
 
                             GlobalNotification.error({
                                 content: error.message,
@@ -481,7 +481,7 @@ Template['views_send'].events({
                             FlowRouter.go('dashboard');
                         } else {
 
-                            EthElements.Modal.hide();
+                            // EthElements.Modal.hide();
 
                             GlobalNotification.error({
                                 content: error.message,

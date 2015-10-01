@@ -9,6 +9,8 @@ observeLatestBlocks = function(){
     web3.eth.filter('latest').watch(function(e, res){
         if(!e) {
 
+            console.log('Block arrived ', res);
+
             // UPDATE WALLETS ACCOUNTS balance
             _.each(Wallets.find().fetch(), function(wallet){
                 if(wallet.address) {

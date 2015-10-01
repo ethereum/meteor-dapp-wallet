@@ -94,12 +94,14 @@ Template['views_account'].events({
     @event click button.delete
     */
     'click button.delete': function(e, template){
+        var data = this;
+
         EthElements.Modal.question({
             text: new Spacebars.SafeString(TAPi18n.__('wallet.accounts.modal.deleteText') + 
                 '<br><input type="text" class="deletionConfirmation" autofocus="true">'),
             ok: function(){
-                if(Wallets.findOne(template.data._id).name === $('input.deletionConfirmation').val()) {
-                    Wallets.remove(template.data._id);
+                if(data.name === $('input.deletionConfirmation').val()) {
+                    Wallets.remove(data._id);
                     FlowRouter.go('dashboard');
                     return true;
                 }
