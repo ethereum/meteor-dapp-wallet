@@ -1,3 +1,5 @@
+var peerCountIntervalId = null;
+
 /**
 Observe the latest blocks
 
@@ -30,5 +32,16 @@ observeLatestBlocks = function(){
             });
         }
     });
+
+
+    // check peer count
+    Session.setDefault('peerCount', 0);
+    clearInterval(peerCountIntervalId);
+    peerCountIntervalId = setInterval(function() {
+        web3.net.getPeerCount(function(e, res) {
+            if(!e)
+                Session.set('peerCount', res);
+        });
+    }, 1000);
 
 };

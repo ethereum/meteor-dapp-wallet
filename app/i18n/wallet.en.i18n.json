@@ -22,7 +22,8 @@
                 "pendingConfirmationsBadge": "Pending Confirmation!",
                 "nodeSyncing": "__blockDiff__ blocks left",
                 "blockReceived": "New Block Received",
-                "timeSinceBlock": "since last block"
+                "timeSinceBlock": "since last block",
+                "peers": "peers"
             },
             "error": {
                 "wrongChain": "You seem on a different chain, please restart the wallet!"

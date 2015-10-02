@@ -410,6 +410,8 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
                     // delay a little to prevent race conditions
                     confirmOrRevoke(contractInstance, log);
                 }
+            } else {
+                console.error('Logs of Wallet'+ newDocument.name + 'couldn\'t be received');
             }
         }));
 

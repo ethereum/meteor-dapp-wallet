@@ -16,9 +16,6 @@
 @colorLink: #02A8F3;
 
 
-&.red {
-    color: @colorError;
-}
 
 // Platform specifics
 // Mac OSX
@@ -178,6 +175,7 @@ body {
     }
     
     .wallet-balance {
+        width: 218px; // necessary to move the block info into the middle again
         padding-bottom: @defaultPaddingVertical - 5px;
         padding-left: @defaultPaddingHorizontal;
         text-align: right;
