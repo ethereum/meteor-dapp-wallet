@@ -269,15 +269,13 @@ Template['views_send'].helpers({
 
         } else {
 
-            var selectedAccount = Helpers.getAccountByAddress(template.find('select[name="dapp-select-account"]').value);
+            var selectedAccount = TemplateVar.getFrom('dapp-select-account', 'value');
             // token = web3.eth.contract(coinABI).at(TemplateVar.get('tokenAddress'));
             // var balance = Number(token.coinBalanceOf(selectedAccount.address)) / 100;
 
             console.log(selectedAccount);
-            // console.log(balance);
 
-
-            return Spacebars.SafeString(TAPi18n.__('wallet.send.texts.sendToken', {amount:amount, balance: 100, symbol: "UZ$"})); 
+            return Spacebars.SafeString(TAPi18n.__('wallet.send.texts.sendToken', {amount:"10", balance: "1000", symbol: "ZZ$"})); 
         }
     },
     /**
