@@ -19,7 +19,14 @@ Template['views_dashboard'].helpers({
     @method (wallets)
     */
     'wallets': function(){
-        return Wallets.find({}, {sort: {disabled: 1, creationBlock: 1}});
+        var wallets = Wallets.find({}, {sort: {disabled: 1, creationBlock: 1}}).fetch();
+
+        // sort wallets by balance
+        wallets.sort(function(a, b) {
+          return new BigNumber(b.balance, 10).gt(new BigNumber(a.balance, 10));
+        });
+
+        return wallets;
     },
     /**
     Get all current accounts
@@ -28,7 +35,13 @@ Template['views_dashboard'].helpers({
     */
     'accounts': function(){
         // balance need to be present, to show only full inserted accounts (not ones added by mist.requestAccount)
-        return EthAccounts.find({name: {$exists: true}}, {sort: {name: 1}});
+        var accounts = EthAccounts.find({name: {$exists: true}}, {sort: {name: 1}}).fetch();
+
+        accounts.sort(function(a, b) {
+          return new BigNumber(b.balance, 10).gt(new BigNumber(a.balance, 10));
+        });
+
+        return accounts;
     },
     /**
     Get all transactions
