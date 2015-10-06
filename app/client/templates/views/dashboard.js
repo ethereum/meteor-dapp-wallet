@@ -43,6 +43,15 @@ Template['views_dashboard'].helpers({
 
         return accounts;
     },
+    /** 
+    Are there any accounts?
+
+    @method (hasAccounts)
+    */
+    'hasAccounts' : function() {
+        return (EthAccounts.find().fetch().length > 0 )
+    },
+
     /**
     Get all transactions
 
