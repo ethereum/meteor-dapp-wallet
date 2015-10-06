@@ -28,6 +28,27 @@ observeLatestBlocks = function(){
                     }, 1000);
                 }
             });
+
+            _.each(EthAccounts.find().fetch(), function(account){
+              _.each(Tokens.find().fetch(), function(token){
+                
+                tokenInstance = web3.eth.contract(tokenABI).at(token.address);
+        
+                var balance = Number(tokenInstance.coinBalanceOf(account.address));
+
+                    console.log(balance);
+                    if(balance>0){
+                        // EthAccounts.update(account._id, {$set: {
+                        //     tokenBalance: balance 
+                        // }})
+                        Balances.upsert(account._id, {$set: {
+                            account: account.address,
+                            token: token.address,
+                            tokenBalance: balance
+                        }});
+                    }
+              })  
+            });
         }
     });
 

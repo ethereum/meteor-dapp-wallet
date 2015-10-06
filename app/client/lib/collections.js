@@ -18,3 +18,7 @@ new PersistentMinimongo(PendingConfirmations, 'ethereum_wallet');
 // Contains Coin Information
 Tokens = new Mongo.Collection('tokens', {connection: null});
 new PersistentMinimongo(Tokens, 'ethereum_wallet');
+
+//Contain token Balances per account
+Balances = new Mongo.Collection('balances', {connection: null});
+new PersistentMinimongo(Balances, 'ethereum_wallet');

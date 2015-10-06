@@ -72,9 +72,7 @@ Template['views_account'].helpers({
     @method (getBalance)
     */
     'formattedCoinBalance': function(e){
-        coinABI = [{constant:false,inputs:[{name:'receiver',type:'address'},{name:'amount',type:'uint256'}],name:'sendCoin',outputs:[{name:'sufficient',type:'bool'}],type:'function'},{constant:true,inputs:[{name:'',type:'address'}],name:'coinBalanceOf',outputs:[{name:'',type:'uint256'}],type:'function'},{inputs:[{name:'supply',type:'uint256'}],type:'constructor'},{anonymous:false,inputs:[{indexed:false,name:'sender',type:'address'},{indexed:false,name:'receiver',type:'address'},{indexed:false,name:'amount',type:'uint256'}],name:'CoinTransfer',type:'event'}];
-
-        token = web3.eth.contract(coinABI).at(this.address);
+        token = web3.eth.contract(tokenABI).at(this.address);
         
         var balance = Number(token.coinBalanceOf(FlowRouter.getParam('address'))) / Number(this.division);
 
@@ -82,7 +80,7 @@ Template['views_account'].helpers({
             return false;
         } else {
             // return Number(token.coinBalanceOf(FlowRouter.getParam('address'))) / Number(this.division);
-            return numeral(balance).format('0,0.00[000000]') + this.symbol;
+            return numeral(balance).format('0,0.00[000000]') + ' ' + this.symbol;
         }
     }
 });
