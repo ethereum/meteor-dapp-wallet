@@ -57,7 +57,7 @@ var updateTransaction = function(newDocument, transaction, receipt){
     var id = newDocument._id || Helpers.makeId('tx', transaction.transactionHash || newDocument.transactionHash);
 
     // if transaction has no transactionId, stop
-    if(!newDocument._id && !transaction.transactionHash && !newDocument.transactionHash)
+    if(!id)
         return;
 
     if(transaction) {

@@ -95,6 +95,9 @@ It will check first if the incoming log is newer than the already stored data.
 confirmOrRevoke = function(contract, log){
     var confirmationId = Helpers.makeId('pc', log.args.operation);
 
+    if(!confirmationId)
+        return;
+
     contract.hasConfirmed(log.args.operation, log.args.owner, function(e, res){
         var pendingConf = PendingConfirmations.findOne(confirmationId),
             setDocument = {$set:{
@@ -122,44 +125,6 @@ confirmOrRevoke = function(contract, log){
         PendingConfirmations.upsert(confirmationId, setDocument);
     });
 
-    // var confirmationId = Helpers.makeId('pc', log.args.operation),
-    //     pendingConf = PendingConfirmations.findOne(confirmationId);
-
-    // if(pendingConf &&
-    //    (!pendingConf.lastActivityBlock || 
-    //     log.blockNumber > pendingConf.lastActivityBlock ||
-    //     (log.blockNumber === pendingConf.lastActivityBlock && log.transactionIndex > pendingConf.lastActivityTxIndex))) {
-        
-    //     var data = {$set:{
-    //         from: log.address,
-    //         lastActivityBlock: log.blockNumber,
-    //         lastActivityTxIndex: log.transactionIndex
-    //     }};
-
-    //     // remove the sending property
-    //     if(pendingConf.sending === log.args.owner)
-    //         data['$unset'] = {sending: ''};
-
-    //     if(type === 'confirm')
-    //         data['$addToSet'] = {
-    //             confirmedOwners: log.args.owner
-    //         };
-    //     else
-    //         data['$pull'] = {
-    //             confirmedOwners: log.args.owner
-    //         };
-
-    //     PendingConfirmations.update(confirmationId, data);
-
-    // } else if(!pendingConf) {
-    //     PendingConfirmations.insert({
-    //         _id: confirmationId,
-    //         confirmedOwners: [log.args.owner],
-    //         from: log.address,
-    //         lastActivityBlock: log.blockNumber,
-    //         lastActivityTxIndex: log.transactionIndex
-    //     });
-    // }
 };
 
 /**
@@ -334,7 +299,7 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
 
                     var block = web3.eth.getBlock(log.blockNumber, true, function(err, block){
 
-                        if(!err) {
+                        if(!err && block) {
                             var confirmationId = Helpers.makeId('pc', log.args.operation),
                                 accounts = Wallets.find({$or: [{address: log.address}, {address: log.args.to}]}).fetch(),
                                 pendingConf = PendingConfirmations.findOne(confirmationId),
@@ -369,6 +334,11 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
                                     transactionHash: log.transactionHash,
                                     transactionIndex: log.transactionIndex,
                                 }});
+
+                                // delay a little to prevent race conditions
+                                Tracker.afterFlush(function() {
+                                    confirmOrRevoke(contractInstance, log);
+                                });
 
 
                                 // remove pending transactions, as they now have to be approved
