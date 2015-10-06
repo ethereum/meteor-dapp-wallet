@@ -68,5 +68,5 @@ Meteor.startup(function(){
     // TODO improve persistent-minimongo2 ?
     Meteor.setTimeout(function() {
         connect();
-    }, 2000);
+    }, 5000);
 });

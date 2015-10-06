@@ -304,12 +304,14 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
         Helpers.eventLogs('Checking Deposits and ConfirmationNeeded for '+ newDocument.address +' from block #', blockToCheckBack);
 
 
-        // delete the last tx and pc until block -1000
+        // delete the last tx and pc until block -500
         _.each(Transactions.find({_id: {$in: newDocument.transactions || []}, blockNumber: {$exists: true, $gt: blockToCheckBack}}).fetch(), function(tx){
-            Transactions.remove(tx._id);
+            if(tx)
+                Transactions.remove({_id: tx._id});
         });
         _.each(PendingConfirmations.find({from: newDocument.address, blockNumber: {$exists: true, $gt: blockToCheckBack}}).fetch(), function(pc){
-            PendingConfirmations.remove(pc._id);
+            if(pc)
+                PendingConfirmations.remove({_id: pc._id});
         });
 
 
@@ -411,7 +413,7 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
                     confirmOrRevoke(contractInstance, log);
                 }
             } else {
-                console.error('Logs of Wallet'+ newDocument.name + 'couldn\'t be received');
+                console.error('Logs of Wallet'+ newDocument.name + 'couldn\'t be received', error);
             }
         }));
 
@@ -603,20 +605,24 @@ observeWallets = function(){
 
                 // check if wallet has code
                 web3.eth.getCode(newDocument.address, function(e, code) {
-                    if(code && code.length > 2){
-                        Wallets.update(newDocument._id, {$unset: {
-                            disabled: ''
-                        }});
+                    if(!e) {
+                        if(code && code.length > 2){
+                            Wallets.update(newDocument._id, {$unset: {
+                                disabled: ''
+                            }});
 
-                        // init wallet events, only if existing wallet
-                        updateContractData(newDocument);
-                        setupContractFilters(newDocument);
-                        checkWalletConfirmations(newDocument, {});
+                            // init wallet events, only if existing wallet
+                            updateContractData(newDocument);
+                            setupContractFilters(newDocument);
+                            checkWalletConfirmations(newDocument, {});
 
+                        } else {
+                            Wallets.update(newDocument._id, {$set: {
+                                disabled: true
+                            }});
+                        }
                     } else {
-                        Wallets.update(newDocument._id, {$set: {
-                            disabled: true
-                        }});
+                        console.log('Couldn\'t check Wallet code of ', newDocument, e);
                     }
                 });
 

@@ -62,7 +62,7 @@ Display logs in the console for events.
 Helpers.eventLogs = function(){
     var args = arguments;
     Array.prototype.unshift.call(args, 'EVENT LOG: ');
-    // console.log.apply(console, args);
+    console.log.apply(console, args);
 }
 
 /**

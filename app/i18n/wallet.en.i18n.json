@@ -76,6 +76,10 @@
             "showMore": "Show More",
             "filter": "Filter transactions",
             "noneFound": "No matching transaction found.",
+            "buttons": {
+                "approve": "Approve",
+                "revoke": "Revoke"
+            },
             "error": {
                 "noDataDeployed": "No data is deployed on the contract address!"    
             },
