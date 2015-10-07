@@ -10,8 +10,8 @@
 
         {{/if}}
 
-        
         {{#if hasAccounts}}
+        
             <h2>{{i18n "wallet.accounts.walletsTitle"}}</h2>
             <br>
 
@@ -26,12 +26,10 @@
                 <h3>{{i18n "wallet.app.buttons.addWallet"}}</h3>
             </a>
 
-        {{/if}}
+            
+            <h2>{{i18n "wallet.accounts.accountsTitle"}}</h2>
+            <div class="dapp-clear-fix"></div>
         
-        <h2>{{i18n "wallet.accounts.accountsTitle"}}</h2>
-        <div class="dapp-clear-fix"></div>
-        
-        {{#if hasAccounts}}
 
             {{#each accounts}}
                 {{> elements_account account=_id}}
@@ -47,10 +45,9 @@
             {{/if}}
 
         {{else}}
-            
             <div class="col col-5 mobile-full ">
-                <h3>You have accounts yet</h3>
-                <p>Before using Mist you need to create at least one account, with strong password</p>
+                <h3>{{i18n "wallet.app.texts.noAccounts.title"}}</h3>
+                <p>{{i18n "wallet.app.texts.noAccounts.text"}}</p>
             </div>
             <div class="col col-5 mobile-full ">
                 <br>

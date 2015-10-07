@@ -16,6 +16,15 @@ Template['views_account_create'].onCreated(function(){
     TemplateVar.set('multisigSignatures', 2);   // number of required signatures
 
     TemplateVar.set('selectedSection', 'simple');
+
+
+    // check if we are still on the correct chain
+    Helpers.checkChain(function(error) {
+        if(error) {
+            checkForOriginalWallet();
+        }
+    });
+
 });
 
 

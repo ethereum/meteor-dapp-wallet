@@ -74,10 +74,6 @@ Check if we are on the correct chain and display an error.
 Helpers.checkChain = function(callback){
     web3.eth.getCode(originalContractAddress, function(e, code){
         if(code && code.length <= 2) {
-            GlobalNotification.error({
-                content: TAPi18n.__('wallet.app.error.wrongChain'),
-                closeable: false
-            });
 
             if(_.isFunction(callback))
                 callback('Wrong chain!');

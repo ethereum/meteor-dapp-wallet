@@ -23,7 +23,11 @@
                 "nodeSyncing": "__blockDiff__ blocks left",
                 "blockReceived": "New Block Received",
                 "timeSinceBlock": "since last block",
-                "peers": "peers"
+                "peers": "peers",
+                "noAccounts": {
+                    "title": "You have no accounts yet",
+                    "text": "Before using the Wallet you need to create at least one account with a strong password."
+                }
             },
             "error": {
                 "wrongChain": "You seem on a different chain, please restart the wallet!"
@@ -34,7 +38,7 @@
                 "title": "Select an account"
             },
             "testnetWallet": {
-                "walletNeedsDeployment": "You seem to be on a testnet.<br><br>There is no original wallet found, we need to deploy a wallet, which can be used by the wallet stub contracts, from your address: <br><br><small><code>__account__</code></small>,<br><br>please make sure this address is unlocked and has at least 1 ether!",
+                "walletNeedsDeployment": "You seem to be on a testnet.<br><br>There is no original wallet found, we need to deploy a wallet, which can be used by the wallet stub contracts, from your address: <br><br><small><code>__account__</code></small>,<br><br>Please make sure this address has at <strong>least 1 ether</strong>!",
                 "testnetWalletDeployed": "Original wallet deployed!<br>An original wallet was deployed on the address:<br><br><small><code>__address__</code></small>."
             }
         },

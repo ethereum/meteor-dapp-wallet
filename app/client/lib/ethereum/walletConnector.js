@@ -53,7 +53,7 @@ connectToNode = function(){
     EthAccounts.init();
     EthBlocks.init();
 
-    if (EthAccounts.find().fetch().length > 0) {
+    if (EthAccounts.find().count() > 0) {
         checkForOriginalWallet();
     }
 
