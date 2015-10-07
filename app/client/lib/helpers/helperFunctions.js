@@ -51,7 +51,7 @@ Make a ID out of a given hash and prefix.
 @param {String} hash
 */
 Helpers.makeId = function(prefix, hash){
-    return prefix +'_'+ hash.replace('0x','').substr(0,10);
+    return _.isString(hash) ? prefix +'_'+ hash.replace('0x','').substr(0,10) : null;
 };
 
 /**
@@ -62,7 +62,7 @@ Display logs in the console for events.
 Helpers.eventLogs = function(){
     var args = arguments;
     Array.prototype.unshift.call(args, 'EVENT LOG: ');
-    // console.log.apply(console, args);
+    console.log.apply(console, args);
 }
 
 /**
@@ -74,10 +74,6 @@ Check if we are on the correct chain and display an error.
 Helpers.checkChain = function(callback){
     web3.eth.getCode(originalContractAddress, function(e, code){
         if(code && code.length <= 2) {
-            GlobalNotification.error({
-                content: TAPi18n.__('wallet.app.error.wrongChain'),
-                closeable: false
-            });
 
             if(_.isFunction(callback))
                 callback('Wrong chain!');

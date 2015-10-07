@@ -95,6 +95,9 @@ It will check first if the incoming log is newer than the already stored data.
 confirmOrRevoke = function(contract, log){
     var confirmationId = Helpers.makeId('pc', log.args.operation);
 
+    if(!confirmationId)
+        return;
+
     contract.hasConfirmed(log.args.operation, log.args.owner, function(e, res){
         var pendingConf = PendingConfirmations.findOne(confirmationId),
             setDocument = {$set:{
@@ -122,44 +125,6 @@ confirmOrRevoke = function(contract, log){
         PendingConfirmations.upsert(confirmationId, setDocument);
     });
 
-    // var confirmationId = Helpers.makeId('pc', log.args.operation),
-    //     pendingConf = PendingConfirmations.findOne(confirmationId);
-
-    // if(pendingConf &&
-    //    (!pendingConf.lastActivityBlock || 
-    //     log.blockNumber > pendingConf.lastActivityBlock ||
-    //     (log.blockNumber === pendingConf.lastActivityBlock && log.transactionIndex > pendingConf.lastActivityTxIndex))) {
-        
-    //     var data = {$set:{
-    //         from: log.address,
-    //         lastActivityBlock: log.blockNumber,
-    //         lastActivityTxIndex: log.transactionIndex
-    //     }};
-
-    //     // remove the sending property
-    //     if(pendingConf.sending === log.args.owner)
-    //         data['$unset'] = {sending: ''};
-
-    //     if(type === 'confirm')
-    //         data['$addToSet'] = {
-    //             confirmedOwners: log.args.owner
-    //         };
-    //     else
-    //         data['$pull'] = {
-    //             confirmedOwners: log.args.owner
-    //         };
-
-    //     PendingConfirmations.update(confirmationId, data);
-
-    // } else if(!pendingConf) {
-    //     PendingConfirmations.insert({
-    //         _id: confirmationId,
-    //         confirmedOwners: [log.args.owner],
-    //         from: log.address,
-    //         lastActivityBlock: log.blockNumber,
-    //         lastActivityTxIndex: log.transactionIndex
-    //     });
-    // }
 };
 
 /**
@@ -304,12 +269,14 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
         Helpers.eventLogs('Checking Deposits and ConfirmationNeeded for '+ newDocument.address +' from block #', blockToCheckBack);
 
 
-        // delete the last tx and pc until block -1000
+        // delete the last tx and pc until block -500
         _.each(Transactions.find({_id: {$in: newDocument.transactions || []}, blockNumber: {$exists: true, $gt: blockToCheckBack}}).fetch(), function(tx){
-            Transactions.remove(tx._id);
+            if(tx)
+                Transactions.remove({_id: tx._id});
         });
         _.each(PendingConfirmations.find({from: newDocument.address, blockNumber: {$exists: true, $gt: blockToCheckBack}}).fetch(), function(pc){
-            PendingConfirmations.remove(pc._id);
+            if(pc)
+                PendingConfirmations.remove({_id: pc._id});
         });
 
 
@@ -332,7 +299,7 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
 
                     var block = web3.eth.getBlock(log.blockNumber, true, function(err, block){
 
-                        if(!err) {
+                        if(!err && block) {
                             var confirmationId = Helpers.makeId('pc', log.args.operation),
                                 accounts = Wallets.find({$or: [{address: log.address}, {address: log.args.to}]}).fetch(),
                                 pendingConf = PendingConfirmations.findOne(confirmationId),
@@ -367,6 +334,11 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
                                     transactionHash: log.transactionHash,
                                     transactionIndex: log.transactionIndex,
                                 }});
+
+                                // delay a little to prevent race conditions
+                                Tracker.afterFlush(function() {
+                                    confirmOrRevoke(contractInstance, log);
+                                });
 
 
                                 // remove pending transactions, as they now have to be approved
@@ -410,6 +382,8 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
                     // delay a little to prevent race conditions
                     confirmOrRevoke(contractInstance, log);
                 }
+            } else {
+                console.error('Logs of Wallet'+ newDocument.name + 'couldn\'t be received', error);
             }
         }));
 
@@ -519,6 +493,11 @@ observeWallets = function(){
                     if(e) {
                         Wallets.remove(newDocument._id);
 
+                        GlobalNotification.error({
+                            content: TAPi18n.__('wallet.app.error.wrongChain'),
+                            closeable: false
+                        });
+
                     } else {
                         WalletContract.new(newDocument.owners, newDocument.requiredSignatures, (newDocument.dailyLimit || ethereumConfig.dailyLimitDefault), {
                             from: newDocument.owners[0],
@@ -601,20 +580,24 @@ observeWallets = function(){
 
                 // check if wallet has code
                 web3.eth.getCode(newDocument.address, function(e, code) {
-                    if(code && code.length > 2){
-                        Wallets.update(newDocument._id, {$unset: {
-                            disabled: ''
-                        }});
+                    if(!e) {
+                        if(code && code.length > 2){
+                            Wallets.update(newDocument._id, {$unset: {
+                                disabled: ''
+                            }});
 
-                        // init wallet events, only if existing wallet
-                        updateContractData(newDocument);
-                        setupContractFilters(newDocument);
-                        checkWalletConfirmations(newDocument, {});
+                            // init wallet events, only if existing wallet
+                            updateContractData(newDocument);
+                            setupContractFilters(newDocument);
+                            checkWalletConfirmations(newDocument, {});
 
+                        } else {
+                            Wallets.update(newDocument._id, {$set: {
+                                disabled: true
+                            }});
+                        }
                     } else {
-                        Wallets.update(newDocument._id, {$set: {
-                            disabled: true
-                        }});
+                        console.log('Couldn\'t check Wallet code of ', newDocument, e);
                     }
                 });
 

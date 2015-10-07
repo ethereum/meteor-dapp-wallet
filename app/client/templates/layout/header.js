@@ -87,7 +87,7 @@ Template['layout_header'].helpers({
             return timeSince.fromNow(true) + " " + TAPi18n.__('wallet.app.texts.timeSinceBlock');
         } else if (diff<2) {
             Helpers.rerun["1s"].tick();
-            return " " + TAPi18n.__('wallet.app.texts.blockReceived')
+            return ' <span class="blue">' + TAPi18n.__('wallet.app.texts.blockReceived') + '</span>'
         } else {
             Helpers.rerun["1s"].tick();
             return diff + "s " + TAPi18n.__('wallet.app.texts.timeSinceBlock')

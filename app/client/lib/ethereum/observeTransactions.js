@@ -56,6 +56,10 @@ Updates a transaction.
 var updateTransaction = function(newDocument, transaction, receipt){
     var id = newDocument._id || Helpers.makeId('tx', transaction.transactionHash || newDocument.transactionHash);
 
+    // if transaction has no transactionId, stop
+    if(!id)
+        return;
+
     if(transaction) {
         newDocument.blockNumber = transaction.blockNumber;
         newDocument.blockHash = transaction.blockHash;
@@ -79,7 +83,7 @@ var updateTransaction = function(newDocument, transaction, receipt){
         if(receipt.contractAddress) {
             web3.eth.getCode(receipt.contractAddress, function(e, code) {
                 if(!e && code.length > 2) {
-                    Transactions.update(id, {$set: {
+                    Transactions.update({_id: id}, {$set: {
                         deployedData: code
                     }});
                     newDocument.deployedData = code;
@@ -88,8 +92,12 @@ var updateTransaction = function(newDocument, transaction, receipt){
         }
     }
 
-    delete newDocument._id;
-    Transactions.upsert(id, {$set: newDocument});
+    if(Transactions.findOne({_id: id})) {
+        delete newDocument._id;
+        Transactions.update({_id: id}, {$set: newDocument});
+    } else {
+        Transactions.insert(newDocument);
+    }
 
     // re-add the id
     newDocument._id = id;
