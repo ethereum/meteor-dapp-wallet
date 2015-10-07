@@ -135,7 +135,7 @@ Creates filters for a wallet contract, to watch for deposits, pending confirmati
 @param {Boolean} checkFromCreationBlock
 */
 setupContractFilters = function(newDocument, checkFromCreationBlock){
-    var blockToCheckBack = (EthBlocks.latest.number || 0) - ethereumConfig.rollBackBy;
+    var blockToCheckBack = (newDocument.checkpointBlock || 0) - ethereumConfig.rollBackBy;
     
     if(checkFromCreationBlock || blockToCheckBack < 0)
         blockToCheckBack = newDocument.creationBlock;
@@ -270,17 +270,30 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
 
 
         // delete the last tx and pc until block -500
-        _.each(Transactions.find({_id: {$in: newDocument.transactions || []}, blockNumber: {$exists: true, $gt: blockToCheckBack}}).fetch(), function(tx){
-            if(tx)
-                Transactions.remove({_id: tx._id});
-        });
-        _.each(PendingConfirmations.find({from: newDocument.address, blockNumber: {$exists: true, $gt: blockToCheckBack}}).fetch(), function(pc){
-            if(pc)
-                PendingConfirmations.remove({_id: pc._id});
-        });
+        // _.each(Transactions.find({_id: {$in: newDocument.transactions || []}, blockNumber: {$exists: true, $gt: blockToCheckBack}}).fetch(), function(tx){
+        //     if(tx)
+        //         Transactions.remove({_id: tx._id});
+        // });
+        // _.each(PendingConfirmations.find({from: newDocument.address, blockNumber: {$exists: true, $gt: blockToCheckBack}}).fetch(), function(pc){
+        //     if(pc)
+        //         PendingConfirmations.remove({_id: pc._id});
+        // });
 
 
-        events.push(contractInstance.allEvents({fromBlock: blockToCheckBack, toBlock: 'latest'}, function(error, log){
+        var filter = contractInstance.allEvents({fromBlock: blockToCheckBack, toBlock: 'latest'});
+        events.push(filter);
+        
+        // get past logs, to set the new blockNumber
+        filter.get(function(error, logs) {
+            if(!error) {
+                // update last checkpoint block
+                Wallets.update({_id: newDocument._id}, {$set: {
+                    checkpointBlock: EthBlocks.latest.number - ethereumConfig.rollBackBy
+                }});
+            }
+        });
+
+        filter.watch(function(error, log){
             if(!error) {
                 Helpers.eventLogs(log);
 
@@ -335,10 +348,11 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
                                     transactionIndex: log.transactionIndex,
                                 }});
 
+                                // TODO: add back? done for the confirmation log already
                                 // delay a little to prevent race conditions
-                                Tracker.afterFlush(function() {
-                                    confirmOrRevoke(contractInstance, log);
-                                });
+                                // Tracker.afterFlush(function() {
+                                //     confirmOrRevoke(contractInstance, log);
+                                // });
 
 
                                 // remove pending transactions, as they now have to be approved
@@ -383,9 +397,9 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
                     confirmOrRevoke(contractInstance, log);
                 }
             } else {
-                console.error('Logs of Wallet'+ newDocument.name + 'couldn\'t be received', error);
+                console.error('Logs of Wallet'+ newDocument.name + ' couldn\'t be received', error);
             }
-        }));
+        });
 
     }
 
@@ -530,6 +544,7 @@ observeWallets = function(){
 
                                     Wallets.update(newDocument._id, {$set: {
                                         creationBlock: EthBlocks.latest.number - 1,
+                                        checkpointBlock: EthBlocks.latest.number - 1,
                                         address: contract.address
                                     }, $unset: {
                                         code: ''
@@ -609,7 +624,8 @@ observeWallets = function(){
         @method changed
         */
         changed: function(newDocument, oldDocument){
-            checkWalletConfirmations(newDocument, oldDocument);
+            // checkWalletConfirmations(newDocument, oldDocument);
+            updateContractData(newDocument);
         },
         /**
         Stop filters, when accounts are removed

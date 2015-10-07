@@ -60,6 +60,8 @@ var updateTransaction = function(newDocument, transaction, receipt){
     if(!id)
         return;
 
+    newDocument._id = id;
+
     if(transaction) {
         newDocument.blockNumber = transaction.blockNumber;
         newDocument.blockHash = transaction.blockHash;
@@ -86,7 +88,6 @@ var updateTransaction = function(newDocument, transaction, receipt){
                     Transactions.update({_id: id}, {$set: {
                         deployedData: code
                     }});
-                    newDocument.deployedData = code;
                 }
             })
         }
@@ -98,10 +99,6 @@ var updateTransaction = function(newDocument, transaction, receipt){
     } else {
         Transactions.insert(newDocument);
     }
-
-    // re-add the id
-    newDocument._id = id;
-    return newDocument;
 };
 
 
@@ -152,7 +149,7 @@ observeTransactions = function(){
 
                                 // update with receipt
                                 if(transaction.blockNumber !== tx.blockNumber)
-                                    tx = updateTransaction(tx, transaction, receipt);
+                                    updateTransaction(tx, transaction, receipt);
 
                                 // enable transaction, if it was disabled
                                 else if(transaction.blockNumber && tx.disabled)
@@ -252,12 +249,6 @@ observeTransactions = function(){
 
             // check first if the transaction was already mined
             if(!newDocument.confirmed) {
-                web3.eth.getTransaction(newDocument.transactionHash, function(e, transaction){
-                    web3.eth.getTransactionReceipt(newDocument.transactionHash, function(e, receipt){
-                        if(!e && receipt)
-                            updateTransaction(newDocument, transaction, receipt);
-                    });
-                });
                 checkTransactionConfirmations(newDocument);
             }
         },
@@ -285,6 +276,12 @@ observeTransactions = function(){
                 transactions: document._id
             }});
             Wallets.update({address: document.to}, {$pull: {
+                transactions: document._id
+            }});
+            EthAccounts.update({address: document.from}, {$pull: {
+                transactions: document._id
+            }});
+            EthAccounts.update({address: document.to}, {$pull: {
                 transactions: document._id
             }});
         }
