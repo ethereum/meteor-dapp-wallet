@@ -109,7 +109,12 @@ Template['views_send'].onCreated(function(){
 
 
     // check if we are still on the correct chain
-    Helpers.checkChain();
+    Helpers.checkChain(function(error) {
+        if(error) {
+            checkForOriginalWallet();
+        }
+    });
+
 
 
     // change the amount when the currency unit is changed

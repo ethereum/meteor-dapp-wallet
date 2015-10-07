@@ -18,9 +18,12 @@
 
     <div class="block-info dapp-flex-item  {{#if TemplateVar.get 'syncing'}}syncing{{/if}}">
 
-        {{#unless $.Session.get "isMainNet"}}
-            <span class="orange" style="font-weight: 400;">TESTNET</span> | 
-        {{/unless}}
+        {{#if $eq ($.Session.get "network") "testnet"}}
+            <span class="orange" style="font-weight: 400;">TEST-NET</span> | 
+        {{/if}}
+        {{#if $eq ($.Session.get "network") "privatenet"}}
+            <span class="orange" style="font-weight: 400;">PRIVATE-NET</span> | 
+        {{/if}}
 
         {{#with TemplateVar.get "syncing"}}
             <span class="text">

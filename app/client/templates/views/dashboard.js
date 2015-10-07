@@ -49,7 +49,7 @@ Template['views_dashboard'].helpers({
     @method (hasAccounts)
     */
     'hasAccounts' : function() {
-        return (EthAccounts.find().fetch().length > 0 )
+        return (EthAccounts.find().count() > 0 )
     },
 
     /**

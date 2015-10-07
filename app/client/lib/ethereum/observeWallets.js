@@ -493,6 +493,11 @@ observeWallets = function(){
                     if(e) {
                         Wallets.remove(newDocument._id);
 
+                        GlobalNotification.error({
+                            content: TAPi18n.__('wallet.app.error.wrongChain'),
+                            closeable: false
+                        });
+
                     } else {
                         WalletContract.new(newDocument.owners, newDocument.requiredSignatures, (newDocument.dailyLimit || ethereumConfig.dailyLimitDefault), {
                             from: newDocument.owners[0],
