@@ -15,6 +15,14 @@ contracts = {};
 
 
 /**
+Contains all collection observers
+
+@property collectionObservers
+*/
+collectionObservers = [];
+
+
+/**
 Config for the ethereum connector
 
 @property config

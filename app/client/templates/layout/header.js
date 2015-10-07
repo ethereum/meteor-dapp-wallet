@@ -13,33 +13,6 @@ The header template
 
 Template['layout_header'].onCreated(function(){
     var template = this;
-
-    // Stop app operation, when the node is syncing
-    web3.eth.isSyncing(function(error, syncing) {
-        if(!error) {
-
-            if(syncing === true) {
-                console.log('Node started syncing, stopping app operation');
-                web3.reset(true);
-
-            
-            } else if(_.isObject(syncing)) {
-                
-                syncing.progress = Math.floor(((syncing.currentBlock - syncing.startingBlock) / (syncing.highestBlock - syncing.startingBlock)) * 100);
-                syncing.blockDiff = numeral(syncing.highestBlock - syncing.currentBlock).format('0,0');
-
-                TemplateVar.set(template, 'syncing', syncing);
-                
-            } else {
-                console.log('Restart app operation again');
-
-                TemplateVar.set(template, 'syncing', false);
-
-                // re-gain app operation
-                connectToNode();
-            }
-        }
-    });
 });
 
 

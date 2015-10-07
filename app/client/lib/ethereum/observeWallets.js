@@ -449,7 +449,7 @@ observeWallets = function(){
     @class Wallets.find({}).observe
     @constructor
     */
-    Wallets.find({}).observe({
+    collectionObservers[collectionObservers.length] = Wallets.find({}).observe({
         /**
         This will observe the account creation, to send the contract creation transaction.
 

@@ -116,7 +116,6 @@ Template['views_send'].onCreated(function(){
     });
 
 
-
     // change the amount when the currency unit is changed
     template.autorun(function(c){
         var unit = EthTools.getUnit();

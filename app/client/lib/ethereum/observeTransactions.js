@@ -226,7 +226,7 @@ observeTransactions = function(){
     @class Transactions({}).observe
     @constructor
     */
-    Transactions.find({}).observe({
+    collectionObservers[collectionObservers.length] = Transactions.find({}).observe({
         /**
         This will observe the transactions creation and create watchers for outgoing trandsactions, to see when they are mined.
 

@@ -10,7 +10,7 @@ observePendingConfirmations = function(){
     @class PendingConfirmations({}).observe
     @constructor
     */
-    PendingConfirmations.find({}).observe({
+    collectionObservers[collectionObservers.length] = PendingConfirmations.find({}).observe({
         /**
         Add pending confirmations to the accounts
 
@@ -31,16 +31,7 @@ observePendingConfirmations = function(){
         //     Accounts.update({address: document.from}, {$pull: {
         //         pendingConfirmations: document._id
         //     }});
-        // }
-    });
-
-    /**
-    Observe PendingConfirmations 
-
-    @class PendingConfirmations({}).observe
-    @constructor
-    */
-    PendingConfirmations.find({}).observeChanges({
+        // },
         /**
         Add pending confirmations to the accounts
 
