@@ -20,7 +20,7 @@ Template['views_account_create'].onCreated(function(){
 
     // check if we are still on the correct chain
     Helpers.checkChain(function(error) {
-        if(error) {
+        if(error && (EthAccounts.find().count() > 0)) {
             checkForOriginalWallet();
         }
     });
