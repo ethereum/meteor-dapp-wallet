@@ -240,6 +240,23 @@ Template['elements_transactions_row'].helpers({
             return;
 
         return Helpers.getAccountByAddress({$in: this.confirmedOwners});
+    },
+    /**
+    Check if there is any owner that 
+
+    @method (singleOwner)
+    */
+    'singleOwner': function(e){
+        ownerAccounts = _.pluck(EthAccounts.find({address: {$in: account.owners}}).fetch(), 'address');
+        var type = ($(e.currentTarget).hasClass('approve'))
+                    ? 'confirm'
+                    : 'revoke';
+        if(((type === 'confirm') ? _.difference(ownerAccounts, this.confirmedOwners).length==0 : this.confirmedOwners.length==0)) {
+            console.log("this should hide the button but the code won't")
+            return true;
+        }
+
+        return false;
     }
 });
 
@@ -250,7 +267,7 @@ Template['elements_transactions_row'].events({
 
     @event click tr
     */
-    'click tr': function(e) {
+    'click tr:not(.pending)': function(e) {
         var $element = $(e.target);
         if(!$element.is('button') && !$element.is('a')) {
             EthElements.Modal.show({
@@ -272,6 +289,16 @@ Template['elements_transactions_row'].events({
         var _this = this,
             account = Helpers.getAccountByAddress(_this.from),
             ownerAccounts = _.pluck(EthAccounts.find({address: {$in: account.owners}}).fetch(), 'address');
+
+        /* REMOVE THIS CODE WHEN 'singleOwner' WORKS */
+        var type = ($(e.currentTarget).hasClass('approve'))
+                    ? 'confirm'
+                    : 'revoke';
+        if(((type === 'confirm') ? _.difference(ownerAccounts, this.confirmedOwners).length==0 : this.confirmedOwners.length==0)) {
+            console.log("this button shouldnt be here");
+            $(e.currentTarget).hide();
+        }
+        /* END HACK */
 
         if(account && (!$(e.currentTarget).hasClass('selected') || ownerAccounts.length > 1)) {
 
@@ -308,6 +335,7 @@ Template['elements_transactions_row'].events({
 
             // if multiple ask, which one to use
             else if(ownerAccounts.length > 1) {
+
                 // show modal
                 EthElements.Modal.question({
                     template: 'views_modals_selectAccount',

@@ -28,7 +28,7 @@
 </template>
 
 <template name="elements_transactions_row">
-    <tr class="{{#if $eq unConfirmed.confirmations 0}}unconfirmed{{/if}} {{#if disabled}}disabled{{/if}}" data-operation="{{operation}}" data-transaction-hash="{{transactionHash}}" data-block-hash="{{blockHash}}">
+    <tr class="{{#if $eq unConfirmed.confirmations 0}}unconfirmed{{/if}} {{#if disabled}}disabled{{/if}}  {{#if $eq ../collection "PendingConfirmations"}}pending{{/if}}" data-operation="{{operation}}" data-transaction-hash="{{transactionHash}}" data-block-hash="{{blockHash}}">
         {{#unless $eq ../collection "PendingConfirmations"}}
             {{#with unConfirmed}}
                 <div class="dapp-progress">
@@ -98,7 +98,7 @@
                 </td>
             {{else}}
                 <td class="button">
-                    <button class="dapp-block-button approve {{#if approved}}selected{{/if}}">
+                    <button class="dapp-block-button approve {{#if approved}}selected{{/if}} {{#if singleOwner}}single-owner{{/if}}">
                         {{#if approved}}
                             <i class="icon-check"></i>
                         {{/if}}
@@ -106,7 +106,7 @@
                     </button>
                 </td>
                 <td class="button">
-                    <button class="dapp-block-button reject {{#unless approved}}selected{{/unless}}">
+                    <button class="dapp-block-button reject {{#unless approved}}selected{{/unless}} {{#if singleOwner}}single-owner{{/if}}">
                         {{#unless approved}}
                             <i class="icon-check"></i>
                         {{/unless}}
