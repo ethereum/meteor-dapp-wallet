@@ -270,25 +270,26 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
 
 
         // delete the last tx and pc until block -500
-        // _.each(Transactions.find({_id: {$in: newDocument.transactions || []}, blockNumber: {$exists: true, $gt: blockToCheckBack}}).fetch(), function(tx){
-        //     if(tx)
-        //         Transactions.remove({_id: tx._id});
-        // });
-        // _.each(PendingConfirmations.find({from: newDocument.address, blockNumber: {$exists: true, $gt: blockToCheckBack}}).fetch(), function(pc){
-        //     if(pc)
-        //         PendingConfirmations.remove({_id: pc._id});
-        // });
+        _.each(Transactions.find({_id: {$in: newDocument.transactions || []}, blockNumber: {$exists: true, $gt: blockToCheckBack}}).fetch(), function(tx){
+            if(tx)
+                Transactions.remove({_id: tx._id});
+        });
+        _.each(PendingConfirmations.find({from: newDocument.address, blockNumber: {$exists: true, $gt: blockToCheckBack}}).fetch(), function(pc){
+            if(pc)
+                PendingConfirmations.remove({_id: pc._id});
+        });
 
 
         var filter = contractInstance.allEvents({fromBlock: blockToCheckBack, toBlock: 'latest'});
         events.push(filter);
         
         // get past logs, to set the new blockNumber
+        var currentBlock = EthBlocks.latest.number;
         filter.get(function(error, logs) {
             if(!error) {
                 // update last checkpoint block
                 Wallets.update({_id: newDocument._id}, {$set: {
-                    checkpointBlock: EthBlocks.latest.number - ethereumConfig.rollBackBy
+                    checkpointBlock: (currentBlock || EthBlocks.latest.number) - ethereumConfig.rollBackBy
                 }});
             }
         });
@@ -296,6 +297,13 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
         filter.watch(function(error, log){
             if(!error) {
                 Helpers.eventLogs(log);
+
+                if(EthBlocks.latest.number && log.blockNumber > EthBlocks.latest.number) {
+                    // update last checkpoint block
+                    Wallets.update({_id: newDocument._id}, {$set: {
+                        checkpointBlock: log.blockNumber
+                    }});
+                }
 
                 if(log.event === 'Deposit') {
                     Helpers.eventLogs('Deposit for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber());

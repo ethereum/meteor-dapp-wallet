@@ -12,7 +12,7 @@ addTransaction = function(log, from, to, value){
     var block = web3.eth.getBlock(log.blockNumber, true, function(err, block){
         if(!err) {
             var txId = Helpers.makeId('tx', log.transactionHash),
-                transaction = _.find(block.transactions, function(tx){ return tx.hash === log.transactionHash; });
+                transaction = _.find(block.transactions, function(tx){ return tx.hash === log.transactionHash; }) || {};
 
             web3.eth.getTransactionReceipt(log.transactionHash, function(err, receipt){
                 if(!err) {
@@ -36,9 +36,10 @@ addTransaction = function(log, from, to, value){
 
             // update balance
             web3.eth.getBalance(log.address, function(err, res){
-                Wallets.update({address: log.address}, {$set: {
-                    balance: res.toString(10)
-                }});
+                if(!err)
+                    Wallets.update({address: log.address}, {$set: {
+                        balance: res.toString(10)
+                    }});
             });
         }
     });
@@ -95,7 +96,7 @@ var updateTransaction = function(newDocument, transaction, receipt){
 
     if(Transactions.findOne({_id: id})) {
         delete newDocument._id;
-        Transactions.update({_id: id}, {$set: newDocument});
+        Transactions.update({_id: id}, newDocument);
     } else {
         Transactions.insert(newDocument);
     }

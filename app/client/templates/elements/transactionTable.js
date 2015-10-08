@@ -251,6 +251,9 @@ Template['elements_transactions_row'].events({
     @event click tr
     */
     'click tr': function(e) {
+        if(Template.parentData(1).collection === 'PendingConfirmations')
+            return;
+
         var $element = $(e.target);
         if(!$element.is('button') && !$element.is('a')) {
             EthElements.Modal.show({
