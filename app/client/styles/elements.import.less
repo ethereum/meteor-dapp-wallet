@@ -285,19 +285,44 @@ table {
                 position: relative;
                 min-width: 100px;
                 text-align: right;
+                padding: 0;
 
                 button {
                     width: 100px;
+                    margin-right: @defaultMargin/2;  
+                    text-align: center;
+                    .transition(background-color @animationSpeed/2, border @animationSpeed);
+
+                    .hover-label {
+                        display: none;
+                    }
+                    &:hover {
+                        .label { 
+                            display: none;                      
+                        }
+                        .hover-label {
+                            display: block;
+                        }
+                    }
                 }
 
                 button.approve {
                     background-color: @colorGreen;
                     border-color: darken(@colorGreen, 10%);
+                    &.selected:not(:hover) {
+                        background-color: transparent;
+                        color: @colorError;
+                        border: @colorError 1px solid;
+                    }
                 }
                 button.revoke {
                     background-color: @colorError;
                     border-color: darken(@colorError, 10%);
-                    margin-left: @defaultMargin;
+                    &.selected:not(:hover) {
+                        background-color: transparent;
+                        color: @colorGreen;
+                        border: @colorGreen 1px solid;
+                    }
                 }
             }
 

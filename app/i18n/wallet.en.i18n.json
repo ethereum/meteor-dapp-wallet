@@ -82,7 +82,9 @@
             "noneFound": "No matching transaction found.",
             "buttons": {
                 "approve": "Approve",
-                "revoke": "Revoke"
+                "approved": "Approved",
+                "revoke": "Revoke",
+                "revoked": "Revoked"
             },
             "error": {
                 "noDataDeployed": "No data is deployed on the contract address!"    

@@ -93,23 +93,43 @@
         {{/if}}
         {{#if $eq ../collection "PendingConfirmations"}}
             {{#if sending}}
-                <td class="button">
+                <td colspan='3' class="button">
                     {{> spinner}}
                 </td>
-            {{else}}
-                <td class="button">
-                    {{#if $or notApproved multipleOwnersApproved}}
+            {{else}}           
+                {{#if multipleOwnersApproved}}
+                    {{#if approved}}
+                    <td class="button">
                         <button class="dapp-block-button approve">
                             {{i18n "wallet.transactions.buttons.approve"}}
                         </button>
-                    {{/if}}
-
-                    {{#if approved}}
+                    </td><td class="button">
                         <button class="dapp-block-button revoke">
                             {{i18n "wallet.transactions.buttons.revoke"}}
                         </button>
+                    </td>
+                    {{else}}
+                    <td class="button" colspan="2">
+                        <button class="dapp-block-button approve selected">
+                            <div class="hover-label">{{i18n "wallet.transactions.buttons.approve"}}</div>
+                            <div class="label">
+                                <i class="icon-check"></i> {{i18n "wallet.transactions.buttons.revoked"}}
+                            </div>
+                        </button>
+                    </td>
                     {{/if}}
-                </td>
+                {{else}}
+                    {{#if approved}}
+                    <td class="button" colspan="2">
+                        <button class="dapp-block-button revoke selected">
+                            <div class="hover-label">{{i18n "wallet.transactions.buttons.revoke"}}</div>
+                            <div class="label">
+                                <i class="icon-check"></i> {{i18n "wallet.transactions.buttons.approved"}}
+                            </div>
+                        </button>
+                    </td>
+                    {{/if}}
+                {{/if}}                                   
             {{/if}}
         {{/if}}
     </tr>

@@ -293,7 +293,7 @@ Template['elements_transactions_row'].events({
             ownerAccounts = _.pluck(EthAccounts.find({address: {$in: account.owners}}).fetch(), 'address');
 
 
-        if(account && (!$(e.currentTarget).hasClass('selected') || ownerAccounts.length > 1)) {
+        if(account) {
 
             var type = ($(e.currentTarget).hasClass('approve'))
                     ? 'confirm'
