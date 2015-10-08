@@ -240,6 +240,25 @@ Template['elements_transactions_row'].helpers({
             return;
 
         return Helpers.getAccountByAddress({$in: this.confirmedOwners});
+    },
+    /**
+    Check if the current owner has not yetr approved the transaction
+
+    @method (notApproved)
+    */
+    'notApproved': function(){
+        return !Helpers.getAccountByAddress({$in: this.confirmedOwners || []});
+    },
+    /**
+    Check if there is any owner that 
+
+    @method (multipleOwnersApproved)
+    */
+    'multipleOwnersApproved': function(e){
+        var account = Helpers.getAccountByAddress(this.from),
+            ownerAccounts = _.pluck(EthAccounts.find({address: {$in: account.owners}}).fetch(), 'address');
+
+        return (_.difference(ownerAccounts, this.confirmedOwners).length > 0);
     }
 });
 
@@ -250,10 +269,7 @@ Template['elements_transactions_row'].events({
 
     @event click tr
     */
-    'click tr': function(e) {
-        if(Template.parentData(1).collection === 'PendingConfirmations')
-            return;
-
+    'click tr:not(.pending)': function(e) {
         var $element = $(e.target);
         if(!$element.is('button') && !$element.is('a')) {
             EthElements.Modal.show({
@@ -267,14 +283,15 @@ Template['elements_transactions_row'].events({
         }
     },
     /**
-    Reject or Approve a pending transactions
+    Revoke or Approve a pending transactions
 
-    @event click button.approve, click button.reject
+    @event click button.approve, click button.revoke
     */
-    'click button.approve, click button.reject': function(e){
+    'click button.approve, click button.revoke': function(e){
         var _this = this,
             account = Helpers.getAccountByAddress(_this.from),
             ownerAccounts = _.pluck(EthAccounts.find({address: {$in: account.owners}}).fetch(), 'address');
+
 
         if(account && (!$(e.currentTarget).hasClass('selected') || ownerAccounts.length > 1)) {
 
@@ -305,12 +322,13 @@ Template['elements_transactions_row'].events({
 
             // check if the wallet has multiple accounts which are on this device
 
-            // if only one, use this one to approve/reject
+            // if only one, use this one to approve/revoke
             if(ownerAccounts.length === 1)
                 sendConfirmation(ownerAccounts[0]);
 
             // if multiple ask, which one to use
             else if(ownerAccounts.length > 1) {
+
                 // show modal
                 EthElements.Modal.question({
                     template: 'views_modals_selectAccount',

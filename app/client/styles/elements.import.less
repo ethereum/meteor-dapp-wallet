@@ -167,17 +167,20 @@ table {
 
     &.transactions {
         tr {
-            cursor: pointer;
+            &:not(.pending) {
+                cursor: pointer;
+
+                &:hover {
+                    border-left: 2px solid @colorGray;
+                    border-right: 2px solid @colorGray;
+                }
+            }
 
             &.unconfirmed {
                 .opacity(0.4);
             }
             &.disabled {
                 .opacity(0.2);
-            }
-            &:hover {
-                border-left: 2px solid @colorGray;
-                border-right: 2px solid @colorGray;
             }
 
             border-left: 2px solid transparent;
@@ -285,19 +288,16 @@ table {
 
                 button {
                     width: 100px;
-
-                    &.selected {
-                        .opacity(0.5);
-                    }
                 }
 
                 button.approve {
                     background-color: @colorGreen;
                     border-color: darken(@colorGreen, 10%);
                 }
-                button.reject {
+                button.revoke {
                     background-color: @colorError;
                     border-color: darken(@colorError, 10%);
+                    margin-left: @defaultMargin;
                 }
             }
 
