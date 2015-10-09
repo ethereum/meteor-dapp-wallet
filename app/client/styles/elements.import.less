@@ -41,7 +41,7 @@ a.wallet-box {
     border: 0;
 
     // ANIMATION
-    .transition(background-color @animationSpeed*4);
+    .transition(background-color @animationSpeed*4, -webkit-filter @animationSpeed*20);
 
     &:active {
         border: 0;
@@ -65,6 +65,9 @@ a.wallet-box {
         position: absolute;
         left: 12px;
         top: 20px;
+        &.dapp-icon-loading {
+            background-image: url('identicon-load.gif');
+        }
     }
     .spinner-container {
         position: absolute;
@@ -79,6 +82,7 @@ a.wallet-box {
 
     &.disabled {
         .opacity(0.4);
+        .filter(grayscale(100%));
         pointer-events: none;
     }
     &.create {
