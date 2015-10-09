@@ -80,6 +80,7 @@
             "showMore": "Show More",
             "filter": "Filter transactions",
             "noneFound": "No matching transaction found.",
+            "noKeys": "Keys not found",
             "buttons": {
                 "approve": "Approve",
                 "approved": "Approved",
