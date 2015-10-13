@@ -6,7 +6,7 @@
 
                 {{> dapp_identicon identity=address}}
                     
-                <hgroup>
+                <header>
                     <h1>
                         <span class="edit-name">{{name}}</span> <i class="edit-icon icon-pencil"></i>
 
@@ -15,9 +15,10 @@
                         {{/if}}
                     </h1>
                     <h2 class="copyable-address">{{walletIcon}} <span>{{address}}</span></h2>
-                </hgroup>
+                    <div class="clear"></div>
+                    {{> elements_balance balance=balance changeUnit=true}}
+                </header>
 
-                {{> elements_balance balance=balance changeUnit=true}}
 
             </div>
 
