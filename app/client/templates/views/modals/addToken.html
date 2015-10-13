@@ -1,0 +1,23 @@
+<template name="views_modals_addToken">
+    <!-- Add Coin -->
+    <h3>Token Contract Address</h3>
+
+    {{> dapp_addressInput placeholder="0x000000.." name="address" autofocus=true}}
+
+
+    <h3>Token symbol</h3>
+    <input type="string" name="symbol" placeholder="ABC$" class="dapp-large symbol">
+
+    
+    <h3>Decimals Places of smallest unit</h3>
+    <input type="number" min="0" step="1" name="division" value="2" class="dapp-large division">
+
+    <br>
+    <h3> Example </h3>
+    <h1 class="example">
+        <span>USD$</span>
+        <strong> 1.234 </strong>
+    </h1>
+
+
+</template>
