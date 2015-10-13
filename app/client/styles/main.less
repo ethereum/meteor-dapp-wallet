@@ -230,6 +230,7 @@ body {
     .accounts-page-summary {
         flex: 1 auto;
         display: flex;
+        flex-flow: row wrap;
 
         .dapp-identicon {
             margin-top: @gridHeight;
@@ -238,6 +239,9 @@ body {
         header {
             flex: 1;
             padding-left: @gridWidth;
+        }
+        table {
+            flex: 1 100%;
         }
     }
 

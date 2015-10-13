@@ -33,6 +33,42 @@ Template['views_tokens'].events({
            content: symbol + ' has been added to your token lists',
            duration: 2
        });
+    },
+    /**
+    Click Add Token
+    
+    @event click a.create.account
+    */
+    'click .add-token': function(e){
+        e.preventDefault();
+        
+        var addToken = function(e) {
+            var address = document.querySelector('[name=address]').value,
+                symbol = document.querySelector('.symbol').value,
+                division = document.querySelector('.division').value; 
+
+            tokenId = Helpers.makeId('token', address);
+
+            Tokens.upsert(tokenId, {$set: {
+                address: address,
+                symbol: symbol,
+                division: division
+            }})
+
+           return GlobalNotification.warning({
+               content: symbol + ' has been added to your token lists',
+               duration: 2
+           });
+        }
+
+        // Open a modal showing the QR Code
+        EthElements.Modal.question({
+                    template: 'views_modals_addToken',
+                    ok: "addToken",
+                    cancel: true
+                },{
+                    class: 'send-transaction-info'
+                });
     }
 
 })

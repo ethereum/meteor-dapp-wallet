@@ -12,8 +12,9 @@
                 "send": "Send",
                 "tokens": "Tokens",
                 "receive": "Receive",
-                "addWallet": "Add wallet",
-                "addAccount": "Add account"
+                "addWallet": "Add Wallet",
+                "addAccount": "Add Account",
+                "addToken": "Add Token"
             },
             "texts": {
                 "note": "Note",
