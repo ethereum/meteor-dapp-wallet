@@ -229,6 +229,15 @@ body {
 
     .accounts-page-summary {
         flex: 1 auto;
+        display: flex;
+
+        .dapp-identicon {
+            margin-top: @gridHeight;
+        }
+        header {
+            flex: 1;
+            padding-left: @gridWidth;
+        }
     }
 
     .accounts-transactions {
@@ -243,7 +252,7 @@ body {
 
     h1 {
         margin-bottom: 0;
-        // .dapp-shorten-text;
+        margin-top: 0;
         display: block;
         max-width: 60%;
         word-break: break-all;
@@ -251,13 +260,16 @@ body {
         &:hover {
             button.delete {
                 display: inline-block;
+                &:hover {
+                    color: @colorLink;
+                }
             }
         }
 
         button.delete {
             display: none;
             font-size: 0.4em;
-            margin-left: 4px;
+            margin-left: @gridWidth;
         }
 
         .edit-name {
@@ -266,7 +278,7 @@ body {
             + .edit-icon {
                 display: none;
                 position: absolute;
-                top: 2px;
+                top: @gridHeight*1.2;
                 margin-left: 5px;
                 font-size: 0.4em;
             }

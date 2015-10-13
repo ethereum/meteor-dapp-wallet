@@ -4,21 +4,20 @@
 
 
 Wallets = new Mongo.Collection('wallets', {connection: null});
-new PersistentMinimongo(Wallets, 'ethereum_wallet');
+new PersistentMinimongo2(Wallets, 'ethereum_wallet');
 
 // Contains the transactions
 Transactions = new Mongo.Collection('transactions', {connection: null});
-new PersistentMinimongo(Transactions, 'ethereum_wallet');
+new PersistentMinimongo2(Transactions, 'ethereum_wallet');
 
 // Contains the pending confirmations
 PendingConfirmations = new Mongo.Collection('pending-confirmations', {connection: null});
-new PersistentMinimongo(PendingConfirmations, 'ethereum_wallet');
-
+new PersistentMinimongo2(PendingConfirmations, 'ethereum_wallet');
 
 // Contains Coin Information
 Tokens = new Mongo.Collection('tokens', {connection: null});
-new PersistentMinimongo(Tokens, 'ethereum_wallet');
+new PersistentMinimongo2(Tokens, 'ethereum_wallet');
 
 //Contain token Balances per account
 Balances = new Mongo.Collection('balances', {connection: null});
-new PersistentMinimongo(Balances, 'ethereum_wallet');
+new PersistentMinimongo2(Balances, 'ethereum_wallet');

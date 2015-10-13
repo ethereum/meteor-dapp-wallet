@@ -58,7 +58,7 @@ var checkOverDailyLimit = function(address, wei, template){
     // check whats left
     var restDailyLimit = new BigNumber(account.dailyLimit || '0', 10).minus(new BigNumber(account.dailyLimitSpent || '0', 10));
 
-    if(account && account.requiredSignatures > 1 && account.dailyLimit && account.dailyLimit !== ethereumConfig.dailyLimitDefault && Number(wei) !== 0) {
+    if(account && account.requiredSignatures > 1 && !_.isUndefined(account.dailyLimit) && account.dailyLimit !== ethereumConfig.dailyLimitDefault && Number(wei) !== 0) {
         if(restDailyLimit.lt(new BigNumber(wei, 10)))
             TemplateVar.set('dailyLimitText', new Spacebars.SafeString(TAPi18n.__('wallet.send.texts.overDailyLimit', {limit: EthTools.formatBalance(restDailyLimit.toString(10)), total: EthTools.formatBalance(account.dailyLimit), count: account.requiredSignatures - 1})));
         else
@@ -118,11 +118,10 @@ Template['views_send'].onCreated(function(){
 
     // check if we are still on the correct chain
     Helpers.checkChain(function(error) {
-        if(error) {
+        if(error && (EthAccounts.find().count() > 0)) {
             checkForOriginalWallet();
         }
     });
-
 
 
     // change the amount when the currency unit is changed

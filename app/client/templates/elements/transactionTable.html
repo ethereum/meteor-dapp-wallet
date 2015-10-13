@@ -28,7 +28,7 @@
 </template>
 
 <template name="elements_transactions_row">
-    <tr class="{{#if $eq unConfirmed.confirmations 0}}unconfirmed{{/if}} {{#if disabled}}disabled{{/if}}" data-operation="{{operation}}" data-transaction-hash="{{transactionHash}}" data-block-hash="{{blockHash}}">
+    <tr class="{{#if $eq unConfirmed.confirmations 0}}unconfirmed{{/if}} {{#if disabled}}disabled{{/if}}  {{#if $eq ../collection "PendingConfirmations"}}pending{{/if}}" data-operation="{{operation}}" data-transaction-hash="{{transactionHash}}" data-block-hash="{{blockHash}}">
         {{#unless $eq ../collection "PendingConfirmations"}}
             {{#with unConfirmed}}
                 <div class="dapp-progress">
@@ -93,26 +93,44 @@
         {{/if}}
         {{#if $eq ../collection "PendingConfirmations"}}
             {{#if sending}}
-                <td colspan="2" class="button">
+                <td colspan='2' class="button">
                     {{> spinner}}
                 </td>
-            {{else}}
-                <td class="button">
-                    <button class="dapp-block-button approve {{#if approved}}selected{{/if}}">
-                        {{#if approved}}
-                            <i class="icon-check"></i>
-                        {{/if}}
-                        {{i18n "wallet.transactions.buttons.approve"}}
-                    </button>
-                </td>
-                <td class="button">
-                    <button class="dapp-block-button reject {{#unless approved}}selected{{/unless}}">
-                        {{#unless approved}}
-                            <i class="icon-check"></i>
-                        {{/unless}}
-                        {{i18n "wallet.transactions.buttons.revoke"}}
-                    </button>
-                </td>
+            {{else}}           
+                {{#if multipleOwnersApproved}}
+                    {{#if approved}}
+                    <td class="button">
+                        <button class="dapp-block-button approve">
+                            {{i18n "wallet.transactions.buttons.approve"}}
+                        </button>
+                    </td><td class="button">
+                        <button class="dapp-block-button revoke">
+                            {{i18n "wallet.transactions.buttons.revoke"}}
+                        </button>
+                    </td>
+                    {{else}}
+                    <td class="button" colspan="2">
+                        <button class="dapp-block-button approve">
+                            {{i18n "wallet.transactions.buttons.approve"}}
+                        </button>
+                    </td>
+                    {{/if}}
+                {{else}}
+                    {{#if approved}}
+                    <td class="button" colspan="2">
+                        <button class="dapp-block-button revoke selected">
+                            <div class="hover-label">{{i18n "wallet.transactions.buttons.revoke"}}</div>
+                            <div class="label">
+                                <i class="icon-check"></i> {{i18n "wallet.transactions.buttons.approved"}}
+                            </div>
+                        </button>
+                    </td>
+                    {{else}}
+                    <td class="info" colspan="2"> 
+                        <i class="icon-info"></i> {{i18n "wallet.transactions.noOwnerAccount"}}
+                    </td>
+                    {{/if}}
+                {{/if}}                                   
             {{/if}}
         {{/if}}
     </tr>

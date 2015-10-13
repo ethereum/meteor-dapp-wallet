@@ -15,17 +15,25 @@ contracts = {};
 
 
 /**
+Contains all collection observers
+
+@property collectionObservers
+*/
+collectionObservers = [];
+
+
+/**
 Config for the ethereum connector
 
 @property config
 */
 ethereumConfig = {
     /**
-    Number of blocks to rollback, from the last stable point.
+    Number of blocks to rollback, from the last checkpoint block of the wallet.
 
     @property ethereumConfig.rollBackBy
     */
-    rollBackBy: 500,
+    rollBackBy: 100,
     /**
     Number of blocks to confirm a wallet
 
@@ -81,4 +89,32 @@ connectToNode = function(){
 
 };
 
+/**
+Will remove all transactions, and will set the checkpointBlock to the creationBlock in the wallets
+
+@method connectToNode
+*/
+resetWallet = function function_name (argument) {
+    _.each(Transactions.find().fetch(), function(tx) {
+        console.log(tx._id);
+        Transactions.remove(tx._id); 
+    });
+
+    _.each(PendingConfirmations.find().fetch(), function(pc) {
+        Transactions.remove(pc._id); 
+    });
+
+    _.each(Wallets.find().fetch(), function(wallet) {
+        Wallets.update(wallet._id, {$set: {
+            checkpointBlock: wallet.creationBlock,
+            transactions: []
+        }});
+    });
+
+    console.log('The wallet will restart in 6 seconds...');
+
+    setTimeout(function() {
+        location.reload();
+    }, 1000 * 6);
+}
 

@@ -41,7 +41,7 @@ a.wallet-box {
     border: 0;
 
     // ANIMATION
-    .transition(background-color @animationSpeed*4);
+    .transition(background-color @animationSpeed*4, -webkit-filter @animationSpeed*20);
 
     &:active {
         border: 0;
@@ -65,6 +65,9 @@ a.wallet-box {
         position: absolute;
         left: 12px;
         top: 20px;
+        &.dapp-icon-loading {
+            background-image: url('identicon-load.gif');
+        }
     }
     .spinner-container {
         position: absolute;
@@ -79,6 +82,7 @@ a.wallet-box {
 
     &.disabled {
         .opacity(0.4);
+        .filter(grayscale(100%));
         pointer-events: none;
     }
     &.create {
@@ -167,17 +171,20 @@ table {
 
     &.transactions {
         tr {
-            cursor: pointer;
+            &:not(.pending) {
+                cursor: pointer;
+
+                &:hover {
+                    border-left: 2px solid @colorGray;
+                    border-right: 2px solid @colorGray;
+                }
+            }
 
             &.unconfirmed {
                 .opacity(0.4);
             }
             &.disabled {
                 .opacity(0.2);
-            }
-            &:hover {
-                border-left: 2px solid @colorGray;
-                border-right: 2px solid @colorGray;
             }
 
             border-left: 2px solid transparent;
@@ -282,22 +289,44 @@ table {
                 position: relative;
                 min-width: 100px;
                 text-align: right;
+                padding: 0;
 
                 button {
-                    width: 100px;
+                    width: 120px;
+                    margin-right: @defaultMargin;  
+                    text-align: center;
+                    .transition(background-color @animationSpeed/2);
 
-                    &.selected {
-                        .opacity(0.5);
+                    .hover-label {
+                        display: none;
+                    }
+                    &:hover {
+                        .label { 
+                            display: none;                      
+                        }
+                        .hover-label {
+                            display: block;
+                        }
                     }
                 }
 
                 button.approve {
                     background-color: @colorGreen;
                     border-color: darken(@colorGreen, 10%);
+                    &.selected:not(:hover) {
+                        background-color: transparent;
+                        color: @colorError;
+                        border: @colorError 1px solid;
+                    }
                 }
-                button.reject {
+                button.revoke {
                     background-color: @colorError;
                     border-color: darken(@colorError, 10%);
+                    &.selected:not(:hover) {
+                        background-color: transparent;
+                        color: @colorGreen;
+                        border: @colorGreen 1px solid;
+                    }
                 }
             }
 

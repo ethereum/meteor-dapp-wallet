@@ -57,6 +57,11 @@
             "dailyLimitRemaining": "remaining today",
             "requiredSignatures": "Required signatures",
             "owners": "Owners",
+            "buttons": {
+                "deposit": "Deposit",
+                "copyAddress": "Copy address",
+                "scanQRCode": "Scan QR-Code"
+            },
             "modal": {
                 "deleteText": "Do you really want to delete the wallet?<br>If you lose the wallet address, you will lose the funds on it!<br><br>Type the name of the wallet to confirm the deletion.",
                 "backupWallet": "<h1>Backup your wallet!</h1>Make sure to write down the address so you can import it again, if needed.<br><pre style=\"font-size: 0.75em;\">__address__</pre>"
@@ -81,9 +86,12 @@
             "showMore": "Show More",
             "filter": "Filter transactions",
             "noneFound": "No matching transaction found.",
+            "noOwnerAccount": "Watch only confirmation",
             "buttons": {
                 "approve": "Approve",
-                "revoke": "Revoke"
+                "approved": "Approved",
+                "revoke": "Revoke",
+                "revoked": "Revoked"
             },
             "error": {
                 "noDataDeployed": "No data is deployed on the contract address!"    
@@ -94,6 +102,20 @@
                 "received": "Received",
                 "createdContract": "Created contract",
                 "pendingConfirmations": "__initiator__ wants to send from __from__"
+            },
+            "notifications": {
+                "incomingTransaction": {
+                    "title": "Payment received",
+                    "text": "You received __amount__ on __to__ from __from__."
+                },
+                "outgoingTransaction": {
+                    "title": "Payment send",
+                    "text": "You send __amount__ from __from__ to __to__."    
+                },
+                "pendingConfirmation": {
+                    "title": "Confirmation needed",
+                    "text": "__initiator__ wants to send __amount__ from __from__ to __to__"
+                }
             }
         },
         "newWallet": {

@@ -12,7 +12,7 @@ addTransaction = function(log, from, to, value){
     var block = web3.eth.getBlock(log.blockNumber, true, function(err, block){
         if(!err) {
             var txId = Helpers.makeId('tx', log.transactionHash),
-                transaction = _.find(block.transactions, function(tx){ return tx.hash === log.transactionHash; });
+                transaction = _.find(block.transactions, function(tx){ return tx.hash === log.transactionHash; }) || {};
 
             web3.eth.getTransactionReceipt(log.transactionHash, function(err, receipt){
                 if(!err) {
@@ -36,9 +36,10 @@ addTransaction = function(log, from, to, value){
 
             // update balance
             web3.eth.getBalance(log.address, function(err, res){
-                Wallets.update({address: log.address}, {$set: {
-                    balance: res.toString(10)
-                }});
+                if(!err)
+                    Wallets.update({address: log.address}, {$set: {
+                        balance: res.toString(10)
+                    }});
             });
         }
     });
@@ -59,6 +60,8 @@ var updateTransaction = function(newDocument, transaction, receipt){
     // if transaction has no transactionId, stop
     if(!id)
         return;
+
+    newDocument._id = id;
 
     if(transaction) {
         newDocument.blockNumber = transaction.blockNumber;
@@ -86,7 +89,6 @@ var updateTransaction = function(newDocument, transaction, receipt){
                     Transactions.update({_id: id}, {$set: {
                         deployedData: code
                     }});
-                    newDocument.deployedData = code;
                 }
             })
         }
@@ -94,14 +96,10 @@ var updateTransaction = function(newDocument, transaction, receipt){
 
     if(Transactions.findOne({_id: id})) {
         delete newDocument._id;
-        Transactions.update({_id: id}, {$set: newDocument});
+        Transactions.update({_id: id}, newDocument);
     } else {
         Transactions.insert(newDocument);
     }
-
-    // re-add the id
-    newDocument._id = id;
-    return newDocument;
 };
 
 
@@ -152,7 +150,7 @@ observeTransactions = function(){
 
                                 // update with receipt
                                 if(transaction.blockNumber !== tx.blockNumber)
-                                    tx = updateTransaction(tx, transaction, receipt);
+                                    updateTransaction(tx, transaction, receipt);
 
                                 // enable transaction, if it was disabled
                                 else if(transaction.blockNumber && tx.disabled)
@@ -226,7 +224,7 @@ observeTransactions = function(){
     @class Transactions({}).observe
     @constructor
     */
-    Transactions.find({}).observe({
+    collectionObservers[collectionObservers.length] = Transactions.find({}).observe({
         /**
         This will observe the transactions creation and create watchers for outgoing trandsactions, to see when they are mined.
 
@@ -252,12 +250,6 @@ observeTransactions = function(){
 
             // check first if the transaction was already mined
             if(!newDocument.confirmed) {
-                web3.eth.getTransaction(newDocument.transactionHash, function(e, transaction){
-                    web3.eth.getTransactionReceipt(newDocument.transactionHash, function(e, receipt){
-                        if(!e && receipt)
-                            updateTransaction(newDocument, transaction, receipt);
-                    });
-                });
                 checkTransactionConfirmations(newDocument);
             }
         },
@@ -285,6 +277,12 @@ observeTransactions = function(){
                 transactions: document._id
             }});
             Wallets.update({address: document.to}, {$pull: {
+                transactions: document._id
+            }});
+            EthAccounts.update({address: document.from}, {$pull: {
+                transactions: document._id
+            }});
+            EthAccounts.update({address: document.to}, {$pull: {
                 transactions: document._id
             }});
         }

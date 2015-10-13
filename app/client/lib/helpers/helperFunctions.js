@@ -94,6 +94,23 @@ Helpers.isWatchOnly = function(id) {
 };
 
 /**
+Shows a notification and plays a sound
+
+@method notificationAndSound
+@param {String} i18nText
+@param {Object} the i18n values passed to the i18n text
+*/
+Helpers.notificationAndSound = function(i18nText, values) {
+    if(Notification.permission === "granted") {
+        new Notification(TAPi18n.__(i18nText +'.title'), {
+            // icon: 'http://cdn.sstatic.net/stackexchange/img/logos/so/so-icon.png',
+            body: TAPi18n.__(i18nText +'.text', values),
+        });
+    }
+    $('#sound1')[0].play();
+};
+
+/**
 Gets the docuement matching the given addess from the EthAccounts or Wallets collection.
 
 @method getAccountByAddress
@@ -101,6 +118,17 @@ Gets the docuement matching the given addess from the EthAccounts or Wallets col
 */
 Helpers.getAccountByAddress = function(address) {
     return EthAccounts.findOne({address: address}) || Wallets.findOne({address: address});
+};
+
+/**
+Gets the docuement matching the given addess from the EthAccounts or Wallets collection and returns its name or address.
+
+@method getAccountNameByAddress
+@param {String} name or address
+*/
+Helpers.getAccountNameByAddress = function(address) {
+    var doc = Helpers.getAccountByAddress(address);
+    return doc ? doc.name : address; 
 };
 
 /**

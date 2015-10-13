@@ -153,7 +153,7 @@ Template['views_account'].events({
     'click .copy-to-clipboard-button': function(e){
         e.preventDefault();
         
-        var copyTextarea = document.querySelector('.copyable-address');
+        var copyTextarea = document.querySelector('.copyable-address span');
         
         var selection = window.getSelection();            
         var range = document.createRange();
@@ -162,8 +162,8 @@ Template['views_account'].events({
         selection.addRange(range);
 
         try {
-        var successful = document.execCommand('copy');
-        var msg = successful ? 'successful' : 'unsuccessful';
+            var successful = document.execCommand('copy');
+            var msg = successful ? 'successful' : 'unsuccessful';
             console.log('Copying text command was ' + msg);
         } catch (err) {
             console.log('Oops, unable to copy');
@@ -171,10 +171,10 @@ Template['views_account'].events({
 
         selection.removeAllRanges();
         
-        return GlobalNotification.warning({
-               content: 'i18n:wallet.accounts.addressCopiedToClipboard',
-               duration: 2
-           });
+        GlobalNotification.warning({
+           content: 'i18n:wallet.accounts.addressCopiedToClipboard',
+           duration: 2
+       });
         
     },
     /**

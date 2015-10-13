@@ -65,4 +65,10 @@ observeLatestBlocks = function(){
         });
     }, 1000);
 
+    // get peercount on start
+    web3.net.getPeerCount(function(e, res) {
+        if(!e)
+            Session.set('peerCount', res);
+    });
+
 };

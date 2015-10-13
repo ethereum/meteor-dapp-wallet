@@ -135,7 +135,7 @@ Creates filters for a wallet contract, to watch for deposits, pending confirmati
 @param {Boolean} checkFromCreationBlock
 */
 setupContractFilters = function(newDocument, checkFromCreationBlock){
-    var blockToCheckBack = (EthBlocks.latest.number || 0) - ethereumConfig.rollBackBy;
+    var blockToCheckBack = (newDocument.checkpointBlock || 0) - ethereumConfig.rollBackBy;
     
     if(checkFromCreationBlock || blockToCheckBack < 0)
         blockToCheckBack = newDocument.creationBlock;
@@ -280,19 +280,54 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
         });
 
 
-        events.push(contractInstance.allEvents({fromBlock: blockToCheckBack, toBlock: 'latest'}, function(error, log){
+        var filter = contractInstance.allEvents({fromBlock: blockToCheckBack, toBlock: 'latest'});
+        events.push(filter);
+        
+        // get past logs, to set the new blockNumber
+        var currentBlock = EthBlocks.latest.number;
+        filter.get(function(error, logs) {
+            if(!error) {
+                // update last checkpoint block
+                Wallets.update({_id: newDocument._id}, {$set: {
+                    checkpointBlock: (currentBlock || EthBlocks.latest.number) - ethereumConfig.rollBackBy
+                }});
+            }
+        });
+
+        filter.watch(function(error, log){
             if(!error) {
                 Helpers.eventLogs(log);
+
+                if(EthBlocks.latest.number && log.blockNumber > EthBlocks.latest.number) {
+                    // update last checkpoint block
+                    Wallets.update({_id: newDocument._id}, {$set: {
+                        checkpointBlock: log.blockNumber
+                    }});
+                }
 
                 if(log.event === 'Deposit') {
                     Helpers.eventLogs('Deposit for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber());
 
                     addTransaction(log, log.args.from, newDocument.address, log.args.value.toString(10));
+
+                    // NOTIFICATION
+                    Helpers.notificationAndSound('wallet.transactions.notifications.incomingTransaction', {
+                        to: Helpers.getAccountNameByAddress(newDocument.address),
+                        from: Helpers.getAccountNameByAddress(log.args.from),
+                        amount: EthTools.formatBalance(log.args.value, '0,0.00[000000] unit', 'ether')
+                    });
                 }
                 if(log.event === 'SingleTransact' || log.event === 'MultiTransact') {
                     Helpers.eventLogs(log.event +' for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber());
 
                     addTransaction(log, newDocument.address, log.args.to, log.args.value.toString(10));
+
+                    // NOTIFICATION
+                    Helpers.notificationAndSound('wallet.transactions.notifications.outgoingTransaction', {
+                        to: Helpers.getAccountNameByAddress(log.args.from),
+                        from: Helpers.getAccountNameByAddress(newDocument.address),
+                        amount: EthTools.formatBalance(log.args.value, '0,0.00[000000] unit', 'ether')
+                    });
                 }
                 if(log.event === 'ConfirmationNeeded') {
                     Helpers.eventLogs('ConfirmationNeeded for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber() +', Operation '+ log.args.operation);
@@ -335,9 +370,18 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
                                     transactionIndex: log.transactionIndex,
                                 }});
 
+                                // TODO: add back? done for the confirmation log already
                                 // delay a little to prevent race conditions
-                                Tracker.afterFlush(function() {
-                                    confirmOrRevoke(contractInstance, log);
+                                // Tracker.afterFlush(function() {
+                                //     confirmOrRevoke(contractInstance, log);
+                                // });
+
+                                // NOTIFICATION
+                                Helpers.notificationAndSound('wallet.transactions.notifications.pendingConfirmation', {
+                                    initiator: Helpers.getAccountNameByAddress(log.args.initiator),
+                                    to: Helpers.getAccountNameByAddress(log.args.to),
+                                    from: Helpers.getAccountNameByAddress(newDocument.address),
+                                    amount: EthTools.formatBalance(log.args.value, '0,0.00[000000] unit', 'ether')
                                 });
 
 
@@ -383,9 +427,9 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
                     confirmOrRevoke(contractInstance, log);
                 }
             } else {
-                console.error('Logs of Wallet'+ newDocument.name + 'couldn\'t be received', error);
+                console.error('Logs of Wallet'+ newDocument.name + ' couldn\'t be received', error);
             }
-        }));
+        });
 
     }
 
@@ -449,7 +493,7 @@ observeWallets = function(){
     @class Wallets.find({}).observe
     @constructor
     */
-    Wallets.find({}).observe({
+    collectionObservers[collectionObservers.length] = Wallets.find({}).observe({
         /**
         This will observe the account creation, to send the contract creation transaction.
 
@@ -530,6 +574,7 @@ observeWallets = function(){
 
                                     Wallets.update(newDocument._id, {$set: {
                                         creationBlock: EthBlocks.latest.number - 1,
+                                        checkpointBlock: EthBlocks.latest.number - 1,
                                         address: contract.address
                                     }, $unset: {
                                         code: ''
@@ -609,7 +654,8 @@ observeWallets = function(){
         @method changed
         */
         changed: function(newDocument, oldDocument){
-            checkWalletConfirmations(newDocument, oldDocument);
+            // checkWalletConfirmations(newDocument, oldDocument);
+            updateContractData(newDocument);
         },
         /**
         Stop filters, when accounts are removed
