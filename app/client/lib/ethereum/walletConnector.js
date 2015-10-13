@@ -111,10 +111,10 @@ resetWallet = function function_name (argument) {
         }});
     });
 
-    console.log('The wallet will restart in 3 seconds...');
+    console.log('The wallet will restart in 6 seconds...');
 
     setTimeout(function() {
         location.reload();
-    }, 1000 * 3);
+    }, 1000 * 6);
 }
 
