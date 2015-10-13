@@ -321,6 +321,13 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
                     Helpers.eventLogs(log.event +' for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber());
 
                     addTransaction(log, newDocument.address, log.args.to, log.args.value.toString(10));
+
+                    // NOTIFICATION
+                    Helpers.notificationAndSound('wallet.transactions.notifications.outgoingTransaction', {
+                        to: Helpers.getAccountNameByAddress(log.args.from),
+                        from: Helpers.getAccountNameByAddress(newDocument.address),
+                        amount: EthTools.formatBalance(log.args.value, '0,0.00[000000] unit', 'ether')
+                    });
                 }
                 if(log.event === 'ConfirmationNeeded') {
                     Helpers.eventLogs('ConfirmationNeeded for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber() +', Operation '+ log.args.operation);

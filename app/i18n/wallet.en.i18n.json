@@ -105,7 +105,11 @@
             "notifications": {
                 "incomingTransaction": {
                     "title": "Payment received",
-                    "text": "You received __amount__ from __from__ on __to__."
+                    "text": "You received __amount__ on __to__ from __from__."
+                },
+                "outgoingTransaction": {
+                    "title": "Payment send",
+                    "text": "You send __amount__ from __from__ to __to__."    
                 },
                 "pendingConfirmation": {
                     "title": "Confirmation needed",
