@@ -111,8 +111,10 @@ resetWallet = function function_name (argument) {
         }});
     });
 
-    Tracker.afterFlush(function() {
+    console.log('The wallet will restart in 3 seconds...');
+
+    setTimeout(function() {
         location.reload();
-    });
+    }, 1000 * 3);
 }
 

@@ -101,6 +101,16 @@
                 "received": "Received",
                 "createdContract": "Created contract",
                 "pendingConfirmations": "__initiator__ wants to send from __from__"
+            },
+            "notifications": {
+                "incomingTransaction": {
+                    "title": "Payment received",
+                    "text": "You received __amount__ from __from__ on __to__."
+                },
+                "pendingConfirmation": {
+                    "title": "Confirmation needed",
+                    "text": "__initiator__ wants to send __amount__ from __from__ to __to__"
+                }
             }
         },
         "newWallet": {
