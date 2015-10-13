@@ -10,7 +10,7 @@ observePendingConfirmations = function(){
     @class PendingConfirmations({}).observe
     @constructor
     */
-    collectionObservers[collectionObservers.length] = PendingConfirmations.find({}).observe({
+    // collectionObservers[collectionObservers.length] = PendingConfirmations.find({}).observe({
         /**
         Add pending confirmations to the accounts
 
@@ -51,5 +51,5 @@ observePendingConfirmations = function(){
         //         }});
         //     }
         // }
-    });
+    // });
 };
