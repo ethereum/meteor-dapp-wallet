@@ -199,6 +199,10 @@
                     "5": "probably within a few seconds"
                 }
             }
+        },
+        "tokens": {
+            "deleteToken": "Do you want to remove the token <strong>__token__</strong> from your list?"
         }
+
     }
 }

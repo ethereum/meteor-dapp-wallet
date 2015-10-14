@@ -5,9 +5,30 @@ Template['views_tokens'].helpers({
     @method (tokens)
     */
     'tokens': function(){
+        
         return Tokens.find({},{sort:{symbol:1}});
+    },
+    /**
+    Get Balance of a Coin
+
+    @method (getBalance)
+    */
+    'formattedTotalBalance': function(e){
+
+        var tokenAddress = this.address;
+        var balance = this.totalBalance / Math.pow(10, this.decimals);
+        var numberFormat = '0,0.';
+
+        for(i=0;i<this.decimals;i++){
+            numberFormat += "0";
+        }
+
+        var formatted = this.symbol + " " + numeral(balance).format(numberFormat);
+
+        return formatted;
     }
 })
+
 
 
 Template['views_tokens'].events({
@@ -19,14 +40,14 @@ Template['views_tokens'].events({
     'submit form': function(e) {
         var address = document.querySelector('[name=address]').value,
             symbol = document.querySelector('.symbol').value,
-            division = document.querySelector('.division').value; 
+            decimals = document.querySelector('.division').value; 
 
         tokenId = Helpers.makeId('token', address);
 
         Tokens.upsert(tokenId, {$set: {
             address: address,
             symbol: symbol,
-            division: division
+            decimals: decimals
         }})
 
        return GlobalNotification.warning({
@@ -69,28 +90,31 @@ Template['views_tokens'].events({
                 },{
                     class: 'send-transaction-info'
                 });
+    },
+    /**
+    Click Delete Token
+    
+    @event click a.create.account
+    */
+    'click .delete-token': function(e){
+        e.preventDefault();
+        
+        var address = e.currentTarget.getAttribute('data')
+        var tokenId = Helpers.makeId('token', address);
+
+        console.log(tokenId);
+
+        EthElements.Modal.question({
+            text: new Spacebars.SafeString(TAPi18n.__('wallet.tokens.deleteToken', {token: address.substring(2,10)})),
+            ok: function(){
+                console.log(tokenId);
+                Tokens.remove(tokenId);
+            },
+            cancel: true
+        });
+
+        
+        //$(e.currentTarget).data('value')
     }
 
 })
-
-// Template['views_dashboard'].helpers({
-//     /**
-//     Get all current wallets
-
-//     @method (wallets)
-//     */
-//     'wallets': function(){
-//         return Wallets.find({}, {sort: {disabled: 1, creationBlock: 1}});
-//     },
-
-    // Transactions.upsert(txId, {$set: {
-    //     value: amount,
-    //     from: selectedAccount.address,
-    //     to: to,
-    //     timestamp: moment().unix(),
-    //     transactionHash: txHash,
-    //     gasPrice: gasPrice,
-    //     gasUsed: estimatedGas,
-    //     fee: String(gasPrice * estimatedGas),
-    //     data: data
-    // }});

@@ -10,14 +10,16 @@
             <tbody>
                 {{#each tokens}}
                     <tr>
-                        <td>{{symbol}}</td>
-                        <td>divisible by {{division}}</td>
+                        <td>                    
+                            {{> dapp_identicon identity=address class="dapp-small"}}
+                        </td>
+                        <td><strong>{{formattedTotalBalance}}</strong></td>
                         <td><a href="{{pathFor route='sendTo' address=address}}" title="{{address}}">   
                             {{address}}
                         </a></td>
                         <td>
                             <button class="edit-token"><i class='icon-note'></i></button>
-                            <button class="delete-token"><i class="icon-trash"></i></button>
+                            <button class="delete-token" data="{{address}}"><i class="icon-trash"></i></button>
                         </td>
                     </tr>
                 {{/each}}
@@ -59,8 +61,8 @@
         <!-- divisor -->
         <div class="row clear amount">
             <div class="col col-7 mobile-full">
-                <h3>Base unit is divisable by</h3>
-                <input type="number" min="0" step="any" name="division" value="100" class="dapp-large division">
+                <h3>Decimal places</h3>
+                <input type="number" min="0" max="32" step="1" name="division" value="2" class="dapp-large division">
             </div>
             <div class="dapp-clear-fix"></div>
         </div>

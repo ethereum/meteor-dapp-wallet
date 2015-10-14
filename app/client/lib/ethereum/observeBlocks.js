@@ -30,26 +30,37 @@ observeLatestBlocks = function(){
                     }, 1000);
                 }
             });
+            
 
-            _.each(EthAccounts.find().fetch(), function(account){
-              _.each(Tokens.find().fetch(), function(token){
-                
+            _.each(Tokens.find().fetch(), function(token){
                 tokenInstance = web3.eth.contract(tokenABI).at(token.address);
-        
-                var balance = Number(tokenInstance.coinBalanceOf(account.address));
 
-                    console.log(balance);
-                    if(balance>0){
-                        // EthAccounts.update(account._id, {$set: {
-                        //     tokenBalance: balance 
-                        // }})
-                        Balances.upsert(account._id, {$set: {
-                            account: account.address,
-                            token: token.address,
-                            tokenBalance: balance
+                if (token.address) {
+                    var totalBalance = 0;
+                    _.each(EthAccounts.find().fetch(), function(account){
+                        var balance = Number(tokenInstance.balanceOf(account.address));
+
+                        var  balanceID = Helpers.makeId('balance', token.address.substring(2,7) + account.address.substring(2,7));
+
+                        if(balance>0){
+                            Balances.upsert(balanceID, {$set: {
+                                account: account.address,
+                                token: token.address,
+                                tokenBalance: balance
+                            }});
+                        }
+
+                        totalBalance += balance;
+                    })
+
+                    if(token.totalBalance != totalBalance ){
+                        var tokenID = Helpers.makeId('token', token.address);
+
+                        Tokens.update(tokenID, {$set: {
+                            totalBalance: totalBalance
                         }});
-                    }
-              })  
+                    } 
+                }               
             });
         }
     });

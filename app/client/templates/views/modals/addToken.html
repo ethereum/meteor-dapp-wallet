@@ -1,5 +1,10 @@
 <template name="views_modals_addToken">
     <!-- Add Coin -->
+    <p>
+        Tokens are currencies built on the Ethereum platform. 
+        <a href="https://ethereum.org/token">Learn how to build your own</a> 
+    </p>
+
     <h3>Token Contract Address</h3>
 
     {{> dapp_addressInput placeholder="0x000000.." name="address" autofocus=true}}
@@ -10,13 +15,16 @@
 
     
     <h3>Decimals Places of smallest unit</h3>
-    <input type="number" min="0" step="1" name="division" value="2" class="dapp-large division">
+    <input type="number" min="0" step="1" name="division" value="{{TemplateVar get 'TokenBaseDecimals'}}
+}}" class="dapp-large division">
 
     <br>
     <h3> Example </h3>
     <h1 class="example">
         <span>USD$</span>
-        <strong> 1.234 </strong>
+        <strong>  
+            {{formattedNumber}}
+        </strong>
     </h1>
 
 

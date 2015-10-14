@@ -72,15 +72,15 @@ Template['views_account'].helpers({
     @method (getBalance)
     */
     'formattedCoinBalance': function(e){
-        token = web3.eth.contract(tokenABI).at(this.address);
-        
-        var balance = Number(token.coinBalanceOf(FlowRouter.getParam('address'))) / Number(this.division);
 
-        if (balance == 0) {
-            return false;
+        var tokenAddress = this.address;
+        var accountAddress = FlowRouter.getParam('address');
+        var balance = Balances.findOne({token:tokenAddress, account: accountAddress});
+        
+        if (balance && balance.tokenBalance > 0) {
+            return numeral(balance.tokenBalance / this.division).format('0,0.00[000000]') + ' ' + this.symbol;
         } else {
-            // return Number(token.coinBalanceOf(FlowRouter.getParam('address'))) / Number(this.division);
-            return numeral(balance).format('0,0.00[000000]') + ' ' + this.symbol;
+            return false;
         }
     }
 });
