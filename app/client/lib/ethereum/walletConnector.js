@@ -101,7 +101,7 @@ resetWallet = function function_name (argument) {
     });
 
     _.each(PendingConfirmations.find().fetch(), function(pc) {
-        Transactions.remove(pc._id); 
+        PendingConfirmations.remove(pc._id); 
     });
 
     _.each(Wallets.find().fetch(), function(wallet) {

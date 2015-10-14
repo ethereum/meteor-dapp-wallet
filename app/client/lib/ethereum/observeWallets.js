@@ -427,7 +427,7 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
                     confirmOrRevoke(contractInstance, log);
                 }
             } else {
-                console.error('Logs of Wallet'+ newDocument.name + ' couldn\'t be received', error);
+                console.error('Logs of Wallet '+ newDocument.name + ' couldn\'t be received', error);
             }
         });
 

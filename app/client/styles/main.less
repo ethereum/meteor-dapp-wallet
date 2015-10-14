@@ -132,7 +132,7 @@ body {
         .dapp-shadow-medium;
   
         .wallet-balance ,
-        .block-info {
+        .block-info {            
             .text,
             h3 {
                 display: none;
@@ -154,6 +154,7 @@ body {
         color: @colorGrayDark;
         .opacity(0.6);
         text-align: center;
+        flex: 1 0;
 
         &.syncing {
             .opacity(0.9);
@@ -176,10 +177,10 @@ body {
     }
     
     .wallet-balance {
-        min-width: 218px; // necessary to move the block info into the middle again
         padding-bottom: @defaultPaddingVertical - 5px;
         padding-left: @defaultPaddingHorizontal;
         text-align: right;
+        flex: 0 2 auto;
 
         h3 {
             margin-bottom: 0;
@@ -495,8 +496,10 @@ body {
 
 /* #### All small phone screens landscape #### */
 @media screen and (max-width: 576px){
-    .block-info {
+    .dapp-header nav ul li.block-info {
+        // display: none;
         visibility: hidden;
+        padding: 0;
     }
   
     .wallet-balance {
