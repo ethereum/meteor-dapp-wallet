@@ -80,10 +80,13 @@ a.wallet-box {
         bottom: 0;
     }
 
-    &.disabled {
+    &.disabled,
+    &.creating {
         .opacity(0.4);
-        .filter(grayscale(100%));
         pointer-events: none;
+    }
+    &.disabled {
+        .filter(grayscale(100%));
     }
     &.create {
         .display(flex);

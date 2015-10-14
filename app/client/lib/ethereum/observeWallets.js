@@ -144,15 +144,15 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
     if(!contractInstance)
         return;
 
-    if(!contractInstance.events)
-        contractInstance.events = [];
+    if(!contractInstance.walletEvents)
+        contractInstance.walletEvents = [];
 
-    var events = contractInstance.events;
+    var events = contractInstance.walletEvents;
 
     // stop all running events
-    _.each(contractInstance.events, function(event){
+    _.each(contractInstance.walletEvents, function(event){
         event.stopWatching();
-        contractInstance.events.shift();
+        contractInstance.walletEvents.shift();
     });
 
     // WATCH for the created event, to get the creation block
@@ -218,39 +218,10 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
                         newDocument = Wallets.findOne(newDocument._id);
 
                         // set address to the contract instance
-                        contracts['ct_'+ newDocument._id].address = receipt.contractAddress;
-
-                        // SETUP DAILY LIMIT
-                        // if(newDocument.dailyLimit && newDocument.dailyLimit !== ethereumConfig.dailyLimitDefault)
-                        //     contractInstance.setDailyLimit(newDocument.dailyLimit, {from: newDocument.owners[0], gas: 1000000});
-                        // // set simple wallet daily limit 100 000 000 ether
-                        // else
-                        //     contractInstance.setDailyLimit(ethereumConfig.dailyLimitDefault, {from: newDocument.owners[0], gas: 1000000});
-
-
-                        // // ADD OWNERS
-                        // if(newDocument.owners.length > 1) {
-                        //     _.each(newDocument.owners, function(owner){
-                        //         if(newDocument.owners[0] !== owner) {
-                        //             contractInstance.addOwner(owner, {from: newDocument.owners[0], gas: 1000000});
-                        //             // remove owner, so that log can re-add it
-                        //             Wallets.update(newDocument._id, {$pull: {
-                        //                 owners: owner
-                        //             }});
-                        //         }
-                        //     });
-                        // }
-
-                        // // ADD REQUIRED SIGNATURES
-                        // if(newDocument.requiredSignatures && newDocument.requiredSignatures != 1) {
-                        //     Tracker.afterFlush(function(){
-                        //         contractInstance.changeRequirement(newDocument.requiredSignatures, {from: newDocument.owners[0], gas: 500000});
-                        //     });
-                        // }
-
+                        contracts['ct_'+ newDocument._id] = WalletContract.at(receipt.contractAddress);
 
                         // add contract filters
-                        setupContractFilters(Wallets.findOne(newDocument._id));
+                        setupContractFilters(newDocument);
 
                     } else {
                         Helpers.eventLogs('Contract created on '+ receipt.contractAddress + ', but didn\'t stored the code!');
@@ -266,7 +237,7 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
     } else {
 
         // SETUP FILTERS
-        Helpers.eventLogs('Checking Deposits and ConfirmationNeeded for '+ newDocument.address +' from block #', blockToCheckBack);
+        Helpers.eventLogs('Checking Deposits and ConfirmationNeeded for '+ contractInstance.address +' (_id: '+ newDocument._id +') from block #', blockToCheckBack);
 
 
         // delete the last tx and pc until block -500
@@ -324,7 +295,7 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
 
                     // NOTIFICATION
                     Helpers.notificationAndSound('wallet.transactions.notifications.outgoingTransaction', {
-                        to: Helpers.getAccountNameByAddress(log.args.from),
+                        to: Helpers.getAccountNameByAddress(log.args.to),
                         from: Helpers.getAccountNameByAddress(newDocument.address),
                         amount: EthTools.formatBalance(log.args.value, '0,0.00[000000] unit', 'ether')
                     });
@@ -504,15 +475,16 @@ observeWallets = function(){
             // DEPLOYED NEW CONTRACT
             if(!newDocument.address) {
 
-                // identifier already exisits, so just watch for created and don't re-deploy
+                // tx hash already exisits, so just get the receipt and don't re-deploy
                 if(newDocument.transactionHash) {
                     contracts['ct_'+ newDocument._id] = WalletContract.at();
 
                     // remove account, if something is searching since more than 30 blocks
                     if(newDocument.creationBlock + 50 <= EthBlocks.latest.number)
                         Wallets.remove(newDocument._id);
+                    else
+                        setupContractFilters(newDocument);
 
-                    setupContractFilters(newDocument);
                     return;
                 }
 
@@ -543,6 +515,9 @@ observeWallets = function(){
                         });
 
                     } else {
+
+                        console.log('Deploying Wallet with following options', newDocument);
+
                         WalletContract.new(newDocument.owners, newDocument.requiredSignatures, (newDocument.dailyLimit || ethereumConfig.dailyLimitDefault), {
                             from: newDocument.owners[0],
                             data: newDocument.code,
@@ -564,14 +539,11 @@ observeWallets = function(){
                                 // CONTRACT DEPLOYED
                                 } else {
 
-                                    contracts['ct_'+ newDocument._id] = contract;
-                                    delete newDocument.code;
-
                                     Helpers.eventLogs('Contract Address: ', contract.address);
 
-                                    // add transactionHash to account
-                                    newDocument.address = contract.address;
+                                    contracts['ct_'+ newDocument._id] = WalletContract.at(contract.address);
 
+                                    // add address to account
                                     Wallets.update(newDocument._id, {$set: {
                                         creationBlock: EthBlocks.latest.number - 1,
                                         checkpointBlock: EthBlocks.latest.number - 1,
@@ -579,6 +551,8 @@ observeWallets = function(){
                                     }, $unset: {
                                         code: ''
                                     }});
+                                    newDocument.address = contract.address;
+                                    delete newDocument.code;
 
 
                                     updateContractData(newDocument);
@@ -596,6 +570,8 @@ observeWallets = function(){
                                 }
                                 
                             } else {
+                                console.log('Error while deploying wallet', error);
+                                
                                 GlobalNotification.error({
                                     content: error.message,
                                     duration: 8
@@ -667,13 +643,13 @@ observeWallets = function(){
             if(!contractInstance)
                 return;
 
-            if(!contractInstance.events)
-                contractInstance.events = [];
+            if(!contractInstance.walletEvents)
+                contractInstance.walletEvents = [];
 
             // stop all running events
-            _.each(contractInstance.events, function(event){
+            _.each(contractInstance.walletEvents, function(event){
                 event.stopWatching();
-                contractInstance.events.shift();
+                contractInstance.walletEvents.shift();
             });
 
             delete contracts['ct_'+ newDocument._id];

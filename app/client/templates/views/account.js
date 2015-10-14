@@ -146,10 +146,10 @@ Template['views_account'].events({
 
         selection.removeAllRanges();
         
-        GlobalNotification.warning({
+        GlobalNotification.info({
            content: 'i18n:wallet.accounts.addressCopiedToClipboard',
            duration: 2
-       });
+        });
         
     },
     /**
