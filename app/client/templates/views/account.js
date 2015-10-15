@@ -76,9 +76,20 @@ Template['views_account'].helpers({
         var tokenAddress = this.address;
         var accountAddress = FlowRouter.getParam('address');
         var balance = Balances.findOne({token:tokenAddress, account: accountAddress});
-        
+        console.log(balance);
+
         if (balance && balance.tokenBalance > 0) {
-            return numeral(balance.tokenBalance / this.division).format('0,0.00[000000]') + ' ' + this.symbol;
+            console.log(balance.tokenBalance);
+
+            var token = Tokens.findOne({address:tokenAddress });
+            var newBalance = balance.tokenBalance / Math.pow(10, token.decimals);
+            var numberFormat = '0,0.';
+
+            for(i=0;i<token.decimals;i++){
+                numberFormat += "0";
+            }
+
+            return  numeral(newBalance).format(numberFormat) + ' ' + token.symbol;
         } else {
             return false;
         }

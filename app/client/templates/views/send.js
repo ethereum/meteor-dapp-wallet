@@ -261,25 +261,38 @@ Template['views_send'].helpers({
     */
     'sendExplanation': function(e, amount){
 
-      
+        var amount = $('input[name="amount"]').val() || 0;
+        var unit = EthTools.getUnit();
+
         if (TemplateVar.get('sendType')=='et') {
             // return "send ether";    
             return Spacebars.SafeString(TAPi18n.__('wallet.send.texts.sendAmount', {amount:amount})); 
             //wallet.send.texts.sendAmount' amount=amount   
         
         } else if (TemplateVar.get('sendType')=='am') {
-            return Spacebars.SafeString(TAPi18n.__('wallet.send.texts.sendAmountEquivalent', {amount:amount})); 
+            return Spacebars.SafeString(TAPi18n.__('wallet.send.texts.sendAmountEquivalent', {amount:amount, unit: TemplateVar.get('tokenAddress') })); 
             // {{{i18n 'wallet.send.texts.sendAmountEquivalent' amount=amount}}}
 
         } else {
 
-            var selectedAccount = TemplateVar.getFrom('dapp-select-account', 'value');
-            // token = web3.eth.contract(coinABI).at(TemplateVar.get('tokenAddress'));
-            // var balance = Number(token.coinBalanceOf(selectedAccount.address)) / 100;
+            var selectedAccount = TemplateVar.getFrom('.dapp-select-account', 'value');
+            var address = TemplateVar.get('tokenAddress');
+            var tokenId = Helpers.makeId('token', address);
+            token = Tokens.findOne(tokenId);
+        
+            balance = Balances.findOne({token: address, account: selectedAccount});
 
-            console.log(selectedAccount);
+            if (!balance) balance = {tokenBalance:0};
 
-            return Spacebars.SafeString(TAPi18n.__('wallet.send.texts.sendToken', {amount:"10", balance: "1000", symbol: "ZZ$"})); 
+            var decimals = token.decimals;
+            var numberFormat = '0,0.';
+            for(i=0;i<decimals;i++){
+                numberFormat += "0";
+            }
+
+            var formatted = numeral(balance.tokenBalance/Math.pow(10, token.decimals)).format(numberFormat);
+
+            return Spacebars.SafeString(TAPi18n.__('wallet.send.texts.sendToken', {amount:amount, name: token.name, balance: formatted , symbol: token.symbol})); 
         }
     },
     /**
@@ -379,7 +392,12 @@ Template['views_send'].events({
             data = TemplateVar.getFrom('.dapp-data-textarea', 'value');
             gasPrice = TemplateVar.getFrom('.dapp-select-gas-price', 'gasPrice'),
             estimatedGas = TemplateVar.get('estimatedGas'),
+            sendType = TemplateVar.get('sendType'),
+            tokenAddress = TemplateVar.get('tokenAddress'),
             selectedAccount = Helpers.getAccountByAddress(template.find('select[name="dapp-select-account"]').value);
+
+
+            
 
 
         if(selectedAccount && !TemplateVar.get('sending')) {
@@ -405,17 +423,36 @@ Template['views_send'].events({
                     duration: 2
                 });
 
-            if(new BigNumber(amount, 10).gt(new BigNumber(selectedAccount.balance, 10)))
-                return GlobalNotification.warning({
-                    content: 'i18n:wallet.send.error.notEnoughFunds',
-                    duration: 2
-                });
 
             if(!web3.isAddress(to) && !data)
                 return GlobalNotification.warning({
                     content: 'i18n:wallet.send.error.noReceiver',
                     duration: 2
                 });
+
+            if (sendType == 'tk') {
+                var tokenId = Helpers.makeId('token', tokenAddress);
+                token = Tokens.findOne(tokenId);
+                balance = Balances.findOne({token: tokenAddress, account: template.find('select[name="dapp-select-account"]').value});
+                if (!balance) balance = {tokenBalance:0};
+                var tokenAmount = $('input[name="amount"]').val()*Math.pow(10, token.decimals) || 0;
+
+                console.log(tokenAmount);
+                console.log(balance.tokenBalance);
+
+                if( tokenAmount > balance.tokenBalance)
+                    return GlobalNotification.warning({
+                        content: 'i18n:wallet.send.error.notEnoughFunds',
+                        duration: 2
+                    });
+            } else {
+                if(new BigNumber(amount, 10).gt(new BigNumber(selectedAccount.balance, 10)))
+                    return GlobalNotification.warning({
+                        content: 'i18n:wallet.send.error.notEnoughFunds',
+                        duration: 2
+                    });
+            }
+            
 
 
             // The function to send the transaction
@@ -459,6 +496,50 @@ Template['views_send'].events({
                             });
                         }
                     });
+
+                // TOKEN TRANSACTION
+                } else if(sendType == 'tk') {
+
+                    var tokenInstance = web3.eth.contract(tokenABI).at(tokenAddress);
+                    console.log(tokenInstance);
+
+
+                    tokenInstance.transfer.sendTransaction(to, tokenAmount,  {
+                        from: selectedAccount.address,
+                        to: tokenAddress,
+                        value: 0,
+                        data: data,
+                        gasPrice: gasPrice,
+                        gas: estimatedGas
+                    }, function(error, txHash){
+
+                        TemplateVar.set(template, 'sending', false);
+
+                        console.log(error, txHash);
+                        if(!error) {
+                            console.log('SEND TOKEN');
+
+                            addTransaction(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
+
+
+                            FlowRouter.go('dashboard');
+                            GlobalNotification.warning({
+                                content: 'token sent',
+                                duration: 2
+                            });
+
+                        } else {
+
+                            // EthElements.Modal.hide();
+
+                            GlobalNotification.error({
+                                content: error.message,
+                                duration: 8
+                            });
+                        }
+                    });
+
+                    
 
                 // SIMPLE TX
                 } else {
@@ -522,8 +603,9 @@ Template['views_send'].events({
     // catch the "onchange" event for the .inline-form element you want to observe
     'change [name="token-switcher"]': function(e, template, value, text){
         // do something with the selected "value" and "text"
-        TemplateVar.set('sendType', value.substring(0,2));
+        TemplateVar.set('sendType', value.substring(0,2));   
         TemplateVar.set('tokenAddress', value.substring(3));
+        
 
     }
 });
