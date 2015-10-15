@@ -7,39 +7,88 @@ The template to display each token.
 
 
 
+Template['views_modals_addToken'].onRendered(function(){
+    TemplateVar.set('symbol', '$');
+});
+
 Template['views_modals_addToken'].events({
     /**
-    Submit form
+    Change Decimals
 
     @event submit form
     */
-    'change .division': function(e, template) {
-        console.log(template);
-        console.log(TemplateVar.getFrom('.division', 'value'));
+    'change .decimals': function(e, template) {
+        var decimals = e.target.value;
+        TemplateVar.set('decimals', decimals);
+    },    
+    /**
+    Change Symbol
 
-    },
-        /**
-    Select an account
-
-    @event click .dapp-account-list button
+    @event change symbol
     */
-    'click .dapp-account-list button': function(e, template){
-        template.data.callback(this.address);
-        TemplateVar.set('TokenBaseDecimals', 2);
+    'change input.symbol': function(e, template) {
+        TemplateVar.set('symbol', e.target.value);
+    },    
+    /**
+    Change Name
 
-        EthElements.Modal.hide();
+    @event change name
+    */
+    'change input.name': function(e, template) {
+        TemplateVar.set('name', e.target.value);
+    },    
+    /**
+    Change Symbol
+
+    @event submit form
+    */
+    'change input[name="address"]': function(e, template) {
+        // initiate the geo pattern
+        var pattern = GeoPattern.generate(e.target.value, {color: '#CCC6C6'});
+        $('.example.wallet-box.tokens').css('background-image', pattern.toDataUrl());
+        
+        if(!$(e.target).hasClass('dapp-error')){
+            TemplateVar.set('tokenAddress', e.target.value)
+        };
+    },    
+    /**
+    click example
+
+    @event submit form
+    */
+    'click .example.wallet-box.tokens': function(e) {
+        e.preventDefault();
     }
 });
 
 
 Template['views_modals_addToken'].helpers({
-       /**
+    /**
     Calculates the fee used for this transaction in ether
 
     @method (estimatedFee)
     */
     'formattedNumber': function() {
-        console.log(TemplateVar.getFrom('.division', 'value'))
-        return "1.2";
+        var decimals = this.decimals;
+        var numberFormat = '0,0.';
+
+        for(i=0;i<decimals;i++){
+            numberFormat += "0";
+        }
+
+        var formatted = numeral(1).format(numberFormat);
+
+        return formatted;
+    },
+    /**
+
+    @method address
+    */
+    'tokenAddress' : function(){
+        if (this.address){
+            return this.address;
+        } else {
+            return TemplateVar.get("tokenAddress");
+        }
     }
 });

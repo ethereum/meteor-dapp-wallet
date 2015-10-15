@@ -44,6 +44,7 @@
 
 .dapp-content {
     padding-bottom: @defaultPaddingVertical*2;
+    perspective: 800px;
 }
 
 
@@ -492,7 +493,57 @@ body {
     }
 }
 
+.wallet-box.tokens {
+    position: relative;
+    background-repeat: repeat-y;
+    background-color: @colorGrayLight;
+    background-size: @gridWidth * 3;
+    background-position-x: @gridWidth * -2;
+    overflow: hidden;
+    transform-style: preserve-3d;
 
+    .dapp-identicon {
+        border: @colorWhite solid 2px; 
+        .transition(transform 0.3s);
+        backface-visibility: hidden;       
+    }
+
+    .delete-token {
+        position: absolute;
+        left: 12px;
+        top: 20px;
+        background: @colorWhite;
+        border-radius: 50%;
+        width: @gridWidth;
+        height: @gridWidth;
+        z-index: 50;
+        backface-visibility: hidden;
+        transform: rotateY(180deg);
+        box-shadow: @colorGray 0 1px 2px;
+        .transition(transform 0.3s);
+        text-align: center;
+
+        &:hover {
+            background: @colorLink;
+            color: @colorWhite;
+        }
+
+        i {
+            position: relative;
+            top: 1.5px;
+            left: 2px;
+        }
+    }
+
+    &:hover {
+        .delete-token {
+            transform: rotateY(0);
+        }
+        .dapp-identicon {
+            transform: rotateY(180deg);
+        }
+    }
+}
 
 /* #### All small phone screens landscape #### */
 @media screen and (max-width: 576px){

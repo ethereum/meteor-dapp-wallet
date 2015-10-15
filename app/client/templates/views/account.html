@@ -21,11 +21,12 @@
 
 
                 {{#if tokens}}
-                 <table class="token-list">
+                 <table class="token-list dapp-zebra">
                     <tbody>
                         {{#each tokens}}
                             {{#if formattedCoinBalance}}
                             <tr>
+                                <td><strong>{{name}}</strong></td>
                                 <td>{{formattedCoinBalance}}</td>
                             </tr>
                             {{/if}}

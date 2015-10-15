@@ -13,12 +13,7 @@
                     <span>{{i18n 'wallet.app.buttons.send'}}</span>
                 </a>
             </li>            
-            <li>
-                <a href="{{pathFor route='tokens'}}" class="{{isActiveRoute regex='tokens'}}">
-                    <i class="icon-settings"></i>
-                    <span>{{i18n 'wallet.app.buttons.tokens'}}</span>
-                </a>
-            </li>
+
             <li class="block-info dapp-flex-item  {{#if TemplateVar.get 'syncing'}}syncing{{/if}}">
 
                 {{#if $eq ($.Session.get "network") "testnet"}}
@@ -43,6 +38,12 @@
                     &nbsp;&nbsp;|&nbsp;&nbsp;
                     <i class="icon-layers"></i> {{formattedBlockNumber}} <i class="icon-clock" style="margin-left: 10px;"></i> <!-- {{! formatTime latestBlock.timestamp "HH:mm:ss"}} {{! formatTime latestBlock.timestamp "ll"}} --> {{{timeSinceBlock}}}
                 {{/with}}
+            </li>            
+            <li>
+                <a href="{{pathFor route='tokens'}}" class="{{isActiveRoute regex='tokens'}}">
+                    <i class="icon-settings"></i>
+                    <span>{{i18n 'wallet.app.buttons.tokens'}}</span>
+                </a>
             </li>
             <li class="wallet-balance">
                 <h3>{{i18n 'wallet.app.texts.balance'}}</h3>

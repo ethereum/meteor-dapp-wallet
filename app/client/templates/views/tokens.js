@@ -1,3 +1,34 @@
+
+
+var addToken = function(e) {
+
+    var address = $('.modals-add-token input[name="address"]').val(),
+        name = $('.modals-add-token input.name').val(),
+        symbol = $('.modals-add-token input.symbol').val(),
+        decimals = $('.modals-add-token input.decimals').val();
+
+
+    tokenId = Helpers.makeId('token', address);
+
+    console.log(tokenId);
+
+    var msg = (Tokens.findOne(tokenId)!=undefined)? 
+        TAPi18n.__('wallet.tokens.editedToken', {token: name}) : 
+        TAPi18n.__('wallet.tokens.addedToken', {token: name}) ;
+
+    Tokens.upsert(tokenId, {$set: {
+        address: address,
+        name: name,
+        symbol: symbol,
+        decimals: decimals
+    }})
+
+   return GlobalNotification.warning({
+       content: msg,
+       duration: 2
+   });
+}
+
 Template['views_tokens'].helpers({
     /**
     Get all tokens
@@ -23,9 +54,17 @@ Template['views_tokens'].helpers({
             numberFormat += "0";
         }
 
-        var formatted = this.symbol + " " + numeral(balance).format(numberFormat);
+        var formatted = numeral(balance).format(numberFormat);
 
         return formatted;
+    },
+    /**
+
+    @method geoPattern
+    */
+    'geoPattern' : function(){
+        var pattern = GeoPattern.generate(this.address, {color: '#CCC6C6'});
+        return pattern.toDataUrl();
     }
 })
 
@@ -33,62 +72,23 @@ Template['views_tokens'].helpers({
 
 Template['views_tokens'].events({
     /**
-    Submit form
-
-    @event submit form
-    */
-    'submit form': function(e) {
-        var address = document.querySelector('[name=address]').value,
-            symbol = document.querySelector('.symbol').value,
-            decimals = document.querySelector('.division').value; 
-
-        tokenId = Helpers.makeId('token', address);
-
-        Tokens.upsert(tokenId, {$set: {
-            address: address,
-            symbol: symbol,
-            decimals: decimals
-        }})
-
-       return GlobalNotification.warning({
-           content: symbol + ' has been added to your token lists',
-           duration: 2
-       });
-    },
-    /**
     Click Add Token
     
     @event click a.create.account
     */
     'click .add-token': function(e){
         e.preventDefault();
-        
-        var addToken = function(e) {
-            var address = document.querySelector('[name=address]').value,
-                symbol = document.querySelector('.symbol').value,
-                division = document.querySelector('.division').value; 
 
-            tokenId = Helpers.makeId('token', address);
-
-            Tokens.upsert(tokenId, {$set: {
-                address: address,
-                symbol: symbol,
-                division: division
-            }})
-
-           return GlobalNotification.warning({
-               content: symbol + ' has been added to your token lists',
-               duration: 2
-           });
-        }
-
-        // Open a modal showing the QR Code
+        // Open a modal 
         EthElements.Modal.question({
                     template: 'views_modals_addToken',
-                    ok: "addToken",
+                    data: {
+                        decimals: 2
+                    },
+                    ok: addToken,
                     cancel: true
                 },{
-                    class: 'send-transaction-info'
+                    class: 'modals-add-token'
                 });
     },
     /**
@@ -102,7 +102,6 @@ Template['views_tokens'].events({
         var address = e.currentTarget.getAttribute('data')
         var tokenId = Helpers.makeId('token', address);
 
-        console.log(tokenId);
 
         EthElements.Modal.question({
             text: new Spacebars.SafeString(TAPi18n.__('wallet.tokens.deleteToken', {token: address.substring(2,10)})),
@@ -113,8 +112,36 @@ Template['views_tokens'].events({
             cancel: true
         });
 
+    },
+    /**
+    Click Token
+    
+    @event click .wallet-box.tokens
+    */
+    'click .wallet-box.tokens': function(e){
+        e.preventDefault();
         
-        //$(e.currentTarget).data('value')
-    }
+        var address = e.currentTarget.getAttribute('data')
+        var tokenId = Helpers.makeId('token', address);
+
+
+        token = Tokens.findOne(tokenId)        
+
+       // Open a modal 
+        EthElements.Modal.question({
+                    template: 'views_modals_addToken',
+                    data: {
+                        address: address,
+                        name: token.name,
+                        symbol: token.symbol, 
+                        decimals: token.decimals 
+                    },
+                    ok: addToken,
+                    cancel: true
+                },{
+                    class: 'modals-add-token'
+                });
+
+        }
 
 })

@@ -201,7 +201,9 @@
             }
         },
         "tokens": {
-            "deleteToken": "Do you want to remove the token <strong>__token__</strong> from your list?"
+            "deleteToken": "Do you want to remove the token <strong>__token__</strong> from your list?",
+            "addedToken": "Added __token__ to your list",
+            "editedToken": "Edited token __token__"
         }
 
     }

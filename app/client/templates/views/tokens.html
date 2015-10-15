@@ -1,83 +1,31 @@
 <template name="views_tokens">
      <!-- we use a form, which posts into the "dapp-form-helper-iframe" iframe, so that the browser stores inout fields for native autocpmplete -->
-    <form class="container account-send-form" action="about:blank" target="dapp-form-helper-iframe" autocomplete="on">
         
         <h1> Custom Tokens </h1>
         
+        <div class="clear"></div>
+
         <h2> Tokens being used</h2>
+       <div class="clear"></div>
+     
+        {{#each tokens}}
 
-        <table class="dapp-zebra token-list">
-            <tbody>
-                {{#each tokens}}
-                    <tr>
-                        <td>                    
-                            {{> dapp_identicon identity=address class="dapp-small"}}
-                        </td>
-                        <td><strong>{{formattedTotalBalance}}</strong></td>
-                        <td><a href="{{pathFor route='sendTo' address=address}}" title="{{address}}">   
-                            {{address}}
-                        </a></td>
-                        <td>
-                            <button class="edit-token"><i class='icon-note'></i></button>
-                            <button class="delete-token" data="{{address}}"><i class="icon-trash"></i></button>
-                        </td>
-                    </tr>
-                {{/each}}
-            </tbody>
-        </table>
+        <a href="#" class="wallet-box tokens" style="background-image:{{geoPattern}}" data="{{address}}">
+            {{> dapp_identicon identity=address class="dapp-small"}}
+            <h3> {{name}}  </h3>
+            <button class="delete-token" data="{{address}}"><i class="icon-trash"></i></button>
+            <span class="account-balance"> 
+                {{formattedTotalBalance}}<span> {{symbol}}</span>
+            </span>            
+            <span class="account-id">{{address}}</span>                
+        </a>
 
-        <a href="#" class="wallet-box create add-token">
+        {{/each}}
+       <a href="#" class="wallet-box create add-token">
             <div class="account-pattern">
                 +
             </div>
             <h3>{{i18n "wallet.app.buttons.addToken"}}</h3>
         </a>
-
-
-
-        <h2> Add Tokens </h2>
-
-        <!-- Add Coin -->
-        <div class="row clear">
-            <div class="col col-7 mobile-full">
-                <h3>Token Contract Address</h3>
-
-                {{> dapp_addressInput placeholder="0x000000.." name="address" autofocus=true}}
-            </div>
-            <div class="dapp-clear-fix"></div>
-        </div>
-
-
-        <!-- symbol -->
-        <div class="row clear">
-            <div class="col col-7 mobile-full">
-                <h3>Token symbol</h3>
-                <input type="string" name="symbol" placeholder="ABC$" class="dapp-large symbol">
-            </div>
-            <div class="dapp-clear-fix"></div>
-        </div>
-
-
-        <!-- divisor -->
-        <div class="row clear amount">
-            <div class="col col-7 mobile-full">
-                <h3>Decimal places</h3>
-                <input type="number" min="0" max="32" step="1" name="division" value="2" class="dapp-large division">
-            </div>
-            <div class="dapp-clear-fix"></div>
-        </div>
-       
-        <hr>
-        <!-- button type="submit" will send the form -->
-        <button type="submit" class="dapp-block-button">
-            {{#if TemplateVar.get "sending"}} 
-                Adding token..
-            {{else}}
-                Add token
-            {{/if}}
-        </button>
-
-    </form>
-   
 
 </template>
