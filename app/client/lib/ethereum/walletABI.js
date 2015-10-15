@@ -53,6 +53,7 @@ var deployTestnetWallet = function() {
 
     EthElements.Modal.question({
         text: new Spacebars.SafeString(TAPi18n.__('wallet.modals.testnetWallet.walletNeedsDeployment', {account: account})),
+        cancel: true,
         ok: function() {
 
             // show loading
