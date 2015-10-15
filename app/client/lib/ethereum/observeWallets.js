@@ -541,7 +541,7 @@ observeWallets = function(){
 
                                     Helpers.eventLogs('Contract Address: ', contract.address);
 
-                                    contracts['ct_'+ newDocument._id] = contract;
+                                    contracts['ct_'+ newDocument._id] = WalletContract.at(contract.address);
 
                                     // add address to account
                                     Wallets.update(newDocument._id, {$set: {

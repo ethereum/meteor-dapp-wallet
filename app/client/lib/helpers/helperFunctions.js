@@ -107,8 +107,7 @@ Helpers.notificationAndSound = function(i18nText, values) {
             body: TAPi18n.__(i18nText +'.text', values),
         });
     }
-    if(typeof mist !== 'undefined')
-        mist.sounds.bip();
+    $('#sound1')[0].play();
 };
 
 /**
