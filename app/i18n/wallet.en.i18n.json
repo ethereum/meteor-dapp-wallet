@@ -59,7 +59,7 @@
             "buttons": {
                 "deposit": "Deposit",
                 "copyAddress": "Copy address",
-                "scanQRCode": "Scan QR-Code"
+                "scanQRCode": "Show QR-Code"
             },
             "modal": {
                 "deleteText": "Do you really want to delete the wallet?<br>If you lose the wallet address, you will lose the funds on it!<br><br>Type the name of the wallet to confirm the deletion.",
