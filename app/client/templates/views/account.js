@@ -85,9 +85,9 @@ Template['views_account'].events({
     /**
     Clicking the name, will make it editable
 
-    @event click .edit-name, mouseenter .edit-name
+    @event click .edit-name
     */
-    'click .edit-name, mouseenter .edit-name': function(e){
+    'click .edit-name': function(e){
         // make it editable
         $(e.currentTarget).attr('contenteditable','true');
     },
