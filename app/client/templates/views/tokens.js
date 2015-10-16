@@ -23,7 +23,7 @@ var addToken = function(e) {
         decimals: decimals
     }})
 
-   return GlobalNotification.warning({
+   return GlobalNotification.success({
        content: msg,
        duration: 2
    });
@@ -48,15 +48,8 @@ Template['views_tokens'].helpers({
 
         var tokenAddress = this.address;
         var balance = this.totalBalance / Math.pow(10, this.decimals);
-        var numberFormat = '0,0.';
-
-        for(i=0;i<this.decimals;i++){
-            numberFormat += "0";
-        }
-
-        var formatted = numeral(balance).format(numberFormat);
-
-        return formatted;
+   
+        return Helpers.formatNumberDecimals(balance, this.decimals);
     },
     /**
 
@@ -98,6 +91,8 @@ Template['views_tokens'].events({
     */
     'click .delete-token': function(e){
         e.preventDefault();
+        e.stopImmediatePropagation();
+
         
         var address = e.currentTarget.getAttribute('data')
         var tokenId = Helpers.makeId('token', address);
@@ -109,6 +104,7 @@ Template['views_tokens'].events({
                 console.log(tokenId);
                 Tokens.remove(tokenId);
             },
+            okText: "delete",
             cancel: true
         });
 
@@ -120,7 +116,7 @@ Template['views_tokens'].events({
     */
     'click .wallet-box.tokens': function(e){
         e.preventDefault();
-        
+
         var address = e.currentTarget.getAttribute('data')
         var tokenId = Helpers.makeId('token', address);
 

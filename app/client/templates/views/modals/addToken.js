@@ -69,16 +69,8 @@ Template['views_modals_addToken'].helpers({
     @method (estimatedFee)
     */
     'formattedNumber': function() {
-        var decimals = this.decimals;
-        var numberFormat = '0,0.';
-
-        for(i=0;i<decimals;i++){
-            numberFormat += "0";
-        }
-
-        var formatted = numeral(1).format(numberFormat);
-
-        return formatted;
+        var decimals = TemplateVar.get('decimals') || 2;
+        return Helpers.formatNumberDecimals(123456, decimals);
     },
     /**
 

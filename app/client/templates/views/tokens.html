@@ -1,13 +1,13 @@
 <template name="views_tokens">
-     <!-- we use a form, which posts into the "dapp-form-helper-iframe" iframe, so that the browser stores inout fields for native autocpmplete -->
+    <div class="dapp-container">      
+        <h1> Custom <strong>Tokens</strong></h1>
         
-        <h1> Custom Tokens </h1>
-        
-        <div class="clear"></div>
-
         <h2> Tokens being used</h2>
-       <div class="clear"></div>
-     
+        <p>
+            Tokens are currencies built on the Ethereum platform. 
+            <a href="https://ethereum.org/token" target="_blank">Learn how to build your own</a>. 
+        </p> 
+
         {{#each tokens}}
 
         <a href="#" class="wallet-box tokens" style="background-image:{{geoPattern}}" data="{{address}}">
@@ -27,5 +27,5 @@
             </div>
             <h3>{{i18n "wallet.app.buttons.addToken"}}</h3>
         </a>
-
+    </div>  
 </template>

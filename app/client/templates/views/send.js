@@ -29,13 +29,6 @@ Set in the created callback.
 */
 var accountSort;
 
-/**
-The ABI for the custom Token Contract
-
-@property coinABI
-*/
-coinABI = [{constant:false,inputs:[{name:'receiver',type:'address'},{name:'amount',type:'uint256'}],name:'sendCoin',outputs:[{name:'sufficient',type:'bool'}],type:'function'},{constant:true,inputs:[{name:'',type:'address'}],name:'coinBalanceOf',outputs:[{name:'',type:'uint256'}],type:'function'},{inputs:[{name:'supply',type:'uint256'}],type:'constructor'},{anonymous:false,inputs:[{indexed:false,name:'sender',type:'address'},{indexed:false,name:'receiver',type:'address'},{indexed:false,name:'amount',type:'uint256'}],name:'CoinTransfer',type:'event'}];
-
 
 /**
 The default gas to provide for estimates. This is set manually,
@@ -291,15 +284,10 @@ Template['views_send'].helpers({
 
             if (!balance) balance = {tokenBalance:0};
 
-            var decimals = token.decimals;
-            var numberFormat = '0,0.';
-            for(i=0;i<decimals;i++){
-                numberFormat += "0";
-            }
+            var formattedAmount = Helpers.formatNumberDecimals(amount * Math.pow(10, token.decimals), token.decimals);
+            var formattedBalance = Helpers.formatNumberDecimals(balance.tokenBalance, token.decimals);
 
-            var formatted = numeral(balance.tokenBalance/Math.pow(10, token.decimals)).format(numberFormat);
-
-            return Spacebars.SafeString(TAPi18n.__('wallet.send.texts.sendToken', {amount:amount, name: token.name, balance: formatted , symbol: token.symbol})); 
+            return Spacebars.SafeString(TAPi18n.__('wallet.send.texts.sendToken', {amount:formattedAmount, name: token.name, balance: formattedBalance , symbol: token.symbol})); 
         }
     },
     /**
@@ -344,7 +332,7 @@ Template['views_send'].helpers({
         var tokens = Tokens.find({},{sort:{symbol:1}});
         tokens.forEach(function(token){
             var el = { 
-                text: token.symbol.toUpperCase(),
+                text: token.name.toUpperCase(),
                 value: "tk_"+ token.address 
             }
             units.push(el);

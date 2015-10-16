@@ -54,6 +54,27 @@ Helpers.makeId = function(prefix, hash){
     return _.isString(hash) ? prefix +'_'+ hash.replace('0x','').substr(0,10) : null;
 };
 
+
+/**
+Format a number based on decimal numbers
+
+@method formatNumberDecimals
+@param {Int} number
+@param {Int} decimals
+*/
+Helpers.formatNumberDecimals = function(number, decimals){
+
+        var numberFormat = '0,0.';
+
+        for(i=0;i<decimals;i++){
+            numberFormat += "0";
+        }
+
+        var formatted = numeral(number/Math.pow(10, decimals)).format(numberFormat);
+
+        return formatted;
+};
+
 /**
 Display logs in the console for events.
 
