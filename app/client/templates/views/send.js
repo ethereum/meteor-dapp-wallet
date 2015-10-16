@@ -305,6 +305,14 @@ Template['views_send'].helpers({
         //     return (returnText === true) ? unit.text : unit.value;
     },
     /**
+    Gets currently selected unit
+
+    @method (selectedUnit)
+    */
+    'showTo': function(returnText){
+        return TemplateVar.get("hideTo");
+    },
+    /**
 
     */
     'unitsAndTokens' : function(){
@@ -363,6 +371,31 @@ Template['views_send'].events({
         e.preventDefault();
         TemplateVar.set('showData', false);
         TemplateVar.set('dataShown', false);
+    },
+    /**
+    Action Switcher
+    
+    @event click button.hide-data
+    */
+    'click .select-action label': function(e){
+        var option = e.currentTarget.getAttribute("for");
+        
+
+        if (option == "upload-contract") {
+            TemplateVar.set('showData', true);
+            TemplateVar.set('hideTo', true);
+            TemplateVar.set('dataShown', true);
+            TemplateVar.set('savedTo', document.querySelector(".dapp-address-input input").value )
+            document.querySelector(".dapp-address-input input").value = "";
+        } else {
+            TemplateVar.set('showData', false);
+            TemplateVar.set('dataShown', false);
+            TemplateVar.set('hideTo', false);
+
+            if (!document.querySelector(".dapp-address-input input").value)
+                document.querySelector(".dapp-address-input input").value = TemplateVar.get('savedTo');
+
+        }
     },
     /**
     Set the amount while typing

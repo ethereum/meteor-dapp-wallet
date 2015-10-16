@@ -17,23 +17,22 @@
             </div>
 
             <div class="col col-7 mobile-full">
+                
                 <h3>{{i18n 'wallet.send.to'}}</h3>
 
-                {{> dapp_addressInput placeholder="0x000000.." name="to" autofocus=true}}
+                {{> dapp_addressInput placeholder="0x000000.." name="to" autofocus=true disabled=showTo}}
                 
             </div>
-
-            <div class="dapp-clear-fix"></div>
         </div>
 
         <!-- select action -->
         <div class="row clear select-action">
             <div class="col col-12 mobile-full">
-                <h3>Choose Action</h3>
-                <div class="dapp-segmented-control">
-                    <input type="radio" id="send-ether" name="select-action" checked> <label for="send-ether"> Send Ether </label>
-                    <input type="radio" id="send-token" name="select-action"> <label for="send-token"> Send Ethereum Token </label>
-                    <input type="radio" id="upload-contract" name="select-action"> <label for="upload-contract"> Upload Contract </label>
+                <h3>Action</h3>
+                <div class="dapp-segmented-control select-action">
+                    <input type="radio" value="send-ether" id="send-ether" name="select-action" checked> <label for="send-ether"> Send Ether </label>
+                    <input type="radio" value="send-token" id="send-token" name="select-action"> <label for="send-token"> Send Other Token </label>
+                    <input type="radio" value="upload-contract" id="upload-contract" name="select-action"> <label for="upload-contract"> Upload Contract </label>
                 </div>
             </div>
 
