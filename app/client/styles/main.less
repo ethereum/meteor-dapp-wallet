@@ -44,6 +44,17 @@
 
 .dapp-content {
     padding-bottom: @defaultPaddingVertical*2;
+
+    
+    .dapp-container {
+        > h2 {
+            margin-bottom: @gridHeight * 1;
+        }
+
+        > h2 + p {
+            margin-bottom: @gridHeight * 3;
+        } 
+    }   
 }
 
 
@@ -296,6 +307,7 @@ body {
             // font-size: 0.9em; 
         }
     }
+
     .account-balance {
         font-size: 1.6em;
         color: @colorTextSecondary;
