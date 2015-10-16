@@ -121,9 +121,9 @@ Template['views_account'].events({
     /**
     Clicking the name, will make it editable
 
-    @event click .edit-name
+    @event click .edit-name, mouseenter .edit-name
     */
-    'click .edit-name': function(e){
+    'click .edit-name, mouseenter .edit-name': function(e){
         // make it editable
         $(e.currentTarget).attr('contenteditable','true');
     },
@@ -143,17 +143,28 @@ Template['views_account'].events({
     */
     'blur .edit-name, keyup .edit-name': function(e){
         if(!e.keyCode || e.keyCode === 13) {
+            var $el = $(e.currentTarget);
+            var text = $el.text();
+
+
+            if(_.isEmpty(text)) {
+                text = TAPi18n.__('wallet.accounts.defaultName');
+            }
 
             // Save new name
             Wallets.update(this._id, {$set: {
-                name: $(e.currentTarget).text()
+                name: text
             }});
             EthAccounts.update(this._id, {$set: {
-                name: $(e.currentTarget).text()
+                name: text
             }});
 
+            Tracker.afterFlush(function(argument) {
+                $el.text(text);
+            });
+
             // make it non-editable
-            $(e.currentTarget).attr('contenteditable', null);
+            $el.attr('contenteditable', null);
         }
     },
     /**

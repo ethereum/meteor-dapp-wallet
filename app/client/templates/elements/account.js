@@ -84,7 +84,7 @@ Template['elements_account'].helpers({
     @method (unConfirmed)
     */
     'unConfirmed': function() {
-        if(!this.creationBlock || this.createdIdentifier)
+        if(!this.address || !this.creationBlock || this.createdIdentifier)
             return false;
 
         var currentBlockNumber = EthBlocks.latest.number,

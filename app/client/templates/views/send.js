@@ -145,6 +145,13 @@ Template['views_send'].onRendered(function(){
         this.$('input[name="to"]').trigger('change');
     }
 
+    // set the from
+    var from = FlowRouter.getParam('from');
+    if(from)
+        TemplateVar.setTo('select[name="dapp-select-account"]', 'value', FlowRouter.getParam('from'));
+
+    
+
     // GAS PRICE ESTIMATION
     template.autorun(function(c){
         var address = TemplateVar.getFrom('.dapp-select-account', 'value');

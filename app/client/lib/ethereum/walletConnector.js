@@ -111,10 +111,12 @@ resetWallet = function function_name (argument) {
         }});
     });
 
-    console.log('The wallet will restart in 6 seconds...');
+    web3.reset();
+    console.log('The wallet will re-fetch log information in 6 seconds...');
 
     setTimeout(function() {
-        location.reload();
+        console.log('Fetching logs...');
+        connectToNode();    
     }, 1000 * 6);
 }
 
