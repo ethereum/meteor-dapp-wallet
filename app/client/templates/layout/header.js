@@ -18,6 +18,20 @@ Template['layout_header'].onCreated(function(){
 
 Template['layout_header'].helpers({
     /**
+    Returns the correct url for the send to route
+
+    @method (goToSend)
+    @return {String}
+    */
+    'goToSend': function() {
+        FlowRouter.watchPathChange();
+        var address = FlowRouter.getParam('address');
+    
+        return (address)
+            ? FlowRouter.path('sendFrom', {from: address})
+            : FlowRouter.path('send');
+    },
+    /**
     Calculates the total balance of all accounts + wallets.
 
     @method (totalBalance)
