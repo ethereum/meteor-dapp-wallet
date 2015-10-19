@@ -30,12 +30,12 @@ diff-sequence@1.0.1
 ecmascript@0.1.5
 ecmascript-collections@0.1.6
 ejson@1.0.7
-ethereum:accounts@0.3.4
-ethereum:blocks@0.2.2
-ethereum:dapp-styles@0.2.7
+ethereum:accounts@0.3.6
+ethereum:blocks@0.2.3
+ethereum:dapp-styles@0.2.9
 ethereum:elements@0.5.6
 ethereum:tools@0.2.9
-ethereum:web3@0.13.0
+ethereum:web3@0.14.1
 fastclick@1.0.7
 frozeman:animation-helper@0.2.6
 frozeman:global-notifications@0.2.0
@@ -54,7 +54,7 @@ http@1.1.1
 id-map@1.0.4
 jeeeyul:moment-with-langs@2.10.6
 jquery@1.11.4
-kadira:blaze-layout@2.1.0
+kadira:blaze-layout@2.2.0
 kadira:flow-router@2.7.0
 launch-screen@1.0.4
 less@2.5.0_3
