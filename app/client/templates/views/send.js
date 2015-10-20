@@ -106,9 +106,6 @@ Template['views_send'].onCreated(function(){
     TemplateVar.set('amount', 0);
     TemplateVar.set('estimatedGas', 0);
     
-    //Selects ether by default
-    TemplateVar.set('sendType','et');
-
     // check if we are still on the correct chain
     Helpers.checkChain(function(error) {
         if(error && (EthAccounts.find().count() > 0)) {
@@ -261,34 +258,25 @@ Template['views_send'].helpers({
     */
     'sendExplanation': function(e, amount){
 
-        var amount = $('input[name="amount"]').val() || 0;
+        var amount = TemplateVar.get("tokenAmount") || 0;
         var unit = EthTools.getUnit();
 
-        if (TemplateVar.get('sendType')=='et') {
-            // return "send ether";    
-            return Spacebars.SafeString(TAPi18n.__('wallet.send.texts.sendAmount', {amount:amount})); 
-            //wallet.send.texts.sendAmount' amount=amount   
+       
+
+        var selectedAccount = TemplateVar.getFrom('.dapp-select-account', 'value');
+        var address = TemplateVar.get('tokenAddress');
+        var tokenId = Helpers.makeId('token', address);
+        token = Tokens.findOne(tokenId);
+    
+        balance = Balances.findOne({token: address, account: selectedAccount});
+
+        if (!balance) balance = {tokenBalance:0};
+
+        var formattedAmount = Helpers.formatNumberDecimals(amount * Math.pow(10, token.decimals), token.decimals);
+        var formattedBalance = Helpers.formatNumberDecimals(balance.tokenBalance, token.decimals);
+
+        return Spacebars.SafeString(TAPi18n.__('wallet.send.texts.sendToken', {amount:formattedAmount, name: token.name, balance: formattedBalance , symbol: token.symbol})); 
         
-        } else if (TemplateVar.get('sendType')=='am') {
-            return Spacebars.SafeString(TAPi18n.__('wallet.send.texts.sendAmountEquivalent', {amount:amount, unit: TemplateVar.get('tokenAddress') })); 
-            // {{{i18n 'wallet.send.texts.sendAmountEquivalent' amount=amount}}}
-
-        } else {
-
-            var selectedAccount = TemplateVar.getFrom('.dapp-select-account', 'value');
-            var address = TemplateVar.get('tokenAddress');
-            var tokenId = Helpers.makeId('token', address);
-            token = Tokens.findOne(tokenId);
-        
-            balance = Balances.findOne({token: address, account: selectedAccount});
-
-            if (!balance) balance = {tokenBalance:0};
-
-            var formattedAmount = Helpers.formatNumberDecimals(amount * Math.pow(10, token.decimals), token.decimals);
-            var formattedBalance = Helpers.formatNumberDecimals(balance.tokenBalance, token.decimals);
-
-            return Spacebars.SafeString(TAPi18n.__('wallet.send.texts.sendToken', {amount:formattedAmount, name: token.name, balance: formattedBalance , symbol: token.symbol})); 
-        }
     },
     /**
     Gets currently selected unit
@@ -316,26 +304,7 @@ Template['views_send'].helpers({
 
     */
     'unitsAndTokens' : function(){
-        units = [{
-            text: 'ETHER',
-            value: 'et_ether'
-        },
-        {
-            text: 'FINNEY',
-            value: 'et_finney'
-        },
-        {
-            text: 'BTC*',
-            value: 'am_btc'
-        },
-        {
-            text: 'USD*',
-            value: 'am_usd'
-        },
-        {
-            text: 'EUR*',
-            value: 'am_eur'
-        }];
+        units = [];
 
         var tokens = Tokens.find({},{sort:{symbol:1}});
         tokens.forEach(function(token){
@@ -348,6 +317,39 @@ Template['views_send'].helpers({
 
 
         return units;
+    },
+    /**
+    Get all tokens
+
+    @method (tokens)
+    */
+    'tokens': function(){
+        return Tokens.find({},{sort:{symbol:1}});
+    },
+    /**
+    Get Balance of a Coin
+
+    @method (getBalance)
+    */
+    'formattedCoinBalance': function(e){
+
+        var tokenAddress = this.address;
+        var accountAddress = TemplateVar.getFrom('.dapp-select-account', 'value');
+
+        var balance = Balances.findOne({token:tokenAddress, account: accountAddress});
+        console.log(balance);
+        var token = Tokens.findOne({address:tokenAddress });
+
+        if (balance) {
+            var tokenBalance = balance.tokenBalance / Math.pow(10, token.decimals) ;
+        } else {
+            var tokenBalance = 0 ;
+        }
+        
+        var formattedAmount = Helpers.formatNumberDecimals(tokenBalance * Math.pow(10, token.decimals), token.decimals)
+
+        return formattedAmount + ' ' + token.symbol;
+
     }
 });
 
@@ -379,23 +381,30 @@ Template['views_send'].events({
     */
     'click .select-action label': function(e){
         var option = e.currentTarget.getAttribute("for");
-        
+        TemplateVar.set("selectAction", option);
 
         if (option == "upload-contract") {
             TemplateVar.set('showData', true);
             TemplateVar.set('hideTo', true);
             TemplateVar.set('dataShown', true);
-            TemplateVar.set('savedTo', document.querySelector(".dapp-address-input input").value )
-            document.querySelector(".dapp-address-input input").value = "";
+            TemplateVar.set('showSendToken', false);
+
+            TemplateVar.set('savedTo', document.querySelector("input[name='to']").value )
+            document.querySelector("input[name='to']").value = "";
         } else {
             TemplateVar.set('showData', false);
             TemplateVar.set('dataShown', false);
             TemplateVar.set('hideTo', false);
+            TemplateVar.set('showSendToken', false);
 
-            if (!document.querySelector(".dapp-address-input input").value)
-                document.querySelector(".dapp-address-input input").value = TemplateVar.get('savedTo');
-
+            if (document.querySelector("input[name='to']").value == "" && TemplateVar.get('savedTo'))
+                document.querySelector("input[name='to']").value = TemplateVar.get('savedTo');
         }
+        if (option == "send-token") {
+            TemplateVar.set('showSendToken', true)
+        }
+
+
     },
     /**
     Set the amount while typing
@@ -409,6 +418,26 @@ Template['views_send'].events({
         checkOverDailyLimit(template.find('select[name="dapp-select-account"]').value, wei, template);
     },
     /**
+    Set the amount while typing
+    
+    @event keyup input[name="token-amount"], change input[name="token-amount"], input input[name="token-amount"]
+    */
+    'keyup input[name="token-amount"], change input[name="token-amount"], input input[name="token-amount"]': function(e, template){
+
+        TemplateVar.set("tokenAmount", e.currentTarget.value);    
+    },
+    /**
+    Selected a token for the first time
+    
+    @event 'click .select-token
+    */
+    'click .select-token ': function(e, template){
+        $(e.currentTarget).removeClass("unselected");  
+
+        var form = document.getElementsByClassName("account-send-form")[0]
+        TemplateVar.set("tokenAddress", form.elements["choose-token"].value) 
+    },
+    /**
     Submit the form and send the transaction!
     
     @event submit form
@@ -420,7 +449,6 @@ Template['views_send'].events({
             data = TemplateVar.getFrom('.dapp-data-textarea', 'value');
             gasPrice = TemplateVar.getFrom('.dapp-select-gas-price', 'gasPrice'),
             estimatedGas = TemplateVar.get('estimatedGas'),
-            sendType = TemplateVar.get('sendType'),
             tokenAddress = TemplateVar.get('tokenAddress'),
             selectedAccount = Helpers.getAccountByAddress(template.find('select[name="dapp-select-account"]').value);
 
@@ -445,11 +473,7 @@ Template['views_send'].events({
                 });
 
 
-            if((_.isEmpty(amount) || amount === '0' || !_.isFinite(amount)) && !data)
-                return GlobalNotification.warning({
-                    content: 'i18n:wallet.send.error.noAmount',
-                    duration: 2
-                });
+            
 
 
             if(!web3.isAddress(to) && !data)
@@ -458,22 +482,28 @@ Template['views_send'].events({
                     duration: 2
                 });
 
-            if (sendType == 'tk') {
+            if (TemplateVar.get("selectAction") == "send-token") {
+                
                 var tokenId = Helpers.makeId('token', tokenAddress);
                 token = Tokens.findOne(tokenId);
                 balance = Balances.findOne({token: tokenAddress, account: template.find('select[name="dapp-select-account"]').value});
                 if (!balance) balance = {tokenBalance:0};
-                var tokenAmount = $('input[name="amount"]').val()*Math.pow(10, token.decimals) || 0;
-
-                console.log(tokenAmount);
-                console.log(balance.tokenBalance);
+                var tokenAmount = TemplateVar.get("tokenAmount")*Math.pow(10, token.decimals) || 0;
 
                 if( tokenAmount > balance.tokenBalance)
                     return GlobalNotification.warning({
                         content: 'i18n:wallet.send.error.notEnoughFunds',
                         duration: 2
                     });
+
             } else {
+
+                if((_.isEmpty(amount) || amount === '0' || !_.isFinite(amount)) && !data)
+                return GlobalNotification.warning({
+                    content: 'i18n:wallet.send.error.noAmount',
+                    duration: 2
+                });
+
                 if(new BigNumber(amount, 10).gt(new BigNumber(selectedAccount.balance, 10)))
                     return GlobalNotification.warning({
                         content: 'i18n:wallet.send.error.notEnoughFunds',
@@ -526,7 +556,7 @@ Template['views_send'].events({
                     });
 
                 // TOKEN TRANSACTION
-                } else if(sendType == 'tk') {
+                } else if(TemplateVar.get("selectAction") == "send-token") {
 
                     var tokenInstance = web3.eth.contract(tokenABI).at(tokenAddress);
                     console.log(tokenInstance);
@@ -627,14 +657,6 @@ Template['views_send'].events({
                 sendTransaction(estimatedGas + 100000);
             }
         }
-    },
-    // catch the "onchange" event for the .inline-form element you want to observe
-    'change [name="token-switcher"]': function(e, template, value, text){
-        // do something with the selected "value" and "text"
-        TemplateVar.set('sendType', value.substring(0,2));   
-        TemplateVar.set('tokenAddress', value.substring(3));
-        
-
     }
 });
 

@@ -159,12 +159,16 @@
             }
         },
         "send": {
-            "title": "<strong>Send</strong> money",
+            "title": "<strong>Send</strong> funds",
             "sendInfoTitle": "Send",
             "pickAddress": "Pick an address",
             "to": "To",
             "from": "From",
             "amount": "Amount",
+            "tokenAmount": "Token Amount",
+            "sendEther": "Send Ether",
+            "sendToken": "Send other token",
+            "uploadContract": "Upload Contract",
             "data": "Data",
             "fee": "Choose a Fee",
             "feeLow": "Cheaper",
@@ -183,7 +187,7 @@
             "texts": {
                 "sendAmount": "You want to send <strong>__amount__</strong> ether.",
                 "sendAmountEquivalent": "You want to send the equivalent of <strong>__amount__ __unit__</strong> in ether, using Kraken.com current exchange rate.",
-                "sendToken": "You are requesting to send <strong>__amount__</strong> of <strong><em> __name__ </em></strong> a currency built in an ethereum contract. The current sender account has a balance of  <strong>__balance__ __symbol__ </strong> ",
+                "sendToken": "You are requesting to send <strong>__amount__ __symbol__ </strong> of <strong><em> __name__ </em></strong> a currency built in an ethereum contract. The current sender account has a balance of  <strong>__balance__ __symbol__ </strong> ",
                 "overDailyLimit": "<p class=\"over-daily\">This amount is over the remaining daily limit of __limit__ (of __total__ per day), so you need __count__ other account to confirm.</p>",
                 "overDailyLimit_plural": "<p class=\"over-daily\">This amount is over the remaining daily limit of __limit__ (of __total__ per day), so you need __count__ other accounts to confirm.</p>",
                 "underDailyLimit": "<p class=\"under-daily\">This amount is under the remaining daily limit of __limit__ (of __total__ per day), means it will send immediately.</p>",

@@ -30,9 +30,11 @@
             <div class="col col-12 mobile-full">
                 <h3>Action</h3>
                 <div class="dapp-segmented-control select-action">
-                    <input type="radio" value="send-ether" id="send-ether" name="select-action" checked> <label for="send-ether"> Send Ether </label>
-                    <input type="radio" value="send-token" id="send-token" name="select-action"> <label for="send-token"> Send Other Token </label>
-                    <input type="radio" value="upload-contract" id="upload-contract" name="select-action"> <label for="upload-contract"> Upload Contract </label>
+                    <input type="radio" value="send-ether" id="send-ether" name="select-action" checked> <label for="send-ether"> {{i18n 'wallet.send.sendEther'}} </label>
+                    {{#if tokens}}
+                    <input type="radio" value="send-token" id="send-token" name="select-action"> <label for="send-token"> {{i18n 'wallet.send.sendToken'}} </label>
+                    {{/if}}
+                    <input type="radio" value="upload-contract" id="upload-contract" name="select-action"> <label for="upload-contract"> {{i18n 'wallet.send.uploadContract'}} </label>
                 </div>
             </div>
 
@@ -41,27 +43,61 @@
 
 
             <div class="dapp-clear-fix"></div>
-        </div>
+        </div> 
 
-        <!-- amount -->
-        <div class="row clear amount">
-            <div class="col col-7 mobile-full">
-                <h3>{{i18n 'wallet.send.amount'}}</h3>
-                <input type="number" min="0" step="any" name="amount" placeholder="0.0" class="dapp-large">
-                {{> InlineForm name="token-switcher" items=unitsAndTokens value=selectedToken}}
+        {{#if TemplateVar.get "showSendToken"}}
+        <!-- amount token -->
+        <div class="row clear token-amount">
+            <div class="col col-3 mobile-full">
+                <h3>{{i18n 'wallet.send.tokenAmount'}}</h3>
+                <input type="number" min="0" step="any" name="token-amount" placeholder="0.0" class="dapp-large">
+
+            </div>
+             <div class="col col-4 mobile-full">
+                <br><br>
+                {{#if tokens}}
+                 <ul class="select-token unselected">
+                    {{#each tokens}}
+                    <li>
+                        <input type="radio" id="token-{{address}}" value="{{address}}"  name="choose-token"> 
+                        <label for="token-{{address}}"> 
+                            {{> dapp_identicon identity=address class="dapp-tiny"}} 
+                            <span class="token-name">{{name}}</span>
+                            <span class="balance">{{formattedCoinBalance}}</span>
+                        </label>
+                    </li>
+                    {{/each}}
+                </ul>
+                {{/if}}
             </div>
             
             <div class="col col-5 mobile-full send-info">
                 <br><br>
                 {{{sendExplanation amount=amount}}}
-                {{TemplateVar.get "dailyLimitText"}}
             </div>
 
 
             <div class="dapp-clear-fix"></div>
         </div>
 
-        
+        {{else}}
+        <!-- amount -->
+        <div class="row clear amount">
+            <div class="col col-7 mobile-full">
+                <h3>{{i18n 'wallet.send.amount'}}</h3>
+                <input type="number" min="0" step="any" name="amount" placeholder="0.0" class="dapp-large"><span> {{unit.toUpperCase}}</span>
+            </div>
+            
+            <div class="col col-5 mobile-full send-info">
+                <br><br>
+                {{{i18n 'wallet.send.texts.sendAmount' amount=amount}}}
+                {{TemplateVar.get "dailyLimitText"}}
+            </div>
+
+
+            <div class="dapp-clear-fix"></div>
+        </div>
+        {{/if}}
 
         
         <div class="row clear data">
