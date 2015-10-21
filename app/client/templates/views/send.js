@@ -350,6 +350,31 @@ Template['views_send'].helpers({
 
         return formattedAmount + ' ' + token.symbol;
 
+    },
+    /**
+    Check if to account has code
+
+    @method (getBalance)
+    */
+    'formattedCoinBalance': function(e){
+
+        var tokenAddress = this.address;
+        var accountAddress = TemplateVar.getFrom('.dapp-select-account', 'value');
+
+        var balance = Balances.findOne({token:tokenAddress, account: accountAddress});
+        console.log(balance);
+        var token = Tokens.findOne({address:tokenAddress });
+
+        if (balance) {
+            var tokenBalance = balance.tokenBalance / Math.pow(10, token.decimals) ;
+        } else {
+            var tokenBalance = 0 ;
+        }
+        
+        var formattedAmount = Helpers.formatNumberDecimals(tokenBalance * Math.pow(10, token.decimals), token.decimals)
+
+        return formattedAmount + ' ' + token.symbol;
+
     }
 });
 
