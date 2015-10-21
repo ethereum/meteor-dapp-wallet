@@ -7,32 +7,32 @@ Add new in/outgoing transaction
 @param {String} from
 @param {String} to
 @param {String} value
+@return {Boolean} TRUE if a transaction already existed
 */
 addTransaction = function(log, from, to, value){
-    var block = web3.eth.getBlock(log.blockNumber, true, function(err, block){
+    var txId = Helpers.makeId('tx', log.transactionHash);
+
+    var block = web3.eth.getBlock(log.blockNumber, false, function(err, block){
         if(!err) {
-            var txId = Helpers.makeId('tx', log.transactionHash),
-                transaction = _.find(block.transactions, function(tx){ return tx.hash === log.transactionHash; }) || {};
 
-            web3.eth.getTransactionReceipt(log.transactionHash, function(err, receipt){
+            web3.eth.getTransaction(log.transactionHash, function(err, transaction) {
                 if(!err) {
+                    web3.eth.getTransactionReceipt(log.transactionHash, function(err, receipt){
+                        if(!err) {
+                            updateTransaction({
+                                _id: txId,
+                                to: to,
+                                from: from,
+                                value: value,
+                                operation: log.args.operation || null,
+                                timestamp: block.timestamp,
+                            }, transaction, receipt);
 
-                    transaction.blockNumber = log.blockNumber;
-                    transaction.blockHash = log.blockHash;
-                    transaction.transactionHash = log.transactionHash;
-                    transaction.transactionIndex = log.transactionIndex;
-
-                    updateTransaction({
-                        _id: txId,
-                        to: to,
-                        from: from,
-                        value: value,
-                        operation: log.args.operation || null,
-                        timestamp: block.timestamp,
-                    }, transaction, receipt);
-
+                        }
+                    });
                 }
-            });
+            })
+
 
             // update balance
             web3.eth.getBalance(log.address, function(err, res){
@@ -43,6 +43,8 @@ addTransaction = function(log, from, to, value){
             });
         }
     });
+
+    return !!Transactions.findOne(txId);
 };
 
 /**
