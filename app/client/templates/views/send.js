@@ -474,33 +474,38 @@ Template['views_send'].events({
 
                     for (i in abi) {
                         if (abi[i].type == "constructor") {
-                            var constructor = abi[i].inputs;
-                             var constructorhtml = "";
+                            // var constructor = abi[i].inputs;
 
-                            for (n in constructor) {
+                            var abi2html = function(func) {
+                                var outputHtml = "";
 
-                                constructorhtml += "<h3>" + constructor[n].name + "</h3>";
+                                 for (n in func) {
 
-                                switch (constructor[n].type.substr(0,3)) {
-                                
-                                case 'boo':
-                                    constructorhtml += "<input type='checkbox' name='constructor" + constructor[n].name + "'>";
-                                    break
-                                case 'uin':
-                                    constructorhtml += "<input type='number' step='any' placeholder='" + constructor[n].type +"' name='constructor" + constructor[n].name + "'>";
-                                    break
-                                case 'int':
-                                    constructorhtml += "<input type='number' min='0' step='any'  placeholder='" + constructor[n].type +"' name='constructor" + constructor[n].name + "'>";
-                                    break
-                                // case 'address':
-                                // case 'string':
-                                // case 'bytes':                                
-                                default:
-                                    constructorhtml += "<input type='string' placeholder='" + constructor[n].type +"' name='constructor" + constructor[n].name + "'>";
+                                    outputHtml += "<h3>" + func[n].name + "</h3>";
+
+                                    switch (func[n].type.substr(0,3)) {
+                                    
+                                        case 'boo':
+                                            outputHtml += "<input type='checkbox' name='constructor" + func[n].name + "'>";
+                                            break
+                                        case 'uin':
+                                            outputHtml += "<input type='number' step='1' placeholder='" + func[n].type +"' name='constructor" + func[n].name + "' pattern='^[0-9]'>";
+                                            break
+                                        case 'int':
+                                            outputHtml += "<input type='number' min='0' step='1'  placeholder='" + func[n].type +"' name='constructor" + func[n].name + "' pattern='^[0-9]'>";
+                                            break
+                                        case 'add':
+                                            outputHtml += '<div class="dapp-address-input"><input type="text" name="to" placeholder="'+ func[n].type +'" class="" autofocus="true"></div>';
+                                            break                              
+                                        default:
+                                            outputHtml += "<input type='string' placeholder='" + func[n].type +"' name='constructor" + func[n].name + "'>";
+                                    }
+                                    //0x9e50ef826720bd466c0bb52dc7b8fc480d6c5199
+                                }
+                                return outputHtml;   
                             }
-                                
-                            }
-
+                            
+                            var constructorhtml = abi2html(abi[i].inputs);
                             TemplateVar.set('constructors', constructorhtml);
                         }
                     }
