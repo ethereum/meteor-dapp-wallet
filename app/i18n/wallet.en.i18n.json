@@ -56,8 +56,8 @@
             "dailyLimitRemaining": "remaining today",
             "requiredSignatures": "Required signatures",
             "owners": "Owners",
-            "walletsDescription": "Wallets are contracts that hold and secure ether. They can have multiple account owners and keep a full log of all transactions.",
-            "accountsDescription": "Accounts are password protected keys that control contracts. You probably won't need more than one or two accounts on the same device.",
+            "walletsDescription": "Wallets are contracts that hold and secure ether. They can have multiple accounts as owners and keep a full log of all transactions.",
+            "accountsDescription": "Accounts are password protected keys that control contracts.",
             "buttons": {
                 "deposit": "Deposit",
                 "copyAddress": "Copy address",

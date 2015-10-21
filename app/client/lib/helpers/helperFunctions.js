@@ -96,11 +96,11 @@ Helpers.isWatchOnly = function(id) {
 /**
 Shows a notification and plays a sound
 
-@method notificationAndSound
+@method showNotification
 @param {String} i18nText
 @param {Object} the i18n values passed to the i18n text
 */
-Helpers.notificationAndSound = function(i18nText, values) {
+Helpers.showNotification = function(i18nText, values) {
     if(Notification.permission === "granted") {
         new Notification(TAPi18n.__(i18nText +'.title'), {
             // icon: 'http://cdn.sstatic.net/stackexchange/img/logos/so/so-icon.png',
