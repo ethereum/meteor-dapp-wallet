@@ -29,6 +29,20 @@ Set in the created callback.
 */
 var accountSort;
 
+/**
+An empty object for the instantiated contract
+
+@property contractInstance
+*/
+var contractInstance = [];
+
+/**
+Contract Functiond
+
+@property contractFunctions
+*/
+var contractFunctions = [];
+var abihtml = new AbiHtml();
 
 /**
 The default gas to provide for estimates. This is set manually,
@@ -324,6 +338,7 @@ Template['views_send'].helpers({
     @method (tokens)
     */
     'tokens': function(){
+        console.log(Tokens.find({},{sort:{symbol:1}}));
         return Tokens.find({},{sort:{symbol:1}});
     },
     /**
@@ -354,27 +369,25 @@ Template['views_send'].helpers({
     /**
     Check if to account has code
 
-    @method (getBalance)
+    @method (accountHasCode)
     */
-    'formattedCoinBalance': function(e){
+    'accountHasCode': function(e){
+        //0x22a037ffc313beb81cd756151bd504653f7b983d
+        //0xa3687db9e245f5ad8a70123f9df0237c11ffc362
 
-        var tokenAddress = this.address;
-        var accountAddress = TemplateVar.getFrom('.dapp-select-account', 'value');
+        var contract = TemplateVar.getFrom('.dapp-address-input', 'value') || FlowRouter.getParam('address');
+        var code = web3.eth.getCode(contract);
 
-        var balance = Balances.findOne({token:tokenAddress, account: accountAddress});
-        console.log(balance);
-        var token = Tokens.findOne({address:tokenAddress });
+        return code != "0x";
+    },
+    /**
+    Get Functions
 
-        if (balance) {
-            var tokenBalance = balance.tokenBalance / Math.pow(10, token.decimals) ;
-        } else {
-            var tokenBalance = 0 ;
-        }
-        
-        var formattedAmount = Helpers.formatNumberDecimals(tokenBalance * Math.pow(10, token.decimals), token.decimals)
-
-        return formattedAmount + ' ' + token.symbol;
-
+    @method (tokens)
+    */
+    'listContractFunctions': function(){
+        console.log("remake array");
+        return contractFunctions;
     }
 });
 
@@ -407,15 +420,21 @@ Template['views_send'].events({
     'click .select-action label': function(e){
         var option = e.currentTarget.getAttribute("for");
         TemplateVar.set("selectAction", option);
+        TemplateVar.set('showExecuteContract', false);
 
-        if (option == "upload-contract") {
+        if (option != "upload-contract") {
+            
+        }
+
+        if (option == "upload-contract" ) {
+            TemplateVar.set('savedTo', document.querySelector("input[name='to']").value )
+            document.querySelector("input[name='to']").value = "";
+
             TemplateVar.set('showData', true);
             TemplateVar.set('hideTo', true);
             TemplateVar.set('dataShown', true);
             TemplateVar.set('showSendToken', false);
 
-            TemplateVar.set('savedTo', document.querySelector("input[name='to']").value )
-            document.querySelector("input[name='to']").value = "";
         } else {
             TemplateVar.set('showData', false);
             TemplateVar.set('dataShown', false);
@@ -425,8 +444,11 @@ Template['views_send'].events({
             if (document.querySelector("input[name='to']").value == "" && TemplateVar.get('savedTo'))
                 document.querySelector("input[name='to']").value = TemplateVar.get('savedTo');
         }
+
         if (option == "send-token") {
             TemplateVar.set('showSendToken', true)
+        } else if (option == "execute-contract") {
+            TemplateVar.set('showExecuteContract', true)
         }
 
 
@@ -441,6 +463,47 @@ Template['views_send'].events({
         TemplateVar.set('amount', wei || '0');
 
         checkOverDailyLimit(template.find('select[name="dapp-select-account"]').value, wei, template);
+    },
+    /**
+    Change the ABI
+    
+    @event keyup input[name="abi"], change input[name="abi"], input input[name="abi"]
+    */
+    'keyup input[name="abi"], change input[name="abi"], input input[name="abi"]': function(e, template){
+        var ABI = JSON.parse(e.currentTarget.value);
+        var address = TemplateVar.getFrom('.dapp-address-input', 'value');
+        contractInstance = web3.eth.contract(ABI).at(address);
+
+        // Settable properties to override default behavior
+        var properties = {
+            events: {
+                renderCallback: function() {}
+            },
+            functions: {
+                callButtonText: 'Read',
+                transactButtonText: 'Update',
+                renderCallback: function(htmlDoc) {
+                    console.log("asdasda");
+                    document.getElementById('execute-functions').appendChild(htmlDoc)
+                }
+            }
+        }
+
+
+        // Instantiate library with abi and optional properties
+        var abihtml = new AbiHtml(e.currentTarget.value, properties);
+        document.getElementById('execute-functions').innerHTML = "";
+        contractFunctions = [{"name":"Alice"}, {"name": "Eve"}]
+
+        abihtml.functions.forEach(function(func) {
+
+            console.log(func);
+            contractFunctions.push({"name":func.abiItem.name});
+
+            func.generateHtml()
+        })
+
+        console.log(contractFunctions);
     },
     /**
     Set the token amount while typing

@@ -35,8 +35,11 @@
                     {{#if tokens}}
                     <input type="radio" value="send-token" id="send-token" name="select-action"> <label for="send-token"> {{i18n 'wallet.send.sendToken'}} </label>
                     {{/if}}
-                    <input type="radio" value="execute-contract" id="execute-contract" name="select-action"> <label for="execute-contract"> Execute Contract </label>
                     
+                    {{#if accountHasCode}}
+                    <input type="radio" value="execute-contract" id="execute-contract" name="select-action"> <label for="execute-contract"> Execute Contract </label>
+                    {{/if}}
+
                     <input type="radio" value="upload-contract" id="upload-contract" name="select-action"> <label for="upload-contract"> {{i18n 'wallet.send.uploadContract'}} </label>
                 </div>
             </div>
@@ -102,7 +105,36 @@
         </div>
         {{/if}}
 
-        
+        {{#if TemplateVar.get "showExecuteContract"}}
+        <!-- amount -->
+        <div class="row clear abi">
+            <div class="col col-7 mobile-full">
+                <h3>Contract Interface</h3>
+                <input type="text" name="abi" placeholder="[{ 'looks': {'like': 'this'} }]" class="">
+            </div>
+
+            
+            <div class="col col-5 mobile-full">
+                <br><br>
+                The wallet couldnt infer the interface from the given code. Please find the contract interface (ABI) and paste it here
+            </div>
+
+
+            <div class="col col-7 mobile-full">
+                <h3>Choose Function</h3>
+                <select name="select-function" id="">
+                    {{#each contractFunctions}}
+                    <option value="{{name}}">{{name}}</option>    
+                    {{/each}}    
+                </select>
+
+                <div id="execute-functions"></div>
+            </div>
+
+            <div class="dapp-clear-fix"></div>
+        </div>
+        {{/if}}
+
         <div class="row clear data">
             <div class="col col-7 mobile-full">
 
