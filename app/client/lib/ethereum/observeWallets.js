@@ -279,26 +279,30 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
                 if(log.event === 'Deposit') {
                     Helpers.eventLogs('Deposit for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber());
 
-                    addTransaction(log, log.args.from, newDocument.address, log.args.value.toString(10));
+                    var txExists = addTransaction(log, log.args.from, newDocument.address, log.args.value.toString(10));
 
                     // NOTIFICATION
-                    Helpers.notificationAndSound('wallet.transactions.notifications.incomingTransaction', {
-                        to: Helpers.getAccountNameByAddress(newDocument.address),
-                        from: Helpers.getAccountNameByAddress(log.args.from),
-                        amount: EthTools.formatBalance(log.args.value, '0,0.00[000000] unit', 'ether')
-                    });
+                    if(!txExists) {
+                        Helpers.showNotification('wallet.transactions.notifications.incomingTransaction', {
+                            to: Helpers.getAccountNameByAddress(newDocument.address),
+                            from: Helpers.getAccountNameByAddress(log.args.from),
+                            amount: EthTools.formatBalance(log.args.value, '0,0.00[000000] unit', 'ether')
+                        });
+                    }
                 }
                 if(log.event === 'SingleTransact' || log.event === 'MultiTransact') {
                     Helpers.eventLogs(log.event +' for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber());
 
-                    addTransaction(log, newDocument.address, log.args.to, log.args.value.toString(10));
+                    var txExists = addTransaction(log, newDocument.address, log.args.to, log.args.value.toString(10));
 
                     // NOTIFICATION
-                    Helpers.notificationAndSound('wallet.transactions.notifications.outgoingTransaction', {
-                        to: Helpers.getAccountNameByAddress(log.args.to),
-                        from: Helpers.getAccountNameByAddress(newDocument.address),
-                        amount: EthTools.formatBalance(log.args.value, '0,0.00[000000] unit', 'ether')
-                    });
+                    if(!txExists) {
+                        Helpers.showNotification('wallet.transactions.notifications.outgoingTransaction', {
+                            to: Helpers.getAccountNameByAddress(log.args.to),
+                            from: Helpers.getAccountNameByAddress(newDocument.address),
+                            amount: EthTools.formatBalance(log.args.value, '0,0.00[000000] unit', 'ether')
+                        });
+                    }
                 }
                 if(log.event === 'ConfirmationNeeded') {
                     Helpers.eventLogs('ConfirmationNeeded for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber() +', Operation '+ log.args.operation);
@@ -348,12 +352,14 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
                                 // });
 
                                 // NOTIFICATION
-                                Helpers.notificationAndSound('wallet.transactions.notifications.pendingConfirmation', {
-                                    initiator: Helpers.getAccountNameByAddress(log.args.initiator),
-                                    to: Helpers.getAccountNameByAddress(log.args.to),
-                                    from: Helpers.getAccountNameByAddress(newDocument.address),
-                                    amount: EthTools.formatBalance(log.args.value, '0,0.00[000000] unit', 'ether')
-                                });
+                                if(!pendingConf.operation) {
+                                    Helpers.showNotification('wallet.transactions.notifications.pendingConfirmation', {
+                                        initiator: Helpers.getAccountNameByAddress(log.args.initiator),
+                                        to: Helpers.getAccountNameByAddress(log.args.to),
+                                        from: Helpers.getAccountNameByAddress(newDocument.address),
+                                        amount: EthTools.formatBalance(log.args.value, '0,0.00[000000] unit', 'ether')
+                                    });
+                                }
 
 
                                 // remove pending transactions, as they now have to be approved
