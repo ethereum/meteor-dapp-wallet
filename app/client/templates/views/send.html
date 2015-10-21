@@ -108,7 +108,15 @@
                     <button class="hide-data">{{{i18n 'wallet.send.removeData'}}}</button>
 
                     <h3>{{i18n 'wallet.send.data'}}</h3>
+
+                    <textarea class="solidity-source" id="solidity-data" cols="20" rows="10"></textarea>
+                    
+                    <div class="constructors">
+                        {{{TemplateVar.get "constructors"}}}
+                    </div>
                     {{> dapp_dataTextarea cols="20" rows="8"}}
+
+
 
                     {{TemplateVar.set "dataShown" true}}
                 {{else}}

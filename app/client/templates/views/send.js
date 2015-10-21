@@ -438,6 +438,92 @@ Template['views_send'].events({
         TemplateVar.set("tokenAddress", form.elements["choose-token"].value) 
     },
     /**
+    Change solidity code
+    
+    @event keyup textarea.solidity-source, change textarea.solidity-source, input textarea.solidity-source
+    */
+    'keyup textarea.solidity-source, change textarea.solidity-source, input textarea.solidity-source': function(e, template){
+        var sourceCode = e.currentTarget.value;
+
+        //check if it matches a hex pattern
+        if (sourceCode == sourceCode.match("[0-9A-Fa-fx]+")[0]){
+            // If matches, just pass if forward to the data field
+            // document.getElementsByClassName("dapp-data-textarea")[0].value = sourceCode;
+            template.find('.dapp-data-textarea').value = sourceCode;
+            TemplateVar.set(template, 'codeNotExecutable', false);
+
+            // TemplateVar.setTo('.dapp-data-textarea', sourceCode);
+
+        } else {
+            //if it doesnt, try compiling it in solidity
+            try {
+                var compiled = web3.eth.compile.solidity(sourceCode);
+                TemplateVar.set(template, 'codeNotExecutable', false);
+
+
+                console.log(compiled);
+
+                // If it compiles then gp through each contract
+                for (contractKey in compiled) {
+
+                    // console.log(compiled[first]);
+                    var contractCompiled = compiled[contractKey];
+                    document.getElementsByClassName("dapp-data-textarea")[0].value = contractCompiled.bytecode;
+
+                    var abi = JSON.parse(contractCompiled.interface);
+
+                    for (i in abi) {
+                        if (abi[i].type == "constructor") {
+                            var constructor = abi[i].inputs;
+                             var constructorhtml = "";
+
+                            for (n in constructor) {
+
+                                constructorhtml += "<h3>" + constructor[n].name + "</h3>";
+
+                                switch (constructor[n].type.substr(0,3)) {
+                                
+                                case 'boo':
+                                    constructorhtml += "<input type='checkbox' name='constructor" + constructor[n].name + "'>";
+                                    break
+                                case 'uin':
+                                    constructorhtml += "<input type='number' step='any' placeholder='" + constructor[n].type +"' name='constructor" + constructor[n].name + "'>";
+                                    break
+                                case 'int':
+                                    constructorhtml += "<input type='number' min='0' step='any'  placeholder='" + constructor[n].type +"' name='constructor" + constructor[n].name + "'>";
+                                    break
+                                // case 'address':
+                                // case 'string':
+                                // case 'bytes':                                
+                                default:
+                                    constructorhtml += "<input type='string' placeholder='" + constructor[n].type +"' name='constructor" + constructor[n].name + "'>";
+                            }
+                                
+                            }
+
+                            TemplateVar.set('constructors', constructorhtml);
+                        }
+                    }
+
+                };
+                
+
+                // console.log(abi);
+
+
+
+            } catch(error) {
+                // Doesnt compile in solidity either, throw error
+                TemplateVar.set(template, 'codeNotExecutable', true);
+                console.log(error.message);
+            }
+        };
+        
+        
+
+         
+    },
+    /**
     Submit the form and send the transaction!
     
     @event submit form
