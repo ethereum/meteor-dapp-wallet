@@ -122,10 +122,11 @@
 
             <div class="col col-7 mobile-full">
                 <h3>Choose Function</h3>
-                <select name="select-function" id="">
-                    {{#each contractFunctions}}
+                <select name="select-function" id="select-function">
+                    <option disabled="">Select function</option>
+                   <!--  {{#each contractFunctions}}
                     <option value="{{name}}">{{name}}</option>    
-                    {{/each}}    
+                    {{/each}}   -->  
                 </select>
 
                 <div id="execute-functions"></div>

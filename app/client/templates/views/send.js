@@ -494,16 +494,36 @@ Template['views_send'].events({
         var abihtml = new AbiHtml(e.currentTarget.value, properties);
         document.getElementById('execute-functions').innerHTML = "";
         contractFunctions = [{"name":"Alice"}, {"name": "Eve"}]
+        var functionHtmls = "";
 
         abihtml.functions.forEach(function(func) {
 
             console.log(func);
             contractFunctions.push({"name":func.abiItem.name});
 
+            functionHtmls +="<option value='function" + func.abiItem.name + "'>" + func.abiItem.name + "</option>";
+
             func.generateHtml()
         })
 
+        document.getElementById('select-function').innerHTML = functionHtmls;
+
         console.log(contractFunctions);
+
+        /*
+        [{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[{"name":"receiver","type":"address"},{"name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"name":"sufficient","type":"bool"}],"type":"function"},{"inputs":[{"name":"supply","type":"uint256"}],"type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"sender","type":"address"},{"indexed":false,"name":"receiver","type":"address"},{"indexed":false,"name":"amount","type":"uint256"}],"name":"Transfer","type":"event"}]
+        */
+
+
+    },
+    /**
+    Select function name
+    
+    @event change select-function
+    */
+    'keyup change select[name="select-function"]': function(e, template){
+
+        console.log(e.currentTarget.value);    
     },
     /**
     Set the token amount while typing
