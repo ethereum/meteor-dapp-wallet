@@ -96,10 +96,10 @@ Template['views_tokens'].events({
         
         var address = e.currentTarget.getAttribute('data')
         var tokenId = Helpers.makeId('token', address);
-
+        var token = Tokens.findOne(tokenId);
 
         EthElements.Modal.question({
-            text: new Spacebars.SafeString(TAPi18n.__('wallet.tokens.deleteToken', {token: address.substring(2,10)})),
+            text: new Spacebars.SafeString(TAPi18n.__('wallet.tokens.deleteToken', {token: token.name})),
             ok: function(){
                 console.log(tokenId);
                 Tokens.remove(tokenId);

@@ -31,13 +31,15 @@ observeLatestBlocks = function(){
                 }
             });
             
+            var walletsAndAccounts = EthAccounts.find().fetch().concat(Wallets.find().fetch());
 
             _.each(Tokens.find().fetch(), function(token){
                 tokenInstance = web3.eth.contract(tokenABI).at(token.address);
 
                 if (token.address) {
                     var totalBalance = 0;
-                    _.each(EthAccounts.find().fetch(), function(account){
+                    
+                    _.each(walletsAndAccounts, function(account){
                         var balance = Number(tokenInstance.balanceOf(account.address));
 
                         var  balanceID = Helpers.makeId('balance', token.address.substring(2,7) + account.address.substring(2,7));

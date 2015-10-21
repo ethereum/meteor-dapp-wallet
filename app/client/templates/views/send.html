@@ -7,16 +7,17 @@
 
         <!-- from/to -->
         <div class="row clear from-to">
-            <div class="col col-7 mobile-full from">
+            <div class="col col-4 mobile-full from">
                 <h3>{{i18n 'wallet.send.from'}}</h3>
 
                 {{> dapp_selectAccount accounts=fromAccounts showAccountTypes=true}}
             </div>
 
-            <div class="col col-5 mobile-full send-info">
+            <div class="col col-7 mobile-full send-info">
             </div>
+            <div class="dapp-clear-fix"></div>
 
-            <div class="col col-7 mobile-full">
+            <div class="col col-4 mobile-full">
                 
                 <h3>{{i18n 'wallet.send.to'}}</h3>
 
@@ -107,7 +108,7 @@
                     <button class="hide-data">{{{i18n 'wallet.send.removeData'}}}</button>
 
                     <h3>{{i18n 'wallet.send.data'}}</h3>
-                    {{> dapp_dataTextarea cols="20" rows="4"}}
+                    {{> dapp_dataTextarea cols="20" rows="8"}}
 
                     {{TemplateVar.set "dataShown" true}}
                 {{else}}

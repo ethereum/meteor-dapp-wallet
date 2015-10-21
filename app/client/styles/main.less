@@ -360,8 +360,6 @@ body {
 
         &.from-to {
             position: relative;
-            // .display(flex);
-            // .align-items(center);
 
             > div {
                 position: relative;
@@ -369,7 +367,8 @@ body {
             }
 
             select {
-                width: auto;
+                color: @colorLink;
+                width: 100%;
             }
 
             .dapp-address-input input {
@@ -518,10 +517,11 @@ body {
 .wallet-box.tokens {
     position: relative;
     background-repeat: repeat-y;
-    background-color: @colorGrayLight;
-    background-size: @gridWidth * 3;
-    background-position-x: @gridWidth * -2;
-    background-blend-mode: multiply;
+    background-color: @colorGray;
+    background-size: cover;
+    // background-size: @gridWidth * 3;
+    background-position-x: 4px;
+    background-blend-mode: overlay;
     overflow: hidden;
     transform-style: preserve-3d;
 
@@ -601,6 +601,7 @@ body {
     label {
         display: block;
         text-transform: uppercase;
+        max-width: @gridWidth * 9;
         color: @colorLink;
         display: flex;
         overflow: hidden;
@@ -618,6 +619,7 @@ body {
 
         span.token-name {
             padding-left: @defaultPaddingHorizontal/4;
+            padding-right: @defaultPaddingHorizontal/4;
         }
 
         span.balance {
@@ -634,10 +636,12 @@ body {
     &.unselected {
         .dapp-shadow-small;
     }
+    
+    &:hover {
+        .dapp-shadow-large;
+    }
 
     &:hover, &.unselected {
-        .dapp-shadow-medium;
-
         label {
             height: @gridHeight * 2;
             padding: @defaultPaddingVertical/2 @defaultPaddingHorizontal/2;  
@@ -651,6 +655,8 @@ body {
             }
         }        
     }
+
+   
 }
 
 /* #### All small phone screens landscape #### */

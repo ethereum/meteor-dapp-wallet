@@ -377,7 +377,7 @@ Template['views_send'].events({
     /**
     Action Switcher
     
-    @event click button.hide-data
+    @event click .select-action label
     */
     'click .select-action label': function(e){
         var option = e.currentTarget.getAttribute("for");
@@ -418,7 +418,7 @@ Template['views_send'].events({
         checkOverDailyLimit(template.find('select[name="dapp-select-account"]').value, wei, template);
     },
     /**
-    Set the amount while typing
+    Set the token amount while typing
     
     @event keyup input[name="token-amount"], change input[name="token-amount"], input input[name="token-amount"]
     */
