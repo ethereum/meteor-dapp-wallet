@@ -500,7 +500,6 @@ Template['views_send'].events({
                                         default:
                                             outputHtml += "<input type='string' placeholder='" + func[n].type +"' name='constructor" + func[n].name + "'>";
                                     }
-                                    //0x9e50ef826720bd466c0bb52dc7b8fc480d6c5199
                                 }
                                 return outputHtml;   
                             }
