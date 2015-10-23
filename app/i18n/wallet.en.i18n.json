@@ -60,7 +60,7 @@
             "defaultName": "Unnamed",
             "creating": "Creating",
             "importing": "Importing",
-            "accountNote": "Accounts can't list incoming transactions and are rather unsafe, please <a href=\"/account/new\">create a wallet</a> to store ether.",
+            "accountNote": "Accounts can't list incoming transactions, please <a href=\"/account/new\">create a wallet</a> to store ether.",
             "addressCopiedToClipboard": "Copied to clipboard",
             "qrCodeLabel": "Point a compatible mobile app to this code",
             "dailyLimit": "Daily limit",

@@ -18,7 +18,7 @@ Update wallet balances
 
 @method updateBalances
 */
-var updateBalances = function() {
+updateBalances = function() {
 
     // UPDATE WALLETS ACCOUNTS balance
     _.each(Wallets.find().fetch(), function(wallet){
@@ -45,6 +45,7 @@ var updateBalances = function() {
         if(!token.address)
             return;
 
+
         var tokenInstance = TokenContract.at(token.address),
             totalBalance = new BigNumber(0);
         
@@ -52,28 +53,15 @@ var updateBalances = function() {
         _.each(walletsAndAccounts, function(account){
             tokenInstance.balanceOf(account.address, function(e, balance){
                 if(balance.toNumber() > 0){
-                    var balanceID = Helpers.makeId('balance', token.address.substring(2,7) + account.address.substring(2,7));
-                        Balances.upsert(balanceID, {$set: {
-                            account: account.address,
-                            token: token.address,
-                            tokenBalance: balance.toString(10)
-                        }});
+                    var tokenID = Helpers.makeId('token', token.address),
+                        set = {};
 
-                    totalBalance = totalBalance.plus(balance);
+                    set['balances.'+ account._id] = balance.toString(10);
+
+                    Tokens.update(tokenID, {$set: set});
                 }
             });
         });
-
-        // update total balance after 1s
-        Meteor.setTimeout(function() {
-            if(!totalBalance.equals(new BigNumber(token.totalBalance, 10))){
-                var tokenID = Helpers.makeId('token', token.address);
-
-                Tokens.update(tokenID, {$set: {
-                    totalBalance: totalBalance.toString(10)
-                }});
-            } 
-        }, 1000);
     });
 };
 

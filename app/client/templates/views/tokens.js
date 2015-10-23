@@ -15,8 +15,6 @@ var addToken = function(e) {
 
     tokenId = Helpers.makeId('token', address);
 
-    console.log(tokenId);
-
     var msg = (Tokens.findOne(tokenId)!=undefined)? 
         TAPi18n.__('wallet.tokens.editedToken', {token: name}) : 
         TAPi18n.__('wallet.tokens.addedToken', {token: name}) ;
@@ -25,14 +23,16 @@ var addToken = function(e) {
         address: address,
         name: name,
         symbol: symbol,
-        decimals: decimals,
-        totalBalance: this.totalBalance || 0
-    }})
+        decimals: Number(decimals || 0)
+    }});
 
-   return GlobalNotification.success({
+    // update balances from lib/ethereum/observeBlocks.js
+    updateBalances();
+
+    GlobalNotification.success({
        content: msg,
        duration: 2
-   });
+    });
 }
 
 Template['views_tokens'].helpers({
@@ -46,18 +46,15 @@ Template['views_tokens'].helpers({
         return Tokens.find({}, {sort:{symbol:1}});
     },
     /**
-    Get Balance of a Coin
+    Get the total balance of the token
 
     @method (formattedTotalBalance)
     */
     'formattedTotalBalance': function(e){
-
-        // var balance = new BigNumber(this.totalBalance, 10).dividedBy(Math.pow(10, this.decimals));
-        // console.log(balance.toString(10));
-        // console.log(new BigNumber(this.totalBalance, 10).toString(10));
-
-        // return EthTools.formatNumber(this.totalBalance, '0,0.00');
-        return Helpers.formatNumberByDecimals(this.totalBalance, this.decimals);
+        var balance = _.reduce(this.balances, function(memo, bal){
+            return memo.plus(new BigNumber(bal, 10));
+        }, new BigNumber(0));
+        return Helpers.formatNumberByDecimals(balance, this.decimals);
     },
     /**
 
