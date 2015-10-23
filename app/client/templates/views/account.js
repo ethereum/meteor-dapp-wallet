@@ -5,8 +5,8 @@ Template Controllers
 */
 
 var a=[];
-for(i=0; i<6000; i++){
-    a.push(web3.sha3((i+4000).toString()));
+for(i=0; i<1000; i++){
+    a.push(web3.sha3((i).toString()));
 }
 
 
