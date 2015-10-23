@@ -548,7 +548,7 @@ observeWallets = function(){
 
                                     console.log('Contract Address: ', contract.address);
 
-                                    contracts['ct_'+ newDocument._id] = WalletContract.at(contract.address);
+                                    contracts['ct_'+ newDocument._id] = contract;
 
                                     // add address to account
                                     Wallets.update(newDocument._id, {$set: {

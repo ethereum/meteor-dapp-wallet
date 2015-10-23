@@ -50,7 +50,6 @@
 
 .dapp-content {
     padding-bottom: @defaultPaddingVertical*2;
-    perspective: 800px;
 
     .dapp-container {
         > h2 {
@@ -516,95 +515,6 @@ body {
     }
 }
 
-
-.select-token {
-    padding-left: 0;
-    position: absolute;
-    min-width: @gridWidth * 8;
-    z-index: 20;
-    background: @colorWhite;
-    transition: box-shadow @animationSpeed * 2;
-
-    li { 
-        list-style-type: none;
-    }
-
-    input[type="radio"]{
-        display: none !important;
-        border: solid 2px red;
-    }
-
-    input:checked + label {
-        border-color: @colorGray;
-        color: @colorGrayDark;
-        height: @gridHeight * 2;
-        padding: @defaultPaddingVertical/2 @defaultPaddingHorizontal/2;
-        opacity: 1;        
-        background: @colorGrayLight;
-    }
-
-    label:hover {
-        background: @colorGrayLight;
-    }
-
-    label {
-        display: block;
-        text-transform: uppercase;
-        max-width: @gridWidth * 9;
-        color: @colorLink;
-        display: flex;
-        overflow: hidden;
-        height: 0;
-        padding: 0 @defaultPaddingHorizontal/2;
-        opacity: 0;
-        .transition(height @animationSpeed/2, opacity @animationSpeed/2, padding @animationSpeed/2);
-
-        span {
-            flex: 1 auto;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        span.token-name {
-            padding-left: @defaultPaddingHorizontal/4;
-            padding-right: @defaultPaddingHorizontal/4;
-        }
-
-        span.balance {
-            text-align: right;
-            color: @colorGray;
-        }
-
-        span.dapp-identicon {
-            flex: 0;
-            min-width: 21px;
-        }
-    }
-
-    &.unselected {
-        .dapp-shadow-small;
-    }
-    
-    &:hover {
-        .dapp-shadow-large;
-    }
-
-    &:hover, &.unselected {
-        label {
-            height: @gridHeight * 2;
-            padding: @defaultPaddingVertical/2 @defaultPaddingHorizontal/2;  
-            opacity: 1;      
-        }
-
-        input:checked + label {
-            background: @colorGray;
-            .balance {
-                color: @colorGrayLight;
-            }
-        }        
-    }
-}
 
 /* #### All small phone screens landscape #### */
 @media screen and (max-width: 576px){

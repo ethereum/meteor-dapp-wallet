@@ -126,7 +126,8 @@ Helpers.showNotification = function(i18nText, values) {
             body: TAPi18n.__(i18nText +'.text', values),
         });
     }
-    $('#sound1')[0].play();
+    if(typeof mist !== 'undefined')
+        mist.sounds.bip();
 };
 
 /**
