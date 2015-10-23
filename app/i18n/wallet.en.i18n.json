@@ -42,6 +42,15 @@
             "testnetWallet": {
                 "walletNeedsDeployment": "You seem to be on a testnet.<br><br>There is no original wallet found, we need to deploy a wallet, which can be used by the wallet stub contracts, from your address: <br><br><small><code>__account__</code></small><br><br><em>Please make sure this address has at least 1 ether!</em>",
                 "testnetWalletDeployed": "Original wallet deployed!<br>An original wallet was deployed on the address:<br><br><small><code>__address__</code></small>."
+            },
+            "addToken": {
+                "title": "Add token",
+                "titleEdit": "Edit token",
+                "contractAddress": "Token contract address",
+                "tokenName": "Token name",
+                "tokenSymbol": "Token symbol",
+                "decimalPlaces": "Decimals Places of smallest unit",
+                "preview": "Preview"
             }
         },
         "accounts": {
@@ -207,6 +216,9 @@
             }
         },
         "tokens": {
+            "title": "Custom <strong>Tokens</strong>",
+            "subTitle": "Added tokens",
+            "description": "Tokens are currencies built on the Ethereum platform. <a href=\"https://ethereum.org/token\" target=\"_blank\">Learn how to build your own</a>.",
             "deleteToken": "Do you want to remove the token <strong>__token__</strong> from your list?",
             "addedToken": "Added __token__ to your list",
             "editedToken": "Edited token __token__"

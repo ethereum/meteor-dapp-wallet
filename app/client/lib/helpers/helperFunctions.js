@@ -58,21 +58,19 @@ Helpers.makeId = function(prefix, hash){
 /**
 Format a number based on decimal numbers
 
-@method formatNumberDecimals
-@param {Int} number
-@param {Int} decimals
+@method formatNumberByDecimals
+@param {Number} number
+@param {Number} decimals
 */
-Helpers.formatNumberDecimals = function(number, decimals){
+Helpers.formatNumberByDecimals = function(number, decimals){
 
-        var numberFormat = '0,0.';
+    var numberFormat = '0,0.';
 
-        for(i=0;i<decimals;i++){
-            numberFormat += "0";
-        }
+    for(i=0; i < Number(decimals); i++){
+        numberFormat += "0";
+    }
 
-        var formatted = numeral(number/Math.pow(10, decimals)).format(numberFormat);
-
-        return formatted;
+    return EthTools.formatNumber(new BigNumber(number, 10).dividedBy(Math.pow(10, decimals)), numberFormat);
 };
 
 /**

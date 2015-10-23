@@ -1,30 +1,28 @@
-
-
-// Deprecated Token Interface 
-// tokenABIDeprecated = [{constant:false,inputs:[{name:'receiver',type:'address'},{name:'amount',type:'uint256'}],name:'sendCoin',outputs:[{name:'sufficient',type:'bool'}],type:'function'},{constant:true,inputs:[{name:'',type:'address'}],name:'coinBalanceOf',outputs:[{name:'',type:'uint256'}],type:'function'},{inputs:[{name:'supply',type:'uint256'}],type:'constructor'},{anonymous:false,inputs:[{indexed:false,name:'sender',type:'address'},{indexed:false,name:'receiver',type:'address'},{indexed:false,name:'amount',type:'uint256'}],name:'CoinTransfer',type:'event'}];
-
+//"0x11485c5f164d6a67a72eee9093b2581d1c304094"
 
 // Token Interface
 
-tokenABI = [
+var tokenABI = [
       {
+        "type": "function",
+        "name": "balanceOf",
         "constant": true,
         "inputs": [
           {
-            "name": "",
+            "name": "receiver",
             "type": "address"
           }
         ],
-        "name": "balanceOf",
         "outputs": [
           {
-            "name": "",
+            "name": "balance",
             "type": "uint256"
           }
-        ],
-        "type": "function"
+        ]
       },
       {
+        "type": "function",
+        "name": "transfer",
         "constant": false,
         "inputs": [
           {
@@ -33,28 +31,28 @@ tokenABI = [
           },
           {
             "name": "amount",
-            "type": "uint256"
+            "type": "uint"
           }
         ],
-        "name": "transfer",
         "outputs": [
           {
             "name": "sufficient",
             "type": "bool"
           }
-        ],
-        "type": "function"
+        ]
       },
       {
+        "type": "constructor",
         "inputs": [
           {
             "name": "supply",
-            "type": "uint256"
+            "type": "uint"
           }
-        ],
-        "type": "constructor"
+        ]
       },
       {
+        "name": "Transfer",
+        "type": "event",
         "anonymous": false,
         "inputs": [
           {
@@ -72,8 +70,7 @@ tokenABI = [
             "name": "amount",
             "type": "uint256"
           }
-        ],
-        "name": "Transfer",
-        "type": "event"
+        ]
       }
-]
+];
+TokenContract = web3.eth.contract(tokenABI);
