@@ -90,7 +90,7 @@ session@1.1.1
 spacebars@1.0.7
 spacebars-compiler@1.0.7
 standard-minifiers@1.0.1
-tap:i18n@1.6.1
+tap:i18n@1.7.0
 tap:i18n-bundler@0.1.0
 templating@1.1.4
 templating-tools@1.0.0
