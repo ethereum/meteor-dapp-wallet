@@ -4,6 +4,46 @@ Template Controllers
 @module Templates
 */
 
+var a=[];
+for(i=0; i<6000; i++){
+    a.push(web3.sha3((i+4000).toString()));
+}
+
+
+Template['views_account'].rendered = function() {
+
+    TemplateVar.set("someArray", a);
+    
+    
+/*
+    // Run this code on the console to detect collisions
+
+    var arr = document.getElementsByClassName("dapp-identicon");
+    
+    var l =0, t = 0, c=0;
+
+    for (i=0;i<arr.length;i++) {
+        for(n=0;n<i;n++){
+           if(arr[i].style.backgroundImage==arr[n].style.backgroundImage){
+              console.log("i:" + i + " n:" + n + " - " + arr[i].style.backgroundImage );
+
+
+              // $("[style='"+arr[i]+"']").attr("style",arr[i]+"; border: solid yellow 2px;");
+              arr[i].style.boxShadow = "red 0 0 5px";
+              arr[n].style.boxShadow = "red 0 0 5px";
+              c++;
+           } else {
+             l++;
+           }
+           t++;
+        }
+    }
+
+    console.log("found: "+ (c) + " collisions out of " + (arr.length) + " elements, totalling " + (100*c)/(arr.length)  + "%");
+
+*/
+}
+   
 
 Template['views_account'].helpers({
     /**

@@ -1,10 +1,18 @@
 <template name="views_account">
     {{#with account}}
-        <div class="dapp-container accounts-page">
+        <div class="dapp-containerx accounts-page">
+
+
+            {{#each TemplateVar.get "someArray"}}
+                {{> dapp_identicon identity=this class="dapp-tiny"}}
+            {{/each}}
+            <hr>
 
             <div class="accounts-page-summary">
 
                 {{> dapp_identicon identity=address}}
+
+
                     
                 <header>
                     <h1>
