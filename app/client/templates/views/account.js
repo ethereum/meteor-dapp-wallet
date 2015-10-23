@@ -5,10 +5,18 @@ Template Controllers
 */
 
 var a=[];
-for(i=0; i<1000; i++){
-    a.push(web3.sha3((i).toString()));
+for(i=0; i<50000; i++){
+
+    // a.push(web3.sha3((i).toString()));
+
+    var word = "";
+    // for (n=0; n<5; n++) {
+    var word = (0000000000000000+i).toString(16);
+    // }
+    a.push(word);
 }
 
+console.log(a[3]);
 
 Template['views_account'].rendered = function() {
 
@@ -19,27 +27,26 @@ Template['views_account'].rendered = function() {
     // Run this code on the console to detect collisions
 
     var arr = document.getElementsByClassName("dapp-identicon");
-    
+    var arrCheck = {};
+
     var l =0, t = 0, c=0;
 
     for (i=0;i<arr.length;i++) {
-        for(n=0;n<i;n++){
-           if(arr[i].style.backgroundImage==arr[n].style.backgroundImage){
-              console.log("i:" + i + " n:" + n + " - " + arr[i].style.backgroundImage );
-
-
-              // $("[style='"+arr[i]+"']").attr("style",arr[i]+"; border: solid yellow 2px;");
-              arr[i].style.boxShadow = "red 0 0 5px";
-              arr[n].style.boxShadow = "red 0 0 5px";
-              c++;
-           } else {
-             l++;
-           }
-           t++;
-        }
+        arrCheck[arr[i].style.backgroundImage.toString()] =  arrCheck[arr[i].style.backgroundImage.toString()]+1 || 1;
     }
 
-    console.log("found: "+ (c) + " collisions out of " + (arr.length) + " elements, totalling " + (100*c)/(arr.length)  + "%");
+    var c = 0, t = 0;
+    _.each(arrCheck, function(e, i) { 
+       t++;
+       if (e > 1) {
+          c++;
+          console.log(i);
+       }
+    })
+
+    console.log("found " + c + " out of " + t + " totalling " + 100*c/t + "%");
+
+
 
 */
 }
