@@ -72,7 +72,6 @@ Template['views_account'].helpers({
     @method (formattedCoinBalance)
     */
     'formattedCoinBalance': function(e){
-
         var account = Template.parentData(2);
 
         return (this.balances && Number(this.balances[account._id]) > 0)

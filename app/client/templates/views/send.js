@@ -213,12 +213,28 @@ Template['views_send'].helpers({
         return _.union(Wallets.find(accountQuery, accountSort).fetch(), EthAccounts.find({}, accountSort).fetch());
     },
     /**
-    Get the current estimatedGas.
+    Get all tokens
 
-    @method estimatedGas
+    @method (tokens)
     */
-    'estimatedGas': function(){
-        return TemplateVar.get('estimatedGas');
+    'tokens': function(){
+        return Tokens.find({},{sort: {name: 1}});
+    },
+    /**
+    Checks if the current selected account has tokens
+
+    @method (hasTokens)
+    */
+    'hasTokens': function() {
+        var selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account', 'value')),
+            query = {};
+
+
+        if(!selectedAccount)
+            return;
+
+        query['balances.'+ selectedAccount._id] = {$exists: true, $ne: '0'};        
+        return Tokens.findOne(query);
     },
     /**
     Return the current sepecified amount (finney)
@@ -256,75 +272,25 @@ Template['views_send'].helpers({
 
     @method (sendExplanation)
     */
-    'sendExplanation': function(e, amount){
+    'sendExplanation': function(){
 
-        var amount = TemplateVar.get("tokenAmount") || 0;
-        var unit = EthTools.getUnit();
+        var amount = TemplateVar.get("tokenAmount") || '0';
+        // var unit = EthTools.getUnit();
 
-       
+        var selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account', 'value')),
+            address = TemplateVar.get('tokenAddress');
 
-        var selectedAccount = TemplateVar.getFrom('.dapp-select-account', 'value');
-        var address = TemplateVar.get('tokenAddress');
-        var tokenId = Helpers.makeId('token', address);
-        token = Tokens.findOne(tokenId);
-    
-        balance = Balances.findOne({token: address, account: selectedAccount});
+        if(!address)
+            return;
 
-        if (!balance) balance = {tokenBalance:0};
+        var token = Tokens.findOne({address: address}),
+            tokenBalance = token.balances[selectedAccount._id] || '0';
 
-        var formattedAmount = Helpers.formatNumberDecimals(amount * Math.pow(10, token.decimals), token.decimals);
-        var formattedBalance = Helpers.formatNumberDecimals(balance.tokenBalance, token.decimals);
+        var formattedAmount = Helpers.formatNumberByDecimals(new BigNumber(amount).times(Math.pow(10, token.decimals)), token.decimals);
+        var formattedBalance = Helpers.formatNumberByDecimals(tokenBalance, token.decimals);
 
         return Spacebars.SafeString(TAPi18n.__('wallet.send.texts.sendToken', {amount:formattedAmount, name: token.name, balance: formattedBalance , symbol: token.symbol})); 
         
-    },
-    /**
-    Gets currently selected unit
-
-    @method (selectedUnit)
-    */
-    'selectedToken': function(returnText){
-        console.log(returnText)
-        // var unit = _.find(units, function(unit){
-        //     return unit.value === EthTools.getUnit();
-        // });
-
-        // if(unit)
-        //     return (returnText === true) ? unit.text : unit.value;
-    },
-    /**
-    Gets currently selected unit
-
-    @method (selectedUnit)
-    */
-    'showTo': function(returnText){
-        return TemplateVar.get("hideTo");
-    },
-    /**
-
-    */
-    'unitsAndTokens' : function(){
-        units = [];
-
-        var tokens = Tokens.find({},{sort:{symbol:1}});
-        tokens.forEach(function(token){
-            var el = { 
-                text: token.name.toUpperCase(),
-                value: "tk_"+ token.address 
-            }
-            units.push(el);
-        })
-
-
-        return units;
-    },
-    /**
-    Get all tokens
-
-    @method (tokens)
-    */
-    'tokens': function(){
-        return Tokens.find({},{sort:{symbol:1}});
     },
     /**
     Get Balance of a Coin
@@ -332,24 +298,11 @@ Template['views_send'].helpers({
     @method (getBalance)
     */
     'formattedCoinBalance': function(e){
+        var selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account', 'value'));
 
-        var tokenAddress = this.address;
-        var accountAddress = TemplateVar.getFrom('.dapp-select-account', 'value');
-
-        var balance = Balances.findOne({token:tokenAddress, account: accountAddress});
-        console.log(balance);
-        var token = Tokens.findOne({address:tokenAddress });
-
-        if (balance) {
-            var tokenBalance = balance.tokenBalance / Math.pow(10, token.decimals) ;
-        } else {
-            var tokenBalance = 0 ;
-        }
-        
-        var formattedAmount = Helpers.formatNumberDecimals(tokenBalance * Math.pow(10, token.decimals), token.decimals)
-
-        return formattedAmount + ' ' + token.symbol;
-
+        return (this.balances && Number(this.balances[selectedAccount._id]) > 0)
+            ? Helpers.formatNumberByDecimals(this.balances[selectedAccount._id], this.decimals) +' '+ this.symbol
+            : false;
     }
 });
 
@@ -377,34 +330,32 @@ Template['views_send'].events({
     /**
     Action Switcher
     
-    @event click .select-action label
+    @event click .select-action input
     */
-    'click .select-action label': function(e){
-        var option = e.currentTarget.getAttribute("for");
-        TemplateVar.set("selectAction", option);
+    'click .select-action input': function(e, template){
+        var option = e.currentTarget.value;
+        TemplateVar.set('selectAction', option);
 
-        if (option == "upload-contract") {
+        if (option == 'upload-contract') {
             TemplateVar.set('showData', true);
             TemplateVar.set('hideTo', true);
             TemplateVar.set('dataShown', true);
             TemplateVar.set('showSendToken', false);
 
-            TemplateVar.set('savedTo', document.querySelector("input[name='to']").value )
-            document.querySelector("input[name='to']").value = "";
+            TemplateVar.set('savedTo', template.find('input[name="to"]').value )
+            template.find('input[name="to"]').value = '';
         } else {
             TemplateVar.set('showData', false);
             TemplateVar.set('dataShown', false);
             TemplateVar.set('hideTo', false);
             TemplateVar.set('showSendToken', false);
 
-            if (document.querySelector("input[name='to']").value == "" && TemplateVar.get('savedTo'))
-                document.querySelector("input[name='to']").value = TemplateVar.get('savedTo');
+            if(template.find('input[name="to"]').value === '' && TemplateVar.get('savedTo'))
+                template.find('input[name="to"]').value = TemplateVar.get('savedTo');
         }
-        if (option == "send-token") {
+        if (option == 'send-token') {
             TemplateVar.set('showSendToken', true)
         }
-
-
     },
     /**
     Set the amount while typing
@@ -424,7 +375,7 @@ Template['views_send'].events({
     */
     'keyup input[name="token-amount"], change input[name="token-amount"], input input[name="token-amount"]': function(e, template){
 
-        TemplateVar.set("tokenAmount", e.currentTarget.value);    
+        TemplateVar.set('tokenAmount', e.currentTarget.value);    
     },
     /**
     Selected a token for the first time
@@ -435,7 +386,7 @@ Template['views_send'].events({
         $(e.currentTarget).removeClass("unselected");  
 
         var form = document.getElementsByClassName("account-send-form")[0]
-        TemplateVar.set("tokenAddress", form.elements["choose-token"].value) 
+        TemplateVar.set('tokenAddress', form.elements["choose-token"].value) 
     },
     /**
     Submit the form and send the transaction!
@@ -451,9 +402,6 @@ Template['views_send'].events({
             estimatedGas = TemplateVar.get('estimatedGas'),
             tokenAddress = TemplateVar.get('tokenAddress'),
             selectedAccount = Helpers.getAccountByAddress(template.find('select[name="dapp-select-account"]').value);
-
-
-            
 
 
         if(selectedAccount && !TemplateVar.get('sending')) {
@@ -473,24 +421,20 @@ Template['views_send'].events({
                 });
 
 
-            
-
-
             if(!web3.isAddress(to) && !data)
                 return GlobalNotification.warning({
                     content: 'i18n:wallet.send.error.noReceiver',
                     duration: 2
                 });
 
-            if (TemplateVar.get("selectAction") == "send-token") {
-                
-                var tokenId = Helpers.makeId('token', tokenAddress);
-                token = Tokens.findOne(tokenId);
-                balance = Balances.findOne({token: tokenAddress, account: template.find('select[name="dapp-select-account"]').value});
-                if (!balance) balance = {tokenBalance:0};
-                var tokenAmount = TemplateVar.get("tokenAmount")*Math.pow(10, token.decimals) || 0;
 
-                if( tokenAmount > balance.tokenBalance)
+            if (TemplateVar.get('selectAction') == 'send-token') {
+                
+                var token = Tokens.findOne({address: tokenAddress}),
+                    tokenBalance = token.balances[selectedAccount._id] || '0',
+                    tokenAmount = new BigNumber(TemplateVar.get('tokenAmount'), 10).times(Math.pow(10, token.decimals || 0));
+
+                if(tokenAmount.gt(new BigNumber(tokenBalance, 10)))
                     return GlobalNotification.warning({
                         content: 'i18n:wallet.send.error.notEnoughFunds',
                         duration: 2
@@ -499,10 +443,10 @@ Template['views_send'].events({
             } else {
 
                 if((_.isEmpty(amount) || amount === '0' || !_.isFinite(amount)) && !data)
-                return GlobalNotification.warning({
-                    content: 'i18n:wallet.send.error.noAmount',
-                    duration: 2
-                });
+                    return GlobalNotification.warning({
+                        content: 'i18n:wallet.send.error.noAmount',
+                        duration: 2
+                    });
 
                 if(new BigNumber(amount, 10).gt(new BigNumber(selectedAccount.balance, 10)))
                     return GlobalNotification.warning({
@@ -556,7 +500,7 @@ Template['views_send'].events({
                     });
 
                 // TOKEN TRANSACTION
-                } else if(TemplateVar.get("selectAction") == "send-token") {
+                } else if(TemplateVar.get('selectAction') == 'send-token') {
 
                     var tokenInstance = web3.eth.contract(tokenABI).at(tokenAddress);
                     console.log(tokenInstance);
