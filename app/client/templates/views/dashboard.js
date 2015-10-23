@@ -76,9 +76,9 @@ Template['views_dashboard'].events({
     /**
     Request to create an account in mist
     
-    @event click a.create.account
+    @event click .create.account
     */
-    'click a.create.account': function(e){
+    'click .create.account': function(e){
         e.preventDefault();
 
         mist.requestAccount(function(e, account) {

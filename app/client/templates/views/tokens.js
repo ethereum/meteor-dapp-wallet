@@ -1,4 +1,9 @@
+/**
+The template to list all token
 
+@class [template] views_tokens
+@constructor
+*/
 
 var addToken = function(e) {
 
@@ -20,7 +25,8 @@ var addToken = function(e) {
         address: address,
         name: name,
         symbol: symbol,
-        decimals: decimals
+        decimals: decimals,
+        totalBalance: this.totalBalance || 0
     }})
 
    return GlobalNotification.success({
@@ -37,19 +43,21 @@ Template['views_tokens'].helpers({
     */
     'tokens': function(){
         
-        return Tokens.find({},{sort:{symbol:1}});
+        return Tokens.find({}, {sort:{symbol:1}});
     },
     /**
     Get Balance of a Coin
 
-    @method (getBalance)
+    @method (formattedTotalBalance)
     */
     'formattedTotalBalance': function(e){
 
-        var tokenAddress = this.address;
-        var balance = this.totalBalance / Math.pow(10, this.decimals);
-   
-        return Helpers.formatNumberDecimals(balance, this.decimals);
+        // var balance = new BigNumber(this.totalBalance, 10).dividedBy(Math.pow(10, this.decimals));
+        // console.log(balance.toString(10));
+        // console.log(new BigNumber(this.totalBalance, 10).toString(10));
+
+        // return EthTools.formatNumber(this.totalBalance, '0,0.00');
+        return Helpers.formatNumberByDecimals(this.totalBalance, this.decimals);
     },
     /**
 
@@ -74,15 +82,15 @@ Template['views_tokens'].events({
 
         // Open a modal 
         EthElements.Modal.question({
-                    template: 'views_modals_addToken',
-                    data: {
-                        decimals: 2
-                    },
-                    ok: addToken,
-                    cancel: true
-                },{
-                    class: 'modals-add-token'
-                });
+            template: 'views_modals_addToken',
+            data: {
+                decimals: 2
+            },
+            ok: addToken,
+            cancel: true
+        },{
+            class: 'modals-add-token'
+        });
     },
     /**
     Click Delete Token
@@ -101,16 +109,14 @@ Template['views_tokens'].events({
         EthElements.Modal.question({
             text: new Spacebars.SafeString(TAPi18n.__('wallet.tokens.deleteToken', {token: token.name})),
             ok: function(){
-                console.log(tokenId);
                 Tokens.remove(tokenId);
             },
-            okText: "delete",
             cancel: true
         });
 
     },
     /**
-    Click Token
+    Edit Token
     
     @event click .wallet-box.tokens
     */
@@ -123,20 +129,20 @@ Template['views_tokens'].events({
 
         token = Tokens.findOne(tokenId)        
 
-       // Open a modal 
+        // Open a modal 
         EthElements.Modal.question({
-                    template: 'views_modals_addToken',
-                    data: {
-                        address: address,
-                        name: token.name,
-                        symbol: token.symbol, 
-                        decimals: token.decimals 
-                    },
-                    ok: addToken,
-                    cancel: true
-                },{
-                    class: 'modals-add-token'
-                });
+            template: 'views_modals_addToken',
+            data: {
+                address: address,
+                name: token.name,
+                symbol: token.symbol, 
+                decimals: token.decimals 
+            },
+            ok: addToken.bind(this),
+            cancel: true
+        },{
+            class: 'modals-add-token'
+        });
 
         }
 

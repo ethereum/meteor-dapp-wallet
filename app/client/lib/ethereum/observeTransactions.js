@@ -18,6 +18,10 @@ addTransaction = function(log, from, to, value){
             web3.eth.getTransaction(log.transactionHash, function(err, transaction) {
                 if(!err) {
                     web3.eth.getTransactionReceipt(log.transactionHash, function(err, receipt){
+
+                        delete transaction.hash;
+                        transaction.transactionHash = log.transactionHash;
+
                         if(!err) {
                             updateTransaction({
                                 _id: txId,
