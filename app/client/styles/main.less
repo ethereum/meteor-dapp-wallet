@@ -412,6 +412,17 @@ body {
         .send-info {
             margin-top: @defaultMargin;
             color: @colorTextSecondary;
+
+            input:not([type='checkbox']), select {
+                width: 100%;
+            }
+
+
+            label {
+                position: relative;
+                top: -6px;
+                left: @gridWidth/4;
+            }
         } 
     }
 

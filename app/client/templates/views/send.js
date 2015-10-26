@@ -502,8 +502,9 @@ Template['views_send'].events({
 
                     // substring the type so that string32 and string16 wont need different templates
                     _.each(constructor[0].inputs, function(input){
-                        console.log(input);
+                        input.template = "input_"+input.type.substr(0,3);
                     })
+
 
                     TemplateVar.set("selectedContractInputs", constructor[0].inputs); 
                     compiledContracts.push({'name': i, 'inputs':constructor[0].inputs });   

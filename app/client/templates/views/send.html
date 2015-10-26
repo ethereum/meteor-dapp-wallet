@@ -132,13 +132,13 @@
                             <i class="icon-shield"></i> {{i18n 'wallet.send.texts.dataNotExecutable'}}
                         </p>
                     {{else}}
-                        {{#if compiledContracts}}
+                        {{#with compiledContracts}}
                             <select class="compiled-contracts" name="compiled-contracts">
-                            {{#each compiledContracts}}
+                            {{#each this}}
                                 <option value="{{name}}" selected="">{{name}}</option>
                             {{/each}}    
                             </select>
-                        {{/if}}
+                        {{/with}}
                             
                         {{#each selectedContractInputs}}
                             {{> Template.dynamic template=template name=name }}
