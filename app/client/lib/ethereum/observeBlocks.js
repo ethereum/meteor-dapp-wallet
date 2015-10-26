@@ -52,7 +52,7 @@ updateBalances = function() {
         // go through all existing accounts, for each token
         _.each(walletsAndAccounts, function(account){
             tokenInstance.balanceOf(account.address, function(e, balance){
-                if(balance.toNumber() > 0){
+                if(!e && balance.toNumber() > 0){
                     var tokenID = Helpers.makeId('token', token.address),
                         set = {};
 

@@ -135,9 +135,11 @@ Gets the docuement matching the given addess from the EthAccounts or Wallets col
 
 @method getAccountByAddress
 @param {String} address
+@param {Boolean} reactive
 */
-Helpers.getAccountByAddress = function(address) {
-    return EthAccounts.findOne({address: address}) || Wallets.findOne({address: address});
+Helpers.getAccountByAddress = function(address, reactive) {
+    var options = (reactive === false) ? {reactive: false} : {};
+    return EthAccounts.findOne({address: address}, options) || Wallets.findOne({address: address}, options);
 };
 
 /**
