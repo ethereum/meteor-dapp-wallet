@@ -111,12 +111,8 @@
 
                     <textarea class="solidity-source" id="solidity-data" cols="20" rows="10"></textarea>
                     
-                    <div class="constructors">
-                        {{{TemplateVar.get "constructors"}}}
-                    </div>
+                    
                     {{> dapp_dataTextarea cols="20" rows="8"}}
-
-
 
                     {{TemplateVar.set "dataShown" true}}
                 {{else}}
@@ -127,12 +123,26 @@
             <div class="col col-5 mobile-full send-info">
                 {{#if TemplateVar.get "showData"}}
                     <br><br>
-                    {{{i18n 'wallet.send.texts.addData'}}}
+                    {{#unless compiledContracts}}
+                        {{{i18n 'wallet.send.texts.addData'}}}
+                    {{/unless}}
 
                     {{#if TemplateVar.get "codeNotExecutable"}}
                         <p class="orange">
                             <i class="icon-shield"></i> {{i18n 'wallet.send.texts.dataNotExecutable'}}
                         </p>
+                    {{else}}
+                        {{#if compiledContracts}}
+                            <select class="compiled-contracts" name="compiled-contracts">
+                            {{#each compiledContracts}}
+                                <option value="{{name}}" selected="">{{name}}</option>
+                            {{/each}}    
+                            </select>
+                        {{/if}}
+                            
+                        {{#each selectedContractInputs}}
+                            {{> Template.dynamic template=template name=name }}
+                        {{/each}}
                     {{/if}}
                 {{/if}}
             </div>
