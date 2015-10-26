@@ -1,11 +1,92 @@
 var peerCountIntervalId = null;
 
 /**
+Update the peercount
+
+@method getPeerCount
+*/
+var getPeerCount = function() {
+    web3.net.getPeerCount(function(e, res) {
+        if(!e)
+            Session.set('peerCount', res);
+    });
+};
+
+
+/**
+Update wallet balances
+
+@method updateBalances
+*/
+var updateBalances = function() {
+
+    // UPDATE WALLETS ACCOUNTS balance
+    _.each(Wallets.find().fetch(), function(wallet){
+        if(wallet.address) {
+            web3.eth.getBalance(wallet.address, function(err, res){
+                if(!err) {
+                    Wallets.update(wallet._id, {$set: {
+                        balance: res.toString(10)
+                    }});
+                }
+            });
+
+            // update dailylimit spent, etc
+            Meteor.setTimeout(function() {
+                updateContractData(wallet);
+            }, 1000);
+        }
+    });
+    
+    // UPDATE TOKEN BALANCES
+    var walletsAndAccounts = EthAccounts.find().fetch().concat(Wallets.find().fetch());
+
+    _.each(Tokens.find().fetch(), function(token){
+        if(!token.address)
+            return;
+
+        var tokenInstance = TokenContract.at(token.address),
+            totalBalance = new BigNumber(0);
+        
+        // go through all existing accounts, for each token
+        _.each(walletsAndAccounts, function(account){
+            tokenInstance.balanceOf(account.address, function(e, balance){
+                if(balance.toNumber() > 0){
+                    var balanceID = Helpers.makeId('balance', token.address.substring(2,7) + account.address.substring(2,7));
+                        Balances.upsert(balanceID, {$set: {
+                            account: account.address,
+                            token: token.address,
+                            tokenBalance: balance.toString(10)
+                        }});
+
+                    totalBalance = totalBalance.plus(balance);
+                }
+            });
+        });
+
+        // update total balance after 1s
+        Meteor.setTimeout(function() {
+            if(!totalBalance.equals(new BigNumber(token.totalBalance, 10))){
+                var tokenID = Helpers.makeId('token', token.address);
+
+                Tokens.update(tokenID, {$set: {
+                    totalBalance: totalBalance.toString(10)
+                }});
+            } 
+        }, 1000);
+    });
+};
+
+
+/**
 Observe the latest blocks
 
 @method observeLatestBlocks
 */
 observeLatestBlocks = function(){
+
+    // update balances on start
+    updateBalances();
 
     // GET the latest blockchain information
     web3.eth.filter('latest').watch(function(e, res){
@@ -13,75 +94,17 @@ observeLatestBlocks = function(){
 
             console.log('Block arrived ', res);
 
-            // UPDATE WALLETS ACCOUNTS balance
-            _.each(Wallets.find().fetch(), function(wallet){
-                if(wallet.address) {
-                    web3.eth.getBalance(wallet.address, function(err, res){
-                        if(!err) {
-                            Wallets.update(wallet._id, {$set: {
-                                balance: res.toString(10)
-                            }});
-                        }
-                    });
-
-                    // update dailylimit spent, etc
-                    Meteor.setTimeout(function() {
-                        updateContractData(wallet);
-                    }, 1000);
-                }
-            });
-            
-            var walletsAndAccounts = EthAccounts.find().fetch().concat(Wallets.find().fetch());
-
-            _.each(Tokens.find().fetch(), function(token){
-                tokenInstance = web3.eth.contract(tokenABI).at(token.address);
-
-                if (token.address) {
-                    var totalBalance = 0;
-                    
-                    _.each(walletsAndAccounts, function(account){
-                        var balance = Number(tokenInstance.balanceOf(account.address));
-
-                        var  balanceID = Helpers.makeId('balance', token.address.substring(2,7) + account.address.substring(2,7));
-
-                        if(balance>0){
-                            Balances.upsert(balanceID, {$set: {
-                                account: account.address,
-                                token: token.address,
-                                tokenBalance: balance
-                            }});
-                        }
-
-                        totalBalance += balance;
-                    })
-
-                    if(token.totalBalance != totalBalance ){
-                        var tokenID = Helpers.makeId('token', token.address);
-
-                        Tokens.update(tokenID, {$set: {
-                            totalBalance: totalBalance
-                        }});
-                    } 
-                }               
-            });
+            updateBalances();
         }
     });
 
 
     // check peer count
     Session.setDefault('peerCount', 0);
+    getPeerCount();
+
     clearInterval(peerCountIntervalId);
     peerCountIntervalId = setInterval(function() {
-        web3.net.getPeerCount(function(e, res) {
-            if(!e)
-                Session.set('peerCount', res);
-        });
+        getPeerCount()
     }, 1000);
-
-    // get peercount on start
-    web3.net.getPeerCount(function(e, res) {
-        if(!e)
-            Session.set('peerCount', res);
-    });
-
 };

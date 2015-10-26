@@ -296,7 +296,7 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
                     var txExists = addTransaction(log, newDocument.address, log.args.to, log.args.value.toString(10));
 
                     // NOTIFICATION
-                    if(!txExists) {
+                    if(!txExists || !txExists.blockNumber) {
                         Helpers.showNotification('wallet.transactions.notifications.outgoingTransaction', {
                             to: Helpers.getAccountNameByAddress(log.args.to),
                             from: Helpers.getAccountNameByAddress(newDocument.address),
@@ -537,6 +537,7 @@ observeWallets = function(){
 
                                     // add transactionHash to account
                                     newDocument.transactionHash = contract.transactionHash;
+                                    console.log('Contract transaction hash: ', contract.transactionHash);
 
                                     Wallets.update(newDocument._id, {$set: {
                                         transactionHash: contract.transactionHash
@@ -545,7 +546,7 @@ observeWallets = function(){
                                 // CONTRACT DEPLOYED
                                 } else {
 
-                                    Helpers.eventLogs('Contract Address: ', contract.address);
+                                    console.log('Contract Address: ', contract.address);
 
                                     contracts['ct_'+ newDocument._id] = WalletContract.at(contract.address);
 

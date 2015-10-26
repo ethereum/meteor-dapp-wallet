@@ -1,31 +1,33 @@
 <template name="views_tokens">
     <div class="dapp-container">      
-        <h1> Custom <strong>Tokens</strong></h1>
+        <h1>{{{i18n "wallet.tokens.title"}}}</h1>
         
-        <h2> Tokens being used</h2>
         <p>
-            Tokens are currencies built on the Ethereum platform. 
-            <a href="https://ethereum.org/token" target="_blank">Learn how to build your own</a>. 
-        </p> 
+            {{{i18n "wallet.tokens.description"}}}
+        </p>
+
+        <br><br>
+        <div class="dapp-clear-fix"></div>
 
         {{#each tokens}}
 
-        <a href="#" class="wallet-box tokens" style="background-image:{{geoPattern}}" data="{{address}}">
-            {{> dapp_identicon identity=address class="dapp-small"}}
-            <h3> {{name}}  </h3>
-            <button class="delete-token" data="{{address}}"><i class="icon-trash"></i></button>
-            <span class="account-balance"> 
-                {{formattedTotalBalance}}<span> {{symbol}}</span>
-            </span>            
-            <span class="account-id">{{address}}</span>                
-        </a>
+            <button class="wallet-box tokens" style="background-image:{{geoPattern}}" data="{{address}}">
+                {{> dapp_identicon identity=address class="dapp-small"}}
+                <h3>{{name}}</h3>
+                <button class="delete-token" data="{{address}}"><i class="icon-trash"></i></button>
+                <span class="account-balance"> 
+                    {{formattedTotalBalance}}<span> {{symbol}}</span>
+                </span>            
+                <span class="account-id">{{address}}</span>                
+            </button>
 
         {{/each}}
-       <a href="#" class="wallet-box create add-token">
+
+        <button class="wallet-box create add-token">
             <div class="account-pattern">
                 +
             </div>
             <h3>{{i18n "wallet.app.buttons.addToken"}}</h3>
-        </a>
+        </button>
     </div>  
 </template>

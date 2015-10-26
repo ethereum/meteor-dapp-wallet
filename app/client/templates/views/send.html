@@ -143,6 +143,10 @@
                     <button class="hide-data">{{{i18n 'wallet.send.removeData'}}}</button>
 
                     <h3>{{i18n 'wallet.send.data'}}</h3>
+
+                    <textarea class="solidity-source" id="solidity-data" cols="20" rows="10"></textarea>
+                    
+                    
                     {{> dapp_dataTextarea cols="20" rows="8"}}
 
                     {{TemplateVar.set "dataShown" true}}
@@ -154,12 +158,26 @@
             <div class="col col-5 mobile-full send-info">
                 {{#if TemplateVar.get "showData"}}
                     <br><br>
-                    {{{i18n 'wallet.send.texts.addData'}}}
+                    {{#unless compiledContracts}}
+                        {{{i18n 'wallet.send.texts.addData'}}}
+                    {{/unless}}
 
                     {{#if TemplateVar.get "codeNotExecutable"}}
                         <p class="orange">
                             <i class="icon-shield"></i> {{i18n 'wallet.send.texts.dataNotExecutable'}}
                         </p>
+                    {{else}}
+                        {{#with compiledContracts}}
+                            <select class="compiled-contracts" name="compiled-contracts">
+                            {{#each this}}
+                                <option value="{{name}}" selected="">{{name}}</option>
+                            {{/each}}    
+                            </select>
+                        {{/with}}
+                            
+                        {{#each selectedContractInputs}}
+                            {{> Template.dynamic template=template name=name }}
+                        {{/each}}
                     {{/if}}
                 {{/if}}
             </div>

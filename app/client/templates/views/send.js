@@ -44,6 +44,7 @@ Contract Functiond
 var contractFunctions = [];
 var abihtml = new AbiHtml();
 
+
 /**
 The default gas to provide for estimates. This is set manually,
 so that invalid data etsimates this value and we can later set it down and show a warning,
@@ -342,6 +343,22 @@ Template['views_send'].helpers({
         return Tokens.find({},{sort:{symbol:1}});
     },
     /**
+    Get compiled contracts 
+
+    @method (compiledContracts)
+    */
+    'compiledContracts' : function(){
+        return TemplateVar.get("compiledContracts");
+    },
+    /**
+    Get selected contract functions
+
+    @method (selectedContractInputs)
+    */
+    'selectedContractInputs' : function(){
+        return TemplateVar.get("selectedContractInputs");
+    },
+    /**
     Get Balance of a Coin
 
     @method (getBalance)
@@ -544,6 +561,76 @@ Template['views_send'].events({
 
         var form = document.getElementsByClassName("account-send-form")[0]
         TemplateVar.set("tokenAddress", form.elements["choose-token"].value) 
+    },
+    /**
+    Selected a contract function
+    
+    @event 'click .contract-functions
+    */
+    'change .compiled-contracts': function(e, template){
+        var selectedContract = _.select(TemplateVar.get("compiledContracts"), function(contract){
+            return contract.name == e.currentTarget.value;
+        })
+        console.log(selectedContract[0]);
+        TemplateVar.set("selectedContractInputs", selectedContract[0].inputs); 
+    },
+    /**
+    Change solidity code
+    
+    @event keyup textarea.solidity-source, change textarea.solidity-source, input textarea.solidity-source
+    */
+    'change textarea.solidity-source, input textarea.solidity-source': function(e, template){
+        var sourceCode = e.currentTarget.value;
+        TemplateVar.set("contractFunctions", false);
+
+        //check if it matches a hex pattern
+        if (sourceCode == sourceCode.match("[0-9A-Fa-fx]+")[0]){
+            // If matches, just pass if forward to the data field
+            // document.getElementsByClassName("dapp-data-textarea")[0].value = sourceCode;
+            template.find('.dapp-data-textarea').value = sourceCode;
+            TemplateVar.set(template, 'codeNotExecutable', false);
+
+            // TemplateVar.setTo('.dapp-data-textarea', sourceCode);
+
+        } else {
+            //if it doesnt, try compiling it in solidity
+            try {
+                var compiled = web3.eth.compile.solidity(sourceCode);
+                TemplateVar.set(template, 'codeNotExecutable', false);
+
+                var compiledContracts = [];
+
+                _.each(compiled, function(e, i){
+                    var abi = JSON.parse(e.interface);
+                    
+                    // find the constructor function
+                    var constructor = _.select(abi, function(func){
+                        return func.type == "constructor";
+                    });
+
+                    // substring the type so that string32 and string16 wont need different templates
+                    _.each(constructor[0].inputs, function(input){
+                        input.template = "input_"+input.type.substr(0,3);
+                    })
+
+
+                    TemplateVar.set("selectedContractInputs", constructor[0].inputs); 
+                    compiledContracts.push({'name': i, 'inputs':constructor[0].inputs });   
+                    
+                })
+
+                TemplateVar.set("compiledContracts", compiledContracts);
+
+            } catch(error) {
+                // Doesnt compile in solidity either, throw error
+                TemplateVar.set(template, 'codeNotExecutable', true);
+                console.log(error.message);
+            }
+        };
+        
+        
+
+         
     },
     /**
     Submit the form and send the transaction!

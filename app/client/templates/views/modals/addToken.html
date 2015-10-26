@@ -1,24 +1,28 @@
 <template name="views_modals_addToken">
-    <!-- Add Coin -->
+    {{#if this.address}}
+        <h1>{{i18n "wallet.modals.addToken.titleEdit"}}</h1>
+    {{else}}
+        <h1>{{i18n "wallet.modals.addToken.title"}}</h1>
+    {{/if}}
 
-    <h3>Token Contract Address</h3>
+    <h3>{{i18n "wallet.modals.addToken.contractAddress"}}</h3>
 
     {{> dapp_addressInput placeholder="0x000000.." value=tokenAddress name="address" autofocus=true}}
 
-    <h3>Token Name</h3>
-    <input type="string" value="{{name}}" name="name" placeholder="Name" class="dapp-large name">
+    <h3>{{i18n "wallet.modals.addToken.tokenName"}}</h3>
+    <input type="string" value="{{name}}" name="name" placeholder="Name" class="name">
 
-    <h3>Token symbol</h3>
-    <input type="string" value="{{symbol}}" name="symbol" placeholder="$" class="dapp-large symbol">
+    <h3>{{i18n "wallet.modals.addToken.tokenSymbol"}}</h3>
+    <input type="string" value="{{symbol}}" name="symbol" placeholder="$" class="symbol">
 
     
-    <h3>Decimals Places of smallest unit</h3>
-    <input type="number" min="0" step="1" name="division" value="{{decimals}}" class="dapp-large decimals">
+    <h3>{{i18n "wallet.modals.addToken.decimalPlaces"}}</h3>
+    <input type="number" min="0" step="1" name="division" value="{{decimals}}" class="decimals">
 
     <br>
-    <h3> Example </h3>
+    <h3>{{i18n "wallet.modals.addToken.preview"}}</h3>
 
-    <a href="#" class="example wallet-box tokens" style="background-image:{{geoPattern}}">
+    <button class="example wallet-box tokens" style="background-image:{{geoPattern}}">
         {{> dapp_identicon identity=tokenAddress class="dapp-small"}}
         <h3> {{TemplateVar.get 'name'}} </h3>
         <button class="delete-token"><i class="icon-emoticon-smile"></i></button>
@@ -26,6 +30,6 @@
             {{formattedNumber}}<span> {{TemplateVar.get 'symbol'}} </span>
         </span>            
         <span class="account-id">{{tokenAddress}}</span>                
-    </a>
+    </button>
 
 </template>
