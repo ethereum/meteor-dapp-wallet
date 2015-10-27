@@ -63,14 +63,15 @@ var checkOverDailyLimit = function(address, wei, template){
 /**
 Add a pending transaction to the transaction list, after sending
 
-@method addTransaction
+@method addTransactionAfterSend
 */
-var addTransaction = function(txHash, amount, from, to, gasPrice, estimatedGas, data) {
+var addTransactionAfterSend = function(txHash, amount, from, to, gasPrice, estimatedGas, data, tokenId) {
                                 
     txId = Helpers.makeId('tx', txHash);
 
 
     Transactions.upsert(txId, {$set: {
+        tokenId: tokenId,
         value: amount,
         from: selectedAccount.address,
         to: to,
@@ -541,7 +542,7 @@ Template['views_send'].events({
                             if(!error) {
                                 console.log('SEND from contract', amount);
 
-                                addTransaction(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
+                                addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
 
                                 FlowRouter.go('dashboard');
 
@@ -573,7 +574,7 @@ Template['views_send'].events({
                             if(!error) {
                                 console.log('SEND simple');
 
-                                addTransaction(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
+                                addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
 
                                 FlowRouter.go('dashboard');
                             } else {
@@ -616,7 +617,7 @@ Template['views_send'].events({
                             if(!error) {
                                 console.log('SEND TOKEN from contract', amount, 'with data ', tokenSendData);
 
-                                // addTransaction(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
+                                addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data, token._id);
 
                                 FlowRouter.go('dashboard');
 
@@ -644,7 +645,7 @@ Template['views_send'].events({
                             if(!error) {
                                 console.log('SEND TOKEN', amount);
 
-                                // addTransaction(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
+                                addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data, token._id);
 
                                 FlowRouter.go('dashboard');
                                 // GlobalNotification.warning({
