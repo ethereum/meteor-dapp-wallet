@@ -210,9 +210,11 @@ span.address {
 .select-token {
     .dapp-vertical-menu;
     .transition(box-shadow @animationSpeed * 2);
+    background: @colorGrayLight;
+
     
     &:hover {
-        .dapp-shadow-large;
+        .dapp-shadow-medium;
     }
 
     input[type="radio"]{
@@ -220,15 +222,17 @@ span.address {
     }
 
     input:checked + label {
+        position: relative;
         border-color: @colorGray;
-        color: @colorTextSecondary;
+        color: @colorGrayDark;
         padding: @defaultPaddingVertical/2 @defaultPaddingHorizontal/2;
         opacity: 1;        
         background: @colorGray;
+        font-weight: 400;
 
         span {
-            color: @colorGrayLight;
-            border-color: @colorGrayLight;
+            color: @colorGrayDark;
+            border-color: @colorGrayDark;
         }
     }
 
@@ -246,7 +250,7 @@ span.address {
         cursor: pointer;
 
         &:hover {
-            background: @colorGrayLight;
+            background: @colorWhite;
         }
 
         span {
