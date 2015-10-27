@@ -134,7 +134,7 @@ Creates filters for a wallet contract, to watch for deposits, pending confirmati
 @param {Object} newDocument
 @param {Boolean} checkFromCreationBlock
 */
-setupContractFilters = function(newDocument, checkFromCreationBlock){
+var setupContractFilters = function(newDocument, checkFromCreationBlock){
     var blockToCheckBack = (newDocument.checkpointBlock || 0) - ethereumConfig.rollBackBy;
     
     if(checkFromCreationBlock || blockToCheckBack < 0)

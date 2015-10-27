@@ -1,6 +1,8 @@
 //"0x11485c5f164d6a67a72eee9093b2581d1c304094"
 
 // Token Interface
+// var tokenABI = [{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balances","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[{"name":"receiver","type":"address"}],"name":"balanceof","outputs":[{"name":"balance","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[{"name":"receiver","type":"address"},{"name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"name":"sufficient","type":"bool"}],"type":"function"},{"inputs":[{"name":"supply","type":"uint256"}],"type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"sender","type":"address"},{"indexed":false,"name":"receiver","type":"address"},{"indexed":false,"name":"amount","type":"uint256"}],"name":"Transfer","type":"event"}];
+
 
 var tokenABI = [
       {
@@ -31,7 +33,7 @@ var tokenABI = [
           },
           {
             "name": "amount",
-            "type": "uint"
+            "type": "uint256"
           }
         ],
         "outputs": [
@@ -46,7 +48,7 @@ var tokenABI = [
         "inputs": [
           {
             "name": "supply",
-            "type": "uint"
+            "type": "uint256"
           }
         ]
       },

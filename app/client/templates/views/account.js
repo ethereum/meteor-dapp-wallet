@@ -192,7 +192,12 @@ Template['views_account'].events({
         e.preventDefault();
         
         // Open a modal showing the QR Code
-        EthElements.Modal.show('views_modals_qrCode');
+        EthElements.Modal.show({
+            template: 'views_modals_qrCode',
+            data: {
+                address: this.address
+            }
+        });
 
         
     }

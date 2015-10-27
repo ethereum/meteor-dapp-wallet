@@ -121,7 +121,7 @@ Shows a notification and plays a sound
 */
 Helpers.showNotification = function(i18nText, values) {
     if(Notification.permission === "granted") {
-        new Notification(TAPi18n.__(i18nText +'.title'), {
+        new Notification(TAPi18n.__(i18nText +'.title', values), {
             // icon: 'http://cdn.sstatic.net/stackexchange/img/logos/so/so-icon.png',
             body: TAPi18n.__(i18nText +'.text', values),
         });

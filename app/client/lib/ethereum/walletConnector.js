@@ -85,6 +85,8 @@ connectToNode = function(){
 
     observeTransactions();
 
+    observeTokens();
+
     observePendingConfirmations();
 
 };
