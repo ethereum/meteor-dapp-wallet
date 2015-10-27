@@ -113,7 +113,7 @@
                 "sent": "Sent",
                 "received": "Received",
                 "createdContract": "Created contract",
-                "tokenTransfer": "Token transfer of __token__",
+                "tokenTransfer": "Token transfer - __token__",
                 "pendingConfirmations": "__initiator__ wants to send from __from__"
             },
             "notifications": {

@@ -17,8 +17,9 @@ var setupContractFilters = function(newDocument){
 
     var blockToCheckBack = (newDocument.checkpointBlock || 0) - ethereumConfig.rollBackBy;
 
-    if(blockToCheckBack < 0)
-        blockToCheckBack = 0;
+    // TODO change to 0, when new geth is out!!!!!
+    if(blockToCheckBack < 400000)
+        blockToCheckBack = 400000;
 
     if(!contractInstance.tokenEvents)
         contractInstance.tokenEvents = [];
@@ -61,7 +62,9 @@ var setupContractFilters = function(newDocument){
                 }});
             }
 
-            if(log.event === 'Transfer') {
+            if(log.event === 'Transfer' &&
+               (Helpers.getAccountByAddress(log.args.receiver) || Helpers.getAccountByAddress(log.args.sender))) {
+                
                 Helpers.eventLogs('Transfer for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.amount.toNumber());
 
                 // add tokenID
