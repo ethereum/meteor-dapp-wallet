@@ -36,7 +36,6 @@ var setupContractFilters = function(newDocument){
     Helpers.eventLogs('Checking Token Transfers for '+ contractInstance.address +' (_id: '+ newDocument._id +') from block #', blockToCheckBack);
 
 
-
     var filter = contractInstance.allEvents({fromBlock: blockToCheckBack, toBlock: 'latest'});
     events.push(filter);
 
@@ -73,12 +72,25 @@ var setupContractFilters = function(newDocument){
                 var txExists = addTransaction(log, log.args.sender, log.args.receiver, log.args.amount.toString(10));
 
                 // NOTIFICATION
-                if(!txExists) {
+                if(!txExists || !txExists.blockNumber) {
+                    var txId = Helpers.makeId('tx', log.transactionHash);
+
                     Helpers.showNotification('wallet.transactions.notifications.tokenTransfer', {
                         token: newDocument.name,
                         to: Helpers.getAccountNameByAddress(log.args.receiver),
                         from: Helpers.getAccountNameByAddress(log.args.sender),
                         amount: Helpers.formatNumberByDecimals(log.args.amount, newDocument.decimals)
+                    }, function() {
+
+                        // on click show tx info
+                        EthElements.Modal.show({
+                            template: 'views_modals_transactionInfo',
+                            data: {
+                                _id: txId
+                            }
+                        },{
+                            class: 'transaction-info'
+                        });
                     });
                 }
             }

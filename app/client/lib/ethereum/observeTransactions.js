@@ -40,7 +40,7 @@ addTransaction = function(log, from, to, value){
         }
     });
 
-    return !!Transactions.findOne(txId);
+    return Transactions.findOne(txId);
 };
 
 /**
