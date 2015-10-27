@@ -57,7 +57,7 @@
 
             </div>
             
-            <div class="col col-6 mobile-full send-info">
+            <div class="col col-6 mobile-full">
                 <br><br>
 
                 {{#if hasTokens}}
@@ -110,7 +110,7 @@
 
         
         <div class="row clear data">
-            <div class="col col-7 mobile-full">
+            <div class="col col-6 mobile-full">
 
                 {{#if TemplateVar.get "showData"}}
                     <button class="hide-data">{{{i18n 'wallet.send.removeData'}}}</button>
@@ -119,8 +119,7 @@
 
                     <textarea class="solidity-source" id="solidity-data" cols="20" rows="10"></textarea>
                     
-                    
-                    {{> dapp_dataTextarea cols="20" rows="8"}}
+                    {{> dapp_dataTextarea cols="20" rows="8" value=(TemplateVar.get "byteCode")}}
 
                     {{TemplateVar.set "dataShown" true}}
                 {{else}}
@@ -129,7 +128,7 @@
                 {{/if}}
             </div>
             
-            <div class="col col-5 mobile-full send-info">
+            <div class="col col-6 mobile-full send-info">
                 {{#if TemplateVar.get "showData"}}
                     <br><br>
                     {{#unless compiledContracts}}
@@ -150,7 +149,7 @@
                         {{/with}}
                             
                         {{#each selectedContractInputs}}
-                            {{> Template.dynamic template=template name=name }}
+                            {{> Template.dynamic template=template name=name bits=bits }}
                         {{/each}}
                     {{/if}}
                 {{/if}}

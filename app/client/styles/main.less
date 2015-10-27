@@ -392,6 +392,7 @@ body {
             font-size: 16px;
             font-weight: normal;
             height: @gridHeight;
+            margin-top: @gridHeight*0.75;
             padding: @gridHeight/4 @gridWidth/2;
 
             .ether-symbol {
@@ -433,6 +434,11 @@ body {
                 top: -6px;
                 left: @gridWidth/4;
             }
+
+            h3 em {
+                text-transform: none;
+                opacity: 0.5;
+            }
         } 
     }
 
@@ -444,7 +450,11 @@ body {
         color: @colorGrayDark;
     }
     .dapp-data-textarea {
-        display: none;
+        // display: none;
+    }
+
+    textarea {
+        width: 100%;
     }
 
 }

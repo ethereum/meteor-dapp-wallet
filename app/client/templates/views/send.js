@@ -465,11 +465,14 @@ Template['views_send'].events({
     @event 'click .contract-functions
     */
     'change .compiled-contracts': function(e, template){
+        // get the correct contract
         var selectedContract = _.select(TemplateVar.get("compiledContracts"), function(contract){
             return contract.name == e.currentTarget.value;
         })
-        console.log(selectedContract[0]);
-        TemplateVar.set("selectedContractInputs", selectedContract[0].inputs); 
+
+        // change the inputs and data field
+        TemplateVar.set("selectedContractInputs", selectedContract[0].inputs);
+        TemplateVar.set("byteCode", selectedContract[0].bytecode);
     },
     /**
     Change solidity code
@@ -486,8 +489,6 @@ Template['views_send'].events({
             // document.getElementsByClassName("dapp-data-textarea")[0].value = sourceCode;
             template.find('.dapp-data-textarea').value = sourceCode;
             TemplateVar.set(template, 'codeNotExecutable', false);
-
-            // TemplateVar.setTo('.dapp-data-textarea', sourceCode);
 
         } else {
             //if it doesnt, try compiling it in solidity
@@ -508,12 +509,14 @@ Template['views_send'].events({
                     // substring the type so that string32 and string16 wont need different templates
                     _.each(constructor[0].inputs, function(input){
                         input.template = "input_"+input.type.substr(0,3);
+                        var sizes = input.type.match(/[0-9]+/);
+                        if (sizes)
+                            input.bits = sizes[0];
                     })
 
-
                     TemplateVar.set("selectedContractInputs", constructor[0].inputs); 
-                    compiledContracts.push({'name': i, 'inputs':constructor[0].inputs });   
-                    
+                    TemplateVar.set("byteCode", e.bytecode)
+                    compiledContracts.push({'name': i, 'bytecode': e.bytecode, 'inputs':constructor[0].inputs });   
                 })
 
                 TemplateVar.set("compiledContracts", compiledContracts);
@@ -539,11 +542,14 @@ Template['views_send'].events({
         var amount = TemplateVar.get('amount') || '0',
             tokenAddress = TemplateVar.get('selectedToken'),
             to = TemplateVar.getFrom('.dapp-address-input', 'value'),
-            data = TemplateVar.getFrom('.dapp-data-textarea', 'value');
+            byteCode = TemplateVar.getFrom('.dapp-data-textarea', 'value'),
+            solidityCode = TemplateVar.getFrom('.solidity-source', 'value'),
             gasPrice = TemplateVar.getFrom('.dapp-select-gas-price', 'gasPrice'),
             estimatedGas = TemplateVar.get('estimatedGas'),
-            selectedAccount = Helpers.getAccountByAddress(template.find('select[name="dapp-select-account"]').value);
-
+            selectedAccount = Helpers.getAccountByAddress(template.find('select[name="dapp-select-account"]').value),
+            selectedAction = TemplateVar.get("selectAction");
+        
+        console.log("ByteCode: "+ byteCode + " Solidity Code: " + solidityCode);
 
         if(selectedAccount && !TemplateVar.get('sending')) {
 
@@ -562,7 +568,7 @@ Template['views_send'].events({
                 });
 
 
-            if(!web3.isAddress(to) && !data)
+            if(!web3.isAddress(to) && selectedAction != "upload-contract")
                 return GlobalNotification.warning({
                     content: 'i18n:wallet.send.error.noReceiver',
                     duration: 2
@@ -571,7 +577,7 @@ Template['views_send'].events({
 
             if(tokenAddress === 'ether') {
                 
-                if((_.isEmpty(amount) || amount === '0' || !_.isFinite(amount)) && !data)
+                if((_.isEmpty(amount) || amount === '0' || !_.isFinite(amount)) && selectedAction != "upload-contract")
                     return GlobalNotification.warning({
                         content: 'i18n:wallet.send.error.noAmount',
                         duration: 2
@@ -612,7 +618,7 @@ Template['views_send'].events({
 
                 
                 // ETHER TX
-                if(tokenAddress === 'ether') {
+                if(tokenAddress === 'ether' && selectedAction != "upload-contract") {
                     console.log('Send Ether');
 
                     // CONTRACT TX
@@ -677,6 +683,11 @@ Template['views_send'].events({
                         });
                          
                     }
+
+                // UPLOAD CONTRACT
+                } else if (selectedAction != "upload-contract") {
+                    console.log('Send Token');
+
 
 
                 // TOKEN TRANSACTION
