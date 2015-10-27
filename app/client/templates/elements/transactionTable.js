@@ -153,6 +153,8 @@ Template['elements_transactions_row'].helpers({
 
         if(this.type === 'pendingConfirmation')
             return new Spacebars.SafeString(TAPi18n.__('wallet.transactions.types.pendingConfirmations', {initiator: initiator, from: from}));
+        else if(this.tokenId && Tokens.findOne(this.tokenId))
+            return TAPi18n.__('wallet.transactions.types.tokenTransfer', {token: Tokens.findOne(this.tokenId).name});
         else if(to && from)
             return TAPi18n.__('wallet.transactions.types.betweenWallets');
         else if(to && !from)
@@ -259,6 +261,16 @@ Template['elements_transactions_row'].helpers({
             ownerAccounts = _.pluck(EthAccounts.find({address: {$in: account.owners}}).fetch(), 'address');
 
         return (_.difference(ownerAccounts, this.confirmedOwners).length > 0);
+    },
+    /**
+    Token value
+
+    @method (tokenValue)
+    */
+    'tokenValue': function() {
+        var token = Tokens.findOne(this.tokenId);
+
+        return (token) ? Helpers.formatNumberByDecimals(this.value, token.decimals) +' '+ token.symbol : this.value;
     }
 });
 

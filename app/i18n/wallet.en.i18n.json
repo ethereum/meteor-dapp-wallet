@@ -60,7 +60,7 @@
             "defaultName": "Unnamed",
             "creating": "Creating",
             "importing": "Importing",
-            "accountNote": "Accounts can't list incoming transactions and are rather unsafe, please <a href=\"/account/new\">create a wallet</a> to store ether.",
+            "accountNote": "Accounts can't list incoming transactions, please <a href=\"/account/new\">create a wallet</a> to store ether.",
             "addressCopiedToClipboard": "Copied to clipboard",
             "qrCodeLabel": "Point a compatible mobile app to this code",
             "dailyLimit": "Daily limit",
@@ -72,7 +72,7 @@
             "buttons": {
                 "deposit": "Deposit",
                 "copyAddress": "Copy address",
-                "scanQRCode": "Scan QR-Code"
+                "scanQRCode": "Show QR-Code"
             },
             "modal": {
                 "deleteText": "Do you really want to delete the wallet?<br>If you lose the wallet address, you will lose the funds on it!<br><br>Type the name of the wallet to confirm the deletion.",
@@ -113,6 +113,7 @@
                 "sent": "Sent",
                 "received": "Received",
                 "createdContract": "Created contract",
+                "tokenTransfer": "__token__ - Token transfer",
                 "pendingConfirmations": "__initiator__ wants to send from __from__"
             },
             "notifications": {
@@ -127,6 +128,10 @@
                 "pendingConfirmation": {
                     "title": "Confirmation needed",
                     "text": "__initiator__ wants to send __amount__ from __from__ to __to__"
+                },
+                "tokenTransfer": {
+                    "title": "__token__ - Token transfer",
+                    "text": "__amount__ __token__  were send from __from__ to __to__."
                 }
             }
         },
@@ -174,10 +179,9 @@
             "to": "To",
             "from": "From",
             "amount": "Amount",
-            "tokenAmount": "Token Amount",
-            "sendEther": "Send Ether",
-            "sendToken": "Send other token",
-            "uploadContract": "Upload Contract",
+            "tokenAmount": "Token amount",
+            "sendFunds": "Send funds",
+            "uploadContract": "Upload contract",
             "data": "Data",
             "fee": "Choose a Fee",
             "feeLow": "Cheaper",
@@ -194,13 +198,13 @@
                 "noAmount": "You didn't specify an amount to send."
             },
             "texts": {
-                "sendAmount": "You want to send <strong>__amount__</strong> ether.",
-                "sendAmountEquivalent": "You want to send the equivalent of <strong>__amount__ __unit__</strong> in ether, using Kraken.com current exchange rate.",
+                "sendAmount": "You want to send <strong>__amount__</strong>.",
+                "sendAmountEquivalent": "You want to send <strong>__amount__</strong> in ether, using the <a href=\"https://kraken.com\" target=\"_blank\">kraken.com</a> exchange rate.<br>Which is currently an equivalent of <strong>__etherAmount__</strong>.",
                 "sendToken": "You are requesting to send <strong>__amount__ __symbol__ </strong> of <strong><em> __name__ </em></strong> a currency built in an ethereum contract. The current sender account has a balance of  <strong>__balance__ __symbol__ </strong> ",
                 "overDailyLimit": "<p class=\"over-daily\">This amount is over the remaining daily limit of __limit__ (of __total__ per day), so you need __count__ other account to confirm.</p>",
                 "overDailyLimit_plural": "<p class=\"over-daily\">This amount is over the remaining daily limit of __limit__ (of __total__ per day), so you need __count__ other accounts to confirm.</p>",
                 "underDailyLimit": "<p class=\"under-daily\">This amount is under the remaining daily limit of __limit__ (of __total__ per day), means it will send immediately.</p>",
-                "sendFee": "This is the most amount of money that might be used to process this transaction. You will get your change back as soon as your transaction is mined, <strong>__timetext__</strong>.",
+                "sendFee": "This is the most amount of money that might be used to process this transaction. Your transaction will be mined <strong>__timetext__</strong>.",
                 "addData": "You can add extra data to send along with your transaction. If you leave the \"to\" field empty it will try to generate a contract from your data.",
                 "dataNotExecutable": "The data seems not to be executabe, that means this transaction will use up all the gas you provide.",
                 "cantEstimateGas": "We can't estimate your gas usage properly, as you need at least 1 ether in your account.",

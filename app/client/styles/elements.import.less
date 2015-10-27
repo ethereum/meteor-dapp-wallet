@@ -85,6 +85,7 @@ span.address {
         // }
     }
     &.tokens {
+        perspective: 800px;
         position: relative;
         background-repeat: repeat-y;
         background-color: @colorGray;
@@ -207,46 +208,50 @@ span.address {
 
 
 .select-token {
-    padding-left: 0;
-    position: absolute;
-    min-width: @gridWidth * 8;
-    z-index: 20;
-    background: @colorWhite;
-    transition: box-shadow @animationSpeed * 2;
+    .dapp-vertical-menu;
+    .transition(box-shadow @animationSpeed * 2);
+    background: @colorGrayLight;
 
-    li { 
-        list-style-type: none;
+    
+    &:hover {
+        .dapp-shadow-medium;
     }
 
     input[type="radio"]{
         display: none !important;
-        border: solid 2px red;
     }
 
     input:checked + label {
+        position: relative;
         border-color: @colorGray;
         color: @colorGrayDark;
-        height: @gridHeight * 2;
         padding: @defaultPaddingVertical/2 @defaultPaddingHorizontal/2;
         opacity: 1;        
-        background: @colorGrayLight;
+        background: @colorGray;
+        font-weight: 400;
+
+        span {
+            color: @colorGrayDark;
+            border-color: @colorGrayDark;
+        }
     }
 
-    label:hover {
-        background: @colorGrayLight;
-    }
 
     label {
         display: block;
-        text-transform: uppercase;
-        max-width: @gridWidth * 9;
+        // text-transform: uppercase;
+        // max-width: @gridWidth * 9;
         color: @colorLink;
         display: flex;
         overflow: hidden;
-        height: 0;
-        padding: 0 @defaultPaddingHorizontal/2;
-        opacity: 0;
+        height: @gridHeight * 2;
+        padding: @defaultPaddingVertical/2 @defaultPaddingHorizontal/2;  
         .transition(height @animationSpeed/2, opacity @animationSpeed/2, padding @animationSpeed/2);
+        cursor: pointer;
+
+        &:hover {
+            background: @colorWhite;
+        }
 
         span {
             flex: 1 auto;
@@ -262,7 +267,19 @@ span.address {
 
         span.balance {
             text-align: right;
-            color: @colorGray;
+            color: @colorTextSecondary;
+        }
+
+        span.ether-symbol {
+            .flex(0);
+            display: inline-block;
+            min-width: 22px;
+            padding: 1px 0;
+            height: 22px;
+            border: 1px solid @colorLink;
+            .border-radius(50%);
+            text-align: center;
+            font-size: 14px;
         }
 
         span.dapp-identicon {
@@ -271,30 +288,6 @@ span.address {
         }
     }
 
-    &.unselected {
-        .dapp-shadow-small;
-    }
-    
-    &:hover {
-        .dapp-shadow-large;
-    }
-
-    &:hover, &.unselected {
-        label {
-            height: @gridHeight * 2;
-            padding: @defaultPaddingVertical/2 @defaultPaddingHorizontal/2;  
-            opacity: 1;      
-        }
-
-        input:checked + label {
-            background: @colorGray;
-            .balance {
-                color: @colorGrayLight;
-            }
-        }        
-    }
-
-   
 }
 
 
