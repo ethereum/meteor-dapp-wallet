@@ -524,6 +524,7 @@ Template['views_send'].events({
                 
                 // ETHER TX
                 if(tokenAddress === 'ether') {
+                    console.log('Send Ether');
 
                     // CONTRACT TX
                     if(contracts['ct_'+ selectedAccount._id]) {
@@ -591,18 +592,19 @@ Template['views_send'].events({
 
                 // TOKEN TRANSACTION
                 } else {
+                    console.log('Send Token');
 
                     var tokenInstance = TokenContract.at(tokenAddress);
 
                     // CONTRACT TX
                     if(contracts['ct_'+ selectedAccount._id]) {
-                        var data = tokenInstance.transfer.getData(to, amount, {
+                        var tokenSendData = tokenInstance.transfer.getData(to, amount, {
                             from: selectedAccount.address,
                             gasPrice: gasPrice,
                             gas: estimatedGas
                         });
 
-                        contracts['ct_'+ selectedAccount._id].execute.sendTransaction(tokenAddress, '0', data, {
+                        contracts['ct_'+ selectedAccount._id].execute.sendTransaction(tokenAddress, '0', tokenSendData, {
                             from: selectedAccount.owners[0],
                             gasPrice: gasPrice,
                             gas: estimatedGas
@@ -612,7 +614,7 @@ Template['views_send'].events({
 
                             console.log(error, txHash);
                             if(!error) {
-                                console.log('SEND TOKEN from contract', amount, 'with data ', data);
+                                console.log('SEND TOKEN from contract', amount, 'with data ', tokenSendData);
 
                                 // addTransaction(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
 
