@@ -29,6 +29,8 @@ Set in the created callback.
 */
 var accountSort;
 
+
+
 /**
 The default gas to provide for estimates. This is set manually,
 so that invalid data etsimates this value and we can later set it down and show a warning,
@@ -363,6 +365,7 @@ Template['views_send'].helpers({
     */
     'formattedCoinBalance': function(e){
         var selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account', 'value'));
+        
         return (this.balances && Number(this.balances[selectedAccount._id]) > 0)
             ? Helpers.formatNumberByDecimals(this.balances[selectedAccount._id], this.decimals) +' '+ this.symbol
             : false;
@@ -397,7 +400,7 @@ Template['views_send'].helpers({
     */
     'etherUnit': function() {
         var unit = EthTools.getUnit();
-        return (unit === 'ether' || unit === 'finney');        
+        return (unit === 'ether' || unit === 'finney');
     }
 });
 
@@ -440,6 +443,7 @@ Template['views_send'].events({
         } else {
             TemplateVar.set('showData', false);
             TemplateVar.set('hideTo', false);
+
             Tracker.afterFlush(function() {
                 if(TemplateVar.get(template, 'savedTo')) {
                     template.find('input[name="to"]').value = TemplateVar.get(template, 'savedTo');
@@ -503,7 +507,6 @@ Template['views_send'].events({
 
     },
     /**
-    Set the token amount while typing
     Set the amount while typing
     
     @event keyup input[name="amount"], change input[name="amount"], input input[name="amount"]
@@ -806,6 +809,7 @@ Template['views_send'].events({
                         web3.eth.contract(selectedContract.abi).new(arguments);
                          
                     }
+                
                 } else if (selectedAction == "execute-contract") {
                     console.log('Execute Contract');
 
