@@ -434,27 +434,11 @@ Template['views_send'].events({
     
     @event click .select-action input
     */
-<<<<<<< HEAD
-    'click .select-action label': function(e){
-        var option = e.currentTarget.getAttribute("for");
-        TemplateVar.set("selectAction", option);
-        TemplateVar.set('showExecuteContract', false);
-
-        if (option != "upload-contract") {
-            
-        }
-
-        if (option == "upload-contract" ) {
-            TemplateVar.set('savedTo', document.querySelector("input[name='to']").value )
-            document.querySelector("input[name='to']").value = "";
-
-=======
     'click .select-action input': function(e, template){
         var option = e.currentTarget.value;
         TemplateVar.set('selectAction', option);
 
         if (option == 'upload-contract') {
->>>>>>> solidity-compiler
             TemplateVar.set('showData', true);
             TemplateVar.set('hideTo', true);
             TemplateVar.set('selectedToken', 'ether');
@@ -464,24 +448,12 @@ Template['views_send'].events({
         } else {
             TemplateVar.set('showData', false);
             TemplateVar.set('hideTo', false);
-
-<<<<<<< HEAD
-            if (document.querySelector("input[name='to']").value == "" && TemplateVar.get('savedTo'))
-                document.querySelector("input[name='to']").value = TemplateVar.get('savedTo');
-        }
-
-        if (option == "send-token") {
-            TemplateVar.set('showSendToken', true)
-        } else if (option == "execute-contract") {
-            TemplateVar.set('showExecuteContract', true)
-=======
             Tracker.afterFlush(function() {
                 if(TemplateVar.get(template, 'savedTo')) {
                     template.find('input[name="to"]').value = TemplateVar.get(template, 'savedTo');
                     TemplateVar.setTo('.dapp-address-input', 'value', TemplateVar.get(template, 'savedTo'));
                 }
             });
->>>>>>> solidity-compiler
         }
 
         // trigger amount box change
@@ -499,7 +471,6 @@ Template['views_send'].events({
         template.$('input[name="amount"]').trigger('change');
     },
     /**
-<<<<<<< HEAD
     Change the ABI
     
     @event keyup input[name="abi"], change input[name="abi"], input input[name="abi"]
@@ -562,9 +533,7 @@ Template['views_send'].events({
     },
     /**
     Set the token amount while typing
-=======
     Set the amount while typing
->>>>>>> solidity-compiler
     
     @event keyup input[name="amount"], change input[name="amount"], input input[name="amount"]
     */
