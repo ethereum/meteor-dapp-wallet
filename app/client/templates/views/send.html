@@ -138,8 +138,9 @@
                 </div>
 
             {{else}}
-                <br><br>
-                The recipient account is not a contract. Select other on the "to" field
+                <p class="red">
+                    <i class="icon-shield"></i> {{{i18n 'wallet.send.texts.noCodeInRecipient'}}}
+                </p>
             {{/if}}
 
             
