@@ -700,6 +700,7 @@ Template['views_send'].events({
 
                         var selectedContract = TemplateVar.get("selectedContract");
 
+                        // create an array with the input fields
                         var contractArguments = [];
 
                         _.each(selectedContract.inputs, function(input){
@@ -708,6 +709,7 @@ Template['views_send'].events({
                             contractArguments.push(output);
                         })
 
+                        // add the default web3 arguments
                         contractArguments.push({
                             from: selectedAccount.address,
                             to: to,
@@ -718,6 +720,7 @@ Template['views_send'].events({
 
                         console.log(contractArguments);
 
+                        // publish new contract
                         web3.eth.contract(selectedContract.abi).new(arguments);
                          
                     }
