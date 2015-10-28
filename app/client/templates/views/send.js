@@ -30,22 +30,6 @@ Set in the created callback.
 var accountSort;
 
 /**
-An empty object for the instantiated contract
-
-@property contractInstance
-*/
-var contractInstance = [];
-
-/**
-Contract Functiond
-
-@property contractFunctions
-*/
-var contractFunctions = [];
-var abihtml = new AbiHtml();
-
-
-/**
 The default gas to provide for estimates. This is set manually,
 so that invalid data etsimates this value and we can later set it down and show a warning,
 when the user actually wants to send the dummy data.
@@ -343,6 +327,14 @@ Template['views_send'].helpers({
         return TemplateVar.get("selectedContract").inputs;
     },
     /**
+    Get selected contract functions
+
+    @method (selectedContractInputs)
+    */
+    'selectedFunctionInputs' : function(){
+        return TemplateVar.get("selectedFunction").inputs;
+    },
+    /**
 
     Shows correct explanation for token type
 
@@ -396,7 +388,7 @@ Template['views_send'].helpers({
     */
     'listContractFunctions': function(){
         console.log("remake array");
-        return contractFunctions;
+        return TemplateVar.get("contractFunctions");
     },
     /**
     Returns true if the current selected unit is an ether unit (ether, finney, etc)
@@ -460,7 +452,7 @@ Template['views_send'].events({
         template.$('input[name="amount"]').trigger('change');
     },
     /**
-    Selected a token for the first time
+    Select a token 
     
     @event 'click .select-token
     */
@@ -480,56 +472,35 @@ Template['views_send'].events({
         var address = TemplateVar.getFrom('.dapp-address-input', 'value');
         contractInstance = web3.eth.contract(ABI).at(address);
 
-        // Settable properties to override default behavior
-        var properties = {
-            events: {
-                renderCallback: function() {}
-            },
-            functions: {
-                callButtonText: 'Read',
-                transactButtonText: 'Update',
-                renderCallback: function(htmlDoc) {
-                    console.log("asdasda");
-                    document.getElementById('execute-functions').appendChild(htmlDoc)
-                }
+        console.log(ABI);
+
+        var contractFunctions = [];
+
+        _.each(ABI, function(e,i){
+            if (e.type == "function" && !e.constant) {
+                _.each(e.inputs, function(input){
+                    input.template = "input_"+input.type.substr(0,3);
+                    var sizes = input.type.match(/[0-9]+/);
+                    if (sizes)
+                        input.bits = sizes[0];
+                })
+                contractFunctions.push(e);
+                TemplateVar.set("selectedFunction", e);
             }
-        }
+        });
 
+        TemplateVar.set("contractFunctions", contractFunctions);
 
-        // Instantiate library with abi and optional properties
-        var abihtml = new AbiHtml(e.currentTarget.value, properties);
-        document.getElementById('execute-functions').innerHTML = "";
-        contractFunctions = [{"name":"Alice"}, {"name": "Eve"}]
-        var functionHtmls = "";
+        /* 
+        Examples:
+        0x76cadd67246babd234a40815ba267f51ff4144f2
 
-        abihtml.functions.forEach(function(func) {
+        ABI:
+    [{"constant":false,"inputs":[{"name":"target","type":"address"},{"name":"amount","type":"uint256"}],"name":"issueNewTokens","outputs":[],"type":"function"},{"constant":true,"inputs":[],"name":"tokenDecimals","outputs":[{"name":"","type":"uint8"}],"type":"function"},{"constant":true,"inputs":[],"name":"tokenName","outputs":[{"name":"","type":"string"}],"type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":true,"inputs":[],"name":"tokenSymbol","outputs":[{"name":"","type":"string"}],"type":"function"},{"constant":false,"inputs":[{"name":"receiver","type":"address"},{"name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"name":"sufficient","type":"bool"}],"type":"function"},{"inputs":[{"name":"supply","type":"uint256"},{"name":"name","type":"string"},{"name":"decimals","type":"uint8"},{"name":"symbol","type":"string"},{"name":"issuer","type":"address"}],"type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"sender","type":"address"},{"indexed":false,"name":"receiver","type":"address"},{"indexed":false,"name":"amount","type":"uint256"}],"name":"Transfer","type":"event"}]
 
-            console.log(func);
-            contractFunctions.push({"name":func.abiItem.name});
-
-            functionHtmls +="<option value='function" + func.abiItem.name + "'>" + func.abiItem.name + "</option>";
-
-            func.generateHtml()
-        })
-
-        document.getElementById('select-function').innerHTML = functionHtmls;
-
-        console.log(contractFunctions);
-
-        /*
-        [{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[{"name":"receiver","type":"address"},{"name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"name":"sufficient","type":"bool"}],"type":"function"},{"inputs":[{"name":"supply","type":"uint256"}],"type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"sender","type":"address"},{"indexed":false,"name":"receiver","type":"address"},{"indexed":false,"name":"amount","type":"uint256"}],"name":"Transfer","type":"event"}]
         */
 
 
-    },
-    /**
-    Select function name
-    
-    @event change select-function
-    */
-    'keyup change select[name="select-function"]': function(e, template){
-
-        console.log(e.currentTarget.value);    
     },
     /**
     Set the token amount while typing
@@ -569,6 +540,20 @@ Template['views_send'].events({
 
         // change the inputs and data field
         TemplateVar.set("selectedContract", selectedContract[0]);
+    },
+    /**
+    Selected a contract function
+    
+    @event 'click .select-contract-function
+    */
+    'change .select-contract-function': function(e, template){
+        // get the correct contract
+        var selectedFunction = _.select(TemplateVar.get("contractFunctions"), function(func){
+            return func.name == e.currentTarget.value;
+        })
+
+        // change the inputs and data field
+        TemplateVar.set("selectedFunction", selectedFunction[0]);
     },
     /**
     Change solidity code
@@ -821,7 +806,8 @@ Template['views_send'].events({
                         web3.eth.contract(selectedContract.abi).new(arguments);
                          
                     }
-
+                } else if (selectedAction == "execute-contract") {
+                    console.log('Execute Contract');
 
                 // TOKEN TRANSACTION
                 } else {

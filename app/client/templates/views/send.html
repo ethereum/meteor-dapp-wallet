@@ -34,12 +34,6 @@
                     {{> dapp_addressInput placeholder="0x000000.." name="to" autofocus=true}}
                 {{/unless}}
             </div>
-
-            {{#unless accountHasCode}}
-            <div class="col col-12 mobile-full"> 
-                The recipient is not a contract and cannot execute code
-            </div>
-            {{/unless}}
             
             <div class="dapp-clear-fix"></div>
         </div>
@@ -116,32 +110,39 @@
             <div class="dapp-clear-fix"></div>
         </div>
 
-        {{#if TemplateVar.get "showExecuteContract"}}
-        <!-- amount -->
-        <div class="row clear abi">
-            <div class="col col-7 mobile-full">
-                <h3>Contract Interface</h3>
-                <input type="text" name="abi" placeholder="[{ 'looks': {'like': 'this'} }]" class="">
-            </div>
+        {{#if $eq (TemplateVar.get 'selectAction') 'execute-contract'}}
+        <!-- EXECUTE CONTRACT -->
+        <div class="row clear execute-contract">
+
+            {{#if accountHasCode}}
+                <div class="col col-6 mobile-full">
+                    <h3>Contract Interface</h3>
+                    <input type="text" name="abi" placeholder="[{ 'looks': {'like': 'this'} }]" class="">
+                    <br><br>
+                    In order to be able to execute a contract we need the contract interface. This should be given by the contract creator.
+                </div>
+
+                <div class="col col-6 mobile-full">
+                    {{#with listContractFunctions}}
+                        <h3>Choose Function</h3>
+                        <select class="select-contract-function" name="select-contract-function">
+                        {{#each this}}
+                            <option value="{{name}}" selected="">{{name}}</option>
+                        {{/each}}    
+                        </select>
+                            
+                        {{#each selectedFunctionInputs}}
+                            {{> Template.dynamic template=template name=name bits=bits }}
+                        {{/each}}
+                    {{/with}}
+                </div>
+
+            {{else}}
+                <br><br>
+                The recipient account is not a contract. Select other on the "to" field
+            {{/if}}
 
             
-            <div class="col col-5 mobile-full">
-                <br><br>
-                The wallet couldnt infer the interface from the given code. Please find the contract interface (ABI) and paste it here
-            </div>
-
-
-            <div class="col col-7 mobile-full">
-                <h3>Choose Function</h3>
-                <select name="select-function" id="select-function">
-                    <option disabled="">Select function</option>
-                   <!--  {{#each contractFunctions}}
-                    <option value="{{name}}">{{name}}</option>    
-                    {{/each}}   -->  
-                </select>
-
-                <div id="execute-functions"></div>
-            </div>
 
             <div class="dapp-clear-fix"></div>
         </div>
