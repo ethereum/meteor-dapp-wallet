@@ -117,8 +117,9 @@
 
                     <h3>{{i18n 'wallet.send.data'}}</h3>
 
-                    <textarea class="solidity-source" id="solidity-data" cols="20" rows="10"></textarea>
+                    <textarea class="solidity-source" id="solidity-data" cols="20" rows="20"></textarea>
                     
+                    <!-- This data field automatically gets the bytecode of the first. We probably don't need it anymore but I'm afraid to take it out in case we do -->
                     {{> dapp_dataTextarea cols="20" rows="8" value=(TemplateVar.get "byteCode")}}
 
                     {{TemplateVar.set "dataShown" true}}
