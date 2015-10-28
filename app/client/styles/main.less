@@ -420,26 +420,7 @@ body {
                 font-size: 2em;
             }
         }
-        .send-info {
-            margin-top: @defaultMargin;
-            color: @colorTextSecondary;
-
-            input:not([type='checkbox']), select {
-                width: 100%;
-            }
-
-
-            label {
-                position: relative;
-                top: -6px;
-                left: @gridWidth/4;
-            }
-
-            h3 em {
-                text-transform: none;
-                opacity: 0.5;
-            }
-        } 
+         
     }
 
 
@@ -457,7 +438,27 @@ body {
     textarea {
         width: 100%;
     }
+    
+    .send-info {
+        margin-top: @defaultMargin;
+        color: @colorTextSecondary;
 
+        input:not([type='checkbox']), select {
+            width: 100%;
+        }
+
+
+        label {
+            position: relative;
+            top: -6px;
+            left: @gridWidth/4;
+        }
+
+        h3 em {
+            text-transform: none;
+            opacity: 0.5;
+        }
+    }
 }
 
 .transaction-info,
