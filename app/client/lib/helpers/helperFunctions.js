@@ -119,14 +119,18 @@ Shows a notification and plays a sound
 @param {String} i18nText
 @param {Object} the i18n values passed to the i18n text
 */
-Helpers.showNotification = function(i18nText, values) {
+Helpers.showNotification = function(i18nText, values, callback) {
     if(Notification.permission === "granted") {
-        new Notification(TAPi18n.__(i18nText +'.title'), {
+        var notification = new Notification(TAPi18n.__(i18nText +'.title', values), {
             // icon: 'http://cdn.sstatic.net/stackexchange/img/logos/so/so-icon.png',
             body: TAPi18n.__(i18nText +'.text', values),
         });
+        
+        if(_.isFunction(callback))
+            notification.onclick = callback;
     }
-    $('#sound1')[0].play();
+    if(typeof mist !== 'undefined')
+        mist.sounds.bip();
 };
 
 /**
@@ -134,9 +138,11 @@ Gets the docuement matching the given addess from the EthAccounts or Wallets col
 
 @method getAccountByAddress
 @param {String} address
+@param {Boolean} reactive
 */
-Helpers.getAccountByAddress = function(address) {
-    return EthAccounts.findOne({address: address}) || Wallets.findOne({address: address});
+Helpers.getAccountByAddress = function(address, reactive) {
+    var options = (reactive === false) ? {reactive: false} : {};
+    return EthAccounts.findOne({address: address}, options) || Wallets.findOne({address: address}, options);
 };
 
 /**

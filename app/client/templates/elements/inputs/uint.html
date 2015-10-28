@@ -1,4 +1,9 @@
 <template name="input_uin">
-    <h3>{{name}}</h3>
+    <h3>
+        {{name}}
+        {{#if bits}}
+        <em> ({{bits}} bits unsigned integer) </em>
+        {{/if}}
+    </h3>    
     <input type="number" step="1" min="0" pattern="[0-9]" placeholder="{{name}}" name='abi-input-{{name}}' class='abi-input'>
 </template>

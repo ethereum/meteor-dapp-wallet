@@ -50,7 +50,6 @@
 
 .dapp-content {
     padding-bottom: @defaultPaddingVertical*2;
-    perspective: 800px;
 
     .dapp-container {
         > h2 {
@@ -108,7 +107,7 @@ body {
         color: @colorWhite;
 
         nav a,
-        div.block-info,
+        .block-info,
         .wallet-balance h3,
         .wallet-balance span.account-balance {
             color: @colorWhite;
@@ -231,17 +230,6 @@ body {
         }
     }
 }
-
-[name='token-switcher'] { 
-    button {
-        font-size: 0.8em;    
-    }
-    .simple-modal button {
-        font-size: 0.7em;
-    }
-}
-
-
 
 .accounts-page {
     display: flex;
@@ -366,6 +354,8 @@ body {
 
         &.from-to {
             position: relative;
+            margin-bottom: 0;
+            padding-bottom: 0;
 
             > div {
                 position: relative;
@@ -383,7 +373,7 @@ body {
             
         }
 
-        &.amount {
+        > .amount {
             position: relative;
 
             span {
@@ -393,7 +383,28 @@ body {
             }
 
             input {
+                width: 100%;
+            }
+        }
+
+        .token-ether {
+            color: @colorGrayDark;
+            font-size: 16px;
+            font-weight: normal;
+            height: @gridHeight;
+            margin-top: @gridHeight*0.75;
+            padding: @gridHeight/4 @gridWidth/2;
+
+            .ether-symbol {
                 display: inline-block;
+                border: solid 1px @colorGrayDark;
+                border-radius: 50%;
+                width: @gridWidth*0.75;
+                height: @gridWidth*0.75;
+                text-align: center;
+                font-size: 14px;
+                line-height: 22px;
+                margin-right: @gridWidth/4;
             }
         }
 
@@ -423,6 +434,11 @@ body {
                 top: -6px;
                 left: @gridWidth/4;
             }
+
+            h3 em {
+                text-transform: none;
+                opacity: 0.5;
+            }
         } 
     }
 
@@ -434,7 +450,11 @@ body {
         color: @colorGrayDark;
     }
     .dapp-data-textarea {
-        display: none;
+        // display: none;
+    }
+
+    textarea {
+        width: 100%;
     }
 
 }
@@ -537,97 +557,6 @@ body {
         }
     }
 }
-
-.select-token {
-    padding-left: 0;
-    position: absolute;
-    min-width: @gridWidth * 8;
-    z-index: 20;
-    background: @colorWhite;
-    transition: box-shadow @animationSpeed * 2;
-
-    li { 
-        list-style-type: none;
-    }
-
-    input[type="radio"]{
-        display: none !important;
-        border: solid 2px red;
-    }
-
-    input:checked + label {
-        border-color: @colorGray;
-        color: @colorGrayDark;
-        height: @gridHeight * 2;
-        padding: @defaultPaddingVertical/2 @defaultPaddingHorizontal/2;
-        opacity: 1;        
-        background: @colorGrayLight;
-    }
-
-    label:hover {
-        background: @colorGrayLight;
-    }
-
-    label {
-        display: block;
-        text-transform: uppercase;
-        max-width: @gridWidth * 9;
-        color: @colorLink;
-        display: flex;
-        overflow: hidden;
-        height: 0;
-        padding: 0 @defaultPaddingHorizontal/2;
-        opacity: 0;
-        .transition(height @animationSpeed/2, opacity @animationSpeed/2, padding @animationSpeed/2);
-
-        span {
-            flex: 1 auto;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        span.token-name {
-            padding-left: @defaultPaddingHorizontal/4;
-            padding-right: @defaultPaddingHorizontal/4;
-        }
-
-        span.balance {
-            text-align: right;
-            color: @colorGray;
-        }
-
-        span.dapp-identicon {
-            flex: 0;
-            min-width: 21px;
-        }
-    }
-
-    &.unselected {
-        .dapp-shadow-small;
-    }
-    
-    &:hover {
-        .dapp-shadow-large;
-    }
-
-    &:hover, &.unselected {
-        label {
-            height: @gridHeight * 2;
-            padding: @defaultPaddingVertical/2 @defaultPaddingHorizontal/2;  
-            opacity: 1;      
-        }
-
-        input:checked + label {
-            background: @colorGray;
-            .balance {
-                color: @colorGrayLight;
-            }
-        }        
-    }
-}
-
-
 
 /* #### All small phone screens landscape #### */
 @media screen and (max-width: 576px){

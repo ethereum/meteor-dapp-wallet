@@ -25,6 +25,7 @@ addTransaction = function(log, from, to, value){
                         if(!err) {
                             updateTransaction({
                                 _id: txId,
+                                tokenId: log.tokenId,
                                 to: to,
                                 from: from,
                                 value: value,
@@ -35,20 +36,11 @@ addTransaction = function(log, from, to, value){
                         }
                     });
                 }
-            })
-
-
-            // update balance
-            web3.eth.getBalance(log.address, function(err, res){
-                if(!err)
-                    Wallets.update({address: log.address}, {$set: {
-                        balance: res.toString(10)
-                    }});
             });
         }
     });
 
-    return !!Transactions.findOne(txId);
+    return Transactions.findOne(txId);
 };
 
 /**
@@ -100,7 +92,16 @@ var updateTransaction = function(newDocument, transaction, receipt){
         }
     }
 
-    if(Transactions.findOne({_id: id})) {
+    if(oldTx = Transactions.findOne({_id: id})) {
+
+        // prevent wallet events overwriding token transfer events
+        if(oldTx.tokenId && !newDocument.tokenId) {
+            newDocument.tokenId = oldTx.tokenId;
+            newDocument.from = oldTx.from;
+            newDocument.to = oldTx.to;
+            newDocument.value = oldTx.value;
+        }
+
         delete newDocument._id;
         Transactions.update({_id: id}, newDocument);
     } else {
@@ -232,7 +233,7 @@ observeTransactions = function(){
     */
     collectionObservers[collectionObservers.length] = Transactions.find({}).observe({
         /**
-        This will observe the transactions creation and create watchers for outgoing trandsactions, to see when they are mined.
+        This will observe the transactions creation and create watchers for outgoing transactions, to see when they are mined.
 
         @method added
         */

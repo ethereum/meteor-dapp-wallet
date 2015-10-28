@@ -64,35 +64,19 @@ Template['views_account'].helpers({
     @method (tokens)
     */
     'tokens': function(){
-        return Tokens.find({},{sort:{symbol:1}});
+        return Tokens.find({}, {sort: {name: 1}});
     },
     /**
-    Get Balance of a Coin
+    Get the tokens balance
 
-    @method (getBalance)
+    @method (formattedCoinBalance)
     */
     'formattedCoinBalance': function(e){
+        var account = Template.parentData(2);
 
-        var tokenAddress = this.address;
-        var accountAddress = FlowRouter.getParam('address');
-        var balance = Balances.findOne({token:tokenAddress, account: accountAddress});
-        console.log(balance);
-
-        if (balance && balance.tokenBalance > 0) {
-            console.log(balance.tokenBalance);
-
-            var token = Tokens.findOne({address:tokenAddress });
-            var newBalance = balance.tokenBalance / Math.pow(10, token.decimals);
-            var numberFormat = '0,0.';
-
-            for(i=0;i<token.decimals;i++){
-                numberFormat += "0";
-            }
-
-            return  numeral(newBalance).format(numberFormat) + ' ' + token.symbol;
-        } else {
-            return false;
-        }
+        return (this.balances && Number(this.balances[account._id]) > 0)
+            ? Helpers.formatNumberByDecimals(this.balances[account._id], this.decimals) +' '+ this.symbol
+            : false;
     }
 });
 
@@ -208,7 +192,12 @@ Template['views_account'].events({
         e.preventDefault();
         
         // Open a modal showing the QR Code
-        EthElements.Modal.show('views_modals_qrCode');
+        EthElements.Modal.show({
+            template: 'views_modals_qrCode',
+            data: {
+                address: this.address
+            }
+        });
 
         
     }

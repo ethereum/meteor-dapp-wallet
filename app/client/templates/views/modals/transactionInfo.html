@@ -19,12 +19,16 @@
                 <tr>
                     <td>{{i18n "wallet.transactions.amount"}}</td>
                     <td>
-                        {{dapp_formatBalance value "0,0.00[000000] UNIT"}}
-                        {{#if $neq unit 'ether'}}
-                            <br>
-                            <small>
-                                ({{dapp_formatBalance value "0,0.00[000000] UNIT" "ether"}})
-                            </small>
+                       {{#if tokenId}}
+                            {{tokenValue}}
+                        {{else}}
+                            {{dapp_formatBalance value "0,0.00[000000] UNIT"}}
+                            {{#if $neq unit 'ether'}}
+                                <br>
+                                <small>
+                                    ({{dapp_formatBalance value "0,0.00[000000] UNIT" "ether"}})
+                                </small>
+                            {{/if}}
                         {{/if}}
                     </td>
                 </tr>

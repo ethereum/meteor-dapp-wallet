@@ -1,9 +1,3 @@
-
-// set providor
-if(!web3.currentProvider)
-    web3.setProvider(new web3.providers.HttpProvider("http://localhost:8545")); //8545 8080 10.10.42.116
-
-
 // disconnect any meteor server
 if(location.hostname !== 'localhost' && location.hostname !== '127.0.0.1')
     Meteor.disconnect();
