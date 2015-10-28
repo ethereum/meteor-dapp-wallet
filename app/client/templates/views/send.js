@@ -365,7 +365,7 @@ Template['views_send'].helpers({
     */
     'formattedCoinBalance': function(e){
         var selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account', 'value'));
-        
+
         return (this.balances && Number(this.balances[selectedAccount._id]) > 0)
             ? Helpers.formatNumberByDecimals(this.balances[selectedAccount._id], this.decimals) +' '+ this.symbol
             : false;
