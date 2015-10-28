@@ -326,7 +326,7 @@ Template['views_send'].helpers({
     @method (selectedContractInputs)
     */
     'selectedContractInputs' : function(){
-        return TemplateVar.get("selectedContractInputs");
+        return TemplateVar.get("selectedContract").inputs;
     },
     /**
 
@@ -471,8 +471,7 @@ Template['views_send'].events({
         })
 
         // change the inputs and data field
-        TemplateVar.set("selectedContractInputs", selectedContract[0].inputs);
-        TemplateVar.set("byteCode", selectedContract[0].bytecode);
+        TemplateVar.set("selectedContract", selectedContract[0]);
     },
     /**
     Change solidity code
@@ -514,9 +513,10 @@ Template['views_send'].events({
                             input.bits = sizes[0];
                     })
 
-                    TemplateVar.set("selectedContractInputs", constructor[0].inputs); 
-                    TemplateVar.set("byteCode", e.bytecode)
-                    compiledContracts.push({'name': i, 'bytecode': e.bytecode, 'inputs':constructor[0].inputs });   
+                    var simplifiedContractObject = {'name': i, 'bytecode': e.bytecode, 'abi': abi, 'inputs':constructor[0].inputs }
+                    
+                    TemplateVar.set("selectedContract", simplifiedContractObject); 
+                    compiledContracts.push(simplifiedContractObject);   
                 })
 
                 TemplateVar.set("compiledContracts", compiledContracts);
@@ -542,7 +542,7 @@ Template['views_send'].events({
         var amount = TemplateVar.get('amount') || '0',
             tokenAddress = TemplateVar.get('selectedToken'),
             to = TemplateVar.getFrom('.dapp-address-input', 'value'),
-            byteCode = TemplateVar.getFrom('.dapp-data-textarea', 'value'),
+            byteCode = TemplateVar.get('selectedContract').bytecode,
             solidityCode = TemplateVar.getFrom('.solidity-source', 'value'),
             gasPrice = TemplateVar.getFrom('.dapp-select-gas-price', 'gasPrice'),
             estimatedGas = TemplateVar.get('estimatedGas'),
@@ -656,7 +656,7 @@ Template['views_send'].events({
                         web3.eth.sendTransaction({
                             from: selectedAccount.address,
                             to: to,
-                            data: data,
+                            data: byteCode,
                             value: amount,
                             gasPrice: gasPrice,
                             gas: estimatedGas
@@ -685,9 +685,42 @@ Template['views_send'].events({
                     }
 
                 // UPLOAD CONTRACT
-                } else if (selectedAction != "upload-contract") {
-                    console.log('Send Token');
+                } else if (selectedAction == "upload-contract") {
+                    console.log('Solidity Compiler');
+                    
+                    // CONTRACT TX
+                    if(contracts['ct_'+ selectedAccount._id]) {
 
+                        console.log('From contract');
+
+                    
+                    // SIMPLE TX
+                    } else {
+                        console.log('From Account');
+
+                        var selectedContract = TemplateVar.get("selectedContract");
+
+                        var contractArguments = [];
+
+                        _.each(selectedContract.inputs, function(input){
+                            var output = $('.abi-input[placeholder="'+input.name+'"]')[0].value;
+                            console.log(output);
+                            contractArguments.push(output);
+                        })
+
+                        contractArguments.push({
+                            from: selectedAccount.address,
+                            to: to,
+                            value: amount,
+                            gasPrice: gasPrice,
+                            gas: estimatedGas
+                        }, function(error, txHash){});
+
+                        console.log(contractArguments);
+
+                        web3.eth.contract(selectedContract.abi).new(arguments);
+                         
+                    }
 
 
                 // TOKEN TRANSACTION
