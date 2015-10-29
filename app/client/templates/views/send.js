@@ -272,8 +272,9 @@ Template['views_send'].helpers({
         if(!selectedAccount)
             return;
 
-        query['balances.'+ selectedAccount._id] = {$exists: true, $ne: '0'};        
-        return Tokens.findOne(query, {field: {_id: 1}});
+        query['balances.'+ selectedAccount._id] = {$exists: true, $ne: '0'};   
+     
+        return (TemplateVar.get('selectAction') === 'send-funds' && !!Tokens.findOne(query, {field: {_id: 1}}));
     },
     /**
     Return the currently selected fee + amount
@@ -311,22 +312,6 @@ Template['views_send'].helpers({
     */
     'timeText': function(){
         return TAPi18n.__('wallet.send.texts.timeTexts.'+ ((Number(TemplateVar.getFrom('.dapp-select-gas-price', 'feeMultiplicator')) + 5) / 2).toFixed(0));
-    },
-    /**
-    Get compiled contracts 
-
-    @method (compiledContracts)
-    */
-    'compiledContracts' : function(){
-        return TemplateVar.get("compiledContracts");
-    },
-    /**
-    Get selected contract functions
-
-    @method (selectedContractInputs)
-    */
-    'selectedContractInputs' : function(){
-        return TemplateVar.get("selectedContract").inputs;
     },
     /**
 
@@ -460,79 +445,6 @@ Template['views_send'].events({
         }
     },
     /**
-    Selected a contract function
-    
-    @event 'click .contract-functions
-    */
-    'change .compiled-contracts': function(e, template){
-        // get the correct contract
-        var selectedContract = _.select(TemplateVar.get("compiledContracts"), function(contract){
-            return contract.name == e.currentTarget.value;
-        })
-
-        // change the inputs and data field
-        TemplateVar.set("selectedContract", selectedContract[0]);
-    },
-    /**
-    Change solidity code
-    
-    @event keyup textarea.solidity-source, change textarea.solidity-source, input textarea.solidity-source
-    */
-    'change textarea.solidity-source, input textarea.solidity-source': function(e, template){
-        var sourceCode = e.currentTarget.value;
-        TemplateVar.set("contractFunctions", false);
-
-        //check if it matches a hex pattern
-        if (sourceCode == sourceCode.match("[0-9A-Fa-fx]+")[0]){
-            // If matches, just pass if forward to the data field
-            // document.getElementsByClassName("dapp-data-textarea")[0].value = sourceCode;
-            template.find('.dapp-data-textarea').value = sourceCode;
-            TemplateVar.set(template, 'codeNotExecutable', false);
-
-        } else {
-            //if it doesnt, try compiling it in solidity
-            try {
-                var compiled = web3.eth.compile.solidity(sourceCode);
-                TemplateVar.set(template, 'codeNotExecutable', false);
-
-                var compiledContracts = [];
-
-                _.each(compiled, function(e, i){
-                    var abi = JSON.parse(e.interface);
-                    
-                    // find the constructor function
-                    var constructor = _.select(abi, function(func){
-                        return func.type == "constructor";
-                    });
-
-                    // substring the type so that string32 and string16 wont need different templates
-                    _.each(constructor[0].inputs, function(input){
-                        input.template = "input_"+input.type.substr(0,3);
-                        var sizes = input.type.match(/[0-9]+/);
-                        if (sizes)
-                            input.bits = sizes[0];
-                    })
-
-                    var simplifiedContractObject = {'name': i, 'bytecode': e.bytecode, 'abi': abi, 'inputs':constructor[0].inputs }
-                    
-                    TemplateVar.set("selectedContract", simplifiedContractObject); 
-                    compiledContracts.push(simplifiedContractObject);   
-                })
-
-                TemplateVar.set("compiledContracts", compiledContracts);
-
-            } catch(error) {
-                // Doesnt compile in solidity either, throw error
-                TemplateVar.set(template, 'codeNotExecutable', true);
-                console.log(error.message);
-            }
-        };
-        
-        
-
-         
-    },
-    /**
     Submit the form and send the transaction!
     
     @event submit form
@@ -542,12 +454,14 @@ Template['views_send'].events({
         var amount = TemplateVar.get('amount') || '0',
             tokenAddress = TemplateVar.get('selectedToken'),
             to = TemplateVar.getFrom('.dapp-address-input', 'value'),
-            byteCode = TemplateVar.get('selectedContract').bytecode,
-            solidityCode = TemplateVar.getFrom('.solidity-source', 'value'),
             gasPrice = TemplateVar.getFrom('.dapp-select-gas-price', 'gasPrice'),
             estimatedGas = TemplateVar.get('estimatedGas'),
             selectedAccount = Helpers.getAccountByAddress(template.find('select[name="dapp-select-account"]').value),
-            selectedAction = TemplateVar.get("selectAction");
+            selectedAction = TemplateVar.get("selectAction"),
+
+            data = TemplateVar.getFrom('.dapp-data-textarea', 'value'),
+            byteCode = TemplateVar.get('selectedContract').bytecode,
+            solidityCode = TemplateVar.getFrom('.solidity-source', 'value');
         
         console.log("ByteCode: "+ byteCode + " Solidity Code: " + solidityCode);
 
@@ -618,7 +532,7 @@ Template['views_send'].events({
 
                 
                 // ETHER TX
-                if(tokenAddress === 'ether' && selectedAction != "upload-contract") {
+                if(tokenAddress === 'ether') {
                     console.log('Send Ether');
 
                     // CONTRACT TX
@@ -656,7 +570,7 @@ Template['views_send'].events({
                         web3.eth.sendTransaction({
                             from: selectedAccount.address,
                             to: to,
-                            data: byteCode,
+                            data: data,
                             value: amount,
                             gasPrice: gasPrice,
                             gas: estimatedGas

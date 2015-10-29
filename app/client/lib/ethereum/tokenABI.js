@@ -11,7 +11,7 @@ var tokenABI = [
         "constant": true,
         "inputs": [
           {
-            "name": "receiver",
+            "name": "address",
             "type": "address"
           }
         ],
@@ -28,17 +28,17 @@ var tokenABI = [
         "constant": false,
         "inputs": [
           {
-            "name": "receiver",
+            "name": "to",
             "type": "address"
           },
           {
-            "name": "amount",
+            "name": "value",
             "type": "uint256"
           }
         ],
         "outputs": [
           {
-            "name": "sufficient",
+            "name": "success",
             "type": "bool"
           }
         ]
@@ -59,17 +59,17 @@ var tokenABI = [
         "inputs": [
           {
             "indexed": false,
-            "name": "sender",
+            "name": "from",
             "type": "address"
           },
           {
             "indexed": false,
-            "name": "receiver",
+            "name": "to",
             "type": "address"
           },
           {
             "indexed": false,
-            "name": "amount",
+            "name": "value",
             "type": "uint256"
           }
         ]

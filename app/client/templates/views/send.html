@@ -90,17 +90,17 @@
                         {{/each}}
                     </ul>
                 {{else}}
-                <div class="token-ether"> 
-                    <span class="ether-symbol">Ξ</span>
-                    <span class="token-name">ETHER</span>
-                    <span class="balance">
-                        {{#if $neq unit 'ether'}}
-                            {{dapp_formatBalance selectedAccount.balance "0,0.00 UNIT"}} ({{dapp_formatBalance selectedAccount.balance "0,0.00 UNIT" "ether"}})
-                        {{else}}
-                            {{dapp_formatBalance selectedAccount.balance "0,0.00 UNIT" "ether"}}
-                        {{/if}}
-                    </span>
-                </div>
+                    <div class="token-ether"> 
+                        <span class="ether-symbol">Ξ</span>
+                        <span class="token-name">ETHER</span>
+                        <span class="balance">
+                            {{#if $neq unit 'ether'}}
+                                {{dapp_formatBalance selectedAccount.balance "0,0.00 UNIT"}} ({{dapp_formatBalance selectedAccount.balance "0,0.00 UNIT" "ether"}})
+                            {{else}}
+                                {{dapp_formatBalance selectedAccount.balance "0,0.00 UNIT" "ether"}}
+                            {{/if}}
+                        </span>
+                    </div>
                 {{/if}}
             </div>
 
@@ -109,56 +109,47 @@
         </div>
 
         
-        <div class="row clear data">
-            <div class="col col-6 mobile-full">
+        {{#if $eq (TemplateVar.get "selectAction") "upload-contract"}}
+            {{> elements_compileContract}}
 
-                {{#if TemplateVar.get "showData"}}
-                    <button class="hide-data">{{{i18n 'wallet.send.removeData'}}}</button>
+        {{else}}
 
-                    <h3>{{i18n 'wallet.send.data'}}</h3>
+            <div class="row clear data">
+                <div class="col col-6 mobile-full">
 
-                    <textarea class="solidity-source" id="solidity-data" cols="20" rows="20"></textarea>
-                    
-                    <!-- This data field automatically gets the bytecode of the first. We probably don't need it anymore but I'm afraid to take it out in case we do -->
-                    {{> dapp_dataTextarea cols="20" rows="8" value=(TemplateVar.get "byteCode")}}
+                    {{#if TemplateVar.get "showData"}}
+                        <button class="hide-data">{{{i18n 'wallet.send.removeData'}}}</button>
 
-                    {{TemplateVar.set "dataShown" true}}
-                {{else}}
-                    <button class="show-data">{{{i18n 'wallet.send.addData'}}}</button>
-                    {{TemplateVar.set "dataShown" false}}
-                {{/if}}
-            </div>
-            
-            <div class="col col-6 mobile-full send-info">
-                {{#if TemplateVar.get "showData"}}
-                    <br><br>
-                    {{#unless compiledContracts}}
-                        {{{i18n 'wallet.send.texts.addData'}}}
-                    {{/unless}}
+                        <h3>{{i18n 'wallet.send.data'}}</h3>
 
-                    {{#if TemplateVar.get "codeNotExecutable"}}
-                        <p class="orange">
-                            <i class="icon-shield"></i> {{i18n 'wallet.send.texts.dataNotExecutable'}}
-                        </p>
+                        <!-- This data field automatically gets the bytecode of the first. We probably don't need it anymore but I'm afraid to take it out in case we do -->
+                        {{> dapp_dataTextarea cols="20" rows="8" value=(TemplateVar.get "byteCode")}}
+
+                        {{TemplateVar.set "dataShown" true}}
                     {{else}}
-                        {{#with compiledContracts}}
-                            <select class="compiled-contracts" name="compiled-contracts">
-                            {{#each this}}
-                                <option value="{{name}}" selected="">{{name}}</option>
-                            {{/each}}    
-                            </select>
-                        {{/with}}
-                            
-                        {{#each selectedContractInputs}}
-                            {{> Template.dynamic template=template name=name bits=bits }}
-                        {{/each}}
+                        <button class="show-data">{{{i18n 'wallet.send.addData'}}}</button>
+                        {{TemplateVar.set "dataShown" false}}
                     {{/if}}
-                {{/if}}
+                </div>
+                
+                <div class="col col-6 mobile-full send-info">
+                    {{#if TemplateVar.get "showData"}}
+                        <br><br>
+                        {{{i18n 'wallet.send.texts.addData'}}}
+
+                        {{#if TemplateVar.get "codeNotExecutable"}}
+                            <p class="orange">
+                                <i class="icon-shield"></i> {{i18n 'wallet.send.texts.dataNotExecutable'}}
+                            </p>
+                        {{/if}}
+                    {{/if}}
+                </div>
+
+
+                <div class="dapp-clear-fix"></div>
             </div>
+        {{/if}}
 
-
-            <div class="dapp-clear-fix"></div>
-        </div>
 
         <!-- fee -->
         <div class="row clear">
@@ -210,7 +201,11 @@
             {{#if TemplateVar.get "sending"}} 
                 {{i18n 'buttons.sending'}}
             {{else}}
-                {{i18n 'buttons.send'}}
+                {{#if $eq (TemplateVar.get "selectAction") "upload-contract"}}
+                    {{i18n 'buttons.deploy'}}
+                {{else}}
+                    {{i18n 'buttons.send'}}
+                {{/if}}
             {{/if}}
         </button>
         
