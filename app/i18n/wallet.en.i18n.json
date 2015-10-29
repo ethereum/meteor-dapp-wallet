@@ -206,8 +206,8 @@
                 "overDailyLimit_plural": "<p class=\"over-daily\">This amount is over the remaining daily limit of __limit__ (of __total__ per day), so you need __count__ other accounts to confirm.</p>",
                 "underDailyLimit": "<p class=\"under-daily\">This amount is under the remaining daily limit of __limit__ (of __total__ per day), means it will send immediately.</p>",
                 "sendFee": "This is the most amount of money that might be used to process this transaction. Your transaction will be mined <strong>__timetext__</strong>.",
-                "addData": "You can add extra data to send along with your transaction. If you leave the \"to\" field empty it will try to generate a contract from your data.",
-                "dataNotExecutable": "The data seems not to be executabe, that means this transaction will use up all the gas you provide.",
+                "addData": "You can add extra data to send along with your transaction. If you leave the \"to\" field empty it will try to deploy a contract from your data.",
+                "dataNotExecutable": "The data seems not to be executabe, that means this transaction will use all the gas you provide.",
                 "cantEstimateGas": "We can't estimate your gas usage properly, as you need at least 1 ether in your account.",
                 "estimatedGas": "Estimated required gas",
                 "timeTexts": {
@@ -229,7 +229,8 @@
             "editedToken": "Edited token __token__"
         },
         "contracts": {
-            "contractSource": "Soldity contract source code",
+            "contractSourceCode": "Soldity contract source code",
+            "contractByteCode": "Contract byte code",
             "selectContract": "Select contract to deploy",
             "constructorParameters": "Constructor parameters",
             "error": {

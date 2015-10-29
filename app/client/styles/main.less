@@ -374,6 +374,24 @@ body {
         }
 
         &.compile-contract {
+            
+            // switch editor sourcecode/bytecode
+            .dapp-data-textarea {
+                display: block;
+            }
+            .ace_editor {
+                display: none;
+            }
+
+            .source-code {
+                .dapp-data-textarea {
+                    display: none;
+                }
+                .ace_editor {
+                    display: block;
+                }
+            }
+
             select {
                 margin-bottom: @defaultMargin*2;
             }
@@ -402,7 +420,7 @@ body {
                 margin-top: @defaultMargin/2;
             }
 
-            label {
+            .send-info label {
                 position: relative;
                 top: -6px;
                 left: @gridWidth/4;

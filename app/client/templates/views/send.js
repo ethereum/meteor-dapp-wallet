@@ -47,7 +47,7 @@ Check if the amount accounts daily limit  and sets the correct text.
 */
 var checkOverDailyLimit = function(address, wei, template){
     // check if under or over dailyLimit
-    account = Helpers.getAccountByAddress(address, false);
+    account = Helpers.getAccountByAddress(address);
 
     // check whats left
     var restDailyLimit = new BigNumber(account.dailyLimit || '0', 10).minus(new BigNumber(account.dailyLimitSpent || '0', 10));
@@ -116,6 +116,26 @@ var estimationCallback = function(e, res){
 };
 
 
+/**
+Get the data field of either the byte or source code textarea, depending on the selectedType
+
+@method getDataField
+*/
+var getDataField = function(){
+    // make reactive to the show/hide of the textarea
+    TemplateVar.getFrom('.compile-contract','byteTextareaShown');
+
+
+    var type = TemplateVar.getFrom('.compile-contract', 'selectedType');
+
+    var data = (type === 'byte-code')
+        ? TemplateVar.getFrom('.dapp-data-textarea', 'value')
+        : TemplateVar.getFrom('.compile-contract', 'value');
+
+    return data;
+};
+
+
 // Set basic variables
 Template['views_send'].onCreated(function(){
     var template = this;
@@ -125,7 +145,7 @@ Template['views_send'].onCreated(function(){
     accountSort = {sort: {name: 1}};
 
     // set the default fee
-    TemplateVar.set('selectAction', 'send-funds');
+    TemplateVar.set('selectedAction', 'send-funds');
     TemplateVar.set('selectedToken', 'ether');
     TemplateVar.set('amount', '0');
     TemplateVar.set('estimatedGas', 0);
@@ -137,6 +157,15 @@ Template['views_send'].onCreated(function(){
         }
     });
 
+
+    // check daily limit again, when the account was switched
+    template.autorun(function(c){
+        var address = TemplateVar.getFrom('.dapp-select-account', 'value'),
+            amount = TemplateVar.get('amount') || '0';
+
+        if(!c.firstRun)
+            checkOverDailyLimit(address, amount, template);
+    });
 
     // change the amount when the currency unit is changed
     template.autorun(function(c){
@@ -164,18 +193,16 @@ Template['views_send'].onRendered(function(){
     if(from)
         TemplateVar.setTo('select[name="dapp-select-account"]', 'value', FlowRouter.getParam('from'));
 
-    
 
     // ->> GAS PRICE ESTIMATION
     template.autorun(function(c){
         var address = TemplateVar.getFrom('.dapp-select-account', 'value'),
             to = TemplateVar.getFrom('.dapp-address-input', 'value'),
-            data = TemplateVar.getFrom('.dapp-data-textarea', 'value'),
+            data = getDataField(),
             tokenAddress = TemplateVar.get('selectedToken'),
             amount = TemplateVar.get('amount') || '0';
 
-        // make reactive to the show/hide data
-        TemplateVar.get('dataShown');
+        console.log('DATA', data);
 
 
         // if(!web3.isAddress(to))
@@ -256,7 +283,7 @@ Template['views_send'].helpers({
     @method (tokens)
     */
     'tokens': function(){
-        if(TemplateVar.get('selectAction') === 'send-funds')
+        if(TemplateVar.get('selectedAction') === 'send-funds')
             return Tokens.find({},{sort: {name: 1}});
     },
     /**
@@ -274,7 +301,15 @@ Template['views_send'].helpers({
 
         query['balances.'+ selectedAccount._id] = {$exists: true, $ne: '0'};   
      
-        return (TemplateVar.get('selectAction') === 'send-funds' && !!Tokens.findOne(query, {field: {_id: 1}}));
+        return (TemplateVar.get('selectedAction') === 'send-funds' && !!Tokens.findOne(query, {field: {_id: 1}}));
+    },
+    /**
+    Show the byte code only for the data field
+
+    @method (showOnlyByteTextarea)
+    */
+    'showOnlyByteTextarea': function() {
+        return (TemplateVar.get("selectedAction") !== "upload-contract");
     },
     /**
     Return the currently selected fee + amount
@@ -361,41 +396,22 @@ Template['views_send'].helpers({
 
 Template['views_send'].events({
     /**
-    Show the extra data field
-    
-    @event click button.show-data
-    */
-    'click button.show-data': function(e){
-        e.preventDefault();
-        TemplateVar.set('showData', true);
-    },
-    /**
-    Show the extra data field
-    
-    @event click button.hide-data
-    */
-    'click button.hide-data': function(e){
-        e.preventDefault();
-        TemplateVar.set('showData', false);
-    },
-    /**
     Action Switcher
     
     @event click .select-action input
     */
     'click .select-action input': function(e, template){
         var option = e.currentTarget.value;
-        TemplateVar.set('selectAction', option);
+        TemplateVar.set('selectedAction', option);
 
-        if (option == 'upload-contract') {
-            TemplateVar.set('showData', true);
+        if (option === 'upload-contract') {
             TemplateVar.set('hideTo', true);
             TemplateVar.set('selectedToken', 'ether');
+            TemplateVar.setTo('.compile-contract', 'selectedType', 'source-code');
 
             TemplateVar.set('savedTo', TemplateVar.getFrom('.dapp-address-input', 'value'));
 
         } else {
-            TemplateVar.set('showData', false);
             TemplateVar.set('hideTo', false);
 
             Tracker.afterFlush(function() {
@@ -457,9 +473,9 @@ Template['views_send'].events({
             gasPrice = TemplateVar.getFrom('.dapp-select-gas-price', 'gasPrice'),
             estimatedGas = TemplateVar.get('estimatedGas'),
             selectedAccount = Helpers.getAccountByAddress(template.find('select[name="dapp-select-account"]').value),
-            selectedAction = TemplateVar.get("selectAction"),
+            selectedAction = TemplateVar.get("selectedAction"),
 
-            data = TemplateVar.getFrom('.dapp-data-textarea', 'value'),
+            data = getDataField(),
             byteCode = TemplateVar.get('selectedContract').bytecode,
             solidityCode = TemplateVar.getFrom('.solidity-source', 'value');
         

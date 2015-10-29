@@ -108,47 +108,8 @@
             <div class="dapp-clear-fix"></div>
         </div>
 
-        
-        {{#if $eq (TemplateVar.get "selectAction") "upload-contract"}}
-            {{> elements_compileContract}}
 
-        {{else}}
-
-            <div class="row clear data">
-                <div class="col col-6 mobile-full">
-
-                    {{#if TemplateVar.get "showData"}}
-                        <button class="hide-data">{{{i18n 'wallet.send.removeData'}}}</button>
-
-                        <h3>{{i18n 'wallet.send.data'}}</h3>
-
-                        <!-- This data field automatically gets the bytecode of the first. We probably don't need it anymore but I'm afraid to take it out in case we do -->
-                        {{> dapp_dataTextarea cols="20" rows="8" value=(TemplateVar.get "byteCode")}}
-
-                        {{TemplateVar.set "dataShown" true}}
-                    {{else}}
-                        <button class="show-data">{{{i18n 'wallet.send.addData'}}}</button>
-                        {{TemplateVar.set "dataShown" false}}
-                    {{/if}}
-                </div>
-                
-                <div class="col col-6 mobile-full send-info">
-                    {{#if TemplateVar.get "showData"}}
-                        <br><br>
-                        {{{i18n 'wallet.send.texts.addData'}}}
-
-                        {{#if TemplateVar.get "codeNotExecutable"}}
-                            <p class="orange">
-                                <i class="icon-shield"></i> {{i18n 'wallet.send.texts.dataNotExecutable'}}
-                            </p>
-                        {{/if}}
-                    {{/if}}
-                </div>
-
-
-                <div class="dapp-clear-fix"></div>
-            </div>
-        {{/if}}
+        {{> elements_compileContract onlyByteCode=showOnlyByteTextarea codeNotExecutable=(TemplateVar.get "codeNotExecutable")}}
 
 
         <!-- fee -->
@@ -201,8 +162,8 @@
             {{#if TemplateVar.get "sending"}} 
                 {{i18n 'buttons.sending'}}
             {{else}}
-                {{#if $eq (TemplateVar.get "selectAction") "upload-contract"}}
-                    {{i18n 'buttons.deploy'}}
+                {{#if $eq (TemplateVar.get "selectedAction") "upload-contract"}}
+                    {{i18n 'wallet.app.buttons.deploy'}}
                 {{else}}
                     {{i18n 'buttons.send'}}
                 {{/if}}
