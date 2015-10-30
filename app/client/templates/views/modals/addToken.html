@@ -7,7 +7,7 @@
 
     <h3>{{i18n "wallet.modals.addToken.contractAddress"}}</h3>
 
-    {{> dapp_addressInput placeholder="0x000000.." value=tokenAddress name="address" autofocus=true}}
+    {{> dapp_addressInput placeholder="0x000000.." value=tokenAddress name="address" autofocus=true class='token-address'}}
 
     <h3>{{i18n "wallet.modals.addToken.tokenName"}}</h3>
     <input type="string" value="{{name}}" name="name" placeholder="Name" class="name">
@@ -17,7 +17,7 @@
 
     
     <h3>{{i18n "wallet.modals.addToken.decimalPlaces"}}</h3>
-    <input type="number" min="0" step="1" name="division" value="{{decimals}}" class="decimals">
+    <input type="number" min="0" step="1" name="division" value="{{decimals}}" placeholder="2" class="decimals">
 
     <br>
     <h3>{{i18n "wallet.modals.addToken.preview"}}</h3>

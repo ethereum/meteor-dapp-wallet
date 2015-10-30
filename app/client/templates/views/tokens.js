@@ -7,7 +7,8 @@ The template to list all token
 
 var addToken = function(e) {
 
-    var address = $('.modals-add-token input[name="address"]').val(),
+    var address = $('.modals-add-token input[name="address"]').hasClass('dapp-error') ? 
+            '' : $('.modals-add-token input[name="address"]').val(),
         name = $('.modals-add-token input.name').val(),
         symbol = $('.modals-add-token input.symbol').val(),
         decimals = $('.modals-add-token input.decimals').val();
@@ -19,20 +20,28 @@ var addToken = function(e) {
         TAPi18n.__('wallet.tokens.editedToken', {token: name}) : 
         TAPi18n.__('wallet.tokens.addedToken', {token: name}) ;
 
-    Tokens.upsert(tokenId, {$set: {
-        address: address,
-        name: name,
-        symbol: symbol,
-        decimals: Number(decimals || 0)
-    }});
+    if(address != '') {
+        Tokens.upsert(tokenId, {$set: {
+            address: address,
+            name: name,
+            symbol: symbol,
+            decimals: Number(decimals || 0)
+        }});
 
-    // update balances from lib/ethereum/observeBlocks.js
-    updateBalances();
+        // update balances from lib/ethereum/observeBlocks.js
+        updateBalances();
 
-    GlobalNotification.success({
-       content: msg,
-       duration: 2
-    });
+        GlobalNotification.success({
+           content: msg,
+           duration: 2
+        });
+    } else {
+       GlobalNotification.warning({
+           content: TAPi18n.__('wallet.tokens.invalidAddress'),
+           duration: 2
+        }); 
+    }
+    
 }
 
 Template['views_tokens'].helpers({
@@ -80,9 +89,6 @@ Template['views_tokens'].events({
         // Open a modal 
         EthElements.Modal.question({
             template: 'views_modals_addToken',
-            data: {
-                decimals: 2
-            },
             ok: addToken,
             cancel: true
         },{
