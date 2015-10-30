@@ -462,20 +462,6 @@ Template['views_send'].events({
         }
     },
     /**
-    Selected a contract function
-    
-    @event 'click .select-contract-function
-    */
-    'change .select-contract-function': function(e, template){
-        // get the correct contract
-        var selectedFunction = _.select(TemplateVar.get("contractFunctions"), function(func){
-            return func.name == e.currentTarget.value;
-        })
-
-        // change the inputs and data field
-        TemplateVar.set("selectedFunction", selectedFunction[0]);
-    },
-    /**
     Submit the form and send the transaction!
     
     @event submit form
@@ -629,6 +615,7 @@ Template['views_send'].events({
                         });
                          
                     }
+
 
                 // TOKEN TRANSACTION
                 } else {
