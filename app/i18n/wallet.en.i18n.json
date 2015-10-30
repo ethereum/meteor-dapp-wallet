@@ -225,6 +225,7 @@
             "description": "Tokens are currencies built on the Ethereum platform. <a href=\"https://ethereum.org/token\" target=\"_blank\">Learn how to build your own</a>.",
             "deleteToken": "Do you want to remove the token <strong>__token__</strong> from your list?",
             "addedToken": "Added __token__ to your list",
+            "invalidAddress": "Token not added, invalid address.",
             "editedToken": "Edited token __token__"
         }
 
