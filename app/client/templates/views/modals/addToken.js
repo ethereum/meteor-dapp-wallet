@@ -66,34 +66,33 @@ Template['views_modals_addToken'].events({
     @event change input[name="address"], input input[name="address"]
     */
     'change input[name="address"], input input[name="address"]': function(e, template) {
-        var tokenAddress = e.target.value;
-
+        var tokenAddress = TemplateVar.getFrom('.token-address', 'value');
+        
+        if(!tokenAddress) 
+            return;
+        
+        TemplateVar.set('tokenAddress', tokenAddress)
+    
         // initiate the geo pattern
         var pattern = GeoPattern.generate(tokenAddress, {color: '#CCC6C6'});
         $('.example.wallet-box.tokens').css('background-image', pattern.toDataUrl());
         
-
-
-        if(!$(e.target).hasClass('dapp-error')){
-            TemplateVar.set('tokenAddress', tokenAddress)
-        };
-
         // check if the token has information about itself asynchrounously
         var tokenInstance = TokenContract.at(tokenAddress);
 
         tokenInstance.tokenSymbol(function(e, i){
-            if ($('input.symbol').val()=='')
-                $('input.symbol').val(i).change();
+            if(template.$('input.symbol').val() === '')
+                template.$('input.symbol').val(i).change();
         })
 
         tokenInstance.tokenName(function(e, i){
-            if ($('input.name').val()=='')
-                $('input.name').val(i).change();
+            if(template.$('input.name').val() === '')
+                template.$('input.name').val(i).change();
         })
         
         tokenInstance.tokenDecimals(function(e, i){
-            if ($('input.decimals').val()=='')
-                $('input.decimals').val(i).change();
+            if(template.$('input.decimals').val() === '')
+                template.$('input.decimals').val(i).change();
         })
 
     },    

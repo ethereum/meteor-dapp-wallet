@@ -89,9 +89,6 @@ Template['views_tokens'].events({
         // Open a modal 
         EthElements.Modal.question({
             template: 'views_modals_addToken',
-            data: {
-                decimals: 2
-            },
             ok: addToken,
             cancel: true
         },{
