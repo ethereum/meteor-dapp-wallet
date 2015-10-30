@@ -201,7 +201,7 @@
             "texts": {
                 "sendAmount": "You want to send <strong>__amount__</strong>.",
                 "sendAmountEquivalent": "You want to send <strong>__amount__</strong> in ether, using the <a href=\"https://kraken.com\" target=\"_blank\">kraken.com</a> exchange rate.<br>Which is currently an equivalent of <strong>__etherAmount__</strong>.",
-                "sendToken": "You are requesting to send <strong>__amount__ __symbol__ </strong> of <strong><em> __name__ </em></strong> a currency built in an ethereum contract. The current sender account has a balance of  <strong>__balance__ __symbol__ </strong> ",
+                "sendToken": "You want to send <strong>__amount__ __name__</strong>.",
                 "overDailyLimit": "<p class=\"over-daily\">This amount is over the remaining daily limit of __limit__ (of __total__ per day), so you need __count__ other account to confirm.</p>",
                 "overDailyLimit_plural": "<p class=\"over-daily\">This amount is over the remaining daily limit of __limit__ (of __total__ per day), so you need __count__ other accounts to confirm.</p>",
                 "underDailyLimit": "<p class=\"under-daily\">This amount is under the remaining daily limit of __limit__ (of __total__ per day), means it will send immediately.</p>",
@@ -223,7 +223,7 @@
         "tokens": {
             "title": "Custom <strong>Tokens</strong>",
             "subTitle": "Added tokens",
-            "description": "Tokens are currencies built on the Ethereum platform. <a href=\"https://ethereum.org/token\" target=\"_blank\">Learn how to build your own</a>.",
+            "description": "Tokens are currencies built on the Ethereum platform. Tokens should follow the <a href=\"https://github.com/ethereum/wiki/wiki/Standardized_Contract_APIs#token\" target=\"_blank\">custom token standard</a>.<br>Create your own token by simply modifiying <a href=\"https://chriseth.github.io/browser-solidity/?gist=b0fea243b49244447153\" target=\"_blank\">this example of a custom token contract</a>.",
             "deleteToken": "Do you want to remove the token <strong>__token__</strong> from your list?",
             "addedToken": "Added __token__ to your list",
             "editedToken": "Edited token __token__"

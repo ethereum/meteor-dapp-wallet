@@ -364,11 +364,11 @@ Template['views_send'].helpers({
         if(!token || !selectedAccount)
             return;
 
-        var tokenBalance = token.balances[selectedAccount._id] || '0',
-            formattedAmount = Helpers.formatNumberByDecimals(amount, token.decimals),
-            formattedBalance = Helpers.formatNumberByDecimals(tokenBalance, token.decimals);
-
-        return Spacebars.SafeString(TAPi18n.__('wallet.send.texts.sendToken', {amount:formattedAmount, name: token.name, balance: formattedBalance , symbol: token.symbol})); 
+        return Spacebars.SafeString(TAPi18n.__('wallet.send.texts.sendToken', {
+            amount: Helpers.formatNumberByDecimals(amount, token.decimals),
+            name: token.name,
+            symbol: token.symbol
+        })); 
         
     },
     /**
