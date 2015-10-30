@@ -80,17 +80,17 @@ Template['views_modals_addToken'].events({
         // check if the token has information about itself asynchrounously
         var tokenInstance = TokenContract.at(tokenAddress);
 
-        tokenInstance.tokenSymbol(function(e, i){
+        tokenInstance.symbol(function(e, i){
             if(template.$('input.symbol').val() === '')
                 template.$('input.symbol').val(i).change();
         })
 
-        tokenInstance.tokenName(function(e, i){
+        tokenInstance.name(function(e, i){
             if(template.$('input.name').val() === '')
                 template.$('input.name').val(i).change();
         })
         
-        tokenInstance.tokenDecimals(function(e, i){
+        tokenInstance.decimals(function(e, i){
             if(template.$('input.decimals').val() === '')
                 template.$('input.decimals').val(i).change();
         })

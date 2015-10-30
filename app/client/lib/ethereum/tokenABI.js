@@ -44,7 +44,7 @@ var tokenABI = [
       {
           "constant": true,
           "inputs": [],
-          "name": "tokenDecimals",
+          "name": "decimals",
           "outputs": [
               {
                   "name": "",
@@ -56,7 +56,7 @@ var tokenABI = [
       {
           "constant": true,
           "inputs": [],
-          "name": "tokenName",
+          "name": "name",
           "outputs": [
               {
                   "name": "",
@@ -68,7 +68,7 @@ var tokenABI = [
       {
           "constant": true,
           "inputs": [],
-          "name": "tokenSymbol",
+          "name": "symbol",
           "outputs": [
               {
                   "name": "",
