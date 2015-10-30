@@ -58,12 +58,12 @@ var tokenABI = [
         "anonymous": false,
         "inputs": [
           {
-            "indexed": false,
+            "indexed": true,
             "name": "from",
             "type": "address"
           },
           {
-            "indexed": false,
+            "indexed": true,
             "name": "to",
             "type": "address"
           },

@@ -273,7 +273,7 @@ var setupContractFilters = function(newDocument, checkFromCreationBlock){
                     var txExists = addTransaction(log, log.args.from, newDocument.address, log.args.value.toString(10));
 
                     // NOTIFICATION
-                    if(!txExists || (!txExists.blockNumber && txExists.tokenId)) {
+                    if(!txExists || !txExists.tokenId) {
                         var txId = Helpers.makeId('tx', log.transactionHash);
 
                         Helpers.showNotification('wallet.transactions.notifications.incomingTransaction', {
@@ -300,7 +300,7 @@ var setupContractFilters = function(newDocument, checkFromCreationBlock){
                     var txExists = addTransaction(log, newDocument.address, log.args.to, log.args.value.toString(10));
 
                     // NOTIFICATION
-                    if(!txExists || (!txExists.blockNumber && txExists.tokenId)) {
+                    if(!txExists || !txExists.tokenId) {
                         var txId = Helpers.makeId('tx', log.transactionHash);
 
                         Helpers.showNotification('wallet.transactions.notifications.outgoingTransaction', {

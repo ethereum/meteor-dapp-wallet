@@ -74,7 +74,7 @@ var addTransactionAfterSend = function(txHash, amount, from, to, gasPrice, estim
     Transactions.upsert(txId, {$set: {
         tokenId: tokenId,
         value: amount,
-        from: selectedAccount.address,
+        from: from,
         to: to,
         timestamp: moment().unix(),
         transactionHash: txHash,
@@ -84,12 +84,12 @@ var addTransactionAfterSend = function(txHash, amount, from, to, gasPrice, estim
         data: data
     }});
 
-    // add to Account
-    EthAccounts.update(selectedAccount._id, {$addToSet: {
+    // add from Account
+    EthAccounts.update({address: from}, {$addToSet: {
         transactions: txId
     }});
 
-    // add from Account
+    // add to Account
     EthAccounts.update({address: to}, {$addToSet: {
         transactions: txId
     }});
@@ -177,6 +177,8 @@ Template['views_send'].onCreated(function(){
     });
 });
 
+
+
 Template['views_send'].onRendered(function(){
     var template = this;
 
@@ -198,12 +200,11 @@ Template['views_send'].onRendered(function(){
     template.autorun(function(c){
         var address = TemplateVar.getFrom('.dapp-select-account', 'value'),
             to = TemplateVar.getFrom('.dapp-address-input', 'value'),
+            amount = TemplateVar.get('amount') || '0',
             data = getDataField(),
-            tokenAddress = TemplateVar.get('selectedToken'),
-            amount = TemplateVar.get('amount') || '0';
+            tokenAddress = TemplateVar.get('selectedToken');
 
-        console.log('DATA', data);
-
+        // console.log('DATA', data);
 
         // if(!web3.isAddress(to))
         //     to = '0x0000000000000000000000000000000000000000';
@@ -474,12 +475,7 @@ Template['views_send'].events({
             estimatedGas = TemplateVar.get('estimatedGas'),
             selectedAccount = Helpers.getAccountByAddress(template.find('select[name="dapp-select-account"]').value),
             selectedAction = TemplateVar.get("selectedAction"),
-
-            data = getDataField(),
-            byteCode = TemplateVar.get('selectedContract').bytecode,
-            solidityCode = TemplateVar.getFrom('.solidity-source', 'value');
-        
-        console.log("ByteCode: "+ byteCode + " Solidity Code: " + solidityCode);
+            data = getDataField();
 
         if(selectedAccount && !TemplateVar.get('sending')) {
 
@@ -498,7 +494,7 @@ Template['views_send'].events({
                 });
 
 
-            if(!web3.isAddress(to) && selectedAction != "upload-contract")
+            if(!web3.isAddress(to) && !data)
                 return GlobalNotification.warning({
                     content: 'i18n:wallet.send.error.noReceiver',
                     duration: 2
@@ -507,7 +503,7 @@ Template['views_send'].events({
 
             if(tokenAddress === 'ether') {
                 
-                if((_.isEmpty(amount) || amount === '0' || !_.isFinite(amount)) && selectedAction != "upload-contract")
+                if((_.isEmpty(amount) || amount === '0' || !_.isFinite(amount)) && !data)
                     return GlobalNotification.warning({
                         content: 'i18n:wallet.send.error.noAmount',
                         duration: 2
@@ -614,47 +610,6 @@ Template['views_send'].events({
                          
                     }
 
-                // UPLOAD CONTRACT
-                } else if (selectedAction == "upload-contract") {
-                    console.log('Solidity Compiler');
-                    
-                    // CONTRACT TX
-                    if(contracts['ct_'+ selectedAccount._id]) {
-
-                        console.log('From contract');
-
-                    
-                    // SIMPLE TX
-                    } else {
-                        console.log('From Account');
-
-                        var selectedContract = TemplateVar.get("selectedContract");
-
-                        // create an array with the input fields
-                        var contractArguments = [];
-
-                        _.each(selectedContract.inputs, function(input){
-                            var output = $('.abi-input[placeholder="'+input.name+'"]')[0].value;
-                            console.log(output);
-                            contractArguments.push(output);
-                        })
-
-                        // add the default web3 arguments
-                        contractArguments.push({
-                            from: selectedAccount.address,
-                            to: to,
-                            value: amount,
-                            gasPrice: gasPrice,
-                            gas: estimatedGas
-                        }, function(error, txHash){});
-
-                        console.log(contractArguments);
-
-                        // publish new contract
-                        web3.eth.contract(selectedContract.abi).new(arguments);
-                         
-                    }
-
 
                 // TOKEN TRANSACTION
                 } else {
@@ -682,7 +637,7 @@ Template['views_send'].events({
                             if(!error) {
                                 console.log('SEND TOKEN from contract', amount, 'with data ', tokenSendData);
 
-                                addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data, token._id);
+                                addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, tokenSendData, token._id);
 
                                 FlowRouter.go('dashboard');
 
@@ -710,7 +665,7 @@ Template['views_send'].events({
                             if(!error) {
                                 console.log('SEND TOKEN', amount);
 
-                                addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data, token._id);
+                                addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, null, token._id);
 
                                 FlowRouter.go('dashboard');
                                 // GlobalNotification.warning({
