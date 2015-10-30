@@ -486,6 +486,12 @@ Template['views_send'].events({
 
             console.log('Providing gas: ', estimatedGas ,' + 100000');
 
+            if(TemplateVar.get('selectedAction') === 'upload-contract' && !data)
+                return GlobalNotification.warning({
+                    content: 'i18n:wallet.contracts.error.noDataProvided',
+                    duration: 2
+                });
+
 
             if(selectedAccount.balance === '0')
                 return GlobalNotification.warning({

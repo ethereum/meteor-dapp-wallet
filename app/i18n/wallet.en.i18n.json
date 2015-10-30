@@ -234,7 +234,8 @@
             "selectContract": "Select contract to deploy",
             "constructorParameters": "Constructor parameters",
             "error": {
-                "compile": "Could not compile source code."
+                "compile": "Could not compile source code.",
+                "noDataProvided": "You didn't provide any data"
             }
         }
 
