@@ -103,7 +103,7 @@ var updateTransaction = function(newDocument, transaction, receipt){
         }
 
         delete newDocument._id;
-        Transactions.update({_id: id}, newDocument);
+        Transactions.update({_id: id}, {$set: newDocument});
     } else {
         Transactions.insert(newDocument);
     }

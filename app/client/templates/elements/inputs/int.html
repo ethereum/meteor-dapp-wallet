@@ -1,9 +1,7 @@
-<template name="input_int">
-    <h3>
+<template name="elements_input_int">
+    <h4>
         {{name}} 
-        {{#if bits}}
-        <em> ({{bits}} bits signed integer) </em>
-        {{/if}}
-    </h3>
-    <input type='number' step='1' pattern='[0-9]'  placeholder='{{name}}' name='abi-input-{{name}}' class='abi-input'>
+        <em>- {{#if bits}}{{bits}} bits{{/if}} signed integer</em>
+    </h4>
+    <input type="number" step="1" required placeholder="-123" name="elements_input_int" class="abi-input">
 </template>

@@ -350,7 +350,7 @@ body {
     }
 
     > div {
-        margin-bottom: @defaultMargin*2;
+        margin-bottom: @defaultMargin;
 
         &.from-to {
             position: relative;
@@ -371,6 +371,72 @@ body {
                 width: 100%;
             }
             
+        }
+
+        &.compile-contract {
+            
+            // switch editor sourcecode/bytecode
+            .dapp-data-textarea {
+                display: block;
+            }
+            .ace_editor {
+                display: none;
+            }
+
+            .source-code {
+                .dapp-data-textarea {
+                    display: none;
+                }
+                .ace_editor {
+                    display: block;
+                }
+            }
+
+            select {
+                margin-bottom: @defaultMargin*2;
+            }
+            h4 {
+                margin-top: @defaultMargin;
+                margin-bottom: 0;
+
+                em {
+                    font-style: normal;
+                    font-weight: normal;
+                    .opacity(0.6);
+                    // font-size: 0.8em;
+                }
+            }
+
+            .spinner-container {
+                position: relative;
+                top: -30px;
+            }
+
+            input:not([type='checkbox']),
+            select {
+                width: 100%;
+            }
+            input[type='checkbox'] {
+                margin-top: @defaultMargin/2;
+            }
+
+            .send-info label {
+                position: relative;
+                top: -6px;
+                left: @gridWidth/4;
+            }
+
+            #contract-source-editor {
+                width: auto;
+                height: 400px;
+            }
+
+            // .solidity-source {
+            //     font-family: 'source code pro', "Lucida Sans Typewriter Regular", Monaco, "Courier New" ,  monospace;
+            //     font-size: 0.8em;
+            //     font-weight: 500;
+            //     color: @colorGrayDark;
+            // }
         }
 
         > .amount {
@@ -406,6 +472,10 @@ body {
                 line-height: 22px;
                 margin-right: @gridWidth/4;
             }
+
+            .balance {
+                float: right;
+            }
         }
 
         .dapp-select-gas-price {
@@ -423,39 +493,8 @@ body {
          
     }
 
-    .solidity-source {
-        font-family: 'source code pro', "Lucida Sans Typewriter Regular", Monaco, "Courier New" ,  monospace;
-        font-size: 0.8em;
-        font-weight: 500;
-        color: @colorGrayDark;
-    }
-    
-    .dapp-data-textarea {
-        display: none;
-    }
-
     textarea {
         width: 100%;
-    }
-    
-    .send-info {
-        margin-top: @defaultMargin;
-        color: @colorTextSecondary;
-
-        input:not([type='checkbox']), select {
-            width: 100%;
-        }
-
-        label {
-            position: relative;
-            top: -6px;
-            left: @gridWidth/4;
-        }
-
-        h3 em {
-            text-transform: none;
-            opacity: 0.5;
-        }
     }
 }
 

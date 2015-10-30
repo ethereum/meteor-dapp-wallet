@@ -47,7 +47,7 @@ Check if the amount accounts daily limit  and sets the correct text.
 */
 var checkOverDailyLimit = function(address, wei, template){
     // check if under or over dailyLimit
-    account = Helpers.getAccountByAddress(address, false);
+    account = Helpers.getAccountByAddress(address);
 
     // check whats left
     var restDailyLimit = new BigNumber(account.dailyLimit || '0', 10).minus(new BigNumber(account.dailyLimitSpent || '0', 10));
@@ -74,7 +74,7 @@ var addTransactionAfterSend = function(txHash, amount, from, to, gasPrice, estim
     Transactions.upsert(txId, {$set: {
         tokenId: tokenId,
         value: amount,
-        from: selectedAccount.address,
+        from: from,
         to: to,
         timestamp: moment().unix(),
         transactionHash: txHash,
@@ -84,12 +84,12 @@ var addTransactionAfterSend = function(txHash, amount, from, to, gasPrice, estim
         data: data
     }});
 
-    // add to Account
-    EthAccounts.update(selectedAccount._id, {$addToSet: {
+    // add from Account
+    EthAccounts.update({address: from}, {$addToSet: {
         transactions: txId
     }});
 
-    // add from Account
+    // add to Account
     EthAccounts.update({address: to}, {$addToSet: {
         transactions: txId
     }});
@@ -116,6 +116,26 @@ var estimationCallback = function(e, res){
 };
 
 
+/**
+Get the data field of either the byte or source code textarea, depending on the selectedType
+
+@method getDataField
+*/
+var getDataField = function(){
+    // make reactive to the show/hide of the textarea
+    TemplateVar.getFrom('.compile-contract','byteTextareaShown');
+
+
+    var type = TemplateVar.getFrom('.compile-contract', 'selectedType');
+
+    var data = (type === 'byte-code')
+        ? TemplateVar.getFrom('.dapp-data-textarea', 'value')
+        : TemplateVar.getFrom('.compile-contract', 'value');
+
+    return data;
+};
+
+
 // Set basic variables
 Template['views_send'].onCreated(function(){
     var template = this;
@@ -125,7 +145,7 @@ Template['views_send'].onCreated(function(){
     accountSort = {sort: {name: 1}};
 
     // set the default fee
-    TemplateVar.set('selectAction', 'send-funds');
+    TemplateVar.set('selectedAction', 'send-funds');
     TemplateVar.set('selectedToken', 'ether');
     TemplateVar.set('amount', '0');
     TemplateVar.set('estimatedGas', 0);
@@ -138,6 +158,15 @@ Template['views_send'].onCreated(function(){
     });
 
 
+    // check daily limit again, when the account was switched
+    template.autorun(function(c){
+        var address = TemplateVar.getFrom('.dapp-select-account', 'value'),
+            amount = TemplateVar.get('amount') || '0';
+
+        if(!c.firstRun)
+            checkOverDailyLimit(address, amount, template);
+    });
+
     // change the amount when the currency unit is changed
     template.autorun(function(c){
         var unit = EthTools.getUnit();
@@ -147,6 +176,8 @@ Template['views_send'].onCreated(function(){
         }
     });
 });
+
+
 
 Template['views_send'].onRendered(function(){
     var template = this;
@@ -164,19 +195,16 @@ Template['views_send'].onRendered(function(){
     if(from)
         TemplateVar.setTo('select[name="dapp-select-account"]', 'value', FlowRouter.getParam('from'));
 
-    
 
     // ->> GAS PRICE ESTIMATION
     template.autorun(function(c){
         var address = TemplateVar.getFrom('.dapp-select-account', 'value'),
             to = TemplateVar.getFrom('.dapp-address-input', 'value'),
-            data = TemplateVar.getFrom('.dapp-data-textarea', 'value'),
-            tokenAddress = TemplateVar.get('selectedToken'),
-            amount = TemplateVar.get('amount') || '0';
+            amount = TemplateVar.get('amount') || '0',
+            data = getDataField(),
+            tokenAddress = TemplateVar.get('selectedToken');
 
-        // make reactive to the show/hide data
-        TemplateVar.get('dataShown');
-
+        // console.log('DATA', data);
 
         // if(!web3.isAddress(to))
         //     to = '0x0000000000000000000000000000000000000000';
@@ -256,7 +284,7 @@ Template['views_send'].helpers({
     @method (tokens)
     */
     'tokens': function(){
-        if(TemplateVar.get('selectAction') === 'send-funds')
+        if(TemplateVar.get('selectedAction') === 'send-funds')
             return Tokens.find({},{sort: {name: 1}});
     },
     /**
@@ -272,8 +300,17 @@ Template['views_send'].helpers({
         if(!selectedAccount)
             return;
 
-        query['balances.'+ selectedAccount._id] = {$exists: true, $ne: '0'};        
-        return Tokens.findOne(query, {field: {_id: 1}});
+        query['balances.'+ selectedAccount._id] = {$exists: true, $ne: '0'};   
+     
+        return (TemplateVar.get('selectedAction') === 'send-funds' && !!Tokens.findOne(query, {field: {_id: 1}}));
+    },
+    /**
+    Show the byte code only for the data field
+
+    @method (showOnlyByteTextarea)
+    */
+    'showOnlyByteTextarea': function() {
+        return (TemplateVar.get("selectedAction") !== "upload-contract");
     },
     /**
     Return the currently selected fee + amount
@@ -313,30 +350,6 @@ Template['views_send'].helpers({
         return TAPi18n.__('wallet.send.texts.timeTexts.'+ ((Number(TemplateVar.getFrom('.dapp-select-gas-price', 'feeMultiplicator')) + 5) / 2).toFixed(0));
     },
     /**
-    Get compiled contracts 
-
-    @method (compiledContracts)
-    */
-    'compiledContracts' : function(){
-        return TemplateVar.get("compiledContracts");
-    },
-    /**
-    Get selected contract functions
-
-    @method (selectedContractInputs)
-    */
-    'selectedContractInputs' : function(){
-        return TemplateVar.get("selectedContract").inputs;
-    },
-    /**
-    Get selected contract functions
-
-    @method (selectedContractInputs)
-    */
-    'selectedFunctionInputs' : function(){
-        return TemplateVar.get("selectedFunction").inputs;
-    },
-    /**
 
     Shows correct explanation for token type
 
@@ -351,11 +364,11 @@ Template['views_send'].helpers({
         if(!token || !selectedAccount)
             return;
 
-        var tokenBalance = token.balances[selectedAccount._id] || '0',
-            formattedAmount = Helpers.formatNumberByDecimals(amount, token.decimals),
-            formattedBalance = Helpers.formatNumberByDecimals(tokenBalance, token.decimals);
-
-        return Spacebars.SafeString(TAPi18n.__('wallet.send.texts.sendToken', {amount:formattedAmount, name: token.name, balance: formattedBalance , symbol: token.symbol})); 
+        return Spacebars.SafeString(TAPi18n.__('wallet.send.texts.sendToken', {
+            amount: Helpers.formatNumberByDecimals(amount, token.decimals),
+            name: token.name,
+            symbol: token.symbol
+        })); 
         
     },
     /**
@@ -371,29 +384,6 @@ Template['views_send'].helpers({
             : false;
     },
     /**
-    Check if to account has code
-
-    @method (accountHasCode)
-    */
-    'accountHasCode': function(e){
-        //0x22a037ffc313beb81cd756151bd504653f7b983d
-        //0xa3687db9e245f5ad8a70123f9df0237c11ffc362
-
-        var contract = TemplateVar.getFrom('.dapp-address-input', 'value') || FlowRouter.getParam('address');
-        var code = web3.eth.getCode(contract);
-
-        return code != "0x";
-    },
-    /**
-    Get Functions
-
-    @method (tokens)
-    */
-    'listContractFunctions': function(){
-        console.log("remake array");
-        return TemplateVar.get("contractFunctions");
-    },
-    /**
     Returns true if the current selected unit is an ether unit (ether, finney, etc)
 
     @method (etherUnit)
@@ -407,41 +397,22 @@ Template['views_send'].helpers({
 
 Template['views_send'].events({
     /**
-    Show the extra data field
-    
-    @event click button.show-data
-    */
-    'click button.show-data': function(e){
-        e.preventDefault();
-        TemplateVar.set('showData', true);
-    },
-    /**
-    Show the extra data field
-    
-    @event click button.hide-data
-    */
-    'click button.hide-data': function(e){
-        e.preventDefault();
-        TemplateVar.set('showData', false);
-    },
-    /**
     Action Switcher
     
     @event click .select-action input
     */
     'click .select-action input': function(e, template){
         var option = e.currentTarget.value;
-        TemplateVar.set('selectAction', option);
+        TemplateVar.set('selectedAction', option);
 
-        if (option == 'upload-contract') {
-            TemplateVar.set('showData', true);
+        if (option === 'upload-contract') {
             TemplateVar.set('hideTo', true);
             TemplateVar.set('selectedToken', 'ether');
+            TemplateVar.setTo('.compile-contract', 'selectedType', 'source-code');
 
             TemplateVar.set('savedTo', TemplateVar.getFrom('.dapp-address-input', 'value'));
 
         } else {
-            TemplateVar.set('showData', false);
             TemplateVar.set('hideTo', false);
 
             Tracker.afterFlush(function() {
@@ -465,46 +436,6 @@ Template['views_send'].events({
 
         // trigger amount box change
         template.$('input[name="amount"]').trigger('change');
-    },
-    /**
-    Change the ABI
-    
-    @event keyup input[name="abi"], change input[name="abi"], input input[name="abi"]
-    */
-    'keyup input[name="abi"], change input[name="abi"], input input[name="abi"]': function(e, template){
-        var ABI = JSON.parse(e.currentTarget.value);
-        var address = TemplateVar.getFrom('.dapp-address-input', 'value');
-        contractInstance = web3.eth.contract(ABI).at(address);
-
-        console.log(ABI);
-
-        var contractFunctions = [];
-
-        _.each(ABI, function(e,i){
-            if (e.type == "function" && !e.constant) {
-                _.each(e.inputs, function(input){
-                    input.template = "input_"+input.type.substr(0,3);
-                    var sizes = input.type.match(/[0-9]+/);
-                    if (sizes)
-                        input.bits = sizes[0];
-                })
-                contractFunctions.push(e);
-                TemplateVar.set("selectedFunction", e);
-            }
-        });
-
-        TemplateVar.set("contractFunctions", contractFunctions);
-
-        /* 
-        Examples:
-        0x76cadd67246babd234a40815ba267f51ff4144f2
-
-        ABI:
-    [{"constant":false,"inputs":[{"name":"target","type":"address"},{"name":"amount","type":"uint256"}],"name":"issueNewTokens","outputs":[],"type":"function"},{"constant":true,"inputs":[],"name":"tokenDecimals","outputs":[{"name":"","type":"uint8"}],"type":"function"},{"constant":true,"inputs":[],"name":"tokenName","outputs":[{"name":"","type":"string"}],"type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":true,"inputs":[],"name":"tokenSymbol","outputs":[{"name":"","type":"string"}],"type":"function"},{"constant":false,"inputs":[{"name":"receiver","type":"address"},{"name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"name":"sufficient","type":"bool"}],"type":"function"},{"inputs":[{"name":"supply","type":"uint256"},{"name":"name","type":"string"},{"name":"decimals","type":"uint8"},{"name":"symbol","type":"string"},{"name":"issuer","type":"address"}],"type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"sender","type":"address"},{"indexed":false,"name":"receiver","type":"address"},{"indexed":false,"name":"amount","type":"uint256"}],"name":"Transfer","type":"event"}]
-
-        */
-
-
     },
     /**
     Set the amount while typing
@@ -533,20 +464,6 @@ Template['views_send'].events({
     /**
     Selected a contract function
     
-    @event 'click .contract-functions
-    */
-    'change .compiled-contracts': function(e, template){
-        // get the correct contract
-        var selectedContract = _.select(TemplateVar.get("compiledContracts"), function(contract){
-            return contract.name == e.currentTarget.value;
-        })
-
-        // change the inputs and data field
-        TemplateVar.set("selectedContract", selectedContract[0]);
-    },
-    /**
-    Selected a contract function
-    
     @event 'click .select-contract-function
     */
     'change .select-contract-function': function(e, template){
@@ -559,65 +476,6 @@ Template['views_send'].events({
         TemplateVar.set("selectedFunction", selectedFunction[0]);
     },
     /**
-    Change solidity code
-    
-    @event keyup textarea.solidity-source, change textarea.solidity-source, input textarea.solidity-source
-    */
-    'change textarea.solidity-source, input textarea.solidity-source': function(e, template){
-        var sourceCode = e.currentTarget.value;
-        TemplateVar.set("contractFunctions", false);
-
-        //check if it matches a hex pattern
-        if (sourceCode == sourceCode.match("[0-9A-Fa-fx]+")[0]){
-            // If matches, just pass if forward to the data field
-            // document.getElementsByClassName("dapp-data-textarea")[0].value = sourceCode;
-            template.find('.dapp-data-textarea').value = sourceCode;
-            TemplateVar.set(template, 'codeNotExecutable', false);
-
-        } else {
-            //if it doesnt, try compiling it in solidity
-            try {
-                var compiled = web3.eth.compile.solidity(sourceCode);
-                TemplateVar.set(template, 'codeNotExecutable', false);
-
-                var compiledContracts = [];
-
-                _.each(compiled, function(e, i){
-                    var abi = JSON.parse(e.interface);
-                    
-                    // find the constructor function
-                    var constructor = _.select(abi, function(func){
-                        return func.type == "constructor";
-                    });
-
-                    // substring the type so that string32 and string16 wont need different templates
-                    _.each(constructor[0].inputs, function(input){
-                        input.template = "input_"+input.type.substr(0,3);
-                        var sizes = input.type.match(/[0-9]+/);
-                        if (sizes)
-                            input.bits = sizes[0];
-                    })
-
-                    var simplifiedContractObject = {'name': i, 'bytecode': e.bytecode, 'abi': abi, 'inputs':constructor[0].inputs }
-                    
-                    TemplateVar.set("selectedContract", simplifiedContractObject); 
-                    compiledContracts.push(simplifiedContractObject);   
-                })
-
-                TemplateVar.set("compiledContracts", compiledContracts);
-
-            } catch(error) {
-                // Doesnt compile in solidity either, throw error
-                TemplateVar.set(template, 'codeNotExecutable', true);
-                console.log(error.message);
-            }
-        };
-        
-        
-
-         
-    },
-    /**
     Submit the form and send the transaction!
     
     @event submit form
@@ -627,14 +485,11 @@ Template['views_send'].events({
         var amount = TemplateVar.get('amount') || '0',
             tokenAddress = TemplateVar.get('selectedToken'),
             to = TemplateVar.getFrom('.dapp-address-input', 'value'),
-            byteCode = TemplateVar.get('selectedContract').bytecode,
-            solidityCode = TemplateVar.getFrom('.solidity-source', 'value'),
             gasPrice = TemplateVar.getFrom('.dapp-select-gas-price', 'gasPrice'),
             estimatedGas = TemplateVar.get('estimatedGas'),
             selectedAccount = Helpers.getAccountByAddress(template.find('select[name="dapp-select-account"]').value),
-            selectedAction = TemplateVar.get("selectAction");
-        
-        console.log("ByteCode: "+ byteCode + " Solidity Code: " + solidityCode);
+            selectedAction = TemplateVar.get("selectedAction"),
+            data = getDataField();
 
         if(selectedAccount && !TemplateVar.get('sending')) {
 
@@ -645,6 +500,12 @@ Template['views_send'].events({
 
             console.log('Providing gas: ', estimatedGas ,' + 100000');
 
+            if(TemplateVar.get('selectedAction') === 'upload-contract' && !data)
+                return GlobalNotification.warning({
+                    content: 'i18n:wallet.contracts.error.noDataProvided',
+                    duration: 2
+                });
+
 
             if(selectedAccount.balance === '0')
                 return GlobalNotification.warning({
@@ -653,7 +514,7 @@ Template['views_send'].events({
                 });
 
 
-            if(!web3.isAddress(to) && selectedAction != "upload-contract")
+            if(!web3.isAddress(to) && !data)
                 return GlobalNotification.warning({
                     content: 'i18n:wallet.send.error.noReceiver',
                     duration: 2
@@ -662,7 +523,7 @@ Template['views_send'].events({
 
             if(tokenAddress === 'ether') {
                 
-                if((_.isEmpty(amount) || amount === '0' || !_.isFinite(amount)) && selectedAction != "upload-contract")
+                if((_.isEmpty(amount) || amount === '0' || !_.isFinite(amount)) && !data)
                     return GlobalNotification.warning({
                         content: 'i18n:wallet.send.error.noAmount',
                         duration: 2
@@ -703,7 +564,7 @@ Template['views_send'].events({
 
                 
                 // ETHER TX
-                if(tokenAddress === 'ether' && selectedAction != "upload-contract") {
+                if(tokenAddress === 'ether') {
                     console.log('Send Ether');
 
                     // CONTRACT TX
@@ -741,7 +602,7 @@ Template['views_send'].events({
                         web3.eth.sendTransaction({
                             from: selectedAccount.address,
                             to: to,
-                            data: byteCode,
+                            data: data,
                             value: amount,
                             gasPrice: gasPrice,
                             gas: estimatedGas
@@ -769,50 +630,6 @@ Template['views_send'].events({
                          
                     }
 
-                // UPLOAD CONTRACT
-                } else if (selectedAction == "upload-contract") {
-                    console.log('Solidity Compiler');
-                    
-                    // CONTRACT TX
-                    if(contracts['ct_'+ selectedAccount._id]) {
-
-                        console.log('From contract');
-
-                    
-                    // SIMPLE TX
-                    } else {
-                        console.log('From Account');
-
-                        var selectedContract = TemplateVar.get("selectedContract");
-
-                        // create an array with the input fields
-                        var contractArguments = [];
-
-                        _.each(selectedContract.inputs, function(input){
-                            var output = $('.abi-input[placeholder="'+input.name+'"]')[0].value;
-                            console.log(output);
-                            contractArguments.push(output);
-                        })
-
-                        // add the default web3 arguments
-                        contractArguments.push({
-                            from: selectedAccount.address,
-                            to: to,
-                            value: amount,
-                            gasPrice: gasPrice,
-                            gas: estimatedGas
-                        }, function(error, txHash){});
-
-                        console.log(contractArguments);
-
-                        // publish new contract
-                        web3.eth.contract(selectedContract.abi).new(arguments);
-                         
-                    }
-                
-                } else if (selectedAction == "execute-contract") {
-                    console.log('Execute Contract');
-
                 // TOKEN TRANSACTION
                 } else {
                     console.log('Send Token');
@@ -839,7 +656,7 @@ Template['views_send'].events({
                             if(!error) {
                                 console.log('SEND TOKEN from contract', amount, 'with data ', tokenSendData);
 
-                                addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data, token._id);
+                                addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, tokenSendData, token._id);
 
                                 FlowRouter.go('dashboard');
 
@@ -867,7 +684,7 @@ Template['views_send'].events({
                             if(!error) {
                                 console.log('SEND TOKEN', amount);
 
-                                addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data, token._id);
+                                addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, null, token._id);
 
                                 FlowRouter.go('dashboard');
                                 // GlobalNotification.warning({

@@ -73,15 +73,13 @@ Observe the latest blocks
 */
 observeLatestBlocks = function(){
 
-    // update balances on start
+    // update balances on start 
     updateBalances();
 
     // GET the latest blockchain information
     web3.eth.filter('latest').watch(function(e, res){
         if(!e) {
-
-            console.log('Block arrived ', res);
-
+            // console.log('Block arrived ', res);
             updateBalances();
         }
     });

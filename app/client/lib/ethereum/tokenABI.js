@@ -1,8 +1,6 @@
 //"0x11485c5f164d6a67a72eee9093b2581d1c304094"
 
 // Token Interface
-// var tokenABI = [{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balances","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[{"name":"receiver","type":"address"}],"name":"balanceof","outputs":[{"name":"balance","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[{"name":"receiver","type":"address"},{"name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"name":"sufficient","type":"bool"}],"type":"function"},{"inputs":[{"name":"supply","type":"uint256"}],"type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"sender","type":"address"},{"indexed":false,"name":"receiver","type":"address"},{"indexed":false,"name":"amount","type":"uint256"}],"name":"Transfer","type":"event"}];
-
 
 var tokenABI = [
       {
@@ -11,7 +9,7 @@ var tokenABI = [
         "constant": true,
         "inputs": [
           {
-            "name": "receiver",
+            "name": "address",
             "type": "address"
           }
         ],
@@ -28,20 +26,56 @@ var tokenABI = [
         "constant": false,
         "inputs": [
           {
-            "name": "receiver",
+            "name": "to",
             "type": "address"
           },
           {
-            "name": "amount",
+            "name": "value",
             "type": "uint256"
           }
         ],
         "outputs": [
           {
-            "name": "sufficient",
+            "name": "success",
             "type": "bool"
           }
         ]
+      },
+      {
+          "constant": true,
+          "inputs": [],
+          "name": "decimals",
+          "outputs": [
+              {
+                  "name": "",
+                  "type": "uint8"
+              }
+          ],
+          "type": "function"
+      },
+      {
+          "constant": true,
+          "inputs": [],
+          "name": "name",
+          "outputs": [
+              {
+                  "name": "",
+                  "type": "string"
+              }
+          ],
+          "type": "function"
+      },
+      {
+          "constant": true,
+          "inputs": [],
+          "name": "symbol",
+          "outputs": [
+              {
+                  "name": "",
+                  "type": "string"
+              }
+          ],
+          "type": "function"
       },
       {
         "type": "constructor",
@@ -58,21 +92,22 @@ var tokenABI = [
         "anonymous": false,
         "inputs": [
           {
-            "indexed": false,
-            "name": "sender",
+            "indexed": true,
+            "name": "from",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "name": "to",
             "type": "address"
           },
           {
             "indexed": false,
-            "name": "receiver",
-            "type": "address"
-          },
-          {
-            "indexed": false,
-            "name": "amount",
+            "name": "value",
             "type": "uint256"
           }
         ]
       }
 ];
+
 TokenContract = web3.eth.contract(tokenABI);

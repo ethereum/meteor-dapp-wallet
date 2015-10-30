@@ -1,5 +1,5 @@
 /**
-The template to display each token.
+Modal to add token.
 
 @class [template] views_modals_addToken
 @constructor
@@ -9,7 +9,6 @@ The template to display each token.
 
 Template['views_modals_addToken'].onCreated(function(){
     TemplateVar.set('symbol', '$');
-    TemplateVar.set('decimals', this.data.decimals || 2);
 });
 
 Template['views_modals_addToken'].onRendered(function(){
@@ -62,18 +61,40 @@ Template['views_modals_addToken'].events({
         TemplateVar.set('name', e.target.value);
     },    
     /**
-    Change Symbol
+    Change Address
 
     @event change input[name="address"], input input[name="address"]
     */
     'change input[name="address"], input input[name="address"]': function(e, template) {
+        var tokenAddress = TemplateVar.getFrom('.token-address', 'value');
+        
+        if(!tokenAddress) 
+            return;
+        
+        TemplateVar.set('tokenAddress', tokenAddress)
+    
         // initiate the geo pattern
-        var pattern = GeoPattern.generate(e.target.value, {color: '#CCC6C6'});
+        var pattern = GeoPattern.generate(tokenAddress, {color: '#CCC6C6'});
         $('.example.wallet-box.tokens').css('background-image', pattern.toDataUrl());
         
-        if(!$(e.target).hasClass('dapp-error')){
-            TemplateVar.set('tokenAddress', e.target.value)
-        };
+        // check if the token has information about itself asynchrounously
+        var tokenInstance = TokenContract.at(tokenAddress);
+
+        tokenInstance.symbol(function(e, i){
+            if(template.$('input.symbol').val() === '')
+                template.$('input.symbol').val(i).change();
+        })
+
+        tokenInstance.name(function(e, i){
+            if(template.$('input.name').val() === '')
+                template.$('input.name').val(i).change();
+        })
+        
+        tokenInstance.decimals(function(e, i){
+            if(template.$('input.decimals').val() === '')
+                template.$('input.decimals').val(i).change();
+        })
+
     },    
     /**
     Prevent the example from beeing clicked
