@@ -60,6 +60,7 @@ Template['elements_compileContract'].onCreated(function() {
     });
 });
 
+editor = {};
 Template['elements_compileContract'].onRendered(function() {
     var template = this;
 
@@ -67,13 +68,23 @@ Template['elements_compileContract'].onRendered(function() {
     this.aceEditor.setOptions({
         useWorker: false,
         minLines: 10,
-        maxLines: 30
+        maxLines: 30,
+        highlightActiveLine: false
     });
     this.aceEditor.setTheme("ace/theme/tomorrow");
     this.aceEditor.getSession().setMode("ace/mode/typescript");
+    this.aceEditor.$blockScrolling = Infinity;
     this.aceEditor.focus();
 
-    // editor = this.aceEditor;
+    this.aceEditor.setValue("contract MyContract {\n"+
+"    /* Constructor */\n"+
+"    function MyContract() {\n"+
+" \n"+
+"    }\n"+
+"}");
+    this.aceEditor.selection.selectTo(0);
+
+    editor = this.aceEditor;
 
     // WATCH FOR CHANGES
     this.aceEditor.getSession().on('change', _.debounce(function(e) {
