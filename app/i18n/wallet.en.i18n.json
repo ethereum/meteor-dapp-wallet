@@ -184,7 +184,7 @@
             "sendFunds": "Send funds",
             "uploadContract": "Upload contract",
             "data": "Data",
-            "fee": "Choose a Fee",
+            "fee": "Select Fee",
             "feeLow": "Cheaper",
             "feeHigh": "Faster",
             "addData": "Add data",
