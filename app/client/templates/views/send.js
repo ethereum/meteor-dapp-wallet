@@ -125,10 +125,12 @@ var getDataField = function(){
     // make reactive to the show/hide of the textarea
     TemplateVar.getFrom('.compile-contract','byteTextareaShown');
 
-
+    var action = TemplateVar.get('selectedAction');
     var type = TemplateVar.getFrom('.compile-contract', 'selectedType');
 
-    var data = (type === 'byte-code')
+    var data = (action === 'execute-contract')
+        ? TemplateVar.getFrom('.execute-contract', 'value')
+        : (type === 'byte-code')
         ? TemplateVar.getFrom('.dapp-data-textarea', 'value')
         : TemplateVar.getFrom('.compile-contract', 'value');
 
