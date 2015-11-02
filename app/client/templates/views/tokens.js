@@ -51,27 +51,7 @@ Template['views_tokens'].helpers({
     @method (tokens)
     */
     'tokens': function(){
-        
         return Tokens.find({}, {sort:{symbol:1}});
-    },
-    /**
-    Get the total balance of the token
-
-    @method (formattedTotalBalance)
-    */
-    'formattedTotalBalance': function(e){
-        var balance = _.reduce(this.balances, function(memo, bal){
-            return memo.plus(new BigNumber(bal, 10));
-        }, new BigNumber(0));
-        return Helpers.formatNumberByDecimals(balance, this.decimals);
-    },
-    /**
-
-    @method geoPattern
-    */
-    'geoPattern' : function(){
-        var pattern = GeoPattern.generate(this.address, {color: '#CCC6C6'});
-        return pattern.toDataUrl();
     }
 })
 
@@ -96,29 +76,6 @@ Template['views_tokens'].events({
         });
     },
     /**
-    Click Delete Token
-    
-    @event click a.create.account
-    */
-    'click .delete-token': function(e){
-        e.preventDefault();
-        e.stopImmediatePropagation();
-
-        
-        var address = e.currentTarget.getAttribute('data')
-        var tokenId = Helpers.makeId('token', address);
-        var token = Tokens.findOne(tokenId);
-
-        EthElements.Modal.question({
-            text: new Spacebars.SafeString(TAPi18n.__('wallet.tokens.deleteToken', {token: token.name})),
-            ok: function(){
-                Tokens.remove(tokenId);
-            },
-            cancel: true
-        });
-
-    },
-    /**
     Edit Token
     
     @event click .wallet-box.tokens
@@ -126,27 +83,15 @@ Template['views_tokens'].events({
     'click .wallet-box.tokens': function(e){
         e.preventDefault();
 
-        var address = e.currentTarget.getAttribute('data')
-        var tokenId = Helpers.makeId('token', address);
-
-
-        token = Tokens.findOne(tokenId)        
-
         // Open a modal 
         EthElements.Modal.question({
             template: 'views_modals_addToken',
-            data: {
-                address: address,
-                name: token.name,
-                symbol: token.symbol, 
-                decimals: token.decimals 
-            },
+            data: this,
             ok: addToken.bind(this),
             cancel: true
         },{
             class: 'modals-add-token'
         });
 
-        }
-
+    }
 })

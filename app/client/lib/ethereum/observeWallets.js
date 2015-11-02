@@ -159,45 +159,36 @@ var setupContractFilters = function(newDocument, checkFromCreationBlock){
     if(newDocument.imported) {
 
         Helpers.eventLogs('Imported wallet: '+ newDocument.address +' checking for any log from block #'+ newDocument.creationBlock);
-        var importFilter = web3.eth.filter({address: newDocument.address, fromBlock: newDocument.creationBlock, toBlock: 'latest'});
-        var intervalId = setInterval(function(){
+        web3.eth.filter({address: newDocument.address, fromBlock: newDocument.creationBlock, toBlock: 'latest'}).get(function(error, logs) {
+            if(!error) {
 
-            if(!importFilter.filterId)
-                return;
-
-            clearInterval(intervalId);
-
-            importFilter.get(function(error, logs) {
-                if(!error) {
-
-                    var creationBlock = EthBlocks.latest.number;
+                var creationBlock = EthBlocks.latest.number;
 
 
-                    // get earliest block number of appeared log
-                    if(logs.length !== 0) {
-                        logs.forEach(function(log){
-                            if(log.blockNumber < creationBlock)
-                                creationBlock = log.blockNumber;
-                        });
-                    }
-
-                    // add the address state
-                    Wallets.update(newDocument._id, {$unset: {
-                        imported: '',
-                    }, $set: {
-                        creationBlock: creationBlock - 100
-                    }});
-                    newDocument = Wallets.findOne(newDocument._id);
-
-
-                    // update dailyLimit and requiredSignatures
-                    updateContractData(newDocument);
-
-                    // add contract filters
-                    setupContractFilters(newDocument, true);
+                // get earliest block number of appeared log
+                if(logs.length !== 0) {
+                    logs.forEach(function(log){
+                        if(log.blockNumber < creationBlock)
+                            creationBlock = log.blockNumber;
+                    });
                 }
-            });
-        }, 100);
+
+                // add the address state
+                Wallets.update(newDocument._id, {$unset: {
+                    imported: '',
+                }, $set: {
+                    creationBlock: creationBlock - 100
+                }});
+                newDocument = Wallets.findOne(newDocument._id);
+
+
+                // update dailyLimit and requiredSignatures
+                updateContractData(newDocument);
+
+                // add contract filters
+                setupContractFilters(newDocument, true);
+            }
+        });
 
     // CHECK if for the contract address
     } else if(!newDocument.address) {
@@ -282,7 +273,7 @@ var setupContractFilters = function(newDocument, checkFromCreationBlock){
                     var txExists = addTransaction(log, log.args.from, newDocument.address, log.args.value.toString(10));
 
                     // NOTIFICATION
-                    if(!txExists || (!txExists.blockNumber && txExists.tokenId)) {
+                    if(!txExists || !txExists.tokenId) {
                         var txId = Helpers.makeId('tx', log.transactionHash);
 
                         Helpers.showNotification('wallet.transactions.notifications.incomingTransaction', {
@@ -309,7 +300,7 @@ var setupContractFilters = function(newDocument, checkFromCreationBlock){
                     var txExists = addTransaction(log, newDocument.address, log.args.to, log.args.value.toString(10));
 
                     // NOTIFICATION
-                    if(!txExists || (!txExists.blockNumber && txExists.tokenId)) {
+                    if(!txExists || !txExists.tokenId) {
                         var txId = Helpers.makeId('tx', log.transactionHash);
 
                         Helpers.showNotification('wallet.transactions.notifications.outgoingTransaction', {
