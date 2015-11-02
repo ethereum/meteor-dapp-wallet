@@ -470,7 +470,7 @@ Template['views_send'].events({
 
         var amount = TemplateVar.get('amount') || '0',
             tokenAddress = TemplateVar.get('selectedToken'),
-            to = TemplateVar.getFrom('.dapp-address-input', 'value'),
+            to = TemplateVar.getFrom('.from-to .dapp-address-input', 'value'),
             gasPrice = TemplateVar.getFrom('.dapp-select-gas-price', 'gasPrice'),
             estimatedGas = TemplateVar.get('estimatedGas'),
             selectedAccount = Helpers.getAccountByAddress(template.find('select[name="dapp-select-account"]').value),
