@@ -132,7 +132,7 @@ observeTokens = function(){
         @method removed
         */
         removed: function(document) {
-            var contractInstance = tokenContracts['ct_'+ newDocument._id];
+            var contractInstance = tokenContracts['ct_'+ document._id];
 
             if(!contractInstance)
                 return;

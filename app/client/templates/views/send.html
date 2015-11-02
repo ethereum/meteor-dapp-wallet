@@ -12,8 +12,8 @@
                     <input type="radio" value="send-funds" id="send-funds" name="select-action" checked>
                     <label for="send-funds"> {{i18n 'wallet.send.sendFunds'}} </label>
 
-                    <input type="radio" value="upload-contract" id="upload-contract" name="select-action">
-                    <label for="upload-contract"> {{i18n 'wallet.send.uploadContract'}} </label>
+                    <input type="radio" value="deploy-contract" id="deploy-contract" name="select-action">
+                    <label for="deploy-contract"> {{i18n 'wallet.send.deployContract'}} </label>
                 </div>
             </div>
         </div> 
@@ -162,7 +162,7 @@
             {{#if TemplateVar.get "sending"}} 
                 {{i18n 'buttons.sending'}}
             {{else}}
-                {{#if $eq (TemplateVar.get "selectedAction") "upload-contract"}}
+                {{#if $eq (TemplateVar.get "selectedAction") "deploy-contract"}}
                     {{i18n 'wallet.app.buttons.deploy'}}
                 {{else}}
                     {{i18n 'buttons.send'}}

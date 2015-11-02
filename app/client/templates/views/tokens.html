@@ -10,17 +10,7 @@
         <div class="dapp-clear-fix"></div>
 
         {{#each tokens}}
-
-            <button class="wallet-box tokens" style="background-image:{{geoPattern}}" data="{{address}}">
-                {{> dapp_identicon identity=address class="dapp-small"}}
-                <h3>{{name}}</h3>
-                <button class="delete-token" data="{{address}}"><i class="icon-trash"></i></button>
-                <span class="account-balance"> 
-                    {{formattedTotalBalance}}<span> {{symbol}}</span>
-                </span>            
-                <span class="account-id">{{address}}</span>                
-            </button>
-
+            {{> elements_tokenBox}}
         {{/each}}
 
         <button class="wallet-box create add-token">

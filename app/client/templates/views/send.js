@@ -310,7 +310,7 @@ Template['views_send'].helpers({
     @method (showOnlyByteTextarea)
     */
     'showOnlyByteTextarea': function() {
-        return (TemplateVar.get("selectedAction") !== "upload-contract");
+        return (TemplateVar.get("selectedAction") !== "deploy-contract");
     },
     /**
     Return the currently selected fee + amount
@@ -405,7 +405,7 @@ Template['views_send'].events({
         var option = e.currentTarget.value;
         TemplateVar.set('selectedAction', option);
 
-        if (option === 'upload-contract') {
+        if (option === 'deploy-contract') {
             TemplateVar.set('hideTo', true);
             TemplateVar.set('selectedToken', 'ether');
             TemplateVar.setTo('.compile-contract', 'selectedType', 'source-code');
@@ -486,7 +486,7 @@ Template['views_send'].events({
 
             console.log('Providing gas: ', estimatedGas ,' + 100000');
 
-            if(TemplateVar.get('selectedAction') === 'upload-contract' && !data)
+            if(TemplateVar.get('selectedAction') === 'deploy-contract' && !data)
                 return GlobalNotification.warning({
                     content: 'i18n:wallet.contracts.error.noDataProvided',
                     duration: 2
