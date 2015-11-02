@@ -258,7 +258,7 @@ Template['elements_transactions_row'].helpers({
     */
     'multipleOwnersApproved': function(e){
         var account = Helpers.getAccountByAddress(this.from),
-            ownerAccounts = _.pluck(EthAccounts.find({address: {$in: account.owners}}).fetch(), 'address');
+            ownerAccounts = _.pluck(Helpers.getAccounts({address: {$in: account.owners}}), 'address');
 
         return (_.difference(ownerAccounts, this.confirmedOwners).length > 0);
     },
@@ -302,8 +302,7 @@ Template['elements_transactions_row'].events({
     'click button.approve, click button.revoke': function(e){
         var _this = this,
             account = Helpers.getAccountByAddress(_this.from),
-            ownerAccounts = _.pluck(EthAccounts.find({address: {$in: account.owners}}).fetch(), 'address');
-
+            ownerAccounts = _.pluck(Helpers.getAccounts({address: {$in: account.owners}}), 'address');
 
         if(account) {
 
@@ -313,22 +312,40 @@ Template['elements_transactions_row'].events({
 
             var owner = account.owners[0];
 
-            var sendConfirmation = function(owner){
 
-                contracts['ct_'+ account._id][type].sendTransaction(_this.operation, {from: owner, gas: 1204633 + 900000}, function(error, hash){
-                    if(!error) {
-                        console.log(type,'TX hash: '+ hash);
-                        
-                        PendingConfirmations.update(_this._id, {$set: {
-                            sending: owner
-                        }});
-                    } else {
-                        GlobalNotification.error({
-                            content: error.message,
-                            duration: 8
-                        });
-                    }
-                });
+            // the callback called, when its confirmed
+            var callback = function(error, hash){
+                if(!error) {
+                    console.log(type +' confirmation tx hash: '+ hash);
+                    
+                    PendingConfirmations.update(_this._id, {$set: {
+                        sending: owner
+                    }});
+                } else {
+                    GlobalNotification.error({
+                        content: error.message,
+                        duration: 8
+                    });
+                }
+            };
+
+            // sending the confirm tx
+            var sendConfirmation = function(owner){
+                var confirmFunc = contracts['ct_'+ account._id][type];
+
+                if(wallet = Wallets.findOne({address: owner})) {
+
+                    EthElements.Modal.question({
+                        text: 'Wallets can not currently confirm multisig transactions',
+                        ok: true
+                    });
+                    // var confirmData = confirmFunc.getData(_this.operation);
+                    // contracts['ct_'+ wallet._id].execute(account.address, 0, confirmData, {from: wallet.owners[0], gas: 1204633 + 200000}, callback);
+
+                } else {
+
+                    confirmFunc.sendTransaction(_this.operation, {from: owner, gas: 1204633 + 200000}, callback);
+                }
             };
 
 

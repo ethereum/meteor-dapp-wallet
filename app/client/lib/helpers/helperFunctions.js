@@ -146,6 +146,18 @@ Helpers.getAccountByAddress = function(address, reactive) {
 };
 
 /**
+Gets the docuement matching the given query from the EthAccounts or Wallets collection.
+
+@method getAccounts
+@param {String} query
+@param {Boolean} reactive
+*/
+Helpers.getAccounts = function(query, reactive) {
+    var options = (reactive === false) ? {reactive: false} : {};
+    return EthAccounts.find(query, options).fetch().concat(Wallets.find(query, options).fetch());
+};
+
+/**
 Gets the docuement matching the given addess from the EthAccounts or Wallets collection and returns its name or address.
 
 @method getAccountNameByAddress
