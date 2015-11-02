@@ -57,6 +57,26 @@ Template['views_account'].helpers({
             return FlowRouter.path('account', {address: owner});
         else
             return FlowRouter.path('sendTo', {address: owner});
+    },
+    /**
+    Get all tokens
+
+    @method (tokens)
+    */
+    'tokens': function(){
+        return Tokens.find({}, {sort: {name: 1}});
+    },
+    /**
+    Get the tokens balance
+
+    @method (formattedCoinBalance)
+    */
+    'formattedCoinBalance': function(e){
+        var account = Template.parentData(2);
+
+        return (this.balances && Number(this.balances[account._id]) > 0)
+            ? Helpers.formatNumberByDecimals(this.balances[account._id], this.decimals) +' '+ this.symbol
+            : false;
     }
 });
 
@@ -172,7 +192,12 @@ Template['views_account'].events({
         e.preventDefault();
         
         // Open a modal showing the QR Code
-        EthElements.Modal.show('views_modals_qrCode');
+        EthElements.Modal.show({
+            template: 'views_modals_qrCode',
+            data: {
+                address: this.address
+            }
+        });
 
         
     }

@@ -10,9 +10,11 @@
             "buttons": {
                 "wallet": "Wallets",
                 "send": "Send",
+                "tokens": "Tokens",
                 "receive": "Receive",
-                "addWallet": "Add wallet",
-                "addAccount": "Add account"
+                "addWallet": "Add Wallet",
+                "addAccount": "Add Account",
+                "addToken": "Add Token"
             },
             "texts": {
                 "note": "Note",
@@ -40,6 +42,15 @@
             "testnetWallet": {
                 "walletNeedsDeployment": "You seem to be on a testnet.<br><br>There is no original wallet found, we need to deploy a wallet, which can be used by the wallet stub contracts, from your address: <br><br><small><code>__account__</code></small><br><br><em>Please make sure this address has at least 1 ether!</em>",
                 "testnetWalletDeployed": "Original wallet deployed!<br>An original wallet was deployed on the address:<br><br><small><code>__address__</code></small>."
+            },
+            "addToken": {
+                "title": "Add token",
+                "titleEdit": "Edit token",
+                "contractAddress": "Token contract address",
+                "tokenName": "Token name",
+                "tokenSymbol": "Token symbol",
+                "decimalPlaces": "Decimals Places of smallest unit",
+                "preview": "Preview"
             }
         },
         "accounts": {
@@ -49,7 +60,7 @@
             "defaultName": "Unnamed",
             "creating": "Creating",
             "importing": "Importing",
-            "accountNote": "Accounts can't list incoming transactions and are rather unsafe, please <a href=\"/account/new\">create a wallet</a> to store ether.",
+            "accountNote": "Accounts can't list incoming transactions, please <a href=\"/account/new\">create a wallet</a> to store ether.",
             "addressCopiedToClipboard": "Copied to clipboard",
             "qrCodeLabel": "Point a compatible mobile app to this code",
             "dailyLimit": "Daily limit",
@@ -102,6 +113,7 @@
                 "sent": "Sent",
                 "received": "Received",
                 "createdContract": "Created contract",
+                "tokenTransfer": "__token__ - Token transfer",
                 "pendingConfirmations": "__initiator__ wants to send from __from__"
             },
             "notifications": {
@@ -116,6 +128,10 @@
                 "pendingConfirmation": {
                     "title": "Confirmation needed",
                     "text": "__initiator__ wants to send __amount__ from __from__ to __to__"
+                },
+                "tokenTransfer": {
+                    "title": "__token__ - Token transfer",
+                    "text": "__amount__ __token__  were send from __from__ to __to__."
                 }
             }
         },
@@ -157,12 +173,15 @@
             }
         },
         "send": {
-            "title": "<strong>Send</strong> money",
+            "title": "<strong>Send</strong> funds",
             "sendInfoTitle": "Send",
             "pickAddress": "Pick an address",
             "to": "To",
             "from": "From",
             "amount": "Amount",
+            "tokenAmount": "Token amount",
+            "sendFunds": "Send funds",
+            "uploadContract": "Upload contract",
             "data": "Data",
             "fee": "Choose a Fee",
             "feeLow": "Cheaper",
@@ -180,10 +199,12 @@
             },
             "texts": {
                 "sendAmount": "You want to send <strong>__amount__</strong>.",
+                "sendAmountEquivalent": "You want to send <strong>__amount__</strong> in ether, using the <a href=\"https://kraken.com\" target=\"_blank\">kraken.com</a> exchange rate.<br>Which is currently an equivalent of <strong>__etherAmount__</strong>.",
+                "sendToken": "You are requesting to send <strong>__amount__ __symbol__ </strong> of <strong><em> __name__ </em></strong> a currency built in an ethereum contract. The current sender account has a balance of  <strong>__balance__ __symbol__ </strong> ",
                 "overDailyLimit": "<p class=\"over-daily\">This amount is over the remaining daily limit of __limit__ (of __total__ per day), so you need __count__ other account to confirm.</p>",
                 "overDailyLimit_plural": "<p class=\"over-daily\">This amount is over the remaining daily limit of __limit__ (of __total__ per day), so you need __count__ other accounts to confirm.</p>",
                 "underDailyLimit": "<p class=\"under-daily\">This amount is under the remaining daily limit of __limit__ (of __total__ per day), means it will send immediately.</p>",
-                "sendFee": "This is the most amount of money that might be used to process this transaction. You will get your change back as soon as your transaction is mined, <strong>__timetext__</strong>.",
+                "sendFee": "This is the most amount of money that might be used to process this transaction. Your transaction will be mined <strong>__timetext__</strong>.",
                 "addData": "You can add extra data to send along with your transaction. If you leave the \"to\" field empty it will try to generate a contract from your data.",
                 "dataNotExecutable": "The data seems not to be executabe, that means this transaction will use up all the gas you provide.",
                 "cantEstimateGas": "We can't estimate your gas usage properly, as you need at least 1 ether in your account.",
@@ -197,6 +218,16 @@
                     "5": "probably within a few seconds"
                 }
             }
+        },
+        "tokens": {
+            "title": "Custom <strong>Tokens</strong>",
+            "subTitle": "Added tokens",
+            "description": "Tokens are currencies built on the Ethereum platform. <a href=\"https://ethereum.org/token\" target=\"_blank\">Learn how to build your own</a>.",
+            "deleteToken": "Do you want to remove the token <strong>__token__</strong> from your list?",
+            "addedToken": "Added __token__ to your list",
+            "invalidAddress": "Token not added, invalid address.",
+            "editedToken": "Edited token __token__"
         }
+
     }
 }

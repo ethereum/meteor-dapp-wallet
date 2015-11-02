@@ -33,6 +33,16 @@ Template['views_modals_transactionInfo'].helpers({
     'confirmations': function(){
         return (EthBlocks.latest && this.blockNumber)
             ? EthBlocks.latest.number + 1 - this.blockNumber : 0;
+    },
+    /**
+    Token value
+
+    @method (tokenValue)
+    */
+    'tokenValue': function() {
+        var token = Tokens.findOne(this.tokenId);
+
+        return (token) ? Helpers.formatNumberByDecimals(this.value, token.decimals) +' '+ token.symbol : this.value;
     }
 });
 

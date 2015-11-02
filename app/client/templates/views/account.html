@@ -20,6 +20,22 @@
                 </header>
 
 
+                {{#with tokens}}
+                    <table class="token-list dapp-zebra">
+                        <tbody>
+                            {{#each this}}
+                                {{#if formattedCoinBalance}}
+                                    <tr>
+                                        <td>{{> dapp_identicon identity=address class="dapp-tiny"}}
+                                        <strong>{{name}}</strong></td>
+                                        <td>{{formattedCoinBalance}}</td>
+                                    </tr>
+                                {{/if}}
+                            {{/each}}
+                        </tbody>
+                    </table>
+                {{/with}}
+
             </div>
 
             <aside class="dapp-actionbar">

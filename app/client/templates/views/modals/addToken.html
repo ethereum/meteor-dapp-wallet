@@ -1,0 +1,35 @@
+<template name="views_modals_addToken">
+    {{#if this.address}}
+        <h1>{{i18n "wallet.modals.addToken.titleEdit"}}</h1>
+    {{else}}
+        <h1>{{i18n "wallet.modals.addToken.title"}}</h1>
+    {{/if}}
+
+    <h3>{{i18n "wallet.modals.addToken.contractAddress"}}</h3>
+
+    {{> dapp_addressInput placeholder="0x000000.." value=tokenAddress name="address" autofocus=true class='token-address'}}
+
+    <h3>{{i18n "wallet.modals.addToken.tokenName"}}</h3>
+    <input type="string" value="{{name}}" name="name" placeholder="Name" class="name">
+
+    <h3>{{i18n "wallet.modals.addToken.tokenSymbol"}}</h3>
+    <input type="string" value="{{symbol}}" name="symbol" placeholder="$" class="symbol">
+
+    
+    <h3>{{i18n "wallet.modals.addToken.decimalPlaces"}}</h3>
+    <input type="number" min="0" step="1" name="division" value="{{decimals}}" placeholder="2" class="decimals">
+
+    <br>
+    <h3>{{i18n "wallet.modals.addToken.preview"}}</h3>
+
+    <button class="example wallet-box tokens" style="background-image:{{geoPattern}}">
+        {{> dapp_identicon identity=tokenAddress class="dapp-small"}}
+        <h3> {{TemplateVar.get 'name'}} </h3>
+        <button class="delete-token"><i class="icon-emoticon-smile"></i></button>
+        <span class="account-balance">
+            {{formattedNumber}}<span> {{TemplateVar.get 'symbol'}} </span>
+        </span>            
+        <span class="account-id">{{tokenAddress}}</span>                
+    </button>
+
+</template>

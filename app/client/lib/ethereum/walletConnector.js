@@ -33,7 +33,7 @@ ethereumConfig = {
 
     @property ethereumConfig.rollBackBy
     */
-    rollBackBy: 12,
+    rollBackBy: 120,
     /**
     Number of blocks to confirm a wallet
 
@@ -84,6 +84,8 @@ connectToNode = function(){
     observeWallets();
 
     observeTransactions();
+
+    observeTokens();
 
     observePendingConfirmations();
 

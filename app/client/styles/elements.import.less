@@ -28,7 +28,7 @@ span.address {
     }
 }
 
-a.wallet-box {
+.wallet-box {
     position: relative;
     display: inline-block;
     width: @gridWidth * 6.5;
@@ -39,6 +39,8 @@ a.wallet-box {
     margin-bottom: @defaultMargin;
     .box-sizing(border-box);
     border: 0;
+    font: 100 16px 'Source Sans Pro', 'Helvetica Neue', arial, sans-serif;
+
 
     // ANIMATION
     .transition(background-color @animationSpeed*4, -webkit-filter @animationSpeed*20);
@@ -49,32 +51,6 @@ a.wallet-box {
 
     &.new {
         background-color: fadeout( #ffc107, 20%);
-    }
-
-    &.wallets {
-        // background-color: lighten(@colorBackgroundHeader, 12%);
-        .background-image(linear-gradient(to right,  lighten(@colorBackgroundHeader, 12%) 0%, rgba(255,255,255, 0.1) 100%));
-        overflow: hidden;
-
-        // .account-pattern {
-        //     background-color: transparent;
-        //     background-image: none !important;
-        // }
-    }
-    .dapp-identicon {
-        position: absolute;
-        left: 12px;
-        top: 20px;
-    }
-    .spinner-container {
-        position: absolute;
-        top: -11px;
-        left: -72px;
-    }
-    .dapp-progress {
-        position: absolute;
-        left: 0px;
-        bottom: 0;
     }
 
     &.disabled,
@@ -96,6 +72,86 @@ a.wallet-box {
 
     &:hover {
         background-color: lighten(@colorBackgroundHeader, 12%);
+    }
+
+    &.wallets {
+        // background-color: lighten(@colorBackgroundHeader, 12%);
+        .background-image(linear-gradient(to right,  lighten(@colorBackgroundHeader, 12%) 0%, rgba(255,255,255, 0.1) 100%));
+        overflow: hidden;
+
+        // .account-pattern {
+        //     background-color: transparent;
+        //     background-image: none !important;
+        // }
+    }
+    &.tokens {
+        perspective: 800px;
+        position: relative;
+        background-repeat: repeat-y;
+        background-color: @colorGray;
+        background-size: cover;
+        // background-size: @gridWidth * 3;
+        background-position-x: 4px;
+        background-blend-mode: overlay;
+        overflow: hidden;
+        transform-style: preserve-3d;
+
+        .dapp-identicon {
+            border: @colorWhite solid 2px; 
+            .transition(transform 0.3s);
+            backface-visibility: hidden;       
+        }
+
+        .delete-token {
+            position: absolute;
+            left: 12px;
+            top: 20px;
+            background: @colorWhite;
+            border-radius: 50%;
+            width: @gridWidth;
+            height: @gridWidth;
+            z-index: 50;
+            backface-visibility: hidden;
+            transform: rotateY(180deg);
+            box-shadow: @colorGray 0 1px 2px;
+            .transition(transform 0.3s);
+            text-align: center;
+
+            &:hover {
+                background: @colorLink;
+                color: @colorWhite;
+            }
+
+            i {
+                position: relative;
+                top: 1.5px;
+                text-align: center;
+            }
+        }
+
+        &:hover {
+            .delete-token {
+                transform: rotateY(0);
+            }
+            .dapp-identicon {
+                transform: rotateY(180deg);
+            }
+        }
+    }
+    .dapp-identicon {
+        position: absolute;
+        left: 12px;
+        top: 20px;
+    }
+    .spinner-container {
+        position: absolute;
+        top: -11px;
+        left: -72px;
+    }
+    .dapp-progress {
+        position: absolute;
+        left: 0px;
+        bottom: 0;
     }
 
 
@@ -150,6 +206,89 @@ a.wallet-box {
     }
 }
 
+
+.select-token {
+    .dapp-vertical-menu;
+    .transition(box-shadow @animationSpeed * 2);
+    background: @colorGrayLight;
+
+    
+    &:hover {
+        .dapp-shadow-medium;
+    }
+
+    input[type="radio"]{
+        display: none !important;
+    }
+
+    input:checked + label {
+        position: relative;
+        border-color: @colorGray;
+        color: @colorGrayDark;
+        padding: @defaultPaddingVertical/2 @defaultPaddingHorizontal/2;
+        opacity: 1;        
+        background: @colorGray;
+        font-weight: 400;
+
+        span {
+            color: @colorGrayDark;
+            border-color: @colorGrayDark;
+        }
+    }
+
+
+    label {
+        display: block;
+        // text-transform: uppercase;
+        // max-width: @gridWidth * 9;
+        color: @colorLink;
+        display: flex;
+        overflow: hidden;
+        height: @gridHeight * 2;
+        padding: @defaultPaddingVertical/2 @defaultPaddingHorizontal/2;  
+        .transition(height @animationSpeed/2, opacity @animationSpeed/2, padding @animationSpeed/2);
+        cursor: pointer;
+
+        &:hover {
+            background: @colorWhite;
+        }
+
+        span {
+            flex: 1 auto;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        span.token-name {
+            padding-left: @defaultPaddingHorizontal/4;
+            padding-right: @defaultPaddingHorizontal/4;
+        }
+
+        span.balance {
+            text-align: right;
+            color: @colorTextSecondary;
+        }
+
+        span.ether-symbol {
+            .flex(0);
+            display: inline-block;
+            min-width: 22px;
+            padding: 1px 0;
+            height: 22px;
+            border: 1px solid @colorLink;
+            .border-radius(50%);
+            text-align: center;
+            font-size: 14px;
+        }
+
+        span.dapp-identicon {
+            flex: 0;
+            min-width: 21px;
+        }
+    }
+
+}
 
 
 table {

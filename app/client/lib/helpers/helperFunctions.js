@@ -54,6 +54,25 @@ Helpers.makeId = function(prefix, hash){
     return _.isString(hash) ? prefix +'_'+ hash.replace('0x','').substr(0,10) : null;
 };
 
+
+/**
+Format a number based on decimal numbers
+
+@method formatNumberByDecimals
+@param {Number} number
+@param {Number} decimals
+*/
+Helpers.formatNumberByDecimals = function(number, decimals){
+
+    var numberFormat = '0,0.';
+
+    for(i=0; i < Number(decimals); i++){
+        numberFormat += "0";
+    }
+
+    return EthTools.formatNumber(new BigNumber(number, 10).dividedBy(Math.pow(10, decimals)), numberFormat);
+};
+
 /**
 Display logs in the console for events.
 
@@ -100,12 +119,15 @@ Shows a notification and plays a sound
 @param {String} i18nText
 @param {Object} the i18n values passed to the i18n text
 */
-Helpers.showNotification = function(i18nText, values) {
+Helpers.showNotification = function(i18nText, values, callback) {
     if(Notification.permission === "granted") {
-        new Notification(TAPi18n.__(i18nText +'.title'), {
+        var notification = new Notification(TAPi18n.__(i18nText +'.title', values), {
             // icon: 'http://cdn.sstatic.net/stackexchange/img/logos/so/so-icon.png',
             body: TAPi18n.__(i18nText +'.text', values),
         });
+        
+        if(_.isFunction(callback))
+            notification.onclick = callback;
     }
     if(typeof mist !== 'undefined')
         mist.sounds.bip();
@@ -116,9 +138,11 @@ Gets the docuement matching the given addess from the EthAccounts or Wallets col
 
 @method getAccountByAddress
 @param {String} address
+@param {Boolean} reactive
 */
-Helpers.getAccountByAddress = function(address) {
-    return EthAccounts.findOne({address: address}) || Wallets.findOne({address: address});
+Helpers.getAccountByAddress = function(address, reactive) {
+    var options = (reactive === false) ? {reactive: false} : {};
+    return EthAccounts.findOne({address: address}, options) || Wallets.findOne({address: address}, options);
 };
 
 /**

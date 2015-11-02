@@ -13,3 +13,7 @@ new PersistentMinimongo2(Transactions, 'ethereum_wallet');
 // Contains the pending confirmations
 PendingConfirmations = new Mongo.Collection('pending-confirmations', {connection: null});
 new PersistentMinimongo2(PendingConfirmations, 'ethereum_wallet');
+
+// Contains Coin Information
+Tokens = new Mongo.Collection('tokens', {connection: null});
+new PersistentMinimongo2(Tokens, 'ethereum_wallet');

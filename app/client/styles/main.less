@@ -34,6 +34,12 @@
     bottom: @defaultPaddingVertical*2;
     right: @defaultPaddingVertical*2;
     font-weight: 400;
+
+    .global-notification {
+        &.success {
+            background-color: @colorGreen;
+        }
+    }
 }
 
 // MODALS
@@ -45,7 +51,6 @@
 .dapp-content {
     padding-bottom: @defaultPaddingVertical*2;
 
-    
     .dapp-container {
         > h2 {
             margin-bottom: @gridHeight * 1;
@@ -102,7 +107,7 @@ body {
         color: @colorWhite;
 
         nav a,
-        div.block-info,
+        .block-info,
         .wallet-balance h3,
         .wallet-balance span.account-balance {
             color: @colorWhite;
@@ -215,6 +220,7 @@ body {
         font-size: 0.6em;
         font-weight: 100;
     }
+    
     .inline-form {
         button {
             border: 0;
@@ -225,7 +231,6 @@ body {
     }
 }
 
-
 .accounts-page {
     display: flex;
     flex-flow: row wrap;
@@ -233,6 +238,7 @@ body {
     .accounts-page-summary {
         flex: 1 auto;
         display: flex;
+        flex-flow: row wrap;
 
         .dapp-identicon {
             margin-top: @gridHeight;
@@ -241,6 +247,18 @@ body {
         header {
             flex: 1;
             padding-left: @gridWidth;
+        }
+        table.token-list {
+            flex: 1 100%;
+
+            .dapp-identicon {
+                margin-top: 0;
+                position: absolute;
+            }
+            
+            td strong {
+                padding-left: @gridWidth;
+            }
         }
     }
 
@@ -336,8 +354,8 @@ body {
 
         &.from-to {
             position: relative;
-            // .display(flex);
-            // .align-items(center);
+            margin-bottom: 0;
+            padding-bottom: 0;
 
             > div {
                 position: relative;
@@ -345,7 +363,8 @@ body {
             }
 
             select {
-                width: auto;
+                color: @colorLink;
+                width: 100%;
             }
 
             .dapp-address-input input {
@@ -354,7 +373,7 @@ body {
             
         }
 
-        &.amount {
+        > .amount {
             position: relative;
 
             span {
@@ -364,7 +383,27 @@ body {
             }
 
             input {
+                width: 100%;
+            }
+        }
+
+        .token-ether {
+            color: @colorGrayDark;
+            font-size: 16px;
+            font-weight: normal;
+            height: @gridHeight;
+            padding: @gridHeight/4 @gridWidth/2;
+
+            .ether-symbol {
                 display: inline-block;
+                border: solid 1px @colorGrayDark;
+                border-radius: 50%;
+                width: @gridWidth*0.75;
+                height: @gridWidth*0.75;
+                text-align: center;
+                font-size: 14px;
+                line-height: 22px;
+                margin-right: @gridWidth/4;
             }
         }
 
@@ -380,14 +419,10 @@ body {
                 font-size: 2em;
             }
         }
-
-
         .send-info {
             margin-top: @defaultMargin;
             color: @colorTextSecondary;
-        }
-
-        
+        } 
     }
 
 }
@@ -490,7 +525,6 @@ body {
         }
     }
 }
-
 
 
 /* #### All small phone screens landscape #### */

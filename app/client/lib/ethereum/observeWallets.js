@@ -134,7 +134,7 @@ Creates filters for a wallet contract, to watch for deposits, pending confirmati
 @param {Object} newDocument
 @param {Boolean} checkFromCreationBlock
 */
-setupContractFilters = function(newDocument, checkFromCreationBlock){
+var setupContractFilters = function(newDocument, checkFromCreationBlock){
     var blockToCheckBack = (newDocument.checkpointBlock || 0) - ethereumConfig.rollBackBy;
     
     if(checkFromCreationBlock || blockToCheckBack < 0)
@@ -282,11 +282,24 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
                     var txExists = addTransaction(log, log.args.from, newDocument.address, log.args.value.toString(10));
 
                     // NOTIFICATION
-                    if(!txExists) {
+                    if(!txExists || (!txExists.blockNumber && txExists.tokenId)) {
+                        var txId = Helpers.makeId('tx', log.transactionHash);
+
                         Helpers.showNotification('wallet.transactions.notifications.incomingTransaction', {
                             to: Helpers.getAccountNameByAddress(newDocument.address),
                             from: Helpers.getAccountNameByAddress(log.args.from),
                             amount: EthTools.formatBalance(log.args.value, '0,0.00[000000] unit', 'ether')
+                        }, function() {
+
+                            // on click show tx info
+                            EthElements.Modal.show({
+                                template: 'views_modals_transactionInfo',
+                                data: {
+                                    _id: txId
+                                }
+                            },{
+                                class: 'transaction-info'
+                            });
                         });
                     }
                 }
@@ -296,11 +309,24 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
                     var txExists = addTransaction(log, newDocument.address, log.args.to, log.args.value.toString(10));
 
                     // NOTIFICATION
-                    if(!txExists || !txExists.blockNumber) {
+                    if(!txExists || (!txExists.blockNumber && txExists.tokenId)) {
+                        var txId = Helpers.makeId('tx', log.transactionHash);
+
                         Helpers.showNotification('wallet.transactions.notifications.outgoingTransaction', {
                             to: Helpers.getAccountNameByAddress(log.args.to),
                             from: Helpers.getAccountNameByAddress(newDocument.address),
                             amount: EthTools.formatBalance(log.args.value, '0,0.00[000000] unit', 'ether')
+                        }, function() {
+
+                            // on click show tx info
+                            EthElements.Modal.show({
+                                template: 'views_modals_transactionInfo',
+                                data: {
+                                    _id: txId
+                                }
+                            },{
+                                class: 'transaction-info'
+                            });
                         });
                     }
                 }
@@ -358,6 +384,8 @@ setupContractFilters = function(newDocument, checkFromCreationBlock){
                                         to: Helpers.getAccountNameByAddress(log.args.to),
                                         from: Helpers.getAccountNameByAddress(newDocument.address),
                                         amount: EthTools.formatBalance(log.args.value, '0,0.00[000000] unit', 'ether')
+                                    }, function() {
+                                        FlowRouter.go('/account/'+ newDocument.address);
                                     });
                                 }
 
