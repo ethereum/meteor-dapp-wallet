@@ -350,7 +350,7 @@ body {
     }
 
     > div {
-        margin-bottom: @defaultMargin*2;
+        margin-bottom: @defaultMargin;
 
         &.from-to {
             position: relative;
@@ -373,6 +373,72 @@ body {
             
         }
 
+        &.compile-contract {
+            
+            // switch editor sourcecode/bytecode
+            .dapp-data-textarea {
+                display: block;
+            }
+            .ace_editor {
+                display: none;
+            }
+
+            .source-code {
+                .dapp-data-textarea {
+                    display: none;
+                }
+                .ace_editor {
+                    display: block;
+                }
+            }
+
+            select {
+                margin-bottom: @defaultMargin*2;
+            }
+            h4 {
+                margin-top: @defaultMargin;
+                margin-bottom: 0;
+
+                em {
+                    font-style: normal;
+                    font-weight: normal;
+                    .opacity(0.6);
+                    // font-size: 0.8em;
+                }
+            }
+
+            .spinner-container {
+                position: relative;
+                top: -30px;
+            }
+
+            input:not([type='checkbox']),
+            select {
+                width: 100%;
+            }
+            input[type='checkbox'] {
+                margin-top: @defaultMargin/2;
+            }
+
+            .send-info label {
+                position: relative;
+                top: -6px;
+                left: @gridWidth/4;
+            }
+
+            #contract-source-editor {
+                width: auto;
+                height: 400px;
+            }
+
+            // .solidity-source {
+            //     font-family: 'source code pro', "Lucida Sans Typewriter Regular", Monaco, "Courier New" ,  monospace;
+            //     font-size: 0.8em;
+            //     font-weight: 500;
+            //     color: @colorGrayDark;
+            // }
+        }
+
         > .amount {
             position: relative;
 
@@ -392,6 +458,7 @@ body {
             font-size: 16px;
             font-weight: normal;
             height: @gridHeight;
+            margin-top: @gridHeight*0.75;
             padding: @gridHeight/4 @gridWidth/2;
 
             .ether-symbol {
@@ -404,6 +471,10 @@ body {
                 font-size: 14px;
                 line-height: 22px;
                 margin-right: @gridWidth/4;
+            }
+
+            .balance {
+                float: right;
             }
         }
 
@@ -419,12 +490,12 @@ body {
                 font-size: 2em;
             }
         }
-        .send-info {
-            margin-top: @defaultMargin;
-            color: @colorTextSecondary;
-        } 
+         
     }
 
+    textarea {
+        width: 100%;
+    }
 }
 
 .transaction-info,
@@ -525,7 +596,6 @@ body {
         }
     }
 }
-
 
 /* #### All small phone screens landscape #### */
 @media screen and (max-width: 576px){

@@ -9,7 +9,7 @@ var tokenABI = [
         "constant": true,
         "inputs": [
           {
-            "name": "receiver",
+            "name": "address",
             "type": "address"
           }
         ],
@@ -26,17 +26,17 @@ var tokenABI = [
         "constant": false,
         "inputs": [
           {
-            "name": "receiver",
+            "name": "to",
             "type": "address"
           },
           {
-            "name": "amount",
+            "name": "value",
             "type": "uint256"
           }
         ],
         "outputs": [
           {
-            "name": "sufficient",
+            "name": "success",
             "type": "bool"
           }
         ]
@@ -44,7 +44,7 @@ var tokenABI = [
       {
           "constant": true,
           "inputs": [],
-          "name": "tokenDecimals",
+          "name": "decimals",
           "outputs": [
               {
                   "name": "",
@@ -56,7 +56,7 @@ var tokenABI = [
       {
           "constant": true,
           "inputs": [],
-          "name": "tokenName",
+          "name": "name",
           "outputs": [
               {
                   "name": "",
@@ -68,7 +68,7 @@ var tokenABI = [
       {
           "constant": true,
           "inputs": [],
-          "name": "tokenSymbol",
+          "name": "symbol",
           "outputs": [
               {
                   "name": "",
@@ -92,18 +92,18 @@ var tokenABI = [
         "anonymous": false,
         "inputs": [
           {
-            "indexed": false,
-            "name": "sender",
+            "indexed": true,
+            "name": "from",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "name": "to",
             "type": "address"
           },
           {
             "indexed": false,
-            "name": "receiver",
-            "type": "address"
-          },
-          {
-            "indexed": false,
-            "name": "amount",
+            "name": "value",
             "type": "uint256"
           }
         ]

@@ -62,14 +62,14 @@ var setupContractFilters = function(newDocument){
             }
 
             if(log.event === 'Transfer' &&
-               (Helpers.getAccountByAddress(log.args.receiver) || Helpers.getAccountByAddress(log.args.sender))) {
+               (Helpers.getAccountByAddress(log.args.from) || Helpers.getAccountByAddress(log.args.to))) {
                 
-                Helpers.eventLogs('Transfer for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.amount.toNumber());
+                Helpers.eventLogs('Transfer for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber());
 
                 // add tokenID
                 log.tokenId = newDocument._id;
 
-                var txExists = addTransaction(log, log.args.sender, log.args.receiver, log.args.amount.toString(10));
+                var txExists = addTransaction(log, log.args.from, log.args.to, log.args.value.toString(10));
 
                 // NOTIFICATION
                 if(!txExists || !txExists.blockNumber) {
@@ -77,9 +77,9 @@ var setupContractFilters = function(newDocument){
 
                     Helpers.showNotification('wallet.transactions.notifications.tokenTransfer', {
                         token: newDocument.name,
-                        to: Helpers.getAccountNameByAddress(log.args.receiver),
-                        from: Helpers.getAccountNameByAddress(log.args.sender),
-                        amount: Helpers.formatNumberByDecimals(log.args.amount, newDocument.decimals)
+                        to: Helpers.getAccountNameByAddress(log.args.to),
+                        from: Helpers.getAccountNameByAddress(log.args.from),
+                        amount: Helpers.formatNumberByDecimals(log.args.value, newDocument.decimals)
                     }, function() {
 
                         // on click show tx info
@@ -132,7 +132,7 @@ observeTokens = function(){
         @method removed
         */
         removed: function(document) {
-            var contractInstance = tokenContracts['ct_'+ newDocument._id];
+            var contractInstance = tokenContracts['ct_'+ document._id];
 
             if(!contractInstance)
                 return;

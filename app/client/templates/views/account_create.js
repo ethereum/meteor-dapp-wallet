@@ -383,7 +383,8 @@ Template['views_account_create'].events({
                 name: template.find('input[name="accountName"]').value || TAPi18n.__('wallet.accounts.defaultName'),
                 address: address,
                 balance: '0',
-                creationBlock: 0,
+                // TODO set to 0
+                creationBlock: 300000,
                 imported: true
             });
 
