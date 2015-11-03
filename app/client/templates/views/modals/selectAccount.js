@@ -20,7 +20,7 @@ Template['views_modals_selectAccount'].helpers({
     */
     'accounts': function(){
         if(_.isString(this.accounts[0]))
-            return EthAccounts.find({address: {$in: this.accounts}});
+            return Helpers.getAccounts({address: {$in: this.accounts}});
         else
             return this.accounts;
     },
