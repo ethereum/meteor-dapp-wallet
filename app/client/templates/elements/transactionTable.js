@@ -340,11 +340,11 @@ Template['elements_transactions_row'].events({
                         ok: true
                     });
                     // var confirmData = confirmFunc.getData(_this.operation);
-                    // contracts['ct_'+ wallet._id].execute(account.address, 0, confirmData, {from: wallet.owners[0], gas: 1204633 + 200000}, callback);
+                    // contracts['ct_'+ wallet._id].execute(account.address, 0, confirmData, {from: wallet.owners[0], gas: 200000}, callback);
 
                 } else {
 
-                    confirmFunc.sendTransaction(_this.operation, {from: owner, gas: 1204633 + 200000}, callback);
+                    confirmFunc.sendTransaction(_this.operation, {from: owner, gas: 200000}, callback);
                 }
             };
 
