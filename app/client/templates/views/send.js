@@ -146,7 +146,7 @@ Template['views_send'].onCreated(function(){
 
     // set the default fee
     TemplateVar.set('selectedAction', 'send-funds');
-    TemplateVar.set('selectedToken', 'ether');
+    TemplateVar.set('selectedToken', FlowRouter.getParam('token') || 'ether');
     TemplateVar.set('amount', '0');
     TemplateVar.set('estimatedGas', 0);
     

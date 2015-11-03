@@ -256,9 +256,24 @@ body {
                 position: absolute;
             }
             
-            td strong {
-                padding-left: @gridWidth;
+            tr {
+                &:hover td:last-child a {
+                    visibility: visible;
+                }
+                
+                td:last-child {
+                    text-align: right;
+
+                    
+                    a {
+                        visibility: hidden;
+                    }
+                }
+                td strong {
+                    padding-left: @gridWidth;
+                }
             }
+            
         }
     }
 

@@ -40,6 +40,28 @@ Template['elements_account'].helpers({
         return EthAccounts.findOne(this.account) || Wallets.findOne(this.account);
     },
     /**
+    Get all tokens
+
+    @method (tokens)
+    */
+    'tokens': function(){
+        var query = {};
+        query['balances.'+ this._id] = {$exists: true};
+        return Tokens.find(query, {limit: 5, sort: {name: 1}});
+    },
+    /**
+    Get the tokens balance
+
+    @method (formattedTokenBalance)
+    */
+    'formattedTokenBalance': function(e){
+        var account = Template.parentData(2);
+
+        return (this.balances && Number(this.balances[account._id]) > 0)
+            ? Helpers.formatNumberByDecimals(this.balances[account._id], this.decimals) +' '+ this.symbol
+            : false;
+    },
+    /**
     Get the name
 
     @method (name)
