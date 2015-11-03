@@ -8,7 +8,7 @@
         <p>
             {{formatTime timestamp "LLLL"}}
             <br>
-            <small>({{formatTime timestamp "fromNow"}}, <strong>{{confirmations}}</strong> {{i18n "wallet.transactions.confirmations"}})</small>
+            <small>({{formatTime timestamp "fromNow"}}{{#if $lt confirmations 10000}}, <strong>{{dapp_formatNumber confirmations "0,0"}}</strong> {{i18n "wallet.transactions.confirmations"}}{{/if}})</small>
         </p>
 
         <table class="dapp-zebra">

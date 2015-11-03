@@ -6,31 +6,30 @@ Modal to add token.
 */
 
 
-
-Template['views_modals_addToken'].onCreated(function(){
-    TemplateVar.set('symbol', '$');
-});
-
 Template['views_modals_addToken'].onRendered(function(){
-    this.$('input[name="address"]').focus();
+    if(!this.data || !this.data.address)
+        this.$('input[name="address"]').focus();
 });
 
 Template['views_modals_addToken'].helpers({
     /**
-    Calculates the fee used for this transaction in ether
+    Returns the token for the preview token box
 
-    @method (estimatedFee)
+    @method (previewToken)
     */
-    'formattedNumber': function() {
-        return Helpers.formatNumberByDecimals(123456789, TemplateVar.get('decimals'));
-    },
-    /**
-    Return the address given, or from the template var
+    'previewToken' : function(){
+        var token = _.clone(this || {});
 
-    @method address
-    */
-    'tokenAddress' : function(){
-        return this.address || TemplateVar.get("tokenAddress");
+        if(TemplateVar.get('address'))
+            token.address = TemplateVar.get('address');
+        if(TemplateVar.get('decimals'))
+            token.decimals = TemplateVar.get('decimals');
+        if(TemplateVar.get('symbol'))
+            token.symbol = TemplateVar.get('symbol');
+        if(TemplateVar.get('name'))
+            token.name = TemplateVar.get('name');
+
+        return token;
     }
 });
 
@@ -68,10 +67,10 @@ Template['views_modals_addToken'].events({
     'change input[name="address"], input input[name="address"]': function(e, template) {
         var tokenAddress = TemplateVar.getFrom('.token-address', 'value');
         
-        if(!tokenAddress) 
+        if(!tokenAddress || (template.data && template.data.address && template.data.address == tokenAddress))
             return;
         
-        TemplateVar.set('tokenAddress', tokenAddress)
+        TemplateVar.set('address', tokenAddress);
     
         // initiate the geo pattern
         var pattern = GeoPattern.generate(tokenAddress, {color: '#CCC6C6'});
@@ -83,17 +82,17 @@ Template['views_modals_addToken'].events({
         tokenInstance.symbol(function(e, i){
             if(template.$('input.symbol').val() === '')
                 template.$('input.symbol').val(i).change();
-        })
+        });
 
         tokenInstance.name(function(e, i){
             if(template.$('input.name').val() === '')
                 template.$('input.name').val(i).change();
-        })
+        });
         
         tokenInstance.decimals(function(e, i){
             if(template.$('input.decimals').val() === '')
                 template.$('input.decimals').val(i).change();
-        })
+        });
 
     },    
     /**

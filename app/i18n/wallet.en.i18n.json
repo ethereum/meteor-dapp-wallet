@@ -182,7 +182,7 @@
             "amount": "Amount",
             "tokenAmount": "Token amount",
             "sendFunds": "Send funds",
-            "uploadContract": "Upload contract",
+            "deployContract": "Deploy contract",
             "data": "Data",
             "fee": "Select Fee",
             "feeLow": "Cheaper",

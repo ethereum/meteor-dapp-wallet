@@ -249,7 +249,9 @@ Template['elements_compileContract'].events({
         var contractArguments = [];
 
         _.each(template.findAll('.abi-input'), function(input, index){
-            var output = input.value;
+            var output = (selectedContract.constructorInputs[index].typeShort === 'bool') ? input.checked: input.value;
+
+            console.log('output', output);
 
             // force 0x at the start
             if(!_.isEmpty(output) &&
