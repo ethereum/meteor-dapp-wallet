@@ -238,15 +238,27 @@ body {
     .accounts-page-summary {
         flex: 1 auto;
         display: flex;
-        flex-flow: row wrap;
+        flex-flow: column;
 
         .dapp-identicon {
             margin-top: @gridHeight;
-            flex: 0 0 auto;
+            position: absolute;
         }
+
+        
+
+        h2 {
+            .icon-key {
+                position: absolute;
+            }
+            span {
+               padding-left: @gridWidth;
+            }
+        }
+
         header {
             flex: 1;
-            padding-left: @gridWidth;
+            padding-left: @gridWidth*3;
         }
         table.token-list {
             flex: 1 100%;
