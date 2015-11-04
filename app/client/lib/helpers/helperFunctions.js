@@ -194,7 +194,7 @@ Formats a timestamp to any format given.
     Helpers.formatTime(myTime, "YYYY-MM-DD")
 
 @method formatTime
-@param {String} time         The timstamp, can be string or unix format
+@param {String} time         The timestamp, can be string or unix format
 @param {String} format       the format string, can also be "iso", to format to ISO string, or "fromnow"
 @return {String} The formated time
 **/
@@ -222,4 +222,30 @@ Helpers.formatTime = function(time, format) { //parameters
 
     } else
         return '';
+};
+
+
+/**
+Formats an input and prepares it to be a template 
+    
+    Helpers.makeTemplateFromInput(abiFunctionInput);
+
+@method makeTemplateFromInput
+@param {object} input           The input object, out of an ABI
+@return {object} input          The input object with added variables to make it into a template
+**/
+Helpers.makeTemplateFromInput = function (input, parentName){
+
+    input.typeShort = input.type.match(/[a-z]+/i);
+    input.typeShort = input.typeShort[0];
+    input.bits = input.type.replace(input.typeShort, '');
+    input.parentName = parentName;
+    
+    if (input.typeShort=="string" || input.typeShort=="uint" || input.typeShort=="int" || input.typeShort=="address" || input.typeShort=="bool" || input.typeShort=="bytes") {
+        input.template =  'elements_input_'+ input.typeShort;
+    } else {
+        input.template =  'elements_input_string';
+    }
+
+    return input;    
 };

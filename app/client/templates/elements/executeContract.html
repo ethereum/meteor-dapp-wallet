@@ -1,15 +1,36 @@
 <template name="elements_executeContract">
    <!-- EXECUTE CONTRACT -->
         <div class="row clear execute-contract">
+
         {{#if hasCode}}
             <div class="col col-6 mobile-full">
                 <h3>Contract Interface</h3>
+                {{#unless listContractFunctions}}
                 <input type="text" name="abi" placeholder="[{ 'looks': {'like': 'this'} }]" class="">
                 <br><br>
                 In order to be able to execute a contract we need the contract interface. This should be given by the contract creator.
+                {{/unless}}
+
+                <table class="contract-constants dapp-zebra">
+                    <tbody>
+                        {{#each listContractConstants}}
+                        <tr>
+                            <td class="constant-input constant-input-{{name}}" data="{{name}}">
+                            <h3>{{name}}</h3>
+                            {{#each inputs}}
+                                {{> Template.dynamic template=template name=name bits=bits class='constant-input dapp-small' parent=parentName}}
+                                
+                            {{/each}}
+                            <div class="constant-{{name}}">..</div>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+
             </div>
 
-            <div class="col col-6 mobile-full">
+            <div class="col col-6 mobile-full contract-functions">
                 {{#with listContractFunctions}}
                     <h3>Choose Function</h3>
                     <select class="select-contract-function" name="select-contract-function">
@@ -19,7 +40,7 @@
                     </select>
                         
                     {{#each selectedFunctionInputs}}
-                        {{> Template.dynamic template=template name=name bits=bits }}
+                        {{> Template.dynamic template=template name=name bits=bits parent='selected function' }}
                     {{/each}}
                 {{/with}}
             </div>
