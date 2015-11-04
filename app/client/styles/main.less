@@ -205,6 +205,10 @@ body {
         span.account-balance {
             color: @colorTextSecondary;
             font-size: 1.6em;
+
+            .inline-form > button {
+                padding: 0;
+            }
         }
     }
 }
@@ -268,9 +272,24 @@ body {
                 position: absolute;
             }
             
-            td strong {
-                padding-left: @gridWidth;
+            tr {
+                &:hover td:last-child a {
+                    visibility: visible;
+                }
+                
+                td:last-child {
+                    text-align: right;
+
+                    
+                    a {
+                        visibility: hidden;
+                    }
+                }
+                td strong {
+                    padding-left: @gridWidth;
+                }
             }
+            
         }
     }
 

@@ -24,13 +24,17 @@
                     <table class="token-list dapp-zebra">
                         <tbody>
                             {{#each this}}
-                                {{#if formattedCoinBalance}}
-                                    <tr>
-                                        <td>{{> dapp_identicon identity=address class="dapp-tiny"}}
-                                        <strong>{{name}}</strong></td>
-                                        <td>{{formattedCoinBalance}}</td>
-                                    </tr>
-                                {{/if}}
+                                <tr>
+                                    <td>{{> dapp_identicon identity=address class="dapp-tiny"}}
+                                    <strong>{{name}}</strong></td>
+                                    <td>{{formattedTokenBalance}}</td>
+                                    <td>
+                                        <a href="{{pathFor route='sendToken' from=../../address token=address}}">
+                                            <i class="icon-arrow-up"></i>
+                                            {{i18n "wallet.app.buttons.send"}}
+                                        </a>
+                                    </td>
+                                </tr>
                             {{/each}}
                         </tbody>
                     </table>

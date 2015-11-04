@@ -108,6 +108,21 @@ FlowRouter.route('/send-from/:from', {
     }
 });
 
+/**
+The send route.
+
+@method send
+*/
+FlowRouter.route('/send-token/:from/:token', {
+    name: 'sendToken',
+    action: function(params, queryParams) {
+        BlazeLayout.render('layout_main', {
+            header: 'layout_header',
+            main: 'views_send'
+        });
+    }
+});
+
 
 /**
 The create account route.

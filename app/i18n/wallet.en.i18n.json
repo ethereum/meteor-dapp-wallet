@@ -231,7 +231,7 @@
             "editedToken": "Edited token __token__"
         },
         "contracts": {
-            "contractSourceCode": "Soldity contract source code",
+            "contractSourceCode": "Solidity contract source code",
             "contractByteCode": "Contract byte code",
             "selectContract": "Select contract to deploy",
             "constructorParameters": "Constructor parameters",
