@@ -206,8 +206,13 @@ body {
             color: @colorTextSecondary;
             font-size: 1.6em;
 
-            .inline-form > button {
-                padding: 0;
+            .inline-form {
+                > .simple-modal {
+                    min-width: 70px;
+                }
+                > button {
+                    padding: 0;
+                }
             }
         }
     }
