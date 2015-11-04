@@ -47,23 +47,31 @@ Template['elements_executeContract'].onCreated(function(){
             gas: estimatedGas
         });    
 
-        console.log('functionInputs');
-        console.log(functionInputs);
-        console.log('selectedFunction');
-        console.log(selectedFunction);
-
         var contractInstance = web3.eth.contract(contractABI).at(TemplateVar.get("toAddress"));
         
         // SET VALUE
-        TemplateVar.set('value', contractInstance[selectedFunction.name].getData.apply(functionInputs));
+        TemplateVar.set('value', contractInstance[selectedFunction.name].getData.apply(null, functionInputs));
 
 
         // call constants
         console.log("CONSTANTS")        
         var contractConstants = TemplateVar.get("contractConstants");
         _.each(contractConstants, function(constant){            
-            var constantReturns = function(e, i) {
-                $('.contract-constants .constant-'+constant.name).text(i);
+            
+            var constantReturns = function(e, constantReturned) {
+                var returnString = JSON.stringify(i, null, 4);
+                var returnObjects = $('.contract-constants .constant-' + constant.name + ' .output');
+
+               
+                _.each(returnObjects, function(outputField, index) {
+                    $(outputField).html(constantReturned.toString())
+
+                    if(constant.outputs.length>1) 
+                        $(outputField).html(constantReturned[index].toString());
+
+                });  
+                
+                
             };
 
             var constantInputs = constant.parameters;
@@ -72,22 +80,20 @@ Template['elements_executeContract'].onCreated(function(){
             contractInstance[constant.name].apply(null, constantInputs);
         })
 
-
-       
-        console.log('functionInputs: ');
-        console.log(functionInputs);
-        console.log('selectedFunction.name: ');
-        console.log(selectedFunction.name);
-        console.log('value');
-        console.log(TemplateVar.get('value'));
-
-
-        
-
     });
 
 
 })
+
+
+Template['elements_executeContract'].onRendered(function(){
+    var template = this;
+    console.log('onRendered');
+
+    template.$('.abi-input').change();
+
+})
+
 
 Template['elements_executeContract'].helpers({
     /**
@@ -115,7 +121,6 @@ Template['elements_executeContract'].helpers({
     @method (tokens)
     */
     'listContractConstants': function(){
-        console.log(TemplateVar.get("contractConstants"));
         return TemplateVar.get("contractConstants");
     },
     /**
@@ -149,14 +154,23 @@ Template['elements_executeContract'].events({
 
         _.each(ABI, function(e,i){
             if (e.type == "function") {
-                _.each(e.inputs, function(input){
+                e.parameters = [];
+
+                _.each(e.inputs, function(input, i){
                     input = Helpers.makeTemplateFromInput(input, e.name);
+                    
+                    if (e.constant)
+                        e.parameters.push(0);
                 })
 
                 if (e.constant){
-                    e.parameters = [];
+                    // if it's a constant
+
+                    console.log('e.parameters');
+                    console.log(e.parameters);
                     contractConstants.push(e);                    
                 } else {
+                    //if its a variable
                     contractFunctions.push(e);                
                     TemplateVar.set("selectedFunction", e); 
                 }
@@ -164,19 +178,25 @@ Template['elements_executeContract'].events({
             }
         });
 
+
+        _.each(contractConstants, function(constant){  
+            var parameters = template.$(".contract-constants .constant-input-"+constant.name+" .abi-input");
+
+            constant.parameters = [];
+            _.each(parameters, function(parameter){
+                // console.log(parameter.value);
+                constant.parameters.push(parameter.value);
+            })
+        })
+
+
+
+
         TemplateVar.set("contractFunctions", contractFunctions);
         TemplateVar.set("contractConstants", contractConstants);
 
-        /* 
-        Examples:
-        0x15d7a3a5cd34eb54dad230082aebbdba0990a936
-
-        ABI:
-
-[{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"type":"function"},{"constant":true,"inputs":[],"name":"issuer","outputs":[{"name":"","type":"address"}],"type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"issueToken","outputs":[],"type":"function"},{"inputs":[{"name":"_supply","type":"uint256"},{"name":"_name","type":"string"},{"name":"_decimals","type":"uint8"},{"name":"_symbol","type":"string"},{"name":"_issuer","type":"address"}],"type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Transfer","type":"event"}]
-
-
-        */
+        // execute the change function after abi loading
+        $('.abi-input').change();
 
     },
     /**
@@ -190,7 +210,6 @@ Template['elements_executeContract'].events({
             return contract.name == e.currentTarget.value;
         })
 
-        console.log(selectedFunction);
         // change the inputs and data field
         TemplateVar.set('selectedFunction', selectedFunction);
     },
@@ -199,7 +218,9 @@ Template['elements_executeContract'].events({
     
     @event change .contract-functions .abi-input, input .contract-functions .abi-input
     */
-    'change .abi-input, input .abi-input': function(e, template){
+    'change .abi-input, input .abi-input, click .refresh-inputs': function(e, template){
+        e.preventDefault();
+        e.stopImmediatePropagation();
         
         var selectedFunction = TemplateVar.get("selectedFunction");
 
@@ -209,9 +230,9 @@ Template['elements_executeContract'].events({
         var contractConstants = TemplateVar.get("contractConstants");
 
         _.each(template.findAll('.contract-functions .abi-input'), function(input, index){
-            console.log("abi change");
+            // console.log("abi change");
             var parentName = input.getAttribute("data-ref");
-            console.log(index);
+            // console.log(index);
 
             var output = input.value;
 
@@ -224,24 +245,18 @@ Template['elements_executeContract'].events({
             functionArguments.push(output);  
         })
 
-        _.each(contractConstants, function(constant){
-            
+        _.each(contractConstants, function(constant){  
             var parameters = template.$(".contract-constants .constant-input-"+constant.name+" .abi-input");
-            console.log("param: " );
-            console.log( constant);
-            console.log( parameters);
 
             constant.parameters = [];
             _.each(parameters, function(parameter){
-                console.log(parameter.value);
+                // console.log(parameter.value);
                 constant.parameters.push(parameter.value);
             })
-
-
         })
 
-        console.log('contractConstants');
-        console.log(contractConstants);
+        // console.log('contractConstants');
+        // console.log(contractConstants);
 
         TemplateVar.set("contractConstants", contractConstants);
         TemplateVar.set('functionInputs', functionArguments);
