@@ -4,7 +4,7 @@
         
 
         {{#if hasCode}}
-            <h2>Contract Info</h2>
+            <h2>Contract Information</h2>
             <div class="dapp-clear-fix"></div>
 
             <button class="toggle-execution dapp-block-button dapp-small">{{visibilityToggleButton}}</button>
@@ -15,11 +15,7 @@
             {{#unless listContractConstants }}
 
             <div class="dapp-clear-fix"></div>
-            <input type="text" name="abi" placeholder="[{ 'looks': {'like': 'this'} }]" class="" value="{{getContractInfo.interface}}"> 
-            {{else}}
-            <button class="refresh-inputs dapp-small"> <i class="icon-refresh"></i> </button>
-            <div class="dapp-clear-fix"></div>
-
+            <input type="text" name="abi" placeholder="[{ 'looks': {'like': 'this'} }]" class="" value="{{getContractInfo.interface}}">             
             {{/unless}}
 
             
@@ -39,8 +35,8 @@
                             {{> Template.dynamic template=template name=name bits=bits class='constant-input dapp-small' parent=parentName}}
                             
                         {{/each}}
-<!--                         </td><td>
- -->                        
+                    </td></tr>
+                    <tr><td>
                         <dl class="constant-{{name}} dapp-zebra">
                         {{#each outputs}}
                             {{#if name}}
@@ -58,27 +54,34 @@
             </div>
 
             <div class="col col-4 mobile-full contract-functions">
-                {{#with listContractFunctions}}
-                    <h3>Execute Function</h3>
-                    
-                    <h4>From</h4>
-                    <div class="dapp-clear"></div>
-                    {{> dapp_selectAccount accounts=fromAccounts showAccountTypes=true}}
+                {{#with listContractFunctions}}                    
                     
                     <h4>Select Function</h4>
                     <select class="select-contract-function" name="select-contract-function">
+                        <option disabled selected>Pick a contract function</option>
+
                     {{#each this}}
-                        <option value="{{name}}" selected="">{{name}}</option>
+                        <option value="{{name}}">{{name}}</option>
                     {{/each}}    
                     </select>
+                    
+                    {{#with selectedFunctionInputs}}
+                        {{#if this}}
+                            <div class="dapp-clear"></div>
 
+                            <h4>From</h4>
+                            {{> dapp_selectAccount accounts=fromAccounts showAccountTypes=true}}
+
+                            {{#each this}}
+                                {{> Template.dynamic template=template name=name bits=bits parent='selected function' }}
+                            {{/each}}
+                            <div class="dapp-clear"></div>
+                            <button class="dapp-block-button execute">Execute</button>
+                        {{/if}}
+                    {{/with}}
 
                         
-                    {{#each selectedFunctionInputs}}
-                        {{> Template.dynamic template=template name=name bits=bits parent='selected function' }}
-                    {{/each}}
-                    <div class="dapp-clear"></div>
-                    <button class="dapp-block-button execute">Execute</button>
+                    
                 {{/with}}
             </div>
             <div class="dapp-clear-fix"></div>

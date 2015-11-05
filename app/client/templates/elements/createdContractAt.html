@@ -1,7 +1,7 @@
 <template name="elements_createdContractAt">
-    <i class="icon-docs"></i> {{i18n "wallet.transactions.types.createdContract"}}
+    <i class="icon-docs"></i> 
     {{#if contractAddress}}
-        {{i18n "commonWords.at"}} 
+        {{i18n "wallet.transactions.types.createdContract"}} &nbsp;  
         {{> elements_account_link address=contractAddress}}
         {{#unless deployedData}}
             <br>
@@ -9,5 +9,8 @@
                 <i class="icon-shield"></i> {{i18n "wallet.transactions.error.noDataDeployed"}}
             </small>
         {{/unless}}
+    {{else}}
+    {{i18n "wallet.transactions.types.creatingContract"}} &nbsp; 
+    <span class="address"><span class="dapp-identicon dapp-tiny dapp-icon-loading"></span></span>
     {{/if}}
 </template>

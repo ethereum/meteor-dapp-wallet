@@ -8,7 +8,7 @@
     "wallet": {
         "app": {
             "buttons": {
-                "wallet": "Wallets",
+                "wallet": "Your Wallets",
                 "send": "Send",
                 "deploy": "Deploy",
                 "tokens": "Tokens",
@@ -113,7 +113,8 @@
                 "betweenWallets": "Transfer between wallets",
                 "sent": "Sent",
                 "received": "Received",
-                "createdContract": "Created contract",
+                "createdContract": "Created contract at",
+                "creatingContract": "Creating contract",
                 "tokenTransfer": "__token__ - Token transfer",
                 "pendingConfirmations": "__initiator__ wants to send from __from__"
             },

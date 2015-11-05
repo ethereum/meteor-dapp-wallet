@@ -75,27 +75,31 @@ Template['elements_executeContract'].onCreated(function(){
 
         var functionInputs = _.clone(TemplateVar.get('functionInputs'));
 
-        if(!selectedFunction)
-            return;
+        if (TemplateVar.get("executionVisible"))
+            var contractInstance = web3.eth.contract(contractABI).at(TemplateVar.get("toAddress"));
 
-        // If all empty
-        if(!_.isArray(functionInputs) || _.isEmpty(functionInputs)) {
-            functionInputs = _.map(selectedFunction.functionInputs, function() {
-                return '';
-            });
+        if(selectedFunction) {
+             // If all empty
+            if(!_.isArray(functionInputs) || _.isEmpty(functionInputs)) {
+                functionInputs = _.map(selectedFunction.functionInputs, function() {
+                    return '';
+                });
+            }
+
+            functionInputs.push({
+                from: selectedAccount,
+                gasPrice: gasPrice,
+                gas: estimatedGas
+            });   
+            
+            // SET VALUE
+            TemplateVar.set('value', contractInstance[selectedFunction.name].getData.apply(null, functionInputs));
         }
-
-        functionInputs.push({
-            from: selectedAccount,
-            gasPrice: gasPrice,
-            gas: estimatedGas
-        });    
-
-        var contractInstance = web3.eth.contract(contractABI).at(TemplateVar.get("toAddress"));
         
-        // SET VALUE
-        TemplateVar.set('value', contractInstance[selectedFunction.name].getData.apply(null, functionInputs));
+            
 
+        
+       
 
         // call constants
         console.log("CONSTANTS")        
@@ -108,10 +112,24 @@ Template['elements_executeContract'].onCreated(function(){
 
                
                 _.each(returnObjects, function(outputField, index) {
-                    $(outputField).html(constantReturned.toString())
+                    var htmlString = constantReturned.toString()
 
                     if(constant.outputs.length>1) 
-                        $(outputField).html(constantReturned[index].toString());
+                        var htmlString =  constantReturned[index].toString();
+
+                    if (constant.outputs[index].type == 'address') {
+                        var identicon = blockies.create({
+                                            seed: htmlString,
+                                            size: 8,
+                                            scale: 8
+                                        }).toDataURL();
+
+                        console.log(identicon);
+                        var htmlString = '<span class="dapp-identicon dapp-small" style="background-image: url('+identicon+'); position: absolute; top: 5px;"></span> <div style="padding: 10px 0 20px 40px;">' + htmlString + "</div>";
+                    };
+
+                    $(outputField).html(htmlString);
+
 
                 });  
                 
@@ -211,7 +229,7 @@ Template['elements_executeContract'].events({
     
     @event keyup input[name="abi"], change input[name="abi"], input input[name="abi"]
     */
-    'keyup input[name="abi"], change input[name="abi"], blur input[name="abi"]': function(e, template){
+    'keyup input[name="abi"], change input[name="abi"], click input[name="abi"]': function(e, template){
         
         var ABIstring = e.currentTarget.value;
         var ABI = JSON.parse(ABIstring);
@@ -252,7 +270,7 @@ Template['elements_executeContract'].events({
                     } else {
                         //if its a variable
                         contractFunctions.push(e);                
-                        TemplateVar.set("selectedFunction", e); 
+                        // TemplateVar.set("selectedFunction", e); 
                     }
                     
                 }
@@ -312,7 +330,7 @@ Template['elements_executeContract'].events({
     
     @event change .contract-functions .abi-input, input .contract-functions .abi-input
     */
-    'change .abi-input, input .abi-input, click .refresh-inputs': function(e, template){
+    'change .abi-input, input .abi-input': function(e, template){
         e.preventDefault();
         e.stopImmediatePropagation();
 
@@ -331,7 +349,7 @@ Template['elements_executeContract'].events({
             var output = input.value;
 
             // force 0x at the start
-            if(!_.isEmpty(output) &&
+            if(selectedFunction && !_.isEmpty(output) &&
                (selectedFunction.inputs[index].typeShort === 'bytes' ||
                selectedFunction.inputs[index].typeShort === 'address'))
                 output = '0x'+ output.replace('0x','');

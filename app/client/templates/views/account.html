@@ -2,7 +2,7 @@
     {{#with account}}
         <div class="dapp-container accounts-page">
 
-            <div class="accounts-page-summary">
+            <div class="accounts-page-summary dapp-sticky-bar">
 
                 {{> dapp_identicon identity=address}}
                 
@@ -106,12 +106,12 @@
                
 
                 <div class="dapp-clear-fix"></div>
-
+<!-- 
                 {{#unless owners}}
                     <h3>{{i18n "wallet.app.texts.note"}}</h3>
                     <p>{{{i18n "wallet.accounts.accountNote"}}}</p>
                 {{/unless}}
-
+ -->
                 <div class="dapp-clear-fix"></div>
                 <!-- CONTRACT INTERFACE -->
                 {{> elements_executeContract to=address}}

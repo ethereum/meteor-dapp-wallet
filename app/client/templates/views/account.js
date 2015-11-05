@@ -205,5 +205,15 @@ Template['views_account'].events({
         });
 
         
+    },
+    /**
+    Title scrolled out
+    
+    @event scroll accounts-page-summary
+    */
+    'scroll .accounts-page-summary': function(e){
+        
+        console.log(e);
+        
     }
 });
