@@ -82,12 +82,12 @@ The Coins route.
 
 @method tokens
 */
-FlowRouter.route('/watched_addresses', {
-    name: 'watched_addresses',
+FlowRouter.route('/contracts', {
+    name: 'contracts',
     action: function(params, queryParams) {
         BlazeLayout.render('layout_main', {
             header: 'layout_header',
-            main: 'views_watched_addresses'
+            main: 'views_contracts'
         });
     }
 });
@@ -135,6 +135,25 @@ FlowRouter.route('/send-token/:from/:token', {
         BlazeLayout.render('layout_main', {
             header: 'layout_header',
             main: 'views_send'
+        });
+    }
+});
+
+
+/**
+The send route.
+
+@method send
+*/
+FlowRouter.route('/deploy-contract', {
+    name: 'deployContract',
+    action: function(params, queryParams) {
+        BlazeLayout.render('layout_main', {
+            header: 'layout_header',
+            main: 'views_send',
+            data: {
+                deployContract: true
+            }
         });
     }
 });

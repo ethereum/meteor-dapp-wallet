@@ -1,18 +1,28 @@
 /**
-Function to add a new watched account
+Template Controllers
 
-@class [function] watchAddress
+@module Templates
+*/
+
+/**
+The contracts template
+
+@class [template] views_contracts
 @constructor
 */
 
+
+/**
+Function to add a new watched account
+
+@method watchAddress
+*/
 var watchAddress = function(e) {
 
     var address = $('.modals-add-watch-account input[name="address"]').hasClass('dapp-error') ? 
             '' : $('.modals-add-watch-account input[name="address"]').val(),
         name = $('.modals-add-watch-account input.name').val(),
         abi = $('.modals-add-watch-account input.abi').val();
-
-
 
     var msg = "Added to your watch list";
 
@@ -46,10 +56,8 @@ var watchAddress = function(e) {
 /**
 Function to add tokens
 
-@class [function] addToken
-@constructor
+@method addToken
 */
-
 var addToken = function(e) {
 
     var address = $('.modals-add-token input[name="address"]').hasClass('dapp-error') ? 
@@ -90,27 +98,13 @@ var addToken = function(e) {
 }
 
 
-/**
-Template Controllers
-
-@module Templates
-*/
-
-/**
-The watched_addresses template
-
-@class [template] views_watched_addresses
-@constructor
-*/
-
-
-Template['views_watched_addresses'].helpers({
+Template['views_contracts'].helpers({
     /**
     Get all watched wallets
 
-    @method (watchedAddress)
+    @method (customContracts)
     */
-    'watchedAddress': function(){
+    'customContracts': function(){
         return WatchedAddresses.find({}, {sort:{symbol:1}});
     }, 
     /**
@@ -124,14 +118,13 @@ Template['views_watched_addresses'].helpers({
 });
 
 
-Template['views_watched_addresses'].events({
+Template['views_contracts'].events({
     /**
     Add Watched Address
     
-    @event click .watch-address
+    @event click .add-contract
     */
-    'click .watch-address': function(e){
-        e.preventDefault();
+    'click .add-contract': function(){
 
         // Open a modal 
         EthElements.Modal.question({

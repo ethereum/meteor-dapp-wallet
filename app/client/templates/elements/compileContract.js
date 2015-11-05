@@ -22,17 +22,19 @@ Template['elements_compileContract'].onCreated(function() {
     TemplateVar.set('selectedType', this.data.onlyByteCode ? 'byte-code' : 'source-code');
 
     // focus the editors
-    this.autorun(function() {
+    this.autorun(function(c) {
         // react in the selectedType
         var value = TemplateVar.get('selectedType');
 
         // focus the editors
-        Tracker.afterFlush(function() {
-            if(value === 'byte-code')
-                template.$('.dapp-data-textarea').focus();
-            else
-                template.aceEditor.focus();
-        });
+        if(!c.firstRun) {
+            Tracker.afterFlush(function() {
+                if(value === 'byte-code')
+                    template.$('.dapp-data-textarea').focus();
+                else
+                    template.aceEditor.focus();
+            });
+        }
     });
 
     // update and generate the contract data 
