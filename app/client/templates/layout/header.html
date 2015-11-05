@@ -17,10 +17,10 @@
             <li class="block-info dapp-flex-item  {{#if TemplateVar.get 'syncing'}}syncing{{/if}}">
 
                 {{#if $eq ($.Session.get "network") "testnet"}}
-                    <span class="orange" style="font-weight: 400;">TEST-NET</span> | 
+                    <span class="orange" style="font-weight: 400;">TEST-NET</span> &nbsp;&nbsp;|&nbsp;&nbsp; 
                 {{/if}}
                 {{#if $eq ($.Session.get "network") "privatenet"}}
-                    <span class="orange" style="font-weight: 400;">PRIVATE-NET</span> | 
+                    <span class="orange" style="font-weight: 400;">PRIVATE-NET</span> &nbsp;&nbsp;|&nbsp;&nbsp; 
                 {{/if}}
 
                 {{#with TemplateVar.get "syncing"}}
