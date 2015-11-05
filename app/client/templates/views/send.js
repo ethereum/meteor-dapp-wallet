@@ -61,6 +61,7 @@ var checkOverDailyLimit = function(address, wei, template){
         TemplateVar.set('dailyLimitText', false);
 };
 
+
 /**
 Add a pending transaction to the transaction list, after sending
 
@@ -700,6 +701,9 @@ Template['views_send'].events({
 
             // SHOW CONFIRMATION WINDOW when NOT MIST
             if(typeof mist === 'undefined') {
+
+                console.log('estimatedGas: ' + estimatedGas);
+                
                 EthElements.Modal.question({
                     template: 'views_modals_sendTransactionInfo',
                     data: {
