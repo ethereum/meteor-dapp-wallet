@@ -126,12 +126,8 @@ var getDataField = function(){
     // make reactive to the show/hide of the textarea
     TemplateVar.getFrom('.compile-contract','byteTextareaShown');
 
-    var action = TemplateVar.get('selectedAction');
     var type = TemplateVar.getFrom('.compile-contract', 'selectedType');
-
-    var data = (action === 'execute-contract')
-        ? TemplateVar.getFrom('.execute-contract', 'value')
-        : (type === 'byte-code')
+        data = (type === 'byte-code')
         ? TemplateVar.getFrom('.dapp-data-textarea', 'value')
         : TemplateVar.getFrom('.compile-contract', 'value');
 
@@ -147,12 +143,12 @@ Template['views_send'].onCreated(function(){
     accountQuery = {owners: {$in: _.pluck(EthAccounts.find({}).fetch(), 'address')}, address: {$exists: true}};
     accountSort = {sort: {name: 1}};
 
-    // set the default fee
-    TemplateVar.set('selectedAction', 'send-funds');
-    TemplateVar.set('selectedToken', FlowRouter.getParam('token') || 'ether');
+
+    // SET THE DEFAULT VARIABLES
     TemplateVar.set('amount', '0');
     TemplateVar.set('estimatedGas', 0);
-    
+
+
     // check if we are still on the correct chain
     Helpers.checkChain(function(error) {
         if(error && (EthAccounts.find().count() > 0)) {
@@ -247,6 +243,26 @@ Template['views_send'].onRendered(function(){
 
 
 Template['views_send'].helpers({
+    /**
+    React on the template data context
+
+    @method (reactiveData)
+    */
+    'reactiveData': function(deployContract){
+
+        // Deploy contract
+        if(this && this.deployContract) {
+            TemplateVar.set('selectedAction', 'deploy-contract');
+            TemplateVar.set('selectedToken', 'ether');
+            TemplateVar.setTo('.compile-contract', 'selectedType', 'source-code');
+
+
+        // Send funds
+        } else {
+            TemplateVar.set('selectedAction', 'send-funds');
+            TemplateVar.set('selectedToken', FlowRouter.getParam('token') || 'ether');
+        }
+    },
     /**
     Get all current accounts
 
@@ -399,36 +415,6 @@ Template['views_send'].helpers({
 
 
 Template['views_send'].events({
-    /**
-    Action Switcher
-    
-    @event click .select-action input
-    */
-    'click .select-action input': function(e, template){
-        var option = e.currentTarget.value;
-        TemplateVar.set('selectedAction', option);
-
-        if (option === 'deploy-contract') {
-            TemplateVar.set('hideTo', true);
-            TemplateVar.set('selectedToken', 'ether');
-            TemplateVar.setTo('.compile-contract', 'selectedType', 'source-code');
-
-            TemplateVar.set('savedTo', TemplateVar.getFrom('.dapp-address-input', 'value'));
-
-        } else {
-            TemplateVar.set('hideTo', false);
-
-            Tracker.afterFlush(function() {
-                if(TemplateVar.get(template, 'savedTo')) {
-                    template.find('input[name="to"]').value = TemplateVar.get(template, 'savedTo');
-                    TemplateVar.setTo('.dapp-address-input', 'value', TemplateVar.get(template, 'savedTo'));
-                }
-            });
-        }
-
-        // trigger amount box change
-        template.$('input[name="amount"]').trigger('change');
-    },
     /**
     Select a token 
     

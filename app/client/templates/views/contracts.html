@@ -1,25 +1,33 @@
-<template name="views_watched_addresses">
+<template name="views_contracts">
     <div class="dapp-container">
 
         <h1>Contracts</h1>
         
+        <a href="{{pathFor route='deployContract'}}" class="wallet-box create">
+            <div class="account-pattern">
+                +
+            </div>
+            <h3>Deploy Contract</h3>
+        </a>  
+
         <h2>Custom Contracts</h2>
 
-        <p> Those are addresses of contracts that you don't own but are interested in watching or interacting with </p>
+        <p>You can add deployed contracts and their ABI to interact with them.</p>
         <div class="dapp-clear-fix"></div>
 
-        {{#each watchedAddress}}
+        {{#each customContracts}}
             {{> elements_account account=_id wallets=true}}
         {{/each}}
 
-        <a href="{{pathFor route='createAccount'}}" class="wallet-box create watch-address">
+        <button class="wallet-box create add-contract">
             <div class="account-pattern">
                 +
             </div>
             <h3>Add Contract</h3>
-        </a>  
-
+        </button>  
         <div class="dapp-clear-fix"></div>
+
+
         <br><br>
 
         <h2>{{{i18n "wallet.tokens.title"}}}</h2>
