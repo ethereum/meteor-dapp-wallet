@@ -1,3 +1,40 @@
+
+/**
+Add a pending transaction to the transaction list, after sending
+
+@method addTransactionAfterSend
+*/
+var addTransactionAfterSend = function(txHash, amount, from, to, gasPrice, estimatedGas, data, tokenId) {
+                                
+    txId = Helpers.makeId('tx', txHash);
+
+
+    Transactions.upsert(txId, {$set: {
+        tokenId: tokenId,
+        value: amount,
+        from: from,
+        to: to,
+        timestamp: moment().unix(),
+        transactionHash: txHash,
+        gasPrice: gasPrice,
+        gasUsed: estimatedGas,
+        fee: String(gasPrice * estimatedGas),
+        data: data
+    }});
+
+    // add from Account
+    EthAccounts.update({address: from}, {$addToSet: {
+        transactions: txId
+    }});
+
+    // add to Account
+    EthAccounts.update({address: to}, {$addToSet: {
+        transactions: txId
+    }});
+};
+
+
+
 /**
 Creation of executeContract
 
@@ -11,6 +48,13 @@ Template['elements_executeContract'].onCreated(function(){
     TemplateVar.set('value', '0xdeadbeef');
 
     TemplateVar.set("toAddress", this.data.to);
+    TemplateVar.set('sending', false);
+
+
+    // update the abi
+    this.autorun(function(){
+
+    })
 
     // update and generate the contract data 
     this.autorun(function() {
@@ -59,7 +103,7 @@ Template['elements_executeContract'].onCreated(function(){
         _.each(contractConstants, function(constant){            
             
             var constantReturns = function(e, constantReturned) {
-                var returnString = JSON.stringify(i, null, 4);
+                var returnString = JSON.stringify(constantReturned, null, 4);
                 var returnObjects = $('.contract-constants .constant-' + constant.name + ' .output');
 
                
@@ -97,6 +141,14 @@ Template['elements_executeContract'].onRendered(function(){
 
 Template['elements_executeContract'].helpers({
     /**
+    Get the current selected account
+
+    @method (getContractInfo)
+    */
+    'getContractInfo': function() {
+          return Helpers.getAccountByAddress(TemplateVar.get("toAddress"));
+    },
+    /**
     Returns true if the current selected unit is an ether unit (ether, finney, etc)
 
     @method (etherUnit)
@@ -130,6 +182,26 @@ Template['elements_executeContract'].helpers({
     */
     'selectedFunctionInputs' : function(){
         return TemplateVar.get("selectedFunction").inputs;
+    },
+    /**
+    Get selected contract functions
+
+    @method (selectedContractInputs)
+    */
+    'visibilityToggleButton' : function(){
+        return TemplateVar.get("executionVisible")?  "Hide" : "Show contract info";
+    }, 
+    /**
+    Get all current accounts
+
+    @method (fromAccounts)
+    */
+    'fromAccounts': function(){
+        // set account queries
+        accountQuery = {owners: {$in: _.pluck(EthAccounts.find({}).fetch(), 'address')}, address: {$exists: true}};
+        accountSort = {sort: {name: 1}};
+
+        return _.union(Wallets.find(accountQuery, accountSort).fetch(), EthAccounts.find({}, accountSort).fetch());
     }
 })
 
@@ -139,64 +211,86 @@ Template['elements_executeContract'].events({
     
     @event keyup input[name="abi"], change input[name="abi"], input input[name="abi"]
     */
-    'keyup input[name="abi"], change input[name="abi"], input input[name="abi"]': function(e, template){
-        var ABI = JSON.parse(e.currentTarget.value);
+    'keyup input[name="abi"], change input[name="abi"], blur input[name="abi"]': function(e, template){
+        
+        var ABIstring = e.currentTarget.value;
+        var ABI = JSON.parse(ABIstring);
 
-        TemplateVar.set("contractABI", ABI);
+        console.log('ABI');
+        console.log( ABI );
 
-        var address = TemplateVar.getFrom('.dapp-address-input', 'value');
-        contractInstance = web3.eth.contract(ABI).at(address);
+        if (typeof ABI == 'object') {
 
-        // console.log(ABI);
+            TemplateVar.set("contractABI", ABI);
 
-        var contractFunctions = [];
-        var contractConstants = [];
 
-        _.each(ABI, function(e,i){
-            if (e.type == "function") {
-                e.parameters = [];
+            var address = TemplateVar.getFrom('.dapp-address-input', 'value');
+            contractInstance = web3.eth.contract(ABI).at(address);
 
-                _.each(e.inputs, function(input, i){
-                    input = Helpers.makeTemplateFromInput(input, e.name);
+            // console.log(ABI);
+
+            var contractFunctions = [];
+            var contractConstants = [];
+
+            _.each(ABI, function(e,i){
+                if (e.type == "function") {
+                    e.parameters = [];
+
+                    _.each(e.inputs, function(input, i){
+                        input = Helpers.makeTemplateFromInput(input, e.name);
+                        
+                        if (e.constant)
+                            e.parameters.push(0);
+                    })
+
+                    if (e.constant){
+                        // if it's a constant
+                        // console.log('e.parameters');
+                        // console.log(e.parameters);
+                        
+                        contractConstants.push(e);                    
+                    } else {
+                        //if its a variable
+                        contractFunctions.push(e);                
+                        TemplateVar.set("selectedFunction", e); 
+                    }
                     
-                    if (e.constant)
-                        e.parameters.push(0);
-                })
-
-                if (e.constant){
-                    // if it's a constant
-
-                    console.log('e.parameters');
-                    console.log(e.parameters);
-                    contractConstants.push(e);                    
-                } else {
-                    //if its a variable
-                    contractFunctions.push(e);                
-                    TemplateVar.set("selectedFunction", e); 
                 }
-                
-            }
-        });
+            });
 
 
-        _.each(contractConstants, function(constant){  
-            var parameters = template.$(".contract-constants .constant-input-"+constant.name+" .abi-input");
+            _.each(contractConstants, function(constant){  
+                var parameters = template.$(".contract-constants .constant-input-"+constant.name+" .abi-input");
 
-            constant.parameters = [];
-            _.each(parameters, function(parameter){
-                // console.log(parameter.value);
-                constant.parameters.push(parameter.value);
+                constant.parameters = [];
+                _.each(parameters, function(parameter){
+                    // console.log(parameter.value);
+                    constant.parameters.push(parameter.value);
+                })
             })
-        })
 
 
 
 
-        TemplateVar.set("contractFunctions", contractFunctions);
-        TemplateVar.set("contractConstants", contractConstants);
+            TemplateVar.set("contractFunctions", contractFunctions);
+            TemplateVar.set("contractConstants", contractConstants);
 
-        // execute the change function after abi loading
-        $('.abi-input').change();
+            // execute the change function after abi loading
+            // $('.abi-input').change();
+
+            contractInfo = Helpers.getAccountByAddress(TemplateVar.get("toAddress"));
+            // Save new name
+            Wallets.update(contractInfo._id, {$set: {
+                interface: ABIstring
+            }});
+            console.log('saved abi')
+
+            console.log(Wallets.findOne(contractInfo._id));
+
+            console.log(contractInfo)
+            // console.log(ABI)
+
+        } 
 
     },
     /**
@@ -221,7 +315,7 @@ Template['elements_executeContract'].events({
     'change .abi-input, input .abi-input, click .refresh-inputs': function(e, template){
         e.preventDefault();
         e.stopImmediatePropagation();
-        
+
         var selectedFunction = TemplateVar.get("selectedFunction");
 
         // create an array with the input fields
@@ -260,6 +354,140 @@ Template['elements_executeContract'].events({
 
         TemplateVar.set("contractConstants", contractConstants);
         TemplateVar.set('functionInputs', functionArguments);
+    },
+    /**
+    Click the toggle button
+
+    @event
+    */
+    'click .toggle-execution': function(){
+        TemplateVar.set("executionVisible", !TemplateVar.get("executionVisible"))
+    },
+    /**
+    Click the toggle button
+
+    @event
+    */
+    'click .execute': function(){
+
+        console.log('select[name="dapp-select-account"]')
+        console.log(TemplateVar.getFrom('select[name="dapp-select-account"]', 'value'))
+
+        var to = TemplateVar.get('toAddress'),
+            gasPrice = 50000000000,
+            estimatedGas = 3000000,
+            amount = 0,
+            selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('select[name="dapp-select-account"]', 'value')),
+            data =  TemplateVar.get('value');
+
+        if(selectedAccount) {
+
+            console.log('Providing gas: ', estimatedGas ,' + 100000');
+
+
+
+            if(selectedAccount.balance === '0')
+                return GlobalNotification.warning({
+                    content: 'i18n:wallet.send.error.emptyWallet',
+                    duration: 2
+                });
+
+
+
+
+            // The function to send the transaction
+            var sendTransaction = function(estimatedGas){
+
+                // show loading
+                // EthElements.Modal.show('views_modals_loading');
+
+                TemplateVar.set('sending', true);
+
+
+                // use gas set in the input field
+                estimatedGas = estimatedGas || Number($('.send-transaction-info input.gas').val());
+                console.log('Finally choosen gas', estimatedGas);
+
+                
+                // ETHER TX
+            console.log('Send Ether');
+
+            // CONTRACT TX
+            if(contracts['ct_'+ selectedAccount._id]) {
+
+                contracts['ct_'+ selectedAccount._id].execute.sendTransaction(to || '', amount || '', data || '', {
+                    from: selectedAccount.owners[0],
+                    gasPrice: gasPrice,
+                    gas: estimatedGas
+                }, function(error, txHash){
+
+                    // TemplateVar.set('sending', false);
+
+                    console.log(error, txHash);
+                    if(!error) {
+                        console.log('SEND from contract', amount);
+
+                        addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
+
+                        FlowRouter.go('dashboard');
+
+                    } else {
+                        // EthElements.Modal.hide();
+
+                        GlobalNotification.error({
+                            content: error.message,
+                            duration: 8
+                        });
+                    }
+                });
+            
+            // SIMPLE TX
+            } else {
+
+                web3.eth.sendTransaction({
+                    from: selectedAccount.address,
+                    to: to,
+                    data: data,
+                    value: amount,
+                    gasPrice: gasPrice,
+                    gas: estimatedGas
+                }, function(error, txHash){
+
+                    // TemplateVar.set('sending', false);
+
+                    console.log(error, txHash);
+                    if(!error) {
+                        console.log('SEND simple');
+
+                        addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
+
+                        // FlowRouter.go('dashboard');
+                        GlobalNotification.success({
+                           content: "The transaction was executed",
+                           duration: 2
+                        });
+                    } else {
+
+                        // EthElements.Modal.hide();
+
+                        GlobalNotification.error({
+                            content: error.message,
+                            duration: 8
+                        });
+                    }
+                });
+                 
+            }
+
+
+                
+            };
+
+            sendTransaction(estimatedGas);
+
+        
+        }
+
     }
 })
 

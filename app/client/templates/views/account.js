@@ -144,6 +144,9 @@ Template['views_account'].events({
             EthAccounts.update(this._id, {$set: {
                 name: text
             }});
+            WatchedAddresses.update(this._id, {$set: {
+                name: text
+            }});
 
             Tracker.afterFlush(function(argument) {
                 $el.text(text);

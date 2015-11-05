@@ -1,6 +1,9 @@
 <template name="elements_input_bool">
+    {{#if name}}
     <h4>
         {{name}} <em>- Boolean</em>
     </h4>
-    <input type="checkbox" name="elements_input_bool" class="abi-input">
+    {{/if}}
+    <input type="checkbox" id="input-bool-{{class}}-{{name}}" name="elements_input_bool" class="abi-input {{class}}">
+    <label for="input-bool-{{class}}-{{name}}">YES</label>
 </template>

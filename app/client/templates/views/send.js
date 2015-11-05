@@ -586,6 +586,8 @@ Template['views_send'].events({
                     
                     // SIMPLE TX
                     } else {
+                        
+                        console.log('Gas Price: '+ gasPrice);
 
                         web3.eth.sendTransaction({
                             from: selectedAccount.address,

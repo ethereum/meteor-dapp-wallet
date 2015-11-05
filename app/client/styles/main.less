@@ -628,6 +628,64 @@ body {
     }
 }
 
+
+.execute-contract {
+    .contract-info {
+        padding: 0;
+        overflow: hidden;
+        
+        h3 {
+            color: @colorGrayDark;
+        }
+
+        .output {
+            font-weight: 500;
+            font-size: 110%;
+            word-wrap: break-word;
+            word-wrap: break-all;
+            hyphens: auto;
+        }
+        .dapp-address-input {
+            max-width: 9 * @gridWidth;
+        }
+
+        input {
+            margin-top: 0;
+        }
+        
+        dd {
+            margin-left: 0;
+            max-width: 12 * @gridWidth;
+        }
+
+        dt {
+            margin-top: @gridHeight;
+        }
+        
+        table {
+            max-width: @gridWidth * 16;
+        }
+        td {
+            vertical-align: top;
+        }
+        dl {
+            margin: 0;
+        }
+        h3 {
+            margin-top: 0;
+        }
+
+        td {
+            border-radius: 2px;
+        }
+
+    }
+
+    .dapp-block-button {
+        margin-top: @gridHeight ;
+    }
+}
+
 /* #### All small phone screens landscape #### */
 @media screen and (max-width: 576px){
     .dapp-header nav ul li.block-info {

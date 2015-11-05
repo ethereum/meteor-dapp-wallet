@@ -40,6 +40,9 @@
                     </table>
                 {{/with}}
 
+
+
+
             </div>
 
             <aside class="dapp-actionbar">
@@ -100,12 +103,19 @@
                     </div>
                 {{/if}}
 
+               
+
                 <div class="dapp-clear-fix"></div>
 
                 {{#unless owners}}
                     <h3>{{i18n "wallet.app.texts.note"}}</h3>
                     <p>{{{i18n "wallet.accounts.accountNote"}}}</p>
                 {{/unless}}
+
+                <div class="dapp-clear-fix"></div>
+                <!-- CONTRACT INTERFACE -->
+                {{> elements_executeContract to=address}}
+
 
                 {{#if pendingConfirmations}}
                     <h2>{{i18n 'wallet.transactions.pendingConfirmations'}}</h2>

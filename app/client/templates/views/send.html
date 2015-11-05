@@ -14,10 +14,6 @@
                     
                     <input type="radio" value="deploy-contract" id="deploy-contract" name="select-action">
                     <label for="deploy-contract"> {{i18n 'wallet.send.deployContract'}} </label>
-
-                    <input type="radio" value="execute-contract" id="execute-contract" name="select-action"> 
-                    <label for="execute-contract"> Execute Contract </label>
-
                 </div>
             </div>
         </div> 
@@ -111,11 +107,6 @@
 
             <div class="dapp-clear-fix"></div>
         </div>
-
-        {{#if $eq (TemplateVar.get 'selectedAction') 'execute-contract'}}
-            {{> elements_executeContract to=(TemplateVar.getFrom '.dapp-address-input' 'value')}}
-        {{/if}}
-
 
         {{> elements_compileContract onlyByteCode=showOnlyByteTextarea codeNotExecutable=(TemplateVar.get "codeNotExecutable")}}
 

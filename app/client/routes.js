@@ -77,6 +77,22 @@ FlowRouter.route('/tokens', {
 });
 
 
+/**
+The Coins route.
+
+@method tokens
+*/
+FlowRouter.route('/watched_addresses', {
+    name: 'watched_addresses',
+    action: function(params, queryParams) {
+        BlazeLayout.render('layout_main', {
+            header: 'layout_header',
+            main: 'views_watched_addresses'
+        });
+    }
+});
+
+
 
 /**
 The send route.
