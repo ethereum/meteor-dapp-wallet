@@ -1,0 +1,45 @@
+<template name="views_watched_addresses">
+    <div class="dapp-container">
+
+        <h1>Contracts</h1>
+        
+        <h2>Custom Contracts</h2>
+
+        <p> Those are addresses of contracts that you don't own but are interested in watching or interacting with </p>
+        <div class="dapp-clear-fix"></div>
+
+        {{#each watchedAddress}}
+            {{> elements_account account=_id wallets=true}}
+        {{/each}}
+
+        <a href="{{pathFor route='createAccount'}}" class="wallet-box create watch-address">
+            <div class="account-pattern">
+                +
+            </div>
+            <h3>Add Contract</h3>
+        </a>  
+
+        <div class="dapp-clear-fix"></div>
+        <br><br>
+
+        <h2>{{{i18n "wallet.tokens.title"}}}</h2>
+
+        <p>
+            {{{i18n "wallet.tokens.description"}}}
+        </p>
+
+        <div class="dapp-clear-fix"></div>
+
+        {{#each tokens}}
+            {{> elements_tokenBox}}
+        {{/each}}
+
+        <button class="wallet-box create add-token">
+            <div class="account-pattern">
+                +
+            </div>
+            <h3>{{i18n "wallet.app.buttons.addToken"}}</h3>
+        </button>    
+
+    </div>
+</template>
