@@ -345,8 +345,15 @@ Template['elements_executeContract'].events({
             // console.log("abi change");
             var parentName = input.getAttribute("data-ref");
             // console.log(index);
+            // console.log(input);
+            // console.log(input.checked);
 
             var output = input.value;
+
+            if(input.type == 'checkbox')
+                output = input.checked;
+
+            // console.log(output);
 
             // force 0x at the start
             if(selectedFunction && !_.isEmpty(output) &&
