@@ -78,6 +78,7 @@ var addToken = function(e) {
             address: address,
             name: name,
             symbol: symbol,
+            balances: {},
             decimals: Number(decimals || 0)
         }});
 

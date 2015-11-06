@@ -74,14 +74,13 @@ updateBalances = function() {
             tokenInstance.balanceOf(account.address, function(e, balance){
                 var tokenID = Helpers.makeId('token', token.address);
                 var currentBalance = Number(Tokens.findOne(tokenID).balances[account._id]);
-                if(!e && balance.toNumber() != currentBalance){
-                    var set = {};
 
-                    if (currentBalance) {
+                if(!e && balance.toNumber() !== currentBalance){
+                    var set = {};
+                    if (balance > 0) {
                         set['balances.'+ account._id] = balance.toString(10);
                         Tokens.update(tokenID, {$set: set});
-                        console.log("set balance");
-                    } else {
+                    } else if (currentBalance){
                         set['balances.'+ account._id] = '';
                         Tokens.update(tokenID, {$unset: set});
                     }
