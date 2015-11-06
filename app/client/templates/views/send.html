@@ -5,10 +5,10 @@
     <!-- we use a form, which posts into the "dapp-form-helper-iframe" iframe, so that the browser stores inout fields for native autocpmplete -->
     <form class="container account-send-form" action="about:blank" target="dapp-form-helper-iframe" autocomplete="on">
             
-        {{#if $eq (TemplateVar.get "selectedAction") "send-funds"}}
-            <h1>{{{i18n 'wallet.send.title'}}}</h1>
-        {{else}}
+        {{#if deployContract}}
             <h1>{{{i18n 'wallet.contracts.deployContract'}}}</h1>
+        {{else}}
+            <h1>{{{i18n 'wallet.send.title'}}}</h1>
         {{/if}}
 
         <!-- action tabs -->
