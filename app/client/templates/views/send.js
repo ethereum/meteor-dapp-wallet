@@ -270,7 +270,9 @@ Template['views_send'].helpers({
     @method (fromAccounts)
     */
     'fromAccounts': function(){
-        return _.union(Wallets.find(accountQuery, accountSort).fetch(), EthAccounts.find({}, accountSort).fetch());
+        var accounts = _.union(Wallets.find(accountQuery, accountSort).fetch(), EthAccounts.find({}, accountSort).fetch());
+        accounts.sort(Helpers.sortByBalance);
+        return accounts;
     },
     /**
     Get the current selected account

@@ -25,6 +25,14 @@ Helpers.rerun = {
     '1s': new ReactiveTimer(1)
 };
 
+/**
+Sort method for accounts and wallets to sort by balance
+
+@method sortByBalance
+**/
+Helpers.sortByBalance = function(a, b){
+    return !b.disabled && new BigNumber(b.balance, 10).gt(new BigNumber(a.balance, 10)) ? 1 : -1;
+};
 
 /**
 Clear localStorage
