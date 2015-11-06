@@ -37,9 +37,29 @@ updateBalances = function() {
             }, 1000);
         }
     });
+
+    // UPDATE WATCHED ACCOUNTS balance
+    _.each(WatchedAddresses.find().fetch(), function(watchedAdress){
+        if(watchedAdress.address) {
+            web3.eth.getBalance(watchedAdress.address, function(err, res){
+                if(!err) {
+                    WatchedAddresses.update(watchedAdress._id, {$set: {
+                        balance: res.toString(10)
+                    }});
+                }
+            });
+
+            // update dailylimit spent, etc
+            Meteor.setTimeout(function() {
+                updateContractData(watchedAdress);
+            }, 1000);
+        }
+    });
+
+
     
     // UPDATE TOKEN BALANCES
-    var walletsAndAccounts = EthAccounts.find().fetch().concat(Wallets.find().fetch());
+    var walletsAndAccounts = EthAccounts.find().fetch().concat(Wallets.find().fetch(), WatchedAddresses.find().fetch());
 
     _.each(Tokens.find().fetch(), function(token){
         if(!token.address)

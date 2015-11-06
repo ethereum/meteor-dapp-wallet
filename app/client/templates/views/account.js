@@ -64,14 +64,16 @@ Template['views_account'].helpers({
     @method (tokens)
     */
     'tokens': function(){
-        return Tokens.find({}, {sort: {name: 1}});
+        var query = {};
+        query['balances.'+ this._id] = {$exists: true};
+        return Tokens.find(query, {sort: {name: 1}});
     },
     /**
     Get the tokens balance
 
-    @method (formattedCoinBalance)
+    @method (formattedTokenBalance)
     */
-    'formattedCoinBalance': function(e){
+    'formattedTokenBalance': function(e){
         var account = Template.parentData(2);
 
         return (this.balances && Number(this.balances[account._id]) > 0)
@@ -142,6 +144,9 @@ Template['views_account'].events({
             EthAccounts.update(this._id, {$set: {
                 name: text
             }});
+            WatchedAddresses.update(this._id, {$set: {
+                name: text
+            }});
 
             Tracker.afterFlush(function(argument) {
                 $el.text(text);
@@ -199,6 +204,16 @@ Template['views_account'].events({
             }
         });
 
+        
+    },
+    /**
+    Title scrolled out
+    
+    @event scroll accounts-page-summary
+    */
+    'scroll .accounts-page-summary': function(e){
+        
+        console.log(e);
         
     }
 });

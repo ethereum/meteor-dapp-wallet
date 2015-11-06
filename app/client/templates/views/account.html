@@ -2,7 +2,7 @@
     {{#with account}}
         <div class="dapp-container accounts-page">
 
-            <div class="accounts-page-summary">
+            <div class="accounts-page-summary dapp-sticky-bar">
 
                 {{> dapp_identicon identity=address}}
                 
@@ -24,17 +24,24 @@
                     <table class="token-list dapp-zebra">
                         <tbody>
                             {{#each this}}
-                                {{#if formattedCoinBalance}}
-                                    <tr>
-                                        <td>{{> dapp_identicon identity=address class="dapp-tiny"}}
-                                        <strong>{{name}}</strong></td>
-                                        <td>{{formattedCoinBalance}}</td>
-                                    </tr>
-                                {{/if}}
+                                <tr>
+                                    <td>{{> dapp_identicon identity=address class="dapp-tiny"}}
+                                    <strong>{{name}}</strong></td>
+                                    <td>{{formattedTokenBalance}}</td>
+                                    <td>
+                                        <a href="{{pathFor route='sendToken' from=../../address token=address}}">
+                                            <i class="icon-arrow-up"></i>
+                                            {{i18n "wallet.app.buttons.send"}}
+                                        </a>
+                                    </td>
+                                </tr>
                             {{/each}}
                         </tbody>
                     </table>
                 {{/with}}
+
+
+
 
             </div>
 
@@ -96,12 +103,19 @@
                     </div>
                 {{/if}}
 
-                <div class="dapp-clear-fix"></div>
+               
 
+                <div class="dapp-clear-fix"></div>
+<!-- 
                 {{#unless owners}}
                     <h3>{{i18n "wallet.app.texts.note"}}</h3>
                     <p>{{{i18n "wallet.accounts.accountNote"}}}</p>
                 {{/unless}}
+ -->
+                <div class="dapp-clear-fix"></div>
+                <!-- CONTRACT INTERFACE -->
+                {{> elements_executeContract to=address}}
+
 
                 {{#if pendingConfirmations}}
                     <h2>{{i18n 'wallet.transactions.pendingConfirmations'}}</h2>

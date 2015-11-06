@@ -205,6 +205,15 @@ body {
         span.account-balance {
             color: @colorTextSecondary;
             font-size: 1.6em;
+
+            .inline-form {
+                > .simple-modal {
+                    min-width: 70px;
+                }
+                > button {
+                    padding: 0;
+                }
+            }
         }
     }
 }
@@ -232,22 +241,83 @@ body {
 }
 
 .accounts-page {
-    display: flex;
+    .display(flex);
     flex-flow: row wrap;
 
     .accounts-page-summary {
         flex: 1 auto;
-        display: flex;
-        flex-flow: row wrap;
+        .display(flex);
+        flex-flow: column;
+
+        &.dapp-sticky-bar {
+            top: floor(@gridHeight * -1);
+            .transition(top @animationSpeed);
+
+            &.sticky {
+                position: fixed;
+                top: floor(@gridHeight * 2);
+                left: 0;
+                right: 0 ;
+                height: @gridHeight * 2;
+                background: @colorWhite;
+                // .dapp-shadow-small;
+                z-index: 25;
+                padding: @gridHeight/2 @gridWidth;
+
+                .dapp-identicon {
+                    // .dapp-tiny 
+                    width: floor(@gridWidth / 1.5);
+                    height: floor(@gridWidth / 1.5);
+                    box-shadow: inset rgba(255, 255, 255, 0.4) 0 1px 1px, inset rgba(0, 0, 0, 0.3) 0 -1px 2px;
+                    position: absolute;
+                    top: @gridHeight * -0.5;
+                    left: @gridWidth * 2;
+                }
+
+                h1 {
+                    font-size: 1.1em;
+                    text-transform: uppercase;
+                }
+                
+                header {
+                    padding-left: @gridWidth * 2;
+                }
+
+                .account-balance {
+                    position: absolute;
+                    right: @gridWidth;
+                    top: 7px;
+                    font-size: 1.2em;
+                    font-weight: 400;
+                    span {
+                        font-size: 0.75em;
+                        font-weight: 600;
+                    }
+                }
+
+                h2, .token-list {
+                    display: none;
+                }
+            }
+        }
+
 
         .dapp-identicon {
             margin-top: @gridHeight;
-            flex: 0 0 auto;
+            position: absolute;
         }
+
+        h2 {
+            span {
+               padding-left: @gridWidth/6;
+            }
+        }
+
         header {
             flex: 1;
-            padding-left: @gridWidth;
+            padding-left: @gridWidth*3;
         }
+
         table.token-list {
             flex: 1 100%;
 
@@ -256,9 +326,31 @@ body {
                 position: absolute;
             }
             
-            td strong {
-                padding-left: @gridWidth;
+            tr {
+                &:hover td:last-child a {
+                    visibility: visible;
+                }
+                
+                td:last-child {
+                    text-align: right;
+
+                    
+                    a {
+                        visibility: hidden;
+                    }
+                }
+                td strong {
+                    padding-left: @gridWidth;
+                }
             }
+            
+        }
+    }
+
+    .accounts-page-summary.sticky + .dapp-actionbar {
+        flex: 100%;
+        nav {
+            float: right;
         }
     }
 
@@ -594,6 +686,77 @@ body {
         &.invalid {
             color: @colorError;
         }
+    }
+}
+
+
+.execute-contract {
+    .contract-info {
+        padding: 0;
+        overflow: hidden;
+        
+        h3 {
+            color: @colorGrayDark;
+            text-transform: none;
+            font-weight: 300;
+            font-size: 1.2em;
+        }
+
+        .output {
+            font-weight: 500;
+            font-size: 110%;
+            word-wrap: break-word;
+            word-wrap: break-all;
+            hyphens: auto;
+            position: relative;
+        }
+        .dapp-address-input {
+            max-width: 9 * @gridWidth;
+        }
+
+        input {
+            margin-top: @gridHeight/2;
+        }
+        
+        table {
+            max-width: @gridWidth * 16;
+            
+            tr:nth-child(odd) {
+                border-radius: 4px 4px 0 0;
+            }        
+
+            tr:nth-child(even) {
+                background-color: #FFF;
+                border-bottom: solid 10px @colorWhite;
+            }
+
+            td {
+                border-radius: 2px;
+                vertical-align: top;
+
+                h3 {    
+                    margin: 0;
+                }
+
+                dl {
+                    margin: 0;
+                    dd {
+                        margin-left: 0;
+                        max-width: 14 * @gridWidth;
+                        margin-bottom: @gridHeight;
+                    }
+                }
+                
+            }
+        }
+
+
+
+
+    }
+
+    .dapp-block-button {
+        margin-top: @gridHeight ;
     }
 }
 

@@ -1,9 +1,3 @@
-// disable pinch zoom gesture
-document.addEventListener('mousewheel', function(e) {
-    if(e.deltaY % 1 !== 0) {
-        e.preventDefault();
-    }
-});
 
 $(window).on('blur', function(e){ 
     $('body').addClass('app-blur');
@@ -15,9 +9,15 @@ $(window).on('focus', function(e){
 
 // add class to the header when scrolling
 $(window).on('scroll', function() {
-    if($(window).scrollTop() > 35 ) {
+    var scrollPosition = $(window).scrollTop() 
+    if( scrollPosition > 150 ) {
         $('.dapp-header').addClass('dapp-small');
+        $('.dapp-sticky-bar').addClass('sticky');
+    } else if( scrollPosition > 35 ) {
+        $('.dapp-header').addClass('dapp-small');
+        $('.dapp-sticky-bar').removeClass('sticky');
     } else {
         $('.dapp-header').removeClass('dapp-small');
+        $('.dapp-sticky-bar').removeClass('sticky');
     }
 })

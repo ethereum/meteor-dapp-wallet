@@ -25,6 +25,14 @@ Helpers.rerun = {
     '1s': new ReactiveTimer(1)
 };
 
+/**
+Sort method for accounts and wallets to sort by balance
+
+@method sortByBalance
+**/
+Helpers.sortByBalance = function(a, b){
+    return !b.disabled && new BigNumber(b.balance, 10).gt(new BigNumber(a.balance, 10)) ? 1 : -1;
+};
 
 /**
 Clear localStorage
@@ -142,7 +150,19 @@ Gets the docuement matching the given addess from the EthAccounts or Wallets col
 */
 Helpers.getAccountByAddress = function(address, reactive) {
     var options = (reactive === false) ? {reactive: false} : {};
-    return EthAccounts.findOne({address: address}, options) || Wallets.findOne({address: address}, options);
+    return EthAccounts.findOne({address: address}, options) || Wallets.findOne({address: address}, options)|| WatchedAddresses.findOne({address: address}, options);
+};
+
+/**
+Gets the docuement matching the given query from the EthAccounts or Wallets collection.
+
+@method getAccounts
+@param {String} query
+@param {Boolean} reactive
+*/
+Helpers.getAccounts = function(query, reactive) {
+    var options = (reactive === false) ? {reactive: false} : {};
+    return EthAccounts.find(query, options).fetch().concat(Wallets.find(query, options).fetch());
 };
 
 /**
@@ -182,7 +202,7 @@ Formats a timestamp to any format given.
     Helpers.formatTime(myTime, "YYYY-MM-DD")
 
 @method formatTime
-@param {String} time         The timstamp, can be string or unix format
+@param {String} time         The timestamp, can be string or unix format
 @param {String} format       the format string, can also be "iso", to format to ISO string, or "fromnow"
 @return {String} The formated time
 **/
@@ -210,4 +230,30 @@ Helpers.formatTime = function(time, format) { //parameters
 
     } else
         return '';
+};
+
+
+/**
+Formats an input and prepares it to be a template 
+    
+    Helpers.makeTemplateFromInput(abiFunctionInput);
+
+@method makeTemplateFromInput
+@param {object} input           The input object, out of an ABI
+@return {object} input          The input object with added variables to make it into a template
+**/
+Helpers.makeTemplateFromInput = function (input, parentName){
+
+    input.typeShort = input.type.match(/[a-z]+/i);
+    input.typeShort = input.typeShort[0];
+    input.bits = input.type.replace(input.typeShort, '');
+    input.parentName = parentName;
+    
+    if (input.typeShort=="string" || input.typeShort=="uint" || input.typeShort=="int" || input.typeShort=="address" || input.typeShort=="bool" || input.typeShort=="bytes") {
+        input.template =  'elements_input_'+ input.typeShort;
+    } else {
+        input.template =  'elements_input_string';
+    }
+
+    return input;    
 };

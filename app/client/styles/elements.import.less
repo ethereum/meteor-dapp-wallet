@@ -138,7 +138,8 @@ span.address {
             }
         }
     }
-    .dapp-identicon {
+
+    > .dapp-identicon {
         position: absolute;
         left: 12px;
         top: 20px;
@@ -152,6 +153,23 @@ span.address {
         position: absolute;
         left: 0px;
         bottom: 0;
+    }
+
+    .token-list {
+        .dapp-vertical-menu;
+        position: absolute;
+        left: @gridWidth * 1.5;
+        top: 4px;
+
+        li {
+            margin: 3px 0;
+        }
+
+        .dapp-identicon {
+            display: block;
+            width: 10px;
+            height: 10px;
+        }
     }
 
 
@@ -177,14 +195,17 @@ span.address {
         }
     }
 
-    h3 {
-        .dapp-shorten-text;
+    > h3 {
         margin: 0;
         margin-top: 4px;
         color: @colorLink;
         max-width: @gridWidth*4.4;
         float: left;
     }
+    &:not(.create) > h3 {
+        .dapp-shorten-text;
+    }
+
     > span {
         position: relative;
         clear: left;
@@ -193,6 +214,7 @@ span.address {
         font-size: 1.3em;
         line-height: 1.35em;
         .dapp-shorten-text;
+
 
         &.account-id {
             font-size: 0.8em;

@@ -1,22 +1,28 @@
 <template name="views_send">
 
+    {{reactiveData}}
+
     <!-- we use a form, which posts into the "dapp-form-helper-iframe" iframe, so that the browser stores inout fields for native autocpmplete -->
     <form class="container account-send-form" action="about:blank" target="dapp-form-helper-iframe" autocomplete="on">
             
-        <h1>{{{i18n 'wallet.send.title'}}}</h1>
+        {{#if deployContract}}
+            <h1>{{{i18n 'wallet.contracts.deployContract'}}}</h1>
+        {{else}}
+            <h1>{{{i18n 'wallet.send.title'}}}</h1>
+        {{/if}}
 
         <!-- action tabs -->
-        <div class="row clear">
+        <!-- <div class="row clear">
             <div class="col col-12 mobile-full">
                 <div class="dapp-segmented-control select-action">
                     <input type="radio" value="send-funds" id="send-funds" name="select-action" checked>
                     <label for="send-funds"> {{i18n 'wallet.send.sendFunds'}} </label>
-
+                    
                     <input type="radio" value="deploy-contract" id="deploy-contract" name="select-action">
                     <label for="deploy-contract"> {{i18n 'wallet.send.deployContract'}} </label>
                 </div>
             </div>
-        </div> 
+        </div>  -->
 
         <!-- from/to -->
         <div class="row clear from-to">
@@ -27,7 +33,7 @@
             </div>
 
             <div class="col col-6 mobile-full">
-                {{#unless TemplateVar.get "hideTo"}}
+                {{#unless deployContract}}
                     <h3>{{i18n 'wallet.send.to'}}</h3>
 
                     {{> dapp_addressInput placeholder="0x000000.." name="to" autofocus=true}}
@@ -108,7 +114,6 @@
             <div class="dapp-clear-fix"></div>
         </div>
 
-
         {{> elements_compileContract onlyByteCode=showOnlyByteTextarea codeNotExecutable=(TemplateVar.get "codeNotExecutable")}}
 
 
@@ -149,8 +154,6 @@
                     <br>
                     {{i18n "wallet.send.estimatedFee"}}: {{dapp_formatBalance total "0,0.00[000000] UNIT" "ether"}}
                 {{/if}}
-
-                
             </div>
 
             <div class="dapp-clear-fix"></div>
@@ -162,7 +165,7 @@
             {{#if TemplateVar.get "sending"}} 
                 {{i18n 'buttons.sending'}}
             {{else}}
-                {{#if $eq (TemplateVar.get "selectedAction") "deploy-contract"}}
+                {{#if deployContract}}
                     {{i18n 'wallet.app.buttons.deploy'}}
                 {{else}}
                     {{i18n 'buttons.send'}}

@@ -22,16 +22,22 @@ addTransaction = function(log, from, to, value){
                         delete transaction.hash;
                         transaction.transactionHash = log.transactionHash;
 
+                        var tx = {
+                            _id: txId,
+                            to: to,
+                            from: from,
+                            value: value,
+                            timestamp: block.timestamp,
+                        };
+
+                        if(log.tokenId)
+                            tx.tokenId = log.tokenId;
+
+                        if(log.args.operation)
+                            tx.operation = log.args.operation;
+
                         if(!err) {
-                            updateTransaction({
-                                _id: txId,
-                                tokenId: log.tokenId,
-                                to: to,
-                                from: from,
-                                value: value,
-                                operation: log.args.operation || null,
-                                timestamp: block.timestamp,
-                            }, transaction, receipt);
+                            updateTransaction(tx, transaction, receipt);
 
                         }
                     });

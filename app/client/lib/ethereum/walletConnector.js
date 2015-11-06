@@ -33,7 +33,7 @@ ethereumConfig = {
 
     @property ethereumConfig.rollBackBy
     */
-    rollBackBy: 12,
+    rollBackBy: 0,
     /**
     Number of blocks to confirm a wallet
 
@@ -99,11 +99,19 @@ Will remove all transactions, and will set the checkpointBlock to the creationBl
 resetWallet = function function_name (argument) {
     _.each(Transactions.find().fetch(), function(tx) {
         console.log(tx._id);
-        Transactions.remove(tx._id); 
+        try {
+            Transactions.remove(tx._id); 
+        } catch(e){
+            console.error(e);
+        }
     });
 
     _.each(PendingConfirmations.find().fetch(), function(pc) {
-        PendingConfirmations.remove(pc._id); 
+        try {
+            PendingConfirmations.remove(pc._id); 
+        } catch(e){
+            console.error(e);
+        }
     });
 
     _.each(Wallets.find().fetch(), function(wallet) {

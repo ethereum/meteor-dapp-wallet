@@ -61,6 +61,7 @@ var checkOverDailyLimit = function(address, wei, template){
         TemplateVar.set('dailyLimitText', false);
 };
 
+
 /**
 Add a pending transaction to the transaction list, after sending
 
@@ -125,10 +126,8 @@ var getDataField = function(){
     // make reactive to the show/hide of the textarea
     TemplateVar.getFrom('.compile-contract','byteTextareaShown');
 
-
     var type = TemplateVar.getFrom('.compile-contract', 'selectedType');
-
-    var data = (type === 'byte-code')
+        data = (type === 'byte-code')
         ? TemplateVar.getFrom('.dapp-data-textarea', 'value')
         : TemplateVar.getFrom('.compile-contract', 'value');
 
@@ -144,12 +143,12 @@ Template['views_send'].onCreated(function(){
     accountQuery = {owners: {$in: _.pluck(EthAccounts.find({}).fetch(), 'address')}, address: {$exists: true}};
     accountSort = {sort: {name: 1}};
 
-    // set the default fee
-    TemplateVar.set('selectedAction', 'send-funds');
-    TemplateVar.set('selectedToken', 'ether');
+
+    // SET THE DEFAULT VARIABLES
     TemplateVar.set('amount', '0');
     TemplateVar.set('estimatedGas', 0);
-    
+
+
     // check if we are still on the correct chain
     Helpers.checkChain(function(error) {
         if(error && (EthAccounts.find().count() > 0)) {
@@ -183,11 +182,12 @@ Template['views_send'].onRendered(function(){
     var template = this;
 
     // focus address input field
-    if(!this.data || !FlowRouter.getParam('address'))
-        this.$('input[name="to"]').focus();
-    else {
+    if(FlowRouter.getParam('address')) {
         this.find('input[name="to"]').value = FlowRouter.getParam('address');
         this.$('input[name="to"]').trigger('change');
+
+    } else if(!this.data){
+        this.$('input[name="to"]').focus();
     }
 
     // set the from
@@ -245,12 +245,34 @@ Template['views_send'].onRendered(function(){
 
 Template['views_send'].helpers({
     /**
+    React on the template data context
+
+    @method (reactiveData)
+    */
+    'reactiveData': function(deployContract){
+
+        // Deploy contract
+        if(this && this.deployContract) {
+            TemplateVar.set('selectedAction', 'deploy-contract');
+            TemplateVar.set('selectedToken', 'ether');
+            TemplateVar.setTo('.compile-contract', 'selectedType', 'source-code');
+
+
+        // Send funds
+        } else {
+            TemplateVar.set('selectedAction', 'send-funds');
+            TemplateVar.set('selectedToken', FlowRouter.getParam('token') || 'ether');
+        }
+    },
+    /**
     Get all current accounts
 
     @method (fromAccounts)
     */
     'fromAccounts': function(){
-        return _.union(Wallets.find(accountQuery, accountSort).fetch(), EthAccounts.find({}, accountSort).fetch());
+        var accounts = _.union(Wallets.find(accountQuery, accountSort).fetch(), EthAccounts.find({}, accountSort).fetch());
+        accounts.sort(Helpers.sortByBalance);
+        return accounts;
     },
     /**
     Get the current selected account
@@ -397,37 +419,7 @@ Template['views_send'].helpers({
 
 Template['views_send'].events({
     /**
-    Action Switcher
-    
-    @event click .select-action input
-    */
-    'click .select-action input': function(e, template){
-        var option = e.currentTarget.value;
-        TemplateVar.set('selectedAction', option);
-
-        if (option === 'deploy-contract') {
-            TemplateVar.set('hideTo', true);
-            TemplateVar.set('selectedToken', 'ether');
-            TemplateVar.setTo('.compile-contract', 'selectedType', 'source-code');
-
-            TemplateVar.set('savedTo', TemplateVar.getFrom('.dapp-address-input', 'value'));
-
-        } else {
-            TemplateVar.set('hideTo', false);
-
-            Tracker.afterFlush(function() {
-                if(TemplateVar.get(template, 'savedTo')) {
-                    template.find('input[name="to"]').value = TemplateVar.get(template, 'savedTo');
-                    TemplateVar.setTo('.dapp-address-input', 'value', TemplateVar.get(template, 'savedTo'));
-                }
-            });
-        }
-
-        // trigger amount box change
-        template.$('input[name="amount"]').trigger('change');
-    },
-    /**
-    Selected a token for the first time
+    Select a token 
     
     @event 'click .select-token
     */
@@ -584,6 +576,8 @@ Template['views_send'].events({
                     
                     // SIMPLE TX
                     } else {
+                        
+                        console.log('Gas Price: '+ gasPrice);
 
                         web3.eth.sendTransaction({
                             from: selectedAccount.address,
@@ -696,6 +690,9 @@ Template['views_send'].events({
 
             // SHOW CONFIRMATION WINDOW when NOT MIST
             if(typeof mist === 'undefined') {
+
+                console.log('estimatedGas: ' + estimatedGas);
+                
                 EthElements.Modal.question({
                     template: 'views_modals_sendTransactionInfo',
                     data: {

@@ -6,59 +6,16 @@ Modal to add token.
 */
 
 
-Template['views_modals_addToken'].onRendered(function(){
+Template['views_modals_watchAddress'].onRendered(function(){
     if(!this.data || !this.data.address)
         this.$('input[name="address"]').focus();
 });
 
-Template['views_modals_addToken'].helpers({
-    /**
-    Returns the token for the preview token box
-
-    @method (previewToken)
-    */
-    'previewToken' : function(){
-        var token = _.clone(this || {});
-
-        if(TemplateVar.get('address'))
-            token.address = TemplateVar.get('address');
-        if(TemplateVar.get('decimals'))
-            token.decimals = TemplateVar.get('decimals');
-        if(TemplateVar.get('symbol'))
-            token.symbol = TemplateVar.get('symbol');
-        if(TemplateVar.get('name'))
-            token.name = TemplateVar.get('name');
-
-        return token;
-    }
-});
 
 
-Template['views_modals_addToken'].events({
-    /**
-    Change Decimals
-
-    @event change .decimals, input .decimals
-    */
-    'change .decimals, input .decimals': function(e, template) {
-        TemplateVar.set('decimals', e.target.value);
-    },    
-    /**
-    Change Symbol
-
-    @event change input.symbol, input input.symbol
-    */
-    'change input.symbol, input input.symbol': function(e, template) {
-        TemplateVar.set('symbol', e.target.value);
-    },    
-    /**
-    Change Name
-
-    @event change input.name, input input.name
-    */
-    'change input.name, input input.name': function(e, template) {
-        TemplateVar.set('name', e.target.value);
-    },    
+Template['views_modals_watchAddress'].events({
+        
+    
     /**
     Change Address
 

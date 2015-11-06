@@ -1,0 +1,14 @@
+<template name="views_modals_watchAddress">
+    <h1>Watch Contract</h1>
+
+    <h3>Name</h3>
+    <input type="string" value="" name="name" placeholder="Name this contract" class="name">
+
+    <h3>Address</h3>
+
+    {{> dapp_addressInput placeholder="0x000000.." value=this.address name="address" autofocus=true class='token-address'}}
+
+    <h3>Interface</h3>
+    <input type="string" value="" name="abi" placeholder="JSON object" class="abi">
+    
+</template>
