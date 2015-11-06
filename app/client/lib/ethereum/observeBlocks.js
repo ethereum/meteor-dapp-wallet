@@ -72,13 +72,20 @@ updateBalances = function() {
         // go through all existing accounts, for each token
         _.each(walletsAndAccounts, function(account){
             tokenInstance.balanceOf(account.address, function(e, balance){
-                if(!e && balance.toNumber() > 0){
-                    var tokenID = Helpers.makeId('token', token.address),
-                        set = {};
+                var tokenID = Helpers.makeId('token', token.address);
+                var currentBalance = Number(Tokens.findOne(tokenID).balances[account._id]);
+                if(!e && balance.toNumber() != currentBalance){
+                    var set = {};
 
-                    set['balances.'+ account._id] = balance.toString(10);
-
-                    Tokens.update(tokenID, {$set: set});
+                    if (currentBalance) {
+                        set['balances.'+ account._id] = balance.toString(10);
+                        Tokens.update(tokenID, {$set: set});
+                        console.log("set balance");
+                    } else {
+                        set['balances.'+ account._id] = '';
+                        Tokens.update(tokenID, {$unset: set});
+                    }
+                    
                 }
             });
         });
