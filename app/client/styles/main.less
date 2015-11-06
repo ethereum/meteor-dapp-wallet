@@ -241,12 +241,12 @@ body {
 }
 
 .accounts-page {
-    display: flex;
+    .display(flex);
     flex-flow: row wrap;
 
     .accounts-page-summary {
         flex: 1 auto;
-        display: flex;
+        .display(flex);
         flex-flow: column;
 
         &.dapp-sticky-bar {
@@ -307,14 +307,9 @@ body {
             position: absolute;
         }
 
-        
-
         h2 {
-            .icon-key {
-                position: absolute;
-            }
             span {
-               padding-left: @gridWidth/1.5;
+               padding-left: @gridWidth/6;
             }
         }
 
@@ -322,6 +317,7 @@ body {
             flex: 1;
             padding-left: @gridWidth*3;
         }
+
         table.token-list {
             flex: 1 100%;
 

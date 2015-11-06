@@ -42,7 +42,9 @@ Template['views_account_create'].helpers({
     @method (ownerAccounts)
     */
     'ownerAccounts': function(){
-        return EthAccounts.find({}, {sort: {balance: -1}}).fetch();
+        var accounts = EthAccounts.find({}, {sort: {balance: -1}}).fetch();
+        accounts.sort(Helpers.sortByBalance);
+        return accounts;
     },
     /**
     Return the selectedOwner
