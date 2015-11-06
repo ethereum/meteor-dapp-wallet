@@ -113,7 +113,10 @@
                 "betweenWallets": "Transfer between wallets",
                 "sent": "Sent",
                 "received": "Received",
-                "createdContract": "Created contract at",
+                "createdContract": {
+                    "title": "Created contract",
+                    "at": "Created contract at"
+                },
                 "creatingContract": "Creating contract",
                 "tokenTransfer": "__token__ - Token transfer",
                 "pendingConfirmations": "__initiator__ wants to send from __from__"

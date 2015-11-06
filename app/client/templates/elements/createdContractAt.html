@@ -1,7 +1,7 @@
 <template name="elements_createdContractAt">
     <i class="icon-docs"></i> 
     {{#if contractAddress}}
-        {{i18n "wallet.transactions.types.createdContract"}} &nbsp;  
+        {{i18n "wallet.transactions.types.createdContract.at"}} &nbsp;  
         {{> elements_account_link address=contractAddress}}
         {{#unless deployedData}}
             <br>
