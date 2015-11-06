@@ -206,8 +206,13 @@ body {
             color: @colorTextSecondary;
             font-size: 1.6em;
 
-            .inline-form > button {
-                padding: 0;
+            .inline-form {
+                > .simple-modal {
+                    min-width: 70px;
+                }
+                > button {
+                    padding: 0;
+                }
             }
         }
     }
@@ -245,56 +250,57 @@ body {
         flex-flow: column;
 
         &.dapp-sticky-bar {
-            top: @gridHeight * -1;
+            top: floor(@gridHeight * -1);
             .transition(top @animationSpeed);
-        }
 
-        &.dapp-sticky-bar.sticky {
-            position: fixed;
-            top: @gridHeight * 2;
-            left: 0;
-            right: 0 ;
-            height: @gridHeight * 2;
-            background: @colorWhite;
-            // .dapp-shadow-small;
-            z-index: 25;
-            padding: @gridHeight/2 @gridWidth;
+            &.sticky {
+                position: fixed;
+                top: floor(@gridHeight * 2);
+                left: 0;
+                right: 0 ;
+                height: @gridHeight * 2;
+                background: @colorWhite;
+                // .dapp-shadow-small;
+                z-index: 25;
+                padding: @gridHeight/2 @gridWidth;
 
-            .dapp-identicon {
-                // .dapp-tiny 
-                width: floor(@gridWidth / 1.5);
-                height: floor(@gridWidth / 1.5);
-                box-shadow: inset rgba(255, 255, 255, 0.4) 0 1px 1px, inset rgba(0, 0, 0, 0.3) 0 -1px 2px;
-                position: absolute;
-                top: @gridHeight * -0.5;
-                left: @gridWidth * 2;
-            }
+                .dapp-identicon {
+                    // .dapp-tiny 
+                    width: floor(@gridWidth / 1.5);
+                    height: floor(@gridWidth / 1.5);
+                    box-shadow: inset rgba(255, 255, 255, 0.4) 0 1px 1px, inset rgba(0, 0, 0, 0.3) 0 -1px 2px;
+                    position: absolute;
+                    top: @gridHeight * -0.5;
+                    left: @gridWidth * 2;
+                }
 
-            h1 {
-                font-size: 1.1em;
-                text-transform: uppercase;
-            }
-            
-            header {
-                padding-left: @gridWidth * 2;
-            }
+                h1 {
+                    font-size: 1.1em;
+                    text-transform: uppercase;
+                }
+                
+                header {
+                    padding-left: @gridWidth * 2;
+                }
 
-            .account-balance {
-                position: absolute;
-                right: @gridWidth;
-                top: 7px;
-                font-size: 1.2em;
-                font-weight: 400;
-                span {
-                    font-size: 0.75em;
-                    font-weight: 600;
+                .account-balance {
+                    position: absolute;
+                    right: @gridWidth;
+                    top: 7px;
+                    font-size: 1.2em;
+                    font-weight: 400;
+                    span {
+                        font-size: 0.75em;
+                        font-weight: 600;
+                    }
+                }
+
+                h2, .token-list {
+                    display: none;
                 }
             }
-
-            h2, .token-list {
-                display: none;
-            }
         }
+
 
         .dapp-identicon {
             margin-top: @gridHeight;
@@ -308,7 +314,7 @@ body {
                 position: absolute;
             }
             span {
-               padding-left: @gridWidth;
+               padding-left: @gridWidth/1.5;
             }
         }
 
