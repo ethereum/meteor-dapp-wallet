@@ -41,7 +41,6 @@ span.address {
     border: 0;
     font: 100 16px 'Source Sans Pro', 'Helvetica Neue', arial, sans-serif;
 
-
     // ANIMATION
     .transition(background-color @animationSpeed*4, -webkit-filter @animationSpeed*20);
 
@@ -67,6 +66,7 @@ span.address {
 
         h3 {
             margin-top: 0;
+            text-align: left;
         }
     }
 
@@ -75,14 +75,8 @@ span.address {
     }
 
     &.wallets {
-        // background-color: lighten(@colorBackgroundHeader, 12%);
         .background-image(linear-gradient(to right,  lighten(@colorBackgroundHeader, 12%) 0%, rgba(255,255,255, 0.1) 100%));
         overflow: hidden;
-
-        // .account-pattern {
-        //     background-color: transparent;
-        //     background-image: none !important;
-        // }
     }
     &.tokens {
         perspective: 800px;

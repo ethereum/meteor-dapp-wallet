@@ -45,7 +45,7 @@ Template['elements_executeContract'].onCreated(function(){
     var template = this;
 
     // Set Defaults
-    TemplateVar.set('value', '0xdeadbeef');
+    TemplateVar.set('value', '');
 
     TemplateVar.set("toAddress", this.data.to);
     TemplateVar.set('sending', false);
@@ -96,16 +96,13 @@ Template['elements_executeContract'].onCreated(function(){
             TemplateVar.set('value', contractInstance[selectedFunction.name].getData.apply(null, functionInputs));
         }
         
-            
-
-        
-       
-
-        // call constants
+        // call constants and get their values
         console.log("CONSTANTS")        
         var contractConstants = TemplateVar.get("contractConstants");
         _.each(contractConstants, function(constant){            
             
+            // the return function for the variable argument.
+            // will execute a jquery (sorry!) and fill the output fields for the constant
             var constantReturns = function(e, constantReturned) {
                 var returnString = JSON.stringify(constantReturned, null, 4);
                 var returnObjects = $('.contract-constants .constant-' + constant.name + ' .output');
@@ -139,6 +136,9 @@ Template['elements_executeContract'].onCreated(function(){
             var constantInputs = constant.parameters;
             constantInputs.push(constantReturns);
 
+            // executes all the contract constant functions whenever a templatevar changes
+            // (which happens when fields are clicked)
+            
             contractInstance[constant.name].apply(null, constantInputs);
         })
 
@@ -231,6 +231,10 @@ Template['elements_executeContract'].events({
     */
     'keyup input[name="abi"], change input[name="abi"], click input[name="abi"]': function(e, template){
         
+        /* 
+        This is executed when the ABI is changed or clicked on. Ideally it should happen automatically without requiring a click, obviously. It reads the ABI and generates templateVars that will create the variables and functions inputs
+         */
+
         var ABIstring = e.currentTarget.value;
         var ABI = JSON.parse(ABIstring);
 
@@ -238,6 +242,7 @@ Template['elements_executeContract'].events({
         console.log( ABI );
 
         if (typeof ABI == 'object') {
+            // If the ABI is valid
 
             TemplateVar.set("contractABI", ABI);
 
@@ -245,49 +250,43 @@ Template['elements_executeContract'].events({
             var address = TemplateVar.getFrom('.dapp-address-input', 'value');
             contractInstance = web3.eth.contract(ABI).at(address);
 
-            // console.log(ABI);
-
             var contractFunctions = [];
             var contractConstants = [];
 
             _.each(ABI, function(e,i){
+                // Walk throught the abi and extract functions and constants
                 if (e.type == "function") {
                     e.parameters = [];
 
                     _.each(e.inputs, function(input, i){
                         input = Helpers.makeTemplateFromInput(input, e.name);
-                        
+                        // Get the inputs of the functions
                         if (e.constant)
                             e.parameters.push(0);
                     })
 
                     if (e.constant){
-                        // if it's a constant
-                        // console.log('e.parameters');
-                        // console.log(e.parameters);
-                        
+                        // if it's a constant                        
                         contractConstants.push(e);                    
                     } else {
                         //if its a variable
                         contractFunctions.push(e);                
-                        // TemplateVar.set("selectedFunction", e); 
                     }
                     
                 }
             });
 
-
+            // Walk in each contract constant to get the value assync
             _.each(contractConstants, function(constant){  
+                // get all the inputs from the constant ABI
                 var parameters = template.$(".contract-constants .constant-input-"+constant.name+" .abi-input");
+                // haven't figured out a way to do it without jquery
 
                 constant.parameters = [];
                 _.each(parameters, function(parameter){
-                    // console.log(parameter.value);
                     constant.parameters.push(parameter.value);
                 })
             })
-
-
 
 
             TemplateVar.set("contractFunctions", contractFunctions);
@@ -297,17 +296,11 @@ Template['elements_executeContract'].events({
             // $('.abi-input').change();
 
             contractInfo = Helpers.getAccountByAddress(TemplateVar.get("toAddress"));
-            // Save new name
+            
+            // If it's valid then saves new ABI
             Wallets.update(contractInfo._id, {$set: {
                 interface: ABIstring
             }});
-            console.log('saved abi')
-
-            console.log(Wallets.findOne(contractInfo._id));
-
-            console.log(contractInfo)
-            // console.log(ABI)
-
         } 
 
     },
@@ -331,6 +324,8 @@ Template['elements_executeContract'].events({
     @event change .contract-functions .abi-input, input .contract-functions .abi-input
     */
     'change .abi-input, input .abi-input': function(e, template){
+        /* Things that happen when you click on any ABI input field */
+
         e.preventDefault();
         e.stopImmediatePropagation();
 
@@ -341,19 +336,14 @@ Template['elements_executeContract'].events({
         var constants = [];
         var contractConstants = TemplateVar.get("contractConstants");
 
+        // Save all current arguments for the contract functions in variables
         _.each(template.findAll('.contract-functions .abi-input'), function(input, index){
-            // console.log("abi change");
             var parentName = input.getAttribute("data-ref");
-            // console.log(index);
-            // console.log(input);
-            // console.log(input.checked);
-
+         
             var output = input.value;
 
             if(input.type == 'checkbox')
                 output = input.checked;
-
-            // console.log(output);
 
             // force 0x at the start
             if(selectedFunction && !_.isEmpty(output) &&
@@ -364,18 +354,18 @@ Template['elements_executeContract'].events({
             functionArguments.push(output);  
         })
 
+        // Update all the contract constants
+        // This only happens when you click on any field, should  
+        // probably happen whenever there's a new block also
+
         _.each(contractConstants, function(constant){  
             var parameters = template.$(".contract-constants .constant-input-"+constant.name+" .abi-input");
 
             constant.parameters = [];
             _.each(parameters, function(parameter){
-                // console.log(parameter.value);
                 constant.parameters.push(parameter.value);
             })
         })
-
-        // console.log('contractConstants');
-        // console.log(contractConstants);
 
         TemplateVar.set("contractConstants", contractConstants);
         TemplateVar.set('functionInputs', functionArguments);
@@ -394,6 +384,8 @@ Template['elements_executeContract'].events({
     @event
     */
     'click .execute': function(){
+        
+        // This should definitely be a separate module, as it repeats a lot of whats on the send page
 
         console.log('select[name="dapp-select-account"]')
         console.log(TemplateVar.getFrom('select[name="dapp-select-account"]', 'value'))
@@ -501,18 +493,10 @@ Template['elements_executeContract'].events({
                         });
                     }
                 });
-                 
-            }
-
-
-                
-            };
-
-            sendTransaction(estimatedGas);
-
-        
-        }
-
+            }   
+        };
+        sendTransaction(estimatedGas);    
+    }
     }
 })
 

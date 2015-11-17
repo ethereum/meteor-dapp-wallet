@@ -24,7 +24,7 @@ var watchAddress = function(e) {
         name = $('.modals-add-watch-account input.name').val(),
         abi = $('.modals-add-watch-account input.abi').val();
 
-    var msg = "Added to your watch list";
+    var msg = TAPi18n.__('wallet.contracts.success') ;
 
     console.log(address)
     if(address != '') {

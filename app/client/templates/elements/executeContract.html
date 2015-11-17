@@ -4,7 +4,7 @@
         
 
         {{#if hasCode}}
-            <h2>Contract Information</h2>
+            <h2> {{i18n "wallet.contracts.contractInformation"}} </h2>
             <div class="dapp-clear-fix"></div>
 
             <button class="toggle-execution dapp-block-button dapp-small">{{visibilityToggleButton}}</button>
@@ -85,10 +85,6 @@
                 {{/with}}
             </div>
             <div class="dapp-clear-fix"></div>
-        {{else}}
-            <!-- <p class="red">
-                <i class="icon-shield"></i> {{{i18n 'wallet.send.texts.noCodeInRecipient'}}}
-            </p> -->
         {{/if}}
         
         {{/if}}
