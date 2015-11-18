@@ -16,14 +16,14 @@
         <div class="dapp-clear-fix"></div>
 
         {{#each customContracts}}
-            {{> elements_account account=_id wallets=true}}
+            {{> elements_account account=_id isContract=true}}
         {{/each}}
 
         <button class="wallet-box create add-contract">
             <div class="account-pattern">
                 +
             </div>
-            <h3>{{{i18n "wallet.contracts.watchContract"}}}</h3>
+            <h3>{{{i18n "wallet.contracts.addCustomContract"}}}</h3>
         </button>  
         <div class="dapp-clear-fix"></div>
 

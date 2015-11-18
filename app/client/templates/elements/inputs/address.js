@@ -8,6 +8,6 @@ Template['elements_input_address'].helpers({
     @return {String}
     */
     'getClass': function() {
-        return this.class + "abi-input"
+        return this.class ? this.class + ' abi-input' : 'abi-input';
     }
 })

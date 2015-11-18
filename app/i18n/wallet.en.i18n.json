@@ -231,13 +231,15 @@
             "description": "Tokens are currencies built on the Ethereum platform. Tokens should follow the <a href=\"https://github.com/ethereum/wiki/wiki/Standardized_Contract_APIs#token\" target=\"_blank\">custom token standard</a>.<br>Create your own token by simply modifiying <a href=\"http://chriseth.github.io/browser-solidity/?gist=20c8b5658349b003b08d\" target=\"_blank\">this example of a custom token contract</a>.",
             "deleteToken": "Do you want to remove the token <strong>__token__</strong> from your list?",
             "addedToken": "Added __token__ to your watch list",
-            "invalidAddress": "Token not added, invalid address.",
-            "editedToken": "Edited token __token__"
+            "editedToken": "Edited token __token__",
+            "error": {
+                "invalidAddress": "Token not added, invalid address."
+            }
         },
         "contracts": {
             "contractTitle" : "Contracts",
             "deployNewContract": "Deploy new contract",
-            "watchContract": "Watch contract",
+            "addCustomContract": "Add custom contract",
             "customContracts": "Custom contracts",
             "description": "In order to watch and interact with a contract already deployed on the blockchain you need to know it's address and description of its interface (in an ABI/JSON format)",
             "deployContract": "<strong>Deploy</strong> contract",
@@ -245,14 +247,15 @@
             "contractByteCode": "Contract byte code",
             "selectContract": "Select contract to deploy",
             "constructorParameters": "Constructor parameters",
-            "success": "Added to your watch list",
             "name": "Contract Name",
             "address": "Contract Address",
-            "interface": "Interface",
+            "abi": "JSON ABI",
             "contractInformation": "Contract Information",
+            "addedContract": "Added custom contract",
             "error": {
                 "compile": "Could not compile source code.",
-                "noDataProvided": "You didn't provide any data"
+                "noDataProvided": "You didn't provide any data",
+                "invalidAddress": "Contract not added, invalid address."
             }
         }
 

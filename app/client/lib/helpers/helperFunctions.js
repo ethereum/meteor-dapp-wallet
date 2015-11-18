@@ -150,7 +150,7 @@ Gets the docuement matching the given addess from the EthAccounts or Wallets col
 */
 Helpers.getAccountByAddress = function(address, reactive) {
     var options = (reactive === false) ? {reactive: false} : {};
-    return EthAccounts.findOne({address: address}, options) || Wallets.findOne({address: address}, options)|| WatchedContracts.findOne({address: address}, options);
+    return EthAccounts.findOne({address: address}, options) || Wallets.findOne({address: address}, options)|| CustomContracts.findOne({address: address}, options);
 };
 
 /**
@@ -236,20 +236,25 @@ Helpers.formatTime = function(time, format) { //parameters
 /**
 Formats an input and prepares it to be a template 
     
-    Helpers.makeTemplateFromInput(abiFunctionInput);
+    Helpers.createTemplateDataFromInput(abiFunctionInput);
 
-@method makeTemplateFromInput
+@method createTemplateDataFromInput
 @param {object} input           The input object, out of an ABI
 @return {object} input          The input object with added variables to make it into a template
 **/
-Helpers.makeTemplateFromInput = function (input, parentName){
+Helpers.createTemplateDataFromInput = function (input, parentName){
 
     input.typeShort = input.type.match(/[a-z]+/i);
     input.typeShort = input.typeShort[0];
     input.bits = input.type.replace(input.typeShort, '');
     input.parentName = parentName;
     
-    if (input.typeShort=="string" || input.typeShort=="uint" || input.typeShort=="int" || input.typeShort=="address" || input.typeShort=="bool" || input.typeShort=="bytes") {
+    if(input.typeShort === 'uint' ||
+       input.typeShort == 'int' ||
+       input.typeShort == 'address' ||
+       input.typeShort == 'bool' ||
+       input.typeShort == 'bytes') {
+
         input.template =  'elements_input_'+ input.typeShort;
     } else {
         input.template =  'elements_input_string';

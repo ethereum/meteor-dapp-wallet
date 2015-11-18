@@ -47,8 +47,15 @@ Template['elements_executeContract'].onCreated(function(){
     // Set Defaults
     TemplateVar.set('value', '');
 
-    TemplateVar.set("toAddress", this.data.to);
+    TemplateVar.set('toAddress', this.data.address);
     TemplateVar.set('sending', false);
+
+    // check address for code
+    web3.eth.getCode(template.data.address, function(e, code) {
+        if(!e && code.length > 2) {
+            TemplateVar.set(template, 'hasCode', true);
+        }
+    });
 
 
     // update the abi
@@ -58,13 +65,13 @@ Template['elements_executeContract'].onCreated(function(){
 
     // update and generate the contract data 
     this.autorun(function() {
-        console.log("autorun");
+        console.log('autorun');
 
         var gasPrice = TemplateVar.getFrom('.dapp-select-gas-price', 'gasPrice'),
         estimatedGas = TemplateVar.getFrom('.account-send-form', 'estimatedGas'),
         selectedAccount = TemplateVar.getFrom('.select[name="dapp-select-account"]', 'value');
 
-        console.log("gasPrice: " + gasPrice+" estimatedGas: " + estimatedGas);
+        console.log('gasPrice: ' + gasPrice +' estimatedGas: '+ estimatedGas);
 
         // EXECUTE CONTRACT
 
@@ -75,8 +82,8 @@ Template['elements_executeContract'].onCreated(function(){
 
         var functionInputs = _.clone(TemplateVar.get('functionInputs'));
 
-        if (TemplateVar.get("executionVisible"))
-            var contractInstance = web3.eth.contract(contractABI).at(TemplateVar.get("toAddress"));
+        if (TemplateVar.get('executionVisible'))
+            var contractInstance = web3.eth.contract(contractABI).at(TemplateVar.get('toAddress'));
 
         if(selectedFunction) {
              // If all empty
@@ -98,7 +105,7 @@ Template['elements_executeContract'].onCreated(function(){
         
         // call constants and get their values
         console.log("CONSTANTS")        
-        var contractConstants = TemplateVar.get("contractConstants");
+        var contractConstants = TemplateVar.get('contractConstants');
         _.each(contractConstants, function(constant){            
             
             // the return function for the variable argument.
@@ -167,17 +174,6 @@ Template['elements_executeContract'].helpers({
           return Helpers.getAccountByAddress(TemplateVar.get("toAddress"));
     },
     /**
-    Returns true if the current selected unit is an ether unit (ether, finney, etc)
-
-    @method (etherUnit)
-    */
-    'hasCode': function() {
-        var code = web3.eth.getCode(this.to);
-        // gave up trying to make that async
-
-        return code != '0x'; 
-    },
-    /**
     Get Functions
 
     @method (tokens)
@@ -244,7 +240,7 @@ Template['elements_executeContract'].events({
         if (typeof ABI == 'object') {
             // If the ABI is valid
 
-            TemplateVar.set("contractABI", ABI);
+            TemplateVar.set('contractABI', ABI);
 
 
             var address = TemplateVar.getFrom('.dapp-address-input', 'value');
@@ -255,11 +251,11 @@ Template['elements_executeContract'].events({
 
             _.each(ABI, function(e,i){
                 // Walk throught the abi and extract functions and constants
-                if (e.type == "function") {
+                if (e.type == 'function') {
                     e.parameters = [];
 
                     _.each(e.inputs, function(input, i){
-                        input = Helpers.makeTemplateFromInput(input, e.name);
+                        input = Helpers.createTemplateDataFromInput(input, e.name);
                         // Get the inputs of the functions
                         if (e.constant)
                             e.parameters.push(0);
@@ -279,7 +275,7 @@ Template['elements_executeContract'].events({
             // Walk in each contract constant to get the value assync
             _.each(contractConstants, function(constant){  
                 // get all the inputs from the constant ABI
-                var parameters = template.$(".contract-constants .constant-input-"+constant.name+" .abi-input");
+                var parameters = template.$('.contract-constants .constant-input-'+ constant.name +' .abi-input');
                 // haven't figured out a way to do it without jquery
 
                 constant.parameters = [];
@@ -298,8 +294,8 @@ Template['elements_executeContract'].events({
             contractInfo = Helpers.getAccountByAddress(TemplateVar.get("toAddress"));
             
             // If it's valid then saves new ABI
-            Wallets.update(contractInfo._id, {$set: {
-                interface: ABIstring
+            CustomContracts.update(contractInfo._id, {$set: {
+                abi: ABIstring
             }});
         } 
 

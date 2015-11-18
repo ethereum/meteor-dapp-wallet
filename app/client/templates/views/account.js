@@ -97,6 +97,7 @@ Template['views_account'].events({
             ok: function(){
                 if(data.name === $('input.deletionConfirmation').val()) {
                     Wallets.remove(data._id);
+                    CustomContracts.remove(data._id);
                     FlowRouter.go('dashboard');
                     return true;
                 }
@@ -144,7 +145,7 @@ Template['views_account'].events({
             EthAccounts.update(this._id, {$set: {
                 name: text
             }});
-            WatchedContracts.update(this._id, {$set: {
+            CustomContracts.update(this._id, {$set: {
                 name: text
             }});
 
@@ -204,16 +205,6 @@ Template['views_account'].events({
             }
         });
 
-        
-    },
-    /**
-    Title scrolled out
-    
-    @event scroll accounts-page-summary
-    */
-    'scroll .accounts-page-summary': function(e){
-        
-        console.log(e);
         
     }
 });

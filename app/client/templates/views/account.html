@@ -2,7 +2,19 @@
     {{#with account}}
         <div class="dapp-container accounts-page">
 
-            <div class="accounts-page-summary dapp-sticky-bar">
+            <div class="dapp-sticky-bar dapp-container">
+                {{> dapp_identicon identity=address}}
+                <h1>
+                    <span class="edit-name">{{name}}</span> <i class="edit-icon icon-pencil"></i>
+
+                    {{#if $or owners abi}}
+                        <button class="dapp-icon-button delete icon-trash"></button>
+                    {{/if}}
+                </h1>
+                {{> elements_balance balance=balance changeUnit=true}}
+            </div>
+
+            <div class="accounts-page-summary">
 
                 {{> dapp_identicon identity=address}}
                 
@@ -10,7 +22,7 @@
                     <h1>
                         <span class="edit-name">{{name}}</span> <i class="edit-icon icon-pencil"></i>
 
-                        {{#if owners}}
+                        {{#if $or owners abi}}
                             <button class="dapp-icon-button delete icon-trash"></button>
                         {{/if}}
                     </h1>
@@ -41,7 +53,44 @@
                 {{/with}}
 
 
+                {{#if owners}}
+                    <!-- Wallet infos -->
 
+                    <div class="row clear wallet-info">
+                        {{#if showDailyLimit}}
+                            <div class="col col-4 mobile-full">
+                                {{#if $gte version 1}}
+                                    <h3>{{i18n "wallet.accounts.dailyLimit"}} <span style="font-weight: 200;">{{dapp_formatBalance dailyLimit "0,0.00 unit"}}</span></h3>
+                                    {{dapp_formatBalance availableToday "0,0.00 unit"}} {{i18n "wallet.accounts.dailyLimitRemaining"}}
+                                {{else}}
+                                    <h3>{{i18n "wallet.accounts.dailyLimit"}}</h3>
+                                    {{dapp_formatBalance dailyLimit "0,0.00 unit"}}
+                                {{/if}}
+                            </div>
+                        {{/if}}
+                        {{#if showRequiredSignatures}}
+                            <div class="col col-4 mobile-full">
+                                <h3>{{i18n "wallet.accounts.requiredSignatures"}}</h3> {{requiredSignatures}}
+                            </div>
+                        {{/if}}
+                        <div class="col col-4 mobile-full">
+                            <h3>{{i18n "wallet.accounts.owners"}}</h3>
+                            {{#each owners}}
+                                <span data-tooltip="{{accountNameOrAddress this}}" class="simptip-position-bottom simptip-movable">
+                                    {{> dapp_identicon identity=this class="dapp-tiny" link=ownerLink}}
+                                </span>
+                            {{/each}}
+                        </div>
+                    </div>
+                {{/if}}
+
+                {{#if $eq type "account"}}
+                    <!-- Account infos -->
+                    <div class="account-info">
+                        <h3>{{i18n "wallet.app.texts.note"}}</h3>
+                        <p>{{{i18n "wallet.accounts.accountNote"}}}</p>
+                    </div>
+                {{/if}}
 
             </div>
 
@@ -70,52 +119,13 @@
                     </ul>
                 </nav>
             </aside>
-                
+
+            {{#if abi}}
+                {{> elements_executeContract address=address abi=abi}}
+            {{/if}}
+
+
             <div class="accounts-transactions">
-                <!-- <h3>{{account}}</h3> -->
-
-                {{#if owners}}
-                    <div class="row clear">
-                        {{#if showDailyLimit}}
-                            <div class="col col-4 mobile-full">
-                                {{#if $gte version 1}}
-                                    <h3>{{i18n "wallet.accounts.dailyLimit"}} <span style="font-weight: 200;">{{dapp_formatBalance dailyLimit "0,0.00 unit"}}</span></h3>
-                                    {{dapp_formatBalance availableToday "0,0.00 unit"}} {{i18n "wallet.accounts.dailyLimitRemaining"}}
-                                {{else}}
-                                    <h3>{{i18n "wallet.accounts.dailyLimit"}}</h3>
-                                    {{dapp_formatBalance dailyLimit "0,0.00 unit"}}
-                                {{/if}}
-                            </div>
-                        {{/if}}
-                        {{#if showRequiredSignatures}}
-                            <div class="col col-4 mobile-full">
-                                <h3>{{i18n "wallet.accounts.requiredSignatures"}}</h3> {{requiredSignatures}}
-                            </div>
-                        {{/if}}
-                        <div class="col col-4 mobile-full">
-                            <h3>{{i18n "wallet.accounts.owners"}}</h3>
-                            {{#each owners}}
-                                <span data-tooltip="{{accountNameOrAddress this}}" class="simptip-position-bottom simptip-movable">
-                                    {{> dapp_identicon identity=this class="dapp-tiny" link=ownerLink}}
-                                </span>
-                            {{/each}}
-                        </div>
-                    </div>
-                {{/if}}
-
-               
-
-                <div class="dapp-clear-fix"></div>
-<!-- 
-                {{#unless owners}}
-                    <h3>{{i18n "wallet.app.texts.note"}}</h3>
-                    <p>{{{i18n "wallet.accounts.accountNote"}}}</p>
-                {{/unless}}
- -->
-                <div class="dapp-clear-fix"></div>
-                <!-- CONTRACT INTERFACE -->
-                {{> elements_executeContract to=address}}
-
 
                 {{#if pendingConfirmations}}
                     <h2>{{i18n 'wallet.transactions.pendingConfirmations'}}</h2>

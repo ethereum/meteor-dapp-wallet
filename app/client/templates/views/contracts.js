@@ -13,40 +13,39 @@ The contracts template
 
 
 /**
-Function to add a new watched account
+Function to add a new custom contract
 
-@method watchAddress
+@method addCustomContract
 */
-var watchAddress = function(e) {
+var addCustomContract = function(e) {
 
-    var address = $('.modals-add-watch-account input[name="address"]').hasClass('dapp-error') ? 
-            '' : $('.modals-add-watch-account input[name="address"]').val(),
-        name = $('.modals-add-watch-account input.name').val(),
-        abi = $('.modals-add-watch-account input.abi').val();
-
-    var msg = TAPi18n.__('wallet.contracts.success') ;
+    var address = $('.modals-add-custom-contract input[name="address"]').hasClass('dapp-error')
+            ? ''
+            : $('.modals-add-custom-contract input[name="address"]').val(),
+        name = $('.modals-add-custom-contract input.name').val(),
+        abi = $('.modals-add-custom-contract textarea.abi').val();
 
     console.log(address)
-    if(address != '') {
-        WatchedContracts.upsert({address:address}, {$set: {
+    if(web3.isAddress(address)) {
+        CustomContracts.upsert({address:address}, {$set: {
                     address: address,
                     name: name,
-                    interface: abi                
+                    abi: abi                
                 }});
 
         console.log(address)
-        console.log(WatchedContracts.findOne(address))
+        console.log(CustomContracts.findOne(address))
 
         // update balances from lib/ethereum/observeBlocks.js
         updateBalances();
 
         GlobalNotification.success({
-           content: msg,
+           content: TAPi18n.__('wallet.contracts.addedContract'),
            duration: 2
         });
     } else {
        GlobalNotification.warning({
-           content: TAPi18n.__('wallet.tokens.invalidAddress'),
+           content: TAPi18n.__('wallet.contracts.error.invalidAddress'),
            duration: 2
         }); 
     }
@@ -73,7 +72,7 @@ var addToken = function(e) {
         TAPi18n.__('wallet.tokens.editedToken', {token: name}) : 
         TAPi18n.__('wallet.tokens.addedToken', {token: name}) ;
 
-    if(address != '') {
+    if(web3.isAddress(address)) {
         Tokens.upsert(tokenId, {$set: {
             address: address,
             name: name,
@@ -91,7 +90,7 @@ var addToken = function(e) {
         });
     } else {
        GlobalNotification.warning({
-           content: TAPi18n.__('wallet.tokens.invalidAddress'),
+           content: TAPi18n.__('wallet.tokens.error.invalidAddress'),
            duration: 2
         }); 
     }
@@ -101,12 +100,12 @@ var addToken = function(e) {
 
 Template['views_contracts'].helpers({
     /**
-    Get all watched wallets
+    Get all custom contracts
 
     @method (customContracts)
     */
     'customContracts': function(){
-        return WatchedContracts.find({}, {sort:{symbol:1}});
+        return CustomContracts.find({}, {sort:{symbol:1}});
     }, 
     /**
     Get all tokens
@@ -121,7 +120,7 @@ Template['views_contracts'].helpers({
 
 Template['views_contracts'].events({
     /**
-    Add Watched Address
+    Add custom contract
     
     @event click .add-contract
     */
@@ -129,11 +128,11 @@ Template['views_contracts'].events({
 
         // Open a modal 
         EthElements.Modal.question({
-            template: 'views_modals_watchAddress',
-            ok: watchAddress,
+            template: 'views_modals_addCustomContract',
+            ok: addCustomContract,
             cancel: true
         },{
-            class: 'modals-add-watch-account'
+            class: 'modals-add-custom-contract'
         });
     }, 
     /**

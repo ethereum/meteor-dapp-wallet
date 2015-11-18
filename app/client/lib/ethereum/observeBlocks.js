@@ -20,7 +20,7 @@ Update wallet balances
 */
 updateBalances = function() {
 
-    var walletsAndContracts = Wallets.find().fetch().concat(WatchedContracts.find().fetch());
+    var walletsAndContracts = Wallets.find().fetch().concat(CustomContracts.find().fetch());
 
     // UPDATE WALLETS ACCOUNTS balance
     _.each(walletsAndContracts, function(wallet){
@@ -33,7 +33,7 @@ updateBalances = function() {
                             balance: res.toString(10)
                         }});
                     } else {
-                        WatchedContracts.update(wallet._id, {$set: {
+                        CustomContracts.update(wallet._id, {$set: {
                             balance: res.toString(10)
                         }});
                     }
@@ -52,7 +52,7 @@ updateBalances = function() {
 
     
     // UPDATE TOKEN BALANCES
-    var walletsAndAccounts = EthAccounts.find().fetch().concat(Wallets.find().fetch(), WatchedContracts.find().fetch());
+    var walletsAndAccounts = EthAccounts.find().fetch().concat(Wallets.find().fetch(), CustomContracts.find().fetch());
 
     _.each(Tokens.find().fetch(), function(token){
         if(!token.address)
