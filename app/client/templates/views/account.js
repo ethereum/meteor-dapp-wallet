@@ -144,7 +144,7 @@ Template['views_account'].events({
             EthAccounts.update(this._id, {$set: {
                 name: text
             }});
-            WatchedAddresses.update(this._id, {$set: {
+            WatchedContracts.update(this._id, {$set: {
                 name: text
             }});
 

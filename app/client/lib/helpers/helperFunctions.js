@@ -150,7 +150,7 @@ Gets the docuement matching the given addess from the EthAccounts or Wallets col
 */
 Helpers.getAccountByAddress = function(address, reactive) {
     var options = (reactive === false) ? {reactive: false} : {};
-    return EthAccounts.findOne({address: address}, options) || Wallets.findOne({address: address}, options)|| WatchedAddresses.findOne({address: address}, options);
+    return EthAccounts.findOne({address: address}, options) || Wallets.findOne({address: address}, options)|| WatchedContracts.findOne({address: address}, options);
 };
 
 /**

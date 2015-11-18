@@ -28,14 +28,14 @@ var watchAddress = function(e) {
 
     console.log(address)
     if(address != '') {
-        WatchedAddresses.upsert({address:address}, {$set: {
+        WatchedContracts.upsert({address:address}, {$set: {
                     address: address,
                     name: name,
                     interface: abi                
                 }});
 
         console.log(address)
-        console.log(WatchedAddresses.findOne(address))
+        console.log(WatchedContracts.findOne(address))
 
         // update balances from lib/ethereum/observeBlocks.js
         updateBalances();
@@ -106,7 +106,7 @@ Template['views_contracts'].helpers({
     @method (customContracts)
     */
     'customContracts': function(){
-        return WatchedAddresses.find({}, {sort:{symbol:1}});
+        return WatchedContracts.find({}, {sort:{symbol:1}});
     }, 
     /**
     Get all tokens

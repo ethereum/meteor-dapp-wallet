@@ -20,46 +20,39 @@ Update wallet balances
 */
 updateBalances = function() {
 
+    var walletsAndContracts = Wallets.find().fetch().concat(WatchedContracts.find().fetch());
+
     // UPDATE WALLETS ACCOUNTS balance
-    _.each(Wallets.find().fetch(), function(wallet){
+    _.each(walletsAndContracts, function(wallet){
         if(wallet.address) {
             web3.eth.getBalance(wallet.address, function(err, res){
                 if(!err) {
-                    Wallets.update(wallet._id, {$set: {
-                        balance: res.toString(10)
-                    }});
+                    // is of type wallet
+                    if(wallet.creationBlock) {
+                        Wallets.update(wallet._id, {$set: {
+                            balance: res.toString(10)
+                        }});
+                    } else {
+                        WatchedContracts.update(wallet._id, {$set: {
+                            balance: res.toString(10)
+                        }});
+                    }
                 }
             });
 
-            // update dailylimit spent, etc
-            Meteor.setTimeout(function() {
-                updateContractData(wallet);
-            }, 1000);
-        }
-    });
-
-    // UPDATE WATCHED ACCOUNTS balance
-    _.each(WatchedAddresses.find().fetch(), function(watchedAdress){
-        if(watchedAdress.address) {
-            web3.eth.getBalance(watchedAdress.address, function(err, res){
-                if(!err) {
-                    WatchedAddresses.update(watchedAdress._id, {$set: {
-                        balance: res.toString(10)
-                    }});
-                }
-            });
-
-            // update dailylimit spent, etc
-            Meteor.setTimeout(function() {
-                updateContractData(watchedAdress);
-            }, 1000);
+            // update dailylimit spent, etc, if wallet type
+            if(wallet.creationBlock) {
+                Meteor.setTimeout(function() {
+                    updateContractData(wallet);
+                }, 1000);
+            }
         }
     });
 
 
     
     // UPDATE TOKEN BALANCES
-    var walletsAndAccounts = EthAccounts.find().fetch().concat(Wallets.find().fetch(), WatchedAddresses.find().fetch());
+    var walletsAndAccounts = EthAccounts.find().fetch().concat(Wallets.find().fetch(), WatchedContracts.find().fetch());
 
     _.each(Tokens.find().fetch(), function(token){
         if(!token.address)
@@ -73,9 +66,9 @@ updateBalances = function() {
         _.each(walletsAndAccounts, function(account){
             tokenInstance.balanceOf(account.address, function(e, balance){
                 var tokenID = Helpers.makeId('token', token.address);
-                var currentBalance = Number(Tokens.findOne(tokenID).balances[account._id]);
+                var currentBalance = Tokens.findOne(tokenID).balances ? Tokens.findOne(tokenID).balances[account._id] : 0;
 
-                if(!e && balance.toNumber() !== currentBalance){
+                if(!e && balance.toString(10) !== currentBalance){
                     var set = {};
                     if (balance > 0) {
                         set['balances.'+ account._id] = balance.toString(10);

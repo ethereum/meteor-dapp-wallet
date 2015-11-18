@@ -37,7 +37,7 @@ Template['elements_account'].helpers({
     @method (account)
     */
     'account': function(){
-        return EthAccounts.findOne(this.account) || Wallets.findOne(this.account) || WatchedAddresses.findOne(this.account);
+        return EthAccounts.findOne(this.account) || Wallets.findOne(this.account) || WatchedContracts.findOne(this.account);
     },
     /**
     Get all tokens
@@ -81,7 +81,7 @@ Template['elements_account'].helpers({
             Meteor.setTimeout(function() {
                 EthAccounts.update(id, {$unset: {new: ''}});
                 Wallets.update(id, {$unset: {new: ''}});
-                WatchedAddresses.update(id, {$unset: {new: ''}});
+                WatchedContracts.update(id, {$unset: {new: ''}});
             }, 1000);
 
             return true;

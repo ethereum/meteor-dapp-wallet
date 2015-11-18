@@ -6,8 +6,8 @@
 Wallets = new Mongo.Collection('wallets', {connection: null});
 new PersistentMinimongo2(Wallets, 'ethereum_wallet');
 
-WatchedAddresses = new Mongo.Collection('watched-addresses', {connection: null});
-new PersistentMinimongo2(WatchedAddresses, 'ethereum_wallet');
+WatchedContracts = new Mongo.Collection('watched-contracts', {connection: null});
+new PersistentMinimongo2(WatchedContracts, 'ethereum_wallet');
 
 // Contains the transactions
 Transactions = new Mongo.Collection('transactions', {connection: null});
