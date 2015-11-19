@@ -49,6 +49,17 @@ Template.registerHelper('latestBlock', function(){
     return EthBlocks.latest;
 });
 
+/**
+Returns a list of accounts and wallets sorted by balance
+
+@method (latestBlock)
+**/
+Template.registerHelper('selectAccounts', function(){
+    var accounts = EthAccounts.find({}, {sort: {name: 1}}).fetch();
+    accounts = _.union(Wallets.find({owners: {$in: _.pluck(accounts, 'address')}, address: {$exists: true}}, {sort: {name: 1}}).fetch(), accounts);
+    accounts.sort(Helpers.sortByBalance);
+    return accounts;
+});
 
 
 /**

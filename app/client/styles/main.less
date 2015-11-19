@@ -485,9 +485,6 @@ body {
                 margin-bottom: @defaultMargin*2;
             }
             h4 {
-                margin-top: @defaultMargin;
-                margin-bottom: 0;
-
                 em {
                     font-style: normal;
                     font-weight: normal;
@@ -707,12 +704,9 @@ body {
             hyphens: auto;
             position: relative;
         }
+        input,
         .dapp-address-input {
-            max-width: 9 * @gridWidth;
-        }
-
-        input {
-            margin-top: @gridHeight/2;
+            width: 100%;
         }
         
         table {
@@ -747,13 +741,10 @@ body {
             }
         }
 
-
-
-
     }
 
     .dapp-block-button {
-        margin-top: @gridHeight ;
+        margin-top: @gridHeight;
     }
 }
 

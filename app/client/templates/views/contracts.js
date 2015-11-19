@@ -22,15 +22,22 @@ var addCustomContract = function(e) {
     var address = $('.modals-add-custom-contract input[name="address"]').hasClass('dapp-error')
             ? ''
             : $('.modals-add-custom-contract input[name="address"]').val(),
-        name = $('.modals-add-custom-contract input.name').val(),
-        abi = $('.modals-add-custom-contract textarea.abi').val();
+        name = $('.modals-add-custom-contract input.name').val();
 
-    console.log(address)
+    try {
+        abi = JSON.parse($('.modals-add-custom-contract textarea.abi').val());
+    } catch(e) {
+        return GlobalNotification.warning({
+           content: TAPi18n.__('wallet.contracts.error.jsonABIParseError'),
+           duration: 2
+        });
+    }
+
     if(web3.isAddress(address)) {
         CustomContracts.upsert({address:address}, {$set: {
                     address: address,
                     name: name,
-                    abi: abi                
+                    abi: abi
                 }});
 
         console.log(address)
@@ -44,7 +51,7 @@ var addCustomContract = function(e) {
            duration: 2
         });
     } else {
-       GlobalNotification.warning({
+        GlobalNotification.warning({
            content: TAPi18n.__('wallet.contracts.error.invalidAddress'),
            duration: 2
         }); 

@@ -255,7 +255,8 @@
             "error": {
                 "compile": "Could not compile source code.",
                 "noDataProvided": "You didn't provide any data",
-                "invalidAddress": "Contract not added, invalid address."
+                "invalidAddress": "Contract not added, invalid address.",
+                "jsonABIParseError": "Couldn't parse the JSON ABI."
             }
         }
 

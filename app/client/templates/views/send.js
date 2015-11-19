@@ -11,25 +11,6 @@ The add user template
 @constructor
 */
 
-/**
-The query and sort option for all account queries
-
-Set in the created callback.
-
-@property accountQuery
-*/
-var accountQuery;
-
-/**
-The query and sort option for all account queries
-
-Set in the created callback.
-
-@property accountSort
-*/
-var accountSort;
-
-
 
 /**
 The default gas to provide for estimates. This is set manually,
@@ -138,11 +119,6 @@ var getDataField = function(){
 // Set basic variables
 Template['views_send'].onCreated(function(){
     var template = this;
-
-    // set account queries
-    accountQuery = {owners: {$in: _.pluck(EthAccounts.find({}).fetch(), 'address')}, address: {$exists: true}};
-    accountSort = {sort: {name: 1}};
-
 
     // SET THE DEFAULT VARIABLES
     TemplateVar.set('amount', '0');
@@ -263,16 +239,6 @@ Template['views_send'].helpers({
             TemplateVar.set('selectedAction', 'send-funds');
             TemplateVar.set('selectedToken', FlowRouter.getParam('token') || 'ether');
         }
-    },
-    /**
-    Get all current accounts
-
-    @method (fromAccounts)
-    */
-    'fromAccounts': function(){
-        var accounts = _.union(Wallets.find(accountQuery, accountSort).fetch(), EthAccounts.find({}, accountSort).fetch());
-        accounts.sort(Helpers.sortByBalance);
-        return accounts;
     },
     /**
     Get the current selected account

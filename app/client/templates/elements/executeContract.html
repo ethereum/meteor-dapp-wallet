@@ -1,90 +1,93 @@
 <template name="elements_executeContract">
     {{#if TemplateVar.get "hasCode"}}
+
+        {{reactiveContext}}
+
+        <div class="dapp-clear-fix"></div>
+
         <!-- EXECUTE CONTRACT -->
         <div class="execute-contract">
             <!-- <h2> {{i18n "wallet.contracts.contractInformation"}} </h2> -->
-            <div class="dapp-clear-fix"></div>
 
-            <button class="toggle-execution dapp-block-button dapp-small">{{visibilityToggleButton}}</button>
-
+            <button class="toggle-visibility dapp-block-button dapp-small">
+                {{#if (TemplateVar.get "executionVisible")}}
+                    Hide
+                {{else}}
+                    Show contract info
+                {{/if}}
+            </button>
             
             {{#if TemplateVar.get "executionVisible"}}
             
-                {{#unless listContractConstants }}
-
-                <div class="dapp-clear-fix"></div>
-                <input type="text" name="abi" placeholder="[{ 'looks': {'like': 'this'} }]" class="" value="{{getContractInfo.abi}}">             
-                {{/unless}}
-
-                
-
                 <div class="dapp-clear-fix"></div>
 
-                <div class="col col-8 mobile-full contract-info">
-                    <div class="dapp-clear"></div>
-        
-                    <table class="contract-constants dapp-zebra">
-                        <tbody>
-                        {{#each listContractConstants}}
-                        <tr class="constant-input constant-input-{{name}}" data="{{name}}">
-                            <td>
-                            <h3>{{name}}</h3>
-                            {{#each inputs}}
-                                {{> Template.dynamic template=template name=name bits=bits class='constant-input dapp-small' parent=parentName}}
-                                
+                <div class="row clear">
+                    <div class="col col-8 mobile-full contract-info">
+            
+                        <table class="contract-constants dapp-zebra">
+                            <tbody>
+                            {{#each (TemplateVar.get "contractConstants")}}
+                                {{> elements_executeContract_constant}}
                             {{/each}}
-                        </td></tr>
-                        <tr><td>
-                            <dl class="constant-{{name}} dapp-zebra">
-                            {{#each outputs}}
-                                {{#if name}}
-                                <dt>{{name}}</dt>
-                                {{/if}}
-                                <dd class="output"></dd>                             
-                            {{/each}}
-                            </dl>
-                            </td>
-                        </tr>
-                        {{/each}}
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
 
-                </div>
+                    </div>
 
-                <div class="col col-4 mobile-full contract-functions">
-                    {{#with listContractFunctions}}                    
-                        
-                        <h4>Select Function</h4>
-                        <select class="select-contract-function" name="select-contract-function">
-                            <option disabled selected>Pick a contract function</option>
-
-                        {{#each this}}
-                            <option value="{{name}}">{{name}}</option>
-                        {{/each}}    
-                        </select>
-                        
-                        {{#with selectedFunctionInputs}}
-                            {{#if this}}
-                                <div class="dapp-clear"></div>
-
-                                <h4>From</h4>
-                                {{> dapp_selectAccount accounts=fromAccounts showAccountTypes=true}}
-
-                                {{#each this}}
-                                    {{> Template.dynamic template=template name=name bits=bits parent='selected function' }}
-                                {{/each}}
-                                <div class="dapp-clear"></div>
-                                <button class="dapp-block-button execute">Execute</button>
-                            {{/if}}
-                        {{/with}}
-
+                    <div class="col col-4 mobile-full contract-functions">
+                        {{#with (TemplateVar.get "contractFunctions")}}                    
                             
-                        
-                    {{/with}}
+                            <h4>Select Function</h4>
+                            <select class="select-contract-function" name="select-contract-function">
+                                <option disabled selected>Pick a contract function</option>
+
+                            {{#each this}}
+                                <option value="{{name}}">{{name}}</option>
+                            {{/each}}    
+                            </select>
+                            
+                            {{#with selectedFunctionInputs}}
+                                {{#if this}}
+                                    <div class="dapp-clear"></div>
+
+                                    <h4>From</h4>
+                                    {{> dapp_selectAccount accounts=selectAccounts showAccountTypes=true}}
+
+                                    {{#each this}}
+                                        {{> Template.dynamic template=template name=name bits=bits parent='selected function' }}
+                                    {{/each}}
+                                    <div class="dapp-clear"></div>
+                                    <button class="dapp-block-button execute">Execute</button>
+                                {{/if}}
+                            {{/with}}
+                            
+                        {{/with}}
+                    </div>
                 </div>
-                <div class="dapp-clear-fix"></div>
+
             {{/if}}
-        
         </div>
     {{/if}}
+</template>
+
+
+<template name="elements_executeContract_constant">
+    <tr class="constant-input constant-input-{{name}}" data="{{name}}">
+        <td>
+        <h3>{{name}}</h3>
+        {{#each inputs}}
+            {{> Template.dynamic template=template name=name bits=bits class="constant-input dapp-small" parent=parentName}}
+        {{/each}}
+    </td></tr>
+    <tr><td>
+        <dl class="constant-{{name}} dapp-zebra">
+        {{#each outputs}}
+            {{#if name}}
+            <dt>{{name}}</dt>
+            {{/if}}
+            <dd class="output"></dd>                             
+        {{/each}}
+        </dl>
+        </td>
+    </tr>
 </template>
