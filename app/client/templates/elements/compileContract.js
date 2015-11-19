@@ -59,6 +59,7 @@ Template['elements_compileContract'].onCreated(function() {
 
         // generate new contract code
         TemplateVar.set('value', web3.eth.contract(selectedContract.abi).new.getData.apply(null, constructorInputs));
+        TemplateVar.set('abi', selectedContract.abi);
     });
 });
 

@@ -11,9 +11,9 @@
 
             <button class="toggle-visibility dapp-block-button dapp-small">
                 {{#if (TemplateVar.get "executionVisible")}}
-                    Hide
+                    {{i18n "wallet.contracts.buttons.hideContracInfo"}}
                 {{else}}
-                    Show contract info
+                    {{i18n "wallet.contracts.buttons.showContracInfo"}}
                 {{/if}}
             </button>
             
@@ -23,6 +23,7 @@
 
                 <div class="row clear">
                     <div class="col col-8 mobile-full contract-info">
+                        <h2>{{i18n "wallet.contracts.readFromContract"}}</h2>
             
                         <table class="contract-constants dapp-zebra">
                             <tbody>
@@ -36,6 +37,7 @@
 
                     <div class="col col-4 mobile-full contract-functions">
                         {{#with (TemplateVar.get "contractFunctions")}}                    
+                            <h2>{{i18n "wallet.contracts.writeToContract"}}</h2>
                             
                             <h4>Select Function</h4>
                             <select class="select-contract-function" name="select-contract-function">
@@ -74,20 +76,28 @@
 <template name="elements_executeContract_constant">
     <tr class="constant-input constant-input-{{name}}" data="{{name}}">
         <td>
-        <h3>{{name}}</h3>
-        {{#each inputs}}
-            {{> Template.dynamic template=template name=name bits=bits class="constant-input dapp-small" parent=parentName}}
-        {{/each}}
-    </td></tr>
-    <tr><td>
-        <dl class="constant-{{name}} dapp-zebra">
-        {{#each outputs}}
-            {{#if name}}
-            <dt>{{name}}</dt>
-            {{/if}}
-            <dd class="output"></dd>                             
-        {{/each}}
-        </dl>
+            <h3>{{name}}</h3>
+            {{#each inputs}}
+                <!-- name=name bits=bits class="constant-input dapp-small" -->
+                {{> Template.dynamic template=template data=this}}
+            {{/each}}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <dl class="constant-{{name}} dapp-zebra">
+            {{#each (TemplateVar.get "outputs")}}
+                {{#if name}}
+                <dt>{{name}}</dt>
+                {{/if}}
+                <dd class="output">
+                    {{#each value}}
+                        {{this}}
+                        <br>
+                    {{/each}}
+                </dd> 
+            {{/each}}
+            </dl>
         </td>
     </tr>
 </template>

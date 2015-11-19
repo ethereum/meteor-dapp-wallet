@@ -12,7 +12,15 @@ Template['views_account'].helpers({
     @method (account)
     */
     'account': function() {
-          return Helpers.getAccountByAddress(FlowRouter.getParam('address'));
+        return Helpers.getAccountByAddress(FlowRouter.getParam('address'));
+    },
+    /**
+    Get the current ABI, or use the wallet ABI
+
+    @method (abi)
+    */
+    'abi': function() {
+        return (this.owners) ? walletABI : this.abi;
     },
     /**
     Get the pending confirmations of this account.

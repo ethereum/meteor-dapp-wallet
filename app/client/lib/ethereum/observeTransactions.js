@@ -65,6 +65,8 @@ var updateTransaction = function(newDocument, transaction, receipt){
     if(!id)
         return;
 
+    var oldTx = Transactions.findOne({_id: id});
+
     newDocument._id = id;
 
     if(transaction) {
@@ -82,23 +84,33 @@ var updateTransaction = function(newDocument, transaction, receipt){
     }
 
     if(receipt && transaction) {
-        newDocument.contractAddress = receipt.contractAddress;
-        newDocument.gasUsed = receipt.gasUsed;
-        newDocument.fee = transaction.gasPrice.times(new BigNumber(receipt.gasUsed)).toString(10);
 
         // check for code on the address
-        if(receipt.contractAddress) {
+        if(!newDocument.contractAddress && receipt.contractAddress) {
             web3.eth.getCode(receipt.contractAddress, function(e, code) {
                 if(!e && code.length > 2) {
                     Transactions.update({_id: id}, {$set: {
                         deployedData: code
                     }});
+
+                    // Add contract to the contract list
+                    if(oldTx && oldTx.abi) {
+                        CustomContracts.upsert({address: receipt.contractAddress}, {$set: {
+                            address: receipt.contractAddress,
+                            name: 'Deployed Wallet '+ receipt.contractAddress.substr(0, 4),
+                            abi: oldTx.abi
+                        }});
+                    }
                 }
             })
         }
+
+        newDocument.contractAddress = receipt.contractAddress;
+        newDocument.gasUsed = receipt.gasUsed;
+        newDocument.fee = transaction.gasPrice.times(new BigNumber(receipt.gasUsed)).toString(10);
     }
 
-    if(oldTx = Transactions.findOne({_id: id})) {
+    if(oldTx) {
 
         // prevent wallet events overwriding token transfer events
         if(oldTx.tokenId && !newDocument.tokenId) {

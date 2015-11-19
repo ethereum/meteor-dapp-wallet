@@ -27,18 +27,20 @@ var addCustomContract = function(e) {
     try {
         abi = JSON.parse($('.modals-add-custom-contract textarea.abi').val());
     } catch(e) {
-        return GlobalNotification.warning({
+        GlobalNotification.warning({
            content: TAPi18n.__('wallet.contracts.error.jsonABIParseError'),
            duration: 2
         });
+
+        return false;
     }
 
     if(web3.isAddress(address)) {
         CustomContracts.upsert({address:address}, {$set: {
-                    address: address,
-                    name: name,
-                    abi: abi
-                }});
+            address: address,
+            name: name,
+            abi: abi
+        }});
 
         console.log(address)
         console.log(CustomContracts.findOne(address))

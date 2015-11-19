@@ -686,8 +686,6 @@ body {
 
 .execute-contract {
     .contract-info {
-        padding: 0;
-        overflow: hidden;
         
         h3 {
             color: @colorGrayDark;
@@ -697,12 +695,10 @@ body {
         }
 
         .output {
-            font-weight: 500;
-            font-size: 110%;
-            word-wrap: break-word;
-            word-wrap: break-all;
-            hyphens: auto;
             position: relative;
+            overflow: auto;
+            max-height: 120px;
+            font-weight: 400;
         }
         input,
         .dapp-address-input {

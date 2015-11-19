@@ -252,6 +252,12 @@
             "abi": "JSON ABI",
             "contractInformation": "Contract Information",
             "addedContract": "Added custom contract",
+            "readFromContract": "Read from contract",
+            "writeToContract": "Write to contract",
+            "buttons": {
+                "showContracInfo": "Show contract info",
+                "hideContractInfo": "Hide contract info"    
+            },
             "error": {
                 "compile": "Could not compile source code.",
                 "noDataProvided": "You didn't provide any data",

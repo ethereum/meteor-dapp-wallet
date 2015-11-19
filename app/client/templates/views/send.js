@@ -49,9 +49,13 @@ Add a pending transaction to the transaction list, after sending
 @method addTransactionAfterSend
 */
 var addTransactionAfterSend = function(txHash, amount, from, to, gasPrice, estimatedGas, data, tokenId) {
-                                
-    txId = Helpers.makeId('tx', txHash);
+    var abi = undefined,
+        txId = Helpers.makeId('tx', txHash);
 
+    if(_.isObject(data)) {
+        abi = data.abi;
+        data = data.data;
+    }
 
     Transactions.upsert(txId, {$set: {
         tokenId: tokenId,
@@ -63,7 +67,8 @@ var addTransactionAfterSend = function(txHash, amount, from, to, gasPrice, estim
         gasPrice: gasPrice,
         gasUsed: estimatedGas,
         fee: String(gasPrice * estimatedGas),
-        data: data
+        data: data,
+        abi: abi
     }});
 
     // add from Account
@@ -433,7 +438,8 @@ Template['views_send'].events({
             estimatedGas = TemplateVar.get('estimatedGas'),
             selectedAccount = Helpers.getAccountByAddress(template.find('select[name="dapp-select-account"]').value),
             selectedAction = TemplateVar.get("selectedAction"),
-            data = getDataField();
+            data = getDataField(),
+            abi = TemplateVar.getFrom('.compile-contract', 'abi');
 
         if(selectedAccount && !TemplateVar.get('sending')) {
 
@@ -526,6 +532,10 @@ Template['views_send'].events({
                             if(!error) {
                                 console.log('SEND from contract', amount);
 
+                                data = (!to && abi)
+                                    ? {abi: abi, data: data}
+                                    : data;
+
                                 addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
 
                                 FlowRouter.go('dashboard');
@@ -559,6 +569,10 @@ Template['views_send'].events({
                             console.log(error, txHash);
                             if(!error) {
                                 console.log('SEND simple');
+
+                                data = (!to && abi)
+                                    ? {abi: abi, data: data}
+                                    : data;
 
                                 addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
 
