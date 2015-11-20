@@ -11,9 +11,9 @@
 
             <button class="toggle-visibility dapp-block-button dapp-small">
                 {{#if (TemplateVar.get "executionVisible")}}
-                    {{i18n "wallet.contracts.buttons.hideContracInfo"}}
+                    {{i18n "wallet.contracts.buttons.hideContractInfo"}}
                 {{else}}
-                    {{i18n "wallet.contracts.buttons.showContracInfo"}}
+                    {{i18n "wallet.contracts.buttons.showContractInfo"}}
                 {{/if}}
             </button>
             
@@ -41,26 +41,14 @@
                             
                             <h4>Select Function</h4>
                             <select class="select-contract-function" name="select-contract-function">
-                                <option disabled selected>Pick a contract function</option>
-
-                            {{#each this}}
-                                <option value="{{name}}">{{name}}</option>
-                            {{/each}}    
+                                <option disabled selected>Pick a function</option>
+                                {{#each this}}
+                                    <option value="{{name}}">{{name}}</option>
+                                {{/each}}    
                             </select>
                             
-                            {{#with selectedFunctionInputs}}
-                                {{#if this}}
-                                    <div class="dapp-clear"></div>
-
-                                    <h4>From</h4>
-                                    {{> dapp_selectAccount accounts=selectAccounts showAccountTypes=true}}
-
-                                    {{#each this}}
-                                        {{> Template.dynamic template=template name=name bits=bits parent='selected function' }}
-                                    {{/each}}
-                                    <div class="dapp-clear"></div>
-                                    <button class="dapp-block-button execute">Execute</button>
-                                {{/if}}
+                            {{#with TemplateVar.get "selectedFunction"}}
+                                {{> elements_executeContract_function}}
                             {{/with}}
                             
                         {{/with}}
@@ -74,12 +62,11 @@
 
 
 <template name="elements_executeContract_constant">
-    <tr class="constant-input constant-input-{{name}}" data="{{name}}">
+    <tr>
         <td>
             <h3>{{name}}</h3>
             {{#each inputs}}
-                <!-- name=name bits=bits class="constant-input dapp-small" -->
-                {{> Template.dynamic template=template data=this}}
+                {{> Template.dynamic template=template}}
             {{/each}}
         </td>
     </tr>
@@ -88,10 +75,13 @@
             <dl class="constant-{{name}} dapp-zebra">
             {{#each (TemplateVar.get "outputs")}}
                 {{#if name}}
-                <dt>{{name}}</dt>
+                    <dt>{{name}}</dt>
                 {{/if}}
                 <dd class="output">
                     {{#each value}}
+                        {{#if $eq ../type "address"}}
+                            {{> dapp_identicon identity=this class="dapp-tiny"}}
+                        {{/if}}
                         {{this}}
                         <br>
                     {{/each}}
@@ -100,4 +90,30 @@
             </dl>
         </td>
     </tr>
+</template>
+
+
+<template name="elements_executeContract_function">
+    {{#each inputs}}
+        {{> Template.dynamic template=template}}
+    {{/each}}
+
+    <hr class="dapp-clear-fix">
+
+    <h4>Execute from</h4>
+    {{> dapp_selectAccount accounts=selectAccounts showAccountTypes=true}}
+
+    <h4>
+        Send {{> elements_selectableUnit}}
+        {{#unless isEtherUnit}}({{dapp_formatBalance (TemplateVar.get "amount") "0,0.00[000000] UNIT" "ether"}}){{/unless}}
+    </h4>
+    <input type="number" min="0" name="amount" placeholder="0">
+
+    <button class="dapp-block-button execute">
+        {{#if TemplateVar.get "sending"}} 
+            {{i18n 'buttons.sending'}}
+        {{else}}
+            {{i18n 'wallet.contracts.buttons.execute'}}
+        {{/if}}
+    </button>
 </template>

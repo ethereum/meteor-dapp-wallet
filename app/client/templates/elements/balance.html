@@ -6,7 +6,7 @@
         {{getBalance}}
 
         {{#if changeUnit}}
-            {{> InlineForm name="unit" items=units value=selectedUnit}}
+            {{> elements_selectableUnit}}
         {{else}}
             <span>
                 {{selectedUnit true}}

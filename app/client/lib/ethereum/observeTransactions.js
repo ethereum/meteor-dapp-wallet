@@ -1,5 +1,46 @@
 
 /**
+Add a pending transaction to the transaction list, after sending
+
+@method addTransactionAfterSend
+*/
+addTransactionAfterSend = function(txHash, amount, from, to, gasPrice, estimatedGas, data, tokenId) {
+    var abi = undefined,
+        txId = Helpers.makeId('tx', txHash);
+
+    if(_.isObject(data)) {
+        abi = data.abi;
+        data = data.data;
+    }
+
+    Transactions.upsert(txId, {$set: {
+        tokenId: tokenId,
+        value: amount,
+        from: from,
+        to: to,
+        timestamp: moment().unix(),
+        transactionHash: txHash,
+        gasPrice: gasPrice,
+        gasUsed: estimatedGas,
+        fee: String(gasPrice * estimatedGas),
+        data: data,
+        abi: abi
+    }});
+
+    // add from Account
+    EthAccounts.update({address: from}, {$addToSet: {
+        transactions: txId
+    }});
+
+    // add to Account
+    EthAccounts.update({address: to}, {$addToSet: {
+        transactions: txId
+    }});
+};
+
+
+
+/**
 Add new in/outgoing transaction
 
 @method addTransaction

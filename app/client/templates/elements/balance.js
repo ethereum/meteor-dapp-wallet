@@ -11,32 +11,6 @@ The balance template
 @constructor
 */
 
-/**
-The available units
-
-@property units
-*/
-var units = [{
-    text: 'ETHER',
-    value: 'ether'
-},
-{
-    text: 'FINNEY', //(µΞ)
-    value: 'finney'
-},
-{
-    text: 'BTC',
-    value: 'btc'
-},
-{
-    text: 'USD',
-    value: 'usd'
-},
-{
-    text: 'EUR',
-    value: 'eur'
-}];
-
 
 Template['elements_balance'].onCreated(function(){
     this._intervalId = null;
@@ -86,37 +60,5 @@ Template['elements_balance'].helpers({
                 Meteor.clearInterval(template._intervalId);
             }
         }, 1);
-    },
-    /**
-    Gets currently selected unit
-
-    @method (selectedUnit)
-    */
-    'selectedUnit': function(returnText){
-        var unit = _.find(units, function(unit){
-            return unit.value === EthTools.getUnit();
-        });
-
-        if(unit)
-            return (returnText === true) ? unit.text : unit.value;
-    },
-    /**
-    Return the selectable units
-
-    @method (selectedUnit)
-    */
-    'units': function(){
-        return units;
-    }
-});
-
-Template['elements_balance'].events({
-    /**
-    Select the current section, based on the radio inputs value.
-
-    @event change .inline-form
-    */
-    'change .inline-form': function(e, template, value){
-        EthTools.setUnit(value);
     }
 });

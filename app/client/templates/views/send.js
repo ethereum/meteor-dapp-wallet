@@ -44,45 +44,6 @@ var checkOverDailyLimit = function(address, wei, template){
 
 
 /**
-Add a pending transaction to the transaction list, after sending
-
-@method addTransactionAfterSend
-*/
-var addTransactionAfterSend = function(txHash, amount, from, to, gasPrice, estimatedGas, data, tokenId) {
-    var abi = undefined,
-        txId = Helpers.makeId('tx', txHash);
-
-    if(_.isObject(data)) {
-        abi = data.abi;
-        data = data.data;
-    }
-
-    Transactions.upsert(txId, {$set: {
-        tokenId: tokenId,
-        value: amount,
-        from: from,
-        to: to,
-        timestamp: moment().unix(),
-        transactionHash: txHash,
-        gasPrice: gasPrice,
-        gasUsed: estimatedGas,
-        fee: String(gasPrice * estimatedGas),
-        data: data,
-        abi: abi
-    }});
-
-    // add from Account
-    EthAccounts.update({address: from}, {$addToSet: {
-        transactions: txId
-    }});
-
-    // add to Account
-    EthAccounts.update({address: to}, {$addToSet: {
-        transactions: txId
-    }});
-};
-
-/**
 Gas estimation callback
 
 @method estimationCallback
@@ -180,7 +141,7 @@ Template['views_send'].onRendered(function(){
     // ->> GAS PRICE ESTIMATION
     template.autorun(function(c){
         var address = TemplateVar.getFrom('.dapp-select-account', 'value'),
-            to = TemplateVar.getFrom('.dapp-address-input', 'value'),
+            to = TemplateVar.getFrom('.dapp-address-input .to', 'value'),
             amount = TemplateVar.get('amount') || '0',
             data = getDataField(),
             tokenAddress = TemplateVar.get('selectedToken');
@@ -375,15 +336,6 @@ Template['views_send'].helpers({
         return (this.balances && Number(this.balances[selectedAccount._id]) > 0)
             ? Helpers.formatNumberByDecimals(this.balances[selectedAccount._id], this.decimals) +' '+ this.symbol
             : false;
-    },
-    /**
-    Returns true if the current selected unit is an ether unit (ether, finney, etc)
-
-    @method (etherUnit)
-    */
-    'etherUnit': function() {
-        var unit = EthTools.getUnit();
-        return (unit === 'ether' || unit === 'finney');
     }
 });
 
@@ -433,7 +385,7 @@ Template['views_send'].events({
 
         var amount = TemplateVar.get('amount') || '0',
             tokenAddress = TemplateVar.get('selectedToken'),
-            to = TemplateVar.getFrom('.from-to .dapp-address-input', 'value'),
+            to = TemplateVar.getFrom('.dapp-address-input .to', 'value'),
             gasPrice = TemplateVar.getFrom('.dapp-select-gas-price', 'gasPrice'),
             estimatedGas = TemplateVar.get('estimatedGas'),
             selectedAccount = Helpers.getAccountByAddress(template.find('select[name="dapp-select-account"]').value),

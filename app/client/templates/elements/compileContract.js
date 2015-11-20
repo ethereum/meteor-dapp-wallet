@@ -121,12 +121,7 @@ Template['elements_compileContract'].onRendered(function() {
 
                         // substring the type so that string32 and string16 wont need different templates
                         if(constructor) {
-                            _.each(constructor.inputs, function(input){
-                                input.typeShort = input.type.match(/[a-z]+/i);
-                                input.typeShort = input.typeShort[0];
-                                input.bits = input.type.replace(input.typeShort, '');
-                                input.template =  'elements_input_'+ input.typeShort;
-                            })
+                            constructor.inputs = _.map(constructor.inputs, Helpers.createTemplateDataFromInput)
                         } else {
                             constructor = {
                                 inputs: []

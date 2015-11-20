@@ -1,4 +1,15 @@
+/**
+Template Controllers
 
+@module Templates
+*/
+
+/**
+The address input template
+
+@class [template] elements_input_address
+@constructor
+*/
 
 Template['elements_input_address'].helpers({
     /**

@@ -27,9 +27,20 @@ Check if in mist
 
 @method (isMist)
 **/
-Template.registerHelper('isMist', function(object){
+Template.registerHelper('isMist', function(){
     return typeof mist !== 'undefined';
 });
+
+/**
+Check if currenct unit is an ether unit
+
+@method (isEtherUnit)
+**/
+Template.registerHelper('isEtherUnit', function(){
+    var unit = EthTools.getUnit();
+    return (unit === 'ether' || unit === 'finney');
+});
+
 
 /**
 Return the current unit

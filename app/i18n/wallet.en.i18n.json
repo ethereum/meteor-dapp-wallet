@@ -255,8 +255,9 @@
             "readFromContract": "Read from contract",
             "writeToContract": "Write to contract",
             "buttons": {
-                "showContracInfo": "Show contract info",
-                "hideContractInfo": "Hide contract info"    
+                "showContractInfo": "Show contract info",
+                "hideContractInfo": "Hide contract info",
+                "execute": "Execute"
             },
             "error": {
                 "compile": "Could not compile source code.",
