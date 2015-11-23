@@ -249,7 +249,8 @@ Helpers.createTemplateDataFromInput = function (input){
     input.bits = input.type.replace(input.typeShort, '');
     
     if(input.type.indexOf('[') === -1 &&
-       (input.typeShort === 'uint' ||
+       (input.typeShort === 'string' ||
+        input.typeShort === 'uint' ||
         input.typeShort == 'int' ||
         input.typeShort == 'address' ||
         input.typeShort == 'bool' ||
@@ -261,4 +262,45 @@ Helpers.createTemplateDataFromInput = function (input){
     }
 
     return input;    
+};
+
+
+/**
+Adds the input value from a form field to the inputs array
+    
+@method addInputValue
+@param {object} inputs          The current inputs
+@param {object} currentInput   The current input
+@return {Array} array of parameter values
+**/
+Helpers.addInputValue = function (inputs, currentInput, formField){
+
+    return _.pluck(_.map(inputs, function(input) {
+            if(currentInput.name === input.name &&
+               currentInput.type === input.type) {
+
+                if(input.type.indexOf('[') !== -1) {
+                    try {
+                        input.value = JSON.parse(formField.value);
+                    } catch(e) {
+                        input.value = [];
+                    }
+
+                // force 0x at the start
+                } else if(!_.isEmpty(formField.value) &&
+                   (input.typeShort === 'bytes' ||
+                    input.typeShort === 'address')) {
+                    input.value = '0x'+ formField.value.replace('0x','');
+
+                // bool
+                } else if(input.typeShort === 'bool') {
+                    input.value = formField.checked;
+                } else {
+                    input.value = formField.value || '';
+                }
+
+            }
+
+            return input;
+        }) || [], 'value');
 };

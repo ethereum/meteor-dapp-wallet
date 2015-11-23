@@ -19,6 +19,7 @@ Template['elements_compileContract'].onCreated(function() {
 
     // set the default
     TemplateVar.set('value', '');
+    TemplateVar.get('constructorInputs', []);
     TemplateVar.set('selectedType', this.data.onlyByteCode ? 'byte-code' : 'source-code');
 
     // focus the editors
@@ -39,18 +40,13 @@ Template['elements_compileContract'].onCreated(function() {
 
     // update and generate the contract data 
     this.autorun(function() {
-        var selectedContract = TemplateVar.get("selectedContract");
-        var constructorInputs = _.clone(TemplateVar.get("constructorInputs"));
+        var selectedContract = TemplateVar.get('selectedContract');
+        var constructorInputs = _.clone(TemplateVar.get('constructorInputs'));
 
         if(!selectedContract)
             return;
 
-
-        if(!_.isArray(constructorInputs) || _.isEmpty(constructorInputs)) {
-            constructorInputs = _.map(selectedContract.constructorInputs, function() {
-                return '';
-            });
-        }
+        console.log('Inputs', constructorInputs);
 
         // add the default web3 sendTransaction arguments
         constructorInputs.push({
@@ -67,15 +63,15 @@ editor = {};
 Template['elements_compileContract'].onRendered(function() {
     var template = this;
 
-    this.aceEditor = ace.edit("contract-source-editor");
+    this.aceEditor = ace.edit('contract-source-editor');
     this.aceEditor.setOptions({
         useWorker: false,
         minLines: 10,
         maxLines: 30,
         highlightActiveLine: false
     });
-    this.aceEditor.setTheme("ace/theme/tomorrow");
-    this.aceEditor.getSession().setMode("ace/mode/typescript");
+    this.aceEditor.setTheme('ace/theme/tomorrow');
+    this.aceEditor.getSession().setMode('ace/mode/typescript');
     this.aceEditor.$blockScrolling = Infinity;
     this.aceEditor.focus();
 
@@ -240,26 +236,9 @@ Template['elements_compileContract'].events({
     @event change abi-input, input .abi-input
     */
     'change .abi-input, input .abi-input': function(e, template){
-        
         var selectedContract = TemplateVar.get("selectedContract");
+        var inputs = Helpers.addInputValue(selectedContract.constructorInputs, this, e.currentTarget);
 
-        // create an array with the input fields
-        var contractArguments = [];
-
-        _.each(template.findAll('.abi-input'), function(input, index){
-            var output = (selectedContract.constructorInputs[index].typeShort === 'bool') ? input.checked: input.value;
-
-            console.log('output', output);
-
-            // force 0x at the start
-            if(!_.isEmpty(output) &&
-               (selectedContract.constructorInputs[index].typeShort === 'bytes' ||
-               selectedContract.constructorInputs[index].typeShort === 'address'))
-                output = '0x'+ output.replace('0x','');
-
-            contractArguments.push(output);
-        })
-
-        TemplateVar.set('constructorInputs', contractArguments);
+        TemplateVar.set('constructorInputs', inputs);
     }
 });

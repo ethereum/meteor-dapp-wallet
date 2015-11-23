@@ -254,10 +254,13 @@
             "addedContract": "Added custom contract",
             "readFromContract": "Read from contract",
             "writeToContract": "Write to contract",
+            "pickContract": "Pick a contract",
+            "pickFunction": "Pick a function",
             "buttons": {
                 "showContractInfo": "Show contract info",
                 "hideContractInfo": "Hide contract info",
-                "execute": "Execute"
+                "execute": "Execute",
+                "yes": "Yes"
             },
             "error": {
                 "compile": "Could not compile source code.",

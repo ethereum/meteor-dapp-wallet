@@ -42,28 +42,6 @@ var checkOverDailyLimit = function(address, wei, template){
         TemplateVar.set('dailyLimitText', false);
 };
 
-
-/**
-Gas estimation callback
-
-@method estimationCallback
-*/
-var estimationCallback = function(e, res){
-    var template = this;
-
-    console.log('Estimated gas: ', res, e);
-    if(!e && res) {
-        TemplateVar.set(template, 'estimatedGas', res);
-
-        // show note if its defaultEstimateGas, as the data is not executeable
-        if(res === defaultEstimateGas)
-            TemplateVar.set(template, 'codeNotExecutable', true);
-        else
-            TemplateVar.set(template, 'codeNotExecutable', false);
-    }
-};
-
-
 /**
 Get the data field of either the byte or source code textarea, depending on the selectedType
 
@@ -79,6 +57,28 @@ var getDataField = function(){
         : TemplateVar.getFrom('.compile-contract', 'value');
 
     return data;
+};
+
+
+/**
+Gas estimation callback
+
+@method estimationCallback
+*/
+var estimationCallback = function(e, res){
+    var template = this;
+
+    console.log('Estimated gas: ', res, e);
+
+    if(!e && res) {
+        TemplateVar.set(template, 'estimatedGas', res);
+
+        // show note if its defaultEstimateGas, as the data is not executeable
+        if(res === defaultEstimateGas)
+            TemplateVar.set(template, 'codeNotExecutable', true);
+        else
+            TemplateVar.set(template, 'codeNotExecutable', false);
+    }
 };
 
 
@@ -150,6 +150,22 @@ Template['views_send'].onRendered(function(){
 
         // if(!web3.isAddress(to))
         //     to = '0x0000000000000000000000000000000000000000';
+
+        console.log('ESTIMATE', tokenAddress, {
+                    from: address,
+                    to: to,
+                    value: amount,
+                    data: data,
+                    gas: defaultEstimateGas
+                },
+
+                web3.eth.estimateGas({
+                    from: address,
+                    to: to,
+                    value: amount,
+                    data: data,
+                    gas: defaultEstimateGas
+                }));
 
         // Ether tx estimation
         if(tokenAddress === 'ether') {

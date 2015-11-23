@@ -44,13 +44,13 @@ Template['elements_selectableUnit'].helpers({
 
     @method (selectedUnit)
     */
-    'selectedUnit': function(returnText){
+    'selectedUnit': function(){
         var unit = _.find(selectableUnits, function(unit){
             return unit.value === EthTools.getUnit();
         });
 
         if(unit)
-            return (returnText === true) ? unit.text : unit.value;
+            return unit.value;
     },
     /**
     Return the selectable units

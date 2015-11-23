@@ -135,7 +135,7 @@ Template['elements_executeContract_constant'].onCreated(function(){
         EthBlocks.latest;
 
         // get args for the constant function
-        var args = _.pluck(TemplateVar.get('inputs') || [], 'value');
+        var args = TemplateVar.get('inputs') || [];
 
         // add callback
         args.push(function(e, r) {
@@ -159,7 +159,7 @@ Template['elements_executeContract_constant'].onCreated(function(){
             TemplateVar.set(template, 'outputs', outputs);
         });
 
-        // console.log('Inputs', args);
+        console.log('Inputs', args);
 
         template.data.contractInstance[template.data.name].apply(null, args);
     });
@@ -183,23 +183,7 @@ Template['elements_executeContract_constant'].events({
     @event change .abi-input, input .abi-input
     */
     'change .abi-input, input .abi-input': function(e, template) {
-        var currentInput = this;
-        var inputs = _.map(template.data.inputs, function(input) {
-            if(currentInput.name === input.name &&
-               currentInput.type === input.type) {
-                if(input.type.indexOf('[') !== -1) {
-                    try {
-                        input.value = JSON.parse(e.currentTarget.value);
-                    } catch(e) {
-                        input.value = [];
-                    }
-                } else
-                    input.value = e.currentTarget.value;
-            }
-
-
-            return input;
-        });
+        var inputs = Helpers.addInputValue(template.data.inputs, this, e.currentTarget);
 
         TemplateVar.set('inputs', inputs);
     }
@@ -223,6 +207,7 @@ Template['elements_executeContract_function'].onCreated(function(){
     if(template.data.inputs.length === 0)
         TemplateVar.set('executeData', template.data.contractInstance[template.data.name].getData());
 
+
     // change the amount when the currency unit is changed
     template.autorun(function(c){
         var unit = EthTools.getUnit();
@@ -231,6 +216,11 @@ Template['elements_executeContract_function'].onCreated(function(){
             TemplateVar.set('amount', EthTools.toWei(template.find('input[name="amount"]').value.replace(',','.'), unit));
         }
     });
+});
+
+Template['elements_executeContract_function'].onRendered(function(){
+    // Run all inputs through formatter to catch bools
+    this.$('.abi-input').trigger('change');
 });
 
 Template['elements_executeContract_function'].events({
@@ -249,29 +239,11 @@ Template['elements_executeContract_function'].events({
     @event change .abi-input, input .abi-input
     */
     'change .abi-input, input .abi-input': function(e, template) {
-        var currentInput = this;
-        var inputs = _.map(template.data.inputs, function(input) {
-            if(currentInput.name === input.name &&
-               currentInput.type === input.type) {
+        var inputs = Helpers.addInputValue(template.data.inputs, this, e.currentTarget);
 
-                if(input.type.indexOf('[') !== -1) {
-                    try {
-                        input.value = JSON.parse(e.currentTarget.value);
-                    } catch(e) {
-                        input.value = [];
-                    }
-                } else
-                    input.value = e.currentTarget.value;
-            }
+        console.log('Inputs', inputs);
 
-            return input;
-        });
-        // get args for the constant function
-        var args = _.pluck(inputs || [], 'value');
-        console.log(template.data);
-        console.log('Inputs', args);
-
-        TemplateVar.set('executeData', template.data.contractInstance[template.data.name].getData.apply(null, args));
+        TemplateVar.set('executeData', template.data.contractInstance[template.data.name].getData.apply(null, inputs));
     },
     /**
     Executes a transaction on contract
