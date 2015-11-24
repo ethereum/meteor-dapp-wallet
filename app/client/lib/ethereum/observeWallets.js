@@ -369,7 +369,7 @@ var setupContractFilters = function(newDocument, checkFromCreationBlock){
                                 // });
 
                                 // NOTIFICATION
-                                if(!pendingConf.operation) {
+                                if(pendingConf && !pendingConf.operation) {
                                     Helpers.showNotification('wallet.transactions.notifications.pendingConfirmation', {
                                         initiator: Helpers.getAccountNameByAddress(log.args.initiator),
                                         to: Helpers.getAccountNameByAddress(log.args.to),
