@@ -501,6 +501,8 @@ body {
             input:not([type='checkbox']),
             select {
                 width: 100%;
+                margin-top: 0;
+                margin-bottom: @gridHeight;
             }
             input[type='checkbox'] {
                 float: left; 
@@ -511,6 +513,11 @@ body {
                 position: relative;
                 top: -6px;
                 left: @gridWidth/4;
+            }
+
+            input[type='checkbox'] + label {
+                top: 1px;
+                left: 0;
             }
 
             #contract-source-editor {

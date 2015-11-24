@@ -407,7 +407,8 @@ Template['views_send'].events({
             selectedAccount = Helpers.getAccountByAddress(template.find('select[name="dapp-select-account"]').value),
             selectedAction = TemplateVar.get("selectedAction"),
             data = getDataField(),
-            abi = TemplateVar.getFrom('.compile-contract', 'abi');
+            abi = TemplateVar.getFrom('.compile-contract', 'abi'),
+            contractName = TemplateVar.getFrom('.compile-contract', 'contractName');
 
         if(selectedAccount && !TemplateVar.get('sending')) {
 
@@ -501,7 +502,7 @@ Template['views_send'].events({
                                 console.log('SEND from contract', amount);
 
                                 data = (!to && abi)
-                                    ? {abi: abi, data: data}
+                                    ? {abi: abi, data: data, name: contractName}
                                     : data;
 
                                 addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
@@ -539,7 +540,7 @@ Template['views_send'].events({
                                 console.log('SEND simple');
 
                                 data = (!to && abi)
-                                    ? {abi: abi, data: data}
+                                    ? {abi: abi, data: data, name: contractName}
                                     : data;
 
                                 addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);

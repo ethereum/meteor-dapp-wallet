@@ -42,11 +42,9 @@ Template['elements_compileContract'].onCreated(function() {
     this.autorun(function() {
         var selectedContract = TemplateVar.get('selectedContract');
         var constructorInputs = _.clone(TemplateVar.get('constructorInputs'));
-
+        
         if(!selectedContract)
             return;
-
-        console.log('Inputs', constructorInputs);
 
         // add the default web3 sendTransaction arguments
         constructorInputs.push({
@@ -55,7 +53,9 @@ Template['elements_compileContract'].onCreated(function() {
 
         // generate new contract code
         TemplateVar.set('value', web3.eth.contract(selectedContract.abi).new.getData.apply(null, constructorInputs));
+
         TemplateVar.set('abi', selectedContract.abi);
+        TemplateVar.set('contractName', selectedContract.name);
     });
 });
 
@@ -118,6 +118,7 @@ Template['elements_compileContract'].onRendered(function() {
                         // substring the type so that string32 and string16 wont need different templates
                         if(constructor) {
                             constructor.inputs = _.map(constructor.inputs, Helpers.createTemplateDataFromInput)
+
                         } else {
                             constructor = {
                                 inputs: []
@@ -132,7 +133,7 @@ Template['elements_compileContract'].onRendered(function() {
                         };
                         
                         TemplateVar.set(template, 'selectedContract', simplifiedContractObject); 
-                        
+
                         return simplifiedContractObject;
                     })
 
@@ -184,6 +185,7 @@ Template['elements_compileContract'].helpers({
     */
     'selectedContractInputs' : function(){
         selectedContract = TemplateVar.get('selectedContract');
+
         return selectedContract ? selectedContract.constructorInputs : [];
     }
 });
@@ -237,6 +239,7 @@ Template['elements_compileContract'].events({
     */
     'change .abi-input, input .abi-input': function(e, template){
         var selectedContract = TemplateVar.get("selectedContract");
+
         var inputs = Helpers.addInputValue(selectedContract.constructorInputs, this, e.currentTarget);
 
         TemplateVar.set('constructorInputs', inputs);

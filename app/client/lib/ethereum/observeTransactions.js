@@ -5,11 +5,14 @@ Add a pending transaction to the transaction list, after sending
 @method addTransactionAfterSend
 */
 addTransactionAfterSend = function(txHash, amount, from, to, gasPrice, estimatedGas, data, tokenId) {
-    var abi = undefined,
+
+    var abi = undefined, 
+        name = "",
         txId = Helpers.makeId('tx', txHash);
 
     if(_.isObject(data)) {
         abi = data.abi;
+        name = data.name;
         data = data.data;
     }
 
@@ -24,7 +27,8 @@ addTransactionAfterSend = function(txHash, amount, from, to, gasPrice, estimated
         gasUsed: estimatedGas,
         fee: String(gasPrice * estimatedGas),
         data: data,
-        abi: abi
+        abi: abi,
+        name: name
     }});
 
     // add from Account
@@ -138,7 +142,7 @@ var updateTransaction = function(newDocument, transaction, receipt){
                     if(oldTx && oldTx.abi) {
                         CustomContracts.upsert({address: receipt.contractAddress}, {$set: {
                             address: receipt.contractAddress,
-                            name: 'Deployed Wallet '+ receipt.contractAddress.substr(0, 4),
+                            name: oldTx.name + ' ' + receipt.contractAddress.substr(2, 4),
                             abi: oldTx.abi
                         }});
                     }
