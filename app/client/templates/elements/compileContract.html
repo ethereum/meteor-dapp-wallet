@@ -51,8 +51,9 @@
                     {{#with TemplateVar.get "compiledContracts"}}
                         <h3>{{i18n 'wallet.contracts.selectContract'}}</h3>
                         <select class="compiled-contracts">
+                            <option disabled selected>{{i18n "wallet.contracts.pickContract"}}</option>
                             {{#each this}}
-                                <option value="{{name}}" selected="">{{name}}</option>
+                                <option value="{{name}}">{{name}}</option>
                             {{/each}}    
                         </select>
                     {{/with}}

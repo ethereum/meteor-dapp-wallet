@@ -19,36 +19,32 @@ Template['elements_compileContract'].onCreated(function() {
 
     // set the default
     TemplateVar.set('value', '');
+    TemplateVar.get('constructorInputs', []);
     TemplateVar.set('selectedType', this.data.onlyByteCode ? 'byte-code' : 'source-code');
 
     // focus the editors
-    this.autorun(function() {
+    this.autorun(function(c) {
         // react in the selectedType
         var value = TemplateVar.get('selectedType');
 
         // focus the editors
-        Tracker.afterFlush(function() {
-            if(value === 'byte-code')
-                template.$('.dapp-data-textarea').focus();
-            else
-                template.aceEditor.focus();
-        });
+        if(!c.firstRun) {
+            Tracker.afterFlush(function() {
+                if(value === 'byte-code')
+                    template.$('.dapp-data-textarea').focus();
+                else
+                    template.aceEditor.focus();
+            });
+        }
     });
 
     // update and generate the contract data 
     this.autorun(function() {
-        var selectedContract = TemplateVar.get("selectedContract");
-        var constructorInputs = _.clone(TemplateVar.get("constructorInputs"));
-
+        var selectedContract = TemplateVar.get('selectedContract');
+        var constructorInputs = _.clone(TemplateVar.get('constructorInputs'));
+        
         if(!selectedContract)
             return;
-
-
-        if(!_.isArray(constructorInputs) || _.isEmpty(constructorInputs)) {
-            constructorInputs = _.map(selectedContract.constructorInputs, function() {
-                return '';
-            });
-        }
 
         // add the default web3 sendTransaction arguments
         constructorInputs.push({
@@ -57,6 +53,9 @@ Template['elements_compileContract'].onCreated(function() {
 
         // generate new contract code
         TemplateVar.set('value', web3.eth.contract(selectedContract.abi).new.getData.apply(null, constructorInputs));
+
+        TemplateVar.set('abi', selectedContract.abi);
+        TemplateVar.set('contractName', selectedContract.name);
     });
 });
 
@@ -64,15 +63,15 @@ editor = {};
 Template['elements_compileContract'].onRendered(function() {
     var template = this;
 
-    this.aceEditor = ace.edit("contract-source-editor");
+    this.aceEditor = ace.edit('contract-source-editor');
     this.aceEditor.setOptions({
         useWorker: false,
         minLines: 10,
         maxLines: 30,
         highlightActiveLine: false
     });
-    this.aceEditor.setTheme("ace/theme/tomorrow");
-    this.aceEditor.getSession().setMode("ace/mode/typescript");
+    this.aceEditor.setTheme('ace/theme/tomorrow');
+    this.aceEditor.getSession().setMode('ace/mode/typescript');
     this.aceEditor.$blockScrolling = Infinity;
     this.aceEditor.focus();
 
@@ -118,12 +117,8 @@ Template['elements_compileContract'].onRendered(function() {
 
                         // substring the type so that string32 and string16 wont need different templates
                         if(constructor) {
-                            _.each(constructor.inputs, function(input){
-                                input.typeShort = input.type.match(/[a-z]+/i);
-                                input.typeShort = input.typeShort[0];
-                                input.bits = input.type.replace(input.typeShort, '');
-                                input.template =  'elements_input_'+ input.typeShort;
-                            })
+                            constructor.inputs = _.map(constructor.inputs, Helpers.createTemplateDataFromInput)
+
                         } else {
                             constructor = {
                                 inputs: []
@@ -138,7 +133,7 @@ Template['elements_compileContract'].onRendered(function() {
                         };
                         
                         TemplateVar.set(template, 'selectedContract', simplifiedContractObject); 
-                        
+
                         return simplifiedContractObject;
                     })
 
@@ -190,6 +185,7 @@ Template['elements_compileContract'].helpers({
     */
     'selectedContractInputs' : function(){
         selectedContract = TemplateVar.get('selectedContract');
+
         return selectedContract ? selectedContract.constructorInputs : [];
     }
 });
@@ -242,26 +238,10 @@ Template['elements_compileContract'].events({
     @event change abi-input, input .abi-input
     */
     'change .abi-input, input .abi-input': function(e, template){
-        
         var selectedContract = TemplateVar.get("selectedContract");
 
-        // create an array with the input fields
-        var contractArguments = [];
+        var inputs = Helpers.addInputValue(selectedContract.constructorInputs, this, e.currentTarget);
 
-        _.each(template.findAll('.abi-input'), function(input, index){
-            var output = (selectedContract.constructorInputs[index].typeShort === 'bool') ? input.checked: input.value;
-
-            console.log('output', output);
-
-            // force 0x at the start
-            if(!_.isEmpty(output) &&
-               (selectedContract.constructorInputs[index].typeShort === 'bytes' ||
-               selectedContract.constructorInputs[index].typeShort === 'address'))
-                output = '0x'+ output.replace('0x','');
-
-            contractArguments.push(output);
-        })
-
-        TemplateVar.set('constructorInputs', contractArguments);
+        TemplateVar.set('constructorInputs', inputs);
     }
 });

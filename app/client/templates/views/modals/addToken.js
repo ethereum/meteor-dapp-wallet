@@ -1,5 +1,5 @@
 /**
-The template to display each token.
+Modal to add token.
 
 @class [template] views_modals_addToken
 @constructor

@@ -1,13 +1,16 @@
 <template name="elements_createdContractAt">
-    <i class="icon-docs"></i> {{i18n "wallet.transactions.types.createdContract"}}
+    <i class="icon-docs"></i> 
     {{#if contractAddress}}
-        {{i18n "commonWords.at"}} 
-        <a href="http://etherscan.io/address/{{contractAddress}}" target="_blank">{{contractAddress}}</a>
+        {{i18n "wallet.transactions.types.createdContract.at"}} &nbsp;  
+        {{> elements_account_link address=contractAddress}}
         {{#unless deployedData}}
             <br>
             <small class="red">
                 <i class="icon-shield"></i> {{i18n "wallet.transactions.error.noDataDeployed"}}
             </small>
         {{/unless}}
+    {{else}}
+    {{i18n "wallet.transactions.types.creatingContract"}} &nbsp; 
+    <span class="address"><span class="dapp-identicon dapp-tiny dapp-icon-loading"></span></span>
     {{/if}}
 </template>

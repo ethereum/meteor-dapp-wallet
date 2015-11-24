@@ -2,6 +2,18 @@
     {{#with account}}
         <div class="dapp-container accounts-page">
 
+            <div class="dapp-sticky-bar dapp-container">
+                {{> dapp_identicon identity=address}}
+                <h1>
+                    <span class="edit-name">{{name}}</span> <i class="edit-icon icon-pencil"></i>
+
+                    {{#if $or owners abi}}
+                        <button class="dapp-icon-button delete icon-trash"></button>
+                    {{/if}}
+                </h1>
+                {{> elements_balance balance=balance changeUnit=true}}
+            </div>
+
             <div class="accounts-page-summary">
 
                 {{> dapp_identicon identity=address}}
@@ -10,7 +22,7 @@
                     <h1>
                         <span class="edit-name">{{name}}</span> <i class="edit-icon icon-pencil"></i>
 
-                        {{#if owners}}
+                        {{#if $or owners abi}}
                             <button class="dapp-icon-button delete icon-trash"></button>
                         {{/if}}
                     </h1>
@@ -40,39 +52,11 @@
                     </table>
                 {{/with}}
 
-            </div>
-
-            <aside class="dapp-actionbar">
-                <nav>
-                    <ul>
-                        <li>
-                            <a href="{{pathFor route='sendTo' address=address}}" title="{{address}}">
-                                <i class="icon-arrow-down"></i>
-                                {{i18n "wallet.accounts.buttons.deposit"}}
-                            </a>
-                        </li>
-                        <li>
-                            <button class="copy-to-clipboard-button">
-                                <i class="icon-docs"></i>
-                                {{i18n "wallet.accounts.buttons.copyAddress"}}
-                            </button>
-                        </li>                        
-                        <li>
-                            <button class="qrcode-button">
-                                <i class="icon-camera"></i>
-                                {{i18n "wallet.accounts.buttons.scanQRCode"}}
-                            </button>
-                        </li>                        
-
-                    </ul>
-                </nav>
-            </aside>
-                
-            <div class="accounts-transactions">
-                <!-- <h3>{{account}}</h3> -->
 
                 {{#if owners}}
-                    <div class="row clear">
+                    <!-- Wallet infos -->
+
+                    <div class="row clear wallet-info">
                         {{#if showDailyLimit}}
                             <div class="col col-4 mobile-full">
                                 {{#if $gte version 1}}
@@ -100,12 +84,48 @@
                     </div>
                 {{/if}}
 
-                <div class="dapp-clear-fix"></div>
+                {{#if $eq type "account"}}
+                    <!-- Account infos -->
+                    <div class="account-info">
+                        <h3>{{i18n "wallet.app.texts.note"}}</h3>
+                        <p>{{{i18n "wallet.accounts.accountNote"}}}</p>
+                    </div>
+                {{/if}}
 
-                {{#unless owners}}
-                    <h3>{{i18n "wallet.app.texts.note"}}</h3>
-                    <p>{{{i18n "wallet.accounts.accountNote"}}}</p>
-                {{/unless}}
+            </div>
+
+            <aside class="dapp-actionbar">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="{{pathFor route='sendTo' address=address}}" title="{{address}}">
+                                <i class="icon-arrow-down"></i>
+                                {{i18n "wallet.accounts.buttons.deposit"}}
+                            </a>
+                        </li>
+                        <li>
+                            <button class="copy-to-clipboard-button">
+                                <i class="icon-docs"></i>
+                                {{i18n "wallet.accounts.buttons.copyAddress"}}
+                            </button>
+                        </li>                        
+                        <li>
+                            <button class="qrcode-button">
+                                <i class="icon-camera"></i>
+                                {{i18n "wallet.accounts.buttons.scanQRCode"}}
+                            </button>
+                        </li>                        
+
+                    </ul>
+                </nav>
+            </aside>
+
+            {{#if abi}}
+                {{> elements_executeContract address=address abi=abi}}
+            {{/if}}
+
+
+            <div class="accounts-transactions">
 
                 {{#if pendingConfirmations}}
                     <h2>{{i18n 'wallet.transactions.pendingConfirmations'}}</h2>

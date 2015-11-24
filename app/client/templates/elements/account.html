@@ -35,7 +35,11 @@
             {{/with}}
 
             <h3>
-                {{walletIcon}}
+                {{#if ../isContract}}
+                    <i class="icon-doc"></i>
+                {{else}}
+                    {{walletIcon}}
+                {{/if}}
                 {{name}}
             </h3>
 

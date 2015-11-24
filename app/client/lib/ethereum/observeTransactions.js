@@ -1,5 +1,50 @@
 
 /**
+Add a pending transaction to the transaction list, after sending
+
+@method addTransactionAfterSend
+*/
+addTransactionAfterSend = function(txHash, amount, from, to, gasPrice, estimatedGas, data, tokenId) {
+
+    var abi = undefined, 
+        name = "",
+        txId = Helpers.makeId('tx', txHash);
+
+    if(_.isObject(data)) {
+        abi = data.abi;
+        name = data.name;
+        data = data.data;
+    }
+
+    Transactions.upsert(txId, {$set: {
+        tokenId: tokenId,
+        value: amount,
+        from: from,
+        to: to,
+        timestamp: moment().unix(),
+        transactionHash: txHash,
+        gasPrice: gasPrice,
+        gasUsed: estimatedGas,
+        fee: String(gasPrice * estimatedGas),
+        data: data,
+        abi: abi,
+        name: name
+    }});
+
+    // add from Account
+    EthAccounts.update({address: from}, {$addToSet: {
+        transactions: txId
+    }});
+
+    // add to Account
+    EthAccounts.update({address: to}, {$addToSet: {
+        transactions: txId
+    }});
+};
+
+
+
+/**
 Add new in/outgoing transaction
 
 @method addTransaction
@@ -65,6 +110,8 @@ var updateTransaction = function(newDocument, transaction, receipt){
     if(!id)
         return;
 
+    var oldTx = Transactions.findOne({_id: id});
+
     newDocument._id = id;
 
     if(transaction) {
@@ -82,23 +129,33 @@ var updateTransaction = function(newDocument, transaction, receipt){
     }
 
     if(receipt && transaction) {
-        newDocument.contractAddress = receipt.contractAddress;
-        newDocument.gasUsed = receipt.gasUsed;
-        newDocument.fee = transaction.gasPrice.times(new BigNumber(receipt.gasUsed)).toString(10);
 
         // check for code on the address
-        if(receipt.contractAddress) {
+        if(!newDocument.contractAddress && receipt.contractAddress) {
             web3.eth.getCode(receipt.contractAddress, function(e, code) {
                 if(!e && code.length > 2) {
                     Transactions.update({_id: id}, {$set: {
                         deployedData: code
                     }});
+
+                    // Add contract to the contract list
+                    if(oldTx && oldTx.abi) {
+                        CustomContracts.upsert({address: receipt.contractAddress}, {$set: {
+                            address: receipt.contractAddress,
+                            name: oldTx.name + ' ' + receipt.contractAddress.substr(2, 4),
+                            abi: oldTx.abi
+                        }});
+                    }
                 }
             })
         }
+
+        newDocument.contractAddress = receipt.contractAddress;
+        newDocument.gasUsed = receipt.gasUsed;
+        newDocument.fee = transaction.gasPrice.times(new BigNumber(receipt.gasUsed)).toString(10);
     }
 
-    if(oldTx = Transactions.findOne({_id: id})) {
+    if(oldTx) {
 
         // prevent wallet events overwriding token transfer events
         if(oldTx.tokenId && !newDocument.tokenId) {

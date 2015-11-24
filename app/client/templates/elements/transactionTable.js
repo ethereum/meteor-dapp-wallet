@@ -160,7 +160,7 @@ Template['elements_transactions_row'].helpers({
         else if(to && !from)
             return TAPi18n.__('wallet.transactions.types.received');
         else if(!this.to)
-            return TAPi18n.__('wallet.transactions.types.createdContract');
+            return TAPi18n.__('wallet.transactions.types.createdContract.title');
         else
             return TAPi18n.__('wallet.transactions.types.sent');
     },

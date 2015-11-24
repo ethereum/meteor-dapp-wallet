@@ -18,13 +18,11 @@ Template['views_dashboard'].helpers({
 
     @method (wallets)
     */
-    'wallets': function(){
-        var wallets = Wallets.find({}, {sort: {disabled: 1, creationBlock: 1}}).fetch();
+    'wallets': function(disabled){
+        var wallets = Wallets.find({disabled: disabled}, {sort: {creationBlock: 1}}).fetch();
 
         // sort wallets by balance
-        wallets.sort(function(a, b) {
-          return new BigNumber(b.balance, 10).gt(new BigNumber(a.balance, 10));
-        });
+        wallets.sort(Helpers.sortByBalance);
 
         return wallets;
     },
@@ -37,9 +35,7 @@ Template['views_dashboard'].helpers({
         // balance need to be present, to show only full inserted accounts (not ones added by mist.requestAccount)
         var accounts = EthAccounts.find({name: {$exists: true}}, {sort: {name: 1}}).fetch();
 
-        accounts.sort(function(a, b) {
-          return new BigNumber(b.balance, 10).gt(new BigNumber(a.balance, 10));
-        });
+        accounts.sort(Helpers.sortByBalance);
 
         return accounts;
     },
@@ -49,7 +45,7 @@ Template['views_dashboard'].helpers({
     @method (hasAccounts)
     */
     'hasAccounts' : function() {
-        return (EthAccounts.find().count() > 0 )
+        return (EthAccounts.find().count() > 0);
     },
 
     /**

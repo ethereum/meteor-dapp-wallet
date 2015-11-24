@@ -12,7 +12,15 @@ Template['views_account'].helpers({
     @method (account)
     */
     'account': function() {
-          return Helpers.getAccountByAddress(FlowRouter.getParam('address'));
+        return Helpers.getAccountByAddress(FlowRouter.getParam('address'));
+    },
+    /**
+    Get the current ABI, or use the wallet ABI
+
+    @method (abi)
+    */
+    'abi': function() {
+        return (this.owners) ? walletABI : this.abi;
     },
     /**
     Get the pending confirmations of this account.
@@ -97,6 +105,7 @@ Template['views_account'].events({
             ok: function(){
                 if(data.name === $('input.deletionConfirmation').val()) {
                     Wallets.remove(data._id);
+                    CustomContracts.remove(data._id);
                     FlowRouter.go('dashboard');
                     return true;
                 }
@@ -142,6 +151,9 @@ Template['views_account'].events({
                 name: text
             }});
             EthAccounts.update(this._id, {$set: {
+                name: text
+            }});
+            CustomContracts.update(this._id, {$set: {
                 name: text
             }});
 

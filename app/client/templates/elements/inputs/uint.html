@@ -1,7 +1,6 @@
 <template name="elements_input_uint">
     <h4>
-        {{name}}
-        <em>- {{#if bits}}{{bits}} bits{{/if}} unsigned integer</em>
-    </h4>    
-    <input type="number" step="1" min="0" placeholder="1234" name="elements_input_uint" class="abi-input">
+        {{#if name}}{{name}} <em>-</em> {{/if}}<em>{{#if bits}}{{bits}} bits{{/if}} unsigned integer</em>
+    </h4>
+    <input type="number" step="1" min="0" placeholder="1234" name="elements_input_uint" class="abi-input {{class}}">
 </template>
