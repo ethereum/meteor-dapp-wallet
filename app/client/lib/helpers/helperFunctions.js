@@ -275,32 +275,35 @@ Adds the input value from a form field to the inputs array
 **/
 Helpers.addInputValue = function (inputs, currentInput, formField){
 
-    return _.pluck(_.map(inputs, function(input) {
+    return _.map(inputs, function(input) {
+            var value = _.isUndefined(input.value) ? '' : input.value;
+
             if(currentInput.name === input.name &&
                currentInput.type === input.type) {
 
                 if(input.type.indexOf('[') !== -1) {
                     try {
-                        input.value = JSON.parse(formField.value);
+                        value = JSON.parse(formField.value);
                     } catch(e) {
-                        input.value = [];
+                        value = [];
                     }
 
                 // force 0x at the start
                 } else if(!_.isEmpty(formField.value) &&
                    (input.typeShort === 'bytes' ||
                     input.typeShort === 'address')) {
-                    input.value = '0x'+ formField.value.replace('0x','');
+                    value = '0x'+ formField.value.replace('0x','');
 
                 // bool
                 } else if(input.typeShort === 'bool') {
-                    input.value = formField.checked;
+                    value = !!formField.checked;
                 } else {
-                    input.value = formField.value || '';
+                    value = formField.value || '';
                 }
 
+                input.value = value;
             }
 
-            return input;
-        }) || [], 'value');
+            return value;
+        }) || [];
 };

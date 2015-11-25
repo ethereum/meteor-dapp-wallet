@@ -19,7 +19,7 @@ Template['elements_compileContract'].onCreated(function() {
 
     // set the default
     TemplateVar.set('value', '');
-    TemplateVar.get('constructorInputs', []);
+    TemplateVar.set('constructorInputs', []);
     TemplateVar.set('selectedType', this.data.onlyByteCode ? 'byte-code' : 'source-code');
 
     // focus the editors
@@ -124,20 +124,17 @@ Template['elements_compileContract'].onRendered(function() {
                             };
                         }
 
-                        var simplifiedContractObject = {
+                        return {
                             name: name,
                             bytecode: contract.bytecode,
                             abi: abi,
                             constructorInputs: constructor.inputs
                         };
-                        
-                        TemplateVar.set(template, 'selectedContract', simplifiedContractObject); 
-                        
-                        return simplifiedContractObject;
-                    })
+                    });
 
+                    TemplateVar.set(template, 'selectedContract', null);
                     TemplateVar.set(template, 'compiledContracts', compiledContracts);
-
+                    TemplateVar.set('constructorInputs', []);
 
                 } else {
                     console.log(error);
@@ -229,6 +226,11 @@ Template['elements_compileContract'].events({
 
         // change the inputs and data field
         TemplateVar.set('selectedContract', selectedContract);
+
+        Tracker.afterFlush(function(){
+            // Run all inputs through formatter to catch bools
+            template.$('.abi-input').trigger('change');
+        });
     },
     /**
     Compile the solidty code, when
