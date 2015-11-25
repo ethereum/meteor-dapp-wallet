@@ -6,6 +6,7 @@ Add a pending transaction to the transaction list, after sending
 */
 addTransactionAfterSend = function(txHash, amount, from, to, gasPrice, estimatedGas, data, tokenId) {
     var abi = undefined,
+        contractName = undefined,
         txId = Helpers.makeId('tx', txHash);
 
     if(_.isObject(data)) {
