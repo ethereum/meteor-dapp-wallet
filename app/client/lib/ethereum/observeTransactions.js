@@ -140,9 +140,53 @@ var updateTransaction = function(newDocument, transaction, receipt){
                     if(oldTx && oldTx.abi) {
                         CustomContracts.upsert({address: receipt.contractAddress}, {$set: {
                             address: receipt.contractAddress,
-                            name: oldTx.contractName || 'Deployed Wallet '+ receipt.contractAddress.substr(2, 6),
+                            name: ( oldTx.contractName || 'New Contract') + ' ' + receipt.contractAddress.substr(2, 6),
                             abi: oldTx.abi
                         }});
+
+
+                        //If it looks like a token, add it to the list
+                        var functionNames = _.pluck(oldTx.abi, 'name');
+                        var isToken = _.contains(functionNames, 'transfer') && _.contains(functionNames, 'Transfer') && _.contains(functionNames, 'balanceOf');
+                        console.log("isToken: ",isToken)
+
+                        if(isToken) {
+                            
+                            tokenId = Helpers.makeId('token', receipt.contractAddress);
+
+                            Tokens.upsert(tokenId, {$set: {
+                                address: receipt.contractAddress,
+                                name: oldTx.name + ' ' + receipt.contractAddress.substr(2, 4),
+                                symbol: oldTx.name + receipt.contractAddress.substr(2, 4),
+                                balances: {},
+                                decimals: 0
+                            }});
+
+                            
+                            // check if the token has information about itself asynchrounously
+                            var tokenInstance = TokenContract.at(receipt.contractAddress);
+
+                            tokenInstance.name(function(e, i){
+                                Tokens.upsert(tokenId, {$set: {
+                                    name: i
+                                }});
+                                CustomContracts.upsert({address: receipt.contractAddress}, {$set: {
+                                    name: TAPi18n.__('wallet.tokens.admin', { name: i } )
+                                }});
+                            });
+                            
+                            tokenInstance.decimals(function(e, i){
+                                Tokens.upsert(tokenId, {$set: {
+                                    decimals: Number(i)
+                                }});
+                            });
+                            tokenInstance.symbol(function(e, i){
+                                Tokens.upsert(tokenId, {$set: {
+                                    symbol: i
+                                }});
+                            });
+
+                        }
                     }
                 }
             })

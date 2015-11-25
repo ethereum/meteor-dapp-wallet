@@ -228,7 +228,8 @@
         "tokens": {
             "title": "Custom <strong>Tokens</strong>",
             "subTitle": "Added tokens",
-            "description": "Tokens are currencies built on the Ethereum platform. Tokens should follow the <a href=\"https://github.com/ethereum/wiki/wiki/Standardized_Contract_APIs#token\" target=\"_blank\">custom token standard</a>.<br>Create your own token by simply modifiying <a href=\"http://chriseth.github.io/browser-solidity/?gist=20c8b5658349b003b08d\" target=\"_blank\">this example of a custom token contract</a>.",
+            "admin": "__name__ (admin page)",
+            "description": "Tokens are currencies and other fungibles built on the Ethereum platform. In order for wallets and accounts to watch for tokens and send them, you have to add their address to this list. You can create your own token by simply modifiying <a href=\"http://chriseth.github.io/browser-solidity/?gist=20c8b5658349b003b08d\" target=\"_blank\">this example of a custom token contract</a> or learning more on <a href=\"https://github.com/ethereum/wiki/wiki/Standardized_Contract_APIs#token\" target=\"_blank\">Custom Token standard</a>.",
             "deleteToken": "Do you want to remove the token <strong>__token__</strong> from your list?",
             "addedToken": "Added __token__ to your watch list",
             "editedToken": "Edited token __token__",
