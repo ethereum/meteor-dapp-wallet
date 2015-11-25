@@ -38,33 +38,34 @@
 
                 {{#if TemplateVar.get "compiling"}}
                     {{> spinner}}
-                {{/if}}
-
-                {{#with TemplateVar.get "compileError"}}
-                    <p class="orange">
-                        <i class="icon-shield"></i> {{i18n 'wallet.contracts.error.compile'}}
-                        <br><br>
-                        <code>{{this}}</code>
-                    </p>
 
                 {{else}}
-                    {{#with TemplateVar.get "compiledContracts"}}
-                        <h3>{{i18n 'wallet.contracts.selectContract'}}</h3>
-                        <select class="compiled-contracts">
-                            <option disabled selected>{{i18n "wallet.contracts.pickContract"}}</option>
-                            {{#each this}}
-                                <option value="{{name}}">{{name}}</option>
-                            {{/each}}    
-                        </select>
+                    {{#with TemplateVar.get "compileError"}}
+                        <p class="orange">
+                            <i class="icon-shield"></i> {{i18n 'wallet.contracts.error.compile'}}
+                            <br><br>
+                            <code>{{this}}</code>
+                        </p>
+
+                    {{else}}
+                        {{#with TemplateVar.get "compiledContracts"}}
+                            <h3>{{i18n 'wallet.contracts.selectContract'}}</h3>
+                            <select class="compiled-contracts">
+                                <option disabled selected>{{i18n "wallet.contracts.pickContract"}}</option>
+                                {{#each this}}
+                                    <option value="{{name}}">{{name}}</option>
+                                {{/each}}    
+                            </select>
+                        {{/with}}
+                        
+                        {{#with selectedContractInputs}}
+                            <h3>{{i18n 'wallet.contracts.constructorParameters'}}</h3>
+                            {{#each selectedContractInputs}}
+                                {{> Template.dynamic template=template}}
+                            {{/each}}
+                        {{/with}}
                     {{/with}}
-                    
-                    {{#with selectedContractInputs}}
-                        <h3>{{i18n 'wallet.contracts.constructorParameters'}}</h3>
-                        {{#each selectedContractInputs}}
-                            {{> Template.dynamic template=template}}
-                        {{/each}}
-                    {{/with}}
-                {{/with}}
+                {{/if}}
 
             {{else}}
 

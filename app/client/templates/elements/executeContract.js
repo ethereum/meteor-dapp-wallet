@@ -137,24 +137,26 @@ Template['elements_executeContract_constant'].onCreated(function(){
 
         // add callback
         args.push(function(e, r) {
-            var outputs = [];
+            if(!e) {
+                var outputs = [];
 
-            // single return value
-            if(template.data.outputs.length === 1) {
-                template.data.outputs[0].value = r;
-                outputs.push(template.data.outputs[0]);
+                // single return value
+                if(template.data.outputs.length === 1) {
+                    template.data.outputs[0].value = r;
+                    outputs.push(template.data.outputs[0]);
 
-            // multiple return values
-            } else {
-                outputs = _.map(template.data.outputs, function(output, i) {
-                    output.value = r[i];
-                    return output;
-                });
+                // multiple return values
+                } else {
+                    outputs = _.map(template.data.outputs, function(output, i) {
+                        output.value = r[i];
+                        return output;
+                    });
+                }
+
+                // console.log('Outputs', outputs);
+
+                TemplateVar.set(template, 'outputs', outputs);
             }
-
-            // console.log('Outputs', outputs);
-
-            TemplateVar.set(template, 'outputs', outputs);
         });
 
         console.log('Inputs', args);
