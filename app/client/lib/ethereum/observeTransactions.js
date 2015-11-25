@@ -9,7 +9,8 @@ addTransactionAfterSend = function(txHash, amount, from, to, gasPrice, estimated
         txId = Helpers.makeId('tx', txHash);
 
     if(_.isObject(data)) {
-        abi = data.abi;
+        contractName = data.contract.name;
+        abi = data.contract.abi;
         data = data.data;
     }
 
@@ -24,7 +25,8 @@ addTransactionAfterSend = function(txHash, amount, from, to, gasPrice, estimated
         gasUsed: estimatedGas,
         fee: String(gasPrice * estimatedGas),
         data: data,
-        abi: abi
+        abi: abi,
+        contractName: contractName
     }});
 
     // add from Account
@@ -138,7 +140,7 @@ var updateTransaction = function(newDocument, transaction, receipt){
                     if(oldTx && oldTx.abi) {
                         CustomContracts.upsert({address: receipt.contractAddress}, {$set: {
                             address: receipt.contractAddress,
-                            name: 'Deployed Wallet '+ receipt.contractAddress.substr(0, 4),
+                            name: oldTx.contractName || 'Deployed Wallet '+ receipt.contractAddress.substr(2, 6),
                             abi: oldTx.abi
                         }});
                     }

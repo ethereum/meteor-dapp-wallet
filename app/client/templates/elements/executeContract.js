@@ -39,8 +39,6 @@ Template['elements_executeContract'].helpers({
         var contractFunctions = [];
         var contractConstants = [];
 
-        console.log(this.abi);
-
         _.each(this.abi, function(func, i){
 
             // Walk throught the abi and extract functions and constants
@@ -49,10 +47,10 @@ Template['elements_executeContract'].helpers({
 
                 func.inputs = _.map(func.inputs, Helpers.createTemplateDataFromInput);
 
-                console.log(func.name);
-                _.each(func.inputs, function(inputs) {
-                    console.log(inputs);
-                });
+                // console.log(func.name);
+                // _.each(func.inputs, function(inputs) {
+                //     console.log(inputs);
+                // });
 
                 if(func.constant){
                     // if it's a constant                        
@@ -241,8 +239,6 @@ Template['elements_executeContract_function'].events({
     'change .abi-input, input .abi-input': function(e, template) {
         var inputs = Helpers.addInputValue(template.data.inputs, this, e.currentTarget);
 
-        console.log('Inputs', inputs);
-
         TemplateVar.set('executeData', template.data.contractInstance[template.data.name].getData.apply(null, inputs));
     },
     /**
@@ -258,14 +254,6 @@ Template['elements_executeContract_function'].events({
             selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.execute-contract select[name="dapp-select-account"]', 'value')),
             data = TemplateVar.get('executeData');
 
-        console.log({
-                    from: selectedAccount.address,
-                    to: to,
-                    data: data,
-                    value: amount,
-                    gasPrice: gasPrice,
-                    gas: estimatedGas
-                });
 
         if(selectedAccount) {
 
@@ -282,10 +270,6 @@ Template['elements_executeContract_function'].events({
             var sendTransaction = function(estimatedGas){
 
                 TemplateVar.set('sending', true);
-
-                // use gas set in the input field
-                estimatedGas = estimatedGas || Number($('.send-transaction-info input.gas').val());
-                console.log('Finally choosen gas', estimatedGas);
 
 
                 // CONTRACT TX
