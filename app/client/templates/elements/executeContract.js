@@ -6,6 +6,23 @@ Template Controllers
 
 
 /**
+Gas estimation callback
+
+@method estimationCallback
+*/
+var estimationCallback = function(e, res){
+    var template = this;
+
+    console.log('Estimated gas: ', res, e);
+
+    if(!e && res) {
+        TemplateVar.set(template, 'estimatedGas', res);
+    }
+};
+
+
+
+/**
 The execute contract template
 
 @class [template] elements_executeContract
@@ -17,6 +34,7 @@ Template['elements_executeContract'].onCreated(function(){
 
     // Set Defaults
     TemplateVar.set('sending', false);
+    TemplateVar.set(template, 'estimateGas', 3000000)
 
     // check address for code
     web3.eth.getCode(template.data.address, function(e, code) {
@@ -76,6 +94,7 @@ Template['elements_executeContract'].events({
     */
     'change .select-contract-function': function(e, template){
         TemplateVar.set('executeData', null);
+
 
         // change the inputs and data field
         TemplateVar.set('selectedFunction', _.find(TemplateVar.get('contractFunctions'), function(contract){
@@ -241,6 +260,12 @@ Template['elements_executeContract_function'].events({
     'change .abi-input, input .abi-input': function(e, template) {
         var inputs = Helpers.addInputValue(template.data.inputs, this, e.currentTarget);
 
+        var args = inputs;
+        args.push({ from: TemplateVar.getFrom('.execute-contract select[name="dapp-select-account"]', 'value'), gas: TemplateVar.get('estimateGas') || 3000000 });
+        args.push(estimationCallback.bind(template));
+    
+        template.data.contractInstance[template.data.name].estimateGas(args);
+        
         TemplateVar.set('executeData', template.data.contractInstance[template.data.name].getData.apply(null, inputs));
     },
     /**
@@ -251,11 +276,14 @@ Template['elements_executeContract_function'].events({
     'click .execute': function(e, template){
         var to = template.data.contractInstance.address,
             gasPrice = 50000000000,
-            estimatedGas = 3000000,
+            estimatedGas = TemplateVar.get('estimatedGas'),
             amount = TemplateVar.get('amount') || 0,
             selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.execute-contract select[name="dapp-select-account"]', 'value')),
             data = TemplateVar.get('executeData');
 
+        var latestTransaction =  Transactions.findOne({}, {sort: {timestamp: -1}});
+        if (latestTransaction && latestTransaction.gasPrice)
+            gasPrice = latestTransaction.gasPrice; 
 
         if(selectedAccount) {
 
