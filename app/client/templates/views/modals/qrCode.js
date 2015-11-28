@@ -1,7 +1,7 @@
 /**
 The template to display qrCode.
 
-@class [template] views_account
+@class [template] views_modals_qrCode
 @constructor
 */
 

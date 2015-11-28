@@ -46,11 +46,6 @@ Template['elements_executeContract'].helpers({
 
                 func.inputs = _.map(func.inputs, Helpers.createTemplateDataFromInput);
 
-                // console.log(func.name);
-                // _.each(func.inputs, function(inputs) {
-                //     console.log(inputs);
-                // });
-
                 if(func.constant){
                     // if it's a constant                        
                     contractConstants.push(func);                    
@@ -153,13 +148,9 @@ Template['elements_executeContract_constant'].onCreated(function(){
                     });
                 }
 
-                // console.log('Outputs', outputs);
-
                 TemplateVar.set(template, 'outputs', outputs);
             }
         });
-
-        console.log('Inputs', args);
 
         template.data.contractInstance[template.data.name].apply(null, args);
     });
@@ -251,7 +242,7 @@ Template['elements_executeContract_function'].events({
     'click .execute': function(e, template){
         var to = template.data.contractInstance.address,
             gasPrice = 50000000000,
-            estimatedGas = (typeof mist == 'undefined') ? 3000000 : undefined,
+            estimatedGas = undefined, /* (typeof mist == 'undefined')not working */
             amount = TemplateVar.get('amount') || 0,
             selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.execute-contract select[name="dapp-select-account"]', 'value')),
             data = TemplateVar.get('executeData');

@@ -114,7 +114,15 @@
                                 <i class="icon-camera"></i>
                                 {{i18n "wallet.accounts.buttons.scanQRCode"}}
                             </button>
-                        </li>                        
+                        </li>  
+                        {{#if abi}}
+                        <li>
+                            <button class="interface-button">
+                                <i class="icon-settings"></i>
+                                {{i18n "wallet.accounts.buttons.showInterface"}}
+                            </button>
+                        </li>
+                        {{/if}}                    
 
                     </ul>
                 </nav>

@@ -46,8 +46,6 @@ Template['elements_compileContract'].onCreated(function() {
         if(!selectedContract)
             return;
 
-        console.log('Inputs', constructorInputs);
-
         // add the default web3 sendTransaction arguments
         constructorInputs.push({
             data: selectedContract.bytecode

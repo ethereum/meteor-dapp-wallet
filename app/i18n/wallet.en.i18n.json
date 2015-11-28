@@ -73,7 +73,8 @@
             "buttons": {
                 "deposit": "Deposit",
                 "copyAddress": "Copy address",
-                "scanQRCode": "Show QR-Code"
+                "scanQRCode": "Show QR-Code",
+                "showInterface": "Show Interface"
             },
             "modal": {
                 "deleteText": "Do you really want to delete the wallet?<br>If you lose the wallet address, you will lose the funds on it!<br><br>Type the name of the wallet to confirm the deletion.",
@@ -110,6 +111,7 @@
                 "noDataDeployed": "No data is deployed on the contract address!"    
             },
             "types": {
+                "executeContract": "Contract Execution",
                 "betweenWallets": "Transfer between wallets",
                 "sent": "Sent",
                 "received": "Received",

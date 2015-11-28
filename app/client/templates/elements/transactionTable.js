@@ -143,7 +143,10 @@ Template['elements_transactions_row'].helpers({
     'transactionType': function(){
         var to = Helpers.getAccountByAddress(this.to),
             from = Helpers.getAccountByAddress(this.from),
-            initiator = Helpers.getAccountByAddress(this.initiator);
+            initiator = Helpers.getAccountByAddress(this.initiator), 
+            sendData = this.data;
+
+        console.log("This Object: ", this);
 
         if(from)
             from = '<a href="/account/'+ from.address +'">'+ from.name +'</a>';
@@ -155,6 +158,8 @@ Template['elements_transactions_row'].helpers({
             return new Spacebars.SafeString(TAPi18n.__('wallet.transactions.types.pendingConfirmations', {initiator: initiator, from: from}));
         else if(this.tokenId && Tokens.findOne(this.tokenId))
             return TAPi18n.__('wallet.transactions.types.tokenTransfer', {token: Tokens.findOne(this.tokenId).name});
+        else if(sendData && to)
+            return TAPi18n.__('wallet.transactions.types.executeContract');
         else if(to && from)
             return TAPi18n.__('wallet.transactions.types.betweenWallets');
         else if(to && !from)

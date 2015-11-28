@@ -141,7 +141,7 @@ var updateTransaction = function(newDocument, transaction, receipt){
                     if(oldTx && oldTx.abi) {
                         CustomContracts.upsert({address: receipt.contractAddress}, {$set: {
                             address: receipt.contractAddress,
-                            name: ( oldTx.contractName || 'New Contract') + ' ' + receipt.contractAddress.substr(2, 6),
+                            name: ( oldTx.contractName || 'New Contract') + ' ' + receipt.contractAddress.substr(2, 4),
                             abi: oldTx.abi
                         }});
 

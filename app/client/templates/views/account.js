@@ -214,5 +214,33 @@ Template['views_account'].events({
         });
 
         
+    },
+    /**
+    Click to reveal the ABI Code
+    
+    @event click .interface-button
+    */
+    'click .interface-button': function(e){
+        e.preventDefault();
+        var abi = (this.owners) ? _.clone(walletABI) : _.clone(this.abi);
+
+        var cleanAbi = [];
+        
+        //clean ABI from circular references
+        _.each(abi, function(e, i) {
+            cleanAbi.push(_.omit(e, 'contractInstance'));
+        })
+
+        console.log("abi: ", abi);
+        console.log("abi clean: ", cleanAbi);
+        // Open a modal showing the QR Code
+        EthElements.Modal.show({
+            template: 'views_modals_interface',
+            data: {
+                abiInterface: cleanAbi
+            }
+        });
+
+        
     }
 });
