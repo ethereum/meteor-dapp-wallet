@@ -20,6 +20,9 @@
             {{#each wallets}}
                 {{> elements_account account=_id wallets=true}}
             {{/each}}
+            {{#each (wallets true)}}
+                {{> elements_account account=_id wallets=true}}
+            {{/each}}
 
             <a href="{{pathFor route='createAccount'}}" class="wallet-box create">
                 <div class="account-pattern">

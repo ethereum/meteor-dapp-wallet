@@ -189,6 +189,11 @@ body {
             font-weight: 400;
             bottom: 6px;
         }
+
+        .private-chain {
+            color: @colorGrayDark;
+            opacity: 0.5;
+        }
         
     }
     
@@ -205,6 +210,15 @@ body {
         span.account-balance {
             color: @colorTextSecondary;
             font-size: 1.6em;
+
+            .inline-form {
+                > .simple-modal {
+                    min-width: 70px;
+                }
+                > button {
+                    padding: 0;
+                }
+            }
         }
     }
 }
@@ -232,22 +246,74 @@ body {
 }
 
 .accounts-page {
-    display: flex;
+    .display(flex);
     flex-flow: row wrap;
+
+    .dapp-sticky-bar {
+        z-index: 25;
+        position: fixed;
+        top: floor(@gridHeight * -1);
+        left: 0;
+        right: 0;
+        height: @gridHeight * 2;
+        padding: @gridHeight/2 @gridWidth;
+        background: @colorWhite;
+        .transition(top @animationSpeed);
+        // box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+
+        &.sticky {
+            top: floor(@gridHeight * 2);
+        }
+
+        > .dapp-identicon {
+            // .dapp-tiny;
+            position: absolute;
+            width: floor(@gridWidth / 1.5);
+            height: floor(@gridWidth / 1.5);
+            box-shadow: inset rgba(255, 255, 255, 0.4) 0 1px 1px, inset rgba(0, 0, 0, 0.3) 0 -1px 2px;
+            left: @gridWidth;
+        }
+
+        h1 {
+            font-size: 1.1em;
+            text-transform: uppercase;
+            padding-left: @gridWidth;
+        }
+        
+        .account-balance {
+            position: absolute;
+            right: @gridWidth;
+            top: 7px;
+            font-size: 1.2em;
+            font-weight: 400;
+            span {
+                font-size: 0.75em;
+                font-weight: 600;
+            }
+        }
+    }
 
     .accounts-page-summary {
         flex: 1 auto;
-        display: flex;
-        flex-flow: row wrap;
+        .display(flex);
+        flex-flow: column;
 
-        .dapp-identicon {
+        > .dapp-identicon {
             margin-top: @gridHeight;
-            flex: 0 0 auto;
+            position: absolute;
         }
+
+        h2 {
+            span {
+               padding-left: @gridWidth/6;
+            }
+        }
+
         header {
             flex: 1;
-            padding-left: @gridWidth;
+            padding-left: @gridWidth*3;
         }
+
         table.token-list {
             flex: 1 100%;
 
@@ -256,13 +322,36 @@ body {
                 position: absolute;
             }
             
-            td strong {
-                padding-left: @gridWidth;
+            tr {
+                &:hover td:last-child a {
+                    visibility: visible;
+                }
+                
+                td:last-child {
+                    text-align: right;
+
+                    
+                    a {
+                        visibility: hidden;
+                    }
+                }
+                td strong {
+                    padding-left: @gridWidth;
+                }
             }
+            
         }
     }
 
-    .accounts-transactions {
+    .accounts-page-summary.sticky + .dapp-actionbar {
+        flex: 100%;
+        nav {
+            float: right;
+        }
+    }
+
+    .accounts-transactions,
+    .execute-contract {
         flex: 1 100%;
     }
     
@@ -396,9 +485,6 @@ body {
                 margin-bottom: @defaultMargin*2;
             }
             h4 {
-                margin-top: @defaultMargin;
-                margin-bottom: 0;
-
                 em {
                     font-style: normal;
                     font-weight: normal;
@@ -417,13 +503,8 @@ body {
                 width: 100%;
             }
             input[type='checkbox'] {
-                margin-top: @defaultMargin/2;
-            }
-
-            .send-info label {
-                position: relative;
-                top: -6px;
-                left: @gridWidth/4;
+                float: left; 
+                margin-right: @defaultMargin/2;
             }
 
             #contract-source-editor {
@@ -594,6 +675,78 @@ body {
         &.invalid {
             color: @colorError;
         }
+    }
+}
+
+
+.execute-contract {
+    input[type='checkbox'] {
+        float: left; 
+        margin-right: @defaultMargin/2;
+    }
+
+    .contract-info {
+        
+        h3 {
+            color: @colorGrayDark;
+            text-transform: none;
+            font-weight: 300;
+            font-size: 1.2em;
+        }
+        input,
+        .dapp-address-input {
+            width: 100%;
+        }
+
+        .dapp-identicon {
+            top: 4px;
+            position: relative;
+            margin-right: @defaultMargin/4;
+        }
+
+        .output {
+            position: relative;
+            overflow: auto;
+            max-height: 120px;
+            font-weight: 400;
+        }
+        
+        table {
+            max-width: @gridWidth * 16;
+            
+            tr:nth-child(odd) {
+                border-radius: 4px 4px 0 0;
+            }        
+
+            tr:nth-child(even) {
+                background-color: #FFF;
+                border-bottom: solid 10px @colorWhite;
+            }
+
+            td {
+                border-radius: 2px;
+                vertical-align: top;
+
+                h3 {    
+                    margin: 0;
+                }
+
+                dl {
+                    margin: 0;
+                    dd {
+                        margin-left: 0;
+                        max-width: 14 * @gridWidth;
+                        margin-bottom: @gridHeight;
+                    }
+                }
+                
+            }
+        }
+
+    }
+
+    .dapp-block-button {
+        margin-top: @gridHeight;
     }
 }
 

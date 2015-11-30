@@ -37,7 +37,29 @@ Template['elements_account'].helpers({
     @method (account)
     */
     'account': function(){
-        return EthAccounts.findOne(this.account) || Wallets.findOne(this.account);
+        return EthAccounts.findOne(this.account) || Wallets.findOne(this.account) || CustomContracts.findOne(this.account);
+    },
+    /**
+    Get all tokens
+
+    @method (tokens)
+    */
+    'tokens': function(){
+        var query = {};
+        query['balances.'+ this._id] = {$exists: true};
+        return Tokens.find(query, {limit: 5, sort: {name: 1}});
+    },
+    /**
+    Get the tokens balance
+
+    @method (formattedTokenBalance)
+    */
+    'formattedTokenBalance': function(e){
+        var account = Template.parentData(2);
+
+        return (this.balances && Number(this.balances[account._id]) > 0)
+            ? Helpers.formatNumberByDecimals(this.balances[account._id], this.decimals) +' '+ this.symbol
+            : false;
     },
     /**
     Get the name
@@ -48,7 +70,7 @@ Template['elements_account'].helpers({
         return this.name || TAPi18n.__('wallet.accounts.defaultName');
     },
     /**
-    Account was just added. Retrun true and eemove the "new" field.
+    Account was just added. Return true and remove the "new" field.
 
     @method (new)
     */
@@ -59,6 +81,7 @@ Template['elements_account'].helpers({
             Meteor.setTimeout(function() {
                 EthAccounts.update(id, {$unset: {new: ''}});
                 Wallets.update(id, {$unset: {new: ''}});
+                CustomContracts.update(id, {$unset: {new: ''}});
             }, 1000);
 
             return true;

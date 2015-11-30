@@ -28,6 +28,13 @@ span.address {
     }
 }
 
+.abi-input-range {
+    overflow: auto;
+    max-height: 120px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
 .wallet-box {
     position: relative;
     display: inline-block;
@@ -40,7 +47,6 @@ span.address {
     .box-sizing(border-box);
     border: 0;
     font: 100 16px 'Source Sans Pro', 'Helvetica Neue', arial, sans-serif;
-
 
     // ANIMATION
     .transition(background-color @animationSpeed*4, -webkit-filter @animationSpeed*20);
@@ -67,6 +73,7 @@ span.address {
 
         h3 {
             margin-top: 0;
+            text-align: left;
         }
     }
 
@@ -75,14 +82,8 @@ span.address {
     }
 
     &.wallets {
-        // background-color: lighten(@colorBackgroundHeader, 12%);
         .background-image(linear-gradient(to right,  lighten(@colorBackgroundHeader, 12%) 0%, rgba(255,255,255, 0.1) 100%));
         overflow: hidden;
-
-        // .account-pattern {
-        //     background-color: transparent;
-        //     background-image: none !important;
-        // }
     }
     &.tokens {
         perspective: 800px;
@@ -138,7 +139,8 @@ span.address {
             }
         }
     }
-    .dapp-identicon {
+
+    > .dapp-identicon {
         position: absolute;
         left: 12px;
         top: 20px;
@@ -152,6 +154,23 @@ span.address {
         position: absolute;
         left: 0px;
         bottom: 0;
+    }
+
+    .token-list {
+        .dapp-vertical-menu;
+        position: absolute;
+        left: @gridWidth * 1.5;
+        top: 4px;
+
+        li {
+            margin: 3px 0;
+        }
+
+        .dapp-identicon {
+            display: block;
+            width: 10px;
+            height: 10px;
+        }
     }
 
 
@@ -177,14 +196,17 @@ span.address {
         }
     }
 
-    h3 {
-        .dapp-shorten-text;
+    > h3 {
         margin: 0;
         margin-top: 4px;
         color: @colorLink;
         max-width: @gridWidth*4.4;
         float: left;
     }
+    &:not(.create) > h3 {
+        .dapp-shorten-text;
+    }
+
     > span {
         position: relative;
         clear: left;
@@ -193,6 +215,7 @@ span.address {
         font-size: 1.3em;
         line-height: 1.35em;
         .dapp-shorten-text;
+
 
         &.account-id {
             font-size: 0.8em;

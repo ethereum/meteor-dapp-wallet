@@ -12,7 +12,15 @@ Template['views_account'].helpers({
     @method (account)
     */
     'account': function() {
-          return Helpers.getAccountByAddress(FlowRouter.getParam('address'));
+        return Helpers.getAccountByAddress(FlowRouter.getParam('address'));
+    },
+    /**
+    Get the current ABI, or use the wallet ABI
+
+    @method (abi)
+    */
+    'abi': function() {
+        return (this.owners) ? walletABI : this.abi;
     },
     /**
     Get the pending confirmations of this account.
@@ -64,14 +72,16 @@ Template['views_account'].helpers({
     @method (tokens)
     */
     'tokens': function(){
-        return Tokens.find({}, {sort: {name: 1}});
+        var query = {};
+        query['balances.'+ this._id] = {$exists: true};
+        return Tokens.find(query, {sort: {name: 1}});
     },
     /**
     Get the tokens balance
 
-    @method (formattedCoinBalance)
+    @method (formattedTokenBalance)
     */
-    'formattedCoinBalance': function(e){
+    'formattedTokenBalance': function(e){
         var account = Template.parentData(2);
 
         return (this.balances && Number(this.balances[account._id]) > 0)
@@ -95,6 +105,7 @@ Template['views_account'].events({
             ok: function(){
                 if(data.name === $('input.deletionConfirmation').val()) {
                     Wallets.remove(data._id);
+                    CustomContracts.remove(data._id);
                     FlowRouter.go('dashboard');
                     return true;
                 }
@@ -140,6 +151,9 @@ Template['views_account'].events({
                 name: text
             }});
             EthAccounts.update(this._id, {$set: {
+                name: text
+            }});
+            CustomContracts.update(this._id, {$set: {
                 name: text
             }});
 
@@ -196,6 +210,34 @@ Template['views_account'].events({
             template: 'views_modals_qrCode',
             data: {
                 address: this.address
+            }
+        });
+
+        
+    },
+    /**
+    Click to reveal the ABI Code
+    
+    @event click .interface-button
+    */
+    'click .interface-button': function(e){
+        e.preventDefault();
+        var abi = (this.owners) ? _.clone(walletABI) : _.clone(this.abi);
+
+        var cleanAbi = [];
+        
+        //clean ABI from circular references
+        _.each(abi, function(e, i) {
+            cleanAbi.push(_.omit(e, 'contractInstance'));
+        })
+
+        console.log("abi: ", abi);
+        console.log("abi clean: ", cleanAbi);
+        // Open a modal showing the QR Code
+        EthElements.Modal.show({
+            template: 'views_modals_interface',
+            data: {
+                abiInterface: cleanAbi
             }
         });
 

@@ -1,5 +1,49 @@
 
 /**
+Add a pending transaction to the transaction list, after sending
+
+@method addTransactionAfterSend
+*/
+addTransactionAfterSend = function(txHash, amount, from, to, gasPrice, estimatedGas, data, tokenId) {
+    var abi = undefined,
+        contractName = undefined,
+        txId = Helpers.makeId('tx', txHash);
+
+    if(_.isObject(data)) {
+        contractName = data.contract.name;
+        abi = data.contract.abi;
+        data = data.data;
+    }
+
+    Transactions.upsert(txId, {$set: {
+        tokenId: tokenId,
+        value: amount,
+        from: from,
+        to: to,
+        timestamp: moment().unix(),
+        transactionHash: txHash,
+        gasPrice: gasPrice,
+        gasUsed: estimatedGas,
+        fee: String(gasPrice * estimatedGas),
+        data: data,
+        abi: abi,
+        contractName: contractName
+    }});
+
+    // add from Account
+    EthAccounts.update({address: from}, {$addToSet: {
+        transactions: txId
+    }});
+
+    // add to Account
+    EthAccounts.update({address: to}, {$addToSet: {
+        transactions: txId
+    }});
+};
+
+
+
+/**
 Add new in/outgoing transaction
 
 @method addTransaction
@@ -65,6 +109,8 @@ var updateTransaction = function(newDocument, transaction, receipt){
     if(!id)
         return;
 
+    var oldTx = Transactions.findOne({_id: id});
+
     newDocument._id = id;
 
     if(transaction) {
@@ -82,23 +128,77 @@ var updateTransaction = function(newDocument, transaction, receipt){
     }
 
     if(receipt && transaction) {
-        newDocument.contractAddress = receipt.contractAddress;
-        newDocument.gasUsed = receipt.gasUsed;
-        newDocument.fee = transaction.gasPrice.times(new BigNumber(receipt.gasUsed)).toString(10);
 
         // check for code on the address
-        if(receipt.contractAddress) {
+        if(!newDocument.contractAddress && receipt.contractAddress) {
             web3.eth.getCode(receipt.contractAddress, function(e, code) {
                 if(!e && code.length > 2) {
                     Transactions.update({_id: id}, {$set: {
                         deployedData: code
                     }});
+
+                    // Add contract to the contract list
+                    if(oldTx && oldTx.abi) {
+                        CustomContracts.upsert({address: receipt.contractAddress}, {$set: {
+                            address: receipt.contractAddress,
+                            name: ( oldTx.contractName || 'New Contract') + ' ' + receipt.contractAddress.substr(2, 4),
+                            abi: oldTx.abi
+                        }});
+
+
+                        //If it looks like a token, add it to the list
+                        var functionNames = _.pluck(oldTx.abi, 'name');
+                        var isToken = _.contains(functionNames, 'transfer') && _.contains(functionNames, 'Transfer') && _.contains(functionNames, 'balanceOf');
+                        console.log("isToken: ",isToken)
+
+                        if(isToken) {
+                            
+                            tokenId = Helpers.makeId('token', receipt.contractAddress);
+
+                            Tokens.upsert(tokenId, {$set: {
+                                address: receipt.contractAddress,
+                                name: oldTx.name + ' ' + receipt.contractAddress.substr(2, 4),
+                                symbol: oldTx.name + receipt.contractAddress.substr(2, 4),
+                                balances: {},
+                                decimals: 0
+                            }});
+
+                            
+                            // check if the token has information about itself asynchrounously
+                            var tokenInstance = TokenContract.at(receipt.contractAddress);
+
+                            tokenInstance.name(function(e, i){
+                                Tokens.upsert(tokenId, {$set: {
+                                    name: i
+                                }});
+                                CustomContracts.upsert({address: receipt.contractAddress}, {$set: {
+                                    name: TAPi18n.__('wallet.tokens.admin', { name: i } )
+                                }});
+                            });
+                            
+                            tokenInstance.decimals(function(e, i){
+                                Tokens.upsert(tokenId, {$set: {
+                                    decimals: Number(i)
+                                }});
+                            });
+                            tokenInstance.symbol(function(e, i){
+                                Tokens.upsert(tokenId, {$set: {
+                                    symbol: i
+                                }});
+                            });
+
+                        }
+                    }
                 }
             })
         }
+
+        newDocument.contractAddress = receipt.contractAddress;
+        newDocument.gasUsed = receipt.gasUsed;
+        newDocument.fee = transaction.gasPrice.times(new BigNumber(receipt.gasUsed)).toString(10);
     }
 
-    if(oldTx = Transactions.findOne({_id: id})) {
+    if(oldTx) {
 
         // prevent wallet events overwriding token transfer events
         if(oldTx.tokenId && !newDocument.tokenId) {

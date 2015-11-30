@@ -2,6 +2,18 @@
     {{#with account}}
         <div class="dapp-container accounts-page">
 
+            <div class="dapp-sticky-bar dapp-container">
+                {{> dapp_identicon identity=address}}
+                <h1>
+                    <span class="edit-name">{{name}}</span> <i class="edit-icon icon-pencil"></i>
+
+                    {{#if $or owners abi}}
+                        <button class="dapp-icon-button delete icon-trash"></button>
+                    {{/if}}
+                </h1>
+                {{> elements_balance balance=balance changeUnit=true}}
+            </div>
+
             <div class="accounts-page-summary">
 
                 {{> dapp_identicon identity=address}}
@@ -10,7 +22,7 @@
                     <h1>
                         <span class="edit-name">{{name}}</span> <i class="edit-icon icon-pencil"></i>
 
-                        {{#if owners}}
+                        {{#if $or owners abi}}
                             <button class="dapp-icon-button delete icon-trash"></button>
                         {{/if}}
                     </h1>
@@ -24,51 +36,27 @@
                     <table class="token-list dapp-zebra">
                         <tbody>
                             {{#each this}}
-                                {{#if formattedCoinBalance}}
-                                    <tr>
-                                        <td>{{> dapp_identicon identity=address class="dapp-tiny"}}
-                                        <strong>{{name}}</strong></td>
-                                        <td>{{formattedCoinBalance}}</td>
-                                    </tr>
-                                {{/if}}
+                                <tr>
+                                    <td>{{> dapp_identicon identity=address class="dapp-tiny"}}
+                                    <strong>{{name}}</strong></td>
+                                    <td>{{formattedTokenBalance}}</td>
+                                    <td>
+                                        <a href="{{pathFor route='sendToken' from=../../address token=address}}">
+                                            <i class="icon-arrow-up"></i>
+                                            {{i18n "wallet.app.buttons.send"}}
+                                        </a>
+                                    </td>
+                                </tr>
                             {{/each}}
                         </tbody>
                     </table>
                 {{/with}}
 
-            </div>
-
-            <aside class="dapp-actionbar">
-                <nav>
-                    <ul>
-                        <li>
-                            <a href="{{pathFor route='sendTo' address=address}}" title="{{address}}">
-                                <i class="icon-arrow-down"></i>
-                                {{i18n "wallet.accounts.buttons.deposit"}}
-                            </a>
-                        </li>
-                        <li>
-                            <button class="copy-to-clipboard-button">
-                                <i class="icon-docs"></i>
-                                {{i18n "wallet.accounts.buttons.copyAddress"}}
-                            </button>
-                        </li>                        
-                        <li>
-                            <button class="qrcode-button">
-                                <i class="icon-camera"></i>
-                                {{i18n "wallet.accounts.buttons.scanQRCode"}}
-                            </button>
-                        </li>                        
-
-                    </ul>
-                </nav>
-            </aside>
-                
-            <div class="accounts-transactions">
-                <!-- <h3>{{account}}</h3> -->
 
                 {{#if owners}}
-                    <div class="row clear">
+                    <!-- Wallet infos -->
+
+                    <div class="row clear wallet-info">
                         {{#if showDailyLimit}}
                             <div class="col col-4 mobile-full">
                                 {{#if $gte version 1}}
@@ -96,12 +84,56 @@
                     </div>
                 {{/if}}
 
-                <div class="dapp-clear-fix"></div>
+                {{#if $eq type "account"}}
+                    <!-- Account infos -->
+                    <div class="account-info">
+                        <h3>{{i18n "wallet.app.texts.note"}}</h3>
+                        <p>{{{i18n "wallet.accounts.accountNote"}}}</p>
+                    </div>
+                {{/if}}
 
-                {{#unless owners}}
-                    <h3>{{i18n "wallet.app.texts.note"}}</h3>
-                    <p>{{{i18n "wallet.accounts.accountNote"}}}</p>
-                {{/unless}}
+            </div>
+
+            <aside class="dapp-actionbar">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="{{pathFor route='sendTo' address=address}}" title="{{address}}">
+                                <i class="icon-arrow-down"></i>
+                                {{i18n "wallet.accounts.buttons.deposit"}}
+                            </a>
+                        </li>
+                        <li>
+                            <button class="copy-to-clipboard-button">
+                                <i class="icon-docs"></i>
+                                {{i18n "wallet.accounts.buttons.copyAddress"}}
+                            </button>
+                        </li>                        
+                        <li>
+                            <button class="qrcode-button">
+                                <i class="icon-camera"></i>
+                                {{i18n "wallet.accounts.buttons.scanQRCode"}}
+                            </button>
+                        </li>  
+                        {{#if abi}}
+                        <li>
+                            <button class="interface-button">
+                                <i class="icon-settings"></i>
+                                {{i18n "wallet.accounts.buttons.showInterface"}}
+                            </button>
+                        </li>
+                        {{/if}}                    
+
+                    </ul>
+                </nav>
+            </aside>
+
+            {{#if abi}}
+                {{> elements_executeContract address=address abi=abi}}
+            {{/if}}
+
+
+            <div class="accounts-transactions">
 
                 {{#if pendingConfirmations}}
                     <h2>{{i18n 'wallet.transactions.pendingConfirmations'}}</h2>
@@ -113,8 +145,6 @@
                     <h2>{{i18n 'wallet.transactions.latest'}}</h2>
 
                     {{> elements_transactions_table ids=transactions account=_id}}
-                {{else}}
-                    <h2>{{i18n 'wallet.transactions.none'}}</h2>
                 {{/if}}
             </div>
         </div>

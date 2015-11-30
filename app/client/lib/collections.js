@@ -6,6 +6,9 @@
 Wallets = new Mongo.Collection('wallets', {connection: null});
 new PersistentMinimongo2(Wallets, 'ethereum_wallet');
 
+CustomContracts = new Mongo.Collection('custom-contracts', {connection: null});
+new PersistentMinimongo2(CustomContracts, 'ethereum_wallet');
+
 // Contains the transactions
 Transactions = new Mongo.Collection('transactions', {connection: null});
 new PersistentMinimongo2(Transactions, 'ethereum_wallet');

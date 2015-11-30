@@ -25,6 +25,14 @@ Helpers.rerun = {
     '1s': new ReactiveTimer(1)
 };
 
+/**
+Sort method for accounts and wallets to sort by balance
+
+@method sortByBalance
+**/
+Helpers.sortByBalance = function(a, b){
+    return !b.disabled && new BigNumber(b.balance, 10).gt(new BigNumber(a.balance, 10)) ? 1 : -1;
+};
 
 /**
 Clear localStorage
@@ -142,7 +150,7 @@ Gets the docuement matching the given addess from the EthAccounts or Wallets col
 */
 Helpers.getAccountByAddress = function(address, reactive) {
     var options = (reactive === false) ? {reactive: false} : {};
-    return EthAccounts.findOne({address: address}, options) || Wallets.findOne({address: address}, options);
+    return EthAccounts.findOne({address: address}, options) || Wallets.findOne({address: address}, options) || CustomContracts.findOne({address: address}, options);
 };
 
 /**
@@ -194,7 +202,7 @@ Formats a timestamp to any format given.
     Helpers.formatTime(myTime, "YYYY-MM-DD")
 
 @method formatTime
-@param {String} time         The timstamp, can be string or unix format
+@param {String} time         The timestamp, can be string or unix format
 @param {String} format       the format string, can also be "iso", to format to ISO string, or "fromnow"
 @return {String} The formated time
 **/
@@ -222,4 +230,80 @@ Helpers.formatTime = function(time, format) { //parameters
 
     } else
         return '';
+};
+
+
+/**
+Formats an input and prepares it to be a template 
+    
+    Helpers.createTemplateDataFromInput(abiFunctionInput);
+
+@method createTemplateDataFromInput
+@param {object} input           The input object, out of an ABI
+@return {object} input          The input object with added variables to make it into a template
+**/
+Helpers.createTemplateDataFromInput = function (input){
+
+    input.typeShort = input.type.match(/[a-z]+/i);
+    input.typeShort = input.typeShort[0];
+    input.bits = input.type.replace(input.typeShort, '');
+    
+    if(input.type.indexOf('[') === -1 &&
+       (input.typeShort === 'string' ||
+        input.typeShort === 'uint' ||
+        input.typeShort == 'int' ||
+        input.typeShort == 'address' ||
+        input.typeShort == 'bool' ||
+        input.typeShort == 'bytes')) {
+
+        input.template =  'elements_input_'+ input.typeShort;
+    } else {
+        input.template =  'elements_input_json';
+    }
+
+    return input;    
+};
+
+
+/**
+Adds the input value from a form field to the inputs array
+    
+@method addInputValue
+@param {object} inputs          The current inputs
+@param {object} currentInput   The current input
+@return {Array} array of parameter values
+**/
+Helpers.addInputValue = function (inputs, currentInput, formField){
+
+    return _.map(inputs, function(input) {
+            var value = _.isUndefined(input.value) ? '' : input.value;
+
+            if(currentInput.name === input.name &&
+               currentInput.type === input.type) {
+
+                if(input.type.indexOf('[') !== -1) {
+                    try {
+                        value = JSON.parse(formField.value);
+                    } catch(e) {
+                        value = [];
+                    }
+
+                // force 0x at the start
+                } else if(!_.isEmpty(formField.value) &&
+                   (input.typeShort === 'bytes' ||
+                    input.typeShort === 'address')) {
+                    value = '0x'+ formField.value.replace('0x','');
+
+                // bool
+                } else if(input.typeShort === 'bool') {
+                    value = !!formField.checked;
+                } else {
+                    value = formField.value || '';
+                }
+
+                input.value = value;
+            }
+
+            return value;
+        }) || [];
 };
