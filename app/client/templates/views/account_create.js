@@ -309,7 +309,7 @@ Template['views_account_create'].events({
     @event submit
     */
     'submit': function(e, template){
-        var code = walletStubABICompiled; // walletStubABICompiled 184 280 walletABICompiled ~1 842 800
+        var code = walletStubABI; // walletStubABI 184 280 walletABI ~1 842 800
         var type = TemplateVar.get('selectedSection');
 
         // SIMPLE
