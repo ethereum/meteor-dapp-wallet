@@ -242,7 +242,7 @@
         "contracts": {
             "contractTitle" : "Contracts",
             "deployNewContract": "Deploy new contract",
-            "addCustomContract": "Add custom contract",
+            "addCustomContract": "Watch contract",
             "customContracts": "Custom contracts",
             "description": "In order to watch and interact with a contract already deployed on the blockchain you need to know it's address and description of its interface (in an ABI/JSON format)",
             "deployContract": "<strong>Deploy</strong> contract",
