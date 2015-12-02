@@ -7,7 +7,7 @@
                 <h1>
                     <span class="edit-name">{{name}}</span> <i class="edit-icon icon-pencil"></i>
 
-                    {{#if $or owners abi}}
+                    {{#if $or owners jsonInterface}}
                         <button class="dapp-icon-button delete icon-trash"></button>
                     {{/if}}
                 </h1>
@@ -22,7 +22,7 @@
                     <h1>
                         <span class="edit-name">{{name}}</span> <i class="edit-icon icon-pencil"></i>
 
-                        {{#if $or owners abi}}
+                        {{#if $or owners jsonInterface}}
                             <button class="dapp-icon-button delete icon-trash"></button>
                         {{/if}}
                     </h1>
@@ -115,7 +115,7 @@
                                 {{i18n "wallet.accounts.buttons.scanQRCode"}}
                             </button>
                         </li>  
-                        {{#if abi}}
+                        {{#if jsonInterface}}
                         <li>
                             <button class="interface-button">
                                 <i class="icon-settings"></i>
@@ -128,8 +128,8 @@
                 </nav>
             </aside>
 
-            {{#if abi}}
-                {{> elements_executeContract address=address abi=abi}}
+            {{#if jsonInterface}}
+                {{> elements_executeContract address=address jsonInterface=jsonInterface}}
             {{/if}}
 
 

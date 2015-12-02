@@ -15,12 +15,12 @@ Template['views_account'].helpers({
         return Helpers.getAccountByAddress(FlowRouter.getParam('address'));
     },
     /**
-    Get the current ABI, or use the wallet ABI
+    Get the current jsonInterface, or use the wallet jsonInterface
 
-    @method (abi)
+    @method (jsonInterface)
     */
-    'abi': function() {
-        return (this.owners) ? walletABI : this.abi;
+    'jsonInterface': function() {
+        return (this.owners) ? walletInterface : this.jsonInterface;
     },
     /**
     Get the pending confirmations of this account.
@@ -216,28 +216,27 @@ Template['views_account'].events({
         
     },
     /**
-    Click to reveal the ABI Code
+    Click to reveal the jsonInterface
     
     @event click .interface-button
     */
     'click .interface-button': function(e){
         e.preventDefault();
-        var abi = (this.owners) ? _.clone(walletABI) : _.clone(this.abi);
-
-        var cleanAbi = [];
+        var jsonInterface = (this.owners) ? _.clone(walletInterface) : _.clone(this.jsonInterface);
         
         //clean ABI from circular references
-        _.each(abi, function(e, i) {
-            cleanAbi.push(_.omit(e, 'contractInstance'));
+        var cleanJsonInterface = _.map(jsonInterface, function(e, i) {
+            return _.omit(e, 'contractInstance');
         })
 
-        console.log("abi: ", abi);
-        console.log("abi clean: ", cleanAbi);
+        console.log("jsonInterface: ", jsonInterface);
+        console.log("jsonInterface clean: ", cleanJsonInterface);
+
         // Open a modal showing the QR Code
         EthElements.Modal.show({
             template: 'views_modals_interface',
             data: {
-                abiInterface: cleanAbi
+                jsonInterface: cleanJsonInterface
             }
         });
 

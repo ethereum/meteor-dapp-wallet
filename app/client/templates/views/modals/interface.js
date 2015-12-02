@@ -9,10 +9,17 @@ Template['views_modals_interface'].helpers({
     /**
     Return the ABI in string formart
 
-    @method (abi)
+    @method (jsonInterface)
     */
-    'abiString': function() {
-        // return JSON.stringify(this.abi);
-        return JSON.stringify(this.abiInterface);
+    'jsonInterface': function() {
+        return JSON.stringify(this.jsonInterface, null, 2);
     }
 });
+
+Template['views_modals_interface'].events({
+    'focus textarea': function(e, template){
+        Tracker.afterFlush(function(){
+            template.$('textarea').select();
+        });
+    }
+})

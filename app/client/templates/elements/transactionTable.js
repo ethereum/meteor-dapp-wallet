@@ -146,7 +146,6 @@ Template['elements_transactions_row'].helpers({
             initiator = Helpers.getAccountByAddress(this.initiator), 
             sendData = this.data;
 
-        console.log("This Object: ", this);
 
         if(from)
             from = '<a href="/account/'+ from.address +'">'+ from.name +'</a>';

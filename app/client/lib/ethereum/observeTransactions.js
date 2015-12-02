@@ -5,13 +5,13 @@ Add a pending transaction to the transaction list, after sending
 @method addTransactionAfterSend
 */
 addTransactionAfterSend = function(txHash, amount, from, to, gasPrice, estimatedGas, data, tokenId) {
-    var abi = undefined,
+    var jsonInterface = undefined,
         contractName = undefined,
         txId = Helpers.makeId('tx', txHash);
 
     if(_.isObject(data)) {
         contractName = data.contract.name;
-        abi = data.contract.abi;
+        jsonInterface = data.contract.jsonInterface;
         data = data.data;
     }
 
@@ -26,7 +26,7 @@ addTransactionAfterSend = function(txHash, amount, from, to, gasPrice, estimated
         gasUsed: estimatedGas,
         fee: String(gasPrice * estimatedGas),
         data: data,
-        abi: abi,
+        jsonInterface: jsonInterface,
         contractName: contractName
     }});
 
@@ -138,16 +138,16 @@ var updateTransaction = function(newDocument, transaction, receipt){
                     }});
 
                     // Add contract to the contract list
-                    if(oldTx && oldTx.abi) {
+                    if(oldTx && oldTx.jsonInterface) {
                         CustomContracts.upsert({address: receipt.contractAddress}, {$set: {
                             address: receipt.contractAddress,
                             name: ( oldTx.contractName || 'New Contract') + ' ' + receipt.contractAddress.substr(2, 4),
-                            abi: oldTx.abi
+                            jsonInterface: oldTx.jsonInterface
                         }});
 
 
                         //If it looks like a token, add it to the list
-                        var functionNames = _.pluck(oldTx.abi, 'name');
+                        var functionNames = _.pluck(oldTx.jsonInterface, 'name');
                         var isToken = _.contains(functionNames, 'transfer') && _.contains(functionNames, 'Transfer') && _.contains(functionNames, 'balanceOf');
                         console.log("isToken: ",isToken)
 

@@ -2,7 +2,7 @@
 
 // Token Interface
 
-var tokenABI = [
+var tokenInterface = [
     {
         "type": "function",
         "name": "name",
@@ -117,4 +117,4 @@ var tokenABI = [
     }
 ];
 
-TokenContract = web3.eth.contract(tokenABI);
+TokenContract = web3.eth.contract(tokenInterface);

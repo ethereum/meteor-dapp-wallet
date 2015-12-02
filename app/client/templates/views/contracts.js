@@ -25,10 +25,10 @@ var addCustomContract = function(e) {
         name = $('.modals-add-custom-contract input.name').val();
 
     try {
-        abi = JSON.parse($('.modals-add-custom-contract textarea.abi').val());
+        jsonInterface = JSON.parse($('.modals-add-custom-contract textarea.jsonInterface').val());
     } catch(e) {
         GlobalNotification.warning({
-           content: TAPi18n.__('wallet.contracts.error.jsonABIParseError'),
+           content: TAPi18n.__('wallet.contracts.error.jsonInterfaceParseError'),
            duration: 2
         });
 
@@ -39,7 +39,7 @@ var addCustomContract = function(e) {
         CustomContracts.upsert({address:address}, {$set: {
             address: address,
             name: name,
-            abi: abi
+            jsonInterface: jsonInterface
         }});
 
         console.log(address)

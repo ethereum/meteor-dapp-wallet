@@ -17,6 +17,10 @@ Template['elements_executeContract'].onCreated(function(){
     // Set Defaults
     TemplateVar.set('sending', false);
 
+    // show execute part if its a custom contract
+    if(CustomContracts.findOne({address: template.data.address}))
+        TemplateVar.set('executionVisible', true);
+
     // check address for code
     web3.eth.getCode(template.data.address, function(e, code) {
         if(!e && code.length > 2) {
@@ -33,14 +37,14 @@ Template['elements_executeContract'].helpers({
     @method (reactiveContext)
     */
     'reactiveContext': function() {
-        var contractInstance = web3.eth.contract(this.abi).at(this.address);
+        var contractInstance = web3.eth.contract(this.jsonInterface).at(this.address);
 
         var contractFunctions = [];
         var contractConstants = [];
 
-        _.each(this.abi, function(func, i){
+        _.each(this.jsonInterface, function(func, i){
 
-            // Walk throught the abi and extract functions and constants
+            // Walk throught the jsonInterface and extract functions and constants
             if(func.type == 'function') {
                 func.contractInstance = contractInstance;
 
@@ -83,7 +87,7 @@ Template['elements_executeContract'].events({
     @event click .toggle-visibility
     */
     'click .toggle-visibility': function(){
-        TemplateVar.set('executionVisible', !TemplateVar.get('executionVisible'))
+        TemplateVar.set('executionVisible', !TemplateVar.get('executionVisible'));
     }
 });
 

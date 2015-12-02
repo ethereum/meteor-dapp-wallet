@@ -52,6 +52,10 @@
                 "tokenSymbol": "Token symbol",
                 "decimalPlaces": "Decimals Places of smallest unit",
                 "preview": "Preview"
+            },
+            "interface": {
+                "title": "Contract JSON Interface",
+                "description": "If you want to have someone else execute this contract, send this information along with the contract's address."
             }
         },
         "accounts": {
@@ -244,7 +248,7 @@
             "deployNewContract": "Deploy new contract",
             "addCustomContract": "Watch contract",
             "customContracts": "Custom contracts",
-            "description": "In order to watch and interact with a contract already deployed on the blockchain you need to know it's address and description of its interface (in an ABI/JSON format)",
+            "description": "In order to watch and interact with a contract already deployed on the blockchain you need to know it's address and description of its interface in JSON format.",
             "deployContract": "<strong>Deploy</strong> contract",
             "contractSourceCode": "Solidity contract source code",
             "contractByteCode": "Contract byte code",
@@ -252,7 +256,7 @@
             "constructorParameters": "Constructor parameters",
             "name": "Contract Name",
             "address": "Contract Address",
-            "abi": "JSON ABI",
+            "jsonInterface": "JSON Interface",
             "contractInformation": "Contract Information",
             "addedContract": "Added custom contract",
             "readFromContract": "Read from contract",
@@ -269,7 +273,7 @@
                 "compile": "Could not compile source code.",
                 "noDataProvided": "You didn't provide any data",
                 "invalidAddress": "Contract not added, invalid address.",
-                "jsonABIParseError": "Couldn't parse the JSON ABI."
+                "jsonInterfaceParseError": "Couldn't parse the JSON Interface."
             }
         }
 

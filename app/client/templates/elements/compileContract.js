@@ -52,7 +52,7 @@ Template['elements_compileContract'].onCreated(function() {
         });
 
         // generate new contract code
-        TemplateVar.set('value', web3.eth.contract(selectedContract.abi).new.getData.apply(null, constructorInputs));
+        TemplateVar.set('value', web3.eth.contract(selectedContract.jsonInterface).new.getData.apply(null, constructorInputs));
         TemplateVar.set('contract', selectedContract);
     });
 });
@@ -106,10 +106,10 @@ Template['elements_compileContract'].onRendered(function() {
                 if(!error) {
 
                     compiledContracts = _.map(compiledContracts, function(contract, name){
-                        var abi = JSON.parse(contract.interface);
+                        var jsonInterface = JSON.parse(contract.interface);
                         
                         // find the constructor function
-                        var constructor = _.find(abi, function(func){
+                        var constructor = _.find(jsonInterface, function(func){
                             return func.type == 'constructor';
                         });
 
@@ -125,7 +125,7 @@ Template['elements_compileContract'].onRendered(function() {
                         return {
                             name: name,
                             bytecode: contract.bytecode,
-                            abi: abi,
+                            jsonInterface: jsonInterface,
                             constructorInputs: constructor.inputs
                         };
                     });
