@@ -314,28 +314,29 @@ Template['elements_transactions_row'].events({
                     ? 'confirm'
                     : 'revoke';
 
-            var owner = account.owners[0];
-
-
-            // the callback called, when its confirmed
-            var callback = function(error, hash){
-                if(!error) {
-                    console.log(type +' confirmation tx hash: '+ hash);
-                    
-                    PendingConfirmations.update(_this._id, {$set: {
-                        sending: owner
-                    }});
-                } else {
-                    GlobalNotification.error({
-                        content: error.message,
-                        duration: 8
-                    });
-                }
-            };
+            
 
             // sending the confirm tx
             var sendConfirmation = function(owner){
                 var confirmFunc = contracts['ct_'+ account._id][type];
+
+
+                // the callback called, when its confirmed
+                var callback = function(error, hash){
+                    if(!error) {
+                        console.log(type +' confirmation tx hash: '+ hash);
+                        
+                        PendingConfirmations.update(_this._id, {$set: {
+                            sending: owner
+                        }});
+                    } else {
+                        GlobalNotification.error({
+                            content: error.message,
+                            duration: 8
+                        });
+                    }
+                };
+
 
                 if(wallet = Wallets.findOne({address: owner})) {
 
