@@ -33,7 +33,7 @@ ejson@1.0.7
 ethereum:accounts@0.3.9
 ethereum:blocks@0.3.1
 ethereum:dapp-styles@0.4.5
-ethereum:elements@0.6.4
+ethereum:elements@0.6.5
 ethereum:tools@0.2.96
 ethereum:web3@0.15.1
 fastclick@1.0.7
@@ -45,7 +45,7 @@ frozeman:persistent-minimongo2@0.3.4
 frozeman:reactive-timer@0.1.7
 frozeman:simple-modal@0.0.7
 frozeman:storage@0.1.9
-frozeman:template-var@1.2.2
+frozeman:template-var@1.2.3
 geojson-utils@1.0.4
 hot-code-push@1.0.0
 html-tools@1.0.5

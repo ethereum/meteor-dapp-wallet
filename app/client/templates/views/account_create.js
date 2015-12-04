@@ -267,12 +267,36 @@ Template['views_account_create'].events({
         }
     },
     /**
+    Check the owner that its not a contract wallet
+    
+    @event change input.owners, input input.owners
+    */
+    'change input.owners, input input.owners': function(e, template){
+        var address = TemplateVar.getFrom(e.currentTarget, 'value');
+        if(address) {
+            web3.eth.getCode(address, function(e, code){
+                if(!e && code.length > 2) {
+                    TemplateVar.set(template, 'contractAsOwner', true);
+
+                    GlobalNotification.warning({
+                        content: TAPi18n.__('wallet.newWallet.error.contractsCantBeOwners') +' '+ TAPi18n.__('wallet.newWallet.error.checkOwnerAddress', {address: address}),
+                        duration: 5
+                    });
+                } else {
+                    TemplateVar.set(template, 'contractAsOwner', false);
+                }
+            });
+
+        }
+    },
+    /**
     Select the current section, based on the radio inputs value.
 
     @event change input[type="radio"]
     */
     'change input[type="radio"]': function(e){
         TemplateVar.set('selectedSection', e.currentTarget.value);
+        TemplateVar.set('contractAsOwner', false);
     },
     /**
     Change the number of signatures
@@ -311,6 +335,15 @@ Template['views_account_create'].events({
     'submit': function(e, template){
         var code = walletStubABI; // walletStubABI 184 280 walletABI ~1 842 800
         var type = TemplateVar.get('selectedSection');
+
+
+        if(TemplateVar.get('contractAsOwner')) {
+            return GlobalNotification.warning({
+                content: TAPi18n.__('wallet.newWallet.error.contractsCantBeOwners'),
+                duration: 5
+            });
+        }
+
 
         // SIMPLE
         if(type === 'simple') {

@@ -180,7 +180,9 @@
             "error": {
                 "emptySignees": "You didn't provided all owners.",
                 "alreadyExists": "Wallet already exists.",
-                "stubHasNoOrigWalletAddress": "Your stub contract has no original wallet address set, please restart your wallet!"
+                "stubHasNoOrigWalletAddress": "Your stub contract has no original wallet address set, please restart your wallet!",
+                "contractsCantBeOwners": "Contracts can't be owners.",
+                "checkOwnerAddress": "Please change the contract address __address__ to an account."
             }
         },
         "send": {
