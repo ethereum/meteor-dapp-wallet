@@ -48,6 +48,7 @@ Template['elements_executeContract'].helpers({
             if(func.type == 'function') {
                 func.contractInstance = contractInstance;
 
+                func.displayName = func.name.replace(/([A-Z])/g, ' $1');
                 func.inputs = _.map(func.inputs, Helpers.createTemplateDataFromInput);
 
                 if(func.constant){

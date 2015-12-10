@@ -685,13 +685,32 @@ body {
         margin-right: @defaultMargin/2;
     }
 
+    h4 {
+        text-transform: lowercase;
+    }
+
+    select {
+        text-transform: capitalize;
+    }
+
+    h4 .lower {
+        opacity: 0.25;
+    }
+
+    h4::first-letter, select::first-letter {
+        text-transform: uppercase;
+    }
+
     .contract-info {
         
         h3 {
             color: @colorGrayDark;
-            text-transform: none;
+            text-transform: lowercase;
             font-weight: 300;
             font-size: 1.2em;
+        }
+        h3::first-letter {
+            text-transform: uppercase;
         }
         input,
         .dapp-address-input {
