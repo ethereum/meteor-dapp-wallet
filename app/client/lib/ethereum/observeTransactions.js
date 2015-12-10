@@ -60,7 +60,7 @@ addTransaction = function(log, from, to, value){
         if(!err) {
 
             web3.eth.getTransaction(log.transactionHash, function(err, transaction) {
-                if(!err) {
+                if(!err && transaction) {
                     web3.eth.getTransactionReceipt(log.transactionHash, function(err, receipt){
 
                         delete transaction.hash;
