@@ -247,7 +247,10 @@ Helpers.createTemplateDataFromInput = function (input){
     input.typeShort = input.type.match(/[a-z]+/i);
     input.typeShort = input.typeShort[0];
     input.bits = input.type.replace(input.typeShort, '');
-    
+    input.displayName = input.name
+        .replace(/([A-Z])/g, ' $1')
+        .replace(/([\-\_])/g, '&thinsp;<span class="lower">$1</span>&thinsp;');
+        
     if(input.type.indexOf('[') === -1 &&
        (input.typeShort === 'string' ||
         input.typeShort === 'uint' ||

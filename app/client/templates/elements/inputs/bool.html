@@ -1,6 +1,6 @@
 <template name="elements_input_bool">
     <h4>
-        {{#if name}}{{name}} <em>-</em> {{/if}}<em>Boolean</em>
+        {{#if name}}{{{displayName}}} <em>-</em> {{/if}}<em>Boolean</em>
     </h4>
     <input type="checkbox" id="input-bool-{{class}}-{{name}}" name="elements_input_bool" class="abi-input {{class}}">
     <label for="input-bool-{{class}}-{{name}}">{{i18n "wallet.contracts.buttons.yes"}}</label>
