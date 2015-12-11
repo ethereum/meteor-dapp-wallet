@@ -115,6 +115,7 @@ Template['elements_compileContract'].onRendered(function() {
 
                         // substring the type so that string32 and string16 wont need different templates
                         if(constructor) {
+                            
                             constructor.inputs = _.map(constructor.inputs, Helpers.createTemplateDataFromInput)
                         } else {
                             constructor = {
@@ -124,6 +125,7 @@ Template['elements_compileContract'].onRendered(function() {
 
                         return {
                             name: name,
+                            displayName: name.replace(/([A-Z])/g, ' $1'),
                             bytecode: contract.bytecode,
                             jsonInterface: jsonInterface,
                             constructorInputs: constructor.inputs
