@@ -5,6 +5,12 @@
             <a href="http://etherscan.io/tx/{{transactionHash}}" target="_blank" style="font-size: 0.4em;">{{transactionHash}}</a>
         </h1>
 
+        {{#if outOfGas}}
+        <h3 class="orange">
+            <i class="icon-shield"></i> {{i18n 'wallet.transactions.outOfGasDesc'}}
+        </h3>
+        {{/if}}
+
         <p>
             {{formatTime timestamp "LLLL"}}
             <br>

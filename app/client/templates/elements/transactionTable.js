@@ -146,6 +146,7 @@ Template['elements_transactions_row'].helpers({
             initiator = Helpers.getAccountByAddress(this.initiator), 
             sendData = this.data;
 
+        console.log('this',this);
 
         if(from)
             from = '<a href="/account/'+ from.address +'">'+ from.name +'</a>';
@@ -155,6 +156,8 @@ Template['elements_transactions_row'].helpers({
 
         if(this.type === 'pendingConfirmation')
             return new Spacebars.SafeString(TAPi18n.__('wallet.transactions.types.pendingConfirmations', {initiator: initiator, from: from}));
+        else if(this.outOfGas) 
+            return TAPi18n.__('wallet.transactions.types.outOfGas');
         else if(this.tokenId && Tokens.findOne(this.tokenId))
             return TAPi18n.__('wallet.transactions.types.tokenTransfer', {token: Tokens.findOne(this.tokenId).name});
         else if(sendData && to)
