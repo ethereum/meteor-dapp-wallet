@@ -249,7 +249,7 @@ Helpers.createTemplateDataFromInput = function (input){
     input.bits = input.type.replace(input.typeShort, '');
     input.displayName = input.name
         .replace(/([A-Z])/g, ' $1')
-        .replace(/([\-\_])/g, '&thinsp;<span class="lower">$1</span>&thinsp;');
+        .replace(/([\-\_])/g, '&thinsp;<span class="punctuation">$1</span>&thinsp;');
         
     if(input.type.indexOf('[') === -1 &&
        (input.typeShort === 'string' ||

@@ -485,11 +485,20 @@ body {
                 margin-bottom: @defaultMargin*2;
             }
             h4 {
+                text-transform: lowercase;
+
+                &::first-letter {
+                    text-transform: uppercase;
+                }
+
                 em {
                     font-style: normal;
                     font-weight: normal;
                     .opacity(0.6);
-                    // font-size: 0.8em;
+                }
+
+                .punctuation {
+                    opacity: 0.25;
                 }
             }
 
@@ -685,7 +694,7 @@ body {
         margin-right: @defaultMargin/2;
     }
 
-    h4 {
+    h4, dt {
         text-transform: lowercase;
     }
 
@@ -693,11 +702,11 @@ body {
         text-transform: capitalize;
     }
 
-    h4 .lower {
+    h4 .punctuation {
         opacity: 0.25;
     }
 
-    h4::first-letter, select::first-letter {
+    h4::first-letter, select::first-letter, dt::first-letter {
         text-transform: uppercase;
     }
 
@@ -728,6 +737,12 @@ body {
             overflow: auto;
             max-height: 120px;
             font-weight: 400;
+
+            em {
+                display: inline-block;
+                color: @colorGray;
+                padding-left: @gridWidth / 2;
+            }
         }
         
         table {

@@ -105,6 +105,7 @@
             "filter": "Filter transactions",
             "noneFound": "No matching transaction found.",
             "noOwnerAccount": "Watch only confirmation",
+            "outOfGasDesc": "The transaction didn't have enough gas to execute",
             "buttons": {
                 "approve": "Approve",
                 "approved": "Approved",
@@ -119,6 +120,7 @@
                 "betweenWallets": "Transfer between wallets",
                 "sent": "Sent",
                 "received": "Received",
+                "outOfGas": "Transaction not executed",
                 "createdContract": {
                     "title": "Created contract",
                     "at": "Created contract at"

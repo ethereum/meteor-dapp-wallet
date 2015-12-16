@@ -139,25 +139,29 @@ Template['elements_executeContract_constant'].onCreated(function(){
         args.push(function(e, r) {
             if(!e) {
                 var outputs = [];
-
                 // single return value
                 if(template.data.outputs.length === 1) {
                     template.data.outputs[0].value = r;
+                    template.data.outputs[0].displayName = template.data.outputs[0].name.replace(/([A-Z])/g, ' $1');
+
                     outputs.push(template.data.outputs[0]);
 
                 // multiple return values
                 } else {
                     outputs = _.map(template.data.outputs, function(output, i) {
                         output.value = r[i];
+                        output.displayName = output.name.replace(/([A-Z])/g, ' $1');
+
                         return output;
                     });
                 }
 
                 TemplateVar.set(template, 'outputs', outputs);
-            }
+            } 
         });
 
         template.data.contractInstance[template.data.name].apply(null, args);
+
     });
 });
 
@@ -169,6 +173,19 @@ Template['elements_executeContract_constant'].helpers({
     */
     'value': function() {
         return _.isArray(this.value) ? formatOutput(this.value) : [formatOutput(this.value)];
+    },
+    /**
+    Figures out extra data
+
+    @method (extra)
+    */
+    'extra': function() {
+        var data = formatOutput(this); // 1000000000
+
+        if (data > 1400000000 && data < 1800000000 && Math.floor(data/1000) != data/1000) {
+            return '(' + moment(data*1000).fromNow() + ')';
+        }
+        return;
     }
 });
 
