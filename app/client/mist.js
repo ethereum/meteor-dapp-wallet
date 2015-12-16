@@ -30,7 +30,7 @@ updateMistMenu = function(){
 
         _.each(accounts, function(account, index){
             mist.menu.add(account._id,{
-                position: 2 + index,
+                position: 3 + index,
                 name: account.name,
                 badge: EthTools.formatBalance(account.balance, "0 a", 'ether')+ ' ETH',
                 selected: (location.pathname === '/account/'+ account.address)
