@@ -52,7 +52,9 @@ Template['elements_executeContract'].helpers({
                 func.inputs = _.map(func.inputs, Helpers.createTemplateDataFromInput);
 
                 if(func.constant){
-                    // if it's a constant                        
+                    // if it's a constant   
+                    func.displayName = func.displayName.replace(/([\_])/g, '<span class="punctuation">$1</span>');
+                     
                     contractConstants.push(func);                    
                 } else {
                     //if its a variable
@@ -150,7 +152,10 @@ Template['elements_executeContract_constant'].onCreated(function(){
                 } else {
                     outputs = _.map(template.data.outputs, function(output, i) {
                         output.value = r[i];
-                        output.displayName = output.name.replace(/([A-Z])/g, ' $1');
+                        output.displayName = output.name
+                        .replace(/([A-Z])/g, ' $1')        
+                        .replace(/([\-\_])/g, '<span class="punctuation">$1</span>');
+;
 
                         return output;
                     });
@@ -253,6 +258,7 @@ Template['elements_executeContract_function'].events({
     */
     'change .abi-input, input .abi-input': function(e, template) {
         var inputs = Helpers.addInputValue(template.data.inputs, this, e.currentTarget);
+        console.log('inputs: ', inputs)
         
         TemplateVar.set('executeData', template.data.contractInstance[template.data.name].getData.apply(null, inputs));
     },

@@ -103,6 +103,7 @@ Template['views_account'].events({
             text: new Spacebars.SafeString(TAPi18n.__('wallet.accounts.modal.deleteText') + 
                 '<br><input type="text" class="deletionConfirmation" autofocus="true">'),
             ok: function(){
+                console.log('data: ', data);
                 if(data.name === $('input.deletionConfirmation').val()) {
                     Wallets.remove(data._id);
                     CustomContracts.remove(data._id);
