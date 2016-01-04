@@ -64,7 +64,7 @@
                 </tr>
                 <tr>
                     <td>{{i18n "wallet.transactions.gasPrice"}}</td>
-                    <td>{{dapp_formatBalance gasPrice "0,0.0[00000000000000000] UNIT"}}</td>
+                    <td>{{dapp_formatBalance gasPricePerMillion "0,0.0[000] UNIT"}} {{i18n "wallet.transactions.perMillionGas"}}</td>
                 </tr>
                 {{#if blockHash}}
                     <tr>

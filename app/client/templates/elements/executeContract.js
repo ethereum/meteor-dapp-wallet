@@ -83,6 +83,8 @@ Template['elements_executeContract'].events({
         TemplateVar.set('selectedFunction', _.find(TemplateVar.get('contractFunctions'), function(contract){
             return contract.name === e.currentTarget.value;
         }));
+
+        $('.abi-input').trigger('change');
     },
     /**
     Click the show hide button
@@ -115,7 +117,7 @@ var formatOutput = function(val) {
 
         // stringify boolean
         if(_.isBoolean(val))
-            val = val ? 'TRUE' : 'FALSE';
+            val = val ? 'YES' : 'NO';
 
         // convert bignumber objects
         val = (_.isObject(val) && val.toString)
@@ -186,9 +188,16 @@ Template['elements_executeContract_constant'].helpers({
     */
     'extra': function() {
         var data = formatOutput(this); // 1000000000
+        console.log('data', data);
 
         if (data > 1400000000 && data < 1800000000 && Math.floor(data/1000) != data/1000) {
             return '(' + moment(data*1000).fromNow() + ')';
+        }
+
+        if (data == 'YES') {
+            return '<span class="icon icon-check"></span>';
+        } else if (data == 'NO') {
+            return '<span class="icon icon-ban"></span>'
         }
         return;
     }
@@ -259,7 +268,7 @@ Template['elements_executeContract_function'].events({
     'change .abi-input, input .abi-input': function(e, template) {
         var inputs = Helpers.addInputValue(template.data.inputs, this, e.currentTarget);
         console.log('inputs: ', inputs)
-        
+    
         TemplateVar.set('executeData', template.data.contractInstance[template.data.name].getData.apply(null, inputs));
     },
     /**

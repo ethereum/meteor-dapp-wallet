@@ -10,7 +10,7 @@ addTransactionAfterSend = function(txHash, amount, from, to, gasPrice, estimated
         txId = Helpers.makeId('tx', txHash);
 
     if(_.isObject(data)) {
-        contractName = data.contract.name;
+        contractName = data.contract.name.replace(/([A-Z])/g, ' $1');
         jsonInterface = data.contract.jsonInterface;
         data = data.data;
     }
@@ -197,6 +197,13 @@ var updateTransaction = function(newDocument, transaction, receipt){
         newDocument.gasUsed = receipt.gasUsed;
         newDocument.outOfGas = receipt.gasUsed === transaction.gas;
         newDocument.fee = transaction.gasPrice.times(new BigNumber(receipt.gasUsed)).toString(10);
+
+        if (newDocument.outOfGas){
+            GlobalNotification.error({
+               content: "A recent transaction ran out of gas and wasn't executed",
+               duration: 4
+            }); 
+        }
     }
 
     if(oldTx) {

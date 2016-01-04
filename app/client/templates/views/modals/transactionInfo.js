@@ -43,6 +43,15 @@ Template['views_modals_transactionInfo'].helpers({
         var token = Tokens.findOne(this.tokenId);
 
         return (token) ? Helpers.formatNumberByDecimals(this.value, token.decimals) +' '+ token.symbol : this.value;
+    },
+    /**
+    Gas Price per million
+
+    @method (gasPricePerMillion)
+    */
+    'gasPricePerMillion': function() {
+
+        return this.gasPrice * 1000000;
     }
 });
 
