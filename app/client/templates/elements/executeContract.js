@@ -84,7 +84,9 @@ Template['elements_executeContract'].events({
             return contract.name === e.currentTarget.value;
         }));
 
-        $('.abi-input').trigger('change');
+        Tracker.afterFlush(function(){
+            $('.abi-input').trigger('change');
+        });
     },
     /**
     Click the show hide button
@@ -230,11 +232,6 @@ The contract function template
 Template['elements_executeContract_function'].onCreated(function(){
     var template = this;
 
-    // get the function call data, if it has no parameters
-    if(template.data.inputs.length === 0)
-        TemplateVar.set('executeData', template.data.contractInstance[template.data.name].getData());
-
-
     // change the amount when the currency unit is changed
     template.autorun(function(c){
         var unit = EthTools.getUnit();
@@ -248,6 +245,13 @@ Template['elements_executeContract_function'].onCreated(function(){
 Template['elements_executeContract_function'].onRendered(function(){
     // Run all inputs through formatter to catch bools
     this.$('.abi-input').trigger('change');
+});
+
+Template['elements_executeContract_function'].helpers({
+    'reactiveDataContext': function(){
+        if(this.inputs.length === 0)
+            TemplateVar.set('executeData', this.contractInstance[this.name].getData());
+    }
 });
 
 Template['elements_executeContract_function'].events({

@@ -95,6 +95,8 @@
 
 
 <template name="elements_executeContract_function">
+    {{reactiveDataContext}}
+
     {{#each inputs}}
         {{> Template.dynamic template=template}}
     {{/each}}
