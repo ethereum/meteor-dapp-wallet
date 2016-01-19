@@ -1,0 +1,33 @@
+{
+    "app": {
+        "loading": "Incarcare...",
+        "offline": "Nu ma pot conecta la retea. Esti legat la internet?",
+        "logginIn": "Logare in curs..."
+    },
+    "error": {
+        "insufficientRights": "Nu ai destule drepturi pentru aceasta actiune."
+    },
+    "buttons": {
+        "ok": "OK",
+        "cancel": "Anuleaza",
+        "save": "Salveaza",
+        "edit": "editeaza",
+        "send": "Trimite",
+        "sending": "Se trimite...",
+        "create": "Creeaza",
+        "select": "Selecteaza",
+        "tryToReconnect": "Incearca sa te reconectezi"
+    },
+    "commonWords": {
+        "you": "Tu",
+        "send": "trimite",
+        "or": "sau",
+        "of": "din",
+        "with": "cu",
+        "and": "si",
+        "on": "pe",
+        "per": "per",
+        "total":"total",
+        "at": "la"
+    }
+}
