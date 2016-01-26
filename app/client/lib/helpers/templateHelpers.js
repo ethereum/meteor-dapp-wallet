@@ -127,3 +127,16 @@ Formats a timestamp to any format given.
 **/
 Template.registerHelper('formatTime', Helpers.formatTime);
 
+
+/**
+Formats a given transactions balance
+
+    {{formatTransactionBalance value exchangeRates "ether"}}
+
+@method formatTransactionBalance
+@param {String} value  the value to format
+@param {Object} exchangeRates  the exchange rates to use
+@param {String} unit  the unit to format to
+@return {String} The formated value
+**/
+Template.registerHelper('formatTransactionBalance', Helpers.formatTransactionBalance);

@@ -89,7 +89,7 @@
                     {{#if tokenId}}
                         {{tokenValue}}
                     {{else}}
-                        {{dapp_formatBalance value '0,0.00[000000] UNIT'}}
+                        {{formatTransactionBalance value exchangeRates}}
                     {{/if}}
                 </td>
                 <td>
@@ -100,7 +100,7 @@
                     {{#if tokenId}}
                         -{{tokenValue}}
                     {{else}}
-                        -{{dapp_formatBalance value '0,0.00[000000] UNIT'}}
+                        -{{formatTransactionBalance value exchangeRates}}
                     {{/if}}
                 </td>
                 <td>

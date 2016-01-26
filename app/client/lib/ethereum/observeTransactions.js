@@ -373,6 +373,35 @@ observeTransactions = function(){
             if(!newDocument.confirmed) {
                 checkTransactionConfirmations(newDocument);
             }
+
+            // add price data
+            if(!newDocument.exchangeRates) {
+                HTTP.get('https://www.cryptocompare.com/api/data/pricehistorical?fsym=ETH&tsyms=BTC,USD,EUR&ts='+ newDocument.timestamp, function(e, res){
+
+                    if(!e && res && res.statusCode === 200) {
+                        var content = JSON.parse(res.content);
+
+                        if(content && content.Response === 'Success' && content.Data){
+                            _.each(content.Data, function(item){
+                                var name = item.Symbol.toLowerCase();
+
+                                if(_.isFinite(item.Price)) {
+                                    var set = {};
+                                    set['exchangeRates.'+ name] = {
+                                        price: String(item.Price),
+                                        timestamp: item.PriceTS
+                                    };
+
+                                    Transactions.update(newDocument._id, {$set: set});
+                                }
+
+                            });
+                        }
+                    } else {
+                        console.warn('Can not connect to https://www.cryptocompare.com/api to get price ticker data, please check your internet connection.');
+                    }
+                });
+            }
         },
         /**
         Will check if the transaction is confirmed 

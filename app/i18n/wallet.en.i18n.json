@@ -215,7 +215,7 @@
             },
             "texts": {
                 "sendAmount": "You want to send <strong>__amount__</strong>.",
-                "sendAmountEquivalent": "You want to send <strong>__amount__</strong> in ether, using the <a href=\"https://kraken.com\" target=\"_blank\">kraken.com</a> exchange rate.<br>Which is currently an equivalent of <strong>__etherAmount__</strong>.",
+                "sendAmountEquivalent": "You want to send <strong>__amount__</strong> in ether, using exchange rates from <a href=\"https://cryptocompare.com\" target=\"_blank\">cryptocompare.com</a>.<br>Which is currently an equivalent of <strong>__etherAmount__</strong>.",
                 "sendToken": "You want to send <strong>__amount__ __symbol__</strong> of <strong> __name__</strong>.",
                 "overDailyLimit": "<p class=\"over-daily\">This amount is over the remaining daily limit of __limit__ (of __total__ per day), so you need __count__ other account to confirm.</p>",
                 "overDailyLimit_plural": "<p class=\"over-daily\">This amount is over the remaining daily limit of __limit__ (of __total__ per day), so you need __count__ other accounts to confirm.</p>",
