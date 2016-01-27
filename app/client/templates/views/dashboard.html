@@ -12,26 +12,6 @@
 
         {{#if hasAccounts}}
         
-            <h2>{{i18n "wallet.accounts.walletsTitle"}}</h2>
-             <p>
-                {{i18n "wallet.accounts.walletsDescription"}}             
-            </p>
-
-            {{#each wallets}}
-                {{> elements_account account=_id wallets=true}}
-            {{/each}}
-            {{#each (wallets true)}}
-                {{> elements_account account=_id wallets=true}}
-            {{/each}}
-
-            <a href="{{pathFor route='createAccount'}}" class="wallet-box create">
-                <div class="account-pattern">
-                    +
-                </div>
-                <h3>{{i18n "wallet.app.buttons.addWallet"}}</h3>
-            </a>
-
-            
             <h2>{{i18n "wallet.accounts.accountsTitle"}}</h2>
             <p>
                 {{i18n "wallet.accounts.accountsDescription"}}
@@ -52,11 +32,27 @@
                 </button>
             {{/if}}
 
+
+            <h2>{{i18n "wallet.accounts.walletsTitle"}}</h2>
+             <p>
+                {{i18n "wallet.accounts.walletsDescription"}}             
+            </p>
+
+            {{#each wallets}}
+                {{> elements_account account=_id wallets=true}}
+            {{/each}}
+            {{#each (wallets true)}}
+                {{> elements_account account=_id wallets=true}}
+            {{/each}}
+
+            <a href="{{pathFor route='createAccount'}}" class="wallet-box create">
+                <div class="account-pattern">
+                    +
+                </div>
+                <h3>{{i18n "wallet.app.buttons.addWallet"}}</h3>
+            </a>
+
         {{else}}
-            <div class="col col-5 mobile-full ">
-                <h3>{{i18n "wallet.app.texts.noAccounts.title"}}</h3>
-                <p>{{i18n "wallet.app.texts.noAccounts.text"}}</p>
-            </div>
             <div class="col col-5 mobile-full ">
                 <br>
                 {{#if isMist}}
@@ -67,6 +63,10 @@
                         <h3>{{i18n "wallet.app.buttons.addAccount"}}</h3>
                     </button>
                 {{/if}}
+            </div>
+            <div class="col col-5 mobile-full ">
+                <h3>{{i18n "wallet.app.texts.noAccounts.title"}}</h3>
+                <p>{{i18n "wallet.app.texts.noAccounts.text"}}</p>
             </div>
         {{/if}}
 
