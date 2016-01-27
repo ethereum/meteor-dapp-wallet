@@ -85,5 +85,5 @@ Template['views_dashboard'].events({
                 }});
             }
         });
-    },
+    }
 });

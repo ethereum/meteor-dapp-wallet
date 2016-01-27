@@ -8,12 +8,12 @@
     "wallet": {
         "app": {
             "buttons": {
-                "wallet": "Wallets",
+                "wallet": "Accounts",
                 "send": "Send",
                 "deploy": "Deploy",
                 "tokens": "Tokens",
                 "receive": "Receive",
-                "addWallet": "Add Wallet",
+                "addWallet": "Add Smart Account",
                 "addAccount": "Add Account",
                 "addToken": "Watch Token"
             },
@@ -29,11 +29,11 @@
                 "peers": "peers",
                 "noAccounts": {
                     "title": "You have no accounts yet",
-                    "text": "Before using the Wallet you need to create at least one account with a strong password."
+                    "text": "You need to create at least one account with a strong password."
                 }
             },
             "error": {
-                "wrongChain": "You seem on a different chain, please restart the wallet!"
+                "wrongChain": "You seem on a different chain, please restart the Ethereum Wallet App!"
             }
         },
         "modals": {
@@ -41,8 +41,8 @@
                 "title": "Select an account"
             },
             "testnetWallet": {
-                "walletNeedsDeployment": "You seem to be on a testnet.<br><br>There is no original wallet found, we need to deploy a wallet, which can be used by the wallet stub contracts, from your address: <br><br><small><code>__account__</code></small><br><br><em>Please make sure this address has at least 1 ether!</em>",
-                "testnetWalletDeployed": "Original wallet deployed!<br>An original wallet was deployed on the address:<br><br><small><code>__address__</code></small>."
+                "walletNeedsDeployment": "You seem to be on a testnet.<br><br>There is no original smart account code found, we need to deploy one, which can be used by the smart account stub contracts, from your address: <br><br><small><code>__account__</code></small><br><br><em>Please make sure this address has at least 1 ether!</em>",
+                "testnetWalletDeployed": "Original smart account contract deployed!<br>An original smart account contract was deployed on the address:<br><br><small><code>__address__</code></small>."
             },
             "addToken": {
                 "title": "Add token",
@@ -59,21 +59,21 @@
             }
         },
         "accounts": {
-            "title": "<strong>Wallet</strong> Overview",
-            "walletsTitle": "Contract based wallets",
+            "title": "<strong>Accounts</strong> Overview",
+            "walletsTitle": "Smart Account",
             "accountsTitle": "Accounts",
             "defaultName": "Unnamed",
             "creating": "Creating",
             "importing": "Importing",
-            "accountNote": "Accounts can't list incoming transactions, please <a href=\"/account/new\">create a wallet</a> to store ether.",
+            "accountNote": "Simple accounts can't list incoming transactions, please <a href=\"/account/new\">create a smart account</a> to store ether.",
             "addressCopiedToClipboard": "Copied to clipboard",
             "qrCodeLabel": "Point a compatible mobile app to this code",
             "dailyLimit": "Daily limit",
             "dailyLimitRemaining": "remaining today",
             "requiredSignatures": "Required signatures",
             "owners": "Owners",
-            "walletsDescription": "Wallets are contracts that hold and secure ether. They can have multiple accounts as owners and keep a full log of all transactions.",
-            "accountsDescription": "Accounts are password protected keys that control contracts.",
+            "walletsDescription": "Smart accounts are contract-based accounts: they live on the blockchain, can hold ether and tokens, can be owned by multiple accounts and keep a full log of all transactions.",
+            "accountsDescription": "Accounts are used to execute contracts, they live on your local machine and can hold ether or any ethereum based token.",
             "buttons": {
                 "deposit": "Deposit",
                 "copyAddress": "Copy address",
@@ -81,8 +81,8 @@
                 "showInterface": "Show Interface"
             },
             "modal": {
-                "deleteText": "Do you really want to delete the wallet?<br>If you lose the wallet address, you will lose the funds on it!<br><br>Type the name of the wallet to confirm the deletion.",
-                "backupWallet": "<h1>Backup your wallet!</h1>Make sure to write down the address so you can import it again, if needed.<br><pre style=\"font-size: 0.75em;\">__address__</pre>"
+                "deleteText": "Do you really want to delete this smart account? The account will still exist on the blockchain but <br>if you delete the address, you will not be able to find and will lose access to the funds deposited<br><br> Type the name of the smart account to confirm the deletion.",
+                "backupWallet": "<h1>Backup your smart account address!</h1>Make sure to write down the address so you can import it again, if needed.<br><pre style=\"font-size: 0.75em;\">__address__</pre>"
             }
         },
         "transactions": {
@@ -118,7 +118,7 @@
             },
             "types": {
                 "executeContract": "Contract Execution",
-                "betweenWallets": "Transfer between wallets",
+                "betweenWallets": "Transfer between accounts",
                 "sent": "Sent",
                 "received": "Received",
                 "outOfGas": "Transaction not executed",
@@ -150,40 +150,40 @@
             }
         },
         "newWallet": {
-            "title": "New <strong>Wallet</strong>",
-            "accountName": "Wallet name",
+            "title": "New <strong>smart account</strong>",
+            "accountName": "Smart account name",
             "selectOwner": "Select owner",
             "accountType": {
-                "title": "Wallet type",
+                "title": "Smart account type",
                 "simple": {
-                    "title": "Simple Wallet",
-                    "description": "A simple wallet without additional security measures.",
+                    "title": "Single owner account",
+                    "description": "A simple contract without additional security measures.",
                     "warning": "Note: If your owner account is compromised your wallet has no protection."
                 },
                 "multisig": {
-                    "title": "Multisignature Wallet",
-                    "description": "A wallet controlled by multiple accounts",
-                    "text1": "This is a joint wallet controlled by",
+                    "title": "Multisignature smart account",
+                    "description": "A contract controlled by multiple accounts",
+                    "text1": "This is a joint account controlled by",
                     "text2": "owners. You can send up to",
                     "text3": "ether per day.",
                     "text4": "Any transaction over that daily limit requires the confirmation of",
                     "text5": "owners.",
-                    "accountOwnersTitle": "Wallet owners",
+                    "accountOwnersTitle": "Account owners",
                     "ownerAddress": "Owner address"
                 },
                 "import": {
                     "title": "Import wallet",
                     "description": "Import an existing (multisignature) wallet.",
                     "walletAddress": "Wallet address",
-                    "youreOwner": "Your \"__account__\" account is an owner of the wallet.",
-                    "watchOnly": "You don't own the wallet, but you can add it as a \"WATCH ONLY\" wallet.",
-                    "notWallet": "This address has no wallet contract."
+                    "youreOwner": "Your \"__account__\" account is an owner of this smart account.",
+                    "watchOnly": "You don't own the account, but you can add it as a \"WATCH ONLY\" account.",
+                    "notWallet": "This address has no smart account contract."
                 }
             },
             "error": {
                 "emptySignees": "You didn't provided all owners.",
-                "alreadyExists": "Wallet already exists.",
-                "stubHasNoOrigWalletAddress": "Your stub contract has no original wallet address set, please restart your wallet!",
+                "alreadyExists": "Account already exists.",
+                "stubHasNoOrigWalletAddress": "Your stub contract has no original account address set, please restart your App!",
                 "contractsCantBeOwners": "Contracts can't be owners.",
                 "checkOwnerAddress": "Please change the contract address __address__ to an account."
             }
@@ -208,8 +208,8 @@
             "createContract": "Create contract",
             "provideGas": "Provide gas",
             "error": {
-                "emptyWallet": "The wallet you want to send from is empty.",
-                "notEnoughFunds": "You don't have enough funds in the wallet.",
+                "emptyWallet": "The account you want to send from is empty.",
+                "notEnoughFunds": "You don't have enough funds in the account.",
                 "noReceiver": "You didn't specify a receiver.",
                 "noAmount": "You didn't specify an amount to send."
             },
@@ -240,7 +240,7 @@
             "title": "Custom <strong>Tokens</strong>",
             "subTitle": "Added tokens",
             "admin": "__name__ (admin page)",
-            "description": "Tokens are currencies and other fungibles built on the Ethereum platform. In order for wallets and accounts to watch for tokens and send them, you have to add their address to this list. You can create your own token by simply modifiying <a href=\"http://chriseth.github.io/browser-solidity/?gist=20c8b5658349b003b08d\" target=\"_blank\">this example of a custom token contract</a> or learning more on <a href=\"https://github.com/ethereum/wiki/wiki/Standardized_Contract_APIs#token\" target=\"_blank\">Custom Token standard</a>.",
+            "description": "Tokens are currencies and other fungibles built on the Ethereum platform. In order for accounts to watch for tokens and send them, you have to add their address to this list. You can create your own token by simply modifiying <a href=\"http://chriseth.github.io/browser-solidity/?gist=20c8b5658349b003b08d\" target=\"_blank\">this example of a custom token contract</a> or learning more on <a href=\"https://github.com/ethereum/wiki/wiki/Standardized_Contract_APIs#token\" target=\"_blank\">Custom Token standard</a>.",
             "deleteToken": "Do you want to remove the token <strong>__token__</strong> from your list?",
             "addedToken": "Added __token__ to your watch list",
             "editedToken": "Edited token __token__",

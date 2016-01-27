@@ -11,7 +11,7 @@ addTransactionAfterSend = function(txHash, amount, from, to, gasPrice, estimated
 
     if(_.isObject(data)) {
         contractName = data.contract.name.replace(/([A-Z])/g, ' $1');
-        jsonInterface = data.contract.jsonInterface;
+        jsonInterface = data.contract.jsonInterface.replace(/\r?\n|\r/g, '');
         data = data.data;
     }
 
