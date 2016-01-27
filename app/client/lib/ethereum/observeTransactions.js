@@ -375,7 +375,10 @@ observeTransactions = function(){
             }
 
             // add price data
-            if(!newDocument.exchangeRates) {
+            if(!newDocument.exchangeRates || 
+               !newDocument.exchangeRates.btc ||
+               !newDocument.exchangeRates.usd ||
+               !newDocument.exchangeRates.eur) {
                 HTTP.get('https://www.cryptocompare.com/api/data/pricehistorical?fsym=ETH&tsyms=BTC,USD,EUR&ts='+ newDocument.timestamp, function(e, res){
 
                     if(!e && res && res.statusCode === 200) {
@@ -383,9 +386,8 @@ observeTransactions = function(){
 
                         if(content && content.Response === 'Success' && content.Data){
                             _.each(content.Data, function(item){
-                                var name = item.Symbol.toLowerCase();
-
-                                if(_.isFinite(item.Price)) {
+                                if(item && _.isFinite(item.Price)) {
+                                    var name = item.Symbol.toLowerCase();
                                     var set = {};
                                     set['exchangeRates.'+ name] = {
                                         price: String(item.Price),

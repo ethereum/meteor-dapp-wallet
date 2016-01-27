@@ -32,7 +32,7 @@
                             {{#if $neq unit 'ether'}}
                                 <br>
                                 <small>
-                                    ({{formatTransactionBalance value exchangeRates "ether"}})
+                                    ({{dapp_formatBalance value "0,0.00[000000] UNIT" "ether"}})
                                 </small>
                             {{/if}}
                         {{/if}}
