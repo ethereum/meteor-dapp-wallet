@@ -13,7 +13,7 @@
                 "deploy": "Deploy",
                 "tokens": "Tokens",
                 "receive": "Receive",
-                "addWallet": "Add Smart Account",
+                "addWallet": "Add wallet contract",
                 "addAccount": "Add Account",
                 "addToken": "Watch Token"
             },
@@ -41,8 +41,8 @@
                 "title": "Select an account"
             },
             "testnetWallet": {
-                "walletNeedsDeployment": "You seem to be on a testnet.<br><br>There is no original smart account code found, we need to deploy one, which can be used by the smart account stub contracts, from your address: <br><br><small><code>__account__</code></small><br><br><em>Please make sure this address has at least 1 ether!</em>",
-                "testnetWalletDeployed": "Original smart account contract deployed!<br>An original smart account contract was deployed on the address:<br><br><small><code>__address__</code></small>."
+                "walletNeedsDeployment": "You seem to be on a testnet.<br><br>There is no original wallet contract code found, we need to deploy one, which can be used by the wallet contract stub contracts, from your address: <br><br><small><code>__account__</code></small><br><br><em>Please make sure this address has at least 1 ether!</em>",
+                "testnetWalletDeployed": "Original wallet contract deployed!<br>An original wallet contract was deployed on the address:<br><br><small><code>__address__</code></small>."
             },
             "addToken": {
                 "title": "Add token",
@@ -65,7 +65,7 @@
             "defaultName": "Unnamed",
             "creating": "Creating",
             "importing": "Importing",
-            "accountNote": "Simple accounts can't list incoming transactions, please <a href=\"/account/new\">create a smart account</a> to store ether.",
+            "accountNote": "Simple accounts can't list incoming transactions, please <a href=\"/account/new\">create a wallet contract</a> to store ether.",
             "addressCopiedToClipboard": "Copied to clipboard",
             "qrCodeLabel": "Point a compatible mobile app to this code",
             "dailyLimit": "Daily limit",
@@ -81,8 +81,8 @@
                 "showInterface": "Show Interface"
             },
             "modal": {
-                "deleteText": "Do you really want to delete this smart account? The account will still exist on the blockchain but <br>if you delete the address, you will not be able to find and will lose access to the funds deposited<br><br> Type the name of the smart account to confirm the deletion.",
-                "backupWallet": "<h1>Backup your smart account address!</h1>Make sure to write down the address so you can import it again, if needed.<br><pre style=\"font-size: 0.75em;\">__address__</pre>"
+                "deleteText": "Do you really want to delete this wallet contract? The account will still exist on the blockchain but <br>if you delete the address, you will not be able to find and will lose access to the funds deposited<br><br> Type the name of the wallet contract to confirm the deletion.",
+                "backupWallet": "<h1>Backup your wallet contract address!</h1>Make sure to write down the address so you can import it again, if needed.<br><pre style=\"font-size: 0.75em;\">__address__</pre>"
             }
         },
         "transactions": {
@@ -150,18 +150,18 @@
             }
         },
         "newWallet": {
-            "title": "New <strong>smart account</strong>",
-            "accountName": "Smart account name",
+            "title": "New <strong>wallet contract</strong>",
+            "accountName": "Wallet contract name",
             "selectOwner": "Select owner",
             "accountType": {
-                "title": "Smart account type",
+                "title": "Wallet contract type",
                 "simple": {
                     "title": "Single owner account",
                     "description": "A simple contract without additional security measures.",
                     "warning": "Note: If your owner account is compromised your wallet has no protection."
                 },
                 "multisig": {
-                    "title": "Multisignature smart account",
+                    "title": "Multisignature wallet contract",
                     "description": "A contract controlled by multiple accounts",
                     "text1": "This is a joint account controlled by",
                     "text2": "owners. You can send up to",
@@ -175,9 +175,9 @@
                     "title": "Import wallet",
                     "description": "Import an existing (multisignature) wallet.",
                     "walletAddress": "Wallet address",
-                    "youreOwner": "Your \"__account__\" account is an owner of this smart account.",
+                    "youreOwner": "Your \"__account__\" account is an owner of this wallet contract.",
                     "watchOnly": "You don't own the account, but you can add it as a \"WATCH ONLY\" account.",
-                    "notWallet": "This address has no smart account contract."
+                    "notWallet": "This address has no wallet contract."
                 }
             },
             "error": {
@@ -276,7 +276,7 @@
             },
             "error": {
                 "compile": "Could not compile source code.",
-                "noDataProvided": "You didn't provide any data",
+                "noDataProvided": "No Data found: select a contract from the 'select contract' menu",
                 "invalidAddress": "Contract not added, invalid address.",
                 "jsonInterfaceParseError": "Couldn't parse the JSON Interface."
             }
