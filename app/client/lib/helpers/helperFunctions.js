@@ -232,6 +232,34 @@ Helpers.formatTime = function(time, format) { //parameters
         return '';
 };
 
+/**
+Formats a given transactions balance
+
+    Helpers.formatTransactionBalance(tx)
+
+@method formatTransactionBalance
+@param {String} value  the value to format
+@param {Object} exchangeRates  the exchange rates to use
+@param {String} unit  the unit to format to
+@return {String} The formated value
+**/
+Helpers.formatTransactionBalance = function(value, exchangeRates, unit) {
+
+    // make sure not existing values are not Spacebars.kw
+    if(unit instanceof Spacebars.kw)
+        unit = null;
+
+    var unit = unit || EthTools.getUnit(),
+        format = '0,0.00[000000]';
+
+    if(unit !== 'ether' && exchangeRates && exchangeRates[unit]) {
+        var price = new BigNumber(String(web3.fromWei(value, 'ether')), 10).times(exchangeRates[unit].price);
+        return EthTools.formatNumber(price, format) + ' '+ unit.toUpperCase();
+    } else {
+        return EthTools.formatBalance(value, format, 'ether') + ' ETHER';
+    }
+};
+
 
 /**
 Formats an input and prepares it to be a template 

@@ -17,6 +17,7 @@ random
 ejson
 spacebars
 check
+http
 
 fastclick
 kadira:flow-router
