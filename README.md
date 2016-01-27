@@ -1,18 +1,9 @@
-# Wallet Ðapp
+# Mist Wallet Ðapp
 
-The ethereum wallet Ðapp.
+The Mist wallet for Ethereum.
 
 **NOTE** The wallet is not yet official released,
-can contain severe bugs and shouldn't be used to store any real value!
-
-## Gas usage statistics
-
-- Deploy original wallet: 1 230 162
-- Deploy wallet stub: 184 280
-- Simple Wallet transaction: 64 280
-- Multisig Wallet transaction below daily limit: 79 280
-- Multisig Wallet transaction above daily limit: 171 096
-- 1 Multisig confirmation: 48 363
+can contain severe bugs!
 
 
 ## Development
@@ -48,3 +39,13 @@ To make routing work properly you need to build it using:
 And start a local server which points with its document root into the `../build` folder,
 so that you can open the app using `http://localhost:80/`
 
+***
+
+## Gas usage statistics
+
+- Deploy original wallet: 1 230 162
+- Deploy wallet stub: 184 280
+- Simple Wallet transaction: 64 280
+- Multisig Wallet transaction below daily limit: 79 280
+- Multisig Wallet transaction above daily limit: 171 096
+- 1 Multisig confirmation: 48 363

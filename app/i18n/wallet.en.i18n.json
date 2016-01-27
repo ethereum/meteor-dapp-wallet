@@ -60,7 +60,7 @@
         },
         "accounts": {
             "title": "<strong>Wallet</strong> Overview",
-            "walletsTitle": "Contract based wallets",
+            "walletsTitle": "Wallet contracts",
             "accountsTitle": "Accounts",
             "defaultName": "Unnamed",
             "creating": "Creating",
@@ -72,8 +72,8 @@
             "dailyLimitRemaining": "remaining today",
             "requiredSignatures": "Required signatures",
             "owners": "Owners",
-            "walletsDescription": "Wallets are contracts that hold and secure ether. They can have multiple accounts as owners and keep a full log of all transactions.",
-            "accountsDescription": "Accounts are password protected keys that control contracts.",
+            "walletsDescription": "These are contracts that can hold and secure ether. They can have multiple accounts as owners and keep a full log of all transactions.",
+            "accountsDescription": "Accounts are password protected keys that control contracts. They can hold ether as well, but can't display incoming transactions.",
             "buttons": {
                 "deposit": "Deposit",
                 "copyAddress": "Copy address",
