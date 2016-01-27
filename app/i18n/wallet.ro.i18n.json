@@ -65,7 +65,7 @@
             "defaultName": "Portofel nou",
             "creating": "Se creeaza",
             "importing": "Se importa",
-            "accountNote": "Conturile nu pot lista tranzactii, te rog <a href=\"/account/new\">creeaza un portofel </a> pentru a stoca ether.",
+            "accountNote": "Conturile nu pot afisa jurnalul tranzactiilor dar pot stoca si trimite ether. Pentru a vedea jurnalul tranzactiilor <a href=\"/account/new\">implementeaza un portofel bazat pe contracte</a> pentru a stoca ether.",
             "addressCopiedToClipboard": "Copiaza adresa ta",
             "qrCodeLabel": "Scaneaza acest cod cu o aplicatie mobila compatibila",
             "dailyLimit": "Limita zilnica",
