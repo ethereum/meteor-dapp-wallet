@@ -72,8 +72,8 @@
             "dailyLimitRemaining": "ramasa azi",
             "requiredSignatures": "Semnaturi necesare",
             "owners": "Detinatori",
-            "walletsDescription": "Portofelele sunt contracte ce stocheaza si securizeaza ether. Acestea pot fi detinute de mai multe conturi si pot pastra jurnalul tuturor tranzactiilor.",
-            "accountsDescription": "Conturile sunt chei protejate de parola. Acestea controleaza contractele.",
+            "walletsDescription": "Acestea sunt contracte ce stocheaza si securizeaza ether. Ele pot avea mai multi detinatori si pot pastra intregul jurnal al tranzactiilor.",
+            "accountsDescription": "Conturile sunt chei securizate prin parola ce pot controla contractele. Conturile pot stoca ether dar nu pot lista jurnalul tranzactiilor.",
             "buttons": {
                 "deposit": "Depunere",
                 "copyAddress": "Copiaza adresa",
