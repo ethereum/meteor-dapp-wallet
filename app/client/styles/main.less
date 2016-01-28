@@ -131,6 +131,10 @@ body {
     .dapp-header {
         background-color: @colorOSBackgroundFocus;
         .background-image(linear-gradient(to top,  @colorOSBackgroundFocus 20%, lighten(@colorOSBackgroundFocus, 10%) 90%));
+
+        nav > ul {
+            margin-left: @gridWidth;
+        }
     }
 }
 
@@ -159,10 +163,6 @@ body {
                 display: none;
             }
         }
-    }
-
-    nav ul {
-        margin-left: @gridWidth;
     }
 
     nav ul a.active {

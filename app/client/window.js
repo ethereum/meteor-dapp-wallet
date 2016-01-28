@@ -9,11 +9,8 @@ $(window).on('focus', function(e){
 
 // add class to the header when scrolling
 $(window).on('scroll', function() {
-    var scrollPosition = $(window).scrollTop() 
-    if( scrollPosition > 150 ) {
-        $('.dapp-header').addClass('dapp-small');
-        $('.dapp-sticky-bar').addClass('sticky');
-    } else if( scrollPosition > 35 ) {
+    var scrollPosition = $(window).scrollTop();
+    if( scrollPosition > 48 ) {
         $('.dapp-header').addClass('dapp-small');
         $('.dapp-sticky-bar').removeClass('sticky');
     } else {
