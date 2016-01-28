@@ -15,12 +15,13 @@
 
 @colorLink: #02A8F3;
 
+@heightHeader: @gridWidth * 2.5;
 
 
 // Platform specifics
 // Mac OSX
-@colorOSBackgroundFocus: #D2D2D2;
-@colorOSBackgroundBlur: #F6F6F6;
+@colorOSBackgroundFocus: #d9d0d0;
+@colorOSBackgroundBlur: lighten(@colorOSBackgroundFocus, 10%);
 
 @colorWinBackgroundFocus: #F0F0F0;
 @colorWinBackgroundBlur: #F0F0F0;
@@ -117,10 +118,10 @@ body {
 // MAC
 .darwin {
     body {
-        background: @colorOSBackgroundFocus;
+        background: @colorOSBackgroundBlur;
 
         &.app-blur {
-            background: @colorOSBackgroundBlur;
+            background: lighten(@colorOSBackgroundBlur, 10%);
 
             .dapp-header {
                 background: @colorOSBackgroundBlur;
@@ -129,7 +130,7 @@ body {
     }
     .dapp-header {
         background-color: @colorOSBackgroundFocus;
-        .background-image(linear-gradient(to bottom,  @colorOSBackgroundFocus 50%, #ddd9d9 90%));
+        .background-image(linear-gradient(to top,  @colorOSBackgroundFocus 20%, lighten(@colorOSBackgroundFocus, 10%) 90%));
     }
 }
 
@@ -160,6 +161,9 @@ body {
         }
     }
 
+    nav ul {
+        margin-left: @gridWidth;
+    }
 
     nav ul a.active {
         color: @colorTextSecondary;
