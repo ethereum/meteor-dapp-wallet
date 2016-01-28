@@ -12,7 +12,7 @@ Template['views_modals_interface'].helpers({
     @method (jsonInterface)
     */
     'jsonInterface': function() {
-        return JSON.stringify(this.jsonInterface, null, 2);
+        return JSON.stringify(this.jsonInterface, null, 2).replace(/\s+/g,' ');
     }
 });
 

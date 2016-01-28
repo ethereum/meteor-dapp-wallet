@@ -2,7 +2,16 @@
     {{#with transaction}}
         <h1>
             {{i18n "wallet.transactions.transactionInfoTitle"}}
+            {{#if $eq ($.Session.get "network") "mainnet"}} 
             <a href="http://etherscan.io/tx/{{transactionHash}}" target="_blank" style="font-size: 0.4em;">{{transactionHash}}</a>
+            {{else}}
+                {{#if $eq ($.Session.get "network") "testnet"}}
+                    <a href="http://testnet.etherscan.io/tx/{{transactionHash}}" target="_blank" style="font-size: 0.4em;">{{transactionHash}}</a>
+                {{else}}
+                    {{transactionHash}}
+                {{/if}}
+            {{/if}}
+
         </h1>
 
         {{#if outOfGas}}
@@ -70,11 +79,25 @@
                     <tr>
                         <td>Block</td>
                         <td>
+                           {{#if $eq ($.Session.get "network") "mainnet"}} 
                             <a href="http://etherscan.io/block/{{blockHash}}" title="{{blockHash}}" target="_blank" class="dapp-shorten-text">
                                 {{blockNumber}}
                                 <br>
                                 {{blockHash.substr 0 40}}...
                             </a>
+                            {{else}}
+                                {{#if $eq ($.Session.get "network") "testnet"}}
+                                <a href="http://testnet.etherscan.io/block/{{blockHash}}" title="{{blockHash}}" target="_blank" class="dapp-shorten-text">
+                                    {{blockNumber}}
+                                    <br>
+                                    {{blockHash.substr 0 40}}...
+                                </a>
+                                {{else}}
+                                    {{blockNumber}}
+                                    <br>
+                                    {{blockHash.substr 0 40}}...
+                                {{/if}}
+                            {{/if}}
                         </td>
                     </tr>
                 {{/if}}

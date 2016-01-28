@@ -190,7 +190,7 @@ Template['elements_executeContract_constant'].helpers({
     */
     'extra': function() {
         var data = formatOutput(this); // 1000000000
-        console.log('data', data);
+        // console.log('data', data);
 
         if (data > 1400000000 && data < 1800000000 && Math.floor(data/1000) != data/1000) {
             return '(' + moment(data*1000).fromNow() + ')';
