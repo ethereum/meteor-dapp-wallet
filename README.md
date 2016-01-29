@@ -1,6 +1,6 @@
-# Mist Wallet Ðapp
+# Ξthereum Wallet Ðapp
 
-The Mist wallet for Ethereum.
+The Ξthereum wallet.
 
 **NOTE** The wallet is not yet official released,
 can contain severe bugs!

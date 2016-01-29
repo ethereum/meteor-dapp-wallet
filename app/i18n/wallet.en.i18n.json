@@ -76,7 +76,7 @@
             "accountsDescription": "Accounts are password protected keys that control contracts. They can hold ether as well, but can't display incoming transactions.",
             "buttons": {
                 "deposit": "Deposit Ether",
-                "depositBitcoin": "Deposit with Bitcoin",
+                "depositBitcoin": "Deposit using Bitcoin",
                 "copyAddress": "Copy address",
                 "scanQRCode": "Show QR-Code",
                 "showInterface": "Show Interface"
