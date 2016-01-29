@@ -75,7 +75,8 @@
             "walletsDescription": "These are contracts that can hold and secure ether. They can have multiple accounts as owners and keep a full log of all transactions.",
             "accountsDescription": "Accounts are password protected keys that control contracts. They can hold ether as well, but can't display incoming transactions.",
             "buttons": {
-                "deposit": "Deposit",
+                "deposit": "Deposit Ether",
+                "depositBitcoin": "Deposit with Bitcoin",
                 "copyAddress": "Copy address",
                 "scanQRCode": "Show QR-Code",
                 "showInterface": "Show Interface"

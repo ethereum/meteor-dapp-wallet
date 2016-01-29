@@ -76,6 +76,7 @@
             "accountsDescription": "Conturile sunt chei securizate prin parola ce pot controla contractele. Conturile pot stoca ether dar nu pot lista jurnalul tranzactiilor.",
             "buttons": {
                 "deposit": "Depunere",
+                "depositBitcoin": "Depunere Bitcoin",
                 "copyAddress": "Copiaza adresa",
                 "scanQRCode": "Arata QR-Code",
                 "showInterface": "Arata Interfata"
