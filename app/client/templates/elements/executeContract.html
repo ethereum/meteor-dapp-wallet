@@ -80,10 +80,11 @@
                 <dd class="output">
                     {{#each value}}
                         {{#if $eq ../type "address"}}
-                            {{> dapp_identicon identity=this class="dapp-tiny"}}
-                        {{/if}}
+                            {{> elements_account_link address=this}}
+                        {{else}}
                         {{this}}
                         <em> {{{extra}}} </em>
+                        {{/if}}
                         <br>
                     {{/each}}
                 </dd> 

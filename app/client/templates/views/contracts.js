@@ -39,7 +39,7 @@ var addCustomContract = function(e) {
         CustomContracts.upsert({address:address}, {$set: {
             address: address,
             name: name,
-            jsonInterface: jsonInterface.replace(/\r?\n|\r/g, '')
+            jsonInterface: jsonInterface
         }});
 
         console.log(address)

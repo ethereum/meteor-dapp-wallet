@@ -15,13 +15,10 @@
             </div>
 
             <div class="accounts-page-summary">
-
                 {{> dapp_identicon identity=address}}
-                
                 <header>
                     <h1>
                         <span class="edit-name">{{name}}</span> <i class="edit-icon icon-pencil"></i>
-
                         {{#if $or owners jsonInterface}}
                             <button class="dapp-icon-button delete icon-trash"></button>
                         {{/if}}
