@@ -27,23 +27,24 @@ Meteor.startup(function() {
             numeral.language(lang);
             EthTools.setLocale(lang);
         }
+
+        // If on the mainnet, this will add the unicorn token by default, only once.
+        if (!localStorage['dapp_hasUnicornToken'] && Session.get('network') === 'mainnet'){
+            localStorage.setItem('dapp_hasUnicornToken', true);
+
+            var unicornToken = '0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7';
+            tokenId = Helpers.makeId('token', unicornToken);
+            Tokens.upsert(tokenId, {$set: {
+                address: unicornToken,
+                name: 'Unicorns',
+                symbol: '🦄',
+                balances: {},
+                decimals: 0
+            }});    
+        }
     });
 
 
 
-    // If on the mainnet, this will add the unicorn token by default, only once.
-    if (Session.get('network') == 'mainnet' && !localStorage.hasAddedUnicorn){
-        localStorage.setItem('hasAddedUnicorn', true);
-
-        unicornToken = '0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7';
-        tokenId = Helpers.makeId('token', unicornToken);
-        Tokens.upsert(tokenId, {$set: {
-            address: unicornToken,
-            name: 'Unicorns',
-            symbol: '🦄',
-            balances: {},
-            decimals: 0
-        }});    
-    }
 
 });
