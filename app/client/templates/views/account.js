@@ -15,6 +15,13 @@ Template['views_account'].helpers({
         return Helpers.getAccountByAddress(FlowRouter.getParam('address'));
     },
     /**
+    Returned checksummed address
+    @method (account)
+    */
+    'checksummedAddress': function(){
+        return Helpers.checksummedAddress(FlowRouter.getParam('address'));
+    },
+    /**
     Get the current jsonInterface, or use the wallet jsonInterface
 
     @method (jsonInterface)

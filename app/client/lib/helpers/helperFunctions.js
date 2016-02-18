@@ -300,6 +300,17 @@ Helpers.createTemplateDataFromInput = function (input){
     return input;    
 };
 
+/** 
+Formats address to a CaseChecksum
+
+@method checksummedAddress
+@param {String} address         The address
+@return {String} checksumAddress 
+**/
+
+Helpers.checksummedAddress = function (address){
+    return web3.toChecksumAddress(address);
+}
 
 /**
 Adds the input value from a form field to the inputs array
