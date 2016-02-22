@@ -37,6 +37,25 @@ selectableUnits = [{
     value: 'eur'
 }];
 
+/* Aprils fool */
+if (moment().format('MM-DD')=='03-01') {
+    selectableUnits.push({
+                text: 'NOETHER', value: 'noether'
+            },{
+                text: 'WEI', value: 'wei'
+            },{
+                text: 'ADA', value: 'ada'
+            },{
+                text: 'BABBAGE', value: 'babbage'
+            },{
+                text: 'SHANNON', value: 'shannon'
+            },{
+                text: 'SZABO', value: 'szabo'
+            },{
+                text: 'EINSTEIN', value: 'einstein'
+            })
+}
+
 
 Template['elements_selectableUnit'].helpers({
     /**

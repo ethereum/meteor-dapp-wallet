@@ -38,7 +38,7 @@ Check if currenct unit is an ether unit
 **/
 Template.registerHelper('isEtherUnit', function(){
     var unit = EthTools.getUnit();
-    return (unit === 'ether' || unit === 'finney');
+    return !(unit === 'usd' || unit === 'eur' || unit === 'btc');
 });
 
 

@@ -25,6 +25,8 @@ Template['elements_balance'].helpers({
     */
     'convertedBalance': function(){
         var balance = TemplateVar.get('balance');
+        
+        if (EthTools.getUnit() === 'noether') return 'infinite';
 
         if(balance){
             return (EthTools.getUnit() === 'btc')
