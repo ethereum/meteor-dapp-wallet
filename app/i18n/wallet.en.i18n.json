@@ -3,7 +3,8 @@
         "selectGasPrice": {
             "high": "Faster",
             "low": "Cheaper"
-        }
+        },
+        "checksumAlert":"Double check for typos on the address"
     },
     "wallet": {
         "app": {
