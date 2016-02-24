@@ -56,6 +56,8 @@
                                     <option value="{{name}}">{{displayName}}</option>
                                 {{/each}}    
                             </select>
+                        {{else}}
+                        {{{i18n "wallet.contracts.noContract"}}}
                         {{/with}}
                         
                         {{#with selectedContractInputs}}

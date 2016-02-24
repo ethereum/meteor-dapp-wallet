@@ -47,7 +47,19 @@ Template['views_dashboard'].helpers({
     'hasAccounts' : function() {
         return (EthAccounts.find().count() > 0);
     },
+    /** 
+    Are there any accounts?
 
+    @method (hasAccounts)
+    */
+    'hasMinimumBalance' : function() {
+        
+        var accounts = EthAccounts.find({}).fetch();
+
+        var balance = _.reduce(_.pluck(accounts, 'balance'), function(memo, num){ return memo + Number(num); }, 0);
+
+        return web3.fromWei(balance, 'ether') > 0.25;
+    },
     /**
     Get all transactions
 

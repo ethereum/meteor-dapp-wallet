@@ -139,30 +139,37 @@ Checks if the original wallet exists, if not deploys it
 @method checkForOriginalWallet
 */
 checkForOriginalWallet = function() {
-    // see if the original wallet is deployed, if not re-deploy on testnet
-    checkCodeOnAddress(mainNetAddress, function() {
-        checkCodeOnAddress(testNetAddress, function() {
-            var privateNetAddress = LocalStore.get('ethereum_testnetWalletContractAddress');
 
-            if(privateNetAddress)
-                web3.eth.getCode(privateNetAddress, function(e, code) {
-                    if(!e) {
-                        if(code.length > 2) {
-                            replaceStubAddress(privateNetAddress);
-                            console.log('Use private-net wallet as code base for stubs on address: ', privateNetAddress);
-                            Session.set('network', 'privatenet');
-                        } else
-                            deployTestnetWallet();
-                    } else {
-                        GlobalNotification.error({
-                            content: e.message,
-                            duration: 8
-                        });
-                    }
-                });
-            else
-                deployTestnetWallet();
+    var balance = _.reduce(_.pluck(EthAccounts.find({}).fetch(), 'balance'), function(memo, num){ return memo + Number(num); }, 0);
+    
+    // Only check for the wallet if user has enough funds to deploy it
+    if (web3.fromWei(balance, 'ether') > 0.25) {     
+        // see if the original wallet is deployed, if not re-deploy on testnet
+        checkCodeOnAddress(mainNetAddress, function() {
+            checkCodeOnAddress(testNetAddress, function() {
+                var privateNetAddress = LocalStore.get('ethereum_testnetWalletContractAddress');
+
+                if(privateNetAddress)
+                    web3.eth.getCode(privateNetAddress, function(e, code) {
+                        if(!e) {
+                            if(code.length > 2) {
+                                replaceStubAddress(privateNetAddress);
+                                console.log('Use private-net wallet as code base for stubs on address: ', privateNetAddress);
+                                Session.set('network', 'privatenet');
+                            } else {
+                                deployTestnetWallet();
+                            }
+                        } else {
+                            GlobalNotification.error({
+                                content: e.message,
+                                duration: 8
+                            });
+                        }
+                    });
+                else
+                    deployTestnetWallet();
+            });
         });
-    });
+    } 
 }
 
