@@ -15,9 +15,11 @@
         <p>{{{i18n "wallet.contracts.description" }}}</p>
         <div class="dapp-clear-fix"></div>
 
+        <div class="wallet-box-list">
         {{#each customContracts}}
             {{> elements_account account=_id isContract=true}}
         {{/each}}
+        </div>
 
         <button class="wallet-box create add-contract">
             <div class="account-pattern">
@@ -38,9 +40,11 @@
 
         <div class="dapp-clear-fix"></div>
 
+        <div class="wallet-box-list">
         {{#each tokens}}
             {{> elements_tokenBox}}
         {{/each}}
+        </div>
 
         <button class="wallet-box create add-token">
             <div class="account-pattern">
