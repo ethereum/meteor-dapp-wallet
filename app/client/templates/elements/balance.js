@@ -31,7 +31,7 @@ Template['elements_balance'].helpers({
         if(balance){
             return (EthTools.getUnit() === 'usd' || EthTools.getUnit() === 'eur')
                 ? EthTools.formatBalance(TemplateVar.get('balance'), '0,0.00')
-                : EthTools.formatBalance(TemplateVar.get('balance'), '0,0.00[0000]');
+                : EthTools.formatBalance(TemplateVar.get('balance'), '0,0.00[000000]');
         }
     },
     /**
