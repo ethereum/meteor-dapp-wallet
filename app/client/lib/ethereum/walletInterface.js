@@ -140,10 +140,13 @@ Checks if the original wallet exists, if not deploys it
 */
 checkForOriginalWallet = function() {
 
-    var balance = _.reduce(_.pluck(EthAccounts.find({}).fetch(), 'balance'), function(memo, num){ return memo + Number(num); }, 0);
-    
+    var enoughBalance = false;
+    _.each(_.pluck(EthAccounts.find({}).fetch(), 'balance'), function(e){
+        if(e > 250000000000000000) enoughBalance = true;
+    })
+
     // Only check for the wallet if user has enough funds to deploy it
-    if (web3.fromWei(balance, 'ether') > 0.25) {     
+    if (enoughBalance) {     
         // see if the original wallet is deployed, if not re-deploy on testnet
         checkCodeOnAddress(mainNetAddress, function() {
             checkCodeOnAddress(testNetAddress, function() {
