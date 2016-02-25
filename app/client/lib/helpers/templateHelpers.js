@@ -140,3 +140,14 @@ Formats a given transactions balance
 @return {String} The formated value
 **/
 Template.registerHelper('formatTransactionBalance', Helpers.formatTransactionBalance);
+
+
+/** 
+Formats address to a CaseChecksum
+
+@method toChecksumAddress
+@param {String} address             The address
+@return {String} checksumAddress    The returned, checksummed address
+**/
+Template.registerHelper('toChecksumAddress', web3.toChecksumAddress);
+

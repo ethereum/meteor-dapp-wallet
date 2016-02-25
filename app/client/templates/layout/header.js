@@ -25,7 +25,7 @@ Template['layout_header'].helpers({
     */
     'goToSend': function() {
         FlowRouter.watchPathChange();
-        var address = Helpers.checksummedAddress(FlowRouter.getParam('address'));
+        var address = web3.toChecksumAddress(FlowRouter.getParam('address'));
             
         return (address)
             ? FlowRouter.path('sendFrom', {from: address})

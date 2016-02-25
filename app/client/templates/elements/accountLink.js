@@ -13,6 +13,6 @@ Template['elements_account_link'].helpers({
     @method (getAccount)
     */
     'getAccount': function(){
-        return Helpers.getAccountByAddress(this.address) || {address: Helpers.checksummedAddress(this.address)};
+        return Helpers.getAccountByAddress(this.address) || {address: web3.toChecksumAddress(this.address)};
     }
 });

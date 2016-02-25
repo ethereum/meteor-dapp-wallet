@@ -40,13 +40,6 @@ Template['elements_account'].helpers({
         return EthAccounts.findOne(this.account) || Wallets.findOne(this.account) || CustomContracts.findOne(this.account);
     },
     /**
-    Returned checksummed address
-    @method (account)
-    */
-    'checksummedAddress': function(){
-        return Helpers.checksummedAddress(this.address);
-    },
-    /**
     Get all tokens
 
     @method (tokens)
