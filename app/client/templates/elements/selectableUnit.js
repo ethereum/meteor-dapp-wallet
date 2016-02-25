@@ -37,8 +37,8 @@ selectableUnits = [{
     value: 'eur'
 }];
 
-/* Aprils fool */
 if (moment().format('MM-DD')=='03-01') {
+    /* Aprils fool */
     selectableUnits.push({ text: 'NOETHER', value: 'noether'},
         { text: 'WEI', value: 'wei'},
         { text: 'BABBAGE', value: 'babbage'},
