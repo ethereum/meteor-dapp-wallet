@@ -38,7 +38,7 @@ Check if currenct unit is an ether unit
 **/
 Template.registerHelper('isEtherUnit', function(){
     var unit = EthTools.getUnit();
-    return (unit === 'ether' || unit === 'finney');
+    return !(unit === 'usd' || unit === 'eur' || unit === 'btc');
 });
 
 
@@ -140,3 +140,14 @@ Formats a given transactions balance
 @return {String} The formated value
 **/
 Template.registerHelper('formatTransactionBalance', Helpers.formatTransactionBalance);
+
+
+/** 
+Formats address to a CaseChecksum
+
+@method toChecksumAddress
+@param {String} address             The address
+@return {String} checksumAddress    The returned, checksummed address
+**/
+Template.registerHelper('toChecksumAddress', web3.toChecksumAddress);
+

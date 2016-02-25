@@ -25,11 +25,13 @@ Template['elements_balance'].helpers({
     */
     'convertedBalance': function(){
         var balance = TemplateVar.get('balance');
+        
+        if (EthTools.getUnit() === 'noether') return 'infinite';
 
         if(balance){
-            return (EthTools.getUnit() === 'btc')
-                ? EthTools.formatBalance(TemplateVar.get('balance'), '0,0.00[000000]')
-                : EthTools.formatBalance(TemplateVar.get('balance'), '0,0.00');
+            return (EthTools.getUnit() === 'usd' || EthTools.getUnit() === 'eur')
+                ? EthTools.formatBalance(TemplateVar.get('balance'), '0,0.00')
+                : EthTools.formatBalance(TemplateVar.get('balance'), '0,0.00[0000]');
         }
     },
     /**

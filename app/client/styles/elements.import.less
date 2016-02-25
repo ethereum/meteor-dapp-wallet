@@ -42,6 +42,11 @@ span.address {
     background-position: center;
 }
 
+.wallet-box-list {
+    display: flex;
+    flex-flow: row wrap;
+}
+
 .wallet-box {
     position: relative;
     display: inline-block;
@@ -82,6 +87,12 @@ span.address {
             margin-top: 0;
             text-align: left;
         }
+    }
+
+    &:last-child {
+        flex: 1 0 @gridWidth * 6.5;
+        max-width: @gridWidth * 13.5;
+        margin-right: 0;
     }
 
     &:hover {

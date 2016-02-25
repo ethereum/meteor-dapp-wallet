@@ -3,7 +3,8 @@
         "selectGasPrice": {
             "high": "Faster",
             "low": "Cheaper"
-        }
+        },
+        "checksumAlert":"Double check for typos on the address"
     },
     "wallet": {
         "app": {
@@ -73,8 +74,9 @@
             "dailyLimitRemaining": "remaining today",
             "requiredSignatures": "Required signatures",
             "owners": "Owners",
-            "walletsDescription": "These are contracts that can hold and secure ether. They can have multiple accounts as owners and keep a full log of all transactions.",
-            "accountsDescription": "Accounts are password protected keys that control contracts. They can hold ether as well, but can't display incoming transactions.",
+            "walletsDescription": "These are contracts that are stored on the blockchain and can hold and secure ether. They can have multiple accounts as owners and keep a full log of all transactions.",
+            "walletsDescriptionNotEnoughFunds": "Once you have a small amount of ether you can create more sofisticated contracts to secure your valuables. Wallets are one type of basic smart contracts, that allows your funds to be controlled by multiple accounts and have optional daily limits on withdrawals to increase security.  For even more customized contracts, go to the <em> Contracts </em> tab",
+            "accountsDescription": "Accounts are password protected keys that can hold ether, secure ethereum-based tokens or coins and control contracts. Accounts can't display incoming transactions.",
             "buttons": {
                 "deposit": "Deposit Ether",
                 "depositBitcoin": "Deposit using Bitcoin",
@@ -242,7 +244,7 @@
             "title": "Custom <strong>Tokens</strong>",
             "subTitle": "Added tokens",
             "admin": "__name__ (admin page)",
-            "description": "Tokens are currencies and other fungibles built on the Ethereum platform. In order for accounts to watch for tokens and send them, you have to add their address to this list. You can create your own token by simply modifiying <a href=\"http://chriseth.github.io/browser-solidity/?gist=20c8b5658349b003b08d\" target=\"_blank\">this example of a custom token contract</a> or learning more on <a href=\"https://github.com/ethereum/wiki/wiki/Standardized_Contract_APIs#token\" target=\"_blank\">Custom Token standard</a>.",
+            "description": "Tokens are currencies and other fungibles built on the Ethereum platform. In order for accounts to watch for tokens and send them, you have to add their address to this list. You can create your own token by simply modifiying <a href=\"http://chriseth.github.io/browser-solidity/?gist=0d1a998d949e26942212\" target=\"_blank\">this example of a custom token contract</a> or learning more on <a href=\"https://github.com/ethereum/wiki/wiki/Standardized_Contract_APIs#token\" target=\"_blank\">Custom Token standard</a>.",
             "deleteToken": "Do you want to remove the token <strong>__token__</strong> from your list?",
             "addedToken": "Added __token__ to your watch list",
             "editedToken": "Edited token __token__",
@@ -270,6 +272,7 @@
             "writeToContract": "Write to contract",
             "pickContract": "Pick a contract",
             "pickFunction": "Pick a function",
+            "noContract": "<p>Put the source of the contract you want here. You can find many examples of contracts at the <a href=\"http://ethereum.org\" target=\"_blank\">ethereum.org</a>: </p> <ul><li><a href=\"http://ethereum.org/token\" target=\"_blank\">Build a token</a></li><li><a href=\"http://ethereum.org/crowdsale\" target=\"_blank\">Start a crowdsale</a></li><li><a href=\"http://ethereum.org/dao\" target=\"_blank\">Create a blockchain organization</a></li></ul>",
             "buttons": {
                 "showContractInfo": "Show contract info",
                 "hideContractInfo": "Hide contract info",
