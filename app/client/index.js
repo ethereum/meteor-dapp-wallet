@@ -42,9 +42,27 @@ Meteor.startup(function() {
                 decimals: 0
             }});    
         }
+
+        //check for contract availability
+        _.each(CustomContracts.find().fetch(), function(c) {
+            console.log(c);
+            // check if wallet has code
+            web3.eth.getCode(c.address, function(e, code) {
+                if(!e) {
+                    if(code && code.length > 2){
+                        CustomContracts.update(c._id, {$unset: {
+                            disabled: ''
+                        }});
+
+                    } else {
+                        CustomContracts.update(c._id, {$set: {
+                            disabled: true
+                        }});
+                    }
+                } else {
+                    console.log('Couldn\'t check Contract code of ', c, e);
+                }
+            });
+        })
     });
-
-
-
-
 });
