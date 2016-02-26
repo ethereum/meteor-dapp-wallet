@@ -43,8 +43,12 @@ Meteor.startup(function() {
             }});    
         }
 
+        var contractsAndTokens = CustomContracts.find().fetch().concat(Tokens.find().fetch());
+
+        console.log('contractsAndTokens: ', contractsAndTokens);
+
         //check for contract availability
-        _.each(CustomContracts.find().fetch(), function(c) {
+        _.each(contractsAndTokens, function(c) {
             console.log(c);
             // check if wallet has code
             web3.eth.getCode(c.address, function(e, code) {
@@ -53,9 +57,17 @@ Meteor.startup(function() {
                         CustomContracts.update(c._id, {$unset: {
                             disabled: ''
                         }});
+                        Tokens.update(c._id, {$unset: {
+                            disabled: ''
+                        }});
 
                     } else {
+                        console.log('disable: ', c.name);
+                        
                         CustomContracts.update(c._id, {$set: {
+                            disabled: true
+                        }});
+                        Tokens.update(c._id, {$set: {
                             disabled: true
                         }});
                     }
