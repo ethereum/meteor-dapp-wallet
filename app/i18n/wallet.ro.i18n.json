@@ -83,7 +83,10 @@
             },
             "modal": {
                 "deleteText": "Chiar vrei sa stergi acest portofel?<br>Daca pierzi adresa portofelului, vei pierde si fondurile alocate acestuia!<br><br>Scrie numele portofelului pentru a confirma stergerea.",
-                "backupWallet": "<h1>Fa backup portofelului!</h1>Ai grija sa notezi adresa portofelului pentru a putea importa adresa cand va fi nevoie.<br><pre style=\"font-size: 0.75em;\">__address__</pre>"
+                "backupWallet": {
+                    "title": "Fa backup portofelului!",
+                    "description": "Ai grija sa notezi adresa portofelului:"
+                }
             }
         },
         "transactions": {

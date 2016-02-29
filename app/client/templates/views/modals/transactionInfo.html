@@ -2,10 +2,10 @@
     {{#with transaction}}
         <h1>
             {{i18n "wallet.transactions.transactionInfoTitle"}}
-            {{#if $eq ($.Session.get "network") "mainnet"}} 
+            {{#if $eq ($.Session.get "network") "main"}} 
             <a href="http://etherscan.io/tx/{{transactionHash}}" target="_blank" style="font-size: 0.4em;">{{transactionHash}}</a>
             {{else}}
-                {{#if $eq ($.Session.get "network") "testnet"}}
+                {{#if $eq ($.Session.get "network") "test"}}
                     <a href="http://testnet.etherscan.io/tx/{{transactionHash}}" target="_blank" style="font-size: 0.4em;">{{transactionHash}}</a>
                 {{else}}
                     {{transactionHash}}
@@ -79,14 +79,14 @@
                     <tr>
                         <td>Block</td>
                         <td>
-                           {{#if $eq ($.Session.get "network") "mainnet"}} 
+                           {{#if $eq ($.Session.get "network") "main"}} 
                             <a href="http://etherscan.io/block/{{blockHash}}" title="{{blockHash}}" target="_blank" class="dapp-shorten-text">
                                 {{blockNumber}}
                                 <br>
                                 {{blockHash.substr 0 40}}...
                             </a>
                             {{else}}
-                                {{#if $eq ($.Session.get "network") "testnet"}}
+                                {{#if $eq ($.Session.get "network") "test"}}
                                 <a href="http://testnet.etherscan.io/block/{{blockHash}}" title="{{blockHash}}" target="_blank" class="dapp-shorten-text">
                                     {{blockNumber}}
                                     <br>

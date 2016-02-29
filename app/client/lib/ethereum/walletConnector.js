@@ -89,6 +89,8 @@ connectToNode = function(){
 
     observePendingConfirmations();
 
+    observeCustomContracts();
+
 };
 
 /**

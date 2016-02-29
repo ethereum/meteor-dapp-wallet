@@ -546,7 +546,7 @@ observeWallets = function(){
                         WalletContract.new(newDocument.owners, newDocument.requiredSignatures, (newDocument.dailyLimit || ethereumConfig.dailyLimitDefault), {
                             from: newDocument.owners[0],
                             data: newDocument.code,
-                            gas: 1000000,
+                            gas: 3000000,
 
                         }, function(error, contract){
                             if(!error) {
@@ -587,8 +587,10 @@ observeWallets = function(){
 
                                     // Show backup note
                                     EthElements.Modal.question({
-                                        text: new Spacebars.SafeString(TAPi18n.__('wallet.accounts.modal.backupWallet', 
-                                            {address: contract.address})),
+                                        template: 'views_modals_backupContractAddress',
+                                        data: {
+                                            address: contract.address
+                                        },
                                         ok: true
                                     },{
                                         closeable: false

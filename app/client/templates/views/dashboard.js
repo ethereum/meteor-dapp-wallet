@@ -54,11 +54,12 @@ Template['views_dashboard'].helpers({
     */
     'hasMinimumBalance' : function() {
         
-        var accounts = EthAccounts.find({}).fetch();
+        var enoughBalance = false;
+        _.each(_.pluck(EthAccounts.find({}).fetch(), 'balance'), function(bal){
+            if(new BigNumber(bal, '10').gt(1000000000000000000)) enoughBalance = true;
+        });
 
-        var balance = _.reduce(_.pluck(accounts, 'balance'), function(memo, num){ return memo + Number(num); }, 0);
-
-        return web3.fromWei(balance, 'ether') > 0.25;
+        return enoughBalance;
     },
     /**
     Get all transactions

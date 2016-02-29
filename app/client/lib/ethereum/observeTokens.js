@@ -115,15 +115,31 @@ observeTokens = function(){
     */
     collectionObservers[collectionObservers.length] = Tokens.find({}).observe({
         /**
-        This will observe the transactions creation and create watchers for outgoing trandsactions, to see when they are mined.
+        Will check if the tokens are on the current chain and setup its listeners.
 
         @method added
         */
         added: function(newDocument) {
 
-            if(newDocument.address) {
-                setupContractFilters(newDocument);
-            }
+            // check if wallet has code
+            web3.eth.getCode(newDocument.address, function(e, code) {
+                if(!e) {
+                    if(code && code.length > 2){
+                        Tokens.update(newDocument._id, {$unset: {
+                            disabled: ''
+                        }});
+
+                        setupContractFilters(newDocument);
+
+                    } else {
+                        Tokens.update(newDocument._id, {$set: {
+                            disabled: true
+                        }});
+                    }
+                } else {
+                    console.log('Couldn\'t check Token code of ', newDocument, e);
+                }
+            });
 
         },
         /**

@@ -99,6 +99,10 @@ Check if we are on the correct chain and display an error.
 @param {Function} callback provide a callback, to get notified if successfull or error (will contain an error object as first parameter, if error)
 */
 Helpers.checkChain = function(callback){
+    // TODO deactivated for now!!! because we are using full contracts
+    return callback(null);
+
+
     web3.eth.getCode(originalContractAddress, function(e, code){
         if(code && code.length <= 2) {
 
