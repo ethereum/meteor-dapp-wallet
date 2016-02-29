@@ -257,15 +257,13 @@ Template['elements_transactions_row'].helpers({
         return !Helpers.getAccountByAddress({$in: this.confirmedOwners || []});
     },
     /**
-    Check if there is any owner that 
+    Check if there is any owner that needs to still approve
 
     @method (multipleOwnersApproved)
     */
     'multipleOwnersApproved': function(e){
-        var account = Helpers.getAccountByAddress(this.from),
-            ownerAccounts = _.pluck(Helpers.getAccounts({address: {$in: account.owners}}), 'address');
-
-        return (_.difference(ownerAccounts, this.confirmedOwners).length > 0);
+        var account = Helpers.getAccountByAddress(this.from);
+        return Helpers.getAccounts({address: {$in: _.difference(account.owners, this.confirmedOwners)}});
     },
     /**
     Token value
@@ -341,12 +339,12 @@ Template['elements_transactions_row'].events({
 
                 if(wallet = Wallets.findOne({address: owner})) {
 
-                    EthElements.Modal.question({
-                        text: 'Wallets can not currently confirm multisig transactions',
-                        ok: true
-                    });
-                    // var confirmData = confirmFunc.getData(_this.operation);
-                    // contracts['ct_'+ wallet._id].execute(account.address, 0, confirmData, {from: wallet.owners[0], gas: 200000}, callback);
+                    // EthElements.Modal.question({
+                    //     text: 'Wallets can not currently confirm multisig transactions',
+                    //     ok: true
+                    // });
+                    var confirmData = confirmFunc.getData(_this.operation);
+                    contracts['ct_'+ wallet._id].execute(account.address, 0, confirmData, {from: wallet.owners[0], gas: 200000}, callback);
 
                 } else {
 
