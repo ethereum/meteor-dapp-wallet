@@ -37,6 +37,26 @@ selectableUnits = [{
     value: 'eur'
 }];
 
+if (moment().format('MM-DD')=='03-01') {
+    /* Aprils fool */
+    selectableUnits.push({ text: 'NOETHER', value: 'noether'},
+        { text: 'WEI', value: 'wei'},
+        { text: 'BABBAGE', value: 'babbage'},
+        { text: 'LOVELACE', value: 'lovelace'},
+        { text: 'SHANNON', value: 'shannon'},
+        { text: 'SZABO', value: 'szabo'})
+
+} else if (moment().format('MM-DD')=='04-30') { 
+    /* Claude's Birthday */
+    selectableUnits.push({ text: 'SHANNON', value: 'shannon'})
+} else if (moment().format('MM-DD')=='12-10') { 
+    /* Ada's Birthday */
+    selectableUnits.push({ text: 'LOVELACE', value: 'lovelace'})
+} else if (moment().format('MM-DD')=='12-26') { 
+    /* Charles's Birthday */
+    selectableUnits.push({ text: 'BABBAGE', value: 'babbage'})
+}
+
 
 Template['elements_selectableUnit'].helpers({
     /**
