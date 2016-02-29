@@ -273,21 +273,21 @@ Template['views_account_create'].events({
     */
     'change input.owners, input input.owners': function(e, template){
         var address = TemplateVar.getFrom(e.currentTarget, 'value');
-        if(address) {
-            web3.eth.getCode(address, function(e, code){
-                if(!e && code.length > 2) {
-                    TemplateVar.set(template, 'contractAsOwner', true);
+        // if(address) {
+        //     web3.eth.getCode(address, function(e, code){
+        //         if(!e && code.length > 2) {
+        //             TemplateVar.set(template, 'contractAsOwner', true);
 
-                    GlobalNotification.warning({
-                        content: TAPi18n.__('wallet.newWallet.error.contractsCantBeOwners') +' '+ TAPi18n.__('wallet.newWallet.error.checkOwnerAddress', {address: address}),
-                        duration: 5
-                    });
-                } else {
-                    TemplateVar.set(template, 'contractAsOwner', false);
-                }
-            });
+        //             GlobalNotification.warning({
+        //                 content: TAPi18n.__('wallet.newWallet.error.contractsCantBeOwners') +' '+ TAPi18n.__('wallet.newWallet.error.checkOwnerAddress', {address: address}),
+        //                 duration: 5
+        //             });
+        //         } else {
+        //             TemplateVar.set(template, 'contractAsOwner', false);
+        //         }
+        //     });
 
-        }
+        // }
     },
     /**
     Select the current section, based on the radio inputs value.
@@ -296,7 +296,7 @@ Template['views_account_create'].events({
     */
     'change input[type="radio"]': function(e){
         TemplateVar.set('selectedSection', e.currentTarget.value);
-        TemplateVar.set('contractAsOwner', false);
+        // TemplateVar.set('contractAsOwner', false);
     },
     /**
     Change the number of signatures
@@ -337,18 +337,18 @@ Template['views_account_create'].events({
         var type = TemplateVar.get('selectedSection');
 
 
-        if(TemplateVar.get('contractAsOwner')) {
-            return GlobalNotification.warning({
-                content: TAPi18n.__('wallet.newWallet.error.contractsCantBeOwners'),
-                duration: 5
-            });
-        }
+        // if(TemplateVar.get('contractAsOwner')) {
+        //     return GlobalNotification.warning({
+        //         content: TAPi18n.__('wallet.newWallet.error.contractsCantBeOwners'),
+        //         duration: 5
+        //     });
+        // }
 
 
         // SIMPLE
         if(type === 'simple') {
             Wallets.insert({
-                owners: [template.find('select[name="dapp-select-account"]').value],
+                owners: [template.find('select[name="dapp-select-account"]').value.toLowerCase()],
                 name: template.find('input[name="accountName"]').value || TAPi18n.__('wallet.accounts.defaultName'),
                 balance: '0',
                 creationBlock: EthBlocks.latest.number,
@@ -364,7 +364,7 @@ Template['views_account_create'].events({
 
             var owners = _.uniq(_.compact(_.map(template.findAll('input.owners'), function(item){
                 if(web3.isAddress(item.value))
-                    return '0x'+ item.value.replace('0x','');
+                    return '0x'+ item.value.replace('0x','').toLowerCase();
             })));
 
             if(owners.length != formValues.multisigSignees)
@@ -391,7 +391,7 @@ Template['views_account_create'].events({
 
             var owners = _.uniq(_.compact(_.map(TemplateVar.get('importWalletOwners'), function(item){
                 if(web3.isAddress(item))
-                    return item;
+                    return item.toLowerCase();
             })));
 
             if(owners.length === 0)
