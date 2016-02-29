@@ -42,39 +42,4 @@ Meteor.startup(function() {
                 decimals: 0
             }});    
         }
-
-        var contractsAndTokens = CustomContracts.find().fetch().concat(Tokens.find().fetch());
-
-        console.log('contractsAndTokens: ', contractsAndTokens);
-
-        //check for contract availability
-        _.each(contractsAndTokens, function(c) {
-            console.log(c);
-            // check if wallet has code
-            web3.eth.getCode(c.address, function(e, code) {
-                if(!e) {
-                    if(code && code.length > 2){
-                        CustomContracts.update(c._id, {$unset: {
-                            disabled: ''
-                        }});
-                        Tokens.update(c._id, {$unset: {
-                            disabled: ''
-                        }});
-
-                    } else {
-                        console.log('disable: ', c.name);
-                        
-                        CustomContracts.update(c._id, {$set: {
-                            disabled: true
-                        }});
-                        Tokens.update(c._id, {$set: {
-                            disabled: true
-                        }});
-                    }
-                } else {
-                    console.log('Couldn\'t check Contract code of ', c, e);
-                }
-            });
-        })
-    });
 });
