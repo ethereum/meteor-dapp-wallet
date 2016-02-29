@@ -23,7 +23,7 @@
                             <button class="dapp-icon-button delete icon-trash"></button>
                         {{/if}}
                     </h1>
-                    <h2 class="copyable-address">{{walletIcon}} <span>{{address}}</span></h2>
+                    <h2 class="copyable-address">{{walletIcon}} <span>{{toChecksumAddress address}}</span></h2>
                     <div class="clear"></div>
                     {{> elements_balance balance=balance changeUnit=true}}
                 </header>
@@ -101,7 +101,7 @@
                 <nav>
                     <ul>
                         <li>
-                            <a href="{{pathFor route='sendTo' address=address}}" title="{{address}}">
+                            <a href="{{pathFor route='sendTo' address=(toChecksumAddress address)}}" title="{{toChecksumAddress address}}">
                                 <i class="icon-arrow-down"></i>
                                 {{i18n "wallet.accounts.buttons.deposit"}}
                             </a>

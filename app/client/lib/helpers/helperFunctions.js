@@ -304,7 +304,6 @@ Helpers.createTemplateDataFromInput = function (input){
     return input;    
 };
 
-
 /**
 Adds the input value from a form field to the inputs array
     
