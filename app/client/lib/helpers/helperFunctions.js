@@ -154,6 +154,8 @@ Gets the docuement matching the given addess from the EthAccounts or Wallets col
 */
 Helpers.getAccountByAddress = function(address, reactive) {
     var options = (reactive === false) ? {reactive: false} : {};
+    if(address)
+        address = address.toLowerCase();
     return EthAccounts.findOne({address: address}, options) || Wallets.findOne({address: address}, options) || CustomContracts.findOne({address: address}, options);
 };
 
@@ -166,6 +168,8 @@ Gets the docuement matching the given query from the EthAccounts or Wallets coll
 */
 Helpers.getAccounts = function(query, reactive) {
     var options = (reactive === false) ? {reactive: false} : {};
+    if(query.address)
+        query.address = query.address.toLowerCase();
     return EthAccounts.find(query, options).fetch().concat(Wallets.find(query, options).fetch());
 };
 
@@ -176,7 +180,7 @@ Gets the docuement matching the given addess from the EthAccounts or Wallets col
 @param {String} name or address
 */
 Helpers.getAccountNameByAddress = function(address) {
-    var doc = Helpers.getAccountByAddress(address);
+    var doc = Helpers.getAccountByAddress(address.toLowerCase());
     return doc ? doc.name : address; 
 };
 
