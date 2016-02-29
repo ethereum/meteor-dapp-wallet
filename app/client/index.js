@@ -42,4 +42,7 @@ Meteor.startup(function() {
                 decimals: 0
             }});    
         }
+    });
+
+
 });
