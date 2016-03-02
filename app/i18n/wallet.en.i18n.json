@@ -10,7 +10,7 @@
     "wallet": {
         "app": {
             "buttons": {
-                "wallet": "Wallet",
+                "wallet": "Wallets",
                 "send": "Send",
                 "deploy": "Deploy",
                 "tokens": "Tokens",
