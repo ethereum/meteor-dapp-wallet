@@ -224,6 +224,7 @@ Template['views_account_create'].events({
     'change input.import, input input.import': function(e, template){
         var address = e.currentTarget.value;
         if(web3.isAddress(address)) {
+            address = address.toLowerCase();
             var myContract = WalletContract.at(address);
 
             myContract.m_numOwners(function(e, numberOfOwners){
