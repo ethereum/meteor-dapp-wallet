@@ -29,6 +29,7 @@
                 "blockReceived": "New Block Received",
                 "timeSinceBlock": "since last block",
                 "peers": "peers",
+                "testnetExplain": "You are on a testnet, DO NOT SEND any real ether to these addresses",
                 "noAccounts": {
                     "title": "You have no accounts yet",
                     "text": "You need to create at least one account with a strong password."

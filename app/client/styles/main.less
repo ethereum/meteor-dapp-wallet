@@ -152,6 +152,10 @@ body {
         right: 0;
         .dapp-shadow-medium;
   
+        .block-info {
+            padding-bottom: @defaultPaddingVertical - 2;
+        }
+        
         .wallet-balance ,
         .block-info {            
             .text,
@@ -170,9 +174,8 @@ body {
     }
 
     .block-info {
-        padding-bottom: @defaultPaddingVertical - 2px;        
-        color: @colorGrayDark;
-        .opacity(0.6);
+        padding-bottom: @defaultPaddingVertical;        
+        color: lighten(@colorGrayDark, 30%);
         text-align: center;
         flex: 1 0;
 
@@ -195,8 +198,11 @@ body {
         }
 
         .private-chain {
-            color: @colorGrayDark;
-            opacity: 0.5;
+            color: @colorWhite;
+            background-color: @colorError;
+            padding: 1px 5px 2px;
+            border-radius: 2px;
+            top: 1px;
         }
         
     }
