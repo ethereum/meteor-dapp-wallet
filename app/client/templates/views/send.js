@@ -135,7 +135,7 @@ Template['views_send'].onRendered(function(){
     // set the from
     var from = FlowRouter.getParam('from');
     if(from)
-        TemplateVar.setTo('select[name="dapp-select-account"]', 'value', FlowRouter.getParam('from'));
+        TemplateVar.setTo('select[name="dapp-select-account"]', 'value', FlowRouter.getParam('from').toLowerCase());
 
 
     // ->> GAS PRICE ESTIMATION
@@ -151,7 +151,7 @@ Template['views_send'].onRendered(function(){
         // if(!web3.isAddress(to))
         //     to = '0x0000000000000000000000000000000000000000';
 
-        console.log('ESTIMATE', tokenAddress, {
+        console.log('ESTIMATE for token', tokenAddress, {
                     from: address,
                     to: to,
                     value: amount,
