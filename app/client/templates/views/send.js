@@ -360,7 +360,7 @@ Template['views_send'].events({
     /**
     Select a token 
     
-    @event 'click .select-token
+    @event click .select-token
     */
     'click .select-token input': function(e, template){
         TemplateVar.set('selectedToken', e.currentTarget.value);
