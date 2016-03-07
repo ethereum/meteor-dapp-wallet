@@ -29,9 +29,14 @@ Template['elements_balance'].helpers({
         if (EthTools.getUnit() === 'noether') return 'infinite';
 
         if(balance){
-            return (EthTools.getUnit() === 'usd' || EthTools.getUnit() === 'eur')
-                ? EthTools.formatBalance(TemplateVar.get('balance'), '0,0.00')
-                : EthTools.formatBalance(TemplateVar.get('balance'), '0,0.00[000000]');
+            if(EthTools.getUnit() === 'usd' || EthTools.getUnit() === 'eur')
+                return EthTools.formatBalance(TemplateVar.get('balance'), '0,0.00');
+            else if(EthTools.getUnit() === 'ether')
+                return EthTools.formatBalance(TemplateVar.get('balance'), '0,0.00[0000000000000000]');
+            else if(EthTools.getUnit() === 'finney')
+                return EthTools.formatBalance(TemplateVar.get('balance'), '0,0.00[00000000000000]');
+            else
+                return EthTools.formatBalance(TemplateVar.get('balance'), '0,0.00[000000]');
         }
     },
     /**

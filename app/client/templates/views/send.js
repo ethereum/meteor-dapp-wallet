@@ -295,13 +295,9 @@ Template['views_send'].helpers({
         // ether
         var gasInWei = TemplateVar.getFrom('.dapp-select-gas-price', 'gasInWei') || '0';
 
-        console.log(TemplateVar.get('selectedToken'));
-
         if (TemplateVar.get('selectedToken')==='ether') {
-            console.log('Ether')
             amount = new BigNumber(amount, 10).plus(new BigNumber(gasInWei, 10));
         } else {
-            console.log('Token')
             amount = new BigNumber(gasInWei, 10);
         }
         return amount;
@@ -386,6 +382,7 @@ Template['views_send'].events({
         // ether
         if(TemplateVar.get('selectedToken') === 'ether') {
             var wei = EthTools.toWei(e.currentTarget.value.replace(',','.'));
+
             TemplateVar.set('amount', wei || '0');
 
             checkOverDailyLimit(template.find('select[name="dapp-select-account"]').value, wei, template);
