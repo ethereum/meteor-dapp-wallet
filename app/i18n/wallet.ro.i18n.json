@@ -204,6 +204,7 @@
             "feeLow": "Tranzactie mai ieftina",
             "feeHigh": "Tranzactie mai rapida",
             "addData": "Adauga date",
+            "sendAll": "Send everything",
             "removeData": "Sterge date",
             "estimatedFee": "Comision estimat",
             "createContract": "Intocmeste contract",
@@ -215,6 +216,7 @@
                 "noAmount": "Nu ai specificat suma ce trebuie trimisa."
             },
             "texts": {
+                "ownerPaysGas": "Gas is payed by the owner of the wallet contract",
                 "sendAmount": "Vei trimite <strong>__amount__</strong>.",
                 "sendAmountEquivalent": "Vei trimite <strong>__amount__</strong> in ether, folosind rata de <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a>.<br>In acest moment echivalentul a <strong>__etherAmount__</strong>.",
                 "sendToken": "You want to send <strong>__amount__ __name__</strong>.",

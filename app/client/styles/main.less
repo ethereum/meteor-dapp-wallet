@@ -548,8 +548,15 @@ body {
                 color: @colorTextSecondary;
             }
 
-            input {
+            input[type="text"] {
                 width: 100%;
+                margin-bottom: @defaultMargin/2;
+            }
+
+            input.send-all  {
+                display: inline-block;
+                float: left;
+                margin-right: @defaultMargin/2;
             }
         }
 
