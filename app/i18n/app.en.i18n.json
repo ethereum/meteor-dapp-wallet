@@ -1,33 +1,33 @@
 {
     "app": {
-        "loading": "Loading...",
-        "offline": "Can't connect are you offline?",
-        "logginIn": "Logging in..."
+        "loading": "Laden...",
+        "offline": "Keine Internetverbindung",
+        "logginIn": "Einloggen..."
     },
     "error": {
-        "insufficientRights": "You don't have enough rights for this action."
+        "insufficientRights": "Sie sind für diese Aktion nicht berechtigt."
     },
     "buttons": {
         "ok": "OK",
-        "cancel": "Cancel",
-        "save": "Save",
-        "edit": "edit",
-        "send": "Send",
-        "sending": "Sending...",
-        "create": "Create",
-        "select": "Select",
-        "tryToReconnect": "Try to reconnect"
+        "cancel": "Abbrechen",
+        "save": "Speichern",
+        "edit": "Bearbeiten",
+        "send": "Senden",
+        "sending": "Sende...",
+        "create": "Erstellen",
+        "select": "Auswählen",
+        "tryToReconnect": "Verbindung wird wiederhergestellt"
     },
     "commonWords": {
-        "you": "You",
-        "send": "Send",
-        "or": "or",
-        "of": "of",
-        "with": "with",
-        "and": "and",
-        "on": "on",
-        "per": "per",
-        "total":"total",
-        "at": "at"
+        "you": "Sie",
+        "send": "Senden",
+        "or": "oder",
+        "of": "von",
+        "with": "mit",
+        "and": "und",
+        "on": "auf",
+        "per": "pro",
+        "total":"gesamt",
+        "at": "bei"
     }
 }
