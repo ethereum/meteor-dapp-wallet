@@ -1,0 +1,33 @@
+{
+    "app": {
+        "loading": "Laden...",
+        "offline": "Keine Internetverbindung",
+        "logginIn": "Einloggen..."
+    },
+    "error": {
+        "insufficientRights": "Sie sind für diese Aktion nicht berechtigt."
+    },
+    "buttons": {
+        "ok": "OK",
+        "cancel": "Abbrechen",
+        "save": "Speichern",
+        "edit": "Bearbeiten",
+        "send": "Senden",
+        "sending": "Sende...",
+        "create": "Erstellen",
+        "select": "Auswählen",
+        "tryToReconnect": "Verbindung wird wiederhergestellt"
+    },
+    "commonWords": {
+        "you": "Sie",
+        "send": "Senden",
+        "or": "oder",
+        "of": "von",
+        "with": "mit",
+        "and": "und",
+        "on": "auf",
+        "per": "pro",
+        "total":"gesamt",
+        "at": "bei"
+    }
+}
