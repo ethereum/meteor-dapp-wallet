@@ -1,83 +1,83 @@
 {
     "elements": {
         "selectGasPrice": {
-            "high": "Faster",
-            "low": "Cheaper"
+            "high": "Mais rápido",
+            "low": "Mais barato"
         },
-        "checksumAlert":"This address looks valid, but it doesn't have some security features that will protect you against typos, so double check you have the right one. If provided, check if the security icon matches.",
-        "identiconHelper": "This is a security icon, if there's any change on the address the resulting icon should be a completelly different one"
+        "checksumAlert":"Esse endereço parece válido mas não tem alguns recursos de segurança para protegê-lo de erros de digitação, então confira atentamente antes de enviar. Se possível confira também o ícone de segurança.",
+        "identiconHelper": "Isso é um ícone de segurança, se houver qualquer mudança no endereço o ícone irá mudar completamente."
     },
     "wallet": {
         "app": {
             "buttons": {
-                "wallet": "Wallets",
-                "send": "Send",
-                "deploy": "Deploy",
-                "tokens": "Tokens",
-                "receive": "Receive",
-                "addWallet": "Add wallet contract",
-                "addAccount": "Add Account",
-                "addToken": "Watch Token"
+                "wallet": "Carteira",
+                "send": "Enviar",
+                "deploy": "Subir",
+                "tokens": "Ficha",
+                "receive": "Receber",
+                "addWallet": "Adicionar contrato de carteira",
+                "addAccount": "Adicionar conta",
+                "addToken": "Observar Ficha"
             },
             "texts": {
-                "note": "Note",
-                "balance": "Balance",
-                "connectionErrorMist": "Unable to connect. Please start geth using:<br><br><small><code>__node__</code><br><br>Make sure you set your IPC path to the default one, when using a different <code>datadir</code>, e.g.<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/geth.ipc</code><br>or<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/geth.ipc</code>. <br><br>Optional add: <code>--unlock &lt;yourAccount&gt;.</code></small>",
-                "connectionErrorBrowser": "Unable to connect. Please start geth with the following options:<br><br><small><code>__node__</code><br><br>Optional add: <code>--unlock &lt;yourAccount&gt;.</code></small>",
-                "pendingConfirmationsBadge": "Pending Confirmation!",
-                "nodeSyncing": "__blockDiff__ blocks left",
-                "blockReceived": "New Block Received",
-                "timeSinceBlock": "since last block",
-                "peers": "peers",
-                "testnetExplain": "You are on a testnet, DO NOT SEND any real ether to these addresses",
+                "note": "Nota",
+                "balance": "Saldo",
+                "connectionErrorMist": "Não foi possível conectar. Inicie Geth usando:<br><br><small><code>__node__</code><br><br> Assegure-se que o endereço IPC está configurado corretamente desta forma: <br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/geth.ipc</code><br>or<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/geth.ipc</code>. <br><br>Opcional: <code>--unlock &lt;suaConta&gt;.</code></small>",
+                "connectionErrorBrowser": "Não foi possível conectar. Por favor inicie Geth com as seguintes opções: <br><br><small><code>__node__</code><br><br>Opcional: <code>--unlock &lt;suaConta&gt;.</code></small>",
+                "pendingConfirmationsBadge": "Aguardando confirmação",
+                "nodeSyncing": "__blockDiff__ blocos restantes",
+                "blockReceived": "Novo bloco recebido",
+                "timeSinceBlock": "desde último bloco",
+                "peers": "conexões",
+                "testnetExplain": "Você está na rede de teste, NÃO ENVIE ethers de verdade para essas contas",
                 "noAccounts": {
-                    "title": "You have no accounts yet",
-                    "text": "You need to create at least one account with a strong password."
+                    "title": "Você ainda não tem contas",
+                    "text": "Crie ao menos uma conta com uma senha segura."
                 }
             },
             "error": {
-                "wrongChain": "You seem on a different chain, please restart the Ethereum Wallet App!"
+                "wrongChain": "Você está na rede errada. Por favor reinicie esse aplicativo."
             }
         },
         "modals": {
             "selectAccount": {
-                "title": "Select an account"
+                "title": "Escolha uma conta"
             },
             "testnetWallet": {
-                "walletNeedsDeployment": "You seem to be on a testnet.<br><br>There is no original wallet contract code found, we need to deploy one, which can be used by the wallet contract stub contracts, from your address: <br><br><small><code>__account__</code></small><br><br><em>Please make sure this address has at least 1 ether!</em>",
-                "testnetWalletDeployed": "Original wallet contract deployed!<br>An original wallet contract was deployed on the address:<br><br><small><code>__address__</code></small>."
+                "walletNeedsDeployment": "Você parece estar em uma rede de teste.<br><br> Precisamos fazer o upload de um contrato que será usado como base para as carteiras. <br><br><small><code>__account__</code></small><br><br><em> Assegure-se que a conta acima tem ao menos 1 ether!</em>",
+                "testnetWalletDeployed": "O código fonte da carteira na sua rede privada foi colocado no endereço seguinte:<br><br><small><code>__address__</code></small>."
             },
             "addToken": {
-                "title": "Add token",
-                "titleEdit": "Edit token",
-                "contractAddress": "Token contract address",
-                "tokenName": "Token name",
-                "tokenSymbol": "Token symbol",
-                "decimalPlaces": "Decimals Places of smallest unit",
-                "preview": "Preview"
+                "title": "Adicionar Ficha",
+                "titleEdit": "Editar Ficha",
+                "contractAddress": "Endereço",
+                "tokenName": "Nome",
+                "tokenSymbol": "Símbolo",
+                "decimalPlaces": "Número de casas decimais máximo",
+                "preview": "Previsualizar"
             },
             "interface": {
-                "title": "Contract JSON Interface",
-                "description": "If you want to have someone else execute this contract, send this information along with the contract's address."
+                "title": "Interface JSON do contrato",
+                "description": "Se você quer que alguem execute esse contrato, envie a eles essa informação."
             }
         },
         "accounts": {
-            "title": "<strong>Accounts</strong> Overview",
-            "walletsTitle": "Wallet contracts",
-            "accountsTitle": "Accounts",
-            "defaultName": "Unnamed",
-            "creating": "Creating",
-            "importing": "Importing",
-            "accountNote": "Accounts can't display incoming transactions, but hold and send ether. To see incoming transactions <a href=\"/account/new\">create a wallet contract</a> to store ether.",
-            "walletNote": "Most exchanges don't support receiving ether from a contract wallet yet. Be sure to move the money to an account address first!",
-            "addressCopiedToClipboard": "Copied to clipboard",
-            "qrCodeLabel": "Point a compatible mobile app to this code",
-            "dailyLimit": "Daily limit",
-            "dailyLimitRemaining": "remaining today",
-            "requiredSignatures": "Required signatures",
-            "owners": "Owners",
-            "walletsDescription": "These are contracts that are stored on the blockchain and can hold and secure ether. They can have multiple accounts as owners and keep a full log of all transactions.",
-            "walletsDescriptionNotEnoughFunds": "Once you have more than 1 ether you can create a more sophisticated contracts. Wallets are one type of basic smart contract, that allows your funds to be controlled by multiple accounts and have an optional daily limit on withdrawals, to increase security.  To create your own custom contracts go to the <em> Contracts </em> tab.",
+            "title": "Sumário das <strong>Contas</strong> ",
+            "walletsTitle": "Contratos de Carteira",
+            "accountsTitle": "Contas",
+            "defaultName": "Sem nome",
+            "creating": "Criando",
+            "importing": "Importando",
+            "accountNote": "Contas podem armazenar ether mas não exibem transações recebidas. Para tal, <a href=\"/account/new\">crie um contrato de carteira</a>.",
+            "walletNote": "Algumas exchanges tem dificuldades técnicas com transações enviadas de contratos. Passe o ether para uma conta simples antes",
+            "addressCopiedToClipboard": "Copiado para área de transferência",
+            "qrCodeLabel": "Abra um aplicativo compatível e aponte a camera do seu celular aqui.",
+            "dailyLimit": "Limite diário",
+            "dailyLimitRemaining": "restantes hoje",
+            "requiredSignatures": "Assinaturas exigidas",
+            "owners": "Donos",
+            "walletsDescription": "Esses são contratos que existem no blockchain e podem armazenar ether e outras moedas. Uma carteira pode ter várias contas como donas. Carteiras mantem um histórico mais preciso de transferências",
+            "walletsDescriptionNotEnoughFunds": "Uma vez que você obtiver ao menos 1 ether poderá criar contratos mais sofisticados como carteiras, que podem funcionar como contas conjuntas administradas por diversas contas e ter limites diários de saques. Para criar um contrato ainda mais personalizado, vá na aba  <em>Contratos</em>.",
             "accountsDescription": "Accounts are password protected keys that can hold ether, secure ethereum-based tokens or coins and control contracts. Accounts can't display incoming transactions.",
             "buttons": {
                 "deposit": "Deposit Ether",
@@ -115,7 +115,7 @@
             "filter": "Filter transactions",
             "noneFound": "No matching transaction found.",
             "noOwnerAccount": "Watch only confirmation",
-            "outOfGasDesc": "The transaction didn't seem to have enough gas to execute.",
+            "outOfGasDesc": "The transaction didn't have enough gas to execute",
             "buttons": {
                 "approve": "Approve",
                 "approved": "Approved",
@@ -212,7 +212,6 @@
             "feeLow": "Cheaper",
             "feeHigh": "Faster",
             "addData": "Add data",
-            "sendAll": "Send everything",
             "removeData": "Remove data",
             "estimatedFee": "Estimated fee",
             "createContract": "Create contract",
@@ -224,7 +223,6 @@
                 "noAmount": "You didn't specify an amount to send."
             },
             "texts": {
-                "ownerPaysGas": "Gas is payed by the owner of the wallet contract",
                 "sendAmount": "You want to send <strong>__amount__</strong>.",
                 "sendAmountEquivalent": "You want to send <strong>__amount__</strong> in ether, using exchange rates from <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a>.<br>Which is currently an equivalent of <strong>__etherAmount__</strong>.",
                 "sendToken": "You want to send <strong>__amount__ __symbol__</strong> of <strong> __name__</strong>.",
