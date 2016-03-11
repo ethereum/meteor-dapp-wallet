@@ -123,7 +123,8 @@
                 "revoked": "Revoked"
             },
             "error": {
-                "noDataDeployed": "No data is deployed on the contract address!"    
+                "noDataDeployed": "No data is deployed on the contract address!",
+                "outOfGas": "The transaction from __from__ to __to__ couldn't be successfully executed."  
             },
             "types": {
                 "executeContract": "Contract Execution",
@@ -293,6 +294,5 @@
                 "jsonInterfaceParseError": "Couldn't parse the JSON Interface."
             }
         }
-
     }
 }

@@ -116,7 +116,8 @@
                 "revoked": "Respinsa"
             },
             "error": {
-                "noDataDeployed": "Nu au fost implementate date in adresa contractului!"    
+                "noDataDeployed": "Nu au fost implementate date in adresa contractului!",
+                "outOfGas": "The transaction from __from__ to __to__ couldn't be successfully executed."
             },
             "types": {
                 "executeContract": "Executie contract",
@@ -284,6 +285,5 @@
                 "jsonInterfaceParseError": "Nu am putut parcurge interfata JSON."
             }
         }
-
     }
 }

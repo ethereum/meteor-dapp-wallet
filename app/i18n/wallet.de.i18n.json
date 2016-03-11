@@ -123,7 +123,8 @@
                 "revoked": "Zurückgezogen"
             },
             "error": {
-                "noDataDeployed": "Auf der Vertrag Adresse wurden keine Daten veröffentlicht"
+                "noDataDeployed": "Auf der Vertrag Adresse wurden keine Daten veröffentlicht",
+                "outOfGas": "The transaction from __from__ to __to__ couldn't be successfully executed."  
             },
             "types": {
                 "executeContract": "Vertrag anwenden",
@@ -212,6 +213,7 @@
             "feeLow": "Guünstiger",
             "feeHigh": "Schneller",
             "addData": "Daten hinzufügen",
+            "sendAll": "Alles senden",
             "removeData": "Daten entfernen",
             "estimatedFee": "Gebühr bestimmen",
             "createContract": "Vertrag erstellen",
@@ -291,6 +293,5 @@
                 "jsonInterfaceParseError": "JSON Schnittstelle konnte nicht gelesen werden."
             }
         }
-
     }
 }
