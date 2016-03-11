@@ -92,6 +92,7 @@ Template['views_dashboard'].events({
 
         mist.requestAccount(function(e, account) {
             if(!e) {
+                account = account.toLowerCase();
                 EthAccounts.upsert({address: account}, {$set: {
                     address: account,
                     new: true
