@@ -277,7 +277,7 @@
             "writeToContract": "Schreiben in Vertrag",
             "pickContract": "Wähle einen Vertrag",
             "pickFunction": "Wähle eine Funktion",
-            "noContract": "<p>Fügen Sie den Quellcode eines Vertrags hier ein. Beispiele fiden sie unter <a href=\"http://ethereum.org\" target=\"_blank\">ethereum.org</a>: </p> <ul><li><a href=\"http://ethereum.org/token\" target=\"_blank\">Token erzeugen</a></li><li><a href=\"http://ethereum.org/crowdsale\" target=\"_blank\">Crowdsale starten</a></li><li><a href=\"http://ethereum.org/dao\" target=\"_blank\">Blockchain organisation erzeugen</a></li></ul>",
+            "noContract": "<p>Fügen Sie den Quellcode eines Vertrags hier ein. Beispiele fiden sie unter <a href=\"http://ethereum.org\" target=\"_blank\">ethereum.org</a>: </p> <ul><li><a href=\"http://ethereum.org/token#the-code\" target=\"_blank\">Token erzeugen</a></li><li><a href=\"http://ethereum.org/crowdsale#the-code\" target=\"_blank\">Crowdsale starten</a></li><li><a href=\"http://ethereum.org/dao#the-code\" target=\"_blank\">Blockchain organisation erzeugen</a></li></ul>",
             "buttons": {
                 "showContractInfo": "Zeige Vertragsinformationen",
                 "hideContractInfo": "Schließe Vertragsinformationen",
