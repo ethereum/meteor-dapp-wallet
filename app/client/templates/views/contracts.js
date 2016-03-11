@@ -36,14 +36,13 @@ var addCustomContract = function(e) {
     }
 
     if(web3.isAddress(address)) {
-        CustomContracts.upsert({address:address}, {$set: {
+        address = address.toLowerCase();
+
+        CustomContracts.upsert({address: address}, {$set: {
             address: address,
             name: name,
             jsonInterface: jsonInterface
         }});
-
-        console.log(address)
-        console.log(CustomContracts.findOne(address))
 
         // update balances from lib/ethereum/observeBlocks.js
         updateBalances();
@@ -82,6 +81,8 @@ var addToken = function(e) {
         TAPi18n.__('wallet.tokens.addedToken', {token: name}) ;
 
     if(web3.isAddress(address)) {
+        address = address.toLowerCase();
+
         Tokens.upsert(tokenId, {$set: {
             address: address,
             name: name,

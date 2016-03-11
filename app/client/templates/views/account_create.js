@@ -400,7 +400,7 @@ Template['views_account_create'].events({
 
 
             var address = template.find('input.import').value;
-            address = '0x'+ address.replace('0x','');
+            address = '0x'+ address.replace('0x','').toLowerCase();
             if(Wallets.findOne({address: address}))
                 return GlobalNotification.warning({
                     content: 'i18n:wallet.newWallet.error.alreadyExists',
