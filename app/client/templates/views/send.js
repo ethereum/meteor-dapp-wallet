@@ -147,6 +147,9 @@ Template['views_send'].onRendered(function(){
             data = getDataField(),
             tokenAddress = TemplateVar.get('selectedToken');
 
+        if(_.isString(address))
+            address = address.toLowerCase();
+
         // console.log('DATA', data);
 
 

@@ -10,13 +10,10 @@ Meteor.startup(function() {
         // set default language
         if (_.isObject(availLang) && availLang[userLang]) {
             TAPi18n.setLanguage(userLang);
-            // lang = userLang;
         } else if (_.isObject(availLang) && availLang[userLang.substr(0,2)]) {
             TAPi18n.setLanguage(userLang.substr(0,2));
-            // lang = userLang.substr(0,2);
         } else {
             TAPi18n.setLanguage('en');
-            // lang = 'en';
         }
     }
     // change moment and numeral language, when language changes
