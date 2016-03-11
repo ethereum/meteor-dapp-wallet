@@ -12,6 +12,7 @@
             "buttons": {
                 "wallet": "Wallets",
                 "send": "Send",
+                "contracts": "Contracts",
                 "deploy": "Deploy",
                 "tokens": "Tokens",
                 "receive": "Receive",

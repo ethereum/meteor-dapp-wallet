@@ -12,6 +12,7 @@
             "buttons": {
                 "wallet": "Carteira",
                 "send": "Enviar",
+                "contracts": "Contratos",
                 "deploy": "Subir",
                 "tokens": "Ficha",
                 "receive": "Receber",
@@ -212,6 +213,7 @@
             "feeLow": "Mais Barato",
             "feeHigh": "Mais Rápido",
             "addData": "Adicionar dados",
+            "sendAll": "Enviar tudo",            
             "removeData": "Remover dados",
             "estimatedFee": "Taxa estimada",
             "createContract": "Criar contratos",
