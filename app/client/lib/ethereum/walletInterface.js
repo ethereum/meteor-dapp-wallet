@@ -88,7 +88,7 @@ var deployTestnetWallet = function() {
                         replaceStubAddress(contract.address);
 
                         EthElements.Modal.question({
-                            text: new Spacebars.SafeString(TAPi18n.__('wallet.modals.testnetWallet.testnetWalletDeployed', {address: contract.address})),
+                            text: new Spacebars.SafeString(TAPi18n.__('wallet.modals.testnetWallet.testnetWalletDeployed', {address: web3.toChecksumAddress(contract.address)})),
                             ok: true
                         });
 

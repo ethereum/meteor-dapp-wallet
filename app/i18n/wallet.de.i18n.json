@@ -12,6 +12,7 @@
             "buttons": {
                 "wallet": "Wallets",
                 "send": "Senden",
+                "contracts": "Verträge",
                 "deploy": "Erstellen",
                 "tokens": "Token",
                 "receive": "Empfangen",
@@ -124,7 +125,7 @@
             },
             "error": {
                 "noDataDeployed": "Auf der Vertrag Adresse wurden keine Daten veröffentlicht",
-                "outOfGas": "The transaction from __from__ to __to__ couldn't be successfully executed."  
+                "outOfGas": "Die Transaktion von __from__ nach __to__ konnte nicht ausgeführt werden."  
             },
             "types": {
                 "executeContract": "Vertrag anwenden",
@@ -225,6 +226,7 @@
                 "noAmount": "Sie haben keinen Betrag angegeben."
             },
             "texts": {
+                "ownerPaysGas": "Gas wird vom Besitzer des Wallet Vertrags bezahlt",
                 "sendAmount": "Sie möchten <strong>__amount__</strong> versenden.",
                 "sendAmountEquivalent": "Sie möchten <strong>__amount__</strong> in Ether versenden, zu einem Wechselkurs von <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a>.<br>Was zur Zeit einem Betrag von <strong>__etherAmount__</strong> Ether entspricht.",
                 "sendToken": "Sie möchnetn <strong>__amount__ __symbol__</strong> von <strong> __name__</strong> versenden.",
@@ -248,7 +250,7 @@
             }
         },
         "tokens": {
-            "title": "Angepasste <strong>Token</strong>",
+            "title": "Eigene <strong>Token</strong>",
             "subTitle": "Hunzugefügte Token",
             "admin": "__name__ (Admin Seite)",
             "description": "Token sind Währungen oder Tauschgegenstände die auf der Ethereum platform aufsetzen. Damit ein Konto ein Token beobachten oder versenden kann, müssen Sie die Kontenadressen in die folgende Liste einfügen. Sie können Ihren einegenen Token erzeugen, in dem Sie z.B. folgendes <a href=\"http://chriseth.github.io/browser-solidity/?gist=0d1a998d949e26942212\" target=\"_blank\">Beispiel eines Token Vetrags</a> anpassen, oder mehr über <a href=\"https://www.ethereum.org/token#the-code\" target=\"_blank\">Ethereum Token</a> lernen.",
@@ -263,7 +265,7 @@
             "contractTitle" : "Verträge",
             "deployNewContract": "Neue Verträge veröffentlichen",
             "addCustomContract": "Vetraäge beobachten",
-            "customContracts": "Angepasste Verträge",
+            "customContracts": "Eigene Verträge",
             "description": "Um einen bereits in der Blockchain veröffentlichten Vertrag zu beobachten oder mit ihm interagieren zu können müssen Sie seine Adresse und die Beschreibung seiner Schnittstelle im JSON Format kennen.",
             "deployContract": "Vertrag <strong>Veröffentlichen</strong>",
             "contractSourceCode": "Solidity Vertragsquellcode",
@@ -279,7 +281,7 @@
             "writeToContract": "Schreiben in Vertrag",
             "pickContract": "Wähle einen Vertrag",
             "pickFunction": "Wähle eine Funktion",
-            "noContract": "<p>Fügen Sie den Quellcode eines Vertrags hier ein. Beispiele fiden sie unter <a href=\"http://ethereum.org\" target=\"_blank\">ethereum.org</a>: </p> <ul><li><a href=\"http://ethereum.org/token\" target=\"_blank\">Token erzeugen</a></li><li><a href=\"http://ethereum.org/crowdsale\" target=\"_blank\">Crowdsale starten</a></li><li><a href=\"http://ethereum.org/dao\" target=\"_blank\">Blockchain organisation erzeugen</a></li></ul>",
+            "noContract": "<p>Fügen Sie den Quellcode eines Vertrags hier ein. Beispiele fiden sie unter <a href=\"http://ethereum.org\" target=\"_blank\">ethereum.org</a>: </p> <ul><li><a href=\"http://ethereum.org/token#the-code\" target=\"_blank\">Token erzeugen</a></li><li><a href=\"http://ethereum.org/crowdsale#the-code\" target=\"_blank\">Crowdsale starten</a></li><li><a href=\"http://ethereum.org/dao#the-code\" target=\"_blank\">Blockchain organisation erzeugen</a></li></ul>",
             "buttons": {
                 "showContractInfo": "Zeige Vertragsinformationen",
                 "hideContractInfo": "Schließe Vertragsinformationen",
