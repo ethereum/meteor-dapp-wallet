@@ -191,11 +191,6 @@ body {
             font-size: 0.7em;
         }
 
-        .red {
-            position: relative;
-            font-weight: 400;
-            bottom: 6px;
-        }
 
         .private-chain {
             color: @colorWhite;
@@ -810,6 +805,16 @@ body {
         margin-top: @gridHeight;
     }
 }
+
+
+/* #### Small wallet #### */
+@media screen and (max-width: 1149px){
+    .hide-on-small {
+        display: none;
+
+    }
+}
+
 
 /* #### All small phone screens landscape #### */
 @media screen and (max-width: 576px){

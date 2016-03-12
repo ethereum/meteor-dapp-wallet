@@ -12,6 +12,7 @@
             "buttons": {
                 "wallet": "Wallets",
                 "send": "Senden",
+                "contracts": "Verträge",
                 "deploy": "Erstellen",
                 "tokens": "Token",
                 "receive": "Empfangen",
@@ -123,7 +124,8 @@
                 "revoked": "Zurückgezogen"
             },
             "error": {
-                "noDataDeployed": "Auf der Vertrag Adresse wurden keine Daten veröffentlicht"
+                "noDataDeployed": "Auf der Vertrag Adresse wurden keine Daten veröffentlicht",
+                "outOfGas": "Die Transaktion von __from__ nach __to__ konnte nicht ausgeführt werden."  
             },
             "types": {
                 "executeContract": "Vertrag anwenden",
@@ -212,6 +214,7 @@
             "feeLow": "Guünstiger",
             "feeHigh": "Schneller",
             "addData": "Daten hinzufügen",
+            "sendAll": "Alles senden",
             "removeData": "Daten entfernen",
             "estimatedFee": "Gebühr bestimmen",
             "createContract": "Vertrag erstellen",
@@ -223,6 +226,7 @@
                 "noAmount": "Sie haben keinen Betrag angegeben."
             },
             "texts": {
+                "ownerPaysGas": "Gas wird vom Besitzer des Wallet Vertrags bezahlt",
                 "sendAmount": "Sie möchten <strong>__amount__</strong> versenden.",
                 "sendAmountEquivalent": "Sie möchten <strong>__amount__</strong> in Ether versenden, zu einem Wechselkurs von <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a>.<br>Was zur Zeit einem Betrag von <strong>__etherAmount__</strong> Ether entspricht.",
                 "sendToken": "Sie möchnetn <strong>__amount__ __symbol__</strong> von <strong> __name__</strong> versenden.",
@@ -246,7 +250,7 @@
             }
         },
         "tokens": {
-            "title": "Angepasste <strong>Token</strong>",
+            "title": "Eigene <strong>Token</strong>",
             "subTitle": "Hunzugefügte Token",
             "admin": "__name__ (Admin Seite)",
             "description": "Token sind Währungen oder Tauschgegenstände die auf der Ethereum platform aufsetzen. Damit ein Konto ein Token beobachten oder versenden kann, müssen Sie die Kontenadressen in die folgende Liste einfügen. Sie können Ihren einegenen Token erzeugen, in dem Sie z.B. folgendes <a href=\"http://chriseth.github.io/browser-solidity/?gist=0d1a998d949e26942212\" target=\"_blank\">Beispiel eines Token Vetrags</a> anpassen, oder mehr über <a href=\"https://www.ethereum.org/token#the-code\" target=\"_blank\">Ethereum Token</a> lernen.",
@@ -261,7 +265,7 @@
             "contractTitle" : "Verträge",
             "deployNewContract": "Neue Verträge veröffentlichen",
             "addCustomContract": "Vetraäge beobachten",
-            "customContracts": "Angepasste Verträge",
+            "customContracts": "Eigene Verträge",
             "description": "Um einen bereits in der Blockchain veröffentlichten Vertrag zu beobachten oder mit ihm interagieren zu können müssen Sie seine Adresse und die Beschreibung seiner Schnittstelle im JSON Format kennen.",
             "deployContract": "Vertrag <strong>Veröffentlichen</strong>",
             "contractSourceCode": "Solidity Vertragsquellcode",
@@ -291,6 +295,5 @@
                 "jsonInterfaceParseError": "JSON Schnittstelle konnte nicht gelesen werden."
             }
         }
-
     }
 }

@@ -124,7 +124,8 @@
                 "revoked": "Rejeitado"
             },
             "error": {
-                "noDataDeployed": "Contrato sem dados"    
+                "noDataDeployed": "Contrato sem dados",
+                "outOfGas": "A transação de __from__ para __to__ não pode ser executada"
             },
             "types": {
                 "executeContract": "Contrato executado",
@@ -225,6 +226,7 @@
                 "noAmount": "Você não especificou a quantidade a enviar."
             },
             "texts": {
+                "ownerPaysGas": "O combustível é pago pelo dono da carteira",
                 "sendAmount": "Você quer enviar <strong>__amount__</strong>.",
                 "sendAmountEquivalent": "Você quer enviar <strong>__amount__</strong> em ether, usando a taxa de câmbio de <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a>.<br> Que atualmente é equivalente a  <strong>__etherAmount__</strong>.",
                 "sendToken": "Você quer enviar <strong>__amount__ __symbol__</strong> de <strong> __name__</strong>.",
@@ -293,6 +295,5 @@
                 "jsonInterfaceParseError": "Interface JSON inválida."
             }
         }
-
     }
 }

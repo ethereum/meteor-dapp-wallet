@@ -3,13 +3,16 @@
         "selectGasPrice": {
             "high": "Tranzactie mai rapida",
             "low": "Tranzactie mai ieftina"
-        }
+        },
+        "checksumAlert":"This address looks valid, but it doesn't have some security features that will protect you against typos, so double check you have the right one. If provided, check if the security icon matches.",
+        "identiconHelper": "This is a security icon, if there's any change on the address the resulting icon should be a completelly different one"
     },
     "wallet": {
         "app": {
             "buttons": {
                 "wallet": "Portofelele tale",
                 "send": "Trimite",
+                "contracts": "Contracts",
                 "deploy": "Implementeaza",
                 "tokens": "Monede",
                 "receive": "Primeste",
@@ -27,6 +30,7 @@
                 "blockReceived": "Bloc nou descarcat",
                 "timeSinceBlock": "de la ultimul bloc",
                 "peers": "peers",
+                "testnetExplain": "You are on a testnet, DO NOT SEND any real ether to these addresses",
                 "noAccounts": {
                     "title": "Nu ai niciun cont configurat",
                     "text": "Inainte de a folosi portofelul, ai nevoie de un cont securizat cu o parola puternica."
@@ -66,6 +70,7 @@
             "creating": "Se creeaza",
             "importing": "Se importa",
             "accountNote": "Conturile nu pot afisa jurnalul tranzactiilor dar pot stoca si trimite ether. Pentru a vedea jurnalul tranzactiilor <a href=\"/account/new\">implementeaza un portofel bazat pe contracte</a> pentru a stoca ether.",
+            "walletNote": "Most exchanges don't support receiving ether from a contract wallet yet. Be sure to move the money to an account address first!",
             "addressCopiedToClipboard": "Copiaza adresa ta",
             "qrCodeLabel": "Scaneaza acest cod cu o aplicatie mobila compatibila",
             "dailyLimit": "Limita zilnica",
@@ -73,6 +78,7 @@
             "requiredSignatures": "Semnaturi necesare",
             "owners": "Detinatori",
             "walletsDescription": "Acestea sunt contracte ce stocheaza si securizeaza ether. Ele pot avea mai multi detinatori si pot pastra intregul jurnal al tranzactiilor.",
+            "walletsDescriptionNotEnoughFunds": "Once you have more than 1 ether you can create a more sophisticated contracts. Wallets are one type of basic smart contract, that allows your funds to be controlled by multiple accounts and have an optional daily limit on withdrawals, to increase security.  To create your own custom contracts go to the <em> Contracts </em> tab.",        
             "accountsDescription": "Conturile sunt chei securizate prin parola ce pot controla contractele. Conturile pot stoca ether dar nu pot lista jurnalul tranzactiilor.",
             "buttons": {
                 "deposit": "Depunere",
@@ -99,6 +105,7 @@
             "to": "Catre",
             "amount": "Cantitate",
             "gasPrice": "Pret Gas",
+            "perMillionGas": " PER MILLION GAS",
             "gasUsed": "Gas Folosit",
             "feePaid": "Taxe platite",
             "data": "Trimite date",
@@ -109,6 +116,7 @@
             "filter": "Filtreaza tranzactii",
             "noneFound": "Nu am gasit tranzactii.",
             "noOwnerAccount": "Urmareste confirmari",
+            "outOfGasDesc": "The transaction didn't seem to have enough gas to execute.",
             "buttons": {
                 "approve": "Aproba",
                 "approved": "Aprobata",
@@ -116,13 +124,15 @@
                 "revoked": "Respinsa"
             },
             "error": {
-                "noDataDeployed": "Nu au fost implementate date in adresa contractului!"    
+                "noDataDeployed": "Nu au fost implementate date in adresa contractului!",
+                "outOfGas": "The transaction from __from__ to __to__ couldn't be successfully executed."
             },
             "types": {
                 "executeContract": "Executie contract",
                 "betweenWallets": "Transfer intre portofele",
                 "sent": "Trimis",
                 "received": "Primit",
+                "outOfGas": "Transaction not executed",
                 "createdContract": {
                     "title": "Contract intocmit",
                     "at": "Contract intocmit la"
@@ -271,6 +281,7 @@
             "writeToContract": "Scrie in contract",
             "pickContract": "Alege un contract",
             "pickFunction": "Alege o functie",
+            "noContract": "<p>Put the source of the contract you want here. You can find many examples of contracts at the <a href=\"http://ethereum.org\" target=\"_blank\">ethereum.org</a>: </p> <ul><li><a href=\"http://ethereum.org/token#the-code\" target=\"_blank\">Build a token</a></li><li><a href=\"http://ethereum.org/crowdsale#the-code\" target=\"_blank\">Start a crowdsale</a></li><li><a href=\"http://ethereum.org/dao#the-code\" target=\"_blank\">Create a blockchain organization</a></li></ul>",
             "buttons": {
                 "showContractInfo": "Arata informatii despre contract",
                 "hideContractInfo": "Ascunde informatii despre contract",
@@ -284,6 +295,5 @@
                 "jsonInterfaceParseError": "Nu am putut parcurge interfata JSON."
             }
         }
-
     }
 }
