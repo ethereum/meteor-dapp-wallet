@@ -26,7 +26,7 @@
 
                     {{#with TemplateVar.get "syncing"}}
                         <span class="text">
-                            <i class="icon-feed"></i> {{$.Session.get "peerCount"}} {{i18n 'wallet.app.texts.peers'}}
+                            <i class="icon-feed"></i> {{$.Session.get "peerCount"}} <span class="hide-on-small">{{i18n 'wallet.app.texts.peers'}}</span>
                             &nbsp;&nbsp;|&nbsp;&nbsp;
                             <i class="icon-layers"></i> {{{i18n "wallet.app.texts.nodeSyncing" blockDiff=blockDiff}}}
                             &nbsp;&nbsp;|&nbsp;&nbsp;
@@ -35,9 +35,9 @@
                         </span>
                         <progress max="100" value="{{progress}}"></progress>
                     {{else}}
-                        <i class="icon-feed"></i> {{$.Session.get "peerCount"}} {{i18n 'wallet.app.texts.peers'}}
+                        <i class="icon-feed"></i> {{$.Session.get "peerCount"}} <span class="hide-on-small">{{i18n 'wallet.app.texts.peers'}}</span>
                         &nbsp;&nbsp;|&nbsp;&nbsp;
-                        <i class="icon-layers"></i> {{formattedBlockNumber}} <i class="icon-clock" style="margin-left: 10px;"></i> <!-- {{! formatTime latestBlock.timestamp "HH:mm:ss"}} {{! formatTime latestBlock.timestamp "ll"}} --> {{{timeSinceBlock}}}
+                        <i class="icon-layers"></i> {{formattedBlockNumber}} <i class="icon-clock" style="margin-left: 10px;"></i> {{{timeSinceBlock}}} <span class="hide-on-small">{{{timeSinceBlockText}}}</span>
                     {{/with}}
                 {{! /unless}}
             </li>
