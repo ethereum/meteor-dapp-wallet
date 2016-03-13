@@ -12,7 +12,7 @@
             "buttons": {
                 "wallet": "Portofelele tale",
                 "send": "Trimite",
-                "contracts": "Contracts",
+                "contracts": "Contracte",
                 "deploy": "Implementeaza",
                 "tokens": "Monede",
                 "receive": "Primeste",
@@ -26,11 +26,11 @@
                 "connectionErrorMist": "Nu ma pot conecta. Te rog porneste geth cu urmatoarele optiuni:<br><br><small><code>__node__</code><br><br>Ai grija sa iti setezi calea IPC implicita<code>datadir</code>, e.g.<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/geth.ipc</code><br>or<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/geth.ipc</code>. <br><br>Optional adauga: <code>--unlock &lt;yourAccount&gt;.</code></small>",
                 "connectionErrorBrowser": "Nu ma pot conecta. Te rog porneste geth cu urmatoarele optiuni:<br><br><small><code>__node__</code><br><br>Optional adauga: <code>--unlock &lt;yourAccount&gt;.</code></small>",
                 "pendingConfirmationsBadge": "Astept confirmarea!",
-                "nodeSyncing": "__blockDiff__ blocks left",
+                "nodeSyncing": "__blockDiff__ blocuri ramase",
                 "blockReceived": "Bloc nou descarcat",
                 "timeSinceBlock": "de la ultimul bloc",
                 "peers": "peers",
-                "testnetExplain": "You are on a testnet, DO NOT SEND any real ether to these addresses",
+                "testnetExplain": "Te afli in reteaua de teste, NU TRIMITE ether din reteaua principala catre aceste adrese",
                 "noAccounts": {
                     "title": "Nu ai niciun cont configurat",
                     "text": "Inainte de a folosi portofelul, ai nevoie de un cont securizat cu o parola puternica."
@@ -70,7 +70,7 @@
             "creating": "Se creeaza",
             "importing": "Se importa",
             "accountNote": "Conturile nu pot afisa jurnalul tranzactiilor dar pot stoca si trimite ether. Pentru a vedea jurnalul tranzactiilor <a href=\"/account/new\">implementeaza un portofel bazat pe contracte</a> pentru a stoca ether.",
-            "walletNote": "Most exchanges don't support receiving ether from a contract wallet yet. Be sure to move the money to an account address first!",
+            "walletNote": "Majoritatea furnizorilor de servicii de schimb nu permit ca tranzactiile de ether sa fie facute dintr-un portofel de tip contract-inteligent. Asigura-te ca trimiti intai ether catre contul tau!",
             "addressCopiedToClipboard": "Copiaza adresa ta",
             "qrCodeLabel": "Scaneaza acest cod cu o aplicatie mobila compatibila",
             "dailyLimit": "Limita zilnica",
@@ -78,7 +78,7 @@
             "requiredSignatures": "Semnaturi necesare",
             "owners": "Detinatori",
             "walletsDescription": "Acestea sunt contracte ce stocheaza si securizeaza ether. Ele pot avea mai multi detinatori si pot pastra intregul jurnal al tranzactiilor.",
-            "walletsDescriptionNotEnoughFunds": "Once you have more than 1 ether you can create a more sophisticated contracts. Wallets are one type of basic smart contract, that allows your funds to be controlled by multiple accounts and have an optional daily limit on withdrawals, to increase security.  To create your own custom contracts go to the <em> Contracts </em> tab.",        
+            "walletsDescriptionNotEnoughFunds": "Ai nevoie de cel putin 1 ether pentru a implementa contracte mai sofisticate. Portofelele sunt la baza niste contracte inteligente, ce pot fi controlate de mai multi detinatori si chiar se pot seta limite de retragere pentru o mai buna securitate.  Pentru a implementa un contract personalizat, mergi la sectiunea <em> Contracts </em>.",        
             "accountsDescription": "Conturile sunt chei securizate prin parola ce pot controla contractele. Conturile pot stoca ether dar nu pot lista jurnalul tranzactiilor.",
             "buttons": {
                 "deposit": "Depunere",
@@ -105,7 +105,7 @@
             "to": "Catre",
             "amount": "Cantitate",
             "gasPrice": "Pret Gas",
-            "perMillionGas": " PER MILLION GAS",
+            "perMillionGas": " PER MILION GAS",
             "gasUsed": "Gas Folosit",
             "feePaid": "Taxe platite",
             "data": "Trimite date",
@@ -116,7 +116,7 @@
             "filter": "Filtreaza tranzactii",
             "noneFound": "Nu am gasit tranzactii.",
             "noOwnerAccount": "Urmareste confirmari",
-            "outOfGasDesc": "The transaction didn't seem to have enough gas to execute.",
+            "outOfGasDesc": "Aceasta transactie nu a fost executata din cauza lipsei de gas.",
             "buttons": {
                 "approve": "Aproba",
                 "approved": "Aprobata",
@@ -132,7 +132,7 @@
                 "betweenWallets": "Transfer intre portofele",
                 "sent": "Trimis",
                 "received": "Primit",
-                "outOfGas": "Transaction not executed",
+                "outOfGas": "Tranzactia nu a fost executata",
                 "createdContract": {
                     "title": "Contract intocmit",
                     "at": "Contract intocmit la"
@@ -281,7 +281,7 @@
             "writeToContract": "Scrie in contract",
             "pickContract": "Alege un contract",
             "pickFunction": "Alege o functie",
-            "noContract": "<p>Put the source of the contract you want here. You can find many examples of contracts at the <a href=\"http://ethereum.org\" target=\"_blank\">ethereum.org</a>: </p> <ul><li><a href=\"http://ethereum.org/token#the-code\" target=\"_blank\">Build a token</a></li><li><a href=\"http://ethereum.org/crowdsale#the-code\" target=\"_blank\">Start a crowdsale</a></li><li><a href=\"http://ethereum.org/dao#the-code\" target=\"_blank\">Create a blockchain organization</a></li></ul>",
+            "noContract": "<p>Pune aici codul sursa al contractului dorit. Poti gasi mai multe exemple de cotracte aici: <a href=\"http://ethereum.org\" target=\"_blank\">ethereum.org</a>: </p> <ul><li><a href=\"http://ethereum.org/token#the-code\" target=\"_blank\">Implementeaza un token</a></li><li><a href=\"http://ethereum.org/crowdsale#the-code\" target=\"_blank\">Lanseaza o campanie pentru strangere de fonduri</a></li><li><a href=\"http://ethereum.org/dao#the-code\" target=\"_blank\">Implementeaza o organizatie bazata pe blockchain</a></li></ul>",
             "buttons": {
                 "showContractInfo": "Arata informatii despre contract",
                 "hideContractInfo": "Ascunde informatii despre contract",
