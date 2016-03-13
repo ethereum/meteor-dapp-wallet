@@ -3,13 +3,16 @@
         "selectGasPrice": {
             "high": "Tranzactie mai rapida",
             "low": "Tranzactie mai ieftina"
-        }
+        },
+        "checksumAlert":"This address looks valid, but it doesn't have some security features that will protect you against typos, so double check you have the right one. If provided, check if the security icon matches.",
+        "identiconHelper": "This is a security icon, if there's any change on the address the resulting icon should be a completelly different one"
     },
     "wallet": {
         "app": {
             "buttons": {
                 "wallet": "Portofelele tale",
                 "send": "Trimite",
+                "contracts": "Contracte",
                 "deploy": "Implementeaza",
                 "tokens": "Monede",
                 "receive": "Primeste",
@@ -23,10 +26,11 @@
                 "connectionErrorMist": "Nu ma pot conecta. Te rog porneste geth cu urmatoarele optiuni:<br><br><small><code>__node__</code><br><br>Ai grija sa iti setezi calea IPC implicita<code>datadir</code>, e.g.<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/geth.ipc</code><br>or<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/geth.ipc</code>. <br><br>Optional adauga: <code>--unlock &lt;yourAccount&gt;.</code></small>",
                 "connectionErrorBrowser": "Nu ma pot conecta. Te rog porneste geth cu urmatoarele optiuni:<br><br><small><code>__node__</code><br><br>Optional adauga: <code>--unlock &lt;yourAccount&gt;.</code></small>",
                 "pendingConfirmationsBadge": "Astept confirmarea!",
-                "nodeSyncing": "__blockDiff__ blocks left",
+                "nodeSyncing": "__blockDiff__ blocuri ramase",
                 "blockReceived": "Bloc nou descarcat",
                 "timeSinceBlock": "de la ultimul bloc",
                 "peers": "peers",
+                "testnetExplain": "Te afli in reteaua de teste, NU TRIMITE ether din reteaua principala catre aceste adrese",
                 "noAccounts": {
                     "title": "Nu ai niciun cont configurat",
                     "text": "Inainte de a folosi portofelul, ai nevoie de un cont securizat cu o parola puternica."
@@ -66,6 +70,7 @@
             "creating": "Se creeaza",
             "importing": "Se importa",
             "accountNote": "Conturile nu pot afisa jurnalul tranzactiilor dar pot stoca si trimite ether. Pentru a vedea jurnalul tranzactiilor <a href=\"/account/new\">implementeaza un portofel bazat pe contracte</a> pentru a stoca ether.",
+            "walletNote": "Majoritatea furnizorilor de servicii de schimb nu permit ca tranzactiile de ether sa fie facute dintr-un portofel de tip contract-inteligent. Asigura-te ca trimiti intai ether catre contul tau!",
             "addressCopiedToClipboard": "Copiaza adresa ta",
             "qrCodeLabel": "Scaneaza acest cod cu o aplicatie mobila compatibila",
             "dailyLimit": "Limita zilnica",
@@ -73,6 +78,7 @@
             "requiredSignatures": "Semnaturi necesare",
             "owners": "Detinatori",
             "walletsDescription": "Acestea sunt contracte ce stocheaza si securizeaza ether. Ele pot avea mai multi detinatori si pot pastra intregul jurnal al tranzactiilor.",
+            "walletsDescriptionNotEnoughFunds": "Ai nevoie de cel putin 1 ether pentru a implementa contracte mai sofisticate. Portofelele sunt la baza niste contracte inteligente, ce pot fi controlate de mai multi detinatori si chiar se pot seta limite de retragere pentru o mai buna securitate.  Pentru a implementa un contract personalizat, mergi la sectiunea <em> Contracts </em>.",        
             "accountsDescription": "Conturile sunt chei securizate prin parola ce pot controla contractele. Conturile pot stoca ether dar nu pot lista jurnalul tranzactiilor.",
             "buttons": {
                 "deposit": "Depunere",
@@ -99,6 +105,7 @@
             "to": "Catre",
             "amount": "Cantitate",
             "gasPrice": "Pret Gas",
+            "perMillionGas": " PER MILION GAS",
             "gasUsed": "Gas Folosit",
             "feePaid": "Taxe platite",
             "data": "Trimite date",
@@ -109,6 +116,7 @@
             "filter": "Filtreaza tranzactii",
             "noneFound": "Nu am gasit tranzactii.",
             "noOwnerAccount": "Urmareste confirmari",
+            "outOfGasDesc": "Aceasta transactie nu a fost executata din cauza lipsei de gas.",
             "buttons": {
                 "approve": "Aproba",
                 "approved": "Aprobata",
@@ -116,13 +124,15 @@
                 "revoked": "Respinsa"
             },
             "error": {
-                "noDataDeployed": "Nu au fost implementate date in adresa contractului!"    
+                "noDataDeployed": "Nu au fost implementate date in adresa contractului!",
+                "outOfGas": "The transaction from __from__ to __to__ couldn't be successfully executed."
             },
             "types": {
                 "executeContract": "Executie contract",
                 "betweenWallets": "Transfer intre portofele",
                 "sent": "Trimis",
                 "received": "Primit",
+                "outOfGas": "Tranzactia nu a fost executata",
                 "createdContract": {
                     "title": "Contract intocmit",
                     "at": "Contract intocmit la"
@@ -204,6 +214,7 @@
             "feeLow": "Tranzactie mai ieftina",
             "feeHigh": "Tranzactie mai rapida",
             "addData": "Adauga date",
+            "sendAll": "Send everything",
             "removeData": "Sterge date",
             "estimatedFee": "Comision estimat",
             "createContract": "Intocmeste contract",
@@ -215,6 +226,7 @@
                 "noAmount": "Nu ai specificat suma ce trebuie trimisa."
             },
             "texts": {
+                "ownerPaysGas": "Gas is payed by the owner of the wallet contract",
                 "sendAmount": "Vei trimite <strong>__amount__</strong>.",
                 "sendAmountEquivalent": "Vei trimite <strong>__amount__</strong> in ether, folosind rata de <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a>.<br>In acest moment echivalentul a <strong>__etherAmount__</strong>.",
                 "sendToken": "You want to send <strong>__amount__ __name__</strong>.",
@@ -269,6 +281,7 @@
             "writeToContract": "Scrie in contract",
             "pickContract": "Alege un contract",
             "pickFunction": "Alege o functie",
+            "noContract": "<p>Pune aici codul sursa al contractului dorit. Poti gasi mai multe exemple de cotracte aici: <a href=\"http://ethereum.org\" target=\"_blank\">ethereum.org</a>: </p> <ul><li><a href=\"http://ethereum.org/token#the-code\" target=\"_blank\">Implementeaza un token</a></li><li><a href=\"http://ethereum.org/crowdsale#the-code\" target=\"_blank\">Lanseaza o campanie pentru strangere de fonduri</a></li><li><a href=\"http://ethereum.org/dao#the-code\" target=\"_blank\">Implementeaza o organizatie bazata pe blockchain</a></li></ul>",
             "buttons": {
                 "showContractInfo": "Arata informatii despre contract",
                 "hideContractInfo": "Ascunde informatii despre contract",
@@ -282,6 +295,5 @@
                 "jsonInterfaceParseError": "Nu am putut parcurge interfata JSON."
             }
         }
-
     }
 }

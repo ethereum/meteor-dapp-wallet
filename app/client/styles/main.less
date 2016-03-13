@@ -191,11 +191,6 @@ body {
             font-size: 0.7em;
         }
 
-        .red {
-            position: relative;
-            font-weight: 400;
-            bottom: 6px;
-        }
 
         .private-chain {
             color: @colorWhite;
@@ -242,7 +237,6 @@ body {
 
     span {
         font-size: 0.6em;
-        font-weight: 100;
     }
     
     .inline-form {
@@ -548,8 +542,15 @@ body {
                 color: @colorTextSecondary;
             }
 
-            input {
+            input[type="text"] {
                 width: 100%;
+                margin-bottom: @defaultMargin/2;
+            }
+
+            input.send-all  {
+                display: inline-block;
+                float: left;
+                margin-right: @defaultMargin/2;
             }
         }
 
@@ -804,6 +805,16 @@ body {
         margin-top: @gridHeight;
     }
 }
+
+
+/* #### Small wallet #### */
+@media screen and (max-width: 1099px){
+    .hide-on-small {
+        display: none;
+
+    }
+}
+
 
 /* #### All small phone screens landscape #### */
 @media screen and (max-width: 576px){

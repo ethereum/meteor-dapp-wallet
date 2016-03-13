@@ -115,6 +115,17 @@ Template.registerHelper('accountNameOrAddress', function(address){
 });
 
 /**
+Format a number based on decimal numbers
+
+    {{formatNumberByDecimals tokenAmount decimals}}
+
+@method formatNumberByDecimals
+@param {Number} number
+@param {Number} decimals
+*/
+Template.registerHelper('formatNumberByDecimals', Helpers.formatNumberByDecimals);
+
+/**
 Formats a timestamp to any format given.
 
     {{formatTime myTime "YYYY-MM-DD"}}

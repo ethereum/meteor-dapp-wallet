@@ -12,6 +12,7 @@
             "buttons": {
                 "wallet": "Wallets",
                 "send": "Send",
+                "contracts": "Contracts",
                 "deploy": "Deploy",
                 "tokens": "Tokens",
                 "receive": "Receive",
@@ -115,7 +116,7 @@
             "filter": "Filter transactions",
             "noneFound": "No matching transaction found.",
             "noOwnerAccount": "Watch only confirmation",
-            "outOfGasDesc": "The transaction didn't have enough gas to execute",
+            "outOfGasDesc": "The transaction didn't seem to have enough gas to execute.",
             "buttons": {
                 "approve": "Approve",
                 "approved": "Approved",
@@ -123,7 +124,8 @@
                 "revoked": "Revoked"
             },
             "error": {
-                "noDataDeployed": "No data is deployed on the contract address!"    
+                "noDataDeployed": "No data is deployed on the contract address!",
+                "outOfGas": "The transaction from __from__ to __to__ couldn't be successfully executed."  
             },
             "types": {
                 "executeContract": "Contract Execution",
@@ -212,6 +214,7 @@
             "feeLow": "Cheaper",
             "feeHigh": "Faster",
             "addData": "Add data",
+            "sendAll": "Send everything",
             "removeData": "Remove data",
             "estimatedFee": "Estimated fee",
             "createContract": "Create contract",
@@ -223,6 +226,7 @@
                 "noAmount": "You didn't specify an amount to send."
             },
             "texts": {
+                "ownerPaysGas": "Gas is payed by the owner of the wallet contract",
                 "sendAmount": "You want to send <strong>__amount__</strong>.",
                 "sendAmountEquivalent": "You want to send <strong>__amount__</strong> in ether, using exchange rates from <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a>.<br>Which is currently an equivalent of <strong>__etherAmount__</strong>.",
                 "sendToken": "You want to send <strong>__amount__ __symbol__</strong> of <strong> __name__</strong>.",
@@ -277,7 +281,7 @@
             "writeToContract": "Write to contract",
             "pickContract": "Pick a contract",
             "pickFunction": "Pick a function",
-            "noContract": "<p>Put the source of the contract you want here. You can find many examples of contracts at the <a href=\"http://ethereum.org\" target=\"_blank\">ethereum.org</a>: </p> <ul><li><a href=\"http://ethereum.org/token\" target=\"_blank\">Build a token</a></li><li><a href=\"http://ethereum.org/crowdsale\" target=\"_blank\">Start a crowdsale</a></li><li><a href=\"http://ethereum.org/dao\" target=\"_blank\">Create a blockchain organization</a></li></ul>",
+            "noContract": "<p>Put the source of the contract you want here. You can find many examples of contracts at the <a href=\"http://ethereum.org\" target=\"_blank\">ethereum.org</a>: </p> <ul><li><a href=\"http://ethereum.org/token#the-code\" target=\"_blank\">Build a token</a></li><li><a href=\"http://ethereum.org/crowdsale#the-code\" target=\"_blank\">Start a crowdsale</a></li><li><a href=\"http://ethereum.org/dao#the-code\" target=\"_blank\">Create a blockchain organization</a></li></ul>",
             "buttons": {
                 "showContractInfo": "Show contract info",
                 "hideContractInfo": "Hide contract info",
@@ -291,6 +295,5 @@
                 "jsonInterfaceParseError": "Couldn't parse the JSON Interface."
             }
         }
-
     }
 }

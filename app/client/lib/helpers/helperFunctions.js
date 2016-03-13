@@ -269,7 +269,7 @@ Helpers.formatTransactionBalance = function(value, exchangeRates, unit) {
         var price = new BigNumber(String(web3.fromWei(value, 'ether')), 10).times(exchangeRates[unit].price);
         return EthTools.formatNumber(price, format) + ' '+ unit.toUpperCase();
     } else {
-        return EthTools.formatBalance(value, format + '[000000] UNIT');
+        return EthTools.formatBalance(value, format + '[0000000000000000] UNIT');
     }
 };
 

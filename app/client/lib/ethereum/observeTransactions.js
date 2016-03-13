@@ -195,15 +195,9 @@ var updateTransaction = function(newDocument, transaction, receipt){
 
         newDocument.contractAddress = receipt.contractAddress;
         newDocument.gasUsed = receipt.gasUsed;
+        newDocument.gasLimit = transaction.gas;
         newDocument.outOfGas = receipt.gasUsed === transaction.gas;
         newDocument.fee = transaction.gasPrice.times(new BigNumber(receipt.gasUsed)).toString(10);
-
-        if (newDocument.outOfGas){
-            GlobalNotification.error({
-               content: "A recent transaction ran out of gas and wasn't executed",
-               duration: 4
-            }); 
-        }
     }
 
     if(oldTx) {
@@ -220,6 +214,34 @@ var updateTransaction = function(newDocument, transaction, receipt){
         Transactions.update({_id: id}, {$set: newDocument});
     } else {
         Transactions.insert(newDocument);
+    }
+
+    // check previous balance, vs current balance, if different remove the out of gas
+    if(newDocument.outOfGas) {
+        var warningText = TAPi18n.__('wallet.transactions.error.outOfGas', {from: Helpers.getAccountNameByAddress(newDocument.from), to: Helpers.getAccountNameByAddress(newDocument.to)});
+
+        if(EthAccounts.findOne({address: newDocument.from})) {
+            web3.eth.getBalance(newDocument.from, newDocument.blockNumber, function(e, now){
+                if(!e) {
+                    web3.eth.getBalance(newDocument.from, newDocument.blockNumber-1, function(e, then){
+                        if(!e && now.toString(10) !== then.toString(10)) {
+                            console.log(newDocument.transactionHash, 'Removed out of gas, as balance changed');
+                            Transactions.update({_id: id}, {$set: {outOfGas: false}});
+                        } else {
+                            GlobalNotification.warning({
+                               content: warningText,
+                               duration: 10
+                            });
+                        }
+                    });
+                }
+            });
+        } else {
+            GlobalNotification.warning({
+               content: warningText,
+               duration: 10
+            });
+        }
     }
 };
 

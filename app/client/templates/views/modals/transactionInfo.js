@@ -50,7 +50,6 @@ Template['views_modals_transactionInfo'].helpers({
     @method (gasPricePerMillion)
     */
     'gasPricePerMillion': function() {
-
         return this.gasPrice * 1000000;
     }
 });
