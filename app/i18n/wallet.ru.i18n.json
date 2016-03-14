@@ -125,7 +125,7 @@
             },
             "error": {
                 "noDataDeployed": "Никаких данных не установлено по адресу контракта!",
-                "outOfGas": "The transaction from __from__ to __to__ couldn't be successfully executed."  
+                "outOfGas": "Транзакция от __from__ к __to__ не может быть выполнена."  
             },
             "types": {
                 "executeContract": "Исполнение контракта",
@@ -214,7 +214,7 @@
             "feeLow": "Дешевле",
             "feeHigh": "Быстрее",
             "addData": "Добавить данные",
-            "sendAll": "Send everything",
+            "sendAll": "Отправить всё",
             "removeData": "Удалить данные",
             "estimatedFee": "Комиссионные",
             "createContract": "Создать контракт",
@@ -226,7 +226,7 @@
                 "noAmount": "Вы не указали сумму, которую нужно отправить."
             },
             "texts": {
-                "ownerPaysGas": "Gas is payed by the owner of the wallet contract",
+                "ownerPaysGas": "Газ оплачивается владельцем контракта кошелька",
                 "sendAmount": "Вы хотите отправить <strong>__amount__</strong>.",
                 "sendAmountEquivalent": "Вы хотите отправить <strong>__amount__</strong> эфира, используя курс с <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a>.<br>Что в данный момент эквивалентно <strong>__etherAmount__</strong>.",
                 "sendToken": "Вы хотите отправить <strong>__amount__ __symbol__</strong> от <strong> __name__</strong>.",
