@@ -1,5 +1,5 @@
 {
 	"helper_name": "i18n",
-	"supported_languages": ["de", "en", "pt", "ro"],
+	"supported_languages": ["de", "en", "pt", "ro", "ru"],
 	"cdn_path": "i18n"
 }
