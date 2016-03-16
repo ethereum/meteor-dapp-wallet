@@ -59,7 +59,7 @@
             },
             "interface": {
                 "title": "Vertrag JSON Schnittstelle",
-                "description": "Wenn Sie möchten, dass eine andere Person diesen Vertrag ausführt, senden Sie diese Informationen zusammen mit der Vertrag-Adresse."
+                "description": "Wenn Sie möchten, dass eine andere Person diesen Vertrag ausführt, senden Sie diese Informationen zusammen mit der Vertragsdresse."
             }
         },
         "accounts": {
@@ -90,7 +90,7 @@
             "modal": {
                 "deleteText": "Möchten Sie diesen Wallet Vertrag wirklich löschen? Der Vertrag wird weiterhin in der Blockchain existieren, jedoch werden Sie den Zugriff auf jegliches darin enthaltene Vermögen verlieren.<br><br> Wenn Sie sicher sind, dass Sie diesen Vertrag löschen möchten, geben Sie bitte den Namen des Vertrags ein, um die Löschung zu bestätigen.",
                 "backupWallet": {
-                    "title": "Sichern Sie Ihre Wallet Vertrag-Adresse!",
+                    "title": "Sichern Sie Ihre Wallet Vertragsadresse!",
                     "description": "Schreiben Sie diese Adresse ab und bewahren Sie diese sicher auf:"
                 }
             }
@@ -176,7 +176,7 @@
                     "description": "Ein Vertrag, der von mehreren Konten kontrolliert wird",
                     "text1": "Dies ist ein gemeinsames Konto von den Eigentümer",
                     "text2": "Sie können bis zu",
-                    "text3": "Ether am Tag versenden.",
+                    "text3": "Ether pro Tag versenden.",
                     "text4": "Jede Transaktion die über das tägliche Limit hinaus geht muss durch",
                     "text5": "betätigt werden.",
                     "accountOwnersTitle": "Kontoinhaber",
