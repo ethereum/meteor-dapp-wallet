@@ -33,8 +33,8 @@ ejson@1.0.7
 ethereum:accounts@0.3.10
 ethereum:blocks@0.3.1
 ethereum:dapp-styles@0.5.0
-ethereum:elements@0.6.7
-ethereum:tools@0.4.1
+ethereum:elements@0.6.8
+ethereum:tools@0.5.2
 ethereum:web3@0.15.3
 fastclick@1.0.7
 frozeman:animation-helper@0.2.6

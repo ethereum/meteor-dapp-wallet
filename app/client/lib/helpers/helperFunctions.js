@@ -258,7 +258,7 @@ Helpers.formatTransactionBalance = function(value, exchangeRates, unit) {
         unit = null;
 
     var unit = unit || EthTools.getUnit(),
-        format = '0,0.00';
+        format = '0,0.00[0]';
 
     if((unit === 'usd' || unit === 'eur' || unit === 'btc') &&
        exchangeRates && exchangeRates[unit]) {
