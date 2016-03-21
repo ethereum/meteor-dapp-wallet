@@ -401,28 +401,27 @@ observeTransactions = function(){
                !newDocument.exchangeRates.btc ||
                !newDocument.exchangeRates.usd ||
                !newDocument.exchangeRates.eur) {
-                HTTP.get('https://www.cryptocompare.com/api/data/pricehistorical?fsym=ETH&tsyms=BTC,USD,EUR&ts='+ newDocument.timestamp, function(e, res){
+                HTTP.get('https://min-api.cryptocompare.com/data/pricehistorical?fsym=ETH&tsyms=BTC,USD,EUR&ts='+ newDocument.timestamp, function(e, res){
 
                     if(!e && res && res.statusCode === 200) {
                         var content = JSON.parse(res.content);
 
-                        if(content && content.Response === 'Success' && content.Data){
-                            _.each(content.Data, function(item){
-                                if(item && _.isFinite(item.Price)) {
-                                    var name = item.Symbol.toLowerCase();
+                        if(content){
+                            _.each(content, function(price, key){
+                                if(price && _.isFinite(price)) {
+                                    var name = key.toLowerCase();
                                     var set = {};
                                     set['exchangeRates.'+ name] = {
-                                        price: String(item.Price),
-                                        timestamp: item.PriceTS
+                                        price: String(price),
+                                        timestamp: null
                                     };
 
                                     Transactions.update(newDocument._id, {$set: set});
                                 }
-
                             });
                         }
                     } else {
-                        console.warn('Can not connect to https://www.cryptocompare.com/api to get price ticker data, please check your internet connection.');
+                        console.warn('Can not connect to https://min-api.cryptocompare.com/ to get price ticker data, please check your internet connection.');
                     }
                 });
             }

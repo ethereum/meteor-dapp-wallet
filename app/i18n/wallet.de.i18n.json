@@ -2,10 +2,10 @@
     "elements": {
         "selectGasPrice": {
             "high": "Schneller",
-            "low": "Billiger"
+            "low": "Günstiger"
         },
-        "checksumAlert":"Die Adresse scheint gültig zu sein. Jedoch fehlen Sicherheitseigenschaften die gegen Tippfehler schützen. Bitte kontrolieren Sie daher die Adresse sehr genau. Wenn ein Sicherheitssymbol angezeigt wird kontrollieren Sie auch ob dieses mit dem der Adresse übereinstimmt.",
-        "identiconHelper": "Dies ist ein Sicherheitssymbol, unterschiedliche Addressen haben augenscheinlich verschiedene Sicherheitssymbole. Dies kann Ihnen helfen Tippfehler frühzeitig zu erkennen."
+        "checksumAlert":"Die Adresse scheint gültig zu sein. Jedoch fehlen Sicherheitseigenschaften, die gegen Tippfehler schützen. Bitte kontrolieren Sie daher die Adresse sehr genau. Wenn ein Sicherheitssymbol angezeigt wird, kontrollieren Sie auch, ob dieses mit dem der Adresse übereinstimmt.",
+        "identiconHelper": "Dies ist ein Sicherheitssymbol. Unterschiedliche Addressen haben augenscheinlich verschiedene Sicherheitssymbole. Dies kann Ihnen helfen, Tippfehler frühzeitig zu erkennen."
     },
     "wallet": {
         "app": {
@@ -27,7 +27,7 @@
                 "connectionErrorBrowser": "Verbindung konnte nicht hergestellt werden. Bitte starten Sie Geth mit den folgenden Optionen:<br><br><small><code>__node__</code><br><br>Alternative Optionen: <code>--unlock &lt;yourAccount&gt;.</code></small>",
                 "pendingConfirmationsBadge": "Ausstehende Bestätigung!",
                 "nodeSyncing": "__blockDiff__ ausstehende Blöcke",
-                "blockReceived": "Neuer Blocke empfangen",
+                "blockReceived": "Neuen Block empfangen",
                 "timeSinceBlock": "seit dem letzten Block",
                 "peers": "Peers",
                 "testnetExplain": "Sie sind mit dem Testnetz verbunden, SENDEN SIE KEINE echten Ether an diese Adressen",
@@ -37,7 +37,7 @@
                 }
             },
             "error": {
-                "wrongChain": "Sie folgen nicht her Hauptblockchain, bitte starten Sie die Ethereum Wallet App neu!"
+                "wrongChain": "Sie folgen nicht der Hauptblockchain, bitte starten Sie die Ethereum Wallet App neu!"
             }
         },
         "modals": {
@@ -45,13 +45,13 @@
                 "title": "Wählen Sie ein Konto"
             },
             "testnetWallet": {
-                "walletNeedsDeployment": "Sie sind mit dem Testnetz verbunden.<br><br>Es wurde kein Wallet Vertrag gefunden. Daher muss ein neuer Vertrag mit Ihrer Adresse:<br><br><small><code>__account__</code></small><br><br><em>erzeugt werden.Bitte stellen Sie sicher, dass diese Adresse über einen Kontostand von mindestens 1 Ether verfügt!</em>",
-                "testnetWalletDeployed": "Der Original Wallet Vertrag wurde erzeugt auf Ihrer Adresse:<br><br><small><code>__address__</code></small> erzeugt."
+                "walletNeedsDeployment": "Sie sind mit dem Testnetz verbunden.<br><br>Es wurde kein Wallet Vertrag gefunden. Daher muss ein neuer Vertrag mit Ihrer Adresse:<br><br><small><code>__account__</code></small><br><br><em>erzeugt werden. Bitte stellen Sie sicher, dass diese Adresse über einen Kontostand von mindestens 1 Ether verfügt!</em>",
+                "testnetWalletDeployed": "Der Original Wallet Vertrag wurde auf Ihrer Adresse:<br><br><small><code>__address__</code></small> erzeugt."
             },
             "addToken": {
                 "title": "Token hinzufügen",
                 "titleEdit": "Token bearbeiten",
-                "contractAddress": "Token Vertrag Adresse",
+                "contractAddress": "Token Vertragsadresse",
                 "tokenName": "Tokenname",
                 "tokenSymbol": "Tokensymbol",
                 "decimalPlaces": "Nachkommastellen der kleinsten Einheit",
@@ -59,7 +59,7 @@
             },
             "interface": {
                 "title": "Vertrag JSON Schnittstelle",
-                "description": "Wenn Sie möchten, dass eine andere Person diesen Vertrag ausführt, senden Sie diese Informationen zusammen mit der Vertrag Adresse."
+                "description": "Wenn Sie möchten, dass eine andere Person diesen Vertrag ausführt, senden Sie diese Informationen zusammen mit der Vertragsdresse."
             }
         },
         "accounts": {
@@ -77,8 +77,8 @@
             "dailyLimitRemaining": "Heute verbleibend",
             "requiredSignatures": "Erforderliche Signaturen",
             "owners": "Eigentümer",
-            "walletsDescription": "Verträge werden auf der Blockchain gespeichert und dienen der Verwaltung von Ether. Ein Vertrag kann mehrere Konten als Eigentümer haben. Verträge zeigen, im Gegensatz zu Konten immer eine vollständige Transaktionshistorie.",
-            "walletsDescriptionNotEnoughFunds": "Es wird mindestens 1 Ether benötigt um komplexe Verträge zu erstellen.",
+            "walletsDescription": "Verträge werden auf der Blockchain gespeichert und dienen der Verwaltung von Ether. Ein Vertrag kann mehrere Konten als Eigentümer haben. Verträge zeigen im Gegensatz zu Konten immer eine vollständige Transaktionshistorie.",
+            "walletsDescriptionNotEnoughFunds": "Es wird mindestens 1 Ether benötigt, um komplexe Verträge zu erstellen.",
             "accountsDescription": "Konten können Ether, Ethereum basierte Token oder Coins enthalten. Darüber hinaus können Konten Verträge kontrollieren. Im Gegensatz zu Wallets können Konten keine einkommenden Transaktionen anzeigen.",
             "buttons": {
                 "deposit": "Ether hinterlegen",
@@ -88,9 +88,9 @@
                 "showInterface": "Interface anzeigen"
             },
             "modal": {
-                "deleteText": "Möchten Sie diesen Wallet Vertrag wirklich löschen? Der Vertrag wird weiterhin in der Blockchain existieren jedoch werden Sie den Zugriff auf jegliches darin enthaltene Vermögen verlieren.<br><br> Wenn Sie sicher sind, dass Sie diesen Vertrag löschen möchten, geben Sie bitte den Namen des Vertrags ein um die Löschung zu bestätigen.",
+                "deleteText": "Möchten Sie diesen Wallet Vertrag wirklich löschen? Der Vertrag wird weiterhin in der Blockchain existieren, jedoch werden Sie den Zugriff auf jegliches darin enthaltene Vermögen verlieren.<br><br> Wenn Sie sicher sind, dass Sie diesen Vertrag löschen möchten, geben Sie bitte den Namen des Vertrags ein, um die Löschung zu bestätigen.",
                 "backupWallet": {
-                    "title": "Sichern Sie Ihre Wallet Vertrag Adresse!",
+                    "title": "Sichern Sie Ihre Wallet Vertragsadresse!",
                     "description": "Schreiben Sie diese Adresse ab und bewahren Sie diese sicher auf:"
                 }
             }
@@ -115,7 +115,7 @@
             "showMore": "Mehr zeigen",
             "filter": "Transaktionen filtern",
             "noneFound": "Keine passende Transaktion gefunden.",
-            "noOwnerAccount": "Nur Bestætigungen berücksichtigen",
+            "noOwnerAccount": "Nur Bestätigungen berücksichtigen",
             "outOfGasDesc": "Die Transaktion benötigt mehr Gas um ausgeführt zu werden.",
             "buttons": {
                 "approve": "Bestätigen",
@@ -124,7 +124,7 @@
                 "revoked": "Zurückgezogen"
             },
             "error": {
-                "noDataDeployed": "Auf der Vertrag Adresse wurden keine Daten veröffentlicht",
+                "noDataDeployed": "Auf der Vertragsadresse wurden keine Daten veröffentlicht",
                 "outOfGas": "Die Transaktion von __from__ nach __to__ konnte nicht ausgeführt werden."  
             },
             "types": {
@@ -169,25 +169,25 @@
                 "simple": {
                     "title": "Konto mit einem Eigentümer",
                     "description": "Ein einfacher Vertrag ohne zusätzliche Sicherheitsmerkmale.",
-                    "warning": "Hinweis: Eine Person mit Zugriff auf Ihr Konto hat auch Zugriff auf diese Wallet."
+                    "warning": "Hinweis: Eine Person mit Zugriff auf Ihr Konto hat auch Zugriff auf dieses Wallet."
                 },
                 "multisig": {
                     "title": "Multisignatur Wallet Vertrag",
-                    "description": "Ein VErtrag der von mehreren Konten kontrolliert wird",
+                    "description": "Ein Vertrag, der von mehreren Konten kontrolliert wird",
                     "text1": "Dies ist ein gemeinsames Konto von den Eigentümer",
                     "text2": "Sie können bis zu",
-                    "text3": "Ether am tag versenden.",
+                    "text3": "Ether pro Tag versenden.",
                     "text4": "Jede Transaktion die über das tägliche Limit hinaus geht muss durch",
                     "text5": "betätigt werden.",
                     "accountOwnersTitle": "Kontoinhaber",
                     "ownerAddress": "Inhaberadresse"
                 },
                 "import": {
-                    "title": "Wallet Importieren",
-                    "description": "Eine existierende (multisignatur) Wallet importieren.",
+                    "title": "Wallet importieren",
+                    "description": "Ein existierendes (multisignatur) Wallet importieren.",
                     "walletAddress": "Walletadresse",
                     "youreOwner": "Ihr \"__account__\" Konto ist Eigentümer von diesem Wallet Vertrag.",
-                    "watchOnly": "Sie sind nicht Eigentümer von diesem Konto, aber Sie können das Konto \"WATCH ONLY\" hunzufügen.",
+                    "watchOnly": "Sie sind nicht Eigentümer von diesem Konto, aber Sie können das Konto \"WATCH ONLY\" hinzufügen.",
                     "notWallet": "Diese Adresse hat keinen Wallet Vertrag."
                 }
             },
@@ -196,7 +196,7 @@
                 "alreadyExists": "Das Konto existiert bereits.",
                 "stubHasNoOrigWalletAddress": "Für Ihren Vertrag wurde keine Kontoadresse gesetzt. Bitte Starten Sie die App neu!",
                 "contractsCantBeOwners": "Verträge können keine Eigentümer sein.",
-                "checkOwnerAddress": "Bitte ändern Sie die Vetragsadresse __address__ zu einer Kontoadresse."
+                "checkOwnerAddress": "Bitte ändern Sie die Vertragsadresse __address__ zu einer Kontoadresse."
             }
         },
         "send": {
@@ -208,10 +208,10 @@
             "amount": "Betrag",
             "tokenAmount": "Token Betrag",
             "sendFunds": "Überweisen",
-            "deployContract": "Vetrag veröffentlichen",
+            "deployContract": "Vertrag veröffentlichen",
             "data": "Daten",
             "fee": "Gebühr auswählen",
-            "feeLow": "Guünstiger",
+            "feeLow": "Günstiger",
             "feeHigh": "Schneller",
             "addData": "Daten hinzufügen",
             "sendAll": "Alles senden",
@@ -220,25 +220,25 @@
             "createContract": "Vertrag erstellen",
             "provideGas": "Gas zur Verfügung stellen",
             "error": {
-                "emptyWallet": "Das Konto von dem Sie senden möchten ist leer.",
+                "emptyWallet": "Das Konto, von dem Sie senden möchten, ist leer.",
                 "notEnoughFunds": "Der Betrag auf Ihrem Konto reicht nicht aus.",
-                "noReceiver": "Sie haben keinen Empfaänger angegeben.",
+                "noReceiver": "Sie haben keinen Empfänger angegeben.",
                 "noAmount": "Sie haben keinen Betrag angegeben."
             },
             "texts": {
                 "ownerPaysGas": "Gas wird vom Besitzer des Wallet Vertrags bezahlt",
                 "sendAmount": "Sie möchten <strong>__amount__</strong> versenden.",
                 "sendAmountEquivalent": "Sie möchten <strong>__amount__</strong> in Ether versenden, zu einem Wechselkurs von <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a>.<br>Was zur Zeit einem Betrag von <strong>__etherAmount__</strong> Ether entspricht.",
-                "sendToken": "Sie möchnetn <strong>__amount__ __symbol__</strong> von <strong> __name__</strong> versenden.",
+                "sendToken": "Sie möchten <strong>__amount__ __symbol__</strong> von <strong> __name__</strong> versenden.",
                 "overDailyLimit": "<p class=\"over-daily\">Der Betrag überschreitet das Tageslimit von __limit__ (of __total__ per day), Sie benötigen __count__ weiteres Konto zum Bestätigen.</p>",
                 "overDailyLimit_plural": "<p class=\"over-daily\">Der Betrag überschreitet das Tageslimit von  __limit__ (of __total__ per day), Sie benötigen __count__ weitere Konten zum Bestätigen.</p>",
                 "underDailyLimit": "<p class=\"under-daily\">Dieser Betrag ist kleiner als das verbleibende Tageslimit von __limit__ (von __total__ pro Tag), daher kann augenblicklich versandt werden.</p>",
-                "sendFee": "Dies ist dr höchste Betrag der durch die Transaktion verbraucht werden könnte. Ihre Transaktion wird voraussichtlich <strong>__timetext__</strong> bestätigt.",
+                "sendFee": "Dies ist ddr höchste Betrag, der durch die Transaktion verbraucht werden könnte. Ihre Transaktion wird voraussichtlich <strong>__timetext__</strong> bestätigt.",
                 "noCodeInRecipient": "Das Empfängerkonto ist kein Vertrag, daher kann nichts ausgeführt werden. <strong> Schreiben Sie eine Vertragsadresse in das 'AN' Feld. </strong>",
-                "addData": "Sie können einer Transaktion zusätzliche Daten übergeben. Wenn sie das \"an\" Feld leer lassen wird versucht den Vertrag mit Hilfe der Daten zu veröffentlichen.",
+                "addData": "Sie können einer Transaktion zusätzliche Daten übergeben. Wenn sie das \"an\" Feld leer lassen, wird versucht, den Vertrag mit Hilfe der Daten zu veröffentlichen.",
                 "dataNotExecutable": "Die Daten scheinen nicht ausführbar zu sein, das bedeutet, dass die Transaktion das komplette Gas aufbrauchen wird.",
-                "cantEstimateGas": "Der Gas verbrauch konnte nicht berechnet werden, da Ihr Konto mindestens einen Betrag von 1 Ether aufweisen muss.",
-                "estimatedGas": "Vorraussichtlich verbrauchtes Gas",
+                "cantEstimateGas": "Der Gasverbrauch konnte nicht berechnet werden, da Ihr Konto mindestens einen Betrag von 1 Ether aufweisen muss.",
+                "estimatedGas": "Voraussichtlich verbrauchtes Gas",
                 "timeTexts": {
                     "0": "In ein paar Minuten",
                     "1": "Wahrscheinlich in wenigen Minuten",
@@ -251,9 +251,9 @@
         },
         "tokens": {
             "title": "Eigene <strong>Token</strong>",
-            "subTitle": "Hunzugefügte Token",
+            "subTitle": "Hinzugefügte Token",
             "admin": "__name__ (Admin Seite)",
-            "description": "Token sind Währungen oder Tauschgegenstände die auf der Ethereum platform aufsetzen. Damit ein Konto ein Token beobachten oder versenden kann, müssen Sie die Kontenadressen in die folgende Liste einfügen. Sie können Ihren einegenen Token erzeugen, in dem Sie z.B. folgendes <a href=\"http://chriseth.github.io/browser-solidity/?gist=0d1a998d949e26942212\" target=\"_blank\">Beispiel eines Token Vetrags</a> anpassen, oder mehr über <a href=\"https://www.ethereum.org/token#the-code\" target=\"_blank\">Ethereum Token</a> lernen.",
+            "description": "Token sind Währungen oder Tauschgegenstände, die auf der Ethereum-Plattform aufsetzen. Damit ein Konto ein Token beobachten oder versenden kann, müssen Sie die Kontoadressen in die folgende Liste einfügen. Sie können Ihren eigenen Token erzeugen, in dem Sie z.B. folgendes <a href=\"http://chriseth.github.io/browser-solidity/?gist=0d1a998d949e26942212\" target=\"_blank\">Beispiel eines Token Vertrags</a> anpassen, oder mehr über <a href=\"https://www.ethereum.org/token#the-code\" target=\"_blank\">Ethereum Token</a> lernen.",
             "deleteToken": "Möchten Sie den Token <strong>__token__</strong> von Ihrer Liste entfernen?",
             "addedToken": "__token__ wurde Ihrer Beobachtungsliste hinzugefügt",
             "editedToken": "Token __token__ wurde bearbeitet",
@@ -264,12 +264,12 @@
         "contracts": {
             "contractTitle" : "Verträge",
             "deployNewContract": "Neue Verträge veröffentlichen",
-            "addCustomContract": "Vetraäge beobachten",
+            "addCustomContract": "Verträge beobachten",
             "customContracts": "Eigene Verträge",
-            "description": "Um einen bereits in der Blockchain veröffentlichten Vertrag zu beobachten oder mit ihm interagieren zu können müssen Sie seine Adresse und die Beschreibung seiner Schnittstelle im JSON Format kennen.",
-            "deployContract": "Vertrag <strong>Veröffentlichen</strong>",
+            "description": "Um einen bereits in der Blockchain veröffentlichten Vertrag zu beobachten oder mit ihm interagieren zu können, müssen Sie seine Adresse und die Beschreibung seiner Schnittstelle im JSON Format kennen.",
+            "deployContract": "Vertrag <strong>veröffentlichen</strong>",
             "contractSourceCode": "Solidity Vertragsquellcode",
-            "contractByteCode": "Vetragsprogrammcode",
+            "contractByteCode": "Vertragsprogrammcode",
             "selectContract": "Vertrag zum Veröffentlichen auswählen",
             "constructorParameters": "Parameter zum Erstellen",
             "name": "Vertragsname",
@@ -277,8 +277,8 @@
             "jsonInterface": "JSON Schnittstelle",
             "contractInformation": "Vertragsinformationen",
             "addedContract": "Erstelle Vertrag",
-            "readFromContract": "Lese von Vertrag",
-            "writeToContract": "Schreiben in Vertrag",
+            "readFromContract": "Vertrag auslesen",
+            "writeToContract": "In Vertrag schreiben",
             "pickContract": "Wähle einen Vertrag",
             "pickFunction": "Wähle eine Funktion",
             "noContract": "<p>Fügen Sie den Quellcode eines Vertrags hier ein. Beispiele fiden sie unter <a href=\"http://ethereum.org\" target=\"_blank\">ethereum.org</a>: </p> <ul><li><a href=\"http://ethereum.org/token#the-code\" target=\"_blank\">Token erzeugen</a></li><li><a href=\"http://ethereum.org/crowdsale#the-code\" target=\"_blank\">Crowdsale starten</a></li><li><a href=\"http://ethereum.org/dao#the-code\" target=\"_blank\">Blockchain organisation erzeugen</a></li></ul>",
@@ -291,7 +291,7 @@
             "error": {
                 "compile": "Quellcode konnte nicht kompiliert werden.",
                 "noDataProvided": "Keine Daten gefunden: Wählen Sie einen Vertrag aus dem Menü",
-                "invalidAddress": "Vertrag nicht hinzugefuügt, ungültige Adresse.",
+                "invalidAddress": "Vertrag nicht hinzugefügt, ungültige Adresse.",
                 "jsonInterfaceParseError": "JSON Schnittstelle konnte nicht gelesen werden."
             }
         }
