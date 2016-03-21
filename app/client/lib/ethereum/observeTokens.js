@@ -33,7 +33,7 @@ var setupContractFilters = function(newDocument){
     });
 
     // SETUP FILTERS
-    Helpers.eventLogs('Checking Token Transfers for '+ contractInstance.address +' (_id: '+ newDocument._id +') from block #', blockToCheckBack);
+    // Helpers.eventLogs('Checking Token Transfers for '+ contractInstance.address +' (_id: '+ newDocument._id +') from block #', blockToCheckBack);
 
 
     var filter = contractInstance.allEvents({fromBlock: blockToCheckBack, toBlock: 'latest'});

@@ -1,6 +1,6 @@
-# Ξthereum Wallet Ðapp
+# Ethereum Wallet Ðapp
 
-The Ξthereum wallet.
+The Ethereum wallet.
 
 **NOTE** The wallet is not yet official released,
 can contain severe bugs!
