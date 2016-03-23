@@ -51,8 +51,6 @@ Template['elements_executeContract'].helpers({
                 func.displayName = func.name.replace(/([A-Z]+|[0-9]+)/g, ' $1');
                 func.inputs = _.map(func.inputs, Helpers.createTemplateDataFromInput);
 
-                console.log('func.inputs', func.inputs);
-
                 if(func.constant){
                     // if it's a constant   
                     func.displayName = func.displayName.replace(/([\_])/g, '<span class="punctuation">$1</span>');
@@ -171,7 +169,6 @@ Template['elements_executeContract_constant'].onCreated(function(){
             } 
         });
 
-        // console.log('call function: ', args);
         template.data.contractInstance[template.data.name].apply(null, args);
 
     });
@@ -193,7 +190,6 @@ Template['elements_executeContract_constant'].helpers({
     */
     'extra': function() {
         var data = formatOutput(this); // 1000000000
-        // console.log('data', data);
 
         if (data > 1400000000 && data < 1800000000 && Math.floor(data/1000) != data/1000) {
             return '(' + moment(data*1000).fromNow() + ')';
@@ -215,7 +211,6 @@ Template['elements_executeContract_constant'].events({
     @event change .abi-input, input .abi-input
     */
     'change .abi-input, input .abi-input': function(e, template) {
-        console.log('.change', template.data, template.data.inputs, this, e.currentTarget)
         var inputs = Helpers.addInputValue(template.data.inputs, this, e.currentTarget);
         TemplateVar.set('inputs', inputs);
     }
@@ -274,7 +269,6 @@ Template['elements_executeContract_function'].events({
     */
     'change .abi-input, input .abi-input': function(e, template) {
         var inputs = Helpers.addInputValue(template.data.inputs, this, e.currentTarget);
-        console.log('inputs: ', inputs)
     
         TemplateVar.set('executeData', template.data.contractInstance[template.data.name].getData.apply(null, inputs));
     },

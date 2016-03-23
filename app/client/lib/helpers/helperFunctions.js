@@ -265,8 +265,6 @@ Helpers.formatTransactionBalance = function(value, exchangeRates, unit) {
 
         if(unit === 'btc')
             format += '[000000]';
-        else 
-            format += '[0]';
 
         var price = new BigNumber(String(web3.fromWei(value, 'ether')), 10).times(exchangeRates[unit].price);
         return EthTools.formatNumber(price, format) + ' '+ unit.toUpperCase();
