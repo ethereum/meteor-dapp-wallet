@@ -219,6 +219,7 @@
             "estimatedFee": "Gebühr bestimmen",
             "createContract": "Vertrag erstellen",
             "provideGas": "Gas zur Verfügung stellen",
+            "transactionSent": "Transaktion gesendet",            
             "error": {
                 "emptyWallet": "Das Konto, von dem Sie senden möchten, ist leer.",
                 "notEnoughFunds": "Der Betrag auf Ihrem Konto reicht nicht aus.",

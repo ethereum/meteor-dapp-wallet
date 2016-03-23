@@ -219,6 +219,7 @@
             "estimatedFee": "Taxa estimada",
             "createContract": "Criar contratos",
             "provideGas": "Providenciar combustível",
+            "transactionSent": "Transação enviada",            
             "error": {
                 "emptyWallet": "A conta de origem está vaziaThe account you want to send from is empty.",
                 "notEnoughFunds": "Você não tem saldo suficiente nessa conta.",

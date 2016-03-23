@@ -219,6 +219,7 @@
             "estimatedFee": "Estimated fee",
             "createContract": "Create contract",
             "provideGas": "Provide gas",
+            "transactionSent": "Transaction sent",
             "error": {
                 "emptyWallet": "The account you want to send from is empty.",
                 "notEnoughFunds": "You don't have enough funds in the account.",

@@ -48,8 +48,10 @@ Template['elements_executeContract'].helpers({
             if(func.type == 'function') {
                 func.contractInstance = contractInstance;
 
-                func.displayName = func.name.replace(/([A-Z])/g, ' $1');
+                func.displayName = func.name.replace(/([A-Z]+|[0-9]+)/g, ' $1');
                 func.inputs = _.map(func.inputs, Helpers.createTemplateDataFromInput);
+
+                console.log('func.inputs', func.inputs);
 
                 if(func.constant){
                     // if it's a constant   
@@ -169,6 +171,7 @@ Template['elements_executeContract_constant'].onCreated(function(){
             } 
         });
 
+        // console.log('call function: ', args);
         template.data.contractInstance[template.data.name].apply(null, args);
 
     });
@@ -212,8 +215,8 @@ Template['elements_executeContract_constant'].events({
     @event change .abi-input, input .abi-input
     */
     'change .abi-input, input .abi-input': function(e, template) {
+        console.log('.change', template.data, template.data.inputs, this, e.currentTarget)
         var inputs = Helpers.addInputValue(template.data.inputs, this, e.currentTarget);
-
         TemplateVar.set('inputs', inputs);
     }
 });
@@ -360,7 +363,7 @@ Template['elements_executeContract_function'].events({
 
                             // FlowRouter.go('dashboard');
                             GlobalNotification.success({
-                               content: "The transaction was executed",
+                               content: 'i18n:wallet.send.transactionSent',
                                duration: 2
                             });
                         } else {
