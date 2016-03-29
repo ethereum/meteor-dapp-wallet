@@ -219,6 +219,7 @@
             "estimatedFee": "Comision estimat",
             "createContract": "Intocmeste contract",
             "provideGas": "Furnizeaza gas",
+            "transactionSent": "tranzacție a trimis",
             "error": {
                 "emptyWallet": "Portofelul din care incerci sa trimiti, nu are fonduri.",
                 "notEnoughFunds": "Fonduri insuficiente pentru aceasta tranzactie.",

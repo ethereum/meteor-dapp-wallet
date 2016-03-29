@@ -147,8 +147,8 @@
                     "text": "You received __amount__ on __to__ from __from__."
                 },
                 "outgoingTransaction": {
-                    "title": "Payment send",
-                    "text": "You send __amount__ from __from__ to __to__."    
+                    "title": "Payment sent",
+                    "text": "You sent __amount__ from __from__ to __to__."    
                 },
                 "pendingConfirmation": {
                     "title": "Confirmation needed",
@@ -219,6 +219,7 @@
             "estimatedFee": "Estimated fee",
             "createContract": "Create contract",
             "provideGas": "Provide gas",
+            "transactionSent": "Transaction sent",
             "error": {
                 "emptyWallet": "The account you want to send from is empty.",
                 "notEnoughFunds": "You don't have enough funds in the account.",
