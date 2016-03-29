@@ -1,0 +1,33 @@
+{
+    "app": {
+        "loading": "ローディング...",
+        "offline": "接続できません、オフラインですか?",
+        "logginIn": "ログインしています..."
+    },
+    "error": {
+        "insufficientRights": "このアクションを行う権限が有りません."
+    },
+    "buttons": {
+        "ok": "OK",
+        "cancel": "キャンセル",
+        "save": "保存",
+        "edit": "編集",
+        "send": "送る",
+        "sending": "送っています...",
+        "create": "作成",
+        "select": "選択",
+        "tryToReconnect": "再接続しようとしています"
+    },
+    "commonWords": {
+        "you": "You",
+        "send": "Send",
+        "or": "or",
+        "of": "of",
+        "with": "with",
+        "and": "and",
+        "on": "on",
+        "per": "per",
+        "total":"合計",
+        "at": "at"
+    }
+}
