@@ -28,7 +28,7 @@ Check if in mist
 @method (isMist)
 **/
 Template.registerHelper('isMist', function(){
-    return typeof mist !== 'undefined';
+    return (typeof mist !== 'undefined' && mist.mode === 'mist');
 });
 
 /**

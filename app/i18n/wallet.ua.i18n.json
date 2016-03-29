@@ -219,6 +219,7 @@
             "estimatedFee": "Залишилось коміссії",
             "createContract": "Створити контракт",
             "provideGas": "Надати газ",
+            "transactionSent": "угода відправлено",
             "error": {
                 "emptyWallet": "Аккаунт з якого ви відправляєте порожній.",
                 "notEnoughFunds": "Ви не маєте достатньо коштів на аккаунті.",

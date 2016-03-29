@@ -15,13 +15,13 @@
             </li>            
             
             <li class="block-info dapp-flex-item  {{#if TemplateVar.get 'syncing'}}syncing{{/if}}">
-                {{! #unless isMist}}
+                {{#unless isMist}}
 
                     {{#if $eq ($.Session.get "network") "test"}}
-                        <span class="private-chain" style="font-weight: 400;" title="{{i18n 'wallet.app.texts.testnetExplain'}}">TEST-NET</span> &nbsp;&nbsp; 
+                        <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">TEST-NET</span> &nbsp;&nbsp; 
                     {{/if}}
                     {{#if $eq ($.Session.get "network") "private"}}
-                        <span class="private-chain" style="font-weight: 400;" title="{{i18n 'wallet.app.texts.testnetExplain'}}">PRIVATE-NET</span> &nbsp;&nbsp; 
+                        <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">PRIVATE-NET</span> &nbsp;&nbsp; 
                     {{/if}}
 
                     {{#with TemplateVar.get "syncing"}}
@@ -39,7 +39,7 @@
                         &nbsp;&nbsp;|&nbsp;&nbsp;
                         <i class="icon-layers"></i> {{formattedBlockNumber}} <i class="icon-clock" style="margin-left: 10px;"></i> {{{timeSinceBlock}}} <span class="hide-on-small">{{{timeSinceBlockText}}}</span>
                     {{/with}}
-                {{! /unless}}
+                {{/unless}}
             </li>
             <li>
                 <a href="{{pathFor route='contracts'}}" class="{{isActiveRoute regex='contracts'}}">

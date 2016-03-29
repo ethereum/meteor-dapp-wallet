@@ -219,6 +219,7 @@
             "estimatedFee": "Комиссионные",
             "createContract": "Создать контракт",
             "provideGas": "Обеспечить газ",
+            "transactionSent": "сделка отправлено",            
             "error": {
                 "emptyWallet": "Аккаунт с которого вы пытаетесь отправить средства - пуст.",
                 "notEnoughFunds": "У вас нет требуеммой суммы.",

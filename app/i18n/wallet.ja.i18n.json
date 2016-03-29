@@ -219,6 +219,7 @@
             "estimatedFee": "手数料の見積",
             "createContract": "コントラクト作成",
             "provideGas": "ガスを供給する",
+            "transactionSent": "トランザクションが送信されました。",
             "error": {
                 "emptyWallet": "送信元のアカウントが",
                 "notEnoughFunds": "アカウント内にある資金が足りません",

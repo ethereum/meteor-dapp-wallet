@@ -265,7 +265,9 @@ Helpers.formatTransactionBalance = function(value, exchangeRates, unit) {
 
         if(unit === 'btc')
             format += '[000000]';
-
+        else 
+            format += '[0]';
+        
         var price = new BigNumber(String(web3.fromWei(value, 'ether')), 10).times(exchangeRates[unit].price);
         return EthTools.formatNumber(price, format) + ' '+ unit.toUpperCase();
     } else {
@@ -283,8 +285,9 @@ Formats an input and prepares it to be a template
 @param {object} input           The input object, out of an ABI
 @return {object} input          The input object with added variables to make it into a template
 **/
-Helpers.createTemplateDataFromInput = function (input){
+Helpers.createTemplateDataFromInput = function (input, key){
 
+    input.index = key;
     input.typeShort = input.type.match(/[a-z]+/i);
     input.typeShort = input.typeShort[0];
     input.bits = input.type.replace(input.typeShort, '');
@@ -322,7 +325,8 @@ Helpers.addInputValue = function (inputs, currentInput, formField){
             var value = _.isUndefined(input.value) ? '' : input.value;
 
             if(currentInput.name === input.name &&
-               currentInput.type === input.type) {
+               currentInput.type === input.type && 
+               currentInput.index === input.index ) {
 
                 if(input.type.indexOf('[') !== -1) {
                     try {
