@@ -24,6 +24,9 @@ var addCustomContract = function(e) {
             : $('.modals-add-custom-contract input[name="address"]').val(),
         name = $('.modals-add-custom-contract input.name').val();
 
+    address = address.toLowerCase();
+
+
     try {
         jsonInterface = JSON.parse($('.modals-add-custom-contract textarea.jsonInterface').val());
     } catch(e) {
@@ -36,8 +39,6 @@ var addCustomContract = function(e) {
     }
 
     if(web3.isAddress(address)) {
-        address = address.toLowerCase();
-
         CustomContracts.upsert({address: address}, {$set: {
             address: address,
             name: name,
@@ -73,6 +74,7 @@ var addToken = function(e) {
         symbol = $('.modals-add-token input.symbol').val(),
         decimals = $('.modals-add-token input.decimals').val();
 
+    address = address.toLowerCase();
 
     tokenId = Helpers.makeId('token', address);
 
@@ -81,8 +83,6 @@ var addToken = function(e) {
         TAPi18n.__('wallet.tokens.addedToken', {token: name}) ;
 
     if(web3.isAddress(address)) {
-        address = address.toLowerCase();
-
         Tokens.upsert(tokenId, {$set: {
             address: address,
             name: name,
