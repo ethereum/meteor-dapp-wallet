@@ -4,7 +4,7 @@
             "high": "Schneller",
             "low": "Günstiger"
         },
-        "checksumAlert":"Die Adresse scheint gültig zu sein. Jedoch fehlen Sicherheitseigenschaften, die gegen Tippfehler schützen. Bitte kontrolieren Sie daher die Adresse sehr genau. Wenn ein Sicherheitssymbol angezeigt wird, kontrollieren Sie auch, ob dieses mit dem der Adresse übereinstimmt.",
+        "checksumAlert":"Die Adresse scheint gültig zu sein. Jedoch fehlen Sicherheitseigenschaften, die gegen Tippfehler schützen. Bitte kontrollieren Sie daher die Adresse sehr genau. Wenn ein Sicherheitssymbol angezeigt wird, kontrollieren Sie auch, ob dieses mit dem der Adresse übereinstimmt.",
         "identiconHelper": "Dies ist ein Sicherheitssymbol. Unterschiedliche Addressen haben augenscheinlich verschiedene Sicherheitssymbole. Dies kann Ihnen helfen, Tippfehler frühzeitig zu erkennen."
     },
     "wallet": {
@@ -45,8 +45,8 @@
                 "title": "Wählen Sie ein Konto"
             },
             "testnetWallet": {
-                "walletNeedsDeployment": "Sie sind mit dem Testnetz verbunden.<br><br>Es wurde kein Wallet Vertrag gefunden. Daher muss ein neuer Vertrag mit Ihrer Adresse:<br><br><small><code>__account__</code></small><br><br><em>erzeugt werden. Bitte stellen Sie sicher, dass diese Adresse über einen Kontostand von mindestens 1 Ether verfügt!</em>",
-                "testnetWalletDeployed": "Der Original Wallet Vertrag wurde auf Ihrer Adresse:<br><br><small><code>__address__</code></small> erzeugt."
+                "walletNeedsDeployment": "Sie sind mit dem Testnetz verbunden.<br><br>Es wurde kein Wallet-Vertrag gefunden. Daher muss ein neuer Vertrag mit Ihrer Adresse:<br><br><small><code>__account__</code></small><br><br><em>erzeugt werden. Bitte stellen Sie sicher, dass diese Adresse über einen Kontostand von mindestens 1 Ether verfügt!</em>",
+                "testnetWalletDeployed": "Der Original-Wallet-Vertrag wurde auf Ihrer Adresse:<br><br><small><code>__address__</code></small> erzeugt."
             },
             "addToken": {
                 "title": "Token hinzufügen",
@@ -64,13 +64,13 @@
         },
         "accounts": {
             "title": "<strong>Konten</strong> Übersicht",
-            "walletsTitle": "Wallet Verträge",
+            "walletsTitle": "Wallet-Verträge",
             "accountsTitle": "Konten",
             "defaultName": "Unbenannt",
             "creating": "Erstellen",
             "importing": "Importieren",
-            "accountNote": "Konten können keine eingehende Transaktionen anzeigen. Trotzdem können Sie mit Konten Ether empfangen und versenden. Um eingehende Transaktionen zu sehen, <a href=\"/account/new\">erstellen Sie einen Wallet Vertrag</a>.",
-            "walletNote": "Die meisten Börsen akzeptieren bisher keine Transaktionen von einem Wallet Vertrag. Transferieren Sie daher Ether zunächst auf ein Konto, um es von dort weiter an eine Börse zu überweisen!",
+            "accountNote": "Konten können keine eingehende Transaktionen anzeigen. Trotzdem können Sie mit Konten Ether empfangen und versenden. Um eingehende Transaktionen zu sehen, <a href=\"/account/new\">erstellen Sie einen Wallet-Vertrag</a>.",
+            "walletNote": "Die meisten Börsen akzeptieren bisher keine Transaktionen von einem Wallet-Vertrag. Transferieren Sie daher Ether zunächst auf ein Konto, um es von dort weiter an eine Börse zu überweisen!",
             "addressCopiedToClipboard": "In die Zwischenablage kopiert",
             "qrCodeLabel": "Scannen Sie diesen Code mit einer kompatiblen Smartphone App",
             "dailyLimit": "Tägliches Limit",
@@ -79,7 +79,7 @@
             "owners": "Eigentümer",
             "walletsDescription": "Verträge werden auf der Blockchain gespeichert und dienen der Verwaltung von Ether. Ein Vertrag kann mehrere Konten als Eigentümer haben. Verträge zeigen im Gegensatz zu Konten immer eine vollständige Transaktionshistorie.",
             "walletsDescriptionNotEnoughFunds": "Es wird mindestens 1 Ether benötigt, um komplexe Verträge zu erstellen.",
-            "accountsDescription": "Konten können Ether, Ethereum basierte Token oder Coins enthalten. Darüber hinaus können Konten Verträge kontrollieren. Im Gegensatz zu Wallets können Konten keine einkommenden Transaktionen anzeigen.",
+            "accountsDescription": "Konten können Ether, Ethereum-basierte Token oder Coins enthalten. Darüber hinaus können Konten Verträge kontrollieren. Im Gegensatz zu Wallets können Konten keine einkommenden Transaktionen anzeigen.",
             "buttons": {
                 "deposit": "Ether hinterlegen",
                 "depositBitcoin": "Ether mit Bitcoin hinterlegen",
@@ -88,9 +88,9 @@
                 "showInterface": "Interface anzeigen"
             },
             "modal": {
-                "deleteText": "Möchten Sie diesen Wallet Vertrag wirklich löschen? Der Vertrag wird weiterhin in der Blockchain existieren, jedoch werden Sie den Zugriff auf jegliches darin enthaltene Vermögen verlieren.<br><br> Wenn Sie sicher sind, dass Sie diesen Vertrag löschen möchten, geben Sie bitte den Namen des Vertrags ein, um die Löschung zu bestätigen.",
+                "deleteText": "Möchten Sie diesen Wallet-Vertrag wirklich löschen? Der Vertrag wird weiterhin in der Blockchain existieren, jedoch werden Sie den Zugriff auf jegliches darin enthaltene Vermögen verlieren.<br><br> Wenn Sie sicher sind, dass Sie diesen Vertrag löschen möchten, geben Sie bitte den Namen des Vertrags ein, um die Löschung zu bestätigen.",
                 "backupWallet": {
-                    "title": "Sichern Sie Ihre Wallet Vertragsadresse!",
+                    "title": "Sichern Sie Ihre Wallet-Vertragsadresse!",
                     "description": "Schreiben Sie diese Adresse ab und bewahren Sie diese sicher auf:"
                 }
             }
@@ -161,18 +161,18 @@
             }
         },
         "newWallet": {
-            "title": "Neuer <strong>Wallet Vertrag</strong>",
-            "accountName": "Wallet Vertragsname",
+            "title": "Neuer <strong>Wallet-Vertrag</strong>",
+            "accountName": "Wallet-Vertragsname",
             "selectOwner": "Eigentümer auswählen",
             "accountType": {
-                "title": "Wallet Vertragstyp",
+                "title": "Wallet-Vertragstyp",
                 "simple": {
                     "title": "Konto mit einem Eigentümer",
                     "description": "Ein einfacher Vertrag ohne zusätzliche Sicherheitsmerkmale.",
                     "warning": "Hinweis: Eine Person mit Zugriff auf Ihr Konto hat auch Zugriff auf dieses Wallet."
                 },
                 "multisig": {
-                    "title": "Multisignatur Wallet Vertrag",
+                    "title": "Multisignatur Wallet-Vertrag",
                     "description": "Ein Vertrag, der von mehreren Konten kontrolliert wird",
                     "text1": "Dies ist ein gemeinsames Konto von den Eigentümer",
                     "text2": "Sie können bis zu",
@@ -184,11 +184,11 @@
                 },
                 "import": {
                     "title": "Wallet importieren",
-                    "description": "Ein existierendes (multisignatur) Wallet importieren.",
+                    "description": "Ein existierendes (Multisignatur-) Wallet importieren.",
                     "walletAddress": "Walletadresse",
-                    "youreOwner": "Ihr \"__account__\" Konto ist Eigentümer von diesem Wallet Vertrag.",
+                    "youreOwner": "Ihr \"__account__\" Konto ist Eigentümer von diesem Wallet-Vertrag.",
                     "watchOnly": "Sie sind nicht Eigentümer von diesem Konto, aber Sie können das Konto \"WATCH ONLY\" hinzufügen.",
-                    "notWallet": "Diese Adresse hat keinen Wallet Vertrag."
+                    "notWallet": "Diese Adresse hat keinen Wallet-Vertrag."
                 }
             },
             "error": {
@@ -226,7 +226,7 @@
                 "noAmount": "Sie haben keinen Betrag angegeben."
             },
             "texts": {
-                "ownerPaysGas": "Gas wird vom Besitzer des Wallet Vertrags bezahlt",
+                "ownerPaysGas": "Gas wird vom Besitzer des Wallet-Vertrags bezahlt",
                 "sendAmount": "Sie möchten <strong>__amount__</strong> versenden.",
                 "sendAmountEquivalent": "Sie möchten <strong>__amount__</strong> in Ether versenden, zu einem Wechselkurs von <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a>.<br>Was zur Zeit einem Betrag von <strong>__etherAmount__</strong> Ether entspricht.",
                 "sendToken": "Sie möchten <strong>__amount__ __symbol__</strong> von <strong> __name__</strong> versenden.",
@@ -281,7 +281,7 @@
             "writeToContract": "In Vertrag schreiben",
             "pickContract": "Wähle einen Vertrag",
             "pickFunction": "Wähle eine Funktion",
-            "noContract": "<p>Fügen Sie den Quellcode eines Vertrags hier ein. Beispiele fiden sie unter <a href=\"http://ethereum.org\" target=\"_blank\">ethereum.org</a>: </p> <ul><li><a href=\"http://ethereum.org/token#the-code\" target=\"_blank\">Token erzeugen</a></li><li><a href=\"http://ethereum.org/crowdsale#the-code\" target=\"_blank\">Crowdsale starten</a></li><li><a href=\"http://ethereum.org/dao#the-code\" target=\"_blank\">Blockchain organisation erzeugen</a></li></ul>",
+            "noContract": "<p>Fügen Sie den Quellcode eines Vertrags hier ein. Beispiele finden Sie unter <a href=\"http://ethereum.org\" target=\"_blank\">ethereum.org</a>: </p> <ul><li><a href=\"http://ethereum.org/token#the-code\" target=\"_blank\">Token erzeugen</a></li><li><a href=\"http://ethereum.org/crowdsale#the-code\" target=\"_blank\">Crowdsale starten</a></li><li><a href=\"http://ethereum.org/dao#the-code\" target=\"_blank\">Blockchain-Organisation erzeugen</a></li></ul>",
             "buttons": {
                 "showContractInfo": "Zeige Vertragsinformationen",
                 "hideContractInfo": "Schließe Vertragsinformationen",
