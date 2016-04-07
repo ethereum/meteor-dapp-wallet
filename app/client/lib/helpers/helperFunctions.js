@@ -286,6 +286,7 @@ Formats an input and prepares it to be a template
 @return {object} input          The input object with added variables to make it into a template
 **/
 Helpers.createTemplateDataFromInput = function (input, key){
+    input = _.clone(input);
 
     input.index = key;
     input.typeShort = input.type.match(/[a-z]+/i);

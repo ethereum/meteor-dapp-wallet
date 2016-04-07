@@ -43,6 +43,7 @@ Template['elements_executeContract'].helpers({
         var contractConstants = [];
 
         _.each(this.jsonInterface, function(func, i){
+            func = _.clone(func);
 
             // Walk throught the jsonInterface and extract functions and constants
             if(func.type == 'function') {
@@ -159,7 +160,6 @@ Template['elements_executeContract_constant'].onCreated(function(){
                         output.displayName = output.name
                         .replace(/([A-Z])/g, ' $1')        
                         .replace(/([\-\_])/g, '<span class="punctuation">$1</span>');
-;
 
                         return output;
                     });

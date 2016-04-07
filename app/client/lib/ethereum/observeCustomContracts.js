@@ -1,3 +1,25 @@
+
+var addLogWatching = function(){
+
+    var filter = contractInstance.allEvents({fromBlock: blockToCheckBack, toBlock: 'latest'});
+    events.push(filter);
+    
+    // get past logs, to set the new blockNumber
+    var currentBlock = EthBlocks.latest.number;
+    filter.get(function(error, logs) {
+        if(!error) {
+            // update last checkpoint block
+            Wallets.update({_id: newDocument._id}, {$set: {
+                checkpointBlock: (currentBlock || EthBlocks.latest.number) - ethereumConfig.rollBackBy
+            }});
+        }
+    });
+
+    filter.watch(function(error, log){
+        Logs.insert(log);
+    });
+};
+
 /**
 Observe custom contacts
 
@@ -27,11 +49,16 @@ observeCustomContracts = function(){
                             disabled: ''
                         }});
 
+                        // check for logs
+                        // addLogWatching();
+                        
+
                     } else {
                         CustomContracts.update(newDocument._id, {$set: {
                             disabled: true
                         }});
                     }
+
                 } else {
                     console.log('Couldn\'t check Custom Contracts code of ', newDocument, e);
                 }
