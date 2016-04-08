@@ -103,9 +103,10 @@ Template['views_account'].events({
             text: new Spacebars.SafeString(TAPi18n.__('wallet.accounts.modal.deleteText') + 
                 '<br><input type="text" class="deletionConfirmation" autofocus="true">'),
             ok: function(){
-                if(data.name === $('input.deletionConfirmation').val()) {
+                if($('input.deletionConfirmation').val() === 'delete') {
                     Wallets.remove(data._id);
                     CustomContracts.remove(data._id);
+
                     FlowRouter.go('dashboard');
                     return true;
                 }

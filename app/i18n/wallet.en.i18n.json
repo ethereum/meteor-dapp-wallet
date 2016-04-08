@@ -88,7 +88,7 @@
                 "showInterface": "Show Interface"
             },
             "modal": {
-                "deleteText": "Do you really want to delete this wallet contract? The account will still exist on the blockchain but <br>if you delete the address, you will not be able to find and will lose access to the funds deposited<br><br> Type the name of the wallet contract to confirm the deletion.",
+                "deleteText": "Do you really want to delete this wallet contract? The account will still exist on the blockchain but <br>if you delete the address, you will not be able to find and will lose access to the funds deposited<br><br> Type \"delete\" confirm the deletion.",
                 "backupWallet": {
                     "title": "Backup your wallet contract address!",
                     "description": "Make sure to write down the wallet contract address:"

@@ -1,10 +1,13 @@
-
 var addLogWatching = function(newDocument){
+
+
     var contractInstance = web3.eth.contract(newDocument.jsonInterface).at(newDocument.address);
     var blockToCheckBack = (newDocument.checkpointBlock || 0) - ethereumConfig.rollBackBy;
     
     if(blockToCheckBack < 0)
         blockToCheckBack = 0;
+
+    console.log('EVENT LOG:  Checking Custom Contract Events for '+ newDocument.address +' (_id: '+ newDocument._id + ') from block # '+ blockToCheckBack);
 
     var filter = contractInstance.allEvents({fromBlock: blockToCheckBack, toBlock: 'latest'});
     // events.push(filter);
@@ -23,11 +26,23 @@ var addLogWatching = function(newDocument){
     filter.watch(function(error, log){
         if(!error) {
             var id = Helpers.makeId('log', web3.sha3(log.logIndex + 'x' + log.transactionHash + 'x' + log.blockHash));
+
+            Helpers.eventLogs(log);
+
             if(log.removed) {
                 Events.remove(id);
             } else {
-                web3.eth.getBlock(log.blockHash, function(error, block){
-                    if(!error) {
+                web3.eth.getBlock(log.blockHash, function(err, block){
+                    if(!err) {
+
+                        _.each(log.args, function(value, key){
+                            // if bignumber
+                            if((_.isObject(value) || value instanceof BigNumber) && value.toFormat) {
+                                value = value.toString(10);
+                                log.args[key] = value;
+                            }
+                        });
+
                         log.timestamp = block.timestamp;
                         Events.upsert(id, log);
                     }

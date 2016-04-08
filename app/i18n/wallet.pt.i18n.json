@@ -88,7 +88,7 @@
                 "showInterface": "Mostrar Interface"
             },
             "modal": {
-                "deleteText": "Você realmente quer apagar essa carteira? O contrato ainda vai existir no blockchain mas você pode não encontrá-lo mais e <i> perder acesso a tudo que estiver na carteira.</i><br><br> Digite o nome dessa carteira para apaga-la:",
+                "deleteText": "Você realmente quer apagar essa carteira? O contrato ainda vai existir no blockchain mas você pode não encontrá-lo mais e <i> perder acesso a tudo que estiver na carteira.</i><br><br> Digite \"delete\" para apaga-la:",
                 "backupWallet": {
                     "title": "Faça uma cópia de segurança dessa carteira!",
                     "description": "Escreva esse endereço em algum lugar"

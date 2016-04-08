@@ -18,7 +18,7 @@ observeEvents = function(){
         */
         added: function(newDocument) {
             // add to accounts
-            CustomContracts.update({address: newDocument.address}, {$addToSet: {
+            CustomContracts.update({address: newDocument.address.toLowerCase()}, {$addToSet: {
                 contractEvents: newDocument._id
             }});
         },
@@ -28,7 +28,7 @@ observeEvents = function(){
         @method removed
         */
         removed: function(document) {
-            CustomContracts.update({address: document.address}, {$pull: {
+            CustomContracts.update({address: document.address.toLowerCase()}, {$pull: {
                 contractEvents: document._id
             }});
         }

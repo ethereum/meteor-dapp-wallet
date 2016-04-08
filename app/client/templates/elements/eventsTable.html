@@ -1,12 +1,13 @@
 <template name="elements_event_table">
     <br>
+    <input type="text" class="filter-transactions" placeholder="{{i18n 'wallet.transactions.filter'}}">
     <table class="dapp-zebra transactions">
         <tbody>
             {{#each items}}
                 {{> elements_events_row}}
             {{else}}
                 <tr class="full-width">
-                    <td colspan="5">
+                    <td colspan="3">
                         {{i18n "wallet.transactions.noneFound"}}
                     </td>
                 </tr>
@@ -14,7 +15,7 @@
 
             {{#if hasMore}}
                 <tr>
-                    <td colspan="10">
+                    <td colspan="6">
                         <button class="show-more">{{i18n "wallet.transactions.showMore"}}</button>
                     </td>
                 </tr>
@@ -35,29 +36,13 @@
             <p>{{formatTime timestamp "D"}}</p>
         </td>
         <td class="account-name">
-            <h2>{{transactionType}}</h2>
+            <h2>{{this.event}}</h2>
             
             <p>
-                {{> elements_account_link address=from}}
-                <span class="arrow">→</span> 
-                {{#if to}}
-                    {{> elements_account_link address=to}}
-                {{else}}
-                    {{> elements_createdContractAt contractAddress=contractAddress deployedData=deployedData}}
-                {{/if}}
+                {{#each returnValues}}
+                    {{name}}: {{value}}<br>
+                {{/each}}
             </p>
-
-            {{#if ownerConfirmationCount}}
-                <div class="owner-confirmations">
-                    {{#each owners}}
-                        <div data-tooltip="{{accountNameOrAddress this}}" class="simptip-position-bottom simptip-movable">
-                            {{#if ownerIsConfirmed}}<i class="icon-check"></i>{{/if}}
-                            {{> dapp_identicon identity=this class="dapp-tiny"}}
-                        </div>
-                    {{/each}}
-                    <span>{{ownerConfirmationCount}}</span>
-                </div>
-            {{/if}}
         </td>
         <td class="info">
             {{#with unConfirmed}}
@@ -66,83 +51,6 @@
                 {{fromNowTime}}
             {{/with}}
         </td>
-        <!-- <td class="account-name">
-            {{> elements_account_link account=account address=to}}
-        </td> -->
-        {{#if outOfGas}}
-            <td class="transaction-amount minus">
-                -{{dapp_formatBalance fee '0,0.00[000] UNIT'}}
-            </td>
-            <td>
-                <i class="icon-shield minus"></i>
-            </td>
-        {{else}}
-            {{#if incomingTx ../account}}
-                <td class="transaction-amount plus">
-                    {{#if tokenId}}
-                        {{tokenValue}}
-                    {{else}}
-                        {{formatTransactionBalance value exchangeRates}}
-                    {{/if}}
-                </td>
-                <td>
-                    <i class="icon-arrow-left plus"></i>
-                </td>
-            {{else}}
-                <td class="transaction-amount minus">
-                    {{#if tokenId}}
-                        -{{tokenValue}}
-                    {{else}}
-                        -{{formatTransactionBalance value exchangeRates}}
-                    {{/if}}
-                </td>
-                <td>
-                    <i class="icon-arrow-right minus"></i>
-                </td>
-            {{/if}}
-        {{/if}}
-        {{#if $eq ../collection "PendingConfirmations"}}
-            {{#if sending}}
-                <td colspan='2' class="button">
-                    {{> spinner}}
-                </td>
-            {{else}}           
-                {{#if multipleOwnersApproved}}
-                    {{#if approved}}
-                    <td class="button">
-                        <button class="dapp-block-button approve">
-                            {{i18n "wallet.transactions.buttons.approve"}}
-                        </button>
-                    </td><td class="button">
-                        <button class="dapp-block-button revoke">
-                            {{i18n "wallet.transactions.buttons.revoke"}}
-                        </button>
-                    </td>
-                    {{else}}
-                    <td class="button" colspan="2">
-                        <button class="dapp-block-button approve">
-                            {{i18n "wallet.transactions.buttons.approve"}}
-                        </button>
-                    </td>
-                    {{/if}}
-                {{else}}
-                    {{#if approved}}
-                    <td class="button" colspan="2">
-                        <button class="dapp-block-button revoke selected">
-                            <div class="hover-label">{{i18n "wallet.transactions.buttons.revoke"}}</div>
-                            <div class="label">
-                                <i class="icon-check"></i> {{i18n "wallet.transactions.buttons.approved"}}
-                            </div>
-                        </button>
-                    </td>
-                    {{else}}
-                    <td class="info" colspan="2"> 
-                        <i class="icon-info"></i> {{i18n "wallet.transactions.noOwnerAccount"}}
-                    </td>
-                    {{/if}}
-                {{/if}}                                   
-            {{/if}}
-        {{/if}}
     </tr>
 </template>
 

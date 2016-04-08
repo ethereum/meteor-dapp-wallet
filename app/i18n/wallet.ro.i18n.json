@@ -88,7 +88,7 @@
                 "showInterface": "Arata Interfata"
             },
             "modal": {
-                "deleteText": "Chiar vrei sa stergi acest portofel?<br>Daca pierzi adresa portofelului, vei pierde si fondurile alocate acestuia!<br><br>Scrie numele portofelului pentru a confirma stergerea.",
+                "deleteText": "Chiar vrei sa stergi acest portofel?<br>Daca pierzi adresa portofelului, vei pierde si fondurile alocate acestuia!<br><br>Scrie \"delete\" a confirma stergerea.",
                 "backupWallet": {
                     "title": "Fa backup portofelului!",
                     "description": "Ai grija sa notezi adresa portofelului:"
