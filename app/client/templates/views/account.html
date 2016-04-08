@@ -158,7 +158,11 @@
                     {{> elements_transactions_table ids=transactions account=_id}}
                 {{/if}}
 
+                {{#if contractEvents}}
+                    <h2>{{i18n 'wallet.events.title'}}</h2>
 
+                    {{> elements_event_table ids=contractEvents}}
+                {{/if}}
             </div>
         </div>
     {{/with}}

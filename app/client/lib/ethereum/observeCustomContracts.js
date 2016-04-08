@@ -1,22 +1,39 @@
 
-var addLogWatching = function(){
+var addLogWatching = function(newDocument){
+    var contractInstance = web3.eth.contract(newDocument.jsonInterface).at(newDocument.address);
+    var blockToCheckBack = (newDocument.checkpointBlock || 0) - ethereumConfig.rollBackBy;
+    
+    if(blockToCheckBack < 0)
+        blockToCheckBack = 0;
 
     var filter = contractInstance.allEvents({fromBlock: blockToCheckBack, toBlock: 'latest'});
-    events.push(filter);
+    // events.push(filter);
     
     // get past logs, to set the new blockNumber
     var currentBlock = EthBlocks.latest.number;
     filter.get(function(error, logs) {
         if(!error) {
             // update last checkpoint block
-            Wallets.update({_id: newDocument._id}, {$set: {
+            CustomContracts.update({_id: newDocument._id}, {$set: {
                 checkpointBlock: (currentBlock || EthBlocks.latest.number) - ethereumConfig.rollBackBy
             }});
         }
     });
 
     filter.watch(function(error, log){
-        Logs.insert(log);
+        if(!error) {
+            var id = Helpers.makeId('log', web3.sha3(log.logIndex + 'x' + log.transactionHash + 'x' + log.blockHash));
+            if(log.removed) {
+                Events.remove(id);
+            } else {
+                web3.eth.getBlock(log.blockHash, function(error, block){
+                    if(!error) {
+                        log.timestamp = block.timestamp;
+                        Events.upsert(id, log);
+                    }
+                });
+            }
+        }
     });
 };
 
@@ -50,7 +67,7 @@ observeCustomContracts = function(){
                         }});
 
                         // check for logs
-                        // addLogWatching();
+                        addLogWatching(newDocument);
                         
 
                     } else {

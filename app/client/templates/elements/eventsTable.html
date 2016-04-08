@@ -1,16 +1,12 @@
-<template name="elements_transactions_table">
+<template name="elements_event_table">
     <br>
-    {{#unless $eq collection "PendingConfirmations"}}
-        <input type="text" class="filter-transactions" placeholder="{{i18n 'wallet.transactions.filter'}}">
-    {{/unless}}
     <table class="dapp-zebra transactions">
         <tbody>
             {{#each items}}
-                {{> elements_transactions_row}}
+                {{> elements_events_row}}
             {{else}}
                 <tr class="full-width">
                     <td colspan="5">
-                        {{! > spinner}}
                         {{i18n "wallet.transactions.noneFound"}}
                     </td>
                 </tr>
@@ -27,15 +23,13 @@
     </table>
 </template>
 
-<template name="elements_transactions_row">
-    <tr class="{{#if $eq unConfirmed.confirmations 0}}unconfirmed{{/if}} {{#if disabled}}disabled{{/if}}  {{#if $eq ../collection "PendingConfirmations"}}pending{{/if}}" data-operation="{{operation}}" data-transaction-hash="{{transactionHash}}" data-block-hash="{{blockHash}}">
-        {{#unless $eq ../collection "PendingConfirmations"}}
-            {{#with unConfirmed}}
-                <div class="dapp-progress">
-                    <div class="dapp-bar" style="width: {{percent}}%;"></div>
-                </div>
-            {{/with}}
-        {{/unless}}
+<template name="elements_events_row">
+    <tr class="{{#if $eq unConfirmed.confirmations 0}}unconfirmed{{/if}} {{#if disabled}}disabled{{/if}}" data-transaction-hash="{{transactionHash}}" data-block-hash="{{blockHash}}">
+        {{#with unConfirmed}}
+            <div class="dapp-progress">
+                <div class="dapp-bar" style="width: {{percent}}%;"></div>
+            </div>
+        {{/with}}
         <td class="time simptip-position-right simptip-movable" data-tooltip="{{formatTime timestamp 'LLLL'}}">
             <h2>{{formatTime timestamp "MMM"}}</h2>
             <p>{{formatTime timestamp "D"}}</p>

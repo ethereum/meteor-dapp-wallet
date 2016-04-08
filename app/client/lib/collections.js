@@ -17,6 +17,10 @@ new PersistentMinimongo2(Transactions, 'ethereum_wallet');
 PendingConfirmations = new Mongo.Collection('pending-confirmations', {connection: null});
 new PersistentMinimongo2(PendingConfirmations, 'ethereum_wallet');
 
+// Contains the custom contract events
+Events = new Mongo.Collection('events', {connection: null});
+new PersistentMinimongo2(Events, 'ethereum_wallet');
+
 // Contains Coin Information
 Tokens = new Mongo.Collection('tokens', {connection: null});
 new PersistentMinimongo2(Tokens, 'ethereum_wallet');
