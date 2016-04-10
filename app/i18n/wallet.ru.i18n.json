@@ -96,21 +96,21 @@
             }
         },
         "events": {
-            "eventInfoTitle": "Event",
-            "latest": "Latest events",
-            "filter": "Filter events",
-            "transactionHash": "Transaction hash",
-            "block": "Block",
-            "originContract": "Origin contract",
-            "logIndex": "Log index",
-            "transactionIndex": "Transaction index",
-            "returnValues": "Return values",
-            "eventName": "Event name"
+            "eventInfoTitle": "Событие",
+            "latest": "Последние события",
+            "filter": "События фильтра",
+            "transactionHash": "Хэш транзакции",
+            "block": "Блок",
+            "originContract": "Контракт-источник",
+            "logIndex": "Индекс лога",
+            "transactionIndex": "Индекс транзакции",
+            "returnValues": "Возвращаемые значения",
+            "eventName": "Имя события"
         },
         "transactions": {
             "transactionInfoTitle": "Транзакция",
             "latest": "Последние транзакции",
-            "block": "Block",
+            "block": "Блок",
             "pendingConfirmations": "Нуждается в подтверждении",
             "none": "Транзакций еще нет",
             "time": "Время",

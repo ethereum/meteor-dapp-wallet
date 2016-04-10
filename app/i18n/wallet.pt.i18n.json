@@ -96,21 +96,21 @@
             }
         },
         "events": {
-            "eventInfoTitle": "Event",
-            "latest": "Latest events",
-            "filter": "Filter events",
-            "transactionHash": "Transaction hash",
-            "block": "Block",
-            "originContract": "Origin contract",
-            "logIndex": "Log index",
-            "transactionIndex": "Transaction index",
-            "returnValues": "Return values",
-            "eventName": "Event name"
+            "eventInfoTitle": "Evento",
+            "latest": "Últimos eventos",
+            "filter": "Filtrar eventos",
+            "transactionHash": "Hash da transação",
+            "block": "Bloco",
+            "originContract": "Contrato de origem",
+            "logIndex": "Índice do log",
+            "transactionIndex": "Índice da transação",
+            "returnValues": "Valores devolvidos",
+            "eventName": "Nome do evento"
         },
         "transactions": {
             "transactionInfoTitle": "Transações",
             "latest": "Últimas transações ",
-            "block": "Block",
+            "block": "Bloco",
             "pendingConfirmations": "Confirmações pendentes",
             "none": "Sem transações ",
             "time": "Tempo",
