@@ -97,7 +97,8 @@
         },
         "events": {
             "eventInfoTitle": "Event",
-            "latest": "Letzte events",
+            "latest": "Letzte Events",
+            "filter": "Filter Events",
             "transactionHash": "Transaktions Hash",
             "block": "Block",
             "originContract": "Ursprungs Vertrag",

@@ -98,6 +98,7 @@
         "events": {
             "eventInfoTitle": "Event",
             "latest": "Latest events",
+            "filter": "Filter events",
             "transactionHash": "Transaction hash",
             "block": "Block",
             "originContract": "Origin contract",

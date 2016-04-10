@@ -65,6 +65,10 @@ Template['elements_event_table'].helpers({
                 if(pattern.test(item.address))
                     return item;
 
+                // search to return values
+                if(_.find(item.args, function(value, name){ return pattern.test(value) || pattern.test(name); }))
+                    return item;
+
                 return false;
             });
             items = items.slice(0, defaultLimit * 4);
