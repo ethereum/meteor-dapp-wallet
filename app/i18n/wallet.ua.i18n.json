@@ -95,9 +95,21 @@
                 }
             }
         },
+        "events": {
+            "eventInfoTitle": "Event",
+            "latest": "Latest events",
+            "transactionHash": "Transaction hash",
+            "block": "Block",
+            "originContract": "Origin contract",
+            "logIndex": "Log index",
+            "transactionIndex": "Transaction index",
+            "returnValues": "Return values",
+            "eventName": "Event name"
+        },
         "transactions": {
             "transactionInfoTitle": "Транзакція",
             "latest": "Останні транзакції",
+            "block": "Block",
             "pendingConfirmations": "Потребує підтвердження",
             "none": "Ще нема транзакцій",
             "time": "Час",

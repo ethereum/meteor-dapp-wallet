@@ -162,8 +162,6 @@ Template['elements_events_row'].helpers({
             var returnValues = [];
             _.each(this.args, function(value, key){
 
-                console.log(value);
-
                 // if bignumber
                 if((_.isObject(value) || value instanceof BigNumber) && value.toFormat)
                     value = value.toFormat(0);

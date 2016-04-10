@@ -95,9 +95,21 @@
                 }
             }
         },
+        "events": {
+            "eventInfoTitle": "Event",
+            "latest": "Letzte events",
+            "transactionHash": "Transaktions Hash",
+            "block": "Block",
+            "originContract": "Ursprungs Vertrag",
+            "logIndex": "Log index",
+            "transactionIndex": "Transaktions index",
+            "returnValues": "Rückgabewerte",
+            "eventName": "Event Name"
+        },
         "transactions": {
             "transactionInfoTitle": "Transaktion",
             "latest": "Letzte Transaktionen",
+            "block": "Block",
             "pendingConfirmations": "Warte auf Bestätigung",
             "none": "Keine Transaktionen",
             "time": "Zeit",

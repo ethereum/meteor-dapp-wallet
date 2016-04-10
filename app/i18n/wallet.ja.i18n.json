@@ -95,9 +95,21 @@
                 }
             }
         },
+        "events": {
+            "eventInfoTitle": "Event",
+            "latest": "Latest events",
+            "transactionHash": "Transaction hash",
+            "block": "Block",
+            "originContract": "Origin contract",
+            "logIndex": "Log index",
+            "transactionIndex": "Transaction index",
+            "returnValues": "Return values",
+            "eventName": "Event name"
+        },
         "transactions": {
             "transactionInfoTitle": "トランザクション",
             "latest": "最新のトランザクション",
+            "block": "Block",
             "pendingConfirmations": "確認が必要です",
             "none": "現在トランザクションはありません",
             "time": "時間",

@@ -95,9 +95,21 @@
                 }
             }
         },
+        "events": {
+            "eventInfoTitle": "Event",
+            "latest": "Latest events",
+            "transactionHash": "Transaction hash",
+            "block": "Block",
+            "originContract": "Origin contract",
+            "logIndex": "Log index",
+            "transactionIndex": "Transaction index",
+            "returnValues": "Return values",
+            "eventName": "Event name"
+        },
         "transactions": {
             "transactionInfoTitle": "Транзакция",
             "latest": "Последние транзакции",
+            "block": "Block",
             "pendingConfirmations": "Нуждается в подтверждении",
             "none": "Транзакций еще нет",
             "time": "Время",

@@ -1,0 +1,93 @@
+<template name="views_modals_eventInfo">
+    {{#with event}}
+        <h1>
+            {{i18n "wallet.events.eventInfoTitle"}}
+        </h1>
+
+        <p>
+            {{formatTime timestamp "LLLL"}}
+            <br>
+            <small>({{formatTime timestamp "fromNow"}}{{#if $lt confirmations 10000}}, <strong>{{dapp_formatNumber confirmations "0,0"}}</strong> {{i18n "wallet.transactions.confirmations"}}{{/if}})</small>
+        </p>
+
+        <table class="dapp-zebra">
+            <!-- <thead>
+                
+            </thead> -->
+            <tbody>
+                <tr>
+                    <td>{{i18n "wallet.events.eventName"}}</td>
+                    <td>
+                        {{this.event}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{i18n "wallet.events.returnValues"}}</td>
+                    <td style="word-break: break-word;">
+                        {{#each returnValues}}
+                            <strong>{{name}}</strong>:<br>
+                            {{value}}<br>
+                        {{/each}}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>{{i18n "wallet.events.originContract"}}</td>
+                    <td>
+                        {{> elements_account_link address=address}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{i18n "wallet.events.logIndex"}}</td>
+                    <td>
+                        {{logIndex}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{i18n "wallet.events.transactionIndex"}}</td>
+                    <td>
+                        {{transactionIndex}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{i18n "wallet.events.transactionHash"}}</td>
+                    <td>
+                        {{#if $eq ($.Session.get "network") "main"}} 
+                            <a href="http://etherscan.io/tx/{{transactionHash}}" target="_blank">{{transactionHash.substr 0 40}}...</a>
+                        {{else}}
+                            {{#if $eq ($.Session.get "network") "test"}}
+                                <a href="http://testnet.etherscan.io/tx/{{transactionHash}}" target="_blank">{{transactionHash.substr 0 40}}...</a>
+                            {{else}}
+                                {{transactionHash.substr 0 40}}...
+                            {{/if}}
+                        {{/if}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{i18n "wallet.events.block"}}</td>
+                    <td>
+                       {{#if $eq ($.Session.get "network") "main"}} 
+                        <a href="http://etherscan.io/block/{{blockHash}}" title="{{blockHash}}" target="_blank" class="dapp-shorten-text">
+                            {{blockNumber}}
+                            <br>
+                            {{blockHash.substr 0 40}}...
+                        </a>
+                        {{else}}
+                            {{#if $eq ($.Session.get "network") "test"}}
+                            <a href="http://testnet.etherscan.io/block/{{blockHash}}" title="{{blockHash}}" target="_blank" class="dapp-shorten-text">
+                                {{blockNumber}}
+                                <br>
+                                {{blockHash.substr 0 40}}...
+                            </a>
+                            {{else}}
+                                {{blockNumber}}
+                                <br>
+                                {{blockHash.substr 0 40}}...
+                            {{/if}}
+                        {{/if}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    {{/with}}
+</template>

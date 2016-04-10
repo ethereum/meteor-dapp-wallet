@@ -65,7 +65,7 @@ updateBalances = function() {
         // go through all existing accounts, for each token
         _.each(walletsAndAccounts, function(account){
             tokenInstance.balanceOf(account.address, function(e, balance){
-                var tokenID = Helpers.makeId('token', token.address);
+                var tokenID = token ? Helpers.makeId('token', token.address) : null;
                 var token = Tokens.findOne(tokenID);
                 var currentBalance = (token && token.balances) ? token.balances[account._id] : 0;
 

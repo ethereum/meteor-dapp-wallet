@@ -95,9 +95,21 @@
                 }
             }
         },
+        "events": {
+            "eventInfoTitle": "Event",
+            "latest": "Latest events",
+            "transactionHash": "Transaction hash",
+            "block": "Block",
+            "originContract": "Origin contract",
+            "logIndex": "Log index",
+            "transactionIndex": "Transaction index",
+            "returnValues": "Return values",
+            "eventName": "Event name"
+        },
         "transactions": {
             "transactionInfoTitle": "Transaction",
             "latest": "Latest transactions",
+            "block": "Block",
             "pendingConfirmations": "Confirmation needed",
             "none": "No transactions yet",
             "time": "Time",
