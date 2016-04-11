@@ -96,21 +96,21 @@
             }
         },
         "events": {
-            "eventInfoTitle": "Event",
-            "latest": "Latest events",
-            "filter": "Filter events",
-            "transactionHash": "Transaction hash",
-            "block": "Block",
-            "originContract": "Origin contract",
-            "logIndex": "Log index",
-            "transactionIndex": "Transaction index",
-            "returnValues": "Return values",
-            "eventName": "Event name"
+            "eventInfoTitle": "Подія",
+            "latest": "Останні події",
+            "filter": "Фільтр подій",
+            "transactionHash": "Хеш транзакції",
+            "block": "Блок",
+            "originContract": "Первинний контракт",
+            "logIndex": "Індекс журналу",
+            "transactionIndex": "Індекс транзакції",
+            "returnValues": "Значення, що повертаються",
+            "eventName": "Ім'я події"
         },
         "transactions": {
             "transactionInfoTitle": "Транзакція",
             "latest": "Останні транзакції",
-            "block": "Block",
+            "block": "Блок",
             "pendingConfirmations": "Потребує підтвердження",
             "none": "Ще нема транзакцій",
             "time": "Час",

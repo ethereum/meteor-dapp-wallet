@@ -96,16 +96,16 @@
             }
         },
         "events": {
-            "eventInfoTitle": "Event",
-            "latest": "Latest events",
-            "filter": "Filter events",
-            "transactionHash": "Transaction hash",
+            "eventInfoTitle": "Evenimente",
+            "latest": "Ultimele evenimente",
+            "filter": "Filtrați evenimentele",
+            "transactionHash": "Hash-ul tranzacției",
             "block": "Block",
-            "originContract": "Origin contract",
-            "logIndex": "Log index",
-            "transactionIndex": "Transaction index",
-            "returnValues": "Return values",
-            "eventName": "Event name"
+            "originContract": "Contractul originar",
+            "logIndex": "Index de jurnal",
+            "transactionIndex": "Index de tranzacții",
+            "returnValues": "Valorile returnate",
+            "eventName": "Numele evenimentului"
         },
         "transactions": {
             "transactionInfoTitle": "Tranzactie",

@@ -96,21 +96,21 @@
             }
         },
         "events": {
-            "eventInfoTitle": "Event",
-            "latest": "Latest events",
-            "filter": "Filter events",
-            "transactionHash": "Transaction hash",
-            "block": "Block",
-            "originContract": "Origin contract",
-            "logIndex": "Log index",
-            "transactionIndex": "Transaction index",
-            "returnValues": "Return values",
-            "eventName": "Event name"
+            "eventInfoTitle": "イベント",
+            "latest": "最新のイベント",
+            "filter": "イベントをフィルター",
+            "transactionHash": "トランザクションハッシュ",
+            "block": "ブロック",
+            "originContract": "コントラクトのオリジン",
+            "logIndex": "ログのインデックス",
+            "transactionIndex": "トランザクションのインデックス",
+            "returnValues": "返り値",
+            "eventName": "イベントの名前"
         },
         "transactions": {
             "transactionInfoTitle": "トランザクション",
             "latest": "最新のトランザクション",
-            "block": "Block",
+            "block": "ブロック",
             "pendingConfirmations": "確認が必要です",
             "none": "現在トランザクションはありません",
             "time": "時間",
