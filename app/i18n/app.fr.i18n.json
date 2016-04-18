@@ -1,0 +1,33 @@
+{
+    "app": {
+        "loading": "Chargement...",
+        "offline": "Impossible de se connecter, êtes-vous hors-ligne?",
+        "logginIn": "Logging in..."
+    },
+    "error": {
+        "insufficientRights": "Vous n'avez pas suffisamment d'autorisations pour cette action."
+    },
+    "buttons": {
+        "ok": "OK",
+        "cancel": "Annuler",
+        "save": "Sauvegarder",
+        "edit": "Editer",
+        "send": "Envoyer",
+        "sending": "Envoie...",
+        "create": "Créer",
+        "select": "Sélectionner",
+        "tryToReconnect": "Essayer de se reconnecter"
+    },
+    "commonWords": {
+        "you": "Vous",
+        "send": "Envoyer",
+        "or": "ou",
+        "of": "de",
+        "with": "avec",
+        "and": "et",
+        "on": "sur",
+        "per": "par",
+        "total":"total",
+        "at": "à"
+    }
+}
