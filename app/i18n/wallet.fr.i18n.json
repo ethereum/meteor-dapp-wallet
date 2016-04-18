@@ -95,9 +95,22 @@
                 }
             }
         },
+        "events": {     
+            "eventInfoTitle": "Événement",      
+            "latest": "Derniers événements",      
+            "filter": "Filtrer les événements",      
+            "transactionHash": "Transaction hash",      
+            "block": "Bloque",       
+            "originContract": "Contrat d'origine",        
+            "logIndex": "Log indice",        
+            "transactionIndex": "Transaction index",        
+            "returnValues": "Valeurs de retour",        
+            "eventName": "Nom de l'événement"      
+        },
         "transactions": {
             "transactionInfoTitle": "Transaction",
             "latest": "Dernières transactions",
+            "block": "Bloque",
             "pendingConfirmations": "Confirmation requise",
             "none": "Pas de transaction pour l'instant",
             "time": "Temps",
@@ -219,11 +232,12 @@
             "estimatedFee": "Fee estimé",
             "createContract": "Créer contrat",
             "provideGas": "Fournir Gas",
+            "transactionSent": "Transaction envoyée",
             "error": {
                 "emptyWallet": "Le compte depuis lequel vous tenter d'envoyer est vide.",
                 "notEnoughFunds": "Vous n'avez pas asser de fonds sur le compte.",
                 "noReceiver": "Vous n'avez pas spécifié de destinataire.",
-                "noAmount": "Vous n'avez pas spécifié le montant à envoyer.",
+                "noAmount": "Vous n'avez pas spécifié le montant à envoyer."
             },
             "texts": {
                 "ownerPaysGas": "Le Gas est payé par le propriétaire du Wallet Contract",
@@ -245,7 +259,7 @@
                     "2": "souvent en moins d'une minute",
                     "3": "probablement en moins de 30 secondes",
                     "4": "probablement en quelques secondes",
-                    "5": "probablement en quelques secondes",
+                    "5": "probablement en quelques secondes"
                 }
             }
         },
