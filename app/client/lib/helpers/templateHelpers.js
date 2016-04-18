@@ -28,6 +28,15 @@ Check if in mist
 @method (isMist)
 **/
 Template.registerHelper('isMist', function(){
+    return (typeof mist !== 'undefined');
+});
+
+/**
+Check if in mist and in mist mode
+
+@method (isMistMode)
+**/
+Template.registerHelper('isMistMode', function(){
     return (typeof mist !== 'undefined' && mist.mode === 'mist');
 });
 
