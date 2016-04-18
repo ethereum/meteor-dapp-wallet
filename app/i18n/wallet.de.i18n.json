@@ -247,19 +247,19 @@
                 "overDailyLimit": "<p class=\"over-daily\">Der Betrag überschreitet das Tageslimit von __limit__ (of __total__ per day), Sie benötigen __count__ weiteres Konto zum Bestätigen.</p>",
                 "overDailyLimit_plural": "<p class=\"over-daily\">Der Betrag überschreitet das Tageslimit von  __limit__ (of __total__ per day), Sie benötigen __count__ weitere Konten zum Bestätigen.</p>",
                 "underDailyLimit": "<p class=\"under-daily\">Dieser Betrag ist kleiner als das verbleibende Tageslimit von __limit__ (von __total__ pro Tag), daher kann augenblicklich versandt werden.</p>",
-                "sendFee": "Dies ist ddr höchste Betrag, der durch die Transaktion verbraucht werden könnte. Ihre Transaktion wird voraussichtlich <strong>__timetext__</strong> bestätigt.",
+                "sendFee": "Dies ist der höchste Betrag, der durch die Transaktion verbraucht werden könnte. Ihre Transaktion wird <strong>__timetext__</strong> bestätigt.",
                 "noCodeInRecipient": "Das Empfängerkonto ist kein Vertrag, daher kann nichts ausgeführt werden. <strong> Schreiben Sie eine Vertragsadresse in das 'AN' Feld. </strong>",
-                "addData": "Sie können einer Transaktion zusätzliche Daten übergeben. Wenn sie das \"an\" Feld leer lassen, wird versucht, den Vertrag mit Hilfe der Daten zu veröffentlichen.",
+                "addData": "Sie können einer Transaktion zusätzliche Daten übergeben. Wenn sie das \"an\" Feld leer lassen, wird versucht, ein Vertrag mit Hilfe der Daten zu erstellen.",
                 "dataNotExecutable": "Die Daten scheinen nicht ausführbar zu sein, das bedeutet, dass die Transaktion das komplette Gas aufbrauchen wird.",
                 "cantEstimateGas": "Der Gasverbrauch konnte nicht berechnet werden, da Ihr Konto mindestens einen Betrag von 1 Ether aufweisen muss.",
                 "estimatedGas": "Voraussichtlich verbrauchtes Gas",
                 "timeTexts": {
-                    "0": "In ein paar Minuten",
-                    "1": "Wahrscheinlich in wenigen Minuten",
-                    "2": "Für gewöhnlich in einer Minute",
-                    "3": "Voraussichtlich in 30 Sekunden",
-                    "4": "Voraussichtlich in ein paar Sekunden",
-                    "5": "Voraussichtlich in ein paar Sekunden"
+                    "0": "in ein paar Minuten",
+                    "1": "wahrscheinlich in wenigen Minuten",
+                    "2": "für gewöhnlich in einer Minute",
+                    "3": "voraussichtlich in 30 Sekunden",
+                    "4": "voraussichtlich in ein paar Sekunden",
+                    "5": "voraussichtlich in ein paar Sekunden"
                 }
             }
         },
