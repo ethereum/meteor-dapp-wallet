@@ -53,19 +53,19 @@ contract multiowned {
     // as well as the selection of addresses capable of confirming them.
     function multiowned(address[] _owners, uint _required) {
         m_numOwners = _owners.length + 1;
-        m_owners[1] = uint(msg.sender);
-        m_ownerIndex[uint(msg.sender)] = 1;
+        m_owners[1] = msg.sender;
+        m_ownerIndex[msg.sender] = 1;
         for (uint i = 0; i < _owners.length; ++i)
         {
-            m_owners[2 + i] = uint(_owners[i]);
-            m_ownerIndex[uint(_owners[i])] = 2 + i;
+            m_owners[2 + i] = _owners[i];
+            m_ownerIndex[_owners[i]] = 2 + i;
         }
         m_required = _required;
     }
     
     // Revokes a prior confirmation of the given operation
     function revoke(bytes32 _operation) external {
-        uint ownerIndex = m_ownerIndex[uint(msg.sender)];
+        uint ownerIndex = m_ownerIndex[msg.sender];
         // make sure they're an owner
         if (ownerIndex == 0) return;
         uint ownerIndexBit = 2**ownerIndex;
@@ -80,13 +80,13 @@ contract multiowned {
     // Replaces an owner `_from` with another `_to`.
     function changeOwner(address _from, address _to) onlymanyowners(sha3(msg.data, block.number)) external {
         if (isOwner(_to)) return;
-        uint ownerIndex = m_ownerIndex[uint(_from)];
+        uint ownerIndex = m_ownerIndex[_from];
         if (ownerIndex == 0) return;
 
         clearPending();
-        m_owners[ownerIndex] = uint(_to);
-        m_ownerIndex[uint(_from)] = 0;
-        m_ownerIndex[uint(_to)] = ownerIndex;
+        m_owners[ownerIndex] = _to;
+        m_ownerIndex[_from] = 0;
+        m_ownerIndex[_to] = ownerIndex;
         OwnerChanged(_from, _to);
     }
     
@@ -99,18 +99,18 @@ contract multiowned {
         if (m_numOwners >= c_maxOwners)
             return;
         m_numOwners++;
-        m_owners[m_numOwners] = uint(_owner);
-        m_ownerIndex[uint(_owner)] = m_numOwners;
+        m_owners[m_numOwners] = _owner;
+        m_ownerIndex[_owner] = m_numOwners;
         OwnerAdded(_owner);
     }
     
     function removeOwner(address _owner) onlymanyowners(sha3(msg.data, block.number)) external {
-        uint ownerIndex = m_ownerIndex[uint(_owner)];
+        uint ownerIndex = m_ownerIndex[_owner];
         if (ownerIndex == 0) return;
         if (m_required > m_numOwners - 1) return;
 
         m_owners[ownerIndex] = 0;
-        m_ownerIndex[uint(_owner)] = 0;
+        m_ownerIndex[_owner] = 0;
         clearPending();
         reorganizeOwners(); //make sure m_numOwner is equal to the number of owners and always points to the optimal free slot
         OwnerRemoved(_owner);
@@ -124,12 +124,12 @@ contract multiowned {
     }
     
     function isOwner(address _addr) returns (bool) {
-        return m_ownerIndex[uint(_addr)] > 0;
+        return m_ownerIndex[_addr] > 0;
     }
     
     function hasConfirmed(bytes32 _operation, address _owner) constant returns (bool) {
         var pending = m_pending[_operation];
-        uint ownerIndex = m_ownerIndex[uint(_owner)];
+        uint ownerIndex = m_ownerIndex[_owner];
 
         // make sure they're an owner
         if (ownerIndex == 0) return false;
@@ -147,7 +147,7 @@ contract multiowned {
 
     function confirmAndCheck(bytes32 _operation) internal returns (bool) {
         // determine what index the present sender is:
-        uint ownerIndex = m_ownerIndex[uint(msg.sender)];
+        uint ownerIndex = m_ownerIndex[msg.sender];
         // make sure they're an owner
         if (ownerIndex == 0) return;
 
@@ -213,10 +213,10 @@ contract multiowned {
     uint public m_numOwners;
     
     // list of owners
-    uint[256] m_owners;
+    address[256] m_owners;
     uint constant c_maxOwners = 250;
     // index on the list of owners to allow reverse lookup
-    mapping(uint => uint) m_ownerIndex;
+    mapping(address => uint) m_ownerIndex;
     // the ongoing operations.
     mapping(bytes32 => PendingState) m_pending;
     bytes32[] m_pendingIndex;
