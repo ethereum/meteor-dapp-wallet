@@ -355,3 +355,17 @@ Helpers.addInputValue = function (inputs, currentInput, formField){
             return value;
         }) || [];
 };
+
+/**
+Takes a camelcase and shows it with spaces
+
+@method toSentence
+@param {string} camelCase    A name in CamelCase or snake_case format
+@return {string} sentence    The same name with spaces
+**/
+Helpers.toSentence = function (name, noHTML) {
+    if (noHTML === true) // only consider explicit true
+        return name.replace(/([A-Z]+|[0-9]+)/g, ' $1')
+    else 
+        return name.replace(/([A-Z]+|[0-9]+)/g, ' $1').replace(/([\_])/g, '<span class="punctuation">$1</span>');
+}

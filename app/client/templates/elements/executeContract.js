@@ -48,14 +48,10 @@ Template['elements_executeContract'].helpers({
             // Walk throught the jsonInterface and extract functions and constants
             if(func.type == 'function') {
                 func.contractInstance = contractInstance;
-
-                func.displayName = func.name.replace(/([A-Z]+|[0-9]+)/g, ' $1');
                 func.inputs = _.map(func.inputs, Helpers.createTemplateDataFromInput);
 
                 if(func.constant){
-                    // if it's a constant   
-                    func.displayName = func.displayName.replace(/([\_])/g, '<span class="punctuation">$1</span>');
-                     
+                    // if it's a constant                        
                     contractConstants.push(func);                    
                 } else {
                     //if its a variable
@@ -149,18 +145,12 @@ Template['elements_executeContract_constant'].onCreated(function(){
                 // single return value
                 if(template.data.outputs.length === 1) {
                     template.data.outputs[0].value = r;
-                    template.data.outputs[0].displayName = template.data.outputs[0].name.replace(/([A-Z])/g, ' $1');
-
                     outputs.push(template.data.outputs[0]);
 
                 // multiple return values
                 } else {
                     outputs = _.map(template.data.outputs, function(output, i) {
                         output.value = r[i];
-                        output.displayName = output.name
-                        .replace(/([A-Z])/g, ' $1')        
-                        .replace(/([\-\_])/g, '<span class="punctuation">$1</span>');
-
                         return output;
                     });
                 }

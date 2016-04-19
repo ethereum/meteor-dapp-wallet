@@ -53,7 +53,7 @@
                             <select class="compiled-contracts">
                                 <option disabled selected>{{i18n "wallet.contracts.pickContract"}}</option>
                                 {{#each this}}
-                                    <option value="{{name}}">{{displayName}}</option>
+                                    <option value="{{name}}">{{toSentence name true}}</option>
                                 {{/each}}    
                             </select>
                         {{else}}
