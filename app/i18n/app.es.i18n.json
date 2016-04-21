@@ -8,7 +8,7 @@
         "insufficientRights": "No tiene suficientes privilegios para esta acción."
     },
     "buttons": {
-        "ok": "OK",
+        "ok": "Aceptar",
         "cancel": "Cancelar",
         "save": "Guardar",
         "edit": "editar",
