@@ -36,11 +36,11 @@
             <p>{{formatTime timestamp "D"}}</p>
         </td>
         <td class="account-name">
-            <h2>{{toSentence this.event}}</h2>
+            <h2>{{{toSentence this.name}}}</h2>
             
             <p style="word-break: break-word;">
                 {{#each returnValues}}
-                    {{toSentence name}}: <strong>{{value}}</strong> <br>
+                    {{{toSentence name}}}: <strong>{{{value}}}</strong> <br>
                 {{/each}}
             </p>
             

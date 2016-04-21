@@ -59,15 +59,16 @@ Template['elements_event_table'].helpers({
             items = _.filter(items, function(item){
                 // search from address
                 if(pattern.test(item.event))
-                    return item;
+                    return _.extend(item, {name: item.event});
+
 
                 // search to address
                 if(pattern.test(item.address))
-                    return item;
+                    return _.extend(item, {name: 'unnamed'});
 
                 // search to return values
                 if(_.find(item.args, function(value, name){ return pattern.test(value) || pattern.test(name); }))
-                    return item;
+                    return _.extend(item, {name: 'args'});
 
                 return false;
             });
@@ -76,7 +77,13 @@ Template['elements_event_table'].helpers({
 
         } else {
             template._properties.cursor = collection.find(selector, {sort: {timestamp: -1, blockNumber: -1}, limit: limit});
-            return template._properties.cursor.fetch();
+            return _.map(template._properties.cursor.fetch(), 
+                        function(item){ 
+                            if(item.event) 
+                                return _.extend(item, {name: item.event}); 
+                            else 
+                                return _.extend(item, {name: TAPi18n.__('wallet.transactions.types.executeContract')}); 
+                        });
         }
     },
     /**

@@ -363,9 +363,11 @@ Takes a camelcase and shows it with spaces
 @param {string} camelCase    A name in CamelCase or snake_case format
 @return {string} sentence    The same name with spaces
 **/
-Helpers.toSentence = function (name, noHTML) {
-    if (noHTML === true) // only consider explicit true
-        return name.replace(/([A-Z]+|[0-9]+)/g, ' $1')
+Helpers.toSentence = function (inputString, noHTML) {
+    if (typeof inputString == 'undefined') 
+        return false;
+    else if (noHTML === true) // only consider explicit true
+        return inputString.replace(/([A-Z]+|[0-9]+)/g, ' $1')
     else 
-        return name.replace(/([A-Z]+|[0-9]+)/g, ' $1').replace(/([\_])/g, '<span class="punctuation">$1</span>');
+        return inputString.replace(/([A-Z]+|[0-9]+)/g, ' $1').replace(/([\_])/g, '<span class="dapp-punctuation">$1</span>');
 }
