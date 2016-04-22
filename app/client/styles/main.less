@@ -238,7 +238,6 @@ body {
 
 
 .account-balance {
-
     span {
         font-size: 0.6em;
     }
@@ -504,10 +503,6 @@ body {
                     font-weight: normal;
                     .opacity(0.6);
                 }
-
-                .punctuation {
-                    opacity: 0.25;
-                }
             }
 
             .spinner-container {
@@ -717,10 +712,6 @@ body {
         text-transform: capitalize;
     }
 
-    h4 .punctuation {
-        opacity: 0.25;
-    }
-
     h4::first-letter, select::first-letter, dt::first-letter {
         text-transform: uppercase;
     }
@@ -794,15 +785,13 @@ body {
                         max-width: 14 * @gridWidth;
                         margin-bottom: @gridHeight;
                     }
-                }
-                
+                }    
             }
         }
-        .punctuation {
+        .dapp-punctuation {
             opacity: 0.15;
             overflow: visible;
         }
-
     }
 
     .dapp-block-button {
@@ -810,6 +799,9 @@ body {
     }
 }
 
+.dapp-punctuation {
+    opacity: 0.25;
+}
 
 /* #### Small wallet #### */
 @media screen and (max-width: 1099px){

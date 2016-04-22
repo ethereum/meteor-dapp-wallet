@@ -61,6 +61,7 @@ Template['elements_event_table'].helpers({
                 if(pattern.test(item.event))
                     return item;
 
+
                 // search to address
                 if(pattern.test(item.address))
                     return item;

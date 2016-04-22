@@ -125,7 +125,6 @@ Template['elements_compileContract'].onRendered(function() {
 
                         return {
                             name: name,
-                            displayName: name.replace(/([A-Z]+|[0-9]+)/g, ' $1'),
                             bytecode: contract.bytecode,
                             jsonInterface: jsonInterface,
                             constructorInputs: constructor.inputs

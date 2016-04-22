@@ -36,13 +36,20 @@
             <p>{{formatTime timestamp "D"}}</p>
         </td>
         <td class="account-name">
-            <h2>{{this.event}}</h2>
+            <h2>  
+                {{#if this.event }} 
+                    {{{toSentence this.event}}}
+                {{else}}
+                    {{i18n "wallet.transactions.types.executeContract"}}
+                {{/if}}
+            </h2>
             
             <p style="word-break: break-word;">
                 {{#each returnValues}}
-                    {{name}}: {{value}}<br>
+                    {{{toSentence name}}}: <strong>{{{value}}}</strong> <br>
                 {{/each}}
             </p>
+            
         </td>
         <td class="info">
             {{#with unConfirmed}}
