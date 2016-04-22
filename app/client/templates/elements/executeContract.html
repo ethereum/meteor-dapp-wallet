@@ -43,7 +43,7 @@
                             <select class="select-contract-function" name="select-contract-function">
                                 <option disabled selected>{{i18n "wallet.contracts.pickFunction"}}</option>
                                 {{#each this}}
-                                    <option value="{{name}}">{{displayName}}</option>
+                                    <option value="{{name}}">{{toSentence name true}}</option>
                                 {{/each}}    
                             </select>
                             
@@ -64,7 +64,7 @@
 <template name="elements_executeContract_constant">
     <tr>
         <td>
-            <h3>{{{displayName}}}</h3>
+            <h3>{{{toSentence name}}}</h3>
             {{#each inputs}}
                 {{> Template.dynamic template=template}}
             {{/each}}
@@ -75,7 +75,7 @@
             <dl class="constant-{{name}} dapp-zebra">
             {{#each (TemplateVar.get "outputs")}}
                 {{#if name}}
-                    <dt>{{{displayName}}}</dt>
+                    <dt>{{{toSentence name}}}</dt>
                 {{/if}}
                 <dd class="output">
                     {{#each value}}

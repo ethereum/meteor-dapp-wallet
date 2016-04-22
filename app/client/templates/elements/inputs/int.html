@@ -1,6 +1,6 @@
 <template name="elements_input_int">
     <h4>
-        {{#if name}}{{{displayName}}} <em>-</em> {{/if}}<em>{{#if bits}}{{bits}} bits{{/if}} signed integer</em>
+        {{#if name}}{{{toSentence name}}} <em>-</em> {{/if}}<em>{{#if bits}}{{bits}} bits{{/if}} signed integer</em>
     </h4>
     <input type="number" step="1" placeholder="-123" name="elements_input_int" class="abi-input {{class}}">
 </template>
