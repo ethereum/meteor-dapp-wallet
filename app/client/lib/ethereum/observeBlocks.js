@@ -58,24 +58,21 @@ updateBalances = function() {
         if(!token.address)
             return;
 
+        var tokenInstance = TokenContract.at(token.address);
 
-        var tokenInstance = TokenContract.at(token.address),
-            totalBalance = new BigNumber(0);
-        
         // go through all existing accounts, for each token
         _.each(walletsAndAccounts, function(account){
             tokenInstance.balanceOf(account.address, function(e, balance){
-                var tokenID = token ? Helpers.makeId('token', token.address) : null;
                 var currentBalance = (token && token.balances) ? token.balances[account._id] : 0;
 
                 if(!e && balance.toString(10) !== currentBalance){
                     var set = {};
                     if (balance > 0) {
                         set['balances.'+ account._id] = balance.toString(10);
-                        Tokens.update(tokenID, {$set: set});
+                        Tokens.update(token._id, {$set: set});
                     } else if (currentBalance){
                         set['balances.'+ account._id] = '';
-                        Tokens.update(tokenID, {$unset: set});
+                        Tokens.update(token._id, {$unset: set});
                     }
                     
                 }
