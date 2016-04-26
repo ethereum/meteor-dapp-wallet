@@ -92,7 +92,8 @@
                 "backupWallet": {
                     "title": "Backup your wallet contract address!",
                     "description": "Make sure to write down the wallet contract address:"
-                }
+                },
+                "copyAddressWarning": "Warning: you're on the Test Network. Be careful not to transfer real funds here."
             }
         },
         "events": {

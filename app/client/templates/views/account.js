@@ -174,29 +174,34 @@ Template['views_account'].events({
     'click .copy-to-clipboard-button': function(e){
         e.preventDefault();
         
-        var copyTextarea = document.querySelector('.copyable-address span');
-        
-        var selection = window.getSelection();            
-        var range = document.createRange();
-        range.selectNodeContents(copyTextarea);
-        selection.removeAllRanges();
-        selection.addRange(range);
+        EthElements.Modal.question({
+            text: new Spacebars.SafeString(TAPi18n.__('wallet.accounts.modal.copyAddressWarning')),
+            ok: function(){
+                var copyTextarea = document.querySelector('.copyable-address span');
+                var selection = window.getSelection();            
+                var range = document.createRange();
+                range.selectNodeContents(copyTextarea);
+                selection.removeAllRanges();
+                selection.addRange(range);
 
-        try {
-            var successful = document.execCommand('copy');
-            var msg = successful ? 'successful' : 'unsuccessful';
-            console.log('Copying text command was ' + msg);
-        } catch (err) {
-            console.log('Oops, unable to copy');
-        }
+                try {
+                    var successful = document.execCommand('copy');
+                    var msg = successful ? 'successful' : 'unsuccessful';
+                    console.log('Copying text command was ' + msg);
+                } catch (err) {
+                    console.log('Oops, unable to copy');
+                }
 
-        selection.removeAllRanges();
-        
-        GlobalNotification.info({
-           content: 'i18n:wallet.accounts.addressCopiedToClipboard',
-           duration: 2
+                selection.removeAllRanges();
+                
+                GlobalNotification.info({
+                   content: 'i18n:wallet.accounts.addressCopiedToClipboard',
+                   duration: 2
+                });
+            },
+            cancel: true
         });
-        
+
     },
     /**
     Click to reveal QR Code
