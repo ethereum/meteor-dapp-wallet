@@ -87,6 +87,16 @@ Template['views_account'].helpers({
         return (this.balances && Number(this.balances[account._id]) > 0)
             ? Helpers.formatNumberByDecimals(this.balances[account._id], this.decimals) +' '+ this.symbol
             : false;
+    },
+    /**
+    Gets the contract events if available
+
+    @method (contractEvents)
+    */
+    'contractEvents': function(){
+        var customContract = CustomContracts.findOne({address: this.address.toLowerCase()});
+
+        return customContract ? customContract.contractEvents : null;
     }
 });
 
