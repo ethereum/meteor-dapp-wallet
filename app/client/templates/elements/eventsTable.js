@@ -49,7 +49,7 @@ Template['elements_event_table'].helpers({
             searchQuery = TemplateVar.get('search'),
             limit = TemplateVar.get('limit'),
             collection = Events,
-            selector = this.ids ? {_id: {$in: this.ids.slice(Number((limit+1)*-1))}} : {}; 
+            selector = this.ids ? {_id: {$in: this.ids.slice(Number((limit+50)*-1))}} : {}; 
             // slice(limit) prevents loading too many objects at once and slowing the machine
         
         // if search
