@@ -7,7 +7,7 @@ var addLogWatching = function(newDocument){
     if(blockToCheckBack < 0)
         blockToCheckBack = 0;
 
-    console.log('EVENT LOG:  Checking Custom Contract Events for '+ newDocument.address +' (_id: '+ newDocument._id + ') from block # '+ blockToCheckBack);
+    // console.log('EVENT LOG:  Checking Custom Contract Events for '+ newDocument.address +' (_id: '+ newDocument._id + ') from block # '+ blockToCheckBack);
 
     // delete the last logs until block -500
     _.each(Events.find({_id: {$in: newDocument.contractEvents || []}, blockNumber: {$exists: true, $gt: blockToCheckBack}}).fetch(), function(log){
