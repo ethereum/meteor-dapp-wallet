@@ -90,6 +90,54 @@ Template['views_account'].helpers({
     }
 });
 
+
+var accountClipboardEventHandler = function(e){
+    e.preventDefault();
+    
+    function copyAddress(){
+        var copyTextarea = document.querySelector('.copyable-address span');
+        var selection = window.getSelection();            
+        var range = document.createRange();
+        range.selectNodeContents(copyTextarea);
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        try {
+            var successful = document.execCommand('copy');
+        } catch (err) {
+            console.log('Oops, unable to copy');
+            GlobalNotification.error({
+                content: 'i18n:wallet.accounts.addressCopiedToClipboard',
+                closeable: false,
+                duration: 3
+            });
+        }
+
+        selection.removeAllRanges();
+        
+        GlobalNotification.info({
+           content: 'i18n:wallet.accounts.addressCopiedToClipboard',
+           duration: 3
+        });
+    }
+
+    console.log('is on main network', Helpers.isOnMainNetwork());
+    if (Helpers.isOnMainNetwork()) {
+        copyAddress();
+    }
+    else {
+        EthElements.Modal.question({
+            text: new Spacebars.SafeString(TAPi18n.__('wallet.accounts.modal.copyAddressWarning')),
+            ok: function(){
+                copyAddress();
+            },
+            cancel: true,
+            modalQuestionOkButtonText: new Spacebars.SafeString(TAPi18n.__('wallet.accounts.modal.buttonOk')),
+            modalQuestionCancelButtonText: new Spacebars.SafeString(TAPi18n.__('wallet.accounts.modal.buttonCancel'))
+        });
+    }
+};
+
 Template['views_account'].events({
     /**
     Clicking the delete button will show delete modal
@@ -171,46 +219,15 @@ Template['views_account'].events({
     
     @event click a.create.account
     */
-    'click .copy-to-clipboard-button': function(e){
-        e.preventDefault();
-        
-        function copyAddress(){
-            var copyTextarea = document.querySelector('.copyable-address span');
-            var selection = window.getSelection();            
-            var range = document.createRange();
-            range.selectNodeContents(copyTextarea);
-            selection.removeAllRanges();
-            selection.addRange(range);
+    'click .copy-to-clipboard-button': accountClipboardEventHandler,
 
-            try {
-                var successful = document.execCommand('copy');
-                var msg = successful ? 'successful' : 'unsuccessful';
-                console.log('Copying text command was ' + msg);
-            } catch (err) {
-                console.log('Oops, unable to copy');
-            }
+    /**
+    Tries to copy account token.
+    
+    @event copy .copyable-address span
+    */
+    'copy .copyable-address': accountClipboardEventHandler,
 
-            selection.removeAllRanges();
-            
-            GlobalNotification.info({
-               content: 'i18n:wallet.accounts.addressCopiedToClipboard',
-               duration: 2
-            });
-        }
-
-        if (Helpers.isOnMainNetwork) {
-            copyAddress();
-        }
-        else {
-            EthElements.Modal.question({
-                text: new Spacebars.SafeString(TAPi18n.__('wallet.accounts.modal.copyAddressWarning')),
-                ok: function(){
-                    copyAddress();
-                },
-                cancel: true
-            });
-        }
-    },
     /**
     Click to reveal QR Code
     
