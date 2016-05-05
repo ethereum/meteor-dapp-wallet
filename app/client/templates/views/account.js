@@ -105,9 +105,8 @@ var accountClipboardEventHandler = function(e){
         try {
             var successful = document.execCommand('copy');
         } catch (err) {
-            console.log('Oops, unable to copy');
             GlobalNotification.error({
-                content: 'i18n:wallet.accounts.addressCopiedToClipboard',
+                content: 'i18n:wallet.accounts.addressNotCopiedToClipboard',
                 closeable: false,
                 duration: 3
             });
@@ -121,7 +120,6 @@ var accountClipboardEventHandler = function(e){
         });
     }
 
-    console.log('is on main network', Helpers.isOnMainNetwork());
     if (Helpers.isOnMainNetwork()) {
         copyAddress();
     }
