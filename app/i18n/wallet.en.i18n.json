@@ -30,6 +30,7 @@
                 "blockReceived": "New Block Received",
                 "timeSinceBlock": "since last block",
                 "peers": "peers",
+                "waitingForBlocks": "Waiting for blocks..",
                 "testnetExplain": "You are on a testnet, DO NOT SEND any real ether to these addresses",
                 "noAccounts": {
                     "title": "You have no accounts yet",

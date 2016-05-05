@@ -33,8 +33,6 @@ var addLogWatching = function(newDocument){
         if(!error) {
             var id = Helpers.makeId('log', web3.sha3(log.logIndex + 'x' + log.transactionHash + 'x' + log.blockHash));
 
-            Helpers.eventLogs(log);
-
             if(log.removed) {
                 Events.remove(id);
             } else {

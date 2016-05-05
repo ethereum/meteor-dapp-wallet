@@ -30,6 +30,7 @@ web3.eth.isSyncing(function(error, syncing) {
     if(!error) {
 
         if(syncing === true) {
+            console.time('nodeRestarted')
             console.log('Node started syncing, stopping app operation');
             web3.reset(true);
 
@@ -49,6 +50,7 @@ web3.eth.isSyncing(function(error, syncing) {
             TemplateVar.setTo('header nav', 'syncing', syncing);
             
         } else {
+            console.timeEnd('nodeRestarted')            
             console.log('Restart app operation again');
 
             TemplateVar.setTo('header nav', 'syncing', false);

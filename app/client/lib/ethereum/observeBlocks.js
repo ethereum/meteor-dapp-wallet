@@ -52,7 +52,7 @@ updateBalances = function() {
 
     
     // UPDATE TOKEN BALANCES
-    var walletsAndAccounts = EthAccounts.find().fetch().concat(Wallets.find().fetch(), CustomContracts.find().fetch());
+    var walletsContractsAndAccounts = EthAccounts.find().fetch().concat(walletsAndContracts);
 
     _.each(Tokens.find().fetch(), function(token){
         if(!token.address)
@@ -61,7 +61,7 @@ updateBalances = function() {
         var tokenInstance = TokenContract.at(token.address);
 
         // go through all existing accounts, for each token
-        _.each(walletsAndAccounts, function(account){
+        _.each(walletsContractsAndAccounts, function(account){
             tokenInstance.balanceOf(account.address, function(e, balance){
                 var currentBalance = (token && token.balances) ? token.balances[account._id] : 0;
 
