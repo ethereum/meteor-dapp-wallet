@@ -89,6 +89,7 @@ Observe the latest blocks
 */
 observeLatestBlocks = function(){
 
+    console.time('observeLatestBlocks');
     // update balances on start 
     updateBalances();
 
@@ -109,4 +110,5 @@ observeLatestBlocks = function(){
     peerCountIntervalId = setInterval(function() {
         getPeerCount()
     }, 1000);
+    console.timeEnd('observeLatestBlocks');    
 };

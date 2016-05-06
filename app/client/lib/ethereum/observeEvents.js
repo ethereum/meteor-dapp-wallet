@@ -1,5 +1,5 @@
 // meant to speed up and make less requests
-var customContractsCache = [{id:0, events: []}];
+var customContractsCache = {};
 /**
 Observe events
 
@@ -21,13 +21,10 @@ observeEvents = function(){
         added: function(newDocument) {
             
             // This creates a temporary cache for the contracts, to reduce the amount of db reads            
-            var customContract = _.find(customContractsCache, function(c){
-                return c.address === newDocument.address.toLowerCase();
-            });
+            var customContract = customContractsCache[newDocument.address.toLowerCase()];
 
             if (typeof customContract == 'undefined') {
                 var customContract = CustomContracts.findOne({address: newDocument.address.toLowerCase()});
-                customContractsCache.push(customContract);
             }
 
             // add to accounts
@@ -37,12 +34,11 @@ observeEvents = function(){
                 CustomContracts.update({address: newDocument.address.toLowerCase()}, {$addToSet: {
                     contractEvents: newDocument._id
                 }});  
+    
                 customContract.contractEvents.push(newDocument._id);    
+                customContractsCache[newDocument.address.toLowerCase()] = customContract; 
             }
 
-            // if (customContract.address == '0xBB9bc244D798123fDe783fCc1C72d3Bb8C189413') {
-            //     console.log('length', customContract.contractEvents.length)
-            // }
         },
         /**
         Remove events confirmations from the accounts
