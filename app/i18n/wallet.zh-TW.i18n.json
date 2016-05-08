@@ -58,118 +58,118 @@
                 "preview": "預覽"
             },
             "interface": {
-                "title": "Contract JSON Interface",
-                "description": "If you want to have someone else execute this contract, send this information along with the contract's address."
+                "title": "契約 JSON 界面",
+                "description": "如果你想讓其他人執行這個契約，請把這個資訊和契約位址一起寄給他。"
             }
         },
         "accounts": {
-            "title": "<strong>Accounts</strong> Overview",
-            "walletsTitle": "Wallet contracts",
-            "accountsTitle": "Accounts",
-            "defaultName": "Unnamed",
-            "creating": "Creating",
-            "importing": "Importing",
-            "accountNote": "Accounts can't display incoming transactions, but hold and send ether. To see incoming transactions <a href=\"/account/new\">create a wallet contract</a> to store ether.",
-            "walletNote": "Most exchanges don't support receiving ether from a contract wallet yet. Be sure to move the money to an account address first!",
-            "addressCopiedToClipboard": "Copied to clipboard",
-            "qrCodeLabel": "Point a compatible mobile app to this code",
-            "dailyLimit": "Daily limit",
-            "dailyLimitRemaining": "remaining today",
-            "requiredSignatures": "Required signatures",
-            "owners": "Owners",
-            "walletsDescription": "These are contracts that are stored on the blockchain and can hold and secure ether. They can have multiple accounts as owners and keep a full log of all transactions.",
-            "walletsDescriptionNotEnoughFunds": "Once you have more than 1 ether you can create a more sophisticated contracts. Wallets are one type of basic smart contract, that allows your funds to be controlled by multiple accounts and have an optional daily limit on withdrawals, to increase security.  To create your own custom contracts go to the <em> Contracts </em> tab.",
-            "accountsDescription": "Accounts are password protected keys that can hold ether, secure ethereum-based tokens or coins and control contracts. Accounts can't display incoming transactions.",
+            "title": "<strong>帳戶</strong> 總覽",
+            "walletsTitle": "錢包契約",
+            "accountsTitle": "帳戶",
+            "defaultName": "未命名",
+            "creating": "創建",
+            "importing": "匯入",
+            "accountNote": "帳戶沒辦法顯示正在進帳的交易，但可以顯示餘額和送出 ether。要看進帳的交易，創建 <a href=\"/account/new\">錢包契約</a> 來儲存 ether。",
+            "walletNote": "多數交易所尚未支援從契約錢包收受 ether。務必先把錢移動到一個帳戶位址！",
+            "addressCopiedToClipboard": "已複製到剪貼簿",
+            "qrCodeLabel": "將相容的手機 app 指向這個二維條碼",
+            "dailyLimit": "每日限額",
+            "dailyLimitRemaining": "今日剩餘限額",
+            "requiredSignatures": "需要簽章",
+            "owners": "擁有者",
+            "walletsDescription": "這些是存在區塊鏈中，可以保存和保障 ether 的契約。他們可以使用多個帳戶擁有者，而且記錄所有交易的日誌。",
+            "walletsDescriptionNotEnoughFunds": "一旦你有多於 1 ether 時你可以創建更成熟的契約。錢包只是一種基本的智能契約，讓你的基金能夠由多個帳戶控制，而且想要的話可以設定每日提款限額來增加安全性。要創建自己的客製化契約，到<em> 契約 </em> 分頁。",
+            "accountsDescription": "帳戶由密碼保護，可以儲存 ether ，保障基於以太坊的 Token 或貨幣，並且控制契約。帳戶無法顯示進帳中的交易。",
             "buttons": {
-                "deposit": "Deposit Ether",
-                "depositBitcoin": "Deposit using Bitcoin",
-                "copyAddress": "Copy address",
-                "scanQRCode": "Show QR-Code",
-                "showInterface": "Show Interface"
+                "deposit": "存入 Ether",
+                "depositBitcoin": "使用 Bitcoin 做存款",
+                "copyAddress": "複製位址",
+                "scanQRCode": "顯示二維條碼",
+                "showInterface": "顯示界面"
             },
             "modal": {
-                "deleteText": "Do you really want to delete this wallet contract? The account will still exist on the blockchain but <br>if you delete the address, you will not be able to find and will lose access to the funds deposited<br><br> Type \"delete\" confirm the deletion.",
+                "deleteText": "您真的想要刪除這個錢包契約？帳戶仍然會存在區塊鏈上但<br>如果您刪除這個位址，您將無法找到，而且將無法取得存入的基金<br><br> 鍵入 \"delete\" 以確認刪除。",
                 "backupWallet": {
-                    "title": "Backup your wallet contract address!",
-                    "description": "Make sure to write down the wallet contract address:"
+                    "title": "備份您的錢包契約位址！",
+                    "description": "請確保寫下錢包契約的位址："
                 }
             }
         },
         "events": {
-            "eventInfoTitle": "Event",
-            "latest": "Latest events",
-            "filter": "Filter events",
-            "transactionHash": "Transaction hash",
-            "block": "Block",
-            "originContract": "Origin contract",
-            "logIndex": "Log index",
-            "transactionIndex": "Transaction index",
-            "returnValues": "Return values",
-            "eventName": "Event name"
+            "eventInfoTitle": "事件",
+            "latest": "最新事件",
+            "filter": "篩選事件",
+            "transactionHash": "交易雜湊碼",
+            "block": "區塊",
+            "originContract": "原始契約",
+            "logIndex": "日誌索引",
+            "transactionIndex": "交易索引",
+            "returnValues": "回傳值",
+            "eventName": "事件名稱"
         },
         "transactions": {
-            "transactionInfoTitle": "Transaction",
-            "latest": "Latest transactions",
-            "block": "Block",
-            "pendingConfirmations": "Confirmation needed",
-            "none": "No transactions yet",
-            "time": "Time",
-            "from": "From",
-            "to": "To",
-            "amount": "Amount",
-            "gasPrice": "Gas price",
-            "perMillionGas": " PER MILLION GAS",
-            "gasUsed": "Gas used", 
-            "feePaid": "Fee paid",
-            "data": "Send data",
-            "deployedData": "Deployed data",
-            "confirmations": "Confirmations",
-            "unconfirmed": "Unconfirmed",
-            "showMore": "Show More",
-            "filter": "Filter transactions",
-            "noneFound": "No matching transaction found.",
-            "noOwnerAccount": "Watch only confirmation",
-            "outOfGasDesc": "The transaction didn't seem to have enough gas to execute.",
+            "transactionInfoTitle": "交易",
+            "latest": "最新交易",
+            "block": "區塊",
+            "pendingConfirmations": "需要確認",
+            "none": "尚無交易",
+            "time": "時間",
+            "from": "從",
+            "to": "到",
+            "amount": "金額",
+            "gasPrice": "瓦斯價格",
+            "perMillionGas": " 每百萬瓦斯",
+            "gasUsed": "瓦斯用掉了", 
+            "feePaid": "手續費",
+            "data": "送出資料",
+            "deployedData": "已佈署資料",
+            "confirmations": "確認區塊",
+            "unconfirmed": "未確認",
+            "showMore": "顯示更多",
+            "filter": "篩選交易",
+            "noneFound": "沒有發現符合的交易。",
+            "noOwnerAccount": "只看唯一的確認",
+            "outOfGasDesc": "這筆交易似乎沒有足夠的瓦斯來執行。",
             "buttons": {
-                "approve": "Approve",
-                "approved": "Approved",
-                "revoke": "Revoke",
-                "revoked": "Revoked"
+                "approve": "批准",
+                "approved": "已批准",
+                "revoke": "撤銷",
+                "revoked": "已撤銷"
             },
             "error": {
-                "noDataDeployed": "No data is deployed on the contract address!",
-                "outOfGas": "The transaction from __from__ to __to__ couldn't be successfully executed."  
+                "noDataDeployed": "沒有資料佈署在契約位址上！",
+                "outOfGas": "從 __from__ 到 __to__ 的交易無法成功執行。"  
             },
             "types": {
-                "executeContract": "Contract Execution",
-                "betweenWallets": "Transfer between accounts",
-                "sent": "Sent",
-                "received": "Received",
-                "outOfGas": "Transaction not executed",
+                "executeContract": "契約執行",
+                "betweenWallets": "在帳戶間轉帳",
+                "sent": "發送",
+                "received": "已收到",
+                "outOfGas": "交易未執行",
                 "createdContract": {
-                    "title": "Created contract",
-                    "at": "Created contract at"
+                    "title": "已創造契約",
+                    "at": "契約創造在"
                 },
-                "creatingContract": "Creating contract",
-                "tokenTransfer": "__token__ - Token transfer",
-                "pendingConfirmations": "__initiator__ wants to send from __from__"
+                "creatingContract": "創造契約",
+                "tokenTransfer": "__token__ - Token 轉移",
+                "pendingConfirmations": "__initiator__ 想從 __from__ 發送"
             },
             "notifications": {
                 "incomingTransaction": {
-                    "title": "Payment received",
-                    "text": "You received __amount__ on __to__ from __from__."
+                    "title": "已收款項",
+                    "text": "您的 __to__ 從 __from__ 收到 __amount__ 。"
                 },
                 "outgoingTransaction": {
-                    "title": "Payment sent",
-                    "text": "You sent __amount__ from __from__ to __to__."    
+                    "title": "已付款項",
+                    "text": "您送出 __amount__ 從 __from__ 到 __to__。"    
                 },
                 "pendingConfirmation": {
-                    "title": "Confirmation needed",
-                    "text": "__initiator__ wants to send __amount__ from __from__ to __to__"
+                    "title": "需要確認",
+                    "text": "__initiator__ 想要送出 __amount__ 從 __from__ 到 __to__"
                 },
                 "tokenTransfer": {
-                    "title": "__token__ - Token transfer",
-                    "text": "__amount__ __token__  were send from __from__ to __to__."
+                    "title": "__token__ - Token 轉移",
+                    "text": "__amount__ __token__  已從 __from__ 發送給 __to__。"
                 }
             }
         },
