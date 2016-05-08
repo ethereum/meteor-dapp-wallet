@@ -1,0 +1,33 @@
+{
+    "app": {
+        "loading": "載入中",
+        "offline": "無法連接，您在離線狀態嗎？",
+        "logginIn": "登入中"
+    },
+    "error": {
+        "insufficientRights": "您沒有足夠權限執行這個動作。"
+    },
+    "buttons": {
+        "ok": "好",
+        "cancel": "取消",
+        "save": "儲存",
+        "edit": "編輯",
+        "send": "發送",
+        "sending": "發送中...",
+        "create": "創建",
+        "select": "選擇",
+        "tryToReconnect": "嘗試重新連接"
+    },
+    "commonWords": {
+        "you": "您",
+        "send": "發送",
+        "or": "或",
+        "of": "的",
+        "with": "和",
+        "and": "和",
+        "on": "在",
+        "per": "每",
+        "total":"總共",
+        "at": "在"
+    }
+}
