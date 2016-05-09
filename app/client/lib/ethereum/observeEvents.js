@@ -30,7 +30,6 @@ observeEvents = function(){
             // add to accounts
             if (customContract.contractEvents.indexOf(newDocument._id)<0) {
                 // Only if the event isn't there
-                console.log('add new event')
                 CustomContracts.update({address: newDocument.address.toLowerCase()}, {$addToSet: {
                     contractEvents: newDocument._id
                 }});  
