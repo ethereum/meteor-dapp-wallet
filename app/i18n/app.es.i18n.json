@@ -1,0 +1,33 @@
+{
+    "app": {
+        "loading": "Cargando...",
+        "offline": "Imposible conectarse, ¿Está fuera de línea?",
+        "logginIn": "Autenticando..."
+    },
+    "error": {
+        "insufficientRights": "No tiene suficientes privilegios para esta acción."
+    },
+    "buttons": {
+        "ok": "Aceptar",
+        "cancel": "Cancelar",
+        "save": "Guardar",
+        "edit": "editar",
+        "send": "Enviar",
+        "sending": "Enviando...",
+        "create": "Crear",
+        "select": "Seleccionar",
+        "tryToReconnect": "Intentar reconección"
+    },
+    "commonWords": {
+        "you": "Usted",
+        "send": "Enviar",
+        "or": "o",
+        "of": "de",
+        "with": "con",
+        "and": "y",
+        "on": "en",
+        "per": "por",
+        "total":"total",
+        "at": "en"
+    }
+}
