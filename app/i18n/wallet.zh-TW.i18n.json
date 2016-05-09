@@ -119,7 +119,7 @@
             "amount": "金額",
             "gasPrice": "瓦斯價格",
             "perMillionGas": " 每百萬瓦斯",
-            "gasUsed": "瓦斯用掉了", 
+            "gasUsed": "瓦斯用掉了",
             "feePaid": "手續費",
             "data": "送出資料",
             "deployedData": "已佈署資料",
@@ -138,7 +138,7 @@
             },
             "error": {
                 "noDataDeployed": "沒有資料佈署在契約位址上！",
-                "outOfGas": "從 __from__ 到 __to__ 的交易無法成功執行。"  
+                "outOfGas": "從 __from__ 到 __to__ 的交易無法成功執行。"
             },
             "types": {
                 "executeContract": "契約執行",
@@ -161,7 +161,7 @@
                 },
                 "outgoingTransaction": {
                     "title": "已付款項",
-                    "text": "您送出 __amount__ 從 __from__ 到 __to__。"    
+                    "text": "您送出 __amount__ 從 __from__ 到 __to__。"
                 },
                 "pendingConfirmation": {
                     "title": "需要確認",
@@ -234,7 +234,7 @@
             "provideGas": "提供瓦斯",
             "transactionSent": "交易已發送",
             "error": {
-                "emptyWallet": "您欲發送的目標帳戶是空的。",
+                "emptyWallet": "您的帳戶錢包是空的。",
                 "notEnoughFunds": "您此帳戶並未有足夠基金。",
                 "noReceiver": "您並未指定收受者。",
                 "noAmount": "您並未指定發送數量。"
@@ -295,7 +295,7 @@
             "writeToContract": "寫至契約",
             "pickContract": "挑選一契約",
             "pickFunction": "挑選一函式",
-            "noContract": "<p>於此填入契約原始碼。您可於下列連結找到契約範例 <a href=\"http://ethereum.org\" target=\"_blank\">ethereum.org</a>： </p> <ul><li><a href=\"http://ethereum.org/token#the-code\" target=\"_blank\">建立 token</a></li><li><a href=\"http://ethereum.org/crowdsale#the-code\" target=\"_blank\">啟動眾籌</a></li><li><a href=\"http://ethereum.org/dao#the-code\" target=\"_blank\">創建區塊鍊組織</a></li></ul>",
+            "noContract": "<p>於此填入契約原始碼。您可於下列連結找到契約範例 <a href=\"http://ethereum.org\" target=\"_blank\">ethereum.org</a>： </p> <ul><li><a href=\"http://ethereum.org/token#the-code\" target=\"_blank\">建立 token</a></li><li><a href=\"http://ethereum.org/crowdsale#the-code\" target=\"_blank\">啟動眾籌</a></li><li><a href=\"http://ethereum.org/dao#the-code\" target=\"_blank\">創建區塊鏈組織</a></li></ul>",
             "buttons": {
                 "showContractInfo": "顯示契約資訊",
                 "hideContractInfo": "隱藏契約資訊",
