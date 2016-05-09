@@ -20,11 +20,12 @@ observeEvents = function(){
         */
         added: function(newDocument) {
             
-            // This creates a temporary cache for the contracts, to reduce the amount of db reads            
+            // This creates a temporary cache for the contracts, to reduce the amount of db read and writes            
             var customContract = customContractsCache[newDocument.address.toLowerCase()];
 
             if (typeof customContract == 'undefined') {
                 var customContract = CustomContracts.findOne({address: newDocument.address.toLowerCase()});
+                customContractsCache[newDocument.address.toLowerCase()] = customContract; 
             }
 
             // add to accounts
