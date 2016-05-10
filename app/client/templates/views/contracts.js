@@ -22,7 +22,7 @@ var addCustomContract = function(e) {
     var address = $('.modals-add-custom-contract input[name="address"]').hasClass('dapp-error')
             ? ''
             : $('.modals-add-custom-contract input[name="address"]').val(),
-        name = $('.modals-add-custom-contract input.name').val();
+        name = $('.modals-add-custom-contract input.name').val() || TAPi18n.__('wallet.accounts.defaultName');
 
     address = address.toLowerCase();
 
