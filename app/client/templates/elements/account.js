@@ -122,5 +122,12 @@ Template['elements_account'].helpers({
 });
 
 Template['elements_account'].events({
-
+    /**
+    Field test the speed wallet is rendered
+    
+    @event click button.show-data
+    */
+    'click .wallet-box': function(e){
+        console.time('renderAccountPage');
+    }
 });
