@@ -52,7 +52,7 @@ var setupContractFilters = function(newDocument){
 
     filter.watch(function(error, log){
         if(!error) {
-            Helpers.eventLogs(log);
+            // Helpers.eventLogs(log);
 
             if(EthBlocks.latest.number && log.blockNumber > EthBlocks.latest.number) {
                 // update last checkpoint block

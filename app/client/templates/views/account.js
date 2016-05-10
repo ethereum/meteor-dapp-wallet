@@ -5,6 +5,10 @@ Template Controllers
 */
 
 
+Template['views_account'].onRendered(function(){
+       console.timeEnd('renderAccountPage');
+});
+
 Template['views_account'].helpers({
     /**
     Get the current selected account
