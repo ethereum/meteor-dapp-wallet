@@ -90,10 +90,15 @@ Template['views_account'].helpers({
     }
 });
 
-
 var accountClipboardEventHandler = function(e){
-    e.preventDefault();
-    
+    if (Session.get('tmpAllowCopy') === true) {
+        Session.set('tmpAllowCopy', false);
+        return true;
+    }
+    else {
+        e.preventDefault();
+    }
+
     function copyAddress(){
         var copyTextarea = document.querySelector('.copyable-address span');
         var selection = window.getSelection();            
@@ -103,7 +108,12 @@ var accountClipboardEventHandler = function(e){
         selection.addRange(range);
 
         try {
-            var successful = document.execCommand('copy');
+            document.execCommand('copy');
+            
+            GlobalNotification.info({
+               content: 'i18n:wallet.accounts.addressCopiedToClipboard',
+               duration: 3
+            });
         } catch (err) {
             GlobalNotification.error({
                 content: 'i18n:wallet.accounts.addressNotCopiedToClipboard',
@@ -111,13 +121,7 @@ var accountClipboardEventHandler = function(e){
                 duration: 3
             });
         }
-
         selection.removeAllRanges();
-        
-        GlobalNotification.info({
-           content: 'i18n:wallet.accounts.addressCopiedToClipboard',
-           duration: 3
-        });
     }
 
     if (Helpers.isOnMainNetwork()) {
@@ -127,6 +131,7 @@ var accountClipboardEventHandler = function(e){
         EthElements.Modal.question({
             text: new Spacebars.SafeString(TAPi18n.__('wallet.accounts.modal.copyAddressWarning')),
             ok: function(){
+                Session.set('tmpAllowCopy', true);
                 copyAddress();
             },
             cancel: true,
