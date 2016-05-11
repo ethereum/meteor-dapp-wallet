@@ -93,8 +93,8 @@
                 "backupWallet": {
                     "title": "Faça uma cópia de segurança dessa carteira!",
                     "description": "Escreva esse endereço em algum lugar",
-                    "copyAddressWarning": "Atenção: você está em uma rede de testes. Cuidado para não transferir fundos reais para cá.",
-                    "buttonOk": "Ok, copiar mesmo assim",
+                    "copyAddressWarning": "Atenção: você está em uma rede de testes. Cuidado para não transferir fundos reais esta conta.",
+                    "buttonOk": "Ok, entendi",
                     "buttonCancel": "Voltar"
                 }
             }
