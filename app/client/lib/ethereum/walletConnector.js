@@ -56,6 +56,7 @@ Connects to a node and setup all the filters for the accounts.
 */
 connectToNode = function(){
 
+    console.time('startNode')
     console.log('Connect to node...');
 
     EthAccounts.init();
@@ -93,6 +94,7 @@ connectToNode = function(){
 
     observeCustomContracts();
 
+    console.timeEnd('startNode')
 };
 
 /**

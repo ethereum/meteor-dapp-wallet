@@ -1,36 +1,35 @@
 {
     "elements": {
         "selectGasPrice": {
-            "high": "Faster",
-            "low": "Cheaper"
+            "high": "Más rápido",
+            "low": "Más barato"
         },
-        "checksumAlert":"This address looks valid, but it doesn't have some security features that will protect you against typos, so double check you have the right one. If provided, check if the security icon matches.",
-        "identiconHelper": "This is a security icon, if there's any change on the address the resulting icon should be a completelly different one"
+        "checksumAlert":"Esta dirección luce válida, pero no tiene algunos mecanismos de seguridad que lo protegerán de errores de tipeo, así que verifique que sea correcta. Si se encuentra, verifique que el ícono de seguridad sea el mismo.",
+        "identiconHelper": "Este es un ícono de seguridad, si la dirección cambia en lo más mínimo, el ícono será completamente distinto"
     },
     "wallet": {
         "app": {
             "buttons": {
-                "wallet": "Wallets",
-                "send": "Send",
-                "contracts": "Contracts",
-                "deploy": "Deploy",
-                "tokens": "Tokens",
-                "receive": "Receive",
-                "addWallet": "Add wallet contract",
-                "addAccount": "Add Account",
-                "addToken": "Watch Token"
+                "wallet": "Billeteras",
+                "send": "Enviar",
+                "contracts": "Contratos",
+                "deploy": "Desplegar",
+                "tokens": "Fichas",
+                "receive": "Recibir",
+                "addWallet": "Añadir contrato billetera",
+                "addAccount": "Añadir Cuenta",
+                "addToken": "Observar Ficha"
             },
             "texts": {
-                "note": "Note",
-                "balance": "Balance",
-                "connectionErrorMist": "Unable to connect. Please start geth using:<br><br><small><code>__node__</code><br><br>Make sure you set your IPC path to the default one, when using a different <code>datadir</code>, e.g.<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/geth.ipc</code><br>or<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/geth.ipc</code>. <br><br>Optional add: <code>--unlock &lt;yourAccount&gt;.</code></small>",
-                "connectionErrorBrowser": "Unable to connect. Please start geth with the following options:<br><br><small><code>__node__</code><br><br>Optional add: <code>--unlock &lt;yourAccount&gt;.</code></small>",
-                "pendingConfirmationsBadge": "Pending Confirmation!",
+                "note": "Nota",
+                "balance": "Saldo",
+                "connectionErrorMist": "No se pudo conectar. Por favor, inicie geth con:<br><br><small><code>__node__</code><br><br>Asegúrese de establecer la ruta de IPC a la por defecto, cuando usa un <code>datadir</code> distinto, por ej.<br><code>geth --datadir ... --ipcpath /Users/&lt;suUsuario&gt;/Library/Ethereum/geth.ipc</code><br>o<br><code>geth --datadir ... --ipcpath /Users/&lt;suUsuario&gt;/.ethereum/geth.ipc</code>. <br><br>Opcionalmente: <code>--unlock &lt;suCuenta&gt;.</code></small>",
+                "connectionErrorBrowser": "No se pudo conectar. Por favor inicie geth con las siguientes opciones:<br><br><small><code>__node__</code><br><br>Opcionalmente agregue: <code>--unlock &lt;suCuenta&gt;.</code></small>",
+                "pendingConfirmationsBadge": "Confirmación Pendiente!",
                 "nodeSyncing": "__blockDiff__ blocks left",
                 "blockReceived": "New Block Received",
                 "timeSinceBlock": "since last block",
                 "peers": "peers",
-                "waitingForBlocks": "Waiting for blocks..",
                 "testnetExplain": "You are on a testnet, DO NOT SEND any real ether to these addresses",
                 "noAccounts": {
                     "title": "You have no accounts yet",
@@ -73,7 +72,6 @@
             "accountNote": "Accounts can't display incoming transactions, but hold and send ether. To see incoming transactions <a href=\"/account/new\">create a wallet contract</a> to store ether.",
             "walletNote": "Most exchanges don't support receiving ether from a contract wallet yet. Be sure to move the money to an account address first!",
             "addressCopiedToClipboard": "Copied to clipboard",
-            "addressNotCopiedToClipboard": "Error copying address to clipboard. Please try again.",
             "qrCodeLabel": "Point a compatible mobile app to this code",
             "dailyLimit": "Daily limit",
             "dailyLimitRemaining": "remaining today",
@@ -94,10 +92,7 @@
                 "backupWallet": {
                     "title": "Backup your wallet contract address!",
                     "description": "Make sure to write down the wallet contract address:"
-                },
-                "copyAddressWarning": "Warning: you are on the Test Network. Be careful not to transfer real funds to this account.",
-                "buttonOk": "Ok, I understand",
-                "buttonCancel": "Go back"
+                }
             }
         },
         "events": {

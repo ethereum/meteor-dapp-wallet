@@ -30,6 +30,7 @@
                 "blockReceived": "Novo bloco recebido",
                 "timeSinceBlock": "desde último bloco",
                 "peers": "conexões",
+                "waitingForBlocks": "Aguardando blocos..",                
                 "testnetExplain": "Você está na rede de teste, NÃO ENVIE ethers de verdade para essas contas",
                 "noAccounts": {
                     "title": "Você ainda não tem contas",

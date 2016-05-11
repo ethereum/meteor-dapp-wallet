@@ -65,6 +65,11 @@ Template['layout_header'].helpers({
     @method (timeSinceBlock)
     */
     'timeSinceBlock': function () {
+        
+        if (EthBlocks.latest.timestamp == 0 
+            || typeof EthBlocks.latest.timestamp == 'undefined')   
+            return false;
+
         var timeSince = moment(EthBlocks.latest.timestamp, "X");
         var now = moment();
         var diff = now.diff(timeSince, "seconds");
@@ -89,6 +94,11 @@ Template['layout_header'].helpers({
     @method (timeSinceBlockText)
     */
     'timeSinceBlockText': function () {
+        
+        if (EthBlocks.latest.timestamp == 0 
+            || typeof EthBlocks.latest.timestamp == 'undefined')   
+            return TAPi18n.__('wallet.app.texts.waitingForBlocks');
+
         var timeSince = moment(EthBlocks.latest.timestamp, "X");
         var now = moment();
         var diff = now.diff(timeSince, "seconds");
