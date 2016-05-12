@@ -76,29 +76,22 @@ observeCustomContracts = function(){
         @method added
         */
         added: function(newDocument) {
-
-            // check if wallet has code
-            web3.eth.getCode(newDocument.address, function(e, code) {
-                if(!e) {
-                    if(code && code.length > 2){
-                        CustomContracts.update(newDocument._id, {$unset: {
-                            disabled: ''
-                        }});
-
-                        // check for logs
-                        addLogWatching(newDocument);
-                        
-
-                    } else {
-                        CustomContracts.update(newDocument._id, {$set: {
-                            disabled: true
-                        }});
-                    }
-
-                } else {
-                    console.log('Couldn\'t check Custom Contracts code of ', newDocument, e);
-                }
-            });
+            var code = web3.eth.getCode(newDocument.address)
+                balance = web3.ethgetBalance(newDocument.address);
+            // Check whether the address contains either a balance or code.
+            // If either yields true the address is considered valid and will
+            // added to the list of "watchable" accouns.
+            if( (code && code.length > 2) || balance > 0 ) {
+                CustomContracts.update(newDocument._id, {$unset: {
+                    disabled: ''
+                }});
+                // check for logs
+                addLogWatching(newDocument);
+            } else {
+                CustomContracts.update(newDocument._id, {$set: {
+                    disabled: true
+                }});
+            }
         }
     });
 }
