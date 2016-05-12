@@ -87,12 +87,24 @@ observeCustomContracts = function(){
 
                         // check for logs
                         addLogWatching(newDocument);
-                        
-
                     } else {
-                        CustomContracts.update(newDocument._id, {$set: {
-                            disabled: true
-                        }});
+                        // if the wallet has no code it might have a balance
+                        web3.eth.getBalance(newDocument.address, function(e, balance) {
+                            if(!e) {
+                                if(balance && balance > 0) {
+                                    CustomContracts.update(newDocument._id, {$unset: {
+                                        disabled: ''
+                                    }});
+
+                                    // watch this address
+                                    addLogWatching(newDocument);
+                                } else {
+                                    CustomContracts.update(newDocument._id, {$set: {
+                                        disabled: true
+                                    }}); 
+                                }
+                            }
+                        });
                     }
 
                 } else {
