@@ -76,39 +76,32 @@ observeCustomContracts = function(){
         @method added
         */
         added: function(newDocument) {
-            // Disables it by default
-            CustomContracts.update(newDocument._id, {$set: {
-                disabled: true
-            }});
-
-            // check for logs
-            addLogWatching(newDocument);
-            
             // check if wallet has code
             web3.eth.getCode(newDocument.address, function(e, code) {
-                if(!e) {
-                    if(code && code.length > 2){
-                        CustomContracts.update(newDocument._id, {$unset: {
-                            disabled: ''
-                        }});                        
-                    } 
-                } else {
-                    console.log('Couldn\'t check Custom Contracts code of ', newDocument, e);
+                if(!e && code && code.length > 2 ){
+                    CustomContracts.update(newDocument._id, {$unset: {
+                        disabled: false
+                    }});  
+                    // check for logs
+                    addLogWatching(newDocument);                      
+                    
+                } else if (!e) {
+                    // if there's no code, check the contract has a balance
+                    web3.eth.getBalance(newDocument.address, function(e, balance) {
+                        if(!e && balance.gt(0)){
+                            CustomContracts.update(newDocument._id, {$unset: {
+                                disabled: false
+                            }});
+                            // check for logs
+                            addLogWatching(newDocument);                        
+                        } else if (!e) {
+                            CustomContracts.update(newDocument._id, {$set: {
+                                disabled: true
+                            }});
+                        } 
+                    });                        
                 }
             });
-
-            // check the contract has a balance
-            web3.eth.getBalance(newDocument.address, function(e, balance) {
-                if(!e) {
-                    if(balance.gt(0)){
-                        CustomContracts.update(newDocument._id, {$unset: {
-                            disabled: ''
-                        }});                        
-                    } 
-                } else {
-                    console.log('Couldn\'t check balance of ', newDocument, e);
-                }
-            });            
         }
     });
 }

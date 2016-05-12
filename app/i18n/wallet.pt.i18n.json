@@ -93,11 +93,11 @@
                 "deleteText": "Você realmente quer apagar essa carteira? O contrato ainda vai existir no blockchain mas você pode não encontrá-lo mais e <i> perder acesso a tudo que estiver na carteira.</i><br><br> Digite \"delete\" para apaga-la:",
                 "backupWallet": {
                     "title": "Faça uma cópia de segurança dessa carteira!",
-                    "description": "Escreva esse endereço em algum lugar",
-                    "copyAddressWarning": "Atenção: você está em uma rede de testes. Cuidado para não transferir fundos reais esta conta.",
-                    "buttonOk": "Ok, entendi",
-                    "buttonCancel": "Voltar"
-                }
+                    "description": "Escreva esse endereço em algum lugar"
+                },
+                "copyAddressWarning": "<strong>Atenção:</strong> você está em uma rede de testes. Cuidado para não transferir fundos reais esta conta.",
+                "buttonOk": "Copie mesmo assim",
+                "buttonCancel": "Melhor não..."
             }
         },
         "events": {

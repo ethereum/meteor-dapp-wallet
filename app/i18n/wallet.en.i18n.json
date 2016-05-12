@@ -95,9 +95,9 @@
                     "title": "Backup your wallet contract address!",
                     "description": "Make sure to write down the wallet contract address:"
                 },
-                "copyAddressWarning": "Warning: you are on the Test Network. Be careful not to transfer real funds to this account.",
-                "buttonOk": "Ok, I understand",
-                "buttonCancel": "Go back"
+                "copyAddressWarning": "<strong>Warning:</strong> you are on the Test Network. Be careful not to transfer real funds to this account.",
+                "buttonOk": "Copy anyway",
+                "buttonCancel": "Nevermind.."
             }
         },
         "events": {
