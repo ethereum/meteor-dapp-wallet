@@ -2,10 +2,10 @@
     "app": {
         "loading": "Chargement...",
         "offline": "Impossible de se connecter, êtes-vous hors-ligne?",
-        "logginIn": "Logging in..."
+        "logginIn": "Connexion..."
     },
     "error": {
-        "insufficientRights": "Vous n'avez pas suffisamment d'autorisations pour cette action."
+        "insufficientRights": "Vous n'avez pas suffisamment de droits pour cette action."
     },
     "buttons": {
         "ok": "OK",
@@ -13,7 +13,7 @@
         "save": "Sauvegarder",
         "edit": "Editer",
         "send": "Envoyer",
-        "sending": "Envoie...",
+        "sending": "Envoi...",
         "create": "Créer",
         "select": "Sélectionner",
         "tryToReconnect": "Essayer de se reconnecter"
