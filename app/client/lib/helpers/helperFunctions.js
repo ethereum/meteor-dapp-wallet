@@ -369,14 +369,3 @@ Helpers.toSentence = function (inputString, noHTML) {
     else 
         return inputString.replace(/([A-Z]+|[0-9]+)/g, ' $1').replace(/([\_])/g, '<span class="dapp-punctuation">$1</span>');
 }
-
-
-/**
-Returns true if Main is the current network.
-
-@method isOnMainNetwork
-@return {Bool} 
-**/
-Helpers.isOnMainNetwork = function () {
-    return Session.get('network') == 'main';
-};
