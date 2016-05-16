@@ -1,0 +1,318 @@
+{
+    "elements": {
+        "selectGasPrice": {
+            "high": "빠름",
+            "low": "저렴"
+        },
+        "checksumAlert": "이 주소는 유효해보이지만, 오타등의 실수로부터 당신을 보호할 수 있는 보안기능이 없습니다. 다시 한번 맞는지 확인해 보시기 바랍니다. 보안 아이콘이 있는 경우 이것이 일치하는지 확인하시기 바랍니다.",
+        "identiconHelper": "이것은 보안 아이콘입니다. 주소에 어떤 변화라도 생기면, 이 아이콘은 완전히 다른 모양으로 변합니다."
+    },
+    "wallet": {
+        "app": {
+            "buttons": {
+                "wallet": "지갑",
+                "send": "보내기",
+                "contracts": "컨트랙트",
+                "deploy": "적용",
+                "tokens": "토큰",
+                "receive": "받기",
+                "addWallet": "지갑컨트랙트 추가",
+                "addAccount": "지갑 추가",
+                "addToken": "토큰 추가"
+            },
+            "texts": {
+                "note": "메모",
+                "balance": "잔고",
+                "connectionErrorMist": "연결할 수 없습니다. geth를 다음과 같이 실행하세요:<br><br><small><code>__node__</code><br><br>IPC 경로가 기본선택으로 되어있는지 확인하세요. 만일 다른 경로를 사용한다면 다음과 같이 실행하세요: <code>datadir</code>, e.g.<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/geth.ipc</code><br>or<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/geth.ipc</code>. <br><br>Optional add: <code>--unlock &lt;yourAccount&gt;.</code></small>",
+                "connectionErrorBrowser": "연결할 수 없습니다. geth 를 다음의 옵션으로 실행하세요.:<br><br><small><code>__node__</code><br><br>Optional add: <code>--unlock &lt;yourAccount&gt;.</code></small>",
+                "pendingConfirmationsBadge": "승인 대기 중!",
+                "nodeSyncing": "__blockDiff__ 블럭 남음",
+                "blockReceived": "새 블럭을 받았음",
+                "timeSinceBlock": "마지막 블럭이후",
+                "peers": "피어(peers)",
+                "waitingForBlocks": "블럭을 기다리는 중..",
+                "testnetExplain": "현재 테스트넷 상에 있습니다. 진짜 이더를 이 주소로 절대 보내지 마세요.",
+                "noAccounts": {
+                    "title": "어카운트 없습니다",
+                    "text": "강력한 암호를 가진 계정이 최소 1개는 있어야 합니다."
+                }
+            },
+            "error": {
+                "wrongChain": "현재 다른 체인에 있는 것 같습니다. 이더리움 지갑앱을 재실행하세요!"
+            }
+        },
+        "modals": {
+            "selectAccount": {
+                "title": "계정을 선택하세요"
+            },
+            "testnetWallet": {
+                "walletNeedsDeployment": "테스넷상에 있습니다.<br><br>오리지널 지갑 컨트랙트 코드가 없습니다.지갑컨트랙트의 서브컨트랙들이 다음의 당신 주소에서 사용할 코드가 필요합니다: <br><br><small><code>__account__</code></small><br><br><em> 이 주소에 최소 1 이더가 있어야 합니다!</em>",
+                "testnetWalletDeployed": "오리지널 지갑 컨트랙트가 설치되었습니다.<br> 사용된 주소는 다음과 같습니다:<br><br><small><code>__address__</code></small>."
+            },
+            "addToken": {
+                "title": "토큰 추가",
+                "titleEdit": "토큰 수정",
+                "contractAddress": "토큰 컨트랙트 주소",
+                "tokenName": "토큰 이름",
+                "tokenSymbol": "토큰 심볼",
+                "decimalPlaces": "최소단위 십진 자리수",
+                "preview": "미리보기"
+            },
+            "interface": {
+                "title": "컨트랙트 JSON 인터페이스",
+                "description": "다른 사람이 이 컨트랙트를 사용하기 위해서는 컨트랙트 주소와 함께 다음의 내용이 필요합니다."
+            }
+        },
+        "accounts": {
+            "title": "<strong>계정</strong> 요약",
+            "walletsTitle": "지갑 계약",
+            "accountsTitle": "계정",
+            "defaultName": "미정",
+            "creating": "만들기",
+            "importing": "불러오기",
+            "accountNote": "계정들은 이더를 보관하고 전송할 수 있지만 개별 입금되는 트랜잭션들을 보여줄 수 없습니다. 개별 입금 트랜잭션들을 보려면 <a href=\"/account/new\">지갑 컨트랙트 설치하기</a>를 해야합니다.",
+            "walletNote": "대부분의 거래소는 아직 컨트랙트 지갑을 지원하지 않습니다. 송금하려는 금액을 계정주소로 먼저 이동시키기 바랍니다.",
+            "addressCopiedToClipboard": "클립보드에 카피되었습니다",
+            "addressNotCopiedToClipboard": "클립보드에 카피하는데 실패했습니다. 다시 시도하세요.",
+            "qrCodeLabel": "이 코드를 호환되는 모바일 앱에 입력하세요",
+            "dailyLimit": "하루 한도",
+            "dailyLimitRemaining": "하루 한도 잔여시간",
+            "requiredSignatures": "필요한 서명",
+            "owners": "소유자",
+            "walletsDescription": "이것은 블랙체인에 저장되는 컨트랙들로서 이더를 보관하고 보호할 수 있습니다. 다수의 소유자를 지정할 수 있고 모든 트랜잭션 로그기록을 보관합니다.",
+            "walletsDescriptionNotEnoughFunds": "1이더 이상을 가지고 있으면 여러가지 기능을 가진 컨트랙들을 만들 수 있습니다. 지갑 컨트랙트은 기본 스마트 컨트랙트의 한가지 유형인데, 보안 강화를 위해 자금을 다수의 계정에 의해 통제되도록 하거나 하루 출금량을 제한할 수도 있습니다. 여러분의 필요에 맞게 컨트랙트를 만들기 위해서는 <em> Contracts </em> 메뉴 탭을 클릭하세요",
+            "accountsDescription": "계정은 암호로 보호된 키인데 이더, 이더리움을 기반으로 한 토큰 또는 코인들을 보관하고 컨트랙트를 통제합니다. 계정은 개별 입금 트랙잭션은 보여주지 못합니다.",
+            "buttons": {
+                "deposit": "이더 입금",
+                "depositBitcoin": "비트코인을 사용한 입금",
+                "copyAddress": "주소 복사",
+                "scanQRCode": "QR-코드 보기",
+                "showInterface": "인터페이스 보기"
+            },
+            "modal": {
+                "deleteText": "이 지갑 컨트랙트를 삭제하려는 것이 정말 맞습니까? 블럭체인위에 어카운트는 여전히 존재하겠지만, <br>만일 이 주소를 지우면, 여기에 저장된 자금을 찾을 수도 없게 되어 잃게 될 겁니다.  정말 삭제를 하는 것이 맞다면 \"delete\" 라고 입력하세요",
+                "backupWallet": {
+                    "title": "지갑 컨트랙트 주소를 백업합니다!",
+                    "description": "반드시 지갑 컨트랙트주소를 적어 놓으시기 바랍니다:"
+                },
+                "copyAddressWarning": "<strong>경고:</strong> 테스트넷상에 있습니다. 절대 실제 펀드를 이 계정으로 송금하지 마세요.",
+                "buttonOk": "복사 확인",
+                "buttonCancel": "취소..."
+            }
+        },
+        "events": {
+            "eventInfoTitle": "이벤트",
+            "latest": "최종 이벤트",
+            "filter": "이벤트 필터링",
+            "transactionHash": "트랜잭션 해쉬",
+            "block": "블럭",
+            "originContract": "컨트랙트 출처",
+            "logIndex": "로그 인덱스",
+            "transactionIndex": "트랜잭션 인덱스",
+            "returnValues": "리턴값",
+            "eventName": "이벤트 이름"
+        },
+        "transactions": {
+            "transactionInfoTitle": "트랜잭션",
+            "latest": "최종 트랜잭션",
+            "block": "블럭",
+            "pendingConfirmations": "승인 필요",
+            "none": "트랜잭션 없음",
+            "time": "시간",
+            "from": "발신자",
+            "to": "수신자",
+            "amount": "금액",
+            "gasPrice": "개스 가격",
+            "perMillionGas": " 백만 개스당",
+            "gasUsed": "개스 사용", 
+            "feePaid": "지급된 수수료",
+            "data": "송신 데이터",
+            "deployedData": "설치된 데이터",
+            "confirmations": "승인",
+            "unconfirmed": "미승인된",
+            "showMore": "더보기",
+            "filter": "트랜잭션 필터링",
+            "noneFound": "매칭하는 트랜잭션이 없음.",
+            "noOwnerAccount": "승인만 보기",
+            "outOfGasDesc": "트랜잭션을 실행하기에 충분한 개스가 없는 것 같습니다.",
+            "buttons": {
+                "approve": "승인",
+                "approved": "승인된",
+                "revoke": "철회",
+                "revoked": "철회된"
+            },
+            "error": {
+                "noDataDeployed": "No data is deployed on the contract address!",
+                "outOfGas": "The transaction from __from__ to __to__ couldn't be successfully executed."  
+            },
+            "types": {
+                "executeContract": "Contract Execution",
+                "betweenWallets": "Transfer between accounts",
+                "sent": "Sent",
+                "received": "Received",
+                "outOfGas": "Transaction not executed",
+                "createdContract": {
+                    "title": "Created contract",
+                    "at": "Created contract at"
+                },
+                "creatingContract": "Creating contract",
+                "tokenTransfer": "__token__ - Token transfer",
+                "pendingConfirmations": "__initiator__ wants to send from __from__"
+            },
+            "notifications": {
+                "incomingTransaction": {
+                    "title": "Payment received",
+                    "text": "You received __amount__ on __to__ from __from__."
+                },
+                "outgoingTransaction": {
+                    "title": "Payment sent",
+                    "text": "You sent __amount__ from __from__ to __to__."    
+                },
+                "pendingConfirmation": {
+                    "title": "Confirmation needed",
+                    "text": "__initiator__ wants to send __amount__ from __from__ to __to__"
+                },
+                "tokenTransfer": {
+                    "title": "__token__ - Token transfer",
+                    "text": "__amount__ __token__  were send from __from__ to __to__."
+                }
+            }
+        },
+        "newWallet": {
+            "title": "New <strong>wallet contract</strong>",
+            "accountName": "Wallet contract name",
+            "selectOwner": "Select owner",
+            "accountType": {
+                "title": "Wallet contract type",
+                "simple": {
+                    "title": "Single owner account",
+                    "description": "A simple contract without additional security measures.",
+                    "warning": "Note: If your owner account is compromised your wallet has no protection."
+                },
+                "multisig": {
+                    "title": "Multisignature wallet contract",
+                    "description": "A contract controlled by multiple accounts",
+                    "text1": "This is a joint account controlled by",
+                    "text2": "owners. You can send up to",
+                    "text3": "ether per day.",
+                    "text4": "Any transaction over that daily limit requires the confirmation of",
+                    "text5": "owners.",
+                    "accountOwnersTitle": "Account owners",
+                    "ownerAddress": "Owner address"
+                },
+                "import": {
+                    "title": "Import wallet",
+                    "description": "Import an existing (multisignature) wallet.",
+                    "walletAddress": "Wallet address",
+                    "youreOwner": "Your \"__account__\" account is an owner of this wallet contract.",
+                    "watchOnly": "You don't own the account, but you can add it as a \"WATCH ONLY\" account.",
+                    "notWallet": "This address has no wallet contract."
+                }
+            },
+            "error": {
+                "emptySignees": "You didn't provided all owners.",
+                "alreadyExists": "Account already exists.",
+                "stubHasNoOrigWalletAddress": "Your stub contract has no original account address set, please restart your App!",
+                "contractsCantBeOwners": "Contracts can't be owners.",
+                "checkOwnerAddress": "Please change the contract address __address__ to an account."
+            }
+        },
+        "send": {
+            "title": "<strong>Send</strong> funds",
+            "sendInfoTitle": "Send",
+            "pickAddress": "Pick an address",
+            "to": "To",
+            "from": "From",
+            "amount": "Amount",
+            "tokenAmount": "Token amount",
+            "sendFunds": "Send funds",
+            "deployContract": "Deploy contract",
+            "data": "Data",
+            "fee": "Select Fee",
+            "feeLow": "Cheaper",
+            "feeHigh": "Faster",
+            "addData": "Add data",
+            "sendAll": "Send everything",
+            "removeData": "Remove data",
+            "estimatedFee": "Estimated fee",
+            "createContract": "Create contract",
+            "provideGas": "Provide gas",
+            "transactionSent": "Transaction sent",
+            "error": {
+                "emptyWallet": "The account you want to send from is empty.",
+                "notEnoughFunds": "You don't have enough funds in the account.",
+                "noReceiver": "You didn't specify a receiver.",
+                "noAmount": "You didn't specify an amount to send."
+            },
+            "texts": {
+                "ownerPaysGas": "Gas is paid by the owner of the wallet contract",
+                "sendAmount": "You want to send <strong>__amount__</strong>.",
+                "sendAmountEquivalent": "You want to send <strong>__amount__</strong> in ether, using exchange rates from <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a>.<br>Which is currently an equivalent of <strong>__etherAmount__</strong>.",
+                "sendToken": "You want to send <strong>__amount__ __symbol__</strong> of <strong> __name__</strong>.",
+                "overDailyLimit": "<p class=\"over-daily\">This amount is over the remaining daily limit of __limit__ (of __total__ per day), so you need __count__ other account to confirm.</p>",
+                "overDailyLimit_plural": "<p class=\"over-daily\">This amount is over the remaining daily limit of __limit__ (of __total__ per day), so you need __count__ other accounts to confirm.</p>",
+                "underDailyLimit": "<p class=\"under-daily\">This amount is under the remaining daily limit of __limit__ (of __total__ per day), means it will send immediately.</p>",
+                "sendFee": "This is the most amount of money that might be used to process this transaction. Your transaction will be mined <strong>__timetext__</strong>.",
+                "noCodeInRecipient": "The recipient account is not a contract, so you can't execute anything. <strong> Put a contract address on the 'TO' field. </strong>",
+                "addData": "You can add extra data to send along with your transaction. If you leave the \"to\" field empty it will try to deploy a contract from your data.",
+                "dataNotExecutable": "The data seems not to be executabe, that means this transaction will use all the gas you provide.",
+                "cantEstimateGas": "We can't estimate your gas usage properly, as you need at least 1 ether in your account.",
+                "estimatedGas": "Estimated required gas",
+                "timeTexts": {
+                    "0": "in a few minutes or more",
+                    "1": "likely within a few minutes",
+                    "2": "usually within a minute",
+                    "3": "probably within 30 seconds",
+                    "4": "probably within a few seconds",
+                    "5": "probably within a few seconds"
+                }
+            }
+        },
+        "tokens": {
+            "title": "Custom <strong>Tokens</strong>",
+            "subTitle": "Added tokens",
+            "admin": "__name__ (admin page)",
+            "description": "Tokens are currencies and other fungibles built on the Ethereum platform. In order for accounts to watch for tokens and send them, you have to add their address to this list. You can create your own token by simply modifiying <a href=\"http://chriseth.github.io/browser-solidity/?gist=0d1a998d949e26942212\" target=\"_blank\">this example of a custom token contract</a> or learning more about <a href=\"https://www.ethereum.org/token#the-code\" target=\"_blank\">Ethereum Tokens</a>.",
+            "deleteToken": "Do you want to remove the token <strong>__token__</strong> from your list?",
+            "addedToken": "Added __token__ to your watch list",
+            "editedToken": "Edited token __token__",
+            "error": {
+                "invalidAddress": "Token not added, invalid address."
+            }
+        },
+        "contracts": {
+            "contractTitle" : "Contracts",
+            "deployNewContract": "Deploy new contract",
+            "addCustomContract": "Watch contract",
+            "customContracts": "Custom contracts",
+            "description": "In order to watch and interact with a contract already deployed on the blockchain you need to know its address and description of its interface in JSON format.",
+            "deployContract": "<strong>Deploy</strong> contract",
+            "contractSourceCode": "Solidity contract source code",
+            "contractByteCode": "Contract byte code",
+            "selectContract": "Select contract to deploy",
+            "constructorParameters": "Constructor parameters",
+            "name": "Contract Name",
+            "address": "Contract Address",
+            "jsonInterface": "JSON Interface",
+            "contractInformation": "Contract Information",
+            "addedContract": "Added custom contract",
+            "readFromContract": "Read from contract",
+            "writeToContract": "Write to contract",
+            "pickContract": "Pick a contract",
+            "pickFunction": "Pick a function",
+            "noContract": "<p>Put the source of the contract you want here. You can find many examples of contracts at the <a href=\"http://ethereum.org\" target=\"_blank\">ethereum.org</a>: </p> <ul><li><a href=\"http://ethereum.org/token#the-code\" target=\"_blank\">Build a token</a></li><li><a href=\"http://ethereum.org/crowdsale#the-code\" target=\"_blank\">Start a crowdsale</a></li><li><a href=\"http://ethereum.org/dao#the-code\" target=\"_blank\">Create a blockchain organization</a></li></ul>",
+            "buttons": {
+                "showContractInfo": "Show contract info",
+                "hideContractInfo": "Hide contract info",
+                "execute": "Execute",
+                "yes": "Yes"
+            },
+            "error": {
+                "compile": "Could not compile source code.",
+                "noDataProvided": "No Data found: select a contract from the 'select contract' menu",
+                "invalidAddress": "Contract not added, invalid address.",
+                "jsonInterfaceParseError": "Couldn't parse the JSON Interface."
+            }
+        }
+    }
+}
