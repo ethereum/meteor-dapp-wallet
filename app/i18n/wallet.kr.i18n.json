@@ -142,52 +142,52 @@
                 "revoked": "철회된"
             },
             "error": {
-                "noDataDeployed": "No data is deployed on the contract address!",
-                "outOfGas": "The transaction from __from__ to __to__ couldn't be successfully executed."  
+                "noDataDeployed": "컨트랙트 주소에 데이타가 배포되지 않았습니다!",
+                "outOfGas": "__from__ 로부터 __to__ 로 가는 트랜잭션이 성공적으로 수행되지 않았습니다."  
             },
             "types": {
-                "executeContract": "Contract Execution",
-                "betweenWallets": "Transfer between accounts",
-                "sent": "Sent",
-                "received": "Received",
-                "outOfGas": "Transaction not executed",
+                "executeContract": "컨트랙트 실행",
+                "betweenWallets": "계정간 송금",
+                "sent": "송금건",
+                "received": "수금건",
+                "outOfGas": "실행이 안된 트랜재션",
                 "createdContract": {
-                    "title": "Created contract",
-                    "at": "Created contract at"
+                    "title": "생성된 컨트랙트",
+                    "at": "생성시간"
                 },
-                "creatingContract": "Creating contract",
-                "tokenTransfer": "__token__ - Token transfer",
-                "pendingConfirmations": "__initiator__ wants to send from __from__"
+                "creatingContract": "컨트랙트 생성",
+                "tokenTransfer": "__token__ - 토큰 전송",
+                "pendingConfirmations": "__initiator__ 가 __from__으로 부터 송금하려함"
             },
             "notifications": {
                 "incomingTransaction": {
-                    "title": "Payment received",
-                    "text": "You received __amount__ on __to__ from __from__."
+                    "title": "임금액",
+                    "text": "__amount__를  __to__ 에 __from__로부터 받음"
                 },
                 "outgoingTransaction": {
-                    "title": "Payment sent",
-                    "text": "You sent __amount__ from __from__ to __to__."    
+                    "title": "송금액",
+                    "text": " __amount__를 __from__로부터  __to__로 보냄"    
                 },
                 "pendingConfirmation": {
-                    "title": "Confirmation needed",
-                    "text": "__initiator__ wants to send __amount__ from __from__ to __to__"
+                    "title": "확인 필요",
+                    "text": "__initiator__ 가 __amount__를 __from__로부터 __to__로 보내려고 합니다."
                 },
                 "tokenTransfer": {
-                    "title": "__token__ - Token transfer",
-                    "text": "__amount__ __token__  were send from __from__ to __to__."
+                    "title": "__token__ - 토큰 송금",
+                    "text": "__amount__ __token__  이 __from__ 로부터 __to__로 송금됨"
                 }
             }
         },
         "newWallet": {
-            "title": "New <strong>wallet contract</strong>",
-            "accountName": "Wallet contract name",
-            "selectOwner": "Select owner",
+            "title": "신규 <strong>지갑 컨트랙트</strong>",
+            "accountName": "지갑 컨트랙트 이름",
+            "selectOwner": "소유자를 선택하세요",
             "accountType": {
-                "title": "Wallet contract type",
+                "title": "지갑 컨트랙트 유형",
                 "simple": {
-                    "title": "Single owner account",
-                    "description": "A simple contract without additional security measures.",
-                    "warning": "Note: If your owner account is compromised your wallet has no protection."
+                    "title": "단일 소유 계정",
+                    "description": "추가적인 보안기능이 없는 단순 계약.",
+                    "warning": "메모: 만일 소유 계정이 칩입당하면, 당신의 지갑은 보호될 수 없습니다."
                 },
                 "multisig": {
                     "title": "Multisignature wallet contract",
