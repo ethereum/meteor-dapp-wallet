@@ -13,11 +13,11 @@
                 "wallet": "지갑",
                 "send": "보내기",
                 "contracts": "컨트랙트",
-                "deploy": "적용",
+                "deploy": "설치",
                 "tokens": "토큰",
                 "receive": "받기",
                 "addWallet": "지갑컨트랙트 추가",
-                "addAccount": "지갑 추가",
+                "addAccount": "계정 추가",
                 "addToken": "토큰 추가"
             },
             "texts": {
@@ -33,12 +33,12 @@
                 "waitingForBlocks": "블럭을 기다리는 중..",
                 "testnetExplain": "현재 테스트넷 상에 있습니다. 진짜 이더를 이 주소로 절대 보내지 마세요.",
                 "noAccounts": {
-                    "title": "어카운트 없습니다",
+                    "title": "계정이 없습니다",
                     "text": "강력한 암호를 가진 계정이 최소 1개는 있어야 합니다."
                 }
             },
             "error": {
-                "wrongChain": "현재 다른 체인에 있는 것 같습니다. 이더리움 지갑앱을 재실행하세요!"
+                "wrongChain": "현재 다른 체인상에 있는 것 같습니다. 이더리움 지갑앱을 재실행하세요!"
             }
         },
         "modals": {
@@ -79,8 +79,8 @@
             "dailyLimitRemaining": "하루 한도 잔여시간",
             "requiredSignatures": "필요한 서명",
             "owners": "소유자",
-            "walletsDescription": "이것은 블랙체인에 저장되는 컨트랙들로서 이더를 보관하고 보호할 수 있습니다. 다수의 소유자를 지정할 수 있고 모든 트랜잭션 로그기록을 보관합니다.",
-            "walletsDescriptionNotEnoughFunds": "1이더 이상을 가지고 있으면 여러가지 기능을 가진 컨트랙들을 만들 수 있습니다. 지갑 컨트랙트은 기본 스마트 컨트랙트의 한가지 유형인데, 보안 강화를 위해 자금을 다수의 계정에 의해 통제되도록 하거나 하루 출금량을 제한할 수도 있습니다. 여러분의 필요에 맞게 컨트랙트를 만들기 위해서는 <em> Contracts </em> 메뉴 탭을 클릭하세요",
+            "walletsDescription": "이것은 블랙체인에 저장되는 컨트랙트들로서 이더를 보관하고 보호할 수 있습니다. 다수의 소유자를 지정할 수 있고 모든 트랜잭션 로그기록을 보관합니다.",
+            "walletsDescriptionNotEnoughFunds": "1이더 이상을 가지고 있으면 여러가지 기능을 가진 컨트랙트들을 만들 수 있습니다. 지갑 컨트랙트은 기본 스마트 컨트랙트의 한가지 유형인데, 보안 강화를 위해 자금을 다수의 계정에 의해 통제되도록 하거나 하루 출금량을 제한할 수도 있습니다. 여러분의 필요에 맞게 컨트랙트를 만들기 위해서는 <em> 컨트랙트 </em> 메뉴 탭을 클릭하세요",
             "accountsDescription": "계정은 암호로 보호된 키인데 이더, 이더리움을 기반으로 한 토큰 또는 코인들을 보관하고 컨트랙트를 통제합니다. 계정은 개별 입금 트랙잭션은 보여주지 못합니다.",
             "buttons": {
                 "deposit": "이더 입금",
@@ -90,7 +90,7 @@
                 "showInterface": "인터페이스 보기"
             },
             "modal": {
-                "deleteText": "이 지갑 컨트랙트를 삭제하려는 것이 정말 맞습니까? 블럭체인위에 어카운트는 여전히 존재하겠지만, <br>만일 이 주소를 지우면, 여기에 저장된 자금을 찾을 수도 없게 되어 잃게 될 겁니다.  정말 삭제를 하는 것이 맞다면 \"delete\" 라고 입력하세요",
+                "deleteText": "이 지갑 컨트랙트를 삭제하려는 것이 정말 맞습니까? 블럭체인 위에 어카운트는 여전히 존재하겠지만, <br>만일 이 주소를 지우면, 여기에 저장된 자금을 찾을 수 없고 결국 잃어 버리게 될 것입니다. 정말 삭제를 하는 것이 맞다면 \"delete\" 라고 입력하세요",
                 "backupWallet": {
                     "title": "지갑 컨트랙트 주소를 백업합니다!",
                     "description": "반드시 지갑 컨트랙트주소를 적어 놓으시기 바랍니다:"
@@ -119,8 +119,8 @@
             "pendingConfirmations": "승인 필요",
             "none": "트랜잭션 없음",
             "time": "시간",
-            "from": "발신자",
-            "to": "수신자",
+            "from": "발신처",
+            "to": "수신처",
             "amount": "금액",
             "gasPrice": "개스 가격",
             "perMillionGas": " 백만 개스당",
@@ -132,7 +132,7 @@
             "unconfirmed": "미승인된",
             "showMore": "더보기",
             "filter": "트랜잭션 필터링",
-            "noneFound": "매칭하는 트랜잭션이 없음.",
+            "noneFound": "해당하는 트랜잭션이 없음.",
             "noOwnerAccount": "승인만 보기",
             "outOfGasDesc": "트랜잭션을 실행하기에 충분한 개스가 없는 것 같습니다.",
             "buttons": {
@@ -142,7 +142,7 @@
                 "revoked": "철회된"
             },
             "error": {
-                "noDataDeployed": "컨트랙트 주소에 데이타가 배포되지 않았습니다!",
+                "noDataDeployed": "컨트랙트 주소에 데이터가 설치되지 않았습니다!",
                 "outOfGas": "__from__ 로부터 __to__ 로 가는 트랜잭션이 성공적으로 수행되지 않았습니다."  
             },
             "types": {
@@ -186,7 +186,7 @@
                 "title": "지갑 컨트랙트 유형",
                 "simple": {
                     "title": "단일 소유 계정",
-                    "description": "추가적인 보안기능이 없는 단순 계약.",
+                    "description": "추가적인 보안기능이 없는 단순 컨트랙트.",
                     "warning": "메모: 만일 소유 계정이 해킹되면, 당신의 지갑은 보호될 수 없습니다."
                 },
                 "multisig": {
@@ -195,7 +195,7 @@
                     "text1": "이것은 다음의 소유자에 의해 통제되는 계정입니다.",
                     "text2": "소유자들. 하루에 보낼 수 있는 최대금액은",
                     "text3": "이더 / 일.",
-                    "text4": "이 일일 금액을 초과하는 트랜잭션은 다음 소유자들의 인증을 필요로 합니다.",
+                    "text4": "이 일일 금액을 초과하는 트랜잭션은 다음 소유자들의 승인을 필요로 합니다.",
                     "text5": "소유자들.",
                     "accountOwnersTitle": "계정 소유자들",
                     "ownerAddress": "소유자 주소"
@@ -221,8 +221,8 @@
             "title": "<strong>송금</strong>",
             "sendInfoTitle": "송금",
             "pickAddress": "주소를 선택하세요",
-            "to": "에게",
-            "from": "로부터",
+            "to": "수신처",
+            "from": "송신처",
             "amount": "금액",
             "tokenAmount": "토큰량",
             "sendFunds": "송금",
@@ -248,9 +248,9 @@
                 "ownerPaysGas": "개스는 지갑 컨트랙트의 소유자에 의해 지불되었습니다.",
                 "sendAmount": "당신이 보내고자하는 금액은 <strong>__amount__</strong> 입니다.",
                 "sendAmountEquivalent": "당신이 보내고자 하는 금액은 <strong>__amount__</strong> 이더이고, 교환비율은 <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a> 에 근거하였으며, <br>현재 <strong>__etherAmount__ </strong>만큼의 이더입니다.",
-                "sendToken": "당신은 <strong> __name__</strong>, <strong>__amount__ __symbol__</strong>을 보내고자 한다.",
-                "overDailyLimit": "<p class=\"over-daily\">이 금액은 현재 남은 일일 제한 금액인 __limit__ (총 일일 한도 __total__)을 초과합니다, 따라서 __count__ 개의 다른 계정의 확인이 필요합니다.</p>",
-                "overDailyLimit_plural": "<p class=\"over-daily\">이 금액은 현재 남은 일일 제한 금액인 __limit__ (일일 한도 __total__)을 초과합니다, 따라서 __count__ 개의 다른 계정의 확인이 필요합니다.</p>",
+                "sendToken": "당신은 <strong> __name__</strong>, <strong>__amount__ __symbol__</strong>을 보내고자 합니다.",
+                "overDailyLimit": "<p class=\"over-daily\">이 금액은 현재 남은 일일 제한 금액인 __limit__ (총 일일 한도 __total__)을 초과합니다, 따라서 __count__ 개의 다른 계정의 승인이 필요합니다.</p>",
+                "overDailyLimit_plural": "<p class=\"over-daily\">이 금액은 현재 남은 일일 제한 금액인 __limit__ (일일 한도 __total__)을 초과합니다, 따라서 __count__ 개의 다른 계정의 승인이 필요합니다.</p>",
                 "underDailyLimit": "<p class=\"under-daily\">이 금액은 현재 남은 일일 제한 금액인 __limit__ (총 일일 한도 __total__)을 초과하지 않습니다, 따라서 즉시 송금이 될 것입니다.</p>",
                 "sendFee": "이것은 이 트랜잭션을 처리하기 위해 사용될 최대 금액입니다. 당신의 트랜잭션은 <strong>__timetext__</strong>에 블럭체인에 등록될 것입니다.",
                 "noCodeInRecipient": "수신계정이 컨트랙트가 아닙니다, 따라서 아무것도 실행할 수 없습니다. <strong> '에게' 란에 컨트랙트 주소를 입력하세요.</strong>",
@@ -259,8 +259,8 @@
                 "cantEstimateGas": "개스 사용량을 정확히 예측할 수가 없습니다, 따라서 최소 1 이더가 계정에 있어야 합니다.",
                 "estimatedGas": "예상 필요 개스",
                 "timeTexts": {
-                    "0": "수 분 또는 그 이상안에",
-                    "1": "대략 수 분 이내에",
+                    "0": "수분 또는 그 이상안에",
+                    "1": "대략 수분 이내에",
                     "2": "보통 1분 이내에",
                     "3": "대략 30초 이내에",
                     "4": "대략 수초 이내에",
@@ -269,7 +269,7 @@
             }
         },
         "tokens": {
-            "title": "주문형<strong>토큰</strong>",
+            "title": "주문형 <strong>토큰</strong>",
             "subTitle": "추가된 토큰",
             "admin": "__name__ (관리자 페이지)",
             "description": "토큰은 이더리움 플랫폼위에 만들어진 화폐와 다른 대체수단들을 말합니다. 토큰들을 열람하고 송금하기 위해서는, 토큰들의 주소를 이 리스트에 등록해야 합니다. <a href=\"http://chriseth.github.io/browser-solidity/?gist=0d1a998d949e26942212\" target=\"_blank\">주문형 토큰 예제</a>를 수정해 주문형 토큰을 만들거나, <a href=\"https://www.ethereum.org/token#the-code\" target=\"_blank\">이더리움 토큰들</a>를 통해 더 학습을 할 수도 있습니다.",
