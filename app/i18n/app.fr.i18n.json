@@ -1,7 +1,7 @@
 {
     "app": {
         "loading": "Chargement...",
-        "offline": "Impossible de se connecter, êtes-vous hors-ligne?",
+        "offline": "Impossible de se connecter, êtes-vous hors-ligne ?",
         "logginIn": "Connexion..."
     },
     "error": {
