@@ -1,10 +1,10 @@
 {
     "elements": {
         "selectGasPrice": {
-            "high": "빠름",
-            "low": "저렴"
+            "high": "높음(빠른 전송)",
+            "low": "낮음(느린 전송)"
         },
-        "checksumAlert": "이 주소는 유효해 보이지만, 오타등의 실수를 막을 수 있는 보안기능은 없습니다. 다시 한번 정확한지 확인해 보시기 바랍니다. 보안 아이콘이 있는 경우 이것이 일치하는지 확인하시기 바랍니다.",
+        "checksumAlert": "이 주소는 유효해 보이지만, 오타 등의 실수를 막을 수 있는 보안기능은 없습니다. 다시 한 번 정확한지 확인해 보시기 바랍니다. 보안 아이콘이 있는 경우 이것이 일치하는지 확인하시기 바랍니다.",
         "identiconHelper": "이것은 보안 아이콘입니다. 주소에 어떤 변화라도 생기면, 이 아이콘은 완전히 다른 모양으로 변합니다."
     },
     "wallet": {
@@ -23,12 +23,12 @@
             "texts": {
                 "note": "메모",
                 "balance": "잔고",
-                "connectionErrorMist": "연결할 수 없습니다. geth를 다음과 같이 실행하세요:<br><br><small><code>__node__</code><br><br>IPC 경로가 기본선택으로 되어있는지 확인하세요. 만일 다른 경로를 사용한다면 다음과 같이 실행하세요: <code>datadir</code>, e.g.<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/geth.ipc</code><br>or<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/geth.ipc</code>. <br><br>Optional add: <code>--unlock &lt;yourAccount&gt;.</code></small>",
-                "connectionErrorBrowser": "연결할 수 없습니다. geth 를 다음의 옵션으로 실행하세요.:<br><br><small><code>__node__</code><br><br>Optional add: <code>--unlock &lt;yourAccount&gt;.</code></small>",
+                "connectionErrorMist": "연결할 수 없습니다. geth를 다음과 같이 실행하세요:<br><br><small><code>__node__</code><br><br>IPC 경로가 디폴트로 되어있는지 확인하세요. 만일 다른 경로를 사용한다면 다음과 같이 실행하세요: <code>datadir</code>, e.g.<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/geth.ipc</code><br>or<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/geth.ipc</code>. <br><br>Optional add: <code>--unlock &lt;yourAccount&gt;.</code></small>",
+                "connectionErrorBrowser": "연결할 수 없습니다. geth를 다음의 옵션으로 실행하세요.:<br><br><small><code>__node__</code><br><br>Optional add: <code>--unlock &lt;yourAccount&gt;.</code></small>",
                 "pendingConfirmationsBadge": "승인 대기 중!",
                 "nodeSyncing": "__blockDiff__ 블럭 남음",
                 "blockReceived": "새 블럭을 받았음",
-                "timeSinceBlock": "마지막 블럭이후",
+                "timeSinceBlock": "마지막 블럭 이후",
                 "peers": "피어(peers)",
                 "waitingForBlocks": "블럭을 기다리는 중..",
                 "testnetExplain": "현재 테스트넷 상에 있습니다. 진짜 이더를 이 주소로 절대 보내지 마세요.",
@@ -46,7 +46,7 @@
                 "title": "계정을 선택하세요"
             },
             "testnetWallet": {
-                "walletNeedsDeployment": "테스넷상에 있습니다.<br><br>오리지널 지갑 컨트랙트 코드가 없습니다.지갑컨트랙트의 서브컨트랙들이 다음의 당신 주소에서 사용할 코드가 필요합니다: <br><br><small><code>__account__</code></small><br><br><em> 이 주소에 최소 1 이더가 있어야 합니다!</em>",
+                "walletNeedsDeployment": "테스넷상에 있습니다.<br><br>원본 지갑 컨트랙트 코드가 없습니다. 지갑컨트랙트의 서브컨트랙들이 다음의 당신 주소에서 사용할 코드가 필요합니다: <br><br><small><code>__account__</code></small><br><br><em> 이 주소에 최소한 1 이더가 있어야 합니다!</em>",
                 "testnetWalletDeployed": "오리지널 지갑 컨트랙트가 설치되었습니다.<br> 사용된 주소는 다음과 같습니다:<br><br><small><code>__address__</code></small>."
             },
             "addToken": {
@@ -60,7 +60,7 @@
             },
             "interface": {
                 "title": "컨트랙트 JSON 인터페이스",
-                "description": "다른 사람이 이 컨트랙트를 사용하기 위해서는 컨트랙트 주소와 함께 다음의 내용이 필요합니다."
+                "description": "타인이 이 컨트랙트를 사용하기 위해서는 컨트랙트 주소와 함께 다음의 내용이 필요합니다."
             }
         },
         "accounts": {
@@ -72,30 +72,30 @@
             "importing": "불러오기",
             "accountNote": "계정들은 이더를 보관하고 전송할 수 있지만 개별 입금되는 트랜잭션들을 보여줄 수 없습니다. 개별 입금 트랜잭션들을 보려면 <a href=\"/account/new\">지갑 컨트랙트 설치하기</a>를 해야합니다.",
             "walletNote": "대부분의 거래소는 아직 컨트랙트 지갑을 지원하지 않습니다. 송금하려는 금액을 계정주소로 먼저 이동시키기 바랍니다.",
-            "addressCopiedToClipboard": "클립보드에 카피되었습니다",
-            "addressNotCopiedToClipboard": "클립보드에 카피하는데 실패했습니다. 다시 시도하세요.",
+            "addressCopiedToClipboard": "클립보드에 복사되었습니다",
+            "addressNotCopiedToClipboard": "클립보드에 복사하는데 실패했습니다. 다시 시도하세요.",
             "qrCodeLabel": "이 코드를 호환되는 모바일 앱에 입력하세요",
-            "dailyLimit": "하루 한도",
-            "dailyLimitRemaining": "하루 한도 잔여시간",
+            "dailyLimit": "일일 한도",
+            "dailyLimitRemaining": "일일 한도 잔여시간",
             "requiredSignatures": "필요한 서명",
             "owners": "소유자",
             "walletsDescription": "이것은 블랙체인에 저장되는 컨트랙트들로서 이더를 보관하고 보호할 수 있습니다. 다수의 소유자를 지정할 수 있고 모든 트랜잭션 로그기록을 보관합니다.",
-            "walletsDescriptionNotEnoughFunds": "1이더 이상을 가지고 있으면 여러가지 기능을 가진 컨트랙트들을 만들 수 있습니다. 지갑 컨트랙트은 기본 스마트 컨트랙트의 한가지 유형인데, 보안 강화를 위해 자금을 다수의 계정에 의해 통제되도록 하거나 하루 출금량을 제한할 수도 있습니다. 여러분의 필요에 맞게 컨트랙트를 만들기 위해서는 <em> 컨트랙트 </em> 메뉴 탭을 클릭하세요",
+            "walletsDescriptionNotEnoughFunds": "1 이더 이상을 가지고 있으면 여러 가지 기능을 가진 컨트랙트들을 만들 수 있습니다. 지갑 컨트랙트은 기본 스마트 컨트랙트의 한가지 유형인데, 보안 강화를 위해 자금을 다수의 계정에 의해 통제되도록 하거나 하루 출금량을 제한할 수도 있습니다. 여러분의 필요에 맞게 컨트랙트를 만들기 위해서는 <em> 컨트랙트 </em> 메뉴 탭을 클릭하세요",
             "accountsDescription": "계정은 암호로 보호된 키인데 이더, 이더리움을 기반으로 한 토큰 또는 코인들을 보관하고 컨트랙트를 통제합니다. 계정은 개별 입금 트랙잭션은 보여주지 못합니다.",
             "buttons": {
                 "deposit": "이더 입금",
                 "depositBitcoin": "비트코인을 사용한 입금",
                 "copyAddress": "주소 복사",
-                "scanQRCode": "QR-코드 보기",
+                "scanQRCode": "QR 코드 보기",
                 "showInterface": "인터페이스 보기"
             },
             "modal": {
-                "deleteText": "이 지갑 컨트랙트를 삭제하려는 것이 정말 맞습니까? 블럭체인 위에 어카운트는 여전히 존재하겠지만, <br>만일 이 주소를 지우면, 여기에 저장된 자금을 찾을 수 없고 결국 잃어 버리게 될 것입니다. 정말 삭제를 하는 것이 맞다면 \"delete\" 라고 입력하세요",
+                "deleteText": "이 지갑 컨트랙트를 삭제하려는 것이 정말 맞습니까? 블럭체인 위에 계정은 여전히 존재하겠지만, <br>만일 이 주소를 지우면, 여기에 저장된 자금을 찾을 수 없고 결국 잃어 버리게 될 것입니다. 정말 삭제를 하는 것이 맞다면 \"delete\" 라고 입력하세요",
                 "backupWallet": {
                     "title": "지갑 컨트랙트 주소를 백업합니다!",
-                    "description": "반드시 지갑 컨트랙트주소를 적어 놓으시기 바랍니다:"
+                    "description": "반드시 지갑 컨트랙트 주소를 적어 놓으시기 바랍니다:"
                 },
-                "copyAddressWarning": "<strong>경고:</strong> 테스트넷상에 있습니다. 절대 실제 펀드를 이 계정으로 송금하지 마세요.",
+                "copyAddressWarning": "<strong>경고:</strong> 테스트넷상에 있습니다. 절대로 실제 펀드를 이 계정으로 송금하지 마세요.",
                 "buttonOk": "복사 확인",
                 "buttonCancel": "취소..."
             }
@@ -104,13 +104,13 @@
             "eventInfoTitle": "이벤트",
             "latest": "최종 이벤트",
             "filter": "이벤트 필터링",
-            "transactionHash": "트랜잭션 해쉬",
+            "transactionHash": "트랜잭션 해시",
             "block": "블럭",
             "originContract": "컨트랙트 출처",
-            "logIndex": "로그 인덱스",
+            "logIndex": "로그 색인",
             "transactionIndex": "트랜잭션 인덱스",
             "returnValues": "리턴값",
-            "eventName": "이벤트 이름"
+            "eventName": "이벤트명"
         },
         "transactions": {
             "transactionInfoTitle": "트랜잭션",
@@ -125,9 +125,9 @@
             "gasPrice": "개스 가격",
             "perMillionGas": " 백만 개스당",
             "gasUsed": "개스 사용", 
-            "feePaid": "지급된 수수료",
+            "feePaid": "지급 수수료",
             "data": "송신 데이터",
-            "deployedData": "설치된 데이터",
+            "deployedData": "설치한 데이터",
             "confirmations": "승인",
             "unconfirmed": "미승인된",
             "showMore": "더보기",
@@ -150,7 +150,7 @@
                 "betweenWallets": "계정간 송금",
                 "sent": "송금건",
                 "received": "수금건",
-                "outOfGas": "실행이 안된 트랜재션",
+                "outOfGas": "실행이 안된 트랜잭션",
                 "createdContract": {
                     "title": "생성된 컨트랙트",
                     "at": "생성시간"
@@ -232,7 +232,7 @@
             "feeLow": "더 싸게",
             "feeHigh": "더 빠르게",
             "addData": "데이터 추가",
-            "sendAll": "모든것 보내기",
+            "sendAll": "모두 보내기",
             "removeData": "데이터 삭제",
             "estimatedFee": "예상 수수료",
             "createContract": "컨트랙트 만들기",
@@ -255,11 +255,11 @@
                 "sendFee": "이것은 이 트랜잭션을 처리하기 위해 사용될 최대 금액입니다. 당신의 트랜잭션은 <strong>__timetext__</strong>에 블럭체인에 등록될 것입니다.",
                 "noCodeInRecipient": "수신계정이 컨트랙트가 아닙니다, 따라서 아무것도 실행할 수 없습니다. <strong> '에게' 란에 컨트랙트 주소를 입력하세요.</strong>",
                 "addData": "트랜잭션과 함께 추가 데이터를 송신할 수 있습니다. 만일 \"에게\" 란이 비어 있으면, 송신된 데이터를 이용해 컨트랙트가 설치됩니다.",
-                "dataNotExecutable": "이 데이터를 실행할 수가 없습니다, 따라서 이 트랜잭션은 제공된 모든 개스를 소모하게 될 것입니다.",
+                "dataNotExecutable": "이 데이터를 실행할 수가 없습니다, 따라서 이 트랜잭션은 제공된 개스를 모두 소모하게 될 것입니다.",
                 "cantEstimateGas": "개스 사용량을 정확히 예측할 수가 없습니다, 따라서 최소 1 이더가 계정에 있어야 합니다.",
                 "estimatedGas": "예상 필요 개스",
                 "timeTexts": {
-                    "0": "수분 또는 그 이상안에",
+                    "0": "수분 또는 그 이상",
                     "1": "대략 수분 이내에",
                     "2": "보통 1분 이내에",
                     "3": "대략 30초 이내에",
@@ -272,12 +272,12 @@
             "title": "주문형 <strong>토큰</strong>",
             "subTitle": "추가된 토큰",
             "admin": "__name__ (관리자 페이지)",
-            "description": "토큰은 이더리움 플랫폼위에 만들어진 화폐와 다른 대체수단들을 말합니다. 토큰들을 열람하고 송금하기 위해서는, 토큰들의 주소를 이 리스트에 등록해야 합니다. <a href=\"http://chriseth.github.io/browser-solidity/?gist=0d1a998d949e26942212\" target=\"_blank\">주문형 토큰 예제</a>를 수정해 주문형 토큰을 만들거나, <a href=\"https://www.ethereum.org/token#the-code\" target=\"_blank\">이더리움 토큰들</a>를 통해 더 학습을 할 수도 있습니다.",
-            "deleteToken": "리스트로부터 <strong>__token__</strong> 토큰을 삭제하고 싶습니까?",
+            "description": "토큰은 이더리움 플랫폼 위에 만들어진 화폐와 다른 대체수단들을 말합니다. 토큰들을 열람하고 송금하기 위해서는, 토큰들의 주소를 이 목록에 등록해야 합니다. <a href=\"http://chriseth.github.io/browser-solidity/?gist=0d1a998d949e26942212\" target=\"_blank\">주문형 토큰 예제</a>를 수정해 주문형 토큰을 만들거나, <a href=\"https://www.ethereum.org/token#the-code\" target=\"_blank\">이더리움 토큰들</a>를 통해 더 학습을 할 수도 있습니다.",
+            "deleteToken": "목록에서 <strong>__token__</strong> 토큰을 삭제하고 싶습니까?",
             "addedToken": "리스트에 __token__ 토큰 추가됨",
             "editedToken": "__token__ 토큰 수정됨",
             "error": {
-                "invalidAddress": "토큰치 추가되지 않았습니다. 잘못된 주소입니다."
+                "invalidAddress": "토큰이 추가되지 않았습니다. 잘못된 주소입니다."
             }
         },
         "contracts": {
@@ -289,8 +289,8 @@
             "deployContract": "컨트랙트 <strong>설치하기</strong> ",
             "contractSourceCode": "솔리더티 컨트랙트 소스 코드",
             "contractByteCode": "컨트랙트 바이트 코드",
-            "selectContract": "설치할 컨트랙을 선택하세요",
-            "constructorParameters": "컨스트럭터 파마미터들",
+            "selectContract": "설치할 컨트랙트를 선택하세요",
+            "constructorParameters": "컨스트럭터 입력값들",
             "name": "컨트랙트 이름",
             "address": "컨트랙트 주소",
             "jsonInterface": "JSON 인터페이스",
@@ -311,7 +311,7 @@
                 "compile": "소스코드를 컴파일할 수 없습니다.",
                 "noDataProvided": "데이터가 없습니다: '컨트랙트 선택' 메뉴에서 컨트랙트를 선택하세요",
                 "invalidAddress": "컨트랙트가 추가되지 않았습니다. 잘못된 주소입니다.",
-                "jsonInterfaceParseError": "JSON 인터페이스를 읽어 들여올 수가 없습니다."
+                "jsonInterfaceParseError": "JSON 인터페이스를 해석할 수가 없습니다."
             }
         }
     }
