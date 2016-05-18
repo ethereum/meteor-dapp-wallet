@@ -139,6 +139,7 @@ var accountClipboardEventHandler = function(e){
     }
 
     if (Helpers.isOnMainNetwork()) {
+        Session.set('tmpAllowCopy', true);
         copyAddress();
     }
     else {
