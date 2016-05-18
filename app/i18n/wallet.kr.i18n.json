@@ -4,7 +4,7 @@
             "high": "빠름",
             "low": "저렴"
         },
-        "checksumAlert": "이 주소는 유효해보이지만, 오타등의 실수로부터 당신을 보호할 수 있는 보안기능이 없습니다. 다시 한번 맞는지 확인해 보시기 바랍니다. 보안 아이콘이 있는 경우 이것이 일치하는지 확인하시기 바랍니다.",
+        "checksumAlert": "이 주소는 유효해 보이지만, 오타등의 실수를 막을 수 있는 보안기능은 없습니다. 다시 한번 정확한지 확인해 보시기 바랍니다. 보안 아이콘이 있는 경우 이것이 일치하는지 확인하시기 바랍니다.",
         "identiconHelper": "이것은 보안 아이콘입니다. 주소에 어떤 변화라도 생기면, 이 아이콘은 완전히 다른 모양으로 변합니다."
     },
     "wallet": {
@@ -204,15 +204,15 @@
                     "title": "지갑 불러오기",
                     "description": "기존 다중서명 지갑 불러오기",
                     "walletAddress": "지갑 주소",
-                    "youreOwner": "당신의 \"__account__\" 계정은 이 지갑 컨트랙트의 소유자입니다.",
+                    "youreOwner": "\"__account__\" 계정은 이 지갑 컨트랙트의 소유자입니다.",
                     "watchOnly": "당신은 이 계정을 소유하고 있지 않습니다, 하지만  \"열람한정\" 계정으로 추가할 수 있습니다.",
                     "notWallet": "이 주소는 지갑 컨트랙트를 가지고 있지 않습니다."
                 }
             },
             "error": {
-                "emptySignees": "당신은 모든 소유자들을 다 제시하지 않았습니다.",
+                "emptySignees": "모든 소유자들이 다 제시되지 않았습니다.",
                 "alreadyExists": "계정이 이미 존재합니다.",
-                "stubHasNoOrigWalletAddress": "당신의 컨트랙트는 오리저널 주소가 설정되어 있지 않습니다.앱을 재실행하세요!",
+                "stubHasNoOrigWalletAddress": "컨트랙트 오리저널 주소가 설정되어 있지 않습니다.앱을 재실행하세요!",
                 "contractsCantBeOwners": "컨트랙트는 소유자가 될 수 없습니다.",
                 "checkOwnerAddress": "컨트랙트 주소 __address__ 를 계정으로 바꾸십시요."
             }
@@ -246,15 +246,15 @@
             },
             "texts": {
                 "ownerPaysGas": "개스는 지갑 컨트랙트의 소유자에 의해 지불되었습니다.",
-                "sendAmount": "당신이 보내고자하는 금액은 <strong>__amount__</strong> 입니다.",
-                "sendAmountEquivalent": "당신이 보내고자 하는 금액은 <strong>__amount__</strong> 이더이고, 교환비율은 <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a> 에 근거하였으며, <br>현재 <strong>__etherAmount__ </strong>만큼의 이더입니다.",
-                "sendToken": "당신은 <strong> __name__</strong>, <strong>__amount__ __symbol__</strong>을 보내고자 합니다.",
+                "sendAmount": "보내고자하는 금액은 <strong>__amount__</strong> 입니다.",
+                "sendAmountEquivalent": "보내고자 하는 금액은 <strong>__amount__</strong> 이더이고, 교환비율은 <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a> 에 근거하였으며, <br>현재 <strong>__etherAmount__ </strong>만큼의 이더입니다.",
+                "sendToken": "<strong> __name__</strong>, <strong>__amount__ __symbol__</strong>을 보내고자 합니다.",
                 "overDailyLimit": "<p class=\"over-daily\">이 금액은 현재 남은 일일 제한 금액인 __limit__ (총 일일 한도 __total__)을 초과합니다, 따라서 __count__ 개의 다른 계정의 승인이 필요합니다.</p>",
                 "overDailyLimit_plural": "<p class=\"over-daily\">이 금액은 현재 남은 일일 제한 금액인 __limit__ (일일 한도 __total__)을 초과합니다, 따라서 __count__ 개의 다른 계정의 승인이 필요합니다.</p>",
                 "underDailyLimit": "<p class=\"under-daily\">이 금액은 현재 남은 일일 제한 금액인 __limit__ (총 일일 한도 __total__)을 초과하지 않습니다, 따라서 즉시 송금이 될 것입니다.</p>",
                 "sendFee": "이것은 이 트랜잭션을 처리하기 위해 사용될 최대 금액입니다. 당신의 트랜잭션은 <strong>__timetext__</strong>에 블럭체인에 등록될 것입니다.",
                 "noCodeInRecipient": "수신계정이 컨트랙트가 아닙니다, 따라서 아무것도 실행할 수 없습니다. <strong> '에게' 란에 컨트랙트 주소를 입력하세요.</strong>",
-                "addData": "당신은 트랜잭션과 함께 추가 데이터를 송신할 수 있습니다. 만일 \"에게\" 란이 비어 있으면, 송신된 데이터를 이용해 컨트랙트가 설치됩니다.",
+                "addData": "트랜잭션과 함께 추가 데이터를 송신할 수 있습니다. 만일 \"에게\" 란이 비어 있으면, 송신된 데이터를 이용해 컨트랙트가 설치됩니다.",
                 "dataNotExecutable": "이 데이터를 실행할 수가 없습니다, 따라서 이 트랜잭션은 제공된 모든 개스를 소모하게 될 것입니다.",
                 "cantEstimateGas": "개스 사용량을 정확히 예측할 수가 없습니다, 따라서 최소 1 이더가 계정에 있어야 합니다.",
                 "estimatedGas": "예상 필요 개스",
@@ -273,7 +273,7 @@
             "subTitle": "추가된 토큰",
             "admin": "__name__ (관리자 페이지)",
             "description": "토큰은 이더리움 플랫폼위에 만들어진 화폐와 다른 대체수단들을 말합니다. 토큰들을 열람하고 송금하기 위해서는, 토큰들의 주소를 이 리스트에 등록해야 합니다. <a href=\"http://chriseth.github.io/browser-solidity/?gist=0d1a998d949e26942212\" target=\"_blank\">주문형 토큰 예제</a>를 수정해 주문형 토큰을 만들거나, <a href=\"https://www.ethereum.org/token#the-code\" target=\"_blank\">이더리움 토큰들</a>를 통해 더 학습을 할 수도 있습니다.",
-            "deleteToken": "당신의 리스트로부터 <strong>__token__</strong> 토큰을 삭제하고 싶습니까?",
+            "deleteToken": "리스트로부터 <strong>__token__</strong> 토큰을 삭제하고 싶습니까?",
             "addedToken": "리스트에 __token__ 토큰 추가됨",
             "editedToken": "__token__ 토큰 수정됨",
             "error": {
