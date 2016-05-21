@@ -21,26 +21,26 @@ observeEvents = function(){
         added: function(newDocument) {
             
             // This creates a temporary cache for the contracts, to reduce the amount of db read and writes            
-            var customContract = customContractsCache[newDocument.address.toLowerCase()];
+            // var customContract = customContractsCache[newDocument.address.toLowerCase()];
 
-            if (typeof customContract == 'undefined') { // not in cache, load from db
-                var customContract = CustomContracts.findOne({address: newDocument.address.toLowerCase()});
-                customContractsCache[newDocument.address.toLowerCase()] = customContract; 
-            }
+            // if (typeof customContract == 'undefined') { // not in cache, load from db
+            //     var customContract = CustomContracts.findOne({address: newDocument.address.toLowerCase()});
+            //     customContractsCache[newDocument.address.toLowerCase()] = customContract; 
+            // }
 
-            if (typeof customContract != 'undefined' && typeof customContract.contractEvents != 'undefined') { // check if still undefined
-                // add to accounts
+            // if (typeof customContract != 'undefined' && typeof customContract.contractEvents != 'undefined') { // check if still undefined
+            //     // add to accounts
 
-                if (customContract.contractEvents && customContract.contractEvents.indexOf(newDocument._id)<0) {
-                    // Only if the event isn't there
-                    CustomContracts.update({address: newDocument.address.toLowerCase()}, {$addToSet: {
-                        contractEvents: newDocument._id
-                    }});  
+            //     if (customContract.contractEvents && customContract.contractEvents.indexOf(newDocument._id)<0) {
+            //         // Only if the event isn't there
+            //         CustomContracts.update({address: newDocument.address.toLowerCase()}, {$addToSet: {
+            //             contractEvents: newDocument._id
+            //         }});  
         
-                    customContract.contractEvents.push(newDocument._id);    
-                    customContractsCache[newDocument.address.toLowerCase()] = customContract; 
-                }  
-            }
+            //         customContract.contractEvents.push(newDocument._id);    
+            //         customContractsCache[newDocument.address.toLowerCase()] = customContract; 
+            //     }  
+            // }
 
             
 
