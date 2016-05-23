@@ -88,7 +88,7 @@
                 "showInterface": "Afficher l'interface"
             },
             "modal": {
-                "deleteText": "Voulez-vous vraiment supprimer ce portefeuille ? Le contrat continuera d'exister sur la blockchain mais <br>si vous ne conservez pas l'adresse, vous ne serez plus en mesure d'accéder aux fonds déposés.<br><br>Entrez le nom du portefeuille pour confirmer sa suppression.",
+                "deleteText": "Voulez-vous vraiment supprimer ce contrat ? Le contrat continuera d'exister sur la blockchain mais <br>si vous ne conservez pas l'adresse, vous ne serez plus en mesure d'accéder aux fonds déposés.<br><br>Ecrivez \"delete\" pour confirmer sa suppression.",
                 "backupWallet": {
                     "title": "Sauvegardez l'adresse de votre portefeuille !",
                     "description": "Assurez-vous recopier manuellement l'adresse de votre portefeuille :"
