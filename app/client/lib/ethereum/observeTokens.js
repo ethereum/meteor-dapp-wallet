@@ -121,25 +121,42 @@ observeTokens = function(){
         */
         added: function(newDocument) {
 
-            // check if wallet has code
-            web3.eth.getCode(newDocument.address, function(e, code) {
-                if(!e) {
-                    if(code && code.length > 2){
-                        Tokens.update(newDocument._id, {$unset: {
-                            disabled: ''
-                        }});
+            // Only check getCode if you don't know which network it belongs
+            if (typeof newDocument.network == 'undefined') {
 
-                        setupContractFilters(newDocument);
+                // check if wallet has code
+                web3.eth.getCode(newDocument.address, function(e, code) {
+                    if(!e) {
+                        if(code && code.length > 2){
+                            Tokens.update(newDocument._id, {$set: {
+                                network: Session.get('network'),
+                                disabled: false
+                            }});
+
+                            setupContractFilters(newDocument);
+
+                        } else {
+                            Tokens.update(newDocument._id, {$set: {
+                                disabled: true
+                            }});
+                        }
 
                     } else {
-                        Tokens.update(newDocument._id, {$set: {
-                            disabled: true
-                        }});
+                        console.log('Couldn\'t check Token code of ', newDocument, e);
                     }
-                } else {
-                    console.log('Couldn\'t check Token code of ', newDocument, e);
-                }
-            });
+                });
+
+            } else if (newDocument.disabled == (newDocument.network != Session.get('network'))) {
+                
+                var isSameNetwork = newDocument.network == Session.get('network');
+
+                Tokens.update(newDocument._id, {$set: {
+                    disabled: !isSameNetwork
+                }}); 
+                
+                if (isSameNetwork)
+                    setupContractFilters(newDocument);
+            } 
 
         },
         /**

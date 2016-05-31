@@ -42,6 +42,7 @@ var addCustomContract = function(e) {
         CustomContracts.upsert({address: address}, {$set: {
             address: address,
             name: name,
+            network: Session.get('network'),
             jsonInterface: jsonInterface
         }});
 

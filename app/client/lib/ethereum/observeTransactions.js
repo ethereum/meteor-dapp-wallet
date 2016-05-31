@@ -141,6 +141,7 @@ var updateTransaction = function(newDocument, transaction, receipt){
                     if(oldTx && oldTx.jsonInterface) {
                         CustomContracts.upsert({address: receipt.contractAddress}, {$set: {
                             address: receipt.contractAddress,
+                            network: Session.get('network'),
                             name: ( oldTx.contractName || 'New Contract') + ' ' + receipt.contractAddress.substr(2, 4),
                             jsonInterface: oldTx.jsonInterface
                         }});
@@ -159,6 +160,7 @@ var updateTransaction = function(newDocument, transaction, receipt){
                                 address: receipt.contractAddress,
                                 name: oldTx.name + ' ' + receipt.contractAddress.substr(2, 4),
                                 symbol: oldTx.name + receipt.contractAddress.substr(2, 4),
+                                network: Session.get('network'),
                                 balances: {},
                                 decimals: 0
                             }});
