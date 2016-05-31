@@ -87,7 +87,7 @@ observeCustomContracts = function(){
                         }});
 
                         } else if (!e) {
-                        // if there's no code, check the contract has a balance
+                        // if there's no code, check if the contract has a balance
                         web3.eth.getBalance(newDocument.address, function(e, balance) {
                             if(!e && balance.gt(0)){
                                 // If there is a balance, enable it (but don't save the network name)
@@ -95,7 +95,7 @@ observeCustomContracts = function(){
                                     disabled: false
                                 }});
                             } else if (!e) {
-                                // If there's not balance, disable it (but don't save the network name)
+                                // If there is no balance, disable it (but don't save the network name)
                                 CustomContracts.update(newDocument._id, {$set: {
                                     disabled: true
                                 }});
