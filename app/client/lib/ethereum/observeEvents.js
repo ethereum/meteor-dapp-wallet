@@ -41,7 +41,6 @@ observeEvents = function(){
                     customContractsCache[newDocument.address.toLowerCase()] = customContract; 
                 }  
             }
-
         },
         /**
         Remove events confirmations from the accounts
