@@ -75,30 +75,27 @@ observeCustomContracts = function(){
         @method added
         */
         added: function(newDocument) {
-            // Only check getCode if you don't know which network it belongs
+            // If the network is not known, check if it has code
             if (typeof newDocument.network == 'undefined') {
                 // check if wallet has code
                 web3.eth.getCode(newDocument.address, function(e, code) {
                     if(!e && code && code.length > 2 ){
+                        // If there is code, then save the network name
                         CustomContracts.update(newDocument._id, {$set: {
                             network: Session.get('network'),
                             disabled: false
                         }});
-                        // check for logs
-                        addLogWatching(newDocument);  
 
                         } else if (!e) {
                         // if there's no code, check the contract has a balance
                         web3.eth.getBalance(newDocument.address, function(e, balance) {
                             if(!e && balance.gt(0)){
+                                // If there is a balance, enable it (but don't save the network name)
                                 CustomContracts.update(newDocument._id, {$set: {
-                                    network: Session.get('network'),
                                     disabled: false
                                 }});
-
-                                // check for logs
-                                addLogWatching(newDocument); 
                             } else if (!e) {
+                                // If there's not balance, disable it (but don't save the network name)
                                 CustomContracts.update(newDocument._id, {$set: {
                                     disabled: true
                                 }});
@@ -107,6 +104,7 @@ observeCustomContracts = function(){
                     }
                 });
             } else if (newDocument.disabled == (newDocument.network != Session.get('network'))){
+                // If the network is known, check if it's enabled/disabled correctly
                 CustomContracts.update(newDocument._id, {$set: {
                     disabled: newDocument.network != Session.get('network')
                 }}); 
