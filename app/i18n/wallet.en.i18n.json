@@ -304,6 +304,8 @@
             "buttons": {
                 "showContractInfo": "Show contract info",
                 "hideContractInfo": "Hide contract info",
+                "watchContractEvents": "Watch contract events",
+                "stopWatchingContractEvents": "Stop watching contract events",
                 "execute": "Execute",
                 "yes": "Yes"
             },

@@ -161,11 +161,24 @@
                     {{> elements_transactions_table ids=transactions account=_id}}
                 {{/if}}
 
-                {{#if contractEvents}}
+                {{#with customContract}}
                     <h2>{{i18n 'wallet.events.latest'}}</h2>
-
+                    <br>
+                    <button class="toggle-watch-events dapp-block-button dapp-small">
+                        {{#if (TemplateVar.get "watchEvents")}}
+                            {{i18n "wallet.contracts.buttons.stopWatchingContractEvents"}}
+                        {{else}}
+                            {{i18n "wallet.contracts.buttons.watchContractEvents"}}
+                        {{/if}}
+                    </button>
+                    {{#if (TemplateVar.get "watchEvents")}}
+                        <div class="watch-events-spinner">
+                            {{> spinner}}
+                        </div>
+                    {{/if}}
+            
                     {{> elements_event_table ids=contractEvents}}
-                {{/if}}
+                {{/with}}
             </div>
         </div>
     {{/with}}

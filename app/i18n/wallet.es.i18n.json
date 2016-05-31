@@ -299,6 +299,8 @@
             "buttons": {
                 "showContractInfo": "Show contract info",
                 "hideContractInfo": "Hide contract info",
+                "watchContractEvents": "Ver eventos de contrato",
+                "stopWatchingContractEvents": "Dejar de ver eventos de contrato",
                 "execute": "Execute",
                 "yes": "Yes"
             },

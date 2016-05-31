@@ -299,6 +299,8 @@
             "buttons": {
                 "showContractInfo": "Показати інформацію контракту",
                 "hideContractInfo": "Сховати інформацію контракту",
+                "watchContractEvents": "Дивитися контрактні події",
+                "stopWatchingContractEvents": "Припинити спостереження контракту події",
                 "execute": "Виконати",
                 "yes": "Так"
             },
