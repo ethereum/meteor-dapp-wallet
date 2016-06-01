@@ -189,3 +189,85 @@ checkForOriginalWallet = function() {
     } 
 }
 
+
+/**
+Check wallet owners
+
+@method checkWalletOwners
+*/
+checkWalletOwners = function(address) {
+    return new P(function (resolve, reject) {
+
+        var returnValue = {
+            owners: false,
+            info: ''
+        };
+
+        if(web3.isAddress(address)) {
+            address = address.toLowerCase();
+            var myContract = WalletContract.at(address);
+
+            myContract.m_numOwners(function(e, numberOfOwners){
+                if(!e) {
+                    numberOfOwners = numberOfOwners.toNumber();
+                    
+                    if(numberOfOwners > 0) {
+                        var owners = [];
+
+                        // go through the number of owners we stop
+                        P.all(_.map(_.range(100), function(i){
+                            return new P(function (resolve, reject) {
+                                web3.eth.getStorageAt(address, 2+i, function(e, ownerAddress){
+                                    if(!e) {
+                                        ownerAddress = ownerAddress.replace('0x000000000000000000000000','0x');
+                                        
+                                        if(owners.length > numberOfOwners)
+                                            return resolve();
+                                        
+                                        if(web3.isAddress(ownerAddress) && ownerAddress !== '0x0000000000000000000000000000000000000000') {
+                                            myContract.isOwner.call(ownerAddress, {from: ownerAddress}, function(e, isOwner){
+                                                if(!e && isOwner) {
+                                                    owners.push(ownerAddress);
+                                                    owners = _.uniq(owners);
+                                                    owners.sort();
+                                                }
+
+                                                resolve();
+                                            });
+
+                                        } else {
+                                            resolve();
+                                        }
+
+                                    }
+                                });
+                            });
+                        })).then(function(){
+
+                            returnValue.owners = owners;
+
+                            if(account = Helpers.getAccountByAddress({$in: owners})) {
+                                returnValue.info = TAPi18n.__('wallet.newWallet.accountType.import.youreOwner', {account: account.name});
+                            } else {
+                                returnValue.info = TAPi18n.__('wallet.newWallet.accountType.import.watchOnly');
+                            }
+
+                            resolve(returnValue);
+                        }, function(){
+                            reject();
+                        });
+
+
+                    } else {
+                        returnValue.info = TAPi18n.__('wallet.newWallet.accountType.import.notWallet');
+                        resolve(returnValue);
+                    }
+
+                } else {
+                    reject(e);
+                }
+            })
+
+        }
+    });
+};

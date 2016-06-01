@@ -68,7 +68,7 @@ var addLogWatching = function(newDocument){
 
 
 Template['views_account'].onRendered(function(){
-       console.timeEnd('renderAccountPage');
+    console.timeEnd('renderAccountPage');
 });
 
 Template['views_account'].onDestroyed(function(){

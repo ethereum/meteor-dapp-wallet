@@ -83,7 +83,7 @@ observeCustomContracts = function(){
                     }});
 
                     // check for logs
-                    // addLogWatching(newDocument);                      
+                    // addLogWatching(newDocument);
                     
                 } else if (!e) {
                     // if there's no code, check the contract has a balance

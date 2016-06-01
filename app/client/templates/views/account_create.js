@@ -222,50 +222,12 @@ Template['views_account_create'].events({
     @event change input.import, input input.import
     */
     'change input.import, input input.import': function(e, template){
-        var address = e.currentTarget.value;
-        if(web3.isAddress(address)) {
-            address = address.toLowerCase();
-            var myContract = WalletContract.at(address);
+        checkWalletOwners(e.currentTarget.value).then(function(wallet){
+            TemplateVar.set(template, 'importWalletOwners', wallet.owners);
+            TemplateVar.set(template, 'importWalletInfo', wallet.info);
+        }, function(){
 
-            myContract.m_numOwners(function(e, numberOfOwners){
-                if(!e) {
-                    numberOfOwners = numberOfOwners.toNumber();
-                    
-                    if(numberOfOwners > 0) {
-                        var owners = [];
-
-                        // go through all 250 storage slots and get addresses,
-                        // once we reach the number of owners we stop
-                        _.find(_.range(250), function(i){
-                            var ownerAddress = web3.eth.getStorageAt(address, 2+i).replace('0x000000000000000000000000','0x');
-                            if(web3.isAddress(ownerAddress) && ownerAddress !== '0x0000000000000000000000000000000000000000')
-                                owners.push(ownerAddress);
-
-                            if(owners.length === numberOfOwners)
-                                return true;
-                            else
-                                return false;
-                        });
-
-                        TemplateVar.set(template, 'importWalletOwners', owners);
-
-                        if(account = Helpers.getAccountByAddress({$in: owners})) {
-                            TemplateVar.set(template, 'importWalletInfo', TAPi18n.__('wallet.newWallet.accountType.import.youreOwner', {account: account.name}));
-                        } else {
-                            TemplateVar.set(template, 'importWalletInfo', TAPi18n.__('wallet.newWallet.accountType.import.watchOnly'));
-                        }
-
-                    } else {
-                        TemplateVar.set(template, 'importWalletOwners', false);
-                        TemplateVar.set(template, 'importWalletInfo', TAPi18n.__('wallet.newWallet.accountType.import.notWallet'));
-                    }
-                }
-            })
-
-        } else {
-            TemplateVar.set('importWalletOwners', false);
-            TemplateVar.set('importWalletInfo', '');
-        }
+        });
     },
     /**
     Check the owner that its not a contract wallet

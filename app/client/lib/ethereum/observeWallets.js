@@ -58,6 +58,15 @@ updateContractData = function(newDocument){
         });
     }
 
+    // check if the owners have changed
+    if(web3.isAddress(newDocument.address)) {
+        checkWalletOwners(newDocument.address).then(function(wallet){
+            Wallets.update(newDocument._id, {$set: {owners: wallet.owners}});
+        }, function(){
+
+        });
+    }
+
     // check for version
     if(_.isUndefined(newDocument.version) && newDocument.address) {
         contractInstance.version(function(e, version){
@@ -659,7 +668,9 @@ observeWallets = function(){
         */
         changed: function(newDocument, oldDocument){
             // checkWalletConfirmations(newDocument, oldDocument);
-            updateContractData(newDocument);
+
+            if(newDocument.transactions != oldDocument.transactions)
+                updateContractData(newDocument);
         },
         /**
         Stop filters, when accounts are removed
