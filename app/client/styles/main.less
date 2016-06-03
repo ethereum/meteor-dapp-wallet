@@ -777,7 +777,7 @@ body {
         }
         
         table {
-            // max-width: @gridWidth * 16;
+            table-layout: fixed;
             
             tr:nth-child(odd) {
                 border-radius: 4px 4px 0 0;
@@ -791,6 +791,7 @@ body {
             td {
                 border-radius: 2px;
                 vertical-align: top;
+                word-wrap: break-word;
 
                 h3 {    
                     margin: 0;
@@ -800,8 +801,8 @@ body {
                     margin: 0;
                     dd {
                         margin-left: 0;
-                        // max-width: 14 * @gridWidth;
                         margin-bottom: @gridHeight;
+                        word-wrap: break-word;
                     }
                 }    
             }
