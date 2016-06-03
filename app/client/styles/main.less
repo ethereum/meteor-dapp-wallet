@@ -50,9 +50,12 @@
 
 
 .dapp-content {
-    padding-bottom: @defaultPaddingVertical*2;
+    padding: @defaultPaddingVertical @defaultPaddingHorizontal*2.5 @defaultPaddingVertical*2;
+    max-width: none;
 
     .dapp-container {
+        max-width: none; 
+
         > h2 {
             margin-bottom: @gridHeight * 1;
         }
@@ -140,6 +143,8 @@ body {
 
 
 .dapp-header {
+    padding-right: @gridWidth * 2;
+    padding-left: @gridWidth * 2;
     background-color: @colorWinBackgroundFocus;
     .background-image(linear-gradient(to bottom,  @colorWinBackgroundFocus 50%, #ddd9d9 90%));
     
@@ -267,7 +272,7 @@ body {
         left: 0;
         right: 0;
         height: @gridHeight * 2;
-        padding: @gridHeight/2 @gridWidth;
+        padding: @gridHeight/2 @gridWidth * 2.5;
         background: @colorWhite;
         .transition(top @animationSpeed);
         // box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
@@ -282,7 +287,7 @@ body {
             width: floor(@gridWidth / 1.5);
             height: floor(@gridWidth / 1.5);
             box-shadow: inset rgba(255, 255, 255, 0.4) 0 1px 1px, inset rgba(0, 0, 0, 0.3) 0 -1px 2px;
-            left: @gridWidth;
+            left: @gridWidth * 2.5;
         }
 
         h1 {
@@ -293,7 +298,7 @@ body {
         
         .account-balance {
             position: absolute;
-            right: @gridWidth;
+            right: @gridWidth * 2;
             top: 7px;
             font-size: 1.2em;
             font-weight: 400;
@@ -772,7 +777,7 @@ body {
         }
         
         table {
-            max-width: @gridWidth * 16;
+            // max-width: @gridWidth * 16;
             
             tr:nth-child(odd) {
                 border-radius: 4px 4px 0 0;
@@ -795,7 +800,7 @@ body {
                     margin: 0;
                     dd {
                         margin-left: 0;
-                        max-width: 14 * @gridWidth;
+                        // max-width: 14 * @gridWidth;
                         margin-bottom: @gridHeight;
                     }
                 }    
