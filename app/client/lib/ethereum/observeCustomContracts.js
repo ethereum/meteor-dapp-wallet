@@ -82,7 +82,7 @@ observeCustomContracts = function(){
                         disabled: false
                     }});  
                     // check for logs
-                    addLogWatching(newDocument);                      
+                    // addLogWatching(newDocument);                      
                     
                 } else if (!e) {
                     // if there's no code, check the contract has a balance
@@ -92,7 +92,7 @@ observeCustomContracts = function(){
                                 disabled: false
                             }});
                             // check for logs
-                            addLogWatching(newDocument);                        
+                            // addLogWatching(newDocument);                        
                         } else if (!e) {
                             CustomContracts.update(newDocument._id, {$set: {
                                 disabled: true
