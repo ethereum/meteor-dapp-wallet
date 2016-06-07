@@ -1,5 +1,6 @@
 app/packages
 app/packages/*
+app/packages/dapp-styles/
 app/public/i18n/
 packages/
 app/public/i18n/fr.json
