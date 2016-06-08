@@ -165,10 +165,11 @@
                     <h2>{{i18n 'wallet.events.latest'}}</h2>
                     <br>
                     
-                    <span><input type="checkbox" id="watch-events-checkbox" name="watch-events-checkbox" class="toggle-watch-events" checked="{{TemplateVar.get 'watchEvents'}}">
+                    <div>
+                        <input type="checkbox" id="watch-events-checkbox" name="watch-events-checkbox" class="toggle-watch-events" checked="{{TemplateVar.get 'watchEvents'}}">
 
-                    <label for="watch-events-checkbox">{{i18n "wallet.contracts.buttons.watchContractEvents"}}</label>
-                    </span>
+                        <label for="watch-events-checkbox">{{i18n "wallet.contracts.buttons.watchContractEvents"}}</label>
+                    </div>
 
                     {{#if (TemplateVar.get "watchEvents")}}
                         <div class="watch-events-spinner">
