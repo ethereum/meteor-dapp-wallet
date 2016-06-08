@@ -130,6 +130,10 @@ var formatOutput = function(val) {
 Template['elements_executeContract_constant'].onCreated(function(){
     var template = this;
 
+    // initialize our input data prior to the first call
+    var inputs = Helpers.addInputValue(template.data.inputs, this);
+    TemplateVar.set('inputs', inputs);
+
     // call the contract functions when data changes and on new blocks
     this.autorun(function() {
         // make reactive to the latest block
