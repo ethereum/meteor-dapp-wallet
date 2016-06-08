@@ -94,7 +94,7 @@ observeCustomContracts = function(){
                             }});
 
                             // check for logs
-                            // addLogWatching(newDocument);                        
+                            // addLogWatching(newDocument);
 
                         } else if (!e) {
                             CustomContracts.update(newDocument._id, {$set: {
