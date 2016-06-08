@@ -304,8 +304,7 @@
             "buttons": {
                 "showContractInfo": "Mostrar informação do contrato",
                 "hideContractInfo": "Esconder informação do contrato",
-                "watchContractEvents": "Assistir a eventos contratuais",
-                "stopWatchingContractEvents": "Pare de assistir a eventos contratuais",
+                "watchContractEvents": "Assistir a eventos do contrato",
                 "execute": "Executar",
                 "yes": "Sim"
             },

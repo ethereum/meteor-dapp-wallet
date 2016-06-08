@@ -300,7 +300,6 @@
                 "showContractInfo": "Afficher les infos du contrat",
                 "hideContractInfo": "Masquer les infos du contrat",
                 "watchContractEvents": "Regardez les événements contractuels",
-                "stopWatchingContractEvents": "Arrêter de regarder les événements contractuels",
                 "execute": "Exécuter",
                 "yes": "Oui"
             },

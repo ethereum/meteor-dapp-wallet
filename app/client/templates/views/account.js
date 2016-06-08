@@ -360,7 +360,7 @@ Template['views_account'].events({
     
     @event click button.toggle-watch-events
     */
-    'click button.toggle-watch-events': function(e, template){
+    'change .toggle-watch-events': function(e, template){
         if(template.customEventFilter) {
             template.customEventFilter.stopWatching();
             template.customEventFilter = null;
