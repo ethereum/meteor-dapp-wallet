@@ -44,19 +44,22 @@ var addLogWatching = function(newDocument){
             if(log.removed) {
                 Events.remove(id);
             } else {
+
+                _.each(log.args, function(value, key){
+                    // if bignumber
+                    if((_.isObject(value) || value instanceof BigNumber) && value.toFormat) {
+                        value = value.toString(10);
+                        log.args[key] = value;
+                    }
+                });
+
+                // store right now, so it could be removed later on, if removed: true
+                Events.upsert(id, log);
+
+                // update events timestamp
                 web3.eth.getBlock(log.blockHash, function(err, block){
                     if(!err) {
-
-                        _.each(log.args, function(value, key){
-                            // if bignumber
-                            if((_.isObject(value) || value instanceof BigNumber) && value.toFormat) {
-                                value = value.toString(10);
-                                log.args[key] = value;
-                            }
-                        });
-
-                        log.timestamp = block.timestamp;
-                        Events.upsert(id, log);
+                        Events.update(id, {$set: {timestamp: block.timestamp}});
                     }
                 });
             }
