@@ -131,8 +131,8 @@ Template['elements_executeContract_constant'].onCreated(function(){
     var template = this;
 
     // initialize our input data prior to the first call
-    TemplateVar.set('inputs', template.data.inputs.map(function() {
-        return '';
+    TemplateVar.set('inputs', _.map(template.data.inputs, function(input) {
+        return Helpers.addInputValue([input], input, {})[0];
     }));
 
     // call the contract functions when data changes and on new blocks
