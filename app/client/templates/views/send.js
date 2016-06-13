@@ -609,6 +609,8 @@ Template['views_send'].events({
 
                                 addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
 
+                                localStorage.setItem('saved_contract', 'contract MyContract {\n    /* Constructor */\n    function MyContract() {\n \n    }\n}');
+
                                 FlowRouter.go('dashboard');
 
                             } else {
@@ -647,6 +649,8 @@ Template['views_send'].events({
                                     : data;
 
                                 addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
+                                
+                                localStorage.setItem('saved_contract', 'contract MyContract {\n    /* Constructor */\n    function MyContract() {\n \n    }\n}');
 
                                 FlowRouter.go('dashboard');
                             } else {

@@ -73,12 +73,9 @@ Template['elements_compileContract'].onRendered(function() {
     this.aceEditor.$blockScrolling = Infinity;
     this.aceEditor.focus();
 
-    this.aceEditor.setValue("contract MyContract {\n"+
-"    /* Constructor */\n"+
-"    function MyContract() {\n"+
-" \n"+
-"    }\n"+
-"}");
+    var defaultCode = localStorage['saved_contract'] || "contract MyContract {\n    /* Constructor */\n    function MyContract() {\n \n    }\n}";
+
+    this.aceEditor.setValue(defaultCode);
     this.aceEditor.selection.selectTo(0);
 
     editor = this.aceEditor;
@@ -86,6 +83,8 @@ Template['elements_compileContract'].onRendered(function() {
     // WATCH FOR CHANGES
     this.aceEditor.getSession().on('change', _.debounce(function(e) {
         var sourceCode = template.aceEditor.getValue();
+
+        localStorage.setItem('saved_contract', sourceCode);
 
         TemplateVar.set(template, 'compiling', true);
         TemplateVar.set(template, 'compileError', false);
