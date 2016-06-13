@@ -12,10 +12,18 @@ Template['elements_tokenBox'].helpers({
     @method (formattedTotalBalance)
     */
     'formattedTotalBalance': function(e){
-        var balance = _.reduce(this.balances, function(memo, bal){
-            return memo.plus(new BigNumber(bal, 10));
-        }, new BigNumber(0));
-        return Helpers.formatNumberByDecimals(balance, this.decimals);
+        // Get wallets and accounts, but not contracts
+        var walletsAndAccounts = _.map(Wallets.find().fetch().concat(EthAccounts.find().fetch()), function(account){  
+                if(!account.disabled) return account._id; 
+            });
+        // check the total balance of these accounts only
+        var totalBalance = new BigNumber(0);
+        _.each(this.balances, function(balance, id){
+            if (walletsAndAccounts.indexOf(id) >= 0)
+                totalBalance = totalBalance.plus(new BigNumber(balance, 10));
+        })
+
+        return Helpers.formatNumberByDecimals(totalBalance, this.decimals);
     },
     /**
     Generates the geo pattern for the background
