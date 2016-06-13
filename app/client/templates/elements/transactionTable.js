@@ -46,11 +46,10 @@ Template['elements_transactions_table'].helpers({
     'items': function(){
         var template = Template.instance(),
             items = [],
-            ids = this.ids || [],
             searchQuery = TemplateVar.get('search'),
             limit = TemplateVar.get('limit'),
             collection = window[this.collection] || Transactions,
-            selector = {_id: {$in: ids}};
+            selector = this.ids ? {_id: {$in: this.ids}} : {};
 
         // if search
         if(searchQuery) {
