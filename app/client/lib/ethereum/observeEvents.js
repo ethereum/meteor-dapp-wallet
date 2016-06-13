@@ -19,24 +19,9 @@ observeEvents = function(){
         @method added
         */
         added: function(newDocument) {
-            
-            // This creates a temporary cache for the contracts, to reduce the amount of db read and writes            
-            var customContract = customContractsCache[newDocument.address.toLowerCase()] || CustomContracts.findOne({address: newDocument.address.toLowerCase()});
-
-            if (typeof customContract !== 'undefined' && typeof customContract.contractEvents !== 'undefined') { // check if still undefined
-                
-                // add to accounts
-                if (customContract.contractEvents && customContract.contractEvents.indexOf(newDocument._id) < 0) {
-                    // Only if the event isn't there
-                    CustomContracts.update({address: newDocument.address.toLowerCase()}, {$addToSet: {
-                        contractEvents: newDocument._id
-                    }});  
-        
-                    customContract.contractEvents.push(newDocument._id);    
-                }
-
-                customContractsCache[newDocument.address.toLowerCase()] = customContract; 
-            }
+            CustomContracts.update({address: newDocument.address.toLowerCase()}, {$addToSet: {
+                contractEvents: newDocument._id
+            }});
 
         },
         /**
