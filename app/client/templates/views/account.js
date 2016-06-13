@@ -71,7 +71,7 @@ var addLogWatching = function(newDocument){
 
 
 Template['views_account'].onRendered(function(){
-       console.timeEnd('renderAccountPage');
+   console.timeEnd('renderAccountPage');
 });
 
 Template['views_account'].onDestroyed(function(){
@@ -91,6 +91,22 @@ Template['views_account'].helpers({
     */
     'account': function() {
         return Helpers.getAccountByAddress(FlowRouter.getParam('address'));
+    },
+    /**
+    Run this helper, if the address changed
+
+    @method (addressChanged)
+    */
+    addressChanged: function(){
+        var address = this.address
+            template = Template.instance();
+
+        // stop watching custom events, on destroy
+        if(template.customEventFilter) {
+            template.customEventFilter.stopWatching();
+            template.customEventFilter = null;
+            TemplateVar.set('watchEvents', false);
+        }
     },
     /**
     Get the current jsonInterface, or use the wallet jsonInterface
