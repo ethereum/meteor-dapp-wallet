@@ -5,7 +5,7 @@
             "low": "Cheaper"
         },
         "checksumAlert":"This address looks valid, but it doesn't have some security features that will protect you against typos, so double check you have the right one. If provided, check if the security icon matches.",
-        "identiconHelper": "This is a security icon, if there's any change on the address the resulting icon should be a completelly different one"
+        "identiconHelper": "This is a security icon, if there's any change on the address the resulting icon should be a completely different one"
     },
     "wallet": {
         "app": {
@@ -80,7 +80,7 @@
             "requiredSignatures": "Required signatures",
             "owners": "Owners",
             "walletsDescription": "These are contracts that are stored on the blockchain and can hold and secure ether. They can have multiple accounts as owners and keep a full log of all transactions.",
-            "walletsDescriptionNotEnoughFunds": "Once you have more than 1 ether you can create a more sophisticated contracts. Wallets are one type of basic smart contract, that allows your funds to be controlled by multiple accounts and have an optional daily limit on withdrawals, to increase security.  To create your own custom contracts go to the <em> Contracts </em> tab.",
+            "walletsDescriptionNotEnoughFunds": "Once you have more than 1 ether you can create more sophisticated contracts. Wallets are one type of basic smart contract, that allows your funds to be controlled by multiple accounts and have an optional daily limit on withdrawals, to increase security.  To create your own custom contracts go to the <em> Contracts </em> tab.",
             "accountsDescription": "Accounts are password protected keys that can hold ether, secure ethereum-based tokens or coins and control contracts. Accounts can't display incoming transactions.",
             "buttons": {
                 "deposit": "Deposit Ether",
@@ -272,7 +272,7 @@
             "title": "Custom <strong>Tokens</strong>",
             "subTitle": "Added tokens",
             "admin": "__name__ (admin page)",
-            "description": "Tokens are currencies and other fungibles built on the Ethereum platform. In order for accounts to watch for tokens and send them, you have to add their address to this list. You can create your own token by simply modifiying <a href=\"http://chriseth.github.io/browser-solidity/?gist=0d1a998d949e26942212\" target=\"_blank\">this example of a custom token contract</a> or learning more about <a href=\"https://www.ethereum.org/token#the-code\" target=\"_blank\">Ethereum Tokens</a>.",
+            "description": "Tokens are currencies and other fungibles built on the Ethereum platform. In order for accounts to watch for tokens and send them, you have to add their address to this list. You can create your own token by simply modifying <a href=\"http://ethereum.github.io/browser-solidity/?gist=319854ee93812ef304ec2af0317b3c74\" target=\"_blank\">this example of a custom token contract</a> or learning more about <a href=\"https://www.ethereum.org/token#the-code\" target=\"_blank\">Ethereum Tokens</a>.",
             "deleteToken": "Do you want to remove the token <strong>__token__</strong> from your list?",
             "addedToken": "Added __token__ to your watch list",
             "editedToken": "Edited token __token__",
