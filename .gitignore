@@ -1,5 +1,5 @@
 app/packages
 app/packages/*
-app/public/i18n/
+app/public/i18n/*.json
 build/
 packages/

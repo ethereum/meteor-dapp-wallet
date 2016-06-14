@@ -56,6 +56,13 @@ Add new in/outgoing transaction
 addTransaction = function(log, from, to, value){
     var txId = Helpers.makeId('tx', log.transactionHash);
 
+    // add the tx already here
+    Transactions.upsert(txId, {
+        to: to,
+        from: from,
+        value: value
+    });
+
     var block = web3.eth.getBlock(log.blockNumber, false, function(err, block){
         if(!err) {
 
@@ -68,9 +75,6 @@ addTransaction = function(log, from, to, value){
 
                         var tx = {
                             _id: txId,
-                            to: to,
-                            from: from,
-                            value: value,
                             timestamp: block.timestamp,
                         };
 
@@ -110,6 +114,10 @@ var updateTransaction = function(newDocument, transaction, receipt){
         return;
 
     var oldTx = Transactions.findOne({_id: id});
+
+    // if no tx was found, means it was never created, or removed, through log.removed: true
+    if(!oldTx)
+        return;
 
     newDocument._id = id;
 
@@ -212,8 +220,6 @@ var updateTransaction = function(newDocument, transaction, receipt){
 
         delete newDocument._id;
         Transactions.update({_id: id}, {$set: newDocument});
-    } else {
-        Transactions.insert(newDocument);
     }
 
     // check previous balance, vs current balance, if different remove the out of gas

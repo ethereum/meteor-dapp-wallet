@@ -287,6 +287,11 @@ var setupContractFilters = function(newDocument, checkFromCreationBlock){
                 }
 
                 if(log.event === 'Deposit') {
+                    if(log.removed) {
+                        Transactions.remove({_id: Helpers.makeId('tx', log.transactionHash)});
+                        return;
+                    }
+
                     Helpers.eventLogs('Deposit for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber());
 
                     var txExists = addTransaction(log, log.args.from, newDocument.address, log.args.value.toString(10));
@@ -314,6 +319,11 @@ var setupContractFilters = function(newDocument, checkFromCreationBlock){
                     }
                 }
                 if(log.event === 'SingleTransact' || log.event === 'MultiTransact') {
+                    if(log.removed) {
+                        Transactions.remove({_id: Helpers.makeId('tx', log.transactionHash)});
+                        return;
+                    }
+                    
                     Helpers.eventLogs(log.event +' for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber());
 
                     var txExists = addTransaction(log, newDocument.address, log.args.to, log.args.value.toString(10));

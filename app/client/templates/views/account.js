@@ -44,19 +44,22 @@ var addLogWatching = function(newDocument){
             if(log.removed) {
                 Events.remove(id);
             } else {
+
+                _.each(log.args, function(value, key){
+                    // if bignumber
+                    if((_.isObject(value) || value instanceof BigNumber) && value.toFormat) {
+                        value = value.toString(10);
+                        log.args[key] = value;
+                    }
+                });
+
+                // store right now, so it could be removed later on, if removed: true
+                Events.upsert(id, log);
+
+                // update events timestamp
                 web3.eth.getBlock(log.blockHash, function(err, block){
                     if(!err) {
-
-                        _.each(log.args, function(value, key){
-                            // if bignumber
-                            if((_.isObject(value) || value instanceof BigNumber) && value.toFormat) {
-                                value = value.toString(10);
-                                log.args[key] = value;
-                            }
-                        });
-
-                        log.timestamp = block.timestamp;
-                        Events.upsert(id, log);
+                        Events.update(id, {$set: {timestamp: block.timestamp}});
                     }
                 });
             }
@@ -88,6 +91,22 @@ Template['views_account'].helpers({
     */
     'account': function() {
         return Helpers.getAccountByAddress(FlowRouter.getParam('address'));
+    },
+    /**
+    Run this helper, if the address changed
+
+    @method (addressChanged)
+    */
+    addressChanged: function(){
+        var address = this.address
+            template = Template.instance();
+
+        // stop watching custom events, on destroy
+        if(template.customEventFilter) {
+            template.customEventFilter.stopWatching();
+            template.customEventFilter = null;
+            TemplateVar.set('watchEvents', false);
+        }
     },
     /**
     Get the current jsonInterface, or use the wallet jsonInterface
@@ -360,7 +379,7 @@ Template['views_account'].events({
     
     @event click button.toggle-watch-events
     */
-    'click button.toggle-watch-events': function(e, template){
+    'change .toggle-watch-events': function(e, template){
         if(template.customEventFilter) {
             template.customEventFilter.stopWatching();
             template.customEventFilter = null;
