@@ -58,6 +58,9 @@ updateContractData = function(newDocument){
         });
     }
 
+    // check if the owner changed
+    checkOwner(newDocument);
+
     // check for version
     if(_.isUndefined(newDocument.version) && newDocument.address) {
         contractInstance.version(function(e, version){
@@ -79,6 +82,22 @@ updateContractData = function(newDocument){
                 }});
                 newDocument.version = version.toNumber();
             }
+        });
+    }
+};
+
+/**
+Update the owner list
+
+@method checkOwner
+*/
+checkOwner = function(newDocument){
+    // check if the owners have changed
+    if(web3.isAddress(newDocument.address)) {
+        checkWalletOwners(newDocument.address).then(function(wallet){
+            Wallets.update(newDocument._id, {$set: {owners: wallet.owners}});
+        }, function(){
+
         });
     }
 };
@@ -268,6 +287,11 @@ var setupContractFilters = function(newDocument, checkFromCreationBlock){
                 }
 
                 if(log.event === 'Deposit') {
+                    if(log.removed) {
+                        Transactions.remove({_id: Helpers.makeId('tx', log.transactionHash)});
+                        return;
+                    }
+
                     Helpers.eventLogs('Deposit for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber());
 
                     var txExists = addTransaction(log, log.args.from, newDocument.address, log.args.value.toString(10));
@@ -295,6 +319,11 @@ var setupContractFilters = function(newDocument, checkFromCreationBlock){
                     }
                 }
                 if(log.event === 'SingleTransact' || log.event === 'MultiTransact') {
+                    if(log.removed) {
+                        Transactions.remove({_id: Helpers.makeId('tx', log.transactionHash)});
+                        return;
+                    }
+                    
                     Helpers.eventLogs(log.event +' for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber());
 
                     var txExists = addTransaction(log, newDocument.address, log.args.to, log.args.value.toString(10));
@@ -394,18 +423,12 @@ var setupContractFilters = function(newDocument, checkFromCreationBlock){
                 if(log.event === 'OwnerAdded') {
                     Helpers.eventLogs('OwnerAdded for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
 
-                    // re-add owner from log
-                    Wallets.update(newDocument._id, {$addToSet: {
-                        owners: log.args.newOwner
-                    }});
+                    checkOwner(newDocument);
                 }
                 if(log.event === 'OwnerRemoved') {
                     Helpers.eventLogs('OwnerRemoved for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
 
-                    // re-add owner from log
-                    Wallets.update(newDocument._id, {$pull: {
-                        owners: log.args.oldOwner
-                    }});
+                    checkOwner(newDocument);
                 }
                 if(log.event === 'RequirementChanged') {
                     Helpers.eventLogs('RequirementChanged for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
@@ -659,7 +682,9 @@ observeWallets = function(){
         */
         changed: function(newDocument, oldDocument){
             // checkWalletConfirmations(newDocument, oldDocument);
-            updateContractData(newDocument);
+
+            if(newDocument.transactions != oldDocument.transactions)
+                updateContractData(newDocument);
         },
         /**
         Stop filters, when accounts are removed

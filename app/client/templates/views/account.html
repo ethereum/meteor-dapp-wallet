@@ -1,5 +1,8 @@
 <template name="views_account">
     {{#with account}}
+
+        {{addressChanged}}
+
         <div class="dapp-container accounts-page">
 
             <div class="dapp-sticky-bar dapp-container">
@@ -161,11 +164,24 @@
                     {{> elements_transactions_table ids=transactions account=_id}}
                 {{/if}}
 
-                {{#if contractEvents}}
+                {{#with customContract}}
                     <h2>{{i18n 'wallet.events.latest'}}</h2>
+                    <br>
+                    
+                    <div>
+                        <input type="checkbox" id="watch-events-checkbox" name="watch-events-checkbox" class="toggle-watch-events" checked="{{TemplateVar.get 'watchEvents'}}">
 
+                        <label for="watch-events-checkbox">{{i18n "wallet.contracts.buttons.watchContractEvents"}}</label>
+                    </div>
+
+                    {{#if (TemplateVar.get "watchEvents")}}
+                        <div class="watch-events-spinner">
+                            {{> spinner}}
+                        </div>
+                    {{/if}}
+            
                     {{> elements_event_table ids=contractEvents}}
-                {{/if}}
+                {{/with}}
             </div>
         </div>
     {{/with}}

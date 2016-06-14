@@ -299,6 +299,7 @@
             "buttons": {
                 "showContractInfo": "Arata informatii despre contract",
                 "hideContractInfo": "Ascunde informatii despre contract",
+                "watchContractEvents": "Uita-te la evenimente de contract",
                 "execute": "Executa",
                 "yes": "Da"
             },

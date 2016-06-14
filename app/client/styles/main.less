@@ -375,6 +375,18 @@ body {
         }
     }
 
+    .accounts-transactions {
+        .watch-events-spinner .spinner-container {
+            position: relative;
+            height: 50px;
+
+            .spinner {
+                left: 3% !important;
+                top: 80% !important;
+            }
+        }
+    }
+
     .accounts-transactions,
     .execute-contract {
         flex: 1 100%;
@@ -443,6 +455,11 @@ body {
     .account-balance {
         font-size: 1.6em;
         color: @colorTextSecondary;
+    }
+
+    input[type='checkbox'] {
+        float: left; 
+        margin-right: @defaultMargin/2;
     }
 }
 
@@ -717,10 +734,6 @@ body {
 
 
 .execute-contract {
-    input[type='checkbox'] {
-        float: left; 
-        margin-right: @defaultMargin/2;
-    }
 
     h4, dt {
         text-transform: lowercase;

@@ -4,9 +4,83 @@ Template Controllers
 @module Templates
 */
 
+/**
+Watches custom events
+
+@param {Object} newDocument  the account object with .jsonInterface
+*/
+var addLogWatching = function(newDocument){
+    var contractInstance = web3.eth.contract(newDocument.jsonInterface).at(newDocument.address);
+    var blockToCheckBack = (newDocument.checkpointBlock || 0) - ethereumConfig.rollBackBy;
+    
+    if(blockToCheckBack < 0)
+        blockToCheckBack = 0;
+
+    console.log('EVENT LOG:  Checking Custom Contract Events for '+ newDocument.address +' (_id: '+ newDocument._id + ') from block # '+ blockToCheckBack);
+
+    // delete the last logs until block -500
+    _.each(Events.find({_id: {$in: newDocument.contractEvents || []}, blockNumber: {$exists: true, $gt: blockToCheckBack}}).fetch(), function(log){
+        if(log)
+            Events.remove({_id: log._id});
+    });
+
+    var filter = contractInstance.allEvents({fromBlock: blockToCheckBack, toBlock: 'latest'});
+    
+    // get past logs, to set the new blockNumber
+    var currentBlock = EthBlocks.latest.number;
+    filter.get(function(error, logs) {
+        if(!error) {
+            // update last checkpoint block
+            CustomContracts.update({_id: newDocument._id}, {$set: {
+                checkpointBlock: (currentBlock || EthBlocks.latest.number) - ethereumConfig.rollBackBy
+            }});
+        }
+    });
+
+    filter.watch(function(error, log){
+        if(!error) {
+            var id = Helpers.makeId('log', web3.sha3(log.logIndex + 'x' + log.transactionHash + 'x' + log.blockHash));
+
+            if(log.removed) {
+                Events.remove(id);
+            } else {
+
+                _.each(log.args, function(value, key){
+                    // if bignumber
+                    if((_.isObject(value) || value instanceof BigNumber) && value.toFormat) {
+                        value = value.toString(10);
+                        log.args[key] = value;
+                    }
+                });
+
+                // store right now, so it could be removed later on, if removed: true
+                Events.upsert(id, log);
+
+                // update events timestamp
+                web3.eth.getBlock(log.blockHash, function(err, block){
+                    if(!err) {
+                        Events.update(id, {$set: {timestamp: block.timestamp}});
+                    }
+                });
+            }
+        }
+    });
+
+    return filter;
+};
+
 
 Template['views_account'].onRendered(function(){
-       console.timeEnd('renderAccountPage');
+    console.timeEnd('renderAccountPage');
+});
+
+Template['views_account'].onDestroyed(function(){
+    // stop watching custom events, on destroy
+    if(this.customEventFilter) {
+        this.customEventFilter.stopWatching();
+        this.customEventFilter = null;
+        TemplateVar.set('watchEvents', false);
+    }
 });
 
 Template['views_account'].helpers({
@@ -17,6 +91,22 @@ Template['views_account'].helpers({
     */
     'account': function() {
         return Helpers.getAccountByAddress(FlowRouter.getParam('address'));
+    },
+    /**
+    Run this helper, if the address changed
+
+    @method (addressChanged)
+    */
+    addressChanged: function(){
+        var address = this.address
+            template = Template.instance();
+
+        // stop watching custom events, on destroy
+        if(template.customEventFilter) {
+            template.customEventFilter.stopWatching();
+            template.customEventFilter = null;
+            TemplateVar.set('watchEvents', false);
+        }
     },
     /**
     Get the current jsonInterface, or use the wallet jsonInterface
@@ -95,12 +185,10 @@ Template['views_account'].helpers({
     /**
     Gets the contract events if available
 
-    @method (contractEvents)
+    @method (customContract)
     */
-    'contractEvents': function(){
-        var customContract = CustomContracts.findOne({address: this.address.toLowerCase()});
-
-        return customContract ? customContract.contractEvents : null;
+    'customContract': function(){
+        return CustomContracts.findOne({address: this.address.toLowerCase()});
     }
 });
 
@@ -285,5 +373,20 @@ Template['views_account'].events({
                 jsonInterface: cleanJsonInterface
             }
         });   
+    },
+    /**
+    Click watch contract events
+    
+    @event click button.toggle-watch-events
+    */
+    'change .toggle-watch-events': function(e, template){
+        if(template.customEventFilter) {
+            template.customEventFilter.stopWatching();
+            template.customEventFilter = null;
+            TemplateVar.set('watchEvents', false);
+        } else {
+            template.customEventFilter = addLogWatching(this);
+            TemplateVar.set('watchEvents', true);
+        }
     }
 });
