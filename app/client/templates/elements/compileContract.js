@@ -21,6 +21,8 @@ Template['elements_compileContract'].onCreated(function() {
     TemplateVar.set('value', '');
     TemplateVar.set('constructorInputs', []);
     TemplateVar.set('selectedType', this.data.onlyByteCode ? 'byte-code' : 'source-code');
+    TemplateVar.set('compiledContracts', JSON.parse(localStorage['compiledContracts'])  || null);
+    TemplateVar.set('selectedContract', JSON.parse(localStorage['selectedContract'])  || null);
 
     // focus the editors
     this.autorun(function(c) {
@@ -54,6 +56,10 @@ Template['elements_compileContract'].onCreated(function() {
         // generate new contract code
         TemplateVar.set('value', web3.eth.contract(selectedContract.jsonInterface).new.getData.apply(null, constructorInputs));
         TemplateVar.set('contract', selectedContract);
+
+        // Save data to localstorage
+        localStorage.setItem('selectedContract', JSON.stringify(selectedContract));
+
     });
 });
 
@@ -73,7 +79,7 @@ Template['elements_compileContract'].onRendered(function() {
     this.aceEditor.$blockScrolling = Infinity;
     this.aceEditor.focus();
 
-    var defaultCode = localStorage['saved_contract'] || "contract MyContract {\n    /* Constructor */\n    function MyContract() {\n \n    }\n}";
+    var defaultCode = localStorage['contractSource'] || "contract MyContract {\n    /* Constructor */\n    function MyContract() {\n \n    }\n}";
 
     this.aceEditor.setValue(defaultCode);
     this.aceEditor.selection.selectTo(0);
@@ -84,12 +90,10 @@ Template['elements_compileContract'].onRendered(function() {
     this.aceEditor.getSession().on('change', _.debounce(function(e) {
         var sourceCode = template.aceEditor.getValue();
 
-        localStorage.setItem('saved_contract', sourceCode);
+        localStorage.setItem('contractSource', sourceCode);
 
         TemplateVar.set(template, 'compiling', true);
         TemplateVar.set(template, 'compileError', false);
-        // TemplateVar.set(template, 'compiledContracts', false);
-        // TemplateVar.set(template, 'selectedContract', false);
 
         Meteor.setTimeout(function(argument) {
             web3.eth.compile.solidity(sourceCode, function(error, compiledContracts){
@@ -132,7 +136,8 @@ Template['elements_compileContract'].onRendered(function() {
 
                     TemplateVar.set(template, 'selectedContract', null);
                     TemplateVar.set(template, 'compiledContracts', compiledContracts);
-                    TemplateVar.set(template, 'constructorInputs', []);
+                    localStorage.setItem('compiledContracts', JSON.stringify(compiledContracts));
+
 
                 } else {
                     console.log(error);
@@ -178,7 +183,7 @@ Template['elements_compileContract'].helpers({
     @method (selectedContractInputs)
     */
     'selectedContractInputs' : function(){
-        selectedContract = TemplateVar.get('selectedContract');
+        selectedContract = TemplateVar.get('selectedContract');        
         return selectedContract ? selectedContract.constructorInputs : [];
     }
 });
@@ -217,13 +222,24 @@ Template['elements_compileContract'].events({
     @event 'change .contract-functions
     */
     'change .compiled-contracts': function(e, template){
+        // set a contract as selected
+        var compiledContracts = TemplateVar.get('compiledContracts');
+
+        _.each(compiledContracts, function(contract){
+            contract.selected = contract.name == e.currentTarget.value;
+        })
+
         // get the correct contract
-        var selectedContract = _.find(TemplateVar.get('compiledContracts'), function(contract){
-            return contract.name == e.currentTarget.value;
+        var selectedContract = _.find(compiledContracts, function(contract){
+            return contract.selected;
         })
 
         // change the inputs and data field
         TemplateVar.set('selectedContract', selectedContract);
+        TemplateVar.set('compiledContracts', compiledContracts);
+        localStorage.setItem('compiledContracts', JSON.stringify(compiledContracts));
+
+        console.log(compiledContracts);
 
         Tracker.afterFlush(function(){
             // Run all inputs through formatter to catch bools
