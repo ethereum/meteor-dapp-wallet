@@ -299,6 +299,7 @@
             "buttons": {
                 "showContractInfo": "顯示契約資訊",
                 "hideContractInfo": "隱藏契約資訊",
+                "watchContractEvents": "看合同事件",
                 "execute": "執行",
                 "yes": "是"
             },
