@@ -141,6 +141,16 @@ body {
     }
 }
 
+.drag-bar {
+    z-index: 31;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    pointer-events: none;
+    -webkit-app-region: drag; // necessary to drag the wallet window
+}
 
 .dapp-header {
     padding-right: @gridWidth * 2.5;
