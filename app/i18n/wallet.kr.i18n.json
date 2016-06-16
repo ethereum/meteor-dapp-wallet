@@ -304,6 +304,7 @@
             "buttons": {
                 "showContractInfo": "컨트랙트 정보 보기",
                 "hideContractInfo": "컨트랙트 정보 감추기",
+                "watchContractEvents": "계약 이벤트를보기",
                 "execute": "실행",
                 "yes": "예"
             },

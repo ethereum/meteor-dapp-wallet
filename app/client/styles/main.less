@@ -141,13 +141,23 @@ body {
     }
 }
 
+.drag-bar {
+    z-index: 31;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    pointer-events: none;
+    -webkit-app-region: drag; // necessary to drag the wallet window
+}
 
 .dapp-header {
-    padding-right: @gridWidth * 2;
-    padding-left: @gridWidth * 2;
+    padding-right: @gridWidth * 2.5;
+    padding-left: @gridWidth * 2.5;
     background-color: @colorWinBackgroundFocus;
+    -webkit-app-region: drag; // necessary to drag the wallet window
     .background-image(linear-gradient(to bottom,  @colorWinBackgroundFocus 50%, #ddd9d9 90%));
-    
 
     &.dapp-small {
         z-index: 30;
@@ -180,6 +190,8 @@ body {
 
     &.dapp-full-header {
         padding-top: @gridHeight * 4.5;
+        padding-right: @gridWidth * 0.5;
+        padding-left: @gridWidth * 0.5;
     }
 
     nav ul a.active {
@@ -375,6 +387,18 @@ body {
         }
     }
 
+    .accounts-transactions {
+        .watch-events-spinner .spinner-container {
+            position: relative;
+            height: 50px;
+
+            .spinner {
+                left: 3% !important;
+                top: 80% !important;
+            }
+        }
+    }
+
     .accounts-transactions,
     .execute-contract {
         flex: 1 100%;
@@ -443,6 +467,11 @@ body {
     .account-balance {
         font-size: 1.6em;
         color: @colorTextSecondary;
+    }
+
+    input[type='checkbox'] {
+        float: left; 
+        margin-right: @defaultMargin/2;
     }
 }
 
@@ -717,10 +746,6 @@ body {
 
 
 .execute-contract {
-    input[type='checkbox'] {
-        float: left; 
-        margin-right: @defaultMargin/2;
-    }
 
     h4, dt {
         text-transform: lowercase;

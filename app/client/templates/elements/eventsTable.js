@@ -44,12 +44,14 @@ Template['elements_event_table'].helpers({
     @return {Object} The items cursor
     */
     'items': function(){
+
         var template = Template.instance(),
             items = [],
+            ids = this.ids || [],
             searchQuery = TemplateVar.get('search'),
             limit = TemplateVar.get('limit'),
             collection = Events,
-            selector = this.ids ? {_id: {$in: this.ids.slice(Number((limit+50)*-1))}} : {}; 
+            selector = {_id: {$in: ids.slice(Number((limit+50)*-1))}}; 
             // slice(limit) prevents loading too many objects at once and slowing the machine
         
         // if search
