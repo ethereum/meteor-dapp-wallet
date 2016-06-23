@@ -522,34 +522,43 @@ table {
 }
 
 .account-page-notification {
-    text-align: center;
-    background: @colorError;
-    padding: @defaultPaddingHorizontal;
-    font-size: 120%;
+    .transition(opacity @animationSpeed * 2);
 
-    a {
-        color: @colorWhite;
-        strong { 
-            display: inline-block;
+    .row {
+        text-align: center;
+        background: @colorError;
+        padding: @defaultPaddingHorizontal;
+        font-size: 120%;
+
+        a {
+            color: @colorWhite;
+            strong { 
+                display: inline-block;
+            }
+        } 
+
+        &:hover {
+            background: lighten(@colorError, 10%);
+        }       
+    }
+  
+    a.learn-more-link {
+        display: block;
+        padding-top: @gridHeight;
+        color: @colorError;
+        text-align: center;
+        font-weight: 400;
+
+        &:hover {
+            cursor: pointer;
+            text-decoration: underline;
         }
-    } 
-
-    &:hover {
-        background: lighten(@colorError, 10%);
-    }
+    }  
 }
 
-a.learn-more-link {
-    display: block;
-    padding-top: @gridHeight;
-    color: @colorError;
-    text-align: center;
-    font-weight: 400;
-
-    &:hover {
-        cursor: pointer;
-        text-decoration: underline;
-    }
+.sticky + div .account-page-notification {
+    opacity: 0;
 }
+
 
 

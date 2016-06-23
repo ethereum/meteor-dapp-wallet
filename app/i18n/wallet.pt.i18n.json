@@ -35,9 +35,7 @@
                 "noAccounts": {
                     "title": "Você ainda não tem contas",
                     "text": "Crie ao menos uma conta com uma senha segura."
-                },
-                "pleaseUpgrade": "This smart contract wallet has outdated code with a known vulnerability. <strong> Upgrade your contract now </strong>",
-                "learnMore": "Learn more about this vulnerability"
+                }
             },
             "error": {
                 "wrongChain": "Você está na rede errada. Por favor reinicie esse aplicativo."
