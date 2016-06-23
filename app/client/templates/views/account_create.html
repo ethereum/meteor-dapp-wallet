@@ -6,7 +6,7 @@
 
         <input type="text" name="accountName" value="{{name}}" placeholder="{{i18n 'wallet.newWallet.accountName'}}" autofocus="true">
 
-        <h2>{{i18n 'wallet.newWallet.selectOwner'}}</h2>
+        <h2>{{i18n 'wallet.newWallet.deployFrom'}}</h2>
 
         {{> dapp_selectAccount accounts=ownerAccounts value=defaultOwner}}
 
@@ -41,8 +41,10 @@
 
                     <h4>{{i18n 'wallet.newWallet.accountType.multisig.accountOwnersTitle'}}</h4>
 
-                    {{> dapp_addressInput placeholder=i18nOwnerAddress class="owners" value=selectedOwner disabled=true}}
-
+                    {{#unless name}}
+                        {{> dapp_addressInput placeholder=i18nOwnerAddress class="owners" value=selectedOwner disabled=true}}
+                    {{/unless}}
+                    
                     {{#each signees}}
                         {{> dapp_addressInput placeholder=i18nOwnerAddress class="owners" value=(toChecksumAddress this)}}
                     {{/each}}
