@@ -76,22 +76,6 @@ Template['views_account_create'].helpers({
         return TemplateVar.get('selectedSection') === section;
     },
     /**
-    Return the number of signees
-
-    @method (multisigSigneesValue)
-    */
-    'multisigSigneesValue': function(section){
-        return TemplateVar.get('multisigSignees');
-    },
-    /**
-    Return the number of signees
-
-    @method (multisigSignaturesValue)
-    */
-    'multisigSignaturesValue': function(section){
-        return TemplateVar.get('multisigSignatures');
-    },
-    /**
     Pick a default owner for the wallet
     @method (defaultOwner)
     @return (string)
@@ -204,7 +188,8 @@ Template['views_account_create'].helpers({
         var signees = TemplateVar.get('multisigSignees');
         var returnArray = []
         
-        for (i = 2; i<signees+1; i++) {
+
+        for (i = 2; i<=signees; i++) {
             returnArray.push({value:i, text:i});
         }
 
