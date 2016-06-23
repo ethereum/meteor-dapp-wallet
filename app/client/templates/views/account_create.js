@@ -119,12 +119,14 @@ Template['views_account_create'].helpers({
     @return {Array} e.g. [1,2,3,4]
     */
     'signees': function(){
-        if (FlowRouter.getQueryParam('owners')) {
-            var owners = FlowRouter.getQueryParam('owners').split('_').slice(0, TemplateVar.get('multisigSignees'));
-        } else {
-            var owners = _.range(TemplateVar.get('multisigSignees') - 1);
-        }
+        var owners = [];
 
+        if (FlowRouter.getQueryParam('owners')) {
+            owners = FlowRouter.getQueryParam('owners').split('_').slice(0, TemplateVar.get('multisigSignees'));
+        } 
+        
+        owners = owners.concat(_.range(TemplateVar.get('multisigSignees') - 1 - owners.length));
+        
         if (TemplateVar.get('multisigSignatures') > TemplateVar.get('multisigSignees')) {
             TemplateVar.set('multisigSignatures', TemplateVar.get('multisigSignees'));
         }
