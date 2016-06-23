@@ -360,15 +360,18 @@ Takes a camelcase and shows it with spaces
 
 @method toSentence
 @param {string} camelCase    A name in CamelCase or snake_case format
-@return {string} sentence    The same name with spaces
+@return {string} sentence    The same name, sanitized, with spaces
 **/
 Helpers.toSentence = function (inputString, noHTML) {
     if (typeof inputString == 'undefined') 
-        return false;
-    else if (noHTML === true) // only consider explicit true
-        return inputString.replace(/([A-Z]+|[0-9]+)/g, ' $1')
-    else 
-        return inputString.replace(/([A-Z]+|[0-9]+)/g, ' $1').replace(/([\_])/g, '<span class="dapp-punctuation">$1</span>');
+      return false;
+    else {
+    	inputString = inputString.replace(/[^a-zA-Z0-9_]/g, '');
+      if (noHTML === true) // only consider explicit true
+        return inputString.replace(/([A-Z]+|[0-9]+)/g, ' $1').trim();
+      else 
+        return inputString.replace(/([A-Z]+|[0-9]+)/g, ' $1').trim().replace(/([\_])/g, '<span class="dapp-punctuation">$1</span>');
+    }
 }
 
 
