@@ -40,7 +40,8 @@
                 "wrongChain": "Se pare ca esti in alta retea, te rog reporneste portofelul!"
             },
             "warnings": {
-                "txOriginVulnerabilityWallet": "Acest portofel contract de inteligent are cod de depășit și este subiectul unor atacuri de tip phishing. <strong> Actualizați contractul acum </strong> și transferați toate fondurile pe unul nou.",
+                "txOriginVulnerabilityWallet": "Acest portofel contract de inteligent are cod de depășit și este subiectul unor atacuri de tip phishing.",
+                "txOriginVulnerabilityCallToAction":"Actualizați contractul acum și transferați toate fondurile pe unul nou.",
                 "txOriginVulnerabilityAccount": "Acest cont este un proprietar al unui contract de portofel vulnerabil și utilizând acest cont pe contractele rău intenționate pot pune în pericol fondurile portofele. Upgrade de portofel înainte de a face orice tranzacții cu acest cont.",
                 "txOriginVulnerabilityPopup": "Am gasit portofele vulnerabile! Asigurați-vă că pentru a implementa noi portofele și pentru a muta fonduri!",
                 "learnMore": "Aflați mai multe despre această vulnerabilitate"

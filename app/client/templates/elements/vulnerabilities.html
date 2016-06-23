@@ -11,7 +11,10 @@
                     {{pathFor route='account' address=walletAddress}}
                 {{/if}}">
                 {{#if owners}}
-                    {{{i18n "wallet.app.warnings.txOriginVulnerabilityWallet"}}}
+                    {{i18n "wallet.app.warnings.txOriginVulnerabilityWallet"}}
+                    {{#unless (isWatchOnly _id)}}
+                    <br><strong>{{i18n "wallet.app.warnings.txOriginVulnerabilityCallToAction"}}</strong>
+                    {{/unless}}
                 {{else}}
                     {{i18n "wallet.app.warnings.txOriginVulnerabilityAccount"}}
                 {{/if}}

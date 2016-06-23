@@ -40,7 +40,8 @@
                 "wrongChain": "間違ったチェーン上にいます。Ethereum Wallet App を再起動して下さい。"
             },
             "warnings": {
-                "txOriginVulnerabilityWallet": "このスマート契約財布は、古いコードを持っており、フィッシング攻撃の対象となります。 <strong> の今、あなたの契約をアップグレードして、あなたの新しいものにすべての資金を移します。</strong>",
+                "txOriginVulnerabilityWallet": "このスマート契約財布は、古いコードを持っており、フィッシング攻撃の対象となります。",
+                "txOriginVulnerabilityCallToAction": "の今、あなたの契約をアップグレードして、あなたの新しいものにすべての資金を移します。",
                 "txOriginVulnerabilityAccount": "このアカウントは、脆弱財布契約の所有者であると悪質な契約にこのアカウントを使用して、あなたの財布の資金を危険にさらすことができます。このアカウントですべてのトランザクションを実行する前に、あなたの財布をアップグレードします。",
                 "txOriginVulnerabilityPopup": "私たちは、脆弱な財布を見つけました！新しい財布を展開し、資金を移動することを確認してください！",
                 "learnMore": "この脆弱性の詳細情報"
