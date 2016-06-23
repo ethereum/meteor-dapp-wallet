@@ -1,7 +1,7 @@
 <template name="elements_vulnerabilities_txorigin">
     <div class="row clear account-page-notification">
         <div class="row clear">
-            <a href="{{pathFor route='createAccount' query=upgradeParams}}">
+            <a href="{{#if owners}}{{pathFor route='createAccount' query=upgradeParams}}{{else}}{{pathFor route='account' address=walletAddress}}{{/if}}">
                 {{#if owners}}
                     {{{i18n "wallet.app.warnings.txOriginVulnerabilityWallet"}}}
                 {{else}}
