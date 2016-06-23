@@ -56,11 +56,20 @@ var checkForVulnerableWallet = function(wallet){
                     return regEx.test(code);
                 });
 
-                if(vulnerableFull || vulnerableStub || vulnerableStubDynamic)
+                if(vulnerableFull || vulnerableStub || vulnerableStubDynamic){
                     vulnerable = true;
 
-                // console.log('VULNERABLE '+ wallet.address, vulnerable);
-                // console.log('Vulns', vulnerableFull, vulnerableStub, vulnerableStubDynamic);
+                    EthElements.Modal.question({
+                        text: TAPi18n.__('wallet.app.warnings.txOriginVulnerabilityPopup'),
+                        ok: function(){
+                            FlowRouter.go('/account/'+ wallet.address)
+                        },
+                        cancel: true,
+                        modalQuestionOkButtonText: TAPi18n.__('wallet.app.warnings.checkThisNow'),
+                        modalQuestionCancelButtonText: TAPi18n.__('wallet.app.warnings.checkThisLater')
+
+                    }, {closeable: false});
+                }
 
                 // update wallet contract
                 Wallets.update(wallet._id, {$set: {
@@ -68,18 +77,6 @@ var checkForVulnerableWallet = function(wallet){
                         'txorigin': vulnerable
                     }
                 }});
-
-                // show warning popup
-                EthElements.Modal.question({
-                    text: TAPi18n.__('wallet.app.warnings.txOriginVulnerabilityPopup'),
-                    ok: function(){
-                        FlowRouter.go('/account/'+ wallet.address)
-                    },
-                    cancel: true,
-                    modalQuestionOkButtonText: TAPi18n.__('wallet.app.warnings.checkThisNow'),
-                    modalQuestionCancelButtonText: TAPi18n.__('wallet.app.warnings.checkThisLater')
-
-                }, {closeable: false});
             }
         }
     });
