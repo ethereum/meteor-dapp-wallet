@@ -64,7 +64,7 @@
 <template name="elements_executeContract_constant">
     <tr>
         <td>
-            <h3>{{toSentence name true}}</h3>
+            <h3>{{{toSentence name}}}</h3>
             {{#each inputs}}
                 {{> Template.dynamic template=template}}
             {{/each}}
@@ -75,7 +75,7 @@
             <dl class="constant-{{name}} dapp-zebra">
             {{#each (TemplateVar.get "outputs")}}
                 {{#if name}}
-                    <dt>{{toSentence name true}}</dt>
+                    <dt>{{{toSentence name}}}</dt>
                 {{/if}}
                 <dd class="output">
                     {{#each value}}
