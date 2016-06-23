@@ -12,8 +12,6 @@ The account create template
 */
 
 Template['views_account_create'].onCreated(function(){
-    console.log('params', FlowRouter.getQueryParam('ownersNum'));
-
     TemplateVar.set('selectedSection', Number(FlowRouter.getQueryParam('ownersNum'))>0? 'multisig' : 'simple');
 
     // number of owners of the account
@@ -93,19 +91,26 @@ Template['views_account_create'].helpers({
     @return (string)
     */
     'defaultOwner': function() {
-        var owners = FlowRouter.getQueryParam('owners').split('_');
-
         // Load the accounts owned by user and sort by balance
         var accounts = EthAccounts.find({name: {$exists: true}}, {sort: {name: 1}}).fetch();
-        accounts.sort(Helpers.sortByBalance);
+        accounts.sort(Helpers.sortByBalance);        
 
-        // Looks for them among the wallet account owner
-        var defaultAccount = _.find(accounts, function(acc){
-           return (owners.indexOf(acc.address)>=0);
-        })
+        if (FlowRouter.getQueryParam('owners')) {
+            var owners = FlowRouter.getQueryParam('owners').split('_');
 
-        TemplateVar.set('defaultOwner', defaultAccount.address)
-        return defaultAccount.address;
+            // Looks for them among the wallet account owner
+            var defaultAccount = _.find(accounts, function(acc){
+               return (owners.indexOf(acc.address)>=0);
+            })
+
+            TemplateVar.set('defaultOwner', defaultAccount.address)
+            return defaultAccount.address;
+
+        } else {
+            return accounts[0].address;
+        }
+
+        
     },
     /**
     Return the number of signees fields
@@ -114,18 +119,17 @@ Template['views_account_create'].helpers({
     @return {Array} e.g. [1,2,3,4]
     */
     'signees': function(){
-        var owners = FlowRouter.getQueryParam('owners').split('_');
-        owners = _.without(owners, TemplateVar.get('defaultOwner'));
-
-        console.log(owners, _.range(TemplateVar.get('multisigSignees') - 1));
-
-        if (owners.length > 0) return owners;
-
-        if ((TemplateVar.get('multisigSignatures')+1) > TemplateVar.get('multisigSignees')) {
-            TemplateVar.set('multisigSignees', TemplateVar.get('multisigSignatures'));
+        if (FlowRouter.getQueryParam('owners')) {
+            var owners = FlowRouter.getQueryParam('owners').split('_').slice(0, TemplateVar.get('multisigSignees'));
+        } else {
+            var owners = _.range(TemplateVar.get('multisigSignees') - 1);
         }
 
-        return _.range(TemplateVar.get('multisigSignees') - 1);
+        if (TemplateVar.get('multisigSignatures') > TemplateVar.get('multisigSignees')) {
+            TemplateVar.set('multisigSignatures', TemplateVar.get('multisigSignees'));
+        }
+
+        return owners;        
     },
     /**
     Translates to 'owner address'
@@ -175,7 +179,7 @@ Template['views_account_create'].helpers({
     @method (multisigSignees)
     */
     'multisigSignees': function() {
-        var maxOwners = Number(FlowRouter.getQueryParam('ownersNum')) || 7;
+        var maxOwners = Math.max(Number(FlowRouter.getQueryParam('ownersNum')) || 7, 7);
         var returnArray = [];
         for (i = 2; i<=maxOwners; i++) {
             returnArray.push({value:i, text:i});
@@ -191,7 +195,7 @@ Template['views_account_create'].helpers({
         var signees = TemplateVar.get('multisigSignees');
         var returnArray = []
         
-        for (i = 2; i<=signees; i++) {
+        for (i = 2; i<signees+1; i++) {
             returnArray.push({value:i, text:i});
         }
 
