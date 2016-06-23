@@ -42,11 +42,7 @@
             },
             "warnings": {
                 "txOriginVulnerabilityWallet": "This smart contract wallet has outdated code and is subject to phishing attacks. <strong> Upgrade your contract now </strong> and transfer all your funds to your new one.",
-<<<<<<< HEAD
                 "txOriginVulnerabilityAccount": "This account is an owner of a vulnerable wallet contract and using this account on malicious contracts can endanger your wallets funds. Upgrade your wallet before doing any transactions with this account.",
-=======
-                "txOriginVulnerabilityAccount": "This account is an owner of a vulnerable wallet contract. Using this account on malicious contracts can endanger your wallets funds!",
->>>>>>> b1b454fb66a1ec67abcbee696e5496237575f339
                 "txOriginVulnerabilityPopup": "We found vulnerable wallets! Make sure to deploy new wallets and move the funds!",
                 "learnMore": "Learn more about this vulnerability"
             }
