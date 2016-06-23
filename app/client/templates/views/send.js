@@ -30,10 +30,10 @@ var checkOverDailyLimit = function(address, wei, template){
     // check if under or over dailyLimit
     account = Helpers.getAccountByAddress(address);
 
-    // check whats left
-    var restDailyLimit = new BigNumber(account.dailyLimit || '0', 10).minus(new BigNumber(account.dailyLimitSpent || '0', 10));
-
     if(account && account.requiredSignatures > 1 && !_.isUndefined(account.dailyLimit) && account.dailyLimit !== ethereumConfig.dailyLimitDefault && Number(wei) !== 0) {
+        // check whats left
+        var restDailyLimit = new BigNumber(account.dailyLimit || '0', 10).minus(new BigNumber(account.dailyLimitSpent || '0', 10));
+
         if(restDailyLimit.lt(new BigNumber(wei, 10)))
             TemplateVar.set('dailyLimitText', new Spacebars.SafeString(TAPi18n.__('wallet.send.texts.overDailyLimit', {limit: EthTools.formatBalance(restDailyLimit.toString(10)), total: EthTools.formatBalance(account.dailyLimit), count: account.requiredSignatures - 1})));
         else
@@ -230,24 +230,30 @@ Template['views_send'].helpers({
     @method (isVulnerable)
     */
     'isVulnerable': function(){
-        // check if is wallet and is vulnerable
-        var vulnerable = !!_.find(this.vulnerabilities || [], function(vul){
-            return vul;
-        });
+        var selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account', 'value'));
 
-        if(vulnerable)
-            return vulnerable;
+        console.log('SEL',selectedAccount);
+
+        if(!selectedAccount)
+            return;
+
+        // check if is wallet and is vulnerable
+        if(_.find(selectedAccount.vulnerabilities || [], function(vul){
+            return vul;
+        })) {
+            return selectedAccount;
+        }
 
         // check if is owner account and is vulnerable
-        var address = this.address;
+        var vulnerable;
         var wallets = _.map(Wallets.find({vulnerabilities: {$exists: true}}).fetch(), function(wal){
             return (!!_.find(wal.vulnerabilities || [], function(vul){
                 return vul;
             }))
                 ? wal : false;
         });
-        return !!_.find(wallets, function(wal){
-            return _.contains(wal.owners, address);
+        return _.find(wallets, function(wal){
+            return _.contains(wal.owners, selectedAccount.address);
         });
     },
     /**

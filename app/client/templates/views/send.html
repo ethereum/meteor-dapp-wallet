@@ -18,9 +18,9 @@
 
                 {{> dapp_selectAccount accounts=selectAccounts showAccountTypes=true}}
 
-                {{#with selectedAccount}}
-                    {{#if isVulnerable}}
-                        VULNERABLK!
+                {{#with isVulnerable}}
+                    {{#if vulnerabilities.txorigin}}
+                        {{> elements_vulnerabilities_txorigin}}
                     {{/if}}
                 {{/with}}
             </div>
