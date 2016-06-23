@@ -182,7 +182,7 @@
         "newWallet": {
             "title": "Portofel <strong>Nou</strong>",
             "accountName": "Numele portofelului",
-            "deployFrom": "Deploy from this account",
+            "selectOwner": "Selecteaza detinatorul",
             "accountType": {
                 "title": "Tipul portofelului",
                 "simple": {

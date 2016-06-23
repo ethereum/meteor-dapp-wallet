@@ -184,7 +184,7 @@
         "newWallet": {
             "title": "Neuer <strong>Wallet-Vertrag</strong>",
             "accountName": "Wallet-Vertragsname",
-            "deployFrom": "Bereitstellen von diesem Konto",
+            "selectOwner": "Eigentümer auswählen",
             "accountType": {
                 "title": "Wallet-Vertragstyp",
                 "simple": {

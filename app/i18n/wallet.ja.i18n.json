@@ -182,7 +182,7 @@
         "newWallet": {
             "title": "新しい <strong>ウォレットコントラクト</strong>",
             "accountName": "ウォレットコントラクト名",
-            "deployFrom": "このアカウントから展開します",
+            "selectOwner": "オーナーを選択",
             "accountType": {
                 "title": "ウォレットコントラクトの種類",
                 "simple": {

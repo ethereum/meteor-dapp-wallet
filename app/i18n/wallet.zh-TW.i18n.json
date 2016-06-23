@@ -184,7 +184,7 @@
         "newWallet": {
             "title": "新<strong>錢包契約</strong>",
             "accountName": "錢包契約名稱",
-            "deployFrom": "Deploy from this account",
+            "selectOwner": "選擇擁有者",
             "accountType": {
                 "title": "錢包契約類型",
                 "simple": {

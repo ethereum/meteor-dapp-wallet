@@ -129,13 +129,14 @@ Template['views_account_create'].helpers({
 
         if (FlowRouter.getQueryParam('owners')) {
             owners = FlowRouter.getQueryParam('owners').split('_').slice(0, TemplateVar.get('multisigSignees'));
+            owners = _.without(owners, TemplateVar.getFrom('.dapp-select-account', 'value'));
         } 
         
         owners = owners.concat(_.range(TemplateVar.get('multisigSignees') - 1 - owners.length));
-        
+
         if (TemplateVar.get('multisigSignatures') > TemplateVar.get('multisigSignees')) {
             TemplateVar.set('multisigSignatures', TemplateVar.get('multisigSignees'));
-        }
+        }        
 
         return owners;        
     },

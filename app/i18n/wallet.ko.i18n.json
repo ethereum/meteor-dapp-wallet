@@ -187,7 +187,7 @@
         "newWallet": {
             "title": "신규 <strong>지갑 컨트랙트</strong>",
             "accountName": "지갑 컨트랙트 이름",
-            "deployFrom": "이 계정에서 배포",
+            "selectOwner": "소유자를 선택하세요",
             "accountType": {
                 "title": "지갑 컨트랙트 유형",
                 "simple": {

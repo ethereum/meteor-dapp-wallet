@@ -189,7 +189,7 @@
         "newWallet": {
             "title": "Nova <strong>Carteira</strong>",
             "accountName": "Nome da carteira",
-            "deployFrom": "Envie dessa conta",
+            "selectOwner": "Administrador",
             "accountType": {
                 "title": "Tipo de carteira",
                 "simple": {
