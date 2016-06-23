@@ -650,7 +650,7 @@ observeWallets = function(){
                         console.log('Deploying Wallet with following options', newDocument);
 
                         WalletContract.new(newDocument.owners, newDocument.requiredSignatures, (newDocument.dailyLimit || ethereumConfig.dailyLimitDefault), {
-                            from: newDocument.owners[0],
+                            from: newDocument.deployFrom,
                             data: newDocument.code,
                             gas: 3000000,
 
