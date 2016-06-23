@@ -299,11 +299,13 @@ Template['views_account_create'].events({
     'submit': function(e, template){
         var code = walletStubABI; // walletStubABI 184 280 walletABI ~1 842 800
         var type = TemplateVar.get('selectedSection');
+        var deployFrom = template.find('select[name="dapp-select-account"]').value.toLowerCase();
 
         // SIMPLE
         if(type === 'simple') {
             Wallets.insert({
-                owners: [template.find('select[name="dapp-select-account"]').value.toLowerCase()],
+                deployFrom: deployFrom,
+                owners: [deployFrom],
                 name: template.find('input[name="accountName"]').value || TAPi18n.__('wallet.accounts.defaultName'),
                 balance: '0',
                 creationBlock: EthBlocks.latest.number,
@@ -329,6 +331,7 @@ Template['views_account_create'].events({
                 });
 
             Wallets.insert({
+                deployFrom: deployFrom,
                 owners: owners,
                 name: template.find('input[name="accountName"]').value || TAPi18n.__('wallet.accounts.defaultName'),
                 balance: '0',
