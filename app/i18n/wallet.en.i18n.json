@@ -41,7 +41,8 @@
                 "wrongChain": "You seem on a different chain, please restart the Ethereum Wallet App!"
             },
             "warnings": {
-                "txOriginVulnerabilityWallet": "This smart contract wallet has outdated code and is subject to phishing attacks. <strong> Upgrade your contract now </strong> and transfer all your funds to your new one.",
+                "txOriginVulnerabilityWallet": "This smart contract wallet has outdated code and is subject to phishing attacks. ",
+                "txOriginVulnerabilityCallToAction": "Upgrade your contract now and transfer all your funds to your new one.",
                 "txOriginVulnerabilityAccount": "This account is an owner of a vulnerable wallet contract and using this account on malicious contracts can endanger your wallets funds. Upgrade your wallet before doing any transactions with this account.",
                 "txOriginVulnerabilityPopup": "We found vulnerable wallets! Make sure to deploy new wallets and move the funds!",
                 "checkThisNow": "Show vulnerable wallet",
