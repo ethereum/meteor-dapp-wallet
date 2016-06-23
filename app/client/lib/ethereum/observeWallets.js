@@ -72,7 +72,13 @@ var checkForVulnerableWallet = function(wallet){
                 // show warning popup
                 EthElements.Modal.question({
                     text: TAPi18n.__('wallet.app.warnings.txOriginVulnerabilityPopup'),
-                    ok: true
+                    ok: function(){
+                        FlowRouter.go('/account/'+ wallet.address)
+                    },
+                    cancel: true,
+                    modalQuestionOkButtonText: TAPi18n.__('wallet.app.warnings.checkThisNow'),
+                    modalQuestionCancelButtonText: TAPi18n.__('wallet.app.warnings.checkThisLater')
+
                 }, {closeable: false});
             }
         }

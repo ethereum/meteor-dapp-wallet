@@ -43,6 +43,8 @@
                 "txOriginVulnerabilityWallet": "Diese intelligente Vertrag Geldbörse hat veraltete Code und unterliegt Phishing-Attacken. <strong> Rüsten Sie Ihren Vertrag jetzt </strong> und übertragen alle Ihre Geld auf Ihr neues.",
                 "txOriginVulnerabilityAccount": "Dieses Konto ist ein Besitzer eines gefährdeten wallet Vertrag und mit diesem Konto auf böswillige Verträge können Ihre Mappen Mittel gefährden. Rüsten Sie Ihren Geldbeutel, bevor Sie Geschäfte mit diesem Konto zu tun.",
                 "txOriginVulnerabilityPopup": "Wir fanden verwundbar Portemonnaies! Achten Sie darauf, neue Geldbörsen zu implementieren und die Mittel zu bewegen!",
+                "checkThisNow": "Zeigen Sie verwundbar",
+                "checkThisLater": "Später",                
                 "learnMore": "Erfahren Sie mehr zu dieser Sicherheitsanfälligkeit"
             }
         },
