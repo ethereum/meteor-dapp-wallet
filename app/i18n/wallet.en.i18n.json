@@ -39,6 +39,10 @@
             },
             "error": {
                 "wrongChain": "You seem on a different chain, please restart the Ethereum Wallet App!"
+            },
+            "warnings": {
+                "txOriginVulnerability": "This Wallet contract is vulnerable to phishing attacks, deploy a new wallet by clicking this text and transfer all funds to the new wallet! Read more about the vulnerability in this blog post:",
+                "txOriginVulnerabilityPopup": "We found vulnerable wallets! Make sure to deploy new wallets and move the funds!"
             }
         },
         "modals": {

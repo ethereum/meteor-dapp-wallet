@@ -225,7 +225,7 @@ Template['views_send'].helpers({
         }
     },
     /**
-    Overwrites the global "isVulnerable" helper to also check if owner accounts are vulnerable
+    Overwrites the global "isVulnerable" helper to also check if wallets AND owner accounts are vulnerable.
 
     @method (isVulnerable)
     */
