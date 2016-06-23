@@ -2,7 +2,11 @@
     <div class="row clear account-page-notification">
         <div class="row clear">
             <a href="{{pathFor route='createAccount' query=upgradeParams}}">
-                {{{i18n "wallet.app.warnings.txOriginVulnerability"}}}
+                {{#if owners}}
+                    {{{i18n "wallet.app.warnings.txOriginVulnerabilityWallet"}}}
+                {{else}}
+                    {{{i18n "wallet.app.warnings.txOriginVulnerabilityAccount"}}}
+                {{/if}}
             </a>
         </div>
         <a href="https://blog.ethereum.org/2016/06/22/security-alert-smart-contract-wallets-created-in-frontier-are-vulnerable-to-phishing-attacks" class="learn-more-link" target="_blank">{{i18n "wallet.app.warnings.learnMore"}}</a>

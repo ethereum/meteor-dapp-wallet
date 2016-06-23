@@ -245,16 +245,22 @@ Template['views_send'].helpers({
         }
 
         // check if is owner account and is vulnerable
-        var vulnerable;
         var wallets = _.map(Wallets.find({vulnerabilities: {$exists: true}}).fetch(), function(wal){
             return (!!_.find(wal.vulnerabilities || [], function(vul){
                 return vul;
             }))
                 ? wal : false;
         });
-        return _.find(wallets, function(wal){
+        var wallet = _.find(wallets, function(wal){
             return _.contains(wal.owners, selectedAccount.address);
-        });
+        })
+
+        if(wallet) {
+            // add vulnerabilities to account
+            selectedAccount.vulnerabilities = wallet.vulnerabilities;
+            return selectedAccount;
+        } else 
+            return false;
     },
     /**
     Get the current selected account
