@@ -225,44 +225,6 @@ Template['views_send'].helpers({
         }
     },
     /**
-    Overwrites the global "isVulnerable" helper to also check if wallets AND owner accounts are vulnerable.
-
-    @method (isVulnerable)
-    */
-    'isVulnerable': function(){
-        var selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account', 'value'));
-
-        console.log('SEL',selectedAccount);
-
-        if(!selectedAccount)
-            return;
-
-        // check if is wallet and is vulnerable
-        if(_.find(selectedAccount.vulnerabilities || [], function(vul){
-            return vul;
-        })) {
-            return selectedAccount;
-        }
-
-        // check if is owner account and is vulnerable
-        var wallets = _.map(Wallets.find({vulnerabilities: {$exists: true}}).fetch(), function(wal){
-            return (!!_.find(wal.vulnerabilities || [], function(vul){
-                return vul;
-            }))
-                ? wal : false;
-        });
-        var wallet = _.find(wallets, function(wal){
-            return _.contains(wal.owners, selectedAccount.address);
-        })
-
-        if(wallet) {
-            // add vulnerabilities to account
-            selectedAccount.vulnerabilities = wallet.vulnerabilities;
-            return selectedAccount;
-        } else 
-            return false;
-    },
-    /**
     Get the current selected account
 
     @method (selectedAccount)

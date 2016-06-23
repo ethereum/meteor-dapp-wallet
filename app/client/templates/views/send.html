@@ -31,7 +31,7 @@
             <div class="dapp-clear-fix"></div>
         </div>
 
-        {{#with isVulnerable}}
+        {{#with isVulnerable (TemplateVar.getFrom ".dapp-select-account" "value")}}
             {{#if vulnerabilities.txorigin}}
                 {{> elements_vulnerabilities_txorigin}}
             {{/if}}

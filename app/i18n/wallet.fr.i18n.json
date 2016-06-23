@@ -38,6 +38,12 @@
             },
             "error": {
                 "wrongChain": "Vous semblez être sur une chaine différente, veuillez redémarrer Ethereum Wallet App !"
+            },
+            "warnings": {
+                "txOriginVulnerabilityWallet": "Ce portefeuille de contrat à puce a le code obsolète et est soumis à des attaques de phishing. <strong> Améliorez votre contrat maintenant </strong> et transférer tous vos fonds à votre nouvelle.",
+                "txOriginVulnerabilityAccount": "Ce compte est propriétaire d'un contrat de portefeuille vulnérable. L'utilisation de ce compte sur les contrats malveillants peut mettre en danger vos fonds de portefeuilles! <Strong> Améliorez votre portefeuille de contrat maintenant </ strong> et transférer tous vos fonds à votre nouvelle.",
+                "txOriginVulnerabilityPopup": "Nous avons trouvé des portefeuilles vulnérables! Assurez-vous de déployer de nouveaux portefeuilles et déplacer les fonds!",
+                "learnMore": "En savoir plus sur cette vulnérabilité"
             }
         },
         "modals": {

@@ -55,11 +55,38 @@ Template.registerHelper('isEtherUnit', function(){
 Check if wallet has vulnerabilities
 
 @method (isVulnerable)
+@param {String} address and address of a wallet/account
 **/
-Template.registerHelper('isVulnerable', function(){
-    return !!_.find(this.vulnerabilities || [], function(vul){
+Template.registerHelper('isVulnerable', function(address){
+    var account = _.isString(address) ? Helpers.getAccountByAddress(address): this;
+
+    if(!account)
+        return;
+
+    // check if is wallet and is vulnerable
+    if(_.find(account.vulnerabilities || [], function(vul){
         return vul;
+    })) {
+        return account;
+    }
+
+    // check if is owner account and is vulnerable
+    var wallets = _.map(Wallets.find({vulnerabilities: {$exists: true}}).fetch(), function(wal){
+        return (!!_.find(wal.vulnerabilities || [], function(vul){
+            return vul;
+        }))
+            ? wal : false;
     });
+    var wallet = _.find(wallets, function(wal){
+        return _.contains(wal.owners, account.address);
+    })
+
+    if(wallet) {
+        // add vulnerabilities to account
+        account.vulnerabilities = wallet.vulnerabilities;
+        return account;
+    } else 
+        return false;
 });
 
 /**

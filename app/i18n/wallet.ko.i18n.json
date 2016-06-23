@@ -39,6 +39,12 @@
             },
             "error": {
                 "wrongChain": "현재 다른 체인상에 있는 것 같습니다. 이더리움 지갑앱을 재실행하세요!"
+            },
+            "warnings": {
+                "txOriginVulnerabilityWallet": "이 스마트 계약 지갑 오래된 코드를 가지고 있으며, 피싱 공격을받습니다. <strong> 이 지금 계약을 업그레이드하고 새로운 하나에 모든 자금을 전송합니다</ strong>",
+                "txOriginVulnerabilityAccount": "이 계정은 취약한 지갑 계약의 소유자와 당신의 지갑 자금을 위험에 빠​​뜨릴 수있는 악성 계약에이 계정을 사용하여입니다. 이 계정으로 모든 거래를하기 전에 당신의 지갑을 업그레이드합니다.",
+                "txOriginVulnerabilityPopup": "우리는 취약 지갑을 발견! 새 지갑을 배포하고 자금을 이동해야합니다!",
+                "learnMore": "이 취약점에 대해 자세히 알아보기"
             }
         },
         "modals": {

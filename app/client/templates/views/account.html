@@ -7,7 +7,7 @@
 
             <div class="dapp-sticky-bar dapp-container">
 
-                {{#if isVulnerable}}
+                {{#with isVulnerable}}
                     {{#if vulnerabilities.txorigin}}
                         {{> elements_vulnerabilities_txorigin}}
                     {{/if}}
@@ -21,7 +21,7 @@
                         {{/if}}
                     </h1>
                     {{> elements_balance balance=balance changeUnit=true showAllDecimals=true}}                
-                {{/if}}
+                {{/with}}
             </div>
 
             <div class="accounts-page-summary">
@@ -62,15 +62,14 @@
                     </table>
                 {{/with}}
 
+                {{#with isVulnerable}}
+                    {{#if vulnerabilities.txorigin}}
+                        {{> elements_vulnerabilities_txorigin}}
+                    {{/if}}
+                {{/with}}
 
                 {{#if owners}}
                     <!-- Wallet infos -->
-
-                    {{#if isVulnerable}}
-                        {{#if vulnerabilities.txorigin}}
-                            {{> elements_vulnerabilities_txorigin}}
-                        {{/if}}
-                    {{/if}}
 
                     <div class="row clear wallet-info">
                         {{#if showDailyLimit}}
