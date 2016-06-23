@@ -6,6 +6,7 @@
         <div class="dapp-container accounts-page">
 
             <div class="dapp-sticky-bar dapp-container">
+
                 {{#if isVulnerable}}
                     {{#if vulnerabilities.txorigin}}
                         {{> elements_vulnerabilities_txorigin}}
@@ -64,6 +65,7 @@
 
                 {{#if owners}}
                     <!-- Wallet infos -->
+
                     {{#if isVulnerable}}
                         {{#if vulnerabilities.txorigin}}
                             {{> elements_vulnerabilities_txorigin}}

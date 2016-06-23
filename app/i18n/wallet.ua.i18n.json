@@ -176,7 +176,7 @@
         "newWallet": {
             "title": "Новий <strong>контракт гаманця</strong>",
             "accountName": "Ім'я контракту гаманця",
-            "selectOwner": "Оберить власника",
+            "deployFrom": "Deploy from this account",
             "accountType": {
                 "title": "Тип контракту гаманця",
                 "simple": {

@@ -286,11 +286,13 @@ body {
         height: @gridHeight * 2;
         padding: @gridHeight/2 @gridWidth * 2.5;
         background: @colorWhite;
-        .transition(top @animationSpeed);
-        // box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+        opacity: 0;
+
+        .transition(top @animationSpeed, opacity @animationSpeed * 2);
 
         &.sticky {
             top: floor(@gridHeight * 2);
+            opacity: 1;
         }
 
         > .dapp-identicon {

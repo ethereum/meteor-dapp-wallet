@@ -5,3 +5,5 @@ build/
 packages/
 
 app/public/i18n/tap-i18n.json
+app/public/i18n/de.json
+app/public/i18n/es.json

@@ -176,7 +176,7 @@
         "newWallet": {
             "title": "新しい <strong>ウォレットコントラクト</strong>",
             "accountName": "ウォレットコントラクト名",
-            "selectOwner": "オーナーを選択",
+            "deployFrom": "このアカウントから展開します",
             "accountType": {
                 "title": "ウォレットコントラクトの種類",
                 "simple": {

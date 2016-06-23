@@ -176,7 +176,7 @@
         "newWallet": {
             "title": "Новый <strong>контракт кошелька</strong>",
             "accountName": "Название контракта кошелька",
-            "selectOwner": "Выберите владельца",
+            "deployFrom": "Deploy from this account",
             "accountType": {
                 "title": "Тип контракта кошелька",
                 "simple": {

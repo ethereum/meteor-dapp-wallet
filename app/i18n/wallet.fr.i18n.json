@@ -176,7 +176,7 @@
         "newWallet": {
             "title": "Nouveau <strong>portefeuille</strong>",
             "accountName": "Nom du portefeuille",
-            "selectOwner": "Selectionner le propriétaire",
+            "deployFrom": "Déployer de ce compte",
             "accountType": {
                 "title": "Type de portefeuille",
                 "simple": {
