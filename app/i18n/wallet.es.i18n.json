@@ -38,6 +38,12 @@
             },
             "error": {
                 "wrongChain": "You seem on a different chain, please restart the Ethereum Wallet App!"
+            },
+            "warnings": {
+                "txOriginVulnerabilityWallet": "Esta cartera tiene contrato inteligente código obsoleto y está sujeto a ataques de phishing. <Strong> Actualizar su contrato ahora </ strong> y transferir todos sus fondos a su nueva.",
+                "txOriginVulnerabilityAccount": "Esta cuenta es un propietario de un contrato cartera vulnerables y el uso de esta cuenta en los contratos maliciosos pueden poner en peligro sus fondos carteras. Actualizar su cartera antes de realizar cualquier transacción con esta cuenta.",
+                "txOriginVulnerabilityPopup": "Encontramos carteras vulnerables! Asegúrese de implementar las nuevas carteras y mover los fondos!",
+                "learnMore": "Más información acerca de esta vulnerabilidad"
             }
         },
         "modals": {
