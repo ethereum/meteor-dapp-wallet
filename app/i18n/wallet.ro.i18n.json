@@ -34,7 +34,9 @@
                 "noAccounts": {
                     "title": "Nu ai niciun cont configurat",
                     "text": "Inainte de a folosi portofelul, ai nevoie de un cont securizat cu o parola puternica."
-                }
+                },
+                "pleaseUpgrade": "This smart contract wallet has outdated code with a known vulnerability. <strong> Upgrade your contract now </strong>",
+                "learnMore": "Learn more about this vulnerability"
             },
             "error": {
                 "wrongChain": "Se pare ca esti in alta retea, te rog reporneste portofelul!"
@@ -176,7 +178,7 @@
         "newWallet": {
             "title": "Portofel <strong>Nou</strong>",
             "accountName": "Numele portofelului",
-            "selectOwner": "Selecteaza detinatorul",
+            "deployFrom": "Deploy from this account",
             "accountType": {
                 "title": "Tipul portofelului",
                 "simple": {

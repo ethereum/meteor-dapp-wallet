@@ -34,7 +34,10 @@
                 "noAccounts": {
                     "title": "Vous n'avez aucun compte pour l'instant",
                     "text": "Vous devez créer au moins un compte avec un mot de passe robuste."
-                }
+                },
+                "pleaseUpgrade": "Ce portefeuille de contrat à puce a dépassé code avec une vulnérabilité connue.
+ <strong> Améliorez votre contrat maintenant </strong>",
+                "learnMore": "En savoir plus sur cette vulnérabilité"
             },
             "error": {
                 "wrongChain": "Vous semblez être sur une chaine différente, veuillez redémarrer Ethereum Wallet App !"
@@ -176,7 +179,7 @@
         "newWallet": {
             "title": "Nouveau <strong>portefeuille</strong>",
             "accountName": "Nom du portefeuille",
-            "selectOwner": "Selectionner le propriétaire",
+            "deployFrom": "Déployer de ce compte",
             "accountType": {
                 "title": "Type de portefeuille",
                 "simple": {

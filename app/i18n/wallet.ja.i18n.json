@@ -34,7 +34,9 @@
                 "noAccounts": {
                     "title": "アカウント未登録",
                     "text": "パスワード付きのアカウントを作成してください。"
-                }
+                },
+                "pleaseUpgrade": "このスマート契約財布は、既知の脆弱性を使用してコードを時代遅れにしました。 <strong> 今、あなたの契約をアップグレード </strong>",
+                "learnMore": "この脆弱性の詳細情報"
             },
             "error": {
                 "wrongChain": "間違ったチェーン上にいます。Ethereum Wallet App を再起動して下さい。"
@@ -176,7 +178,7 @@
         "newWallet": {
             "title": "新しい <strong>ウォレットコントラクト</strong>",
             "accountName": "ウォレットコントラクト名",
-            "selectOwner": "オーナーを選択",
+            "deployFrom": "このアカウントから展開します",
             "accountType": {
                 "title": "ウォレットコントラクトの種類",
                 "simple": {

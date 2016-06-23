@@ -9,8 +9,7 @@
                 {{#if upgradeAvailable}}
                 <div class="row clear upgrade-available">
                     <a href="{{pathFor route='createAccount' query=upgradeParams}}">
-                        There's a new contract wallet available!
-                        <strong>Upgrade now</strong>
+                        {{{i18n "wallet.app.texts.pleaseUpgrade"}}}
                     </a>
                 </div>
                 {{else}}
@@ -70,10 +69,10 @@
                     {{#if upgradeAvailable}}
                     <div class="row clear upgrade-available">
                         <a href="{{pathFor route='createAccount' query=upgradeParams}}">
-                            There's a new contract wallet available!
-                            <strong>Upgrade now</strong>
+                            {{{i18n "wallet.app.texts.pleaseUpgrade"}}}
                         </a>
                     </div>
+                    <a href="http://blog.ethereum.org/" class="learn-more-link" target="_blank">{{i18n "wallet.app.texts.learnMore"}}</a>
                     {{/if}}
 
                     <div class="row clear wallet-info">

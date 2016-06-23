@@ -523,10 +523,33 @@ table {
 
 .upgrade-available {
     text-align: center;
-    background: @colorOrange;
+    background: @colorError;
     font-size: 120%;
-    
+
     a {
         color: @colorWhite;
+        strong { 
+            display: inline-block;
+        }
+    } 
+
+
+
+    &:hover {
+        background: lighten(@colorError, 10%);
     }
 }
+
+a.learn-more-link {
+    padding-top: @gridHeight;
+    color: @colorError;
+    text-align: center;
+    font-weight: 400;
+
+    &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+    }
+}
+
+

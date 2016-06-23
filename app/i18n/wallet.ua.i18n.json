@@ -34,7 +34,9 @@
                 "noAccounts": {
                     "title": "Ви ще не маєте аккаунтів",
                     "text": "Вам потрібно створити аккаунт з міцним паролем."
-                }
+                },
+                "pleaseUpgrade": "This smart contract wallet has outdated code with a known vulnerability. <strong> Upgrade your contract now </strong>",
+                "learnMore": "Learn more about this vulnerability"
             },
             "error": {
                 "wrongChain": "Здається ви не в тому ланцюзі, будь ласка перезапустить Гаманець Ефіріуму!"
@@ -176,7 +178,7 @@
         "newWallet": {
             "title": "Новий <strong>контракт гаманця</strong>",
             "accountName": "Ім'я контракту гаманця",
-            "selectOwner": "Оберить власника",
+            "deployFrom": "Deploy from this account",
             "accountType": {
                 "title": "Тип контракту гаманця",
                 "simple": {

@@ -34,7 +34,9 @@
                 "noAccounts": {
                     "title": "You have no accounts yet",
                     "text": "You need to create at least one account with a strong password."
-                }
+                },
+                "pleaseUpgrade": "Esta cartera contrato inteligente ha anticuado código con una vulnerabilidad conocida. <strong> Actualizar su contrato ahora </strong>",
+                "learnMore": "Más información acerca de esta vulnerabilidad"
             },
             "error": {
                 "wrongChain": "You seem on a different chain, please restart the Ethereum Wallet App!"
@@ -176,7 +178,7 @@
         "newWallet": {
             "title": "New <strong>wallet contract</strong>",
             "accountName": "Wallet contract name",
-            "selectOwner": "Select owner",
+            "deployFrom": "Despliegue de esta cuenta",
             "accountType": {
                 "title": "Wallet contract type",
                 "simple": {

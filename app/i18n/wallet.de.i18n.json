@@ -34,7 +34,9 @@
                 "noAccounts": {
                     "title": "Sie haben noch keine Konten",
                     "text": "Sie müssen mindestens ein Konto mit einem starken Passwort erstellen."
-                }
+                },
+                "pleaseUpgrade": "Diese intelligente Vertrag Portemonnaie hat Code mit einer bekannten Sicherheitslücke veraltet. <strong>   Rüsten Sie Ihren Vertrag jetzt </strong>",
+                "learnMore": "Erfahren Sie mehr zu dieser Sicherheitsanfälligkeit"
             },
             "error": {
                 "wrongChain": "Sie folgen nicht der Hauptblockchain, bitte starten Sie die Ethereum Wallet App neu!"
@@ -176,7 +178,7 @@
         "newWallet": {
             "title": "Neuer <strong>Wallet-Vertrag</strong>",
             "accountName": "Wallet-Vertragsname",
-            "selectOwner": "Eigentümer auswählen",
+            "deployFrom": "Bereitstellen von diesem Konto",
             "accountType": {
                 "title": "Wallet-Vertragstyp",
                 "simple": {
