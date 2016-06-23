@@ -189,6 +189,30 @@ Template['views_account'].helpers({
     */
     'customContract': function(){
         return CustomContracts.findOne({address: this.address.toLowerCase()});
+    },
+    /**
+    Upgrade parameters for the wallet
+
+    @method (customContract)
+    */
+    'upgradeParams': function(){
+        var params = 'name='+this.name;
+        if (this.dailyLimit) params += '&dailyLimit='+this.dailyLimit;
+        if (this.requiredSignatures) params += '&requiredSignatures='+this.requiredSignatures;
+        if (this.owners) {
+            params += '&ownersNum='+this.owners.length;
+            params += '&owners='+ this.owners.join('_');
+        } 
+
+        return params;
+    }, 
+    /**
+    Is an upgrade available?
+
+    @method (upgradeAvailable)
+    */
+    'upgradeAvailable': function(){
+        return true;
     }
 });
 

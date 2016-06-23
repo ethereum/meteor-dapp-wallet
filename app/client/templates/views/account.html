@@ -6,6 +6,14 @@
         <div class="dapp-container accounts-page">
 
             <div class="dapp-sticky-bar dapp-container">
+                {{#if upgradeAvailable}}
+                <div class="row clear upgrade-available">
+                    <a href="{{pathFor route='createAccount' query=upgradeParams}}">
+                        There's a new contract wallet available!
+                        <strong>Upgrade now</strong>
+                    </a>
+                </div>
+                {{else}}
                 {{> dapp_identicon identity=address}}
                 <h1>
                     <span class="edit-name">{{name}}</span> <i class="edit-icon icon-pencil"></i>
@@ -14,7 +22,8 @@
                         <button class="dapp-icon-button delete icon-trash"></button>
                     {{/if}}
                 </h1>
-                {{> elements_balance balance=balance changeUnit=true showAllDecimals=true}}
+                {{> elements_balance balance=balance changeUnit=true showAllDecimals=true}}                
+                {{/if}}
             </div>
 
             <div class="accounts-page-summary">
@@ -58,6 +67,14 @@
 
                 {{#if owners}}
                     <!-- Wallet infos -->
+                    {{#if upgradeAvailable}}
+                    <div class="row clear upgrade-available">
+                        <a href="{{pathFor route='createAccount' query=upgradeParams}}">
+                            There's a new contract wallet available!
+                            <strong>Upgrade now</strong>
+                        </a>
+                    </div>
+                    {{/if}}
 
                     <div class="row clear wallet-info">
                         {{#if showDailyLimit}}
@@ -103,6 +120,7 @@
 
             </div>
 
+            {{#unless upgradeAvailable}}
             <aside class="dapp-actionbar">
                 <nav>
                     <ul>
@@ -144,6 +162,7 @@
                     </ul>
                 </nav>
             </aside>
+            {{/unless}}
 
             {{#if jsonInterface}}
                 {{> elements_executeContract address=address jsonInterface=jsonInterface}}

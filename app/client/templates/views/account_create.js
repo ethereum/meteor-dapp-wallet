@@ -12,10 +12,15 @@ The account create template
 */
 
 Template['views_account_create'].onCreated(function(){
-    TemplateVar.set('multisigSignees', 3);      // number of owners of the account
-    TemplateVar.set('multisigSignatures', 2);   // number of required signatures
+    console.log('params', FlowRouter.getQueryParam('ownersNum'));
 
-    TemplateVar.set('selectedSection', 'simple');
+    TemplateVar.set('selectedSection', Number(FlowRouter.getQueryParam('ownersNum'))>0? 'multisig' : 'simple');
+
+    // number of owners of the account
+    TemplateVar.set('multisigSignees', Number(FlowRouter.getQueryParam('ownersNum')) || 3);      
+
+    // number of required signatures    
+    TemplateVar.set('multisigSignatures', Number(FlowRouter.getQueryParam('requiredSignatures')) || 2);   
 
 
     // check if we are still on the correct chain
@@ -60,13 +65,6 @@ Template['views_account_create'].helpers({
     @method (showSection)
     */
     'showSection': function(section){
-        // var template = Template.instance();
-
-        // Tracker.afterFlush(function(){
-        //     // set the default signee numbers
-        //     TemplateVar.set(template,'multisigSignees', template.$('button[data-name="multisigSignees"]').attr('data-value'));
-        // });
-
         // reset import wallet
         TemplateVar.set('importWalletOwners', false);
         TemplateVar.set('importWalletInfo', '');
@@ -90,12 +88,39 @@ Template['views_account_create'].helpers({
         return TemplateVar.get('multisigSignatures');
     },
     /**
+    Pick a default owner for the wallet
+    @method (defaultOwner)
+    @return (string)
+    */
+    'defaultOwner': function() {
+        var owners = FlowRouter.getQueryParam('owners').split('_');
+
+        // Load the accounts owned by user and sort by balance
+        var accounts = EthAccounts.find({name: {$exists: true}}, {sort: {name: 1}}).fetch();
+        accounts.sort(Helpers.sortByBalance);
+
+        // Looks for them among the wallet account owner
+        var defaultAccount = _.find(accounts, function(acc){
+           return (owners.indexOf(acc.address)>=0);
+        })
+
+        TemplateVar.set('defaultOwner', defaultAccount.address)
+        return defaultAccount.address;
+    },
+    /**
     Return the number of signees fields
 
     @method (signees)
     @return {Array} e.g. [1,2,3,4]
     */
     'signees': function(){
+        var owners = FlowRouter.getQueryParam('owners').split('_');
+        owners = _.without(owners, TemplateVar.get('defaultOwner'));
+
+        console.log(owners, _.range(TemplateVar.get('multisigSignees') - 1));
+
+        if (owners.length > 0) return owners;
+
         if ((TemplateVar.get('multisigSignatures')+1) > TemplateVar.get('multisigSignees')) {
             TemplateVar.set('multisigSignees', TemplateVar.get('multisigSignatures'));
         }
@@ -145,36 +170,17 @@ Template['views_account_create'].helpers({
         return TemplateVar.get('importWalletOwners') ? 'valid' : 'invalid';
     },
     /**
-    Get the number of required multisignees
+    Get the number of required multisignees (account owners)
 
     @method (multisigSignees)
     */
     'multisigSignees': function() {
-        return [
-        {
-            value: '2',
-            text: '2'
-        },
-        {
-            value: '3',
-            text: '3'
-        },
-        {
-            value: '4',
-            text: '4'
-        },
-        {
-            value: '5',
-            text: '5'
-        },
-        {
-            value: '6',
-            text: '6'
-        },
-        {
-            value: '7',
-            text: '7'
-        }];
+        var maxOwners = Number(FlowRouter.getQueryParam('ownersNum')) || 7;
+        var returnArray = [];
+        for (i = 2; i<=maxOwners; i++) {
+            returnArray.push({value:i, text:i});
+        } 
+        return returnArray;
     },
     /**
     Get the number of required multisignatures
@@ -183,35 +189,46 @@ Template['views_account_create'].helpers({
     */
     'multisigSignatures': function() {
         var signees = TemplateVar.get('multisigSignees');
-        var returnValue = [
-        {
-            value: '2',
-            text: '2'
-        },
-        {
-            value: '3',
-            text: '3'
-        },
-        {
-            value: '4',
-            text: '4'
-        },
-        {
-            value: '5',
-            text: '5'
-        },
-        {
-            value: '6',
-            text: '6'
-        },
-        {
-            value: '7',
-            text: '7'
-        }];
+        var returnArray = []
+        
+        for (i = 2; i<=signees; i++) {
+            returnArray.push({value:i, text:i});
+        }
 
-        returnValue = returnValue.slice(0, signees-1);
+        return returnArray;
+    },
+    /**
+    Is simple checked
 
-        return returnValue;
+    @method (simpleCheck)
+    */
+    'simpleCheck': function() {
+        return TemplateVar.get('selectedSection') == 'simple';
+    },
+    /**
+    Is multisig checked
+
+    @method (multisigCheck)
+    */
+    'multisigCheck': function() {
+        return TemplateVar.get('selectedSection') == 'multisig';
+    },
+    /**
+    Default dailyLimit
+
+    @method (defaultDailyLimit)
+    */
+    'defaultDailyLimit': function() {
+        var dailyLimit = FlowRouter.getQueryParam('dailyLimit');
+        return typeof dailyLimit != 'undefined' ? web3.fromWei(dailyLimit,'ether') :  10;
+    },
+    /**
+    Default Name
+
+    @method (name)
+    */
+    'name': function() {
+        return FlowRouter.getQueryParam('name');
     }
 });
 
@@ -236,21 +253,6 @@ Template['views_account_create'].events({
     */
     'change input.owners, input input.owners': function(e, template){
         var address = TemplateVar.getFrom(e.currentTarget, 'value');
-        // if(address) {
-        //     web3.eth.getCode(address, function(e, code){
-        //         if(!e && code.length > 2) {
-        //             TemplateVar.set(template, 'contractAsOwner', true);
-
-        //             GlobalNotification.warning({
-        //                 content: TAPi18n.__('wallet.newWallet.error.contractsCantBeOwners') +' '+ TAPi18n.__('wallet.newWallet.error.checkOwnerAddress', {address: address}),
-        //                 duration: 5
-        //             });
-        //         } else {
-        //             TemplateVar.set(template, 'contractAsOwner', false);
-        //         }
-        //     });
-
-        // }
     },
     /**
     Select the current section, based on the radio inputs value.
@@ -259,7 +261,6 @@ Template['views_account_create'].events({
     */
     'change input[type="radio"]': function(e){
         TemplateVar.set('selectedSection', e.currentTarget.value);
-        // TemplateVar.set('contractAsOwner', false);
     },
     /**
     Change the number of signatures
@@ -277,19 +278,7 @@ Template['views_account_create'].events({
     'click span[name="multisigSignees"] .simple-modal button': function(e){
         TemplateVar.set('multisigSignees',  $(e.currentTarget).data('value'));
     },
-    // 'click button.compile': function(e, template) {
-    //     web3.eth.compile.solidity(template.find('textarea.compile').value, function(e, res) {
-    //         if(!e) {
-    //             console.log(res);
-    //         } else {
-    //             GlobalNotification.error({
-    //                 content: 'Couldn\'t compile code' , //TAPi18n.__('wallet.newWallet.error.stubHasNoOrigWalletAddress'),
-    //                 duration: 5
-    //             });
-    //         }
-
-    //     })
-    // },
+    
     /**
     Create the account
 
@@ -298,15 +287,6 @@ Template['views_account_create'].events({
     'submit': function(e, template){
         var code = walletStubABI; // walletStubABI 184 280 walletABI ~1 842 800
         var type = TemplateVar.get('selectedSection');
-
-
-        // if(TemplateVar.get('contractAsOwner')) {
-        //     return GlobalNotification.warning({
-        //         content: TAPi18n.__('wallet.newWallet.error.contractsCantBeOwners'),
-        //         duration: 5
-        //     });
-        // }
-
 
         // SIMPLE
         if(type === 'simple') {
