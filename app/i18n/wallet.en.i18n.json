@@ -35,12 +35,15 @@
                 "noAccounts": {
                     "title": "You have no accounts yet",
                     "text": "You need to create at least one account with a strong password."
-                },
-                "pleaseUpgrade": "This smart contract wallet has outdated code with a known vulnerability. <strong> Upgrade your contract now </strong>",
-                "learnMore": "Learn more about this vulnerability"
+                }
             },
             "error": {
                 "wrongChain": "You seem on a different chain, please restart the Ethereum Wallet App!"
+            },
+            "warnings": {
+                "txOriginVulnerability": "This smart contract wallet has outdated code and is subject to phishing attacks. <strong> Upgrade your contract now </strong> and transfer all your funds to your new one",
+                "txOriginVulnerabilityPopup": "We found vulnerable wallets! Make sure to deploy new wallets and move the funds!",
+                "learnMore": "Learn more about this vulnerability"
             }
         },
         "modals": {

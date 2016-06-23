@@ -6,22 +6,21 @@
         <div class="dapp-container accounts-page">
 
             <div class="dapp-sticky-bar dapp-container">
-                {{#if upgradeAvailable}}
-                <div class="row clear upgrade-available">
-                    <a href="{{pathFor route='createAccount' query=upgradeParams}}">
-                        {{{i18n "wallet.app.texts.pleaseUpgrade"}}}
-                    </a>
-                </div>
-                {{else}}
-                {{> dapp_identicon identity=address}}
-                <h1>
-                    <span class="edit-name">{{name}}</span> <i class="edit-icon icon-pencil"></i>
 
-                    {{#if $or owners jsonInterface}}
-                        <button class="dapp-icon-button delete icon-trash"></button>
+                {{#if isVulnerable}}
+                    {{#if vulnerabilities.txorigin}}
+                        {{> elements_vulnerabilities_txorigin}}
                     {{/if}}
-                </h1>
-                {{> elements_balance balance=balance changeUnit=true showAllDecimals=true}}                
+                {{else}}
+                    {{> dapp_identicon identity=address}}
+                    <h1>
+                        <span class="edit-name">{{name}}</span> <i class="edit-icon icon-pencil"></i>
+
+                        {{#if $or owners jsonInterface}}
+                            <button class="dapp-icon-button delete icon-trash"></button>
+                        {{/if}}
+                    </h1>
+                    {{> elements_balance balance=balance changeUnit=true showAllDecimals=true}}                
                 {{/if}}
             </div>
 
@@ -66,13 +65,11 @@
 
                 {{#if owners}}
                     <!-- Wallet infos -->
-                    {{#if upgradeAvailable}}
-                    <div class="row clear upgrade-available">
-                        <a href="{{pathFor route='createAccount' query=upgradeParams}}">
-                            {{{i18n "wallet.app.texts.pleaseUpgrade"}}}
-                        </a>
-                    </div>
-                    <a href="http://blog.ethereum.org/" class="learn-more-link" target="_blank">{{i18n "wallet.app.texts.learnMore"}}</a>
+
+                    {{#if isVulnerable}}
+                        {{#if vulnerabilities.txorigin}}
+                            {{> elements_vulnerabilities_txorigin}}
+                        {{/if}}
                     {{/if}}
 
                     <div class="row clear wallet-info">
@@ -119,7 +116,7 @@
 
             </div>
 
-            {{#unless upgradeAvailable}}
+            {{#unless isVulnerable}}
             <aside class="dapp-actionbar">
                 <nav>
                     <ul>

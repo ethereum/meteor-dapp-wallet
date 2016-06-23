@@ -521,9 +521,10 @@ table {
     }
 }
 
-.upgrade-available {
+.account-page-notification {
     text-align: center;
     background: @colorError;
+    padding: @defaultPaddingHorizontal;
     font-size: 120%;
 
     a {
@@ -533,14 +534,13 @@ table {
         }
     } 
 
-
-
     &:hover {
         background: lighten(@colorError, 10%);
     }
 }
 
 a.learn-more-link {
+    display: block;
     padding-top: @gridHeight;
     color: @colorError;
     text-align: center;

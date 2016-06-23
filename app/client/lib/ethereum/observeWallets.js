@@ -69,6 +69,11 @@ var checkForVulnerableWallet = function(wallet){
                     }
                 }});
 
+                // show warning popup
+                EthElements.Modal.question({
+                    text: TAPi18n.__('wallet.app.warnings.txOriginVulnerabilityPopup'),
+                    ok: true
+                }, {closeable: false});
             }
         }
     });

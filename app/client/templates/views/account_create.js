@@ -32,6 +32,12 @@ Template['views_account_create'].onCreated(function(){
 
 
 Template['views_account_create'].onRendered(function(){
+
+    // var from = FlowRouter.getParam('from');
+    // if(from)
+    //     TemplateVar.setTo('select[name="dapp-select-account"]', 'value', FlowRouter.getParam('from').toLowerCase());
+
+
     // focus the input
     this.$('input[name="accountName"]').focus();
 
