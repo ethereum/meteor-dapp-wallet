@@ -18,11 +18,6 @@
 
                 {{> dapp_selectAccount accounts=selectAccounts showAccountTypes=true}}
 
-                {{#with selectedAccount}}
-                    {{#if isVulnerable}}
-                        VULNERABLK!
-                    {{/if}}
-                {{/with}}
             </div>
 
             <div class="col col-6 mobile-full">
@@ -32,8 +27,15 @@
                     {{> dapp_addressInput placeholder="0x000000.." name="to" autofocus=true class="to"}}
                 {{/unless}}
             </div>
+
             <div class="dapp-clear-fix"></div>
         </div>
+
+        {{#with isVulnerable}}
+            {{#if vulnerabilities.txorigin}}
+                {{> elements_vulnerabilities_txorigin}}
+            {{/if}}
+        {{/with}}
 
         <!-- amount -->
         <div class="row clear">
