@@ -25,6 +25,7 @@ Helpers.rerun = {
     '1s': new ReactiveTimer(1)
 };
 
+
 /**
 Sort method for accounts and wallets to sort by balance
 

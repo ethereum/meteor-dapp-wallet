@@ -52,6 +52,17 @@ Template.registerHelper('isEtherUnit', function(){
 
 
 /**
+Check if wallet has vulnerabilities
+
+@method (isVulnerable)
+**/
+Template.registerHelper('isVulnerable', function(){
+    return !!_.find(this.vulnerabilities || [], function(vul){
+        return vul;
+    });
+});
+
+/**
 Return the current unit
 
 @method (unit)

@@ -225,6 +225,32 @@ Template['views_send'].helpers({
         }
     },
     /**
+    Overwrites the global "isVulnerable" helper to also check if owner accounts are vulnerable
+
+    @method (isVulnerable)
+    */
+    'isVulnerable': function(){
+        // check if is wallet and is vulnerable
+        var vulnerable = !!_.find(this.vulnerabilities || [], function(vul){
+            return vul;
+        });
+
+        if(vulnerable)
+            return vulnerable;
+
+        // check if is owner account and is vulnerable
+        var address = this.address;
+        var wallets = _.map(Wallets.find({vulnerabilities: {$exists: true}}).fetch(), function(wal){
+            return (!!_.find(wal.vulnerabilities || [], function(vul){
+                return vul;
+            }))
+                ? wal : false;
+        });
+        return !!_.find(wallets, function(wal){
+            return _.contains(wal.owners, address);
+        });
+    },
+    /**
     Get the current selected account
 
     @method (selectedAccount)
