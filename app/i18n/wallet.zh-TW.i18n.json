@@ -43,6 +43,8 @@
                 "txOriginVulnerabilityWallet": "這個聰明的合同錢包過時代碼，並受網絡釣魚攻擊。 <STRONG>升級您的合同現在</ STRONG>和所有的資金轉移到新的。",
                 "txOriginVulnerabilityAccount": "此帳戶是一個脆弱的錢包合同的所有者和使用上的惡意合同這個帳戶可能會危及你的錢包的資金。做任何交易與該帳戶之前升級你的錢包。",
                 "txOriginVulnerabilityPopup": "我們發現錢包脆弱的！確保部署新的錢包和移動的資金！",
+                "checkThisNow": "顯示脆弱的錢包",
+                "checkThisLater": "後來",
                 "learnMore": "了解更多關於此漏洞"
             }
         },
