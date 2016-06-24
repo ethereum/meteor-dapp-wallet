@@ -12,12 +12,12 @@ Template['elements_vulnerabilities_txorigin'].helpers({
     @method (upgradeParams)
     */
     'upgradeParams': function(){
-        var params = 'name='+ this.name;
+        var params = 'walletId='+ this._id +'&name='+ this.name;
         if (this.dailyLimit) params += '&dailyLimit='+ this.dailyLimit;
         if (this.requiredSignatures) params += '&requiredSignatures='+ this.requiredSignatures;
         if (this.owners) {
             params += '&ownersNum='+ this.owners.length;
-            params += '&owners='+ this.owners.join('_');
+            params += '&owners='+ this.owners.join(',');
         } 
 
         return params;

@@ -15,7 +15,7 @@
         
         <div class="row clear">
             <label>
-                <input type="radio" name="accountType" value="simple" checked="{{simpleCheck}}">
+                <input type="radio" name="accountType" value="simple" {{simpleCheck}}>
                 <h3>{{i18n 'wallet.newWallet.accountType.simple.title'}}</h3>
                 <span>{{i18n 'wallet.newWallet.accountType.simple.description'}}</span>
             </label>
@@ -28,7 +28,7 @@
 
         <div class="row clear">
             <label>
-                <input type="radio" name="accountType" value="multisig" checked="{{multisigCheck}}">
+                <input type="radio" name="accountType" value="multisig" {{multisigCheck}}>
                 <h3>{{i18n 'wallet.newWallet.accountType.multisig.title'}}</h3>
                 {{#unless showSection "multisig"}}
                     <span>{{i18n 'wallet.newWallet.accountType.multisig.description'}}</span>

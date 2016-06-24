@@ -12,10 +12,14 @@ The account create template
 */
 
 Template['views_account_create'].onCreated(function(){
-    TemplateVar.set('selectedSection', Number(FlowRouter.getQueryParam('ownersNum'))>0? 'multisig' : 'simple');
+    TemplateVar.set('selectedSection', Number(FlowRouter.getQueryParam('ownersNum')) > 0 ? 'multisig' : 'simple');
 
     // number of owners of the account
-    TemplateVar.set('multisigSignees', Number(FlowRouter.getQueryParam('ownersNum')) || 3);      
+    var walletId = FlowRouter.getQueryParam('walletId');
+    var maxOwners = FlowRouter.getQueryParam('ownersNum');
+    if(maxOwners && Helpers.isWatchOnly(walletId))
+        maxOwners++;
+    TemplateVar.set('multisigSignees', maxOwners || 3);     
 
     // number of required signatures    
     TemplateVar.set('multisigSignatures', Number(FlowRouter.getQueryParam('requiredSignatures')) || 2);   
@@ -32,11 +36,6 @@ Template['views_account_create'].onCreated(function(){
 
 
 Template['views_account_create'].onRendered(function(){
-
-    // var from = FlowRouter.getParam('from');
-    // if(from)
-    //     TemplateVar.setTo('select[name="dapp-select-account"]', 'value', FlowRouter.getParam('from').toLowerCase());
-
 
     // focus the input
     this.$('input[name="accountName"]').focus();
@@ -82,25 +81,21 @@ Template['views_account_create'].helpers({
     */
     'defaultOwner': function() {
         // Load the accounts owned by user and sort by balance
-        var accounts = EthAccounts.find({name: {$exists: true}}, {sort: {name: 1}}).fetch();
+        var accounts = EthAccounts.find({}, {sort: {balance: -1}}).fetch();
         accounts.sort(Helpers.sortByBalance);        
 
         if (FlowRouter.getQueryParam('owners')) {
-            var owners = FlowRouter.getQueryParam('owners').split('_');
+            var owners = FlowRouter.getQueryParam('owners').split(',');
 
             // Looks for them among the wallet account owner
             var defaultAccount = _.find(accounts, function(acc){
                return (owners.indexOf(acc.address)>=0);
             })
 
-            TemplateVar.set('defaultOwner', defaultAccount.address)
-            return defaultAccount.address;
-
+            return defaultAccount ? defaultAccount.address : null;
         } else {
             return accounts[0].address;
-        }
-
-        
+        }       
     },
     /**
     Return the number of signees fields
@@ -112,7 +107,7 @@ Template['views_account_create'].helpers({
         var owners = [];
 
         if (FlowRouter.getQueryParam('owners')) {
-            owners = FlowRouter.getQueryParam('owners').split('_').slice(0, TemplateVar.get('multisigSignees'));
+            owners = FlowRouter.getQueryParam('owners').split(',').slice(0, TemplateVar.get('multisigSignees'));
             owners = _.without(owners, TemplateVar.getFrom('.dapp-select-account', 'value'));
         } 
         
@@ -172,7 +167,12 @@ Template['views_account_create'].helpers({
     @method (multisigSignees)
     */
     'multisigSignees': function() {
-        var maxOwners = Math.max(Number(FlowRouter.getQueryParam('ownersNum')) || 7, 7);
+        var id = FlowRouter.getQueryParam('walletId');
+        var maxOwners = FlowRouter.getQueryParam('ownersNum');
+        if(maxOwners && Helpers.isWatchOnly(id))
+            maxOwners++;
+        maxOwners = Math.max(maxOwners || 7, 7);
+
         var returnArray = [];
         for (i = 2; i<=maxOwners; i++) {
             returnArray.push({value:i, text:i});
@@ -201,7 +201,7 @@ Template['views_account_create'].helpers({
     @method (simpleCheck)
     */
     'simpleCheck': function() {
-        return TemplateVar.get('selectedSection') == 'simple';
+        return TemplateVar.get('selectedSection') === 'simple' ? 'checked' : '';
     },
     /**
     Is multisig checked
@@ -209,7 +209,7 @@ Template['views_account_create'].helpers({
     @method (multisigCheck)
     */
     'multisigCheck': function() {
-        return TemplateVar.get('selectedSection') == 'multisig';
+        return TemplateVar.get('selectedSection') === 'multisig' ? 'checked' : '';
     },
     /**
     Default dailyLimit

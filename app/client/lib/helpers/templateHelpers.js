@@ -207,7 +207,9 @@ Formats address to a CaseChecksum
 @param {String} address             The address
 @return {String} checksumAddress    The returned, checksummed address
 **/
-Template.registerHelper('toChecksumAddress', web3.toChecksumAddress);
+Template.registerHelper('toChecksumAddress', function(address){
+    return _.isString(address) ? web3.toChecksumAddress(address) : '';
+});
 
 
 
