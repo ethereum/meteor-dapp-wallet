@@ -278,7 +278,6 @@ body {
     flex-flow: row wrap;
 
     .dapp-sticky-bar {
-        z-index: 25;
         position: fixed;
         top: floor(@gridHeight * -1);
         left: 0;
@@ -286,11 +285,15 @@ body {
         height: @gridHeight * 2;
         padding: @gridHeight/2 @gridWidth * 2.5;
         background: @colorWhite;
-        .transition(top @animationSpeed);
-        // box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        z-index: -1;
+
+        .transition(top @animationSpeed, opacity @animationSpeed * 2);
 
         &.sticky {
             top: floor(@gridHeight * 2);
+            opacity: 1;
+            z-index: 25;
         }
 
         > .dapp-identicon {

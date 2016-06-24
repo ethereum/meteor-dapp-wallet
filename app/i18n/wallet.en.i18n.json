@@ -39,6 +39,15 @@
             },
             "error": {
                 "wrongChain": "You seem on a different chain, please restart the Ethereum Wallet App!"
+            },
+            "warnings": {
+                "txOriginVulnerabilityWallet": "This smart contract wallet has outdated code and is subject to phishing attacks. ",
+                "txOriginVulnerabilityCallToAction": "Upgrade your contract now and transfer all your funds to your new one.",
+                "txOriginVulnerabilityAccount": "This account is an owner of a vulnerable wallet contract and using this account on malicious contracts can endanger your wallets funds. Upgrade your wallet before doing any transactions with this account.",
+                "txOriginVulnerabilityPopup": "We found vulnerable wallets! Make sure to deploy new wallets and move the funds!",
+                "checkThisNow": "Show vulnerable wallet",
+                "checkThisLater": "Later",
+                "learnMore": "Learn more about this vulnerability"
             }
         },
         "modals": {
@@ -80,7 +89,7 @@
             "requiredSignatures": "Required signatures",
             "owners": "Owners",
             "walletsDescription": "These are contracts that are stored on the blockchain and can hold and secure ether. They can have multiple accounts as owners and keep a full log of all transactions.",
-            "walletsDescriptionNotEnoughFunds": "Once you have more than 1 ether you can create more sophisticated contracts. Wallets are one type of basic smart contract, that allows your funds to be controlled by multiple accounts and have an optional daily limit on withdrawals, to increase security.  To create your own custom contracts go to the <em> Contracts </em> tab.",
+            "walletsDescriptionNotEnoughFunds": "Once you have more than 1 ether you can create more sophisticated contracts. Wallets are one type of basic smart contract, that allows your funds to be controlled by multiple accounts and have an optional daily limit on withdrawals, to increase security.  To create your own custom contracts go to the <em>Contracts</em> tab.",
             "accountsDescription": "Accounts are password protected keys that can hold ether, secure ethereum-based tokens or coins and control contracts. Accounts can't display incoming transactions.",
             "buttons": {
                 "deposit": "Deposit Ether",
