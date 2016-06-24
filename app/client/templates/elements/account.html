@@ -35,12 +35,19 @@
             {{/with}}
 
             <h3>
-                {{#if ../isContract}}
-                    <i class="icon-doc"></i>
+                {{#if isVulnerable}}
+                    <span class="red">
+                        <i class="icon-info"></i>
+                        {{name}}
+                    </span>
                 {{else}}
-                    {{walletIcon}}
+                    {{#if ../isContract}}
+                        <i class="icon-doc"></i>
+                    {{else}}
+                        {{walletIcon}}
+                    {{/if}}
+                    {{name}}
                 {{/if}}
-                {{name}}
             </h3>
 
             {{#unless creating}}
