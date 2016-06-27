@@ -21,8 +21,8 @@ Template['elements_compileContract'].onCreated(function() {
     TemplateVar.set('value', '');
     TemplateVar.set('constructorInputs', []);
     TemplateVar.set('selectedType', this.data.onlyByteCode ? 'byte-code' : 'source-code');
-    TemplateVar.set('compiledContracts', JSON.parse(localStorage['compiledContracts'])  || null);
-    TemplateVar.set('selectedContract', JSON.parse(localStorage['selectedContract'])  || null);
+    TemplateVar.set('compiledContracts', JSON.parse(localStorage['compiledContracts'] || null));
+    TemplateVar.set('selectedContract', JSON.parse(localStorage['selectedContract'] || null));
 
     // focus the editors
     this.autorun(function(c) {
