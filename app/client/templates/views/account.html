@@ -6,15 +6,22 @@
         <div class="dapp-container accounts-page">
 
             <div class="dapp-sticky-bar dapp-container">
-                {{> dapp_identicon identity=address}}
-                <h1>
-                    <span class="edit-name">{{name}}</span> <i class="edit-icon icon-pencil"></i>
 
-                    {{#if $or owners jsonInterface}}
-                        <button class="dapp-icon-button delete icon-trash"></button>
+                {{#with isVulnerable}}
+                    {{#if vulnerabilities.txorigin}}
+                        {{> elements_vulnerabilities_txorigin}}
                     {{/if}}
-                </h1>
-                {{> elements_balance balance=balance changeUnit=true showAllDecimals=true}}
+                {{else}}
+                    {{> dapp_identicon identity=address}}
+                    <h1>
+                        <span class="edit-name">{{name}}</span> <i class="edit-icon icon-pencil"></i>
+
+                        {{#if $or owners jsonInterface}}
+                            <button class="dapp-icon-button delete icon-trash"></button>
+                        {{/if}}
+                    </h1>
+                    {{> elements_balance balance=balance changeUnit=true showAllDecimals=true}}                
+                {{/with}}
             </div>
 
             <div class="accounts-page-summary">
@@ -55,6 +62,11 @@
                     </table>
                 {{/with}}
 
+                {{#with isVulnerable}}
+                    {{#if vulnerabilities.txorigin}}
+                        {{> elements_vulnerabilities_txorigin}}
+                    {{/if}}
+                {{/with}}
 
                 {{#if owners}}
                     <!-- Wallet infos -->
@@ -89,7 +101,7 @@
                     <!-- Account infos -->
                     <div class="account-info">
                         <h3>{{i18n "wallet.app.texts.note"}}</h3>
-                        <p>{{{i18n "wallet.accounts.walletNote"}}}</p>
+                        <p>{{i18n "wallet.accounts.walletNote"}}</p>
                     </div>
                 {{/if}}
 
@@ -103,6 +115,7 @@
 
             </div>
 
+            {{#unless isVulnerable}}
             <aside class="dapp-actionbar">
                 <nav>
                     <ul>
@@ -144,6 +157,7 @@
                     </ul>
                 </nav>
             </aside>
+            {{/unless}}
 
             {{#if jsonInterface}}
                 {{> elements_executeContract address=address jsonInterface=jsonInterface}}

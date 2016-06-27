@@ -238,8 +238,8 @@ var accountClipboardEventHandler = function(e){
                 copyAddress();
             },
             cancel: true,
-            modalQuestionOkButtonText: new Spacebars.SafeString(TAPi18n.__('wallet.accounts.modal.buttonOk')),
-            modalQuestionCancelButtonText: new Spacebars.SafeString(TAPi18n.__('wallet.accounts.modal.buttonCancel'))
+            modalQuestionOkButtonText: TAPi18n.__('wallet.accounts.modal.buttonOk'),
+            modalQuestionCancelButtonText: TAPi18n.__('wallet.accounts.modal.buttonCancel')
         });
     }
 };
