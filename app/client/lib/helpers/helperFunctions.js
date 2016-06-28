@@ -43,8 +43,7 @@ Return an account you own, from a list of accounts
 **/
 Helpers.getAccountYouOwn = function(accountList){
     // Load the accounts owned by user and sort by balance
-    var accounts = EthAccounts.find({name: {$exists: true}}, {sort: {name: 1}}).fetch();
-    accounts.sort(Helpers.sortByBalance);
+    var accounts = EthAccounts.find({}, {sort: {balance: 1}}).fetch();
 
     // Looks for them among the wallet account owner
     var fromAccount = _.find(accounts, function(acc){
