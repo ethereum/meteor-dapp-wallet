@@ -115,7 +115,9 @@ Returns a list of accounts and wallets sorted by balance
 Template.registerHelper('selectAccounts', function(hideWallets){
     var accounts = EthAccounts.find({}, {sort: {name: 1}}).fetch();
     
-    if(!hideWallets)
+    console.log('hideWallets',hideWallets);
+
+    if(hideWallets !== true)
         accounts = _.union(Wallets.find({owners: {$in: _.pluck(accounts, 'address')}, address: {$exists: true}}, {sort: {name: 1}}).fetch(), accounts);
     
     accounts.sort(Helpers.sortByBalance);

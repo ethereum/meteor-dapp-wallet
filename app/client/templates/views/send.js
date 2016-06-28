@@ -518,6 +518,12 @@ Template['views_send'].events({
                     duration: 2
                 });
 
+            if(selectedAccount.balance === '0' && !(selectedAccount.owners && tokenAddress !== 'ether'))
+                return GlobalNotification.warning({
+                    content: 'i18n:wallet.send.error.emptyWallet',
+                    duration: 2
+                });  
+            
             if(!web3.isAddress(to) && !data)
                 return GlobalNotification.warning({
                     content: 'i18n:wallet.send.error.noReceiver',
@@ -525,12 +531,6 @@ Template['views_send'].events({
                 });
 
             if(tokenAddress === 'ether') {
-
-                if(selectedAccount.balance === '0')
-                    return GlobalNotification.warning({
-                        content: 'i18n:wallet.send.error.emptyWallet',
-                        duration: 2
-                    });             
                 
                 if((_.isEmpty(amount) || amount === '0' || !_.isFinite(amount)) && !data)
                     return GlobalNotification.warning({
