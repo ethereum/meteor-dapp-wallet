@@ -518,20 +518,17 @@ Template['views_send'].events({
                     duration: 2
                 });
 
-
-            if(selectedAccount.balance === '0')
+            if(selectedAccount.balance === '0' && (!selectedAccount.owners || tokenAddress === 'ether'))
                 return GlobalNotification.warning({
                     content: 'i18n:wallet.send.error.emptyWallet',
                     duration: 2
-                });
-
-
+                });  
+            
             if(!web3.isAddress(to) && !data)
                 return GlobalNotification.warning({
                     content: 'i18n:wallet.send.error.noReceiver',
                     duration: 2
                 });
-
 
             if(tokenAddress === 'ether') {
                 
@@ -582,17 +579,8 @@ Template['views_send'].events({
                     // CONTRACT TX
                     if(contracts['ct_'+ selectedAccount._id]) {
 
-                        // Load the accounts owned by user and sort by balance
-                        var accounts = EthAccounts.find({name: {$exists: true}}, {sort: {name: 1}}).fetch();
-                        accounts.sort(Helpers.sortByBalance);
-
-                        // Looks for them among the wallet account owner
-                        var fromAccount = _.find(accounts, function(acc){
-                           return (selectedAccount.owners.indexOf(acc.address)>=0);
-                        })
-
                         contracts['ct_'+ selectedAccount._id].execute.sendTransaction(to || '', amount || '', data || '', {
-                            from: fromAccount.address,
+                            from: Helpers.getOwnedAccountFrom(selectedAccount.owners),
                             gasPrice: gasPrice,
                             gas: estimatedGas
                         }, function(error, txHash){
@@ -685,8 +673,9 @@ Template['views_send'].events({
                             gas: estimatedGas
                         });
 
+
                         contracts['ct_'+ selectedAccount._id].execute.sendTransaction(tokenAddress, '0', tokenSendData, {
-                            from: selectedAccount.owners[0],
+                            from: Helpers.getOwnedAccountFrom(selectedAccount.owners),
                             gasPrice: gasPrice,
                             gas: estimatedGas
                         }, function(error, txHash){

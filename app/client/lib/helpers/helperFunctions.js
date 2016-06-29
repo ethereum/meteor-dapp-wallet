@@ -35,6 +35,27 @@ Helpers.sortByBalance = function(a, b){
     return !b.disabled && new BigNumber(b.balance, 10).gt(new BigNumber(a.balance, 10)) ? 1 : -1;
 };
 
+
+/**
+Return an account you own, from a list of accounts
+
+@method getOwnedAccountFrom
+@param {Array} accountList array of account addresses
+@return {Mixed} the account address of an account owned
+**/
+Helpers.getOwnedAccountFrom = function(accountList){
+    // Load the accounts owned by user and sort by balance
+    var accounts = EthAccounts.find({}, {sort: {balance: 1}}).fetch();
+    accounts.sort(Helpers.sortByBalance);
+
+    // Looks for them among the wallet account owner
+    var fromAccount = _.find(accounts, function(acc){
+       return (accountList.indexOf(acc.address)>=0);
+    })
+
+    return fromAccount ? fromAccount.address : '';
+};
+
 /**
 Clear localStorage
 

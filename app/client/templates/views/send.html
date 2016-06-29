@@ -16,7 +16,7 @@
             <div class="col col-6 mobile-full from">
                 <h3>{{i18n 'wallet.send.from'}}</h3>
 
-                {{> dapp_selectAccount accounts=selectAccounts showAccountTypes=true}}
+                {{> dapp_selectAccount accounts=(selectAccounts deployContract) showAccountTypes=true}}
 
             </div>
 
