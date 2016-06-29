@@ -518,7 +518,7 @@ Template['views_send'].events({
                     duration: 2
                 });
 
-            if(selectedAccount.balance === '0' && !(selectedAccount.owners && tokenAddress !== 'ether'))
+            if(selectedAccount.balance === '0' && (!selectedAccount.owners || tokenAddress === 'ether'))
                 return GlobalNotification.warning({
                     content: 'i18n:wallet.send.error.emptyWallet',
                     duration: 2
@@ -580,7 +580,7 @@ Template['views_send'].events({
                     if(contracts['ct_'+ selectedAccount._id]) {
 
                         contracts['ct_'+ selectedAccount._id].execute.sendTransaction(to || '', amount || '', data || '', {
-                            from: Helpers.getAccountYouOwn(selectedAccount.owners).address,
+                            from: Helpers.getOwnedAccountFrom(selectedAccount.owners),
                             gasPrice: gasPrice,
                             gas: estimatedGas
                         }, function(error, txHash){
@@ -673,10 +673,9 @@ Template['views_send'].events({
                             gas: estimatedGas
                         });
 
-                        console.log( Helpers.getAccountYouOwn(selectedAccount.owners).address);
 
                         contracts['ct_'+ selectedAccount._id].execute.sendTransaction(tokenAddress, '0', tokenSendData, {
-                            from: Helpers.getAccountYouOwn(selectedAccount.owners).address,
+                            from: Helpers.getOwnedAccountFrom(selectedAccount.owners),
                             gasPrice: gasPrice,
                             gas: estimatedGas
                         }, function(error, txHash){
