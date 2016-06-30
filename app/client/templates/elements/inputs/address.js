@@ -22,6 +22,7 @@ Template['elements_input_address'].helpers({
         var attr = _.clone(this);
         attr.class =  this.class ? this.class + ' abi-input' : 'abi-input';
         attr.placeholder = this.placeholder || '0x123456...';
+        attr.value = this.value;
         return attr;
     }
 })

@@ -25,6 +25,7 @@ Helpers.rerun = {
     '1s': new ReactiveTimer(1)
 };
 
+
 /**
 Sort method for accounts and wallets to sort by balance
 
@@ -32,6 +33,27 @@ Sort method for accounts and wallets to sort by balance
 **/
 Helpers.sortByBalance = function(a, b){
     return !b.disabled && new BigNumber(b.balance, 10).gt(new BigNumber(a.balance, 10)) ? 1 : -1;
+};
+
+
+/**
+Return an account you own, from a list of accounts
+
+@method getOwnedAccountFrom
+@param {Array} accountList array of account addresses
+@return {Mixed} the account address of an account owned
+**/
+Helpers.getOwnedAccountFrom = function(accountList){
+    // Load the accounts owned by user and sort by balance
+    var accounts = EthAccounts.find({}, {sort: {balance: 1}}).fetch();
+    accounts.sort(Helpers.sortByBalance);
+
+    // Looks for them among the wallet account owner
+    var fromAccount = _.find(accounts, function(acc){
+       return (accountList.indexOf(acc.address)>=0);
+    })
+
+    return fromAccount ? fromAccount.address : '';
 };
 
 /**
@@ -359,15 +381,18 @@ Takes a camelcase and shows it with spaces
 
 @method toSentence
 @param {string} camelCase    A name in CamelCase or snake_case format
-@return {string} sentence    The same name with spaces
+@return {string} sentence    The same name, sanitized, with spaces
 **/
 Helpers.toSentence = function (inputString, noHTML) {
     if (typeof inputString == 'undefined') 
-        return false;
-    else if (noHTML === true) // only consider explicit true
-        return inputString.replace(/([A-Z]+|[0-9]+)/g, ' $1')
-    else 
-        return inputString.replace(/([A-Z]+|[0-9]+)/g, ' $1').replace(/([\_])/g, '<span class="dapp-punctuation">$1</span>');
+      return false;
+    else {
+    	inputString = inputString.replace(/[^a-zA-Z0-9_]/g, '');
+      if (noHTML === true) // only consider explicit true
+        return inputString.replace(/([A-Z]+|[0-9]+)/g, ' $1').trim();
+      else 
+        return inputString.replace(/([A-Z]+|[0-9]+)/g, ' $1').trim().replace(/([\_])/g, '<span class="dapp-punctuation">$1</span>');
+    }
 }
 
 

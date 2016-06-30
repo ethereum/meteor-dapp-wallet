@@ -1,0 +1,25 @@
+<template name="elements_vulnerabilities_txorigin">
+    <div class="row clear account-page-notification">
+        <div class="row clear">
+            <a href="{{#if owners}}
+                {{#if (isWatchOnly _id)}}
+                    #
+                {{else}}
+                    {{pathFor route='createAccount' query=upgradeParams}}
+                {{/if}}
+                {{else}}
+                    {{pathFor route='account' address=walletAddress}}
+                {{/if}}">
+                {{#if owners}}
+                    {{i18n "wallet.app.warnings.txOriginVulnerabilityWallet"}}
+                    {{#unless (isWatchOnly _id)}}
+                        <br><strong>{{i18n "wallet.app.warnings.txOriginVulnerabilityCallToAction"}}</strong>
+                    {{/unless}}
+                {{else}}
+                    {{i18n "wallet.app.warnings.txOriginVulnerabilityAccount"}}
+                {{/if}}
+            </a>
+        </div>
+        <a href="https://blog.ethereum.org/2016/06/24/security-alert-smart-contract-wallets-created-in-frontier-are-vulnerable-to-phishing-attacks/" class="learn-more-link" target="_blank">{{i18n "wallet.app.warnings.learnMore"}}</a>
+    </div>
+</template>

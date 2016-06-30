@@ -40,7 +40,7 @@ ethereum:web3@0.15.3
 fastclick@1.0.11
 frozeman:animation-helper@0.2.6
 frozeman:global-notifications@0.2.1
-frozeman:inline-form@0.0.7
+frozeman:inline-form@0.1.0
 frozeman:persistent-minimongo@0.1.8
 frozeman:persistent-minimongo2@0.3.4
 frozeman:reactive-timer@0.1.7

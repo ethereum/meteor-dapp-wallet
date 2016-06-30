@@ -93,22 +93,6 @@ Template['views_account'].helpers({
         return Helpers.getAccountByAddress(FlowRouter.getParam('address'));
     },
     /**
-    Run this helper, if the address changed
-
-    @method (addressChanged)
-    */
-    addressChanged: function(){
-        var address = this.address
-            template = Template.instance();
-
-        // stop watching custom events, on destroy
-        if(template.customEventFilter) {
-            template.customEventFilter.stopWatching();
-            template.customEventFilter = null;
-            TemplateVar.set('watchEvents', false);
-        }
-    },
-    /**
     Get the current jsonInterface, or use the wallet jsonInterface
 
     @method (jsonInterface)
@@ -238,8 +222,8 @@ var accountClipboardEventHandler = function(e){
                 copyAddress();
             },
             cancel: true,
-            modalQuestionOkButtonText: new Spacebars.SafeString(TAPi18n.__('wallet.accounts.modal.buttonOk')),
-            modalQuestionCancelButtonText: new Spacebars.SafeString(TAPi18n.__('wallet.accounts.modal.buttonCancel'))
+            modalQuestionOkButtonText: TAPi18n.__('wallet.accounts.modal.buttonOk'),
+            modalQuestionCancelButtonText: TAPi18n.__('wallet.accounts.modal.buttonCancel')
         });
     }
 };
@@ -377,9 +361,11 @@ Template['views_account'].events({
     /**
     Click watch contract events
     
-    @event click button.toggle-watch-events
+    @event change button.toggle-watch-events
     */
     'change .toggle-watch-events': function(e, template){
+        e.preventDefault();
+
         if(template.customEventFilter) {
             template.customEventFilter.stopWatching();
             template.customEventFilter = null;

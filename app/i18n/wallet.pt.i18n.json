@@ -39,6 +39,15 @@
             },
             "error": {
                 "wrongChain": "Você está na rede errada. Por favor reinicie esse aplicativo."
+            },
+            "warnings": {
+                "txOriginVulnerabilityWallet": "Esta carteira contrato inteligente tem código desatualizados e está sujeito a ataques de phishing. ",
+                "txOriginVulnerabilityCallToAction":"Atualize seu contrato agora e transferir todos os seus recursos para o novo.",
+                "txOriginVulnerabilityAccount": "Essa conta administra uma carteira vulnerável e utiliza-la com contratos maliciosos pode pôr em perigo os seus fundos. Atualize sua carteira antes de fazer quaisquer transações com esta conta.",
+                "txOriginVulnerabilityPopup": "Encontramos carteiras vulneráveis! Certifique-se de implantar novas carteiras e mover os fundos!",
+                "checkThisNow": "Mostre-me agora",
+                "checkThisLater": "Eu vejo depois",                
+                "learnMore": "Saiba mais sobre esta vulnerabilidade"
             }
         },
         "modals": {

@@ -9,10 +9,10 @@
                     
                     {{#if TemplateVar.get "show"}}
                         {{TemplateVar.set "byteTextareaShown" true}}
-                        <button class="hide-data dapp-block-button dapp-small">{{{i18n 'wallet.send.removeData'}}}</button>
+                        <button class="hide-data dapp-block-button dapp-small">{{i18n 'wallet.send.removeData'}}</button>
                     {{else}}
                         {{TemplateVar.set "byteTextareaShown" false}}
-                        <button class="show-data dapp-block-button dapp-small">{{{i18n 'wallet.send.addData'}}}</button>
+                        <button class="show-data dapp-block-button dapp-small">{{i18n 'wallet.send.addData'}}</button>
                     {{/if}}
             {{else}}
                 <div class="dapp-segmented-control dapp-small">
@@ -53,11 +53,11 @@
                             <select class="compiled-contracts">
                                 <option disabled selected>{{i18n "wallet.contracts.pickContract"}}</option>
                                 {{#each this}}
-                                    <option value="{{name}}">{{toSentence name true}}</option>
+                                    <option value="{{name}}" selected="{{selected}}">{{toSentence name true}}</option>
                                 {{/each}}    
                             </select>
                         {{else}}
-                        {{{i18n "wallet.contracts.noContract"}}}
+                            {{{i18n "wallet.contracts.noContract"}}}
                         {{/with}}
                         
                         {{#with selectedContractInputs}}
@@ -75,7 +75,7 @@
 
                     {{#if onlyByteCode}}
                         <br><br><br>
-                        {{{i18n 'wallet.send.texts.addData'}}}
+                        {{i18n 'wallet.send.texts.addData'}}
                     {{/if}}
 
                     {{#if codeNotExecutable}}

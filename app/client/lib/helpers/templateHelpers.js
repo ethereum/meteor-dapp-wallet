@@ -52,6 +52,44 @@ Template.registerHelper('isEtherUnit', function(){
 
 
 /**
+Check if wallet has vulnerabilities
+
+@method (isVulnerable)
+@param {String} address and address of a wallet/account
+**/
+Template.registerHelper('isVulnerable', function(address){
+    var account = _.isString(address) ? Helpers.getAccountByAddress(address): this;
+
+    if(!account)
+        return;
+
+    // check if is wallet and is vulnerable
+    if(_.find(account.vulnerabilities || [], function(vul){
+        return vul;
+    })) {
+        return account;
+    }
+
+    // check if is owner account and is vulnerable
+    var wallets = _.map(Wallets.find({vulnerabilities: {$exists: true}}).fetch(), function(wal){
+        return (!!_.find(wal.vulnerabilities || [], function(vul){
+            return vul;
+        }))
+            ? wal : false;
+    });
+    var wallet = _.find(wallets, function(wal){
+        return _.contains(wal.owners, account.address);
+    })
+
+    if(wallet) {
+        // add vulnerabilities to account
+        account.vulnerabilities = wallet.vulnerabilities;
+        return account;
+    } else 
+        return false;
+});
+
+/**
 Return the current unit
 
 @method (unit)
@@ -74,9 +112,12 @@ Returns a list of accounts and wallets sorted by balance
 
 @method (latestBlock)
 **/
-Template.registerHelper('selectAccounts', function(){
+Template.registerHelper('selectAccounts', function(hideWallets){
     var accounts = EthAccounts.find({}, {sort: {name: 1}}).fetch();
-    accounts = _.union(Wallets.find({owners: {$in: _.pluck(accounts, 'address')}, address: {$exists: true}}, {sort: {name: 1}}).fetch(), accounts);
+    
+    if(hideWallets !== true)
+        accounts = _.union(Wallets.find({owners: {$in: _.pluck(accounts, 'address')}, address: {$exists: true}}, {sort: {name: 1}}).fetch(), accounts);
+    
     accounts.sort(Helpers.sortByBalance);
     return accounts;
 });
@@ -169,7 +210,9 @@ Formats address to a CaseChecksum
 @param {String} address             The address
 @return {String} checksumAddress    The returned, checksummed address
 **/
-Template.registerHelper('toChecksumAddress', web3.toChecksumAddress);
+Template.registerHelper('toChecksumAddress', function(address){
+    return _.isString(address) ? web3.toChecksumAddress(address) : '';
+});
 
 
 
