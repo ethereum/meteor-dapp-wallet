@@ -39,6 +39,16 @@ var addCustomContract = function(e) {
     }
 
     if(web3.isAddress(address)) {
+        // chech if wallet contract already exists
+        if(Wallets.findOne({address: address})) {
+            GlobalNotification.warning({
+            content: TAPi18n.__('wallet.newWallet.error.alreadyExists'),
+            duration: 2
+            });
+
+            return false;
+        }
+
         CustomContracts.upsert({address: address}, {$set: {
             address: address,
             name: name,
