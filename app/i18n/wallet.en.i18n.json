@@ -220,7 +220,7 @@
             },
             "error": {
                 "emptySignees": "You didn't provided all owners.",
-                "alreadyExists": "Wallet contract already exists.",
+                "alreadyExists": "Account already exists.",
                 "stubHasNoOrigWalletAddress": "Your stub contract has no original account address set, please restart your App!",
                 "contractsCantBeOwners": "Contracts can't be owners.",
                 "checkOwnerAddress": "Please change the contract address __address__ to an account."
