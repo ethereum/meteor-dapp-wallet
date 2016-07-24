@@ -1,7 +1,5 @@
 app/browser
-app/i18n/public
 app/packages
 app/packages/*
-app/public/i18n/*.json
 build/
 packages/
