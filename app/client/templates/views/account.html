@@ -123,6 +123,7 @@
                                 {{i18n "wallet.accounts.buttons.deposit"}}
                             </a>
                         </li>
+
                         {{#if $eq ($.Session.get "network") "main"}}
                             <li>
                                 <a href="https://shapeshift.io/shifty.html?destination={{address}}&amp;output=ETH&amp;apiKey=ef8312d8c9b9dda64fb852e8683eac6c33123f8743ff11383fb3bab29a364c01c27343fced4e628db8d5d66d763565763f8699c0fc903ec23db31cb908a944c8" target="_popup" data-popup-width="" data-popup-height="">
@@ -131,6 +132,16 @@
                                 </a>
                             </li>  
                         {{/if}}
+
+                        {{#if $eq ($.Session.get "network") "main"}}
+                            <li>
+                                <button class="buy-either-using-coinbase">
+                                    <i class="icon-bitcoin"></i>
+                                    {{i18n "wallet.accounts.buttons.buyEtherUsingCoinbase"}}
+                                </button>
+                            </li>  
+                        {{/if}}
+
                         <li>
                             <button class="copy-to-clipboard-button">
                                 <i class="icon-docs"></i>

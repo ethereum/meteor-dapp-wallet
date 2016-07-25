@@ -94,6 +94,7 @@
             "buttons": {
                 "deposit": "Deposit Ether",
                 "depositBitcoin": "Deposit using Bitcoin",
+                "buyEtherUsingCoinbase": "Buy Ether using Coinbase",
                 "copyAddress": "Copy address",
                 "scanQRCode": "Show QR-Code",
                 "showInterface": "Show Interface"
