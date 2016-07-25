@@ -70,8 +70,6 @@
             "interface": {
                 "title": "合约的JSON 界面",
                 "description": "如果您想让其他人执行这个合约，请把这个信息和合约地址一起发送给他。"
-                "description": "If you want to have someone else execute this contract, send this information along with the contract's address."
-
             }
         },
         "accounts": {
