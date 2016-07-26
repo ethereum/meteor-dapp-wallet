@@ -105,6 +105,10 @@ Template['elements_compileContract'].onRendered(function() {
                     template.$('.abi-input').trigger('input');
                 });
 
+                // clean all error markers
+                _.each(editor.session.$backMarkers, function(i) { 
+                    editor.session.removeMarker(i.id);
+                })
 
                 if(!error) {
 
@@ -126,6 +130,7 @@ Template['elements_compileContract'].onRendered(function() {
                             };
                         }
 
+
                         return {
                             name: name,
                             bytecode: contract.bytecode,
@@ -140,10 +145,26 @@ Template['elements_compileContract'].onRendered(function() {
 
 
                 } else {
-                    console.log(error);
-                    // Doesnt compile in solidity either, throw error
-                    TemplateVar.set(template, 'compileError', error);
+                    // Converts error into multiple bits
+                    var errorLine = error.toString().split(':');
 
+                    if (errorLine.length < 4) {
+                        // If it can't break the error then return all
+                        TemplateVar.set(template, 'compileError', error);
+                    } else {
+                        // Finds a ^____^ pattern
+                        var foundPattern = errorLine[5].match(/(\^-*\^)/g);
+                        var errorLength = (foundPattern)? foundPattern[0].length : 0;
+
+                        // Hightlights the error
+                        var Range = ace.require('ace/range').Range;
+                        editor.session.addMarker(new Range(errorLine[2]-1, 0, errorLine[2]-1, 200), "errorMarker");
+                        editor.session.addMarker(new Range(errorLine[2]-1, errorLine[3]-1, errorLine[2]-1, Number(errorLine[3]) + errorLength), "errorMarker");
+
+                        // Doesnt compile in solidity either, throw error
+                        TemplateVar.set(template, 'compileError', errorLine[5]);  
+                    }
+                    
                     TemplateVar.set(template, 'compiledContracts', false);
                     TemplateVar.set(template, 'selectedContract', false);
                 }
