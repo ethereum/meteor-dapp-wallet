@@ -70,6 +70,7 @@ var addLogWatching = function(newDocument){
 };
 
 
+
 Template['views_account'].onRendered(function(){
     console.timeEnd('renderAccountPage');
 });
@@ -317,6 +318,24 @@ Template['views_account'].events({
     @event copy .copyable-address span
     */
     'copy .copyable-address': accountClipboardEventHandler,
+
+    /**
+    Click to launch Coinbase widget
+    
+    @event click deposit-using-coinbase
+    */
+    'click .deposit-using-coinbase': function(e){
+        e.preventDefault();
+
+        (new CoinBaseWidget(e.currentTarget, {
+            address: "testaddress",
+            amount: "5",
+            code: "OUR_CODE",
+            currency: "USD",
+            crypto_currency: "ETH",
+        })).show();
+    },
+
 
     /**
     Click to reveal QR Code
