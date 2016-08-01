@@ -206,6 +206,29 @@ Template['elements_compileContract'].helpers({
     'selectedContractInputs' : function(){
         selectedContract = TemplateVar.get('selectedContract');        
         return selectedContract ? selectedContract.constructorInputs : [];
+    },
+    /**
+    List options on the replay attack selector
+
+    @method (replayAttackOptions)
+    */
+    'replayAttackOptions' : function(){
+        return [{value:"foo", text:"prevent it from being accepted"},{value:"bar", text:"send to this address:"}];
+    },
+    /**
+    return accounts 
+
+    @method replayAttackAccounts
+    */
+    'replayAttackList' : function() {
+        var accounts = EthAccounts.find({balance:"0"}, {sort: {name: 1}}).fetch();
+    
+        accounts = _.union(Wallets.find({balance:"0", owners: {$in: _.pluck(accounts, 'address')}, address: {$exists: true}}, {sort: {balance: 1}}).fetch(), accounts);
+        
+        console.log('accounts', accounts);
+        accounts.unshift({address:'', name: 'back to the sender'})
+        accounts.push({address:'newAccount', name: 'new account...'})
+        return accounts;
     }
 });
 
@@ -277,5 +300,28 @@ Template['elements_compileContract'].events({
         var inputs = Helpers.addInputValue(selectedContract.constructorInputs, this, e.currentTarget);
 
         TemplateVar.set('constructorInputs', inputs);
+    },
+    /**
+    Change the number of signatures
+
+    @event click span[name="multisigSignatures"] .simple-modal button
+    */
+    'change select.replay-protection-to': function(e){
+        var selection = $(e.currentTarget)[0].options[$(e.currentTarget)[0].selectedIndex].value;
+        console.log('replay-protection-to', selection );
+
+        if (selection == 'newAccount') {
+            mist.requestAccount(function(e, account) {
+                if(!e) {
+                    account = account.toLowerCase();
+                    EthAccounts.upsert({address: account}, {$set: {
+                        address: account,
+                        new: true
+                    }});
+                }
+            });
+        }
+        
+        TemplateVar.set('replay-protection-to',  $(e.currentTarget).attr("data-value"));
     }
 });

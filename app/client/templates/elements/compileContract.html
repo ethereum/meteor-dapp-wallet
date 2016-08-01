@@ -1,20 +1,47 @@
 <template name="elements_compileContract">
     <div class="row clear compile-contract">
+
+        {{#if onlyByteCode}}                    
+            {{#if TemplateVar.get "show"}}
+                {{TemplateVar.set "byteTextareaShown" true}}
+                    <div class="col col-8 mobile-full">
+                    
+                        <button class="hide-data dapp-block-button dapp-small">{{i18n 'wallet.send.showLessOptions'}}</button>
+
+                        <br>
+                        <h3>Replay attack protection</h3>
+                        <label>
+                        <input type="checkbox" class="replay-protection">
+                        If this transaction is attempted on any other chain, then send funds to 
+                        {{> dapp_selectAccount accounts=(replayAttackList) showAccountTypes=false class='inline replay-protection-to'}}
+                        </label>
+
+                        <br>
+                        <br>
+
+                        <h3>{{i18n 'wallet.send.data'}}</h3>
+                    </div>
+                    <div class="col col-4 mobile-full">
+                        <br><br><br><br>
+                        Replay transactions issues happen when similar ethereum chains share peers and transactions signed in one network leak into others. We suggest you do not put any ether on this network into an account that you have a balance in another.
+                    </div>   
+
+            {{else}}
+                <div class="col col-12 mobile-full">
+
+                    {{TemplateVar.set "byteTextareaShown" false}}
+                    <button class="show-data dapp-block-button dapp-small">{{i18n 'wallet.send.showMoreOptions'}}</button>
+                </div>
+            {{/if}}
+        {{/if}}
+
+
         <div class="col col-8 mobile-full {{#if $eq (TemplateVar.get 'selectedType') 'source-code'}}source-code{{/if}}">
 
             {{reactiveContext}}
 
-            {{#if onlyByteCode}}
-                    <h3>{{i18n 'wallet.send.data'}}</h3>
-                    
-                    {{#if TemplateVar.get "show"}}
-                        {{TemplateVar.set "byteTextareaShown" true}}
-                        <button class="hide-data dapp-block-button dapp-small">{{i18n 'wallet.send.removeData'}}</button>
-                    {{else}}
-                        {{TemplateVar.set "byteTextareaShown" false}}
-                        <button class="show-data dapp-block-button dapp-small">{{i18n 'wallet.send.addData'}}</button>
-                    {{/if}}
-            {{else}}
+
+            {{#unless onlyByteCode}}
                 <div class="dapp-segmented-control dapp-small">
                     <input type="radio" value="source-code" id="source-code" name="contract-type" checked>
                     <label for="source-code"> {{i18n 'wallet.contracts.contractSourceCode'}}</label>
@@ -22,7 +49,8 @@
                     <input type="radio" value="byte-code" id="byte-code" name="contract-type">
                     <label for="byte-code"> {{i18n 'wallet.contracts.contractByteCode'}} </label>
                 </div>
-            {{/if}}
+            {{/unless}}
+
 
             <textarea id="contract-source-editor" cols="20" rows="20"></textarea>
 
@@ -74,7 +102,6 @@
                 {{#if TemplateVar.get "show"}}
 
                     {{#if onlyByteCode}}
-                        <br><br><br>
                         {{i18n 'wallet.send.texts.addData'}}
                     {{/if}}
 
