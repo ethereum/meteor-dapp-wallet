@@ -40,7 +40,6 @@ CoinBaseWidget = function(buttonElem, params) {
     // };
 
     self.handleMessage = function(e) {
-        console.log(e.data);
         switch (e.data.event) {
             case "modal_closed":
                 self.modal.style.display = "none";
