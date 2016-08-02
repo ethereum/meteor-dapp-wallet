@@ -140,11 +140,8 @@ Template['elements_executeContract_constant'].onCreated(function(){
         // make reactive to the latest block
         EthBlocks.latest;
 
-        // get args for the constant function
-        var args = TemplateVar.get('inputs') || [];
-
-        // add callback
-        args.push(function(e, r) {
+        // get args for the constant function and add callback
+        var args = TemplateVar.get('inputs').concat(function(e, r) {
             if(!e) {
                 var outputs = [];
                 // single return value
