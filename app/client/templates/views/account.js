@@ -330,7 +330,7 @@ Template['views_account'].events({
         (new CoinBaseWidget(e.currentTarget, {
             address: this.address,
             amount: "5",
-            code: "c58524ed-5147-5cbf-b1ce-4910c4aa46b9",
+            code: "eb44c52c-9c3f-5fb6-8b11-fc3ec3022519",
             currency: "USD",
             crypto_currency: "ETH",
         })).show();
