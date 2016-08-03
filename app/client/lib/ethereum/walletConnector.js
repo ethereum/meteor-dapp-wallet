@@ -61,6 +61,7 @@ connectToNode = function(){
 
     EthAccounts.init();
     EthBlocks.init();
+    EthTools.ticker.start({extraParams: (typeof mist !== 'undefined') ? 'Mist-'+ mist.version : ''});
 
     if (EthAccounts.find().count() > 0) {
         checkForOriginalWallet();
