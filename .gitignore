@@ -1,6 +1,6 @@
+app/browser
 app/packages
 app/packages/*
-app/public/i18n/*.json
 build/
 packages/
 app/public/i18n/tap-i18n.json
