@@ -280,7 +280,6 @@ Template['elements_compileContract'].helpers({
         
         accounts.unshift({address:'ban', name: 'back to the sender'});
         accounts.push({address:'question', name: 'other account...'});
-        // accounts.push({address:'plus', name: 'new account...'});
         return accounts;
     }
 });
@@ -359,22 +358,6 @@ Template['elements_compileContract'].events({
     */
     'change select.replay-protection-to': function(e){
         var selection = $(e.currentTarget)[0].options[$(e.currentTarget)[0].selectedIndex].value;
-
-        // if (selection == 'plus') {
-        //     mist.requestAccount(function(e, account) {
-        //         console.log('newacc', e, account);
-
-        //         if(!e) {
-        //             account = account.toLowerCase();
-        //             EthAccounts.upsert({address: account}, {$set: {
-        //                 address: account,
-        //                 new: true
-        //             }});
-        //             TemplateVar.set(template, 'show-address-field',  true);
-        //             TemplateVar.set(template, 'replay-protection-to',  account);
-        //         }
-        //     });
-        // } else 
 
         if (selection == 'question') {
             TemplateVar.set('show-address-field',  true);

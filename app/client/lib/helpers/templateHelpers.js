@@ -118,7 +118,6 @@ Template.registerHelper('selectAccounts', function(hideWallets){
     if(hideWallets !== true)
         accounts = _.union(Wallets.find({owners: {$in: _.pluck(accounts, 'address')}, address: {$exists: true}}, {sort: {name: 1}}).fetch(), accounts);
     
-    // accounts.sort(Helpers.sortByBalance);
     return accounts;
 });
 

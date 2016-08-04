@@ -496,11 +496,8 @@ Template['views_send'].events({
             selectedAction = TemplateVar.get("selectedAction"),
             data = getDataField(),
             contract = TemplateVar.getFrom('.compile-contract', 'contract'),
-            sendAll = TemplateVar.get('sendAll'),
-            splitterContract = {};
-
-
-
+            sendAll = TemplateVar.get('sendAll');
+            
 
         if(selectedAccount && !TemplateVar.get('sending')) {
 
