@@ -403,11 +403,17 @@ observeTransactions = function(){
             }
 
             // add price data
-            if(!newDocument.exchangeRates || 
+            if(newDocument.timestamp && 
+               (!newDocument.exchangeRates || 
                !newDocument.exchangeRates.btc ||
                !newDocument.exchangeRates.usd ||
-               !newDocument.exchangeRates.eur) {
-                HTTP.get('https://min-api.cryptocompare.com/data/pricehistorical?fsym=ETH&tsyms=BTC,USD,EUR&ts='+ newDocument.timestamp, function(e, res){
+               !newDocument.exchangeRates.eur)) {
+                var url = 'https://min-api.cryptocompare.com/data/pricehistorical?fsym=ETH&tsyms=BTC,USD,EUR&ts='+ newDocument.timestamp;
+
+                if(typeof mist !== 'undefined')
+                    url += '&extraParams=Mist-'+ mist.version;
+
+                HTTP.get(url, function(e, res){
 
                     if(!e && res && res.statusCode === 200) {
                         var content = JSON.parse(res.content);
