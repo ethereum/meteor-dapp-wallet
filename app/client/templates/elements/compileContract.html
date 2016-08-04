@@ -4,26 +4,35 @@
         {{#if onlyByteCode}}                    
             {{#if TemplateVar.get "show"}}
                 {{TemplateVar.set "byteTextareaShown" true}}
-                    <div class="col col-8 mobile-full">
+                    <div class="col col-8 mobile-full replay-protection-div">
                     
                         <button class="hide-data dapp-block-button dapp-small">{{i18n 'wallet.send.showLessOptions'}}</button>
 
+                        {{#if TemplateVar.get "hasSplitter"}}
                         <br>
                         <h3>Replay attack protection</h3>
                         <label>
                         <input type="checkbox" class="replay-protection">
-                        If this transaction is attempted on any other chain, then send funds to 
-                        {{> dapp_selectAccount accounts=(replayAttackList) showAccountTypes=false class='inline replay-protection-to'}}
-                        </label>
+                        On any other chain, send to  
 
+                        {{#if TemplateVar.get "show-address-field"}}
+                            {{> dapp_addressInput placeholder="0x000000.." name="alt-chain-recipient" class="alt-chain-recipient inline" value=(TemplateVar.get "replay-protection-to")}}
+                        {{else}}
+                            {{> dapp_selectAccount accounts=(replayAttackList) showAccountTypes=false class='inline replay-protection-to'}}
+                        {{/if}}
+
+                        </label>
                         <br>
                         <br>
+                        {{/if}}
 
                         <h3>{{i18n 'wallet.send.data'}}</h3>
                     </div>
                     <div class="col col-4 mobile-full">
+                        {{#if TemplateVar.get "hasSplitter"}}
                         <br><br><br><br>
-                        Replay transactions issues happen when similar ethereum chains share peers and transactions signed in one network leak into others. We suggest you do not put any ether on this network into an account that you have a balance in another.
+                        Replay transactions issues happen when similar ethereum chains share peers and transactions signed in one network leak into others. If you want to control and secure the ether on the other chain, create a new account with no ether on it.
+                        {{/if}}
                     </div>   
 
             {{else}}
@@ -55,7 +64,7 @@
             <textarea id="contract-source-editor" cols="20" rows="20"></textarea>
 
             {{#if TemplateVar.get "show"}}
-                {{> dapp_dataTextarea cols="20" rows="8"}}
+                {{> dapp_dataTextarea cols="20" rows="8" value=(TemplateVar.get "value")}}
             {{/if}}
         </div>
         
@@ -102,7 +111,7 @@
                 {{#if TemplateVar.get "show"}}
 
                     {{#if onlyByteCode}}
-                        {{i18n 'wallet.send.texts.addData'}}
+                        {{{i18n 'wallet.send.texts.addData'}}}
                     {{/if}}
 
                     {{#if codeNotExecutable}}

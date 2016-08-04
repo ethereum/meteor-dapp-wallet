@@ -21,6 +21,7 @@ when the user actually wants to send the dummy data.
 */
 var defaultEstimateGas = 5000000;
 
+
 /**
 Check if the amount accounts daily limit  and sets the correct text.
 
@@ -51,12 +52,7 @@ var getDataField = function(){
     // make reactive to the show/hide of the textarea
     TemplateVar.getFrom('.compile-contract','byteTextareaShown');
 
-    var type = TemplateVar.getFrom('.compile-contract', 'selectedType');
-        data = (type === 'byte-code')
-        ? TemplateVar.getFrom('.dapp-data-textarea', 'value')
-        : TemplateVar.getFrom('.compile-contract', 'value');
-
-    return data;
+    return TemplateVar.getFrom('.compile-contract', 'value');
 };
 
 
@@ -102,7 +98,7 @@ Template['views_send'].onCreated(function(){
 
     // check daily limit again, when the account was switched
     template.autorun(function(c){
-        var address = TemplateVar.getFrom('.dapp-select-account', 'value'),
+        var address = TemplateVar.getFrom('.dapp-select-account.send-from', 'value'),
             amount = TemplateVar.get('amount') || '0';
 
         if(!c.firstRun)
@@ -117,6 +113,7 @@ Template['views_send'].onCreated(function(){
             TemplateVar.set('amount', EthTools.toWei(template.find('input[name="amount"]').value.replace(',','.'), unit));
         }
     });
+
 });
 
 
@@ -136,12 +133,12 @@ Template['views_send'].onRendered(function(){
     // set the from
     var from = FlowRouter.getParam('from');
     if(from)
-        TemplateVar.setTo('select[name="dapp-select-account"]', 'value', FlowRouter.getParam('from').toLowerCase());
+        TemplateVar.setTo('select[name="dapp-select-account"].send-from', 'value', FlowRouter.getParam('from').toLowerCase());
 
 
     // ->> GAS PRICE ESTIMATION
     template.autorun(function(c){
-        var address = TemplateVar.getFrom('.dapp-select-account', 'value'),
+        var address = TemplateVar.getFrom('.dapp-select-account.send-from', 'value'),
             to = TemplateVar.getFrom('.dapp-address-input .to', 'value'),
             amount = TemplateVar.get('amount') || '0',
             data = getDataField(),
@@ -230,7 +227,7 @@ Template['views_send'].helpers({
     @method (selectedAccount)
     */
     'selectedAccount': function(){
-        return Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account', 'value'));
+        return Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account.send-from', 'value'));
     },
     /**
     Get the current selected token document
@@ -265,7 +262,7 @@ Template['views_send'].helpers({
     @method (hasTokens)
     */
     'hasTokens': function() {
-        var selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account', 'value')),
+        var selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account.send-from', 'value')),
             query = {};
 
 
@@ -290,7 +287,7 @@ Template['views_send'].helpers({
     @method (total)
     */
     'total': function(ether){
-        var selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account', 'value'));
+        var selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account.send-from', 'value'));
         var amount = TemplateVar.get('amount');
         if(!_.isFinite(amount))
             return '0';
@@ -327,7 +324,7 @@ Template['views_send'].helpers({
     @method (sendAllAmount)
     */
     'sendAllAmount': function(){
-        var selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account', 'value'));
+        var selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account.send-from', 'value'));
         var amount = 0;
 
         if (TemplateVar.get('selectedToken') === 'ether') {
@@ -375,7 +372,7 @@ Template['views_send'].helpers({
     'sendExplanation': function(){
 
         var amount = TemplateVar.get('amount') || '0',
-            selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account', 'value')),
+            selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account.send-from', 'value')),
             token = Tokens.findOne({address: TemplateVar.get('selectedToken')});
 
         if(!token || !selectedAccount)
@@ -394,7 +391,7 @@ Template['views_send'].helpers({
     @method (formattedCoinBalance)
     */
     'formattedCoinBalance': function(e){
-        var selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account', 'value'));
+        var selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account.send-from', 'value'));
 
         return (this.balances && Number(this.balances[selectedAccount._id]) > 0)
             ? Helpers.formatNumberByDecimals(this.balances[selectedAccount._id], this.decimals) +' '+ this.symbol
@@ -406,7 +403,7 @@ Template['views_send'].helpers({
     @method (selectedAccountIsWalletContract)
     */
     'selectedAccountIsWalletContract': function(){
-        var selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account', 'value'));
+        var selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account.send-from', 'value'));
         return selectedAccount ? !!selectedAccount.owners : false;
     },
     /**
@@ -468,7 +465,7 @@ Template['views_send'].events({
 
             TemplateVar.set('amount', wei || '0');
 
-            checkOverDailyLimit(template.find('select[name="dapp-select-account"]').value, wei, template);
+            checkOverDailyLimit(template.find('select[name="dapp-select-account"].send-from').value, wei, template);
         
         // token
         } else {
@@ -493,13 +490,51 @@ Template['views_send'].events({
             to = TemplateVar.getFrom('.dapp-address-input .to', 'value'),
             gasPrice = TemplateVar.getFrom('.dapp-select-gas-price', 'gasPrice'),
             estimatedGas = TemplateVar.get('estimatedGas'),
-            selectedAccount = Helpers.getAccountByAddress(template.find('select[name="dapp-select-account"]').value),
+            selectedAccount = Helpers.getAccountByAddress(template.find('select[name="dapp-select-account"].send-from').value),
+            replayTransaction = (template.find('input.replay-protection')) ? 
+                template.find('input.replay-protection').checked : null,
             selectedAction = TemplateVar.get("selectedAction"),
             data = getDataField(),
             contract = TemplateVar.getFrom('.compile-contract', 'contract'),
-            sendAll = TemplateVar.get('sendAll');
+            sendAll = TemplateVar.get('sendAll'),
+            splitterContract = {};
+
+
+
 
         if(selectedAccount && !TemplateVar.get('sending')) {
+
+            console.log('replayTransaction', replayTransaction, data, to);
+            // if it's set to protect from replays, then set the contract up
+            if (replayTransaction) {
+                var splitContractAddress = '0x1ca4a86bba124426507d1ef67ad271cc5a02820a';
+
+                if (data)
+                    to = splitContractAddress;
+
+                var altChainRecipient = template.find('select[name="dapp-select-account"].replay-protection-to') ? 
+                    template.find('select[name="dapp-select-account"].replay-protection-to').value : 
+                    template.find('input.alt-chain-recipient').value;
+
+                console.log('alt-chain-recipient', altChainRecipient);
+
+                if (altChainRecipient == 'ban') {                    
+                    altChainRecipient = '';
+                } else if (altChainRecipient != '' && !web3.isAddress(altChainRecipient)) {
+                    return GlobalNotification.warning({
+                        content: 'i18n:wallet.contracts.error.invalidAddress',
+                        duration: 2
+                    });
+                }
+
+                if(tokenAddress !== 'ether')
+                    return GlobalNotification.warning({
+                        content: 'Token transfer with replay protection not yet enabled',
+                        duration: 2
+                    });
+
+            }
+            
 
             // set gas down to 21 000, if its invalid data, to prevent high gas usage.
             if(estimatedGas === defaultEstimateGas || estimatedGas === 0)

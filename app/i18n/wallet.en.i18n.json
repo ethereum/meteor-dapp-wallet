@@ -266,7 +266,7 @@
                 "underDailyLimit": "<p class=\"under-daily\">This amount is under the remaining daily limit of __limit__ (of __total__ per day), means it will send immediately.</p>",
                 "sendFee": "This is the most amount of money that might be used to process this transaction. Your transaction will be mined <strong>__timetext__</strong>.",
                 "noCodeInRecipient": "The recipient account is not a contract, so you can't execute anything. <strong> Put a contract address on the 'TO' field. </strong>",
-                "addData": "You can add extra data to send along with your transaction. This usually means you'll be executing a contract, so be careful of data you don't understand.",
+                "addData": "You can add extra data to send along with your transaction. If you don't know what this is then <strong>don't touch it or bad things may happen</strong>.",
                 "dataNotExecutable": "The data seems not to be executabe, that means this transaction will use all the gas you provide.",
                 "cantEstimateGas": "We can't estimate your gas usage properly, as you need at least 1 ether in your account.",
                 "estimatedGas": "Estimated required gas",
@@ -323,7 +323,7 @@
             "error": {
                 "compile": "Could not compile source code.",
                 "noDataProvided": "No Data found: select a contract from the 'select contract' menu",
-                "invalidAddress": "Contract not added, invalid address.",
+                "invalidAddress": "This is not a valid address.",
                 "jsonInterfaceParseError": "Couldn't parse the JSON Interface."
             }
         }
