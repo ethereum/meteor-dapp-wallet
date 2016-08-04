@@ -40,9 +40,16 @@ CoinBaseWidget = function(buttonElem, params) {
     // };
 
     self.handleMessage = function(e) {
+        // Only trust Coinbase with messages
+        if (e.origin !== "https://buy.coinbase.com")
+            return;
+
+        console.debug(e);
+
         switch (e.data.event) {
             case "modal_closed":
                 self.modal.style.display = "none";
+
                 break;
             // case "button_clicked":
             //     self.modal.style.display = "block";
