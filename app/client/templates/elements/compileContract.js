@@ -52,40 +52,66 @@ Template['elements_compileContract'].onCreated(function() {
 
     // update and generate the contract data 
     this.autorun(function() {
-        // Bytecode Data
-        if (TemplateVar.get('replay-protection-checkbox')){
-            var splitterInterface = [ { "constant": false, "inputs": [ { "name": "recipient", "type": "address" }, { "name": "altChainRecipient", "type": "address" }, { "name": "tokenAddress", "type": "address" }, { "name": "amount", "type": "uint256" } ], "name": "tokenSplit", "outputs": [ { "name": "", "type": "bool" } ], "type": "function" }, { "constant": false, "inputs": [ { "name": "recipient", "type": "address" }, { "name": "altChainRecipient", "type": "address" } ], "name": "etherSplit", "outputs": [ { "name": "", "type": "bool" } ], "type": "function" }];
-
-
-            var splitterContract = web3.eth.contract(splitterInterface).at(splitContractAddress);
-
-            var mainRecipient = TemplateVar.getFrom('div.dapp-address-input input.to', 'value');
-            var altRecipient = TemplateVar.get('replay-protection-to');
-            var sendData = splitterContract.etherSplit.getData( mainRecipient, altRecipient, {});
-
-            TemplateVar.set('value', sendData);            
-        }
-
+        
         // selected contract
         var selectedContract = TemplateVar.get('selectedContract');
         var constructorInputs = _.clone(TemplateVar.get('constructorInputs'));
+        var selectedToken = TemplateVar.getFrom('.select-token', 'selectedToken');
+        var mainRecipient = TemplateVar.getFrom('div.dapp-address-input input.to', 'value');
+        var replayProtectionOn = TemplateVar.get('replay-protection-checkbox');
 
-        if(!selectedContract)
-            return;
+        console.log('autorun', selectedContract, replayProtectionOn, selectedToken )
 
-        // add the default web3 sendTransaction arguments
-        constructorInputs.push({
-            data: selectedContract.bytecode
-        });
+        if(selectedContract){        
+                // add the default web3 sendTransaction arguments
+                constructorInputs.push({
+                    data: selectedContract.bytecode
+                });
+        
+                // generate new contract code
+                TemplateVar.set('value', web3.eth.contract(selectedContract.jsonInterface).new.getData.apply(null, constructorInputs));
+                TemplateVar.set('contract', selectedContract);
+        
+                // Save data to localstorage
+                localStorage.setItem('selectedContract', JSON.stringify(selectedContract));
+        
+        } else {
+            // Selected Token
 
-        // generate new contract code
-        TemplateVar.set('value', web3.eth.contract(selectedContract.jsonInterface).new.getData.apply(null, constructorInputs));
-        TemplateVar.set('contract', selectedContract);
+            // Bytecode Data
+            if (replayProtectionOn){
+                var splitterInterface = [ { "constant": false, "inputs": [ { "name": "recipient", "type": "address" }, { "name": "altChainRecipient", "type": "address" }, { "name": "tokenAddress", "type": "address" }, { "name": "amount", "type": "uint256" } ], "name": "tokenSplit", "outputs": [ { "name": "", "type": "bool" } ], "type": "function" }, { "constant": false, "inputs": [ { "name": "recipient", "type": "address" }, { "name": "altChainRecipient", "type": "address" } ], "name": "etherSplit", "outputs": [ { "name": "", "type": "bool" } ], "type": "function" }];
+                var splitterContract = web3.eth.contract(splitterInterface).at(splitContractAddress);
+                var altRecipient = TemplateVar.get('replay-protection-to');
 
-        // Save data to localstorage
-        localStorage.setItem('selectedContract', JSON.stringify(selectedContract));
+                if (!selectedToken || selectedToken == 'ether') {        
+                    var sendData = splitterContract.etherSplit.getData( mainRecipient, altRecipient, {});
+                } else {
+                    var amount = TemplateVar.getFrom('.amount input[name="amount"]', 'amount') || '0';
+                    var token = Tokens.findOne({address: selectedToken});                
+
+                    console.log('send ether protect', amount, token.decimals, selectedToken);
+
+                    var sendData = splitterContract.tokenSplit.getData( mainRecipient, altRecipient, selectedToken, amount,  {});
+                }      
 
 
+            } else {
+                if (!selectedToken || selectedToken == 'ether') {        
+                    var sendData = '';
+                } else {
+
+                    var amount = TemplateVar.getFrom('.amount input[name="amount"]', 'amount') || '0';
+                    var token = Tokens.findOne({address: selectedToken});                
+                    console.log('selectedToken', selectedToken, token)
+
+                    var tokenInstance = TokenContract.at(selectedToken);
+                    var sendData = tokenInstance.transfer.getData( mainRecipient, amount,  {});
+                } 
+            }
+
+            TemplateVar.set("value", sendData);   
+        }
 
     });
 });
@@ -382,8 +408,6 @@ Template['elements_compileContract'].events({
     */
     'change input[type="checkbox"].replay-protection': function(e){
         var value = e.currentTarget.checked;
-        TemplateVar.set('replay-protection-checkbox', value );
-        if (!value)
-            TemplateVar.set('value', '');            
+        TemplateVar.set('replay-protection-checkbox', value);
     }
 });
