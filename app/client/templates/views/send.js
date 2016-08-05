@@ -417,6 +417,20 @@ Template['views_send'].helpers({
             : amount;
 
         return amount.replace(/ /g,'');
+    },
+    /**
+    Needs token approval
+
+    @method (requiresTokenApproval)
+    */
+    'requiresTokenApproval': function(){
+        
+        var replayProtection = TemplateVar.getFrom('.compile-contract', 'replay-protection-checkbox');
+        var tokenAddress = TemplateVar.get('selectedToken');
+
+        console.log('requiresTokenApproval', replayProtection, tokenAddress);
+
+        return tokenAddress != 'ether' && replayProtection;
     }
 });
 

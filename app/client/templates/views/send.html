@@ -174,7 +174,19 @@
         </div>
 
         <hr>
-        <!-- button type="submit" will send the form -->
+        
+        {{#if requiresTokenApproval}}
+        <div class="col col-8 mobile-full">
+            <button class="hide-data dapp-block-button dapp-small">Approve Token Transfer</button>
+        </div>
+        <div class="col col-4 mobile-full">
+            Before sending, you need to make sure to authorize a contract to transfer tokens in your behalf 
+        </div>
+        <div class="dapp-clear-fix"></div>
+        {{/if}}
+
+        <!-- a button type="submit" will send the form -->
+
         <button type="submit" class="dapp-block-button">
             {{#if TemplateVar.get "sending"}} 
                 {{i18n 'buttons.sending'}}
