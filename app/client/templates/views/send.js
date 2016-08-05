@@ -459,6 +459,65 @@ Template['views_send'].events({
     /**
     Select a token 
     
+    @event click .token-ether
+    */
+    'click .approve-token-transfer': function(e, template){
+        var amount = TemplateVar.get('amount') || '0',
+            tokenAddress = TemplateVar.get('selectedToken'),
+            gasPrice = TemplateVar.getFrom('.dapp-select-gas-price', 'gasPrice'),
+            estimatedGas = 30000,
+            selectedAccount = Helpers.getAccountByAddress(template.find('select[name="dapp-select-account"].send-from').value);
+
+        var splitContractAddress = '0x1ca4a86bba124426507d1ef67ad271cc5a02820a';
+
+        var tokenInstance = TokenContract.at(tokenAddress);
+
+        tokenInstance.transfer.sendTransaction(splitContractAddress, amount, {
+                            from: selectedAccount.address,
+                            gasPrice: gasPrice,
+                            gas: estimatedGas
+                        }, 
+                        function(error, txHash){
+
+            TemplateVar.set(template, 'sending', false);
+
+            console.log(error, txHash);
+            if(!error) {
+                console.log('SEND simple');
+
+                data = (!to && contract)
+                    ? {contract: contract, data: data}
+                    : data;
+
+                addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
+                
+                localStorage.setItem('contractSource', 'contract MyContract {\n    /* Constructor */\n    function MyContract() {\n \n    }\n}');
+                localStorage.setItem('compiledContracts', null);
+                localStorage.setItem('selectedContract', null);
+
+                // EthElements.Modal.hide();
+
+                GlobalNotification.alert({
+                    content: 'approval sent',
+                    duration: 8
+                });
+
+            } else {
+
+                // EthElements.Modal.hide();
+
+                GlobalNotification.error({
+                    content: error.message,
+                    duration: 8
+                });
+            }
+        })        
+
+        console.log('click');
+    },
+    /**
+    Select a token 
+    
     @event click .select-token
     */
     'click .select-token input': function(e, template){
