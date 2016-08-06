@@ -176,8 +176,17 @@
         <hr>
         
         {{#if requiresTokenApproval}}
+
         <div class="col col-8 mobile-full">
-            <button class="approve-token-transfer dapp-block-button dapp-small">Approve Token Transfer</button>
+            {{#if $eq (TemplateVar.get "tokenApprovalStatus") "notSent"}}
+            <button class="approve-token-transfer dapp-block-button dapp-small" type="approve">Approve Token Transfer</button>
+            {{/if}}
+            {{#if $eq (TemplateVar.get "tokenApprovalStatus") "approving"}}
+            <button class="approve-token-transfer dapp-block-button dapp-small disabled" disabled="true">Approving</button>
+            {{/if}}
+            {{#if $eq (TemplateVar.get "tokenApprovalStatus") "approved"}}
+            <button class="approve-token-transfer dapp-block-button dapp-small disabled" disabled="true">Approved</button>
+            {{/if}}                        
         </div>
         <div class="col col-4 mobile-full">
             Before sending, you need to make sure to authorize a contract to transfer tokens in your behalf 

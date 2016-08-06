@@ -86,6 +86,7 @@ Template['views_send'].onCreated(function(){
     TemplateVar.set('amount', '0');
     TemplateVar.set('estimatedGas', 0);
     TemplateVar.set('sendAll', false);
+    TemplateVar.set(template, 'tokenApprovalStatus', 'notSent');
 
 
     // check if we are still on the correct chain
@@ -462,6 +463,9 @@ Template['views_send'].events({
     @event click .token-ether
     */
     'click .approve-token-transfer': function(e, template){
+
+        e.preventDefault();
+
         var amount = TemplateVar.get('amount') || '0',
             tokenAddress = TemplateVar.get('selectedToken'),
             gasPrice = TemplateVar.getFrom('.dapp-select-gas-price', 'gasPrice'),
@@ -471,49 +475,38 @@ Template['views_send'].events({
         var splitContractAddress = '0x1ca4a86bba124426507d1ef67ad271cc5a02820a';
 
         var tokenInstance = TokenContract.at(tokenAddress);
+        
+        TemplateVar.set(template, 'tokenApprovalStatus', 'approving');
 
         tokenInstance.transfer.sendTransaction(splitContractAddress, amount, {
-                            from: selectedAccount.address,
-                            gasPrice: gasPrice,
-                            gas: estimatedGas
-                        }, 
-                        function(error, txHash){
+            from: selectedAccount.address,
+            gasPrice: gasPrice,
+            gas: estimatedGas
+            }, 
+            function(error, txHash){
 
-            TemplateVar.set(template, 'sending', false);
+                if(!error) {
+                    console.log('Approve');
+                    TemplateVar.set(template, 'tokenApprovalStatus', 'approved');
 
-            console.log(error, txHash);
-            if(!error) {
-                console.log('SEND simple');
 
-                data = (!to && contract)
-                    ? {contract: contract, data: data}
-                    : data;
+                    addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
 
-                addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
-                
-                localStorage.setItem('contractSource', 'contract MyContract {\n    /* Constructor */\n    function MyContract() {\n \n    }\n}');
-                localStorage.setItem('compiledContracts', null);
-                localStorage.setItem('selectedContract', null);
+                    GlobalNotification.success({
+                       content: 'i18n:wallet.send.transactionSent',
+                       duration: 2
+                    });
+                } else {
 
-                // EthElements.Modal.hide();
+                    TemplateVar.set(template, 'tokenApprovalStatus', 'notSent');
 
-                GlobalNotification.alert({
-                    content: 'approval sent',
-                    duration: 8
-                });
-
-            } else {
-
-                // EthElements.Modal.hide();
-
-                GlobalNotification.error({
-                    content: error.message,
-                    duration: 8
-                });
+                    GlobalNotification.error({
+                        content: error.message,
+                        duration: 8
+                    });
             }
         })        
 
-        console.log('click');
     },
     /**
     Select a token 
@@ -618,8 +611,9 @@ Template['views_send'].events({
                     });
 
             } else {
-
+                // Change recipient and amount
                 to = tokenAddress;
+                amount = 0;
 
                 var token = Tokens.findOne({address: tokenAddress}),
                     tokenBalance = token.balances[selectedAccount._id] || '0';
@@ -630,11 +624,11 @@ Template['views_send'].events({
                         duration: 2
                     });
 
-                if(replayTransaction)
-                    return GlobalNotification.warning({
-                        content: 'Replay protection not yet available for Token Transfers',
-                        duration: 2
-                    });
+                // if(replayTransaction)
+                //     return GlobalNotification.warning({
+                //         content: 'Replay protection not yet available for Token Transfers',
+                //         duration: 2
+                //     });
             }
             
             // Use replay protection contract
