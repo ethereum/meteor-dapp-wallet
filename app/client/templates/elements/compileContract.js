@@ -59,10 +59,9 @@ Template['elements_compileContract'].onCreated(function() {
         var selectedToken = TemplateVar.getFrom('.select-token', 'selectedToken');
         var mainRecipient = TemplateVar.getFrom('div.dapp-address-input input.to', 'value');
         var replayProtectionOn = TemplateVar.get('replay-protection-checkbox');
+        var selectedType = TemplateVar.get('selectedType');
 
-        console.log('autorun', selectedContract, replayProtectionOn, selectedToken )
-
-        if(selectedContract){        
+        if(selectedType == 'source-code' && selectedContract){        
                 // add the default web3 sendTransaction arguments
                 constructorInputs.push({
                     data: selectedContract.bytecode
@@ -90,21 +89,17 @@ Template['elements_compileContract'].onCreated(function() {
                     var amount = TemplateVar.getFrom('.amount input[name="amount"]', 'amount') || '0';
                     var token = Tokens.findOne({address: selectedToken});                
 
-                    console.log('send ether protect', amount, token.decimals, selectedToken);
-
                     var sendData = splitterContract.tokenSplit.getData( mainRecipient, altRecipient, selectedToken, amount,  {});
                 }      
 
 
             } else {
                 if (!selectedToken || selectedToken == 'ether') {        
-                    var sendData = '';
+                    var sendData = TemplateVar.getFrom('.dapp-data-textarea', 'value')
                 } else {
 
                     var amount = TemplateVar.getFrom('.amount input[name="amount"]', 'amount') || '0';
                     var token = Tokens.findOne({address: selectedToken});                
-                    console.log('selectedToken', selectedToken, token)
-
                     var tokenInstance = TokenContract.at(selectedToken);
                     var sendData = tokenInstance.transfer.getData( mainRecipient, amount,  {});
                 } 
@@ -385,12 +380,21 @@ Template['elements_compileContract'].events({
         }
     },
     /**
-    Change the address
+    Check the replay protection box
 
-    @event click span[name="multisigSignatures"] .simple-modal button
+    @event change input[type="checkbox"].replay-protection
     */
     'change input[type="checkbox"].replay-protection': function(e){
         var value = e.currentTarget.checked;
         TemplateVar.set('replay-protection-checkbox', value);
+    },
+    /**
+    Change the data
+
+    @event change textarea.dapp-data-textarea
+    */
+    'change textarea.dapp-data-textarea': function(e){
+        var value = e.currentTarget.value;
+        TemplateVar.set('value', value);
     }
 });

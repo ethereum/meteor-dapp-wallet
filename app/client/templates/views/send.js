@@ -148,24 +148,6 @@ Template['views_send'].onRendered(function(){
         if(_.isString(address))
             address = address.toLowerCase();
 
-        // console.log('DATA', data);
-
-
-        // console.log('ESTIMATE for token', tokenAddress, {
-        //             from: address,
-        //             to: to,
-        //             value: amount,
-        //             data: data,
-        //             gas: defaultEstimateGas
-        //         },
-
-        //         web3.eth.estimateGas({
-        //             from: address,
-        //             to: to,
-        //             value: amount,
-        //             data: data,
-        //             gas: defaultEstimateGas
-        //         }));
 
         // Ether tx estimation
         if(tokenAddress === 'ether') {
@@ -514,7 +496,11 @@ Template['views_send'].events({
     @event click .select-token
     */
     'click .select-token input': function(e, template){
-        TemplateVar.set('selectedToken', e.currentTarget.value);
+        var value = e.currentTarget.value;
+        TemplateVar.set('selectedToken', value);
+
+        if (value === 'ether')    
+            TemplateVar.setTo('.dapp-data-textarea', 'value', '');    
 
         // trigger amount box change
         template.$('input[name="amount"]').trigger('change');
