@@ -9,10 +9,11 @@
 
                         {{#if TemplateVar.get "hasSplitter"}}
                         <br>
-                        <h3>Replay attack protection</h3>
+                        <h3> {{i18n 'wallet.send.preventReplay'}} </h3>
                         <label>
                         <input type="checkbox" class="replay-protection">
-                        On any other chain, send to  
+                        
+                        {{i18n 'wallet.send.onOtherChainSendTo'}}   
 
                         {{#if TemplateVar.get "show-address-field"}}
                             {{> dapp_addressInput placeholder="0x000000.." name="alt-chain-recipient" class="alt-chain-recipient inline" value=(TemplateVar.get "replay-protection-to")}}
@@ -30,7 +31,7 @@
                     <div class="col col-4 mobile-full">
                         {{#if TemplateVar.get "hasSplitter"}}
                         <br><br><br><br>
-                        Replay transactions issues happen when similar ethereum chains share peers and transactions signed in one network leak into others. If you want to control and secure the ether on the other chain, create a new account with no ether on it.
+                        {{i18n 'wallet.send.replayExplanation'}}
                         {{/if}}
                     </div>   
 

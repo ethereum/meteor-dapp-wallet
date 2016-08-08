@@ -273,8 +273,8 @@ Template['elements_compileContract'].helpers({
     
         accounts = _.union(Wallets.find({balance:"0", owners: {$in: _.pluck(accounts, 'address')}, address: {$exists: true}}, {sort: {balance: 1}}).fetch(), accounts);
         
-        accounts.unshift({address:'ban', name: 'back to the sender'});
-        accounts.push({address:'question', name: 'other account...'});
+        accounts.unshift({address:'ban', name: TAPi18n.__('wallet.send.backToSender')});
+        accounts.push({address:'question', name: TAPi18n.__('wallet.send.otherAccount')});
         return accounts;
     }
 });
