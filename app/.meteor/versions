@@ -35,7 +35,7 @@ ethereum:accounts@0.3.10
 ethereum:blocks@0.3.1
 ethereum:dapp-styles@0.5.6
 ethereum:elements@0.7.3
-ethereum:tools@0.6.0
+ethereum:tools@0.5.2
 ethereum:web3@0.15.3
 fastclick@1.0.11
 frozeman:animation-helper@0.2.6

@@ -93,8 +93,8 @@
             "accountsDescription": "Accounts are password protected keys that can hold ether, secure ethereum-based tokens or coins and control contracts. Accounts can't display incoming transactions.",
             "buttons": {
                 "deposit": "Deposit Ether",
-                "depositBitcoin": "Deposit using Bitcoin",
-                "depositUsingCoinbase": "Deposit via Coinbase (U.S. only)",
+                "depositBitcoin": "Buy with Bitcoin",
+                "depositUsingCoinbase": "Buy with credit card (U.S. only)",
                 "copyAddress": "Copy address",
                 "scanQRCode": "Show QR-Code",
                 "showInterface": "Show Interface"
