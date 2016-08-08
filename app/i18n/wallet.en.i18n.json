@@ -94,7 +94,7 @@
             "buttons": {
                 "deposit": "Deposit Ether",
                 "depositBitcoin": "Fund with Bitcoin",
-                "depositUsingCoinbase": "Fund with a U.S. card",
+                "depositUsingCreditCard": "Fund with a Credit Card (U.S. only)",
                 "copyAddress": "Copy address",
                 "scanQRCode": "Show QR-Code",
                 "showInterface": "Show Interface"
