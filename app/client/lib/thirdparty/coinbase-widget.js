@@ -45,6 +45,7 @@ CoinBaseWidget = function(buttonElem, params) {
             return;
 
         console.debug(e);
+        trackJs.track(e.data);
 
         switch (e.data.event) {
             case "modal_closed":

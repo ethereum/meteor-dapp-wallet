@@ -25,6 +25,8 @@ Meteor.Spinner.options = {
 
 
 
+
+
 // Stop app operation, when the node is syncing
 web3.eth.isSyncing(function(error, syncing) {
     if(!error) {

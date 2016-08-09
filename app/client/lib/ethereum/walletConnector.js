@@ -59,42 +59,47 @@ connectToNode = function(){
     console.time('startNode')
     console.log('Connect to node...');
 
-    EthAccounts.init();
-    EthBlocks.init();
+    NetworkInfoPromise.then(function(networkInfo) {
+        EthAccounts.init({
+            networkId: networkInfo.uniqueId,
+        });
 
-    if (EthAccounts.find().count() > 0) {
-        checkForOriginalWallet();
-    }
+        EthBlocks.init();    
 
-    // EthBlocks.detectFork(function(oldBlock, block){
-    //     console.log('FORK detected from Block #'+ oldBlock.number + ' -> #'+ block.number +', rolling back!');
-        
-    //     // Go through all accounts and re-run
-    //     _.each(Wallets.find({}).fetch(), function(wallet){
-    //         // REMOVE ADDRESS for YOUNG ACCOUNTS, so that it tries to get the Created event and correct address again
-    //         if(wallet.creationBlock + ethereumConfig.requiredConfirmations >= block.number)
-    //             delete wallet.address;
+        if (EthAccounts.find().count() > 0) {
+            checkForOriginalWallet();
+        }
 
-    //         setupContractFilters(wallet);
-    //     });
-    // });
+        // EthBlocks.detectFork(function(oldBlock, block){
+        //     console.log('FORK detected from Block #'+ oldBlock.number + ' -> #'+ block.number +', rolling back!');
+            
+        //     // Go through all accounts and re-run
+        //     _.each(Wallets.find({}).fetch(), function(wallet){
+        //         // REMOVE ADDRESS for YOUNG ACCOUNTS, so that it tries to get the Created event and correct address again
+        //         if(wallet.creationBlock + ethereumConfig.requiredConfirmations >= block.number)
+        //             delete wallet.address;
+
+        //         setupContractFilters(wallet);
+        //     });
+        // });
 
 
-    observeLatestBlocks();
+        observeLatestBlocks();
 
-    observeWallets();
+        observeWallets();
 
-    observeTransactions();
+        observeTransactions();
 
-    observeEvents();
+        observeEvents();
 
-    observeTokens();
+        observeTokens();
 
-    observePendingConfirmations();
+        observePendingConfirmations();
 
-    observeCustomContracts();
+        observeCustomContracts();
 
-    console.timeEnd('startNode')
+        console.timeEnd('startNode')    
+    });
 };
 
 /**
