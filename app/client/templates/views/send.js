@@ -195,8 +195,7 @@ Template['views_send'].helpers({
         if(this && this.deployContract) {
             TemplateVar.set('selectedAction', 'deploy-contract');
             TemplateVar.set('selectedToken', 'ether');
-            TemplateVar.setTo('.compile-contract', 'selectedType', 'source-code');
-
+            // TemplateVar.setTo('.compile-contract', 'selectedType', 'source-code');
 
         // Send funds
         } else {
@@ -410,8 +409,6 @@ Template['views_send'].helpers({
         
         var replayProtection = TemplateVar.getFrom('.compile-contract', 'replay-protection-checkbox');
         var tokenAddress = TemplateVar.get('selectedToken');
-
-        console.log('requiresTokenApproval', replayProtection, tokenAddress);
 
         return tokenAddress != 'ether' && replayProtection;
     }

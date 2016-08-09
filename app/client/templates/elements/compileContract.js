@@ -50,8 +50,20 @@ Template['elements_compileContract'].onCreated(function() {
 
     });
 
+
+    // re-run the compile data, to assure that remote elements are made reactive
+    var runDelayed = new Tracker.Dependency;
+
+    setTimeout(function(){
+        runDelayed.changed();
+        runDelayed = null;
+    }, 1000);
+
     // update and generate the contract data 
     this.autorun(function() {
+
+        if(runDelayed)
+            runDelayed.depend();
         
         // selected contract
         var selectedContract = TemplateVar.get('selectedContract');
@@ -60,8 +72,10 @@ Template['elements_compileContract'].onCreated(function() {
         var mainRecipient = TemplateVar.getFrom('div.dapp-address-input input.to', 'value');
         var replayProtectionOn = TemplateVar.get('replay-protection-checkbox');
         var selectedType = TemplateVar.get('selectedType');
+        var textareaData = TemplateVar.getFrom('.dapp-data-textarea', 'value');
 
-        if(selectedType == 'source-code' && selectedContract){        
+
+        if(selectedType === 'source-code' && selectedContract){        
                 // add the default web3 sendTransaction arguments
                 constructorInputs.push({
                     data: selectedContract.bytecode
@@ -75,7 +89,7 @@ Template['elements_compileContract'].onCreated(function() {
                 localStorage.setItem('selectedContract', JSON.stringify(selectedContract));
         
         } else {
-            // Selected Token
+            var sendData = amount = token = '';
 
             // Bytecode Data
             if (replayProtectionOn){
@@ -84,26 +98,29 @@ Template['elements_compileContract'].onCreated(function() {
                 var altRecipient = TemplateVar.get('replay-protection-to');
 
                 if (!selectedToken || selectedToken == 'ether') {        
-                    var sendData = splitterContract.etherSplit.getData( mainRecipient, altRecipient, {});
+                    sendData = splitterContract.etherSplit.getData( mainRecipient, altRecipient, {});
                 } else {
-                    var amount = TemplateVar.getFrom('.amount input[name="amount"]', 'amount') || '0';
-                    var token = Tokens.findOne({address: selectedToken});                
+                    amount = TemplateVar.getFrom('.amount input[name="amount"]', 'amount') || '0';
+                    token = Tokens.findOne({address: selectedToken});                
 
-                    var sendData = splitterContract.tokenSplit.getData( mainRecipient, altRecipient, selectedToken, amount,  {});
+                    sendData = splitterContract.tokenSplit.getData( mainRecipient, altRecipient, selectedToken, amount,  {});
                 }      
 
 
             } else {
-                if (!selectedToken || selectedToken == 'ether') {        
-                    var sendData = TemplateVar.getFrom('.dapp-data-textarea', 'value')
+                if (!selectedToken || selectedToken === 'ether') {        
+                    sendData = (TemplateVar.get('show')) ? textareaData : '';
+
                 } else {
 
-                    var amount = TemplateVar.getFrom('.amount input[name="amount"]', 'amount') || '0';
-                    var token = Tokens.findOne({address: selectedToken});                
+                    amount = TemplateVar.getFrom('.amount input[name="amount"]', 'amount') || '0';
+                    token = Tokens.findOne({address: selectedToken});                
                     var tokenInstance = TokenContract.at(selectedToken);
-                    var sendData = tokenInstance.transfer.getData( mainRecipient, amount,  {});
+                    sendData = tokenInstance.transfer.getData( mainRecipient, amount,  {});
                 } 
             }
+
+            console.log('DATA', sendData, textareaData);
 
             TemplateVar.set("value", sendData);   
         }
@@ -238,8 +255,9 @@ Template['elements_compileContract'].helpers({
             TemplateVar.set('selectedType', 'byte-code');
 
             Tracker.nonreactive(function(){
-                if(_.isEmpty(TemplateVar.getFrom('.dapp-data-textarea', 'value')))
+                if(_.isEmpty(TemplateVar.getFrom('.dapp-data-textarea', 'value'))) {
                     TemplateVar.set('show', false);
+                }
             });
 
         } else {
@@ -295,9 +313,12 @@ Template['elements_compileContract'].events({
     
     @event click button.hide-data
     */
-    'click button.hide-data': function(e){
+    'click button.hide-data': function(e, template){
         e.preventDefault();
-        TemplateVar.set('show', false);
+        TemplateVar.setTo('.dapp-data-textarea', 'value', '');
+        Tracker.afterFlush(function(){
+            TemplateVar.set(template, 'show', false);
+        });
     },
     /**
     Textfield switcher

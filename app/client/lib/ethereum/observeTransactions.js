@@ -271,7 +271,7 @@ observeTransactions = function(){
         var confCount = 0;
 
         // check for confirmations
-        if(!tx.confirmed) {
+        if(!tx.confirmed && tx.transactionHash) {
             var filter = web3.eth.filter('latest');
             filter.watch(function(e, blockHash){
                 if(!e) {
