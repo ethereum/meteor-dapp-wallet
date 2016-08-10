@@ -464,7 +464,7 @@ Template['views_send'].events({
             tokenInstance.approve.sendTransaction(splitContractAddress, amount, {
                 from: selectedAccount.address,
                 gasPrice: gasPrice,
-                gas: estimatedGas
+                gas: 100000 + estimatedGas
                 }, 
                 function(error, txHash){
 
@@ -473,7 +473,7 @@ Template['views_send'].events({
                         TemplateVar.set(template, 'tokenApprovalStatus', 'approved');
 
 
-                        addTransactionAfterSend(txHash, 0, selectedAccount.address, splitContractAddress, gasPrice, estimatedGas, data);
+                        addTransactionAfterSend(txHash, 0, selectedAccount.address, tokenAddress, gasPrice, 100000 + estimatedGas, data);
 
                         GlobalNotification.success({
                            content: 'i18n:wallet.send.transactionSent',
@@ -491,10 +491,10 @@ Template['views_send'].events({
             })
         } else {
             // If it's from a contract
-            contracts['ct_'+ selectedAccount._id].execute.sendTransaction(splitContractAddress, 0, data, {
+            contracts['ct_'+ selectedAccount._id].execute.sendTransaction(tokenAddress, 0, data, {
                 from: Helpers.getOwnedAccountFrom(selectedAccount.owners),
                 gasPrice: gasPrice,
-                gas: estimatedGas
+                gas: 100000 + estimatedGas
                 }, 
                 function(error, txHash){
 
@@ -503,7 +503,7 @@ Template['views_send'].events({
                         TemplateVar.set(template, 'tokenApprovalStatus', 'approved');
 
 
-                        addTransactionAfterSend(txHash, 0, selectedAccount.address, splitContractAddress, gasPrice, estimatedGas, data);
+                        addTransactionAfterSend(txHash, 0, selectedAccount.address, tokenAddress, gasPrice, 100000 + estimatedGas, data);
 
                         GlobalNotification.success({
                            content: 'i18n:wallet.send.transactionSent',
