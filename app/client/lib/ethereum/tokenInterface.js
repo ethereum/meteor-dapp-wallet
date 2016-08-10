@@ -114,7 +114,50 @@ var tokenInterface = [
                 "type": "uint256"
             }
         ]
-    }
+    }, 
+   {  
+      "constant":false,
+      "inputs":[  
+         {  
+            "name":"_spender",
+            "type":"address"
+         },
+         {  
+            "name":"_value",
+            "type":"uint256"
+         }
+      ],
+      "name":"approve",
+      "outputs":[  
+         {  
+            "name":"success",
+            "type":"bool"
+         }
+      ],
+      "type":"function"
+   },
+   {  
+      "constant":true,
+      "inputs":[  
+         {  
+            "name":"",
+            "type":"address"
+         },
+         {  
+            "name":"",
+            "type":"address"
+         }
+      ],
+      "name":"allowance",
+      "outputs":[  
+         {  
+            "name":"",
+            "type":"uint256"
+         }
+      ],
+      "type":"function"
+   }
 ];
+
 
 TokenContract = web3.eth.contract(tokenInterface);

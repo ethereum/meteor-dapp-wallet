@@ -1,20 +1,56 @@
 <template name="elements_compileContract">
     <div class="row clear compile-contract">
+        {{#if onlyByteCode}}                    
+            {{#if TemplateVar.get "show"}}
+                {{TemplateVar.set "byteTextareaShown" true}}
+                    <div class="col col-8 mobile-full replay-protection-div">
+                    
+                        <button class="hide-data dapp-block-button dapp-small">{{i18n 'wallet.send.showLessOptions'}}</button>
+
+                        {{#if TemplateVar.get "hasSplitter"}}
+                        <br>
+                        <h3> {{i18n 'wallet.send.preventReplay'}} </h3>
+                        <label>
+                        <input type="checkbox" class="replay-protection">
+                        
+                        {{i18n 'wallet.send.onOtherChainSendTo'}}   
+
+                        {{#if TemplateVar.get "show-address-field"}}
+                            {{> dapp_addressInput placeholder="0x000000.." name="alt-chain-recipient" class="alt-chain-recipient inline" value=(TemplateVar.get "replay-protection-to")}}
+                        {{else}}
+                            {{> dapp_selectAccount accounts=(replayAttackList) showAccountTypes=false class='inline replay-protection-to'}}
+                        {{/if}}
+
+                        </label>
+                        <br>
+                        <br>
+                        {{/if}}
+
+                        <h3>{{i18n 'wallet.send.data'}}</h3>
+                    </div>
+                    <div class="col col-4 mobile-full">
+                        {{#if TemplateVar.get "hasSplitter"}}
+                        <br><br><br><br>
+                        {{i18n 'wallet.send.replayExplanation'}}
+                        {{/if}}
+                    </div>   
+
+            {{else}}
+                <div class="col col-12 mobile-full">
+
+                    {{TemplateVar.set "byteTextareaShown" false}}
+                    <button class="show-data dapp-block-button dapp-small">{{i18n 'wallet.send.showMoreOptions'}}</button>
+                </div>
+            {{/if}}
+        {{/if}}
+
+
         <div class="col col-8 mobile-full {{#if $eq (TemplateVar.get 'selectedType') 'source-code'}}source-code{{/if}}">
 
             {{reactiveContext}}
 
-            {{#if onlyByteCode}}
-                    <h3>{{i18n 'wallet.send.data'}}</h3>
-                    
-                    {{#if TemplateVar.get "show"}}
-                        {{TemplateVar.set "byteTextareaShown" true}}
-                        <button class="hide-data dapp-block-button dapp-small">{{i18n 'wallet.send.removeData'}}</button>
-                    {{else}}
-                        {{TemplateVar.set "byteTextareaShown" false}}
-                        <button class="show-data dapp-block-button dapp-small">{{i18n 'wallet.send.addData'}}</button>
-                    {{/if}}
-            {{else}}
+
+            {{#unless onlyByteCode}}
                 <div class="dapp-segmented-control dapp-small">
                     <input type="radio" value="source-code" id="source-code" name="contract-type" checked>
                     <label for="source-code"> {{i18n 'wallet.contracts.contractSourceCode'}}</label>
@@ -22,12 +58,13 @@
                     <input type="radio" value="byte-code" id="byte-code" name="contract-type">
                     <label for="byte-code"> {{i18n 'wallet.contracts.contractByteCode'}} </label>
                 </div>
-            {{/if}}
+            {{/unless}}
+
 
             <textarea id="contract-source-editor" cols="20" rows="20"></textarea>
 
             {{#if TemplateVar.get "show"}}
-                {{> dapp_dataTextarea cols="20" rows="8"}}
+                {{> dapp_dataTextarea cols="20" rows="8" value=(TemplateVar.get "value")}}
             {{/if}}
         </div>
         
@@ -74,8 +111,7 @@
                 {{#if TemplateVar.get "show"}}
 
                     {{#if onlyByteCode}}
-                        <br><br><br>
-                        {{i18n 'wallet.send.texts.addData'}}
+                        {{{i18n 'wallet.send.texts.addData'}}}
                     {{/if}}
 
                     {{#if codeNotExecutable}}
