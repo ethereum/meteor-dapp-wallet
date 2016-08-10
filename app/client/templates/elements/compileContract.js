@@ -74,7 +74,6 @@ Template['elements_compileContract'].onCreated(function() {
         var selectedType = TemplateVar.get('selectedType');
         var textareaData = TemplateVar.getFrom('.dapp-data-textarea', 'value');
 
-
         if(selectedType === 'source-code' && selectedContract){        
                 // add the default web3 sendTransaction arguments
                 constructorInputs.push({
@@ -93,35 +92,33 @@ Template['elements_compileContract'].onCreated(function() {
 
             // Bytecode Data
             if (replayProtectionOn){
+                // set up the splitter
                 var splitterInterface = [ { "constant": false, "inputs": [ { "name": "recipient", "type": "address" }, { "name": "altChainRecipient", "type": "address" }, { "name": "tokenAddress", "type": "address" }, { "name": "amount", "type": "uint256" } ], "name": "tokenSplit", "outputs": [ { "name": "", "type": "bool" } ], "type": "function" }, { "constant": false, "inputs": [ { "name": "recipient", "type": "address" }, { "name": "altChainRecipient", "type": "address" } ], "name": "etherSplit", "outputs": [ { "name": "", "type": "bool" } ], "type": "function" }];
                 var splitterContract = web3.eth.contract(splitterInterface).at(splitContractAddress);
                 var altRecipient = TemplateVar.get('replay-protection-to');
 
-                if (!selectedToken || selectedToken == 'ether') {        
+                if (!selectedToken || selectedToken == 'ether') { 
+                    // send ether with replay protection       
                     sendData = splitterContract.etherSplit.getData( mainRecipient, altRecipient, {});
                 } else {
+                    // send token with replay protection
                     amount = TemplateVar.getFrom('.amount input[name="amount"]', 'amount') || '0';
                     token = Tokens.findOne({address: selectedToken});                
 
                     sendData = splitterContract.tokenSplit.getData( mainRecipient, altRecipient, selectedToken, amount,  {});
                 }      
-
-
             } else {
-                if (!selectedToken || selectedToken === 'ether') {        
+                if (!selectedToken || selectedToken === 'ether') {
+                    // send ether without replay protection        
                     sendData = (TemplateVar.get('show')) ? textareaData : '';
-
                 } else {
-
+                    // send tokens without replay protection
                     amount = TemplateVar.getFrom('.amount input[name="amount"]', 'amount') || '0';
                     token = Tokens.findOne({address: selectedToken});                
                     var tokenInstance = TokenContract.at(selectedToken);
                     sendData = tokenInstance.transfer.getData( mainRecipient, amount,  {});
                 } 
             }
-
-            console.log('DATA', sendData, textareaData);
-
             TemplateVar.set("value", sendData);   
         }
 
