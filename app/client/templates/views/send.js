@@ -457,34 +457,70 @@ Template['views_send'].events({
         
         TemplateVar.set(template, 'tokenApprovalStatus', 'approving');
 
-        tokenInstance.transfer.sendTransaction(splitContractAddress, amount, {
-            from: selectedAccount.address,
-            gasPrice: gasPrice,
-            gas: estimatedGas
-            }, 
-            function(error, txHash){
+        var data = tokenInstance.approve.getData(splitContractAddress, amount, {});
 
-                if(!error) {
-                    console.log('Approve');
-                    TemplateVar.set(template, 'tokenApprovalStatus', 'approved');
+        if(typeof contracts['ct_'+ selectedAccount._id] == 'undefined'){            
+            // If it's from a simple account
+            tokenInstance.approve.sendTransaction(splitContractAddress, amount, {
+                from: selectedAccount.address,
+                gasPrice: gasPrice,
+                gas: estimatedGas
+                }, 
+                function(error, txHash){
+
+                    if(!error) {
+                        console.log('Approved', txHash);
+                        TemplateVar.set(template, 'tokenApprovalStatus', 'approved');
 
 
-                    addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
+                        addTransactionAfterSend(txHash, 0, selectedAccount.address, splitContractAddress, gasPrice, estimatedGas, data);
 
-                    GlobalNotification.success({
-                       content: 'i18n:wallet.send.transactionSent',
-                       duration: 2
-                    });
-                } else {
+                        GlobalNotification.success({
+                           content: 'i18n:wallet.send.transactionSent',
+                           duration: 2
+                        });
+                    } else {
 
-                    TemplateVar.set(template, 'tokenApprovalStatus', 'notSent');
+                        TemplateVar.set(template, 'tokenApprovalStatus', 'notSent');
 
-                    GlobalNotification.error({
-                        content: error.message,
-                        duration: 8
-                    });
-            }
-        })        
+                        GlobalNotification.error({
+                            content: error.message,
+                            duration: 8
+                        });
+                }
+            })
+        } else {
+            // If it's from a contract
+            contracts['ct_'+ selectedAccount._id].execute.sendTransaction(splitContractAddress, 0, data, {
+                from: Helpers.getOwnedAccountFrom(selectedAccount.owners),
+                gasPrice: gasPrice,
+                gas: estimatedGas
+                }, 
+                function(error, txHash){
+
+                    if(!error) {
+                        console.log('Approved', txHash);
+                        TemplateVar.set(template, 'tokenApprovalStatus', 'approved');
+
+
+                        addTransactionAfterSend(txHash, 0, selectedAccount.address, splitContractAddress, gasPrice, estimatedGas, data);
+
+                        GlobalNotification.success({
+                           content: 'i18n:wallet.send.transactionSent',
+                           duration: 2
+                        });
+                    } else {
+
+                        TemplateVar.set(template, 'tokenApprovalStatus', 'notSent');
+
+                        GlobalNotification.error({
+                            content: error.message,
+                            duration: 8
+                        });
+                }
+            })
+
+        }        
 
     },
     /**
@@ -606,12 +642,6 @@ Template['views_send'].events({
                         content: 'i18n:wallet.send.error.notEnoughFunds',
                         duration: 2
                     });
-
-                // if(replayTransaction)
-                //     return GlobalNotification.warning({
-                //         content: 'Replay protection not yet available for Token Transfers',
-                //         duration: 2
-                //     });
             }
             
             // Use replay protection contract
@@ -624,8 +654,6 @@ Template['views_send'].events({
                 var altChainRecipient = template.find('select[name="dapp-select-account"].replay-protection-to') ? 
                     template.find('select[name="dapp-select-account"].replay-protection-to').value : 
                     template.find('input.alt-chain-recipient').value;
-
-                console.log('alt-chain-recipient', altChainRecipient);
 
                 if (altChainRecipient == 'ban') {                    
                     altChainRecipient = '';
