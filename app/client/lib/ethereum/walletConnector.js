@@ -61,7 +61,7 @@ connectToNode = function(){
 
     NetworkInfoPromise.then(function(networkInfo) {
         EthAccounts.init({
-            networkId: networkInfo.uniqueId,
+            network: networkInfo.uniqueId,
         });
 
         EthBlocks.init();    
