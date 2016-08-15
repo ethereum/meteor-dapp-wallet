@@ -16,7 +16,7 @@
             <div class="col col-6 mobile-full from">
                 <h3>{{i18n 'wallet.send.from'}}</h3>
 
-                {{> dapp_selectAccount accounts=(selectAccounts deployContract) showAccountTypes=true}}
+                {{> dapp_selectAccount accounts=(selectAccounts deployContract) showAccountTypes=true class='send-from'}}
 
             </div>
 
@@ -174,7 +174,28 @@
         </div>
 
         <hr>
-        <!-- button type="submit" will send the form -->
+        
+        {{#if requiresTokenApproval}}
+
+        <div class="col col-8 mobile-full">
+            {{#if $eq (TemplateVar.get "tokenApprovalStatus") "notSent"}}
+            <button class="approve-token-transfer dapp-block-button dapp-small" type="approve">Approve Token Transfer</button>
+            {{/if}}
+            {{#if $eq (TemplateVar.get "tokenApprovalStatus") "approving"}}
+            <button class="approve-token-transfer dapp-block-button dapp-small disabled" disabled="true">Approving</button>
+            {{/if}}
+            {{#if $eq (TemplateVar.get "tokenApprovalStatus") "approved"}}
+            <button class="approve-token-transfer dapp-block-button dapp-small disabled" disabled="true">Approved</button>
+            {{/if}}                        
+        </div>
+        <div class="col col-4 mobile-full">
+            Before sending, you need to make sure to authorize a contract to transfer tokens in your behalf 
+        </div>
+        <div class="dapp-clear-fix"></div>
+        {{/if}}
+
+        <!-- a button type="submit" will send the form -->
+
         <button type="submit" class="dapp-block-button">
             {{#if TemplateVar.get "sending"}} 
                 {{i18n 'buttons.sending'}}
