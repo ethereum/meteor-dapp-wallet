@@ -92,7 +92,7 @@
             "walletsDescriptionNotEnoughFunds": "Once you have more than 1 ether you can create more sophisticated contracts. Wallets are one type of basic smart contract, that allows your funds to be controlled by multiple accounts and have an optional daily limit on withdrawals, to increase security.  To create your own custom contracts go to the <em>Contracts</em> tab.",
             "accountsDescription": "Accounts are password protected keys that can hold ether, secure ethereum-based tokens or coins and control contracts. Accounts can't display incoming transactions.",
             "buttons": {
-                "deposit": "Deposit Ether",
+                "deposit": "Transfer Ether & Tokens",
                 "depositBitcoin": "Fund with Bitcoin",
                 "depositUsingCreditCard": "Fund with a Credit Card (U.S. only)",
                 "copyAddress": "Copy address",
