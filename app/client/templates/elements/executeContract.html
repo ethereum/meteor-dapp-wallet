@@ -111,7 +111,7 @@
         Send {{> elements_selectableUnit}}
         {{#unless isEtherUnit}}({{dapp_formatBalance (TemplateVar.get "amount") "0,0.00[000000] UNIT" "ether"}}){{/unless}}
     </h4>
-    <input type="number" min="0" name="amount" placeholder="0">
+    <input type="number" min="0" name="amount" placeholder="0" step="0.001">
 
     <button class="dapp-block-button execute">
         {{#if TemplateVar.get "sending"}} 

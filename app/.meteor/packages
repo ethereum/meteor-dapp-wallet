@@ -47,3 +47,4 @@ ethereum:dapp-styles
 numeral:numeral
 jrudio:bluebird
 ethereum:networkinfo
+tap:i18n-bundler

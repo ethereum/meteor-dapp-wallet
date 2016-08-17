@@ -92,9 +92,9 @@
             "walletsDescriptionNotEnoughFunds": "Once you have more than 1 ether you can create more sophisticated contracts. Wallets are one type of basic smart contract, that allows your funds to be controlled by multiple accounts and have an optional daily limit on withdrawals, to increase security.  To create your own custom contracts go to the <em>Contracts</em> tab.",
             "accountsDescription": "Accounts are password protected keys that can hold ether, secure ethereum-based tokens or coins and control contracts. Accounts can't display incoming transactions.",
             "buttons": {
-                "deposit": "Deposit Ether",
-                "depositBitcoin": "Deposit using Bitcoin",
-                "depositUsingCoinbase": "Deposit via Coinbase (U.S. only)",
+                "deposit": "Transfer Ether & Tokens",
+                "depositBitcoin": "Fund with Bitcoin",
+                "depositUsingCreditCard": "Fund with a Credit Card (U.S. only)",
                 "copyAddress": "Copy address",
                 "scanQRCode": "Show QR-Code",
                 "showInterface": "Show Interface"
@@ -238,6 +238,9 @@
             "sendFunds": "Send funds",
             "deployContract": "Deploy contract",
             "data": "Data",
+            "moreOptions": "More Options",
+            "showMoreOptions": "Show More Options",
+            "showLessOptions": "Show Less Options",
             "fee": "Select Fee",
             "feeLow": "Cheaper",
             "feeHigh": "Faster",
@@ -248,6 +251,11 @@
             "createContract": "Create contract",
             "provideGas": "Provide gas",
             "transactionSent": "Transaction sent",
+            "preventReplay": "Prevent transaction replay",
+            "onOtherChainSendTo": "On ETC chain, send to",
+            "replayExplanation": "Replay transactions issues happen when similar ethereum chains share peers and transactions signed in one network leak into others. If you want to control and secure the ether on the other chain, create a new account with no ether on it.",
+            "backToSender": "send back to sender",
+            "otherAccount": "other account...",
             "error": {
                 "emptyWallet": "The account you want to send from is empty.",
                 "notEnoughFunds": "You don't have enough funds in the account.",
@@ -264,7 +272,7 @@
                 "underDailyLimit": "<p class=\"under-daily\">This amount is under the remaining daily limit of __limit__ (of __total__ per day), means it will send immediately.</p>",
                 "sendFee": "This is the most amount of money that might be used to process this transaction. Your transaction will be mined <strong>__timetext__</strong>.",
                 "noCodeInRecipient": "The recipient account is not a contract, so you can't execute anything. <strong> Put a contract address on the 'TO' field. </strong>",
-                "addData": "You can add extra data to send along with your transaction. If you leave the \"to\" field empty it will try to deploy a contract from your data.",
+                "addData": "You can add extra data to send along with your transaction. If you don't know what this is then <strong>don't touch it or bad things may happen</strong>.",
                 "dataNotExecutable": "The data seems not to be executabe, that means this transaction will use all the gas you provide.",
                 "cantEstimateGas": "We can't estimate your gas usage properly, as you need at least 1 ether in your account.",
                 "estimatedGas": "Estimated required gas",
@@ -321,7 +329,7 @@
             "error": {
                 "compile": "Could not compile source code.",
                 "noDataProvided": "No Data found: select a contract from the 'select contract' menu",
-                "invalidAddress": "Contract not added, invalid address.",
+                "invalidAddress": "This is not a valid address.",
                 "jsonInterfaceParseError": "Couldn't parse the JSON Interface."
             }
         }

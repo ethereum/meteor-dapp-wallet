@@ -64,6 +64,10 @@ connectToNode = function(){
             network: networkInfo.uniqueId,
         });
 
+        EthBlocks.init();
+        
+        EthTools.ticker.start({extraParams: (typeof mist !== 'undefined') ? 'Mist-'+ mist.version : ''});
+
         EthBlocks.init();    
 
         if (EthAccounts.find().count() > 0) {
