@@ -59,7 +59,7 @@ connectToNode = function(){
     console.time('startNode')
     console.log('Connect to node...');
 
-    NetworkInfoPromise.then(function(networkInfo) {
+    NetworkInfo.promise.then(function(networkInfo) {
         EthAccounts.init({
             network: networkInfo.uniqueId,
         });
