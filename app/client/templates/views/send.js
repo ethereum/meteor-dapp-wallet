@@ -52,7 +52,9 @@ var getDataField = function(){
     // make reactive to the show/hide of the textarea
     TemplateVar.getFrom('.compile-contract','byteTextareaShown');
 
-    return TemplateVar.getFrom('.compile-contract', 'value');
+    console.log('get data field:', TemplateVar.getFrom('.compile-contract', 'txData'));
+
+    return TemplateVar.getFrom('.compile-contract', 'txData');
 };
 
 
@@ -195,7 +197,6 @@ Template['views_send'].helpers({
         if(this && this.deployContract) {
             TemplateVar.set('selectedAction', 'deploy-contract');
             TemplateVar.set('selectedToken', 'ether');
-            // TemplateVar.setTo('.compile-contract', 'selectedType', 'source-code');
 
         // Send funds
         } else {

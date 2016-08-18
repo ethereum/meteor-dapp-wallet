@@ -17,8 +17,8 @@ Example usage
 Template['elements_compileContract'].onCreated(function() {
     var template = this;
 
-    // set the default
-    TemplateVar.set('value', '');
+    // set the defaults
+    TemplateVar.set('txData', '');
     TemplateVar.set('constructorInputs', []);
     TemplateVar.set('selectedType', this.data.onlyByteCode ? 'byte-code' : 'source-code');
     TemplateVar.set('compiledContracts', JSON.parse(localStorage['compiledContracts'] || null));
@@ -73,6 +73,7 @@ Template['elements_compileContract'].onCreated(function() {
         var replayProtectionOn = TemplateVar.get('replay-protection-checkbox');
         var selectedType = TemplateVar.get('selectedType');
         var textareaData = TemplateVar.getFrom('.dapp-data-textarea', 'value');
+        var sendData = amount = token = '';
 
         if(selectedType === 'source-code' && selectedContract){        
                 // add the default web3 sendTransaction arguments
@@ -81,14 +82,13 @@ Template['elements_compileContract'].onCreated(function() {
                 });
         
                 // generate new contract code
-                TemplateVar.set('value', web3.eth.contract(selectedContract.jsonInterface).new.getData.apply(null, constructorInputs));
+                TemplateVar.set('txData', web3.eth.contract(selectedContract.jsonInterface).new.getData.apply(null, constructorInputs));
                 TemplateVar.set('contract', selectedContract);
         
                 // Save data to localstorage
                 localStorage.setItem('selectedContract', JSON.stringify(selectedContract));
         
         } else {
-            var sendData = amount = token = '';
 
             // Bytecode Data
             if (replayProtectionOn){
@@ -119,9 +119,8 @@ Template['elements_compileContract'].onCreated(function() {
                     sendData = tokenInstance.transfer.getData( mainRecipient, amount,  {});
                 } 
             }
-            TemplateVar.set("value", sendData);   
         }
-
+        TemplateVar.set("txData", sendData);   
     });
 });
 
