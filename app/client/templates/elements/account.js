@@ -93,7 +93,7 @@ Template['elements_account'].helpers({
     @method (creating)
     */
     'creating': function(){
-        return (!this.address || this.imported || (blocksForConfirmation >= EthBlocks.latest.number - (this.creationBlock - 1) && EthBlocks.latest.number - (this.creationBlock - 1) >= 0));
+        return ((!this.address && this.name) || this.imported || (blocksForConfirmation >= EthBlocks.latest.number - (this.creationBlock - 1) && EthBlocks.latest.number - (this.creationBlock - 1) >= 0));
     },
     /**
     Returns the confirmations
@@ -124,7 +124,7 @@ Template['elements_account'].helpers({
 Template['elements_account'].events({
     /**
     Field test the speed wallet is rendered
-    
+
     @event click button.show-data
     */
     'click .wallet-box': function(e){

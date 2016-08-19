@@ -11,7 +11,7 @@
         {{/if}}
 
         {{#if hasAccounts}}
-        
+
             <h2>{{i18n "wallet.accounts.accountsTitle"}}</h2>
             <p>
                 {{i18n "wallet.accounts.accountsDescription"}}
@@ -35,18 +35,18 @@
 
 
             <h2>{{i18n "wallet.accounts.walletsTitle"}}</h2>
-            
+
             {{#if hasMinimumBalance}}
                 <p>
-                    {{i18n "wallet.accounts.walletsDescription"}}     
+                    {{i18n "wallet.accounts.walletsDescription"}}
                 </p>
             {{else}}
                 <p>
                     {{{i18n "wallet.accounts.walletsDescriptionNotEnoughFunds"}}}
-                </p>           
+                </p>
             {{/if}}
 
-            
+
 
             <div class="wallet-box-list">
             {{#each wallets}}
