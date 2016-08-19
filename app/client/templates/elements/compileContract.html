@@ -37,7 +37,7 @@
 
             {{else}}
                 <div class="col col-12 mobile-full">
-
+                    
                     {{TemplateVar.set "byteTextareaShown" false}}
                     <button class="show-data dapp-block-button dapp-small">{{i18n 'wallet.send.showMoreOptions'}}</button>
                 </div>
@@ -60,9 +60,8 @@
                 </div>
             {{/unless}}
 
-
+            
             <textarea id="contract-source-editor" cols="20" rows="20"></textarea>
-
             {{#if TemplateVar.get "show"}}
                 {{> dapp_dataTextarea cols="20" rows="8" value=(TemplateVar.get "txData")}}
             {{/if}}

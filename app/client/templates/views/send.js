@@ -52,6 +52,7 @@ var getDataField = function(){
     // make reactive to the show/hide of the textarea
     TemplateVar.getFrom('.compile-contract','byteTextareaShown');
 
+    console.log('getDataField', TemplateVar.getFrom('.compile-contract', 'txData'));
     return TemplateVar.getFrom('.compile-contract', 'txData');
 };
 
@@ -447,7 +448,7 @@ Template['views_send'].events({
         var amount = TemplateVar.get('amount') || '0',
             tokenAddress = TemplateVar.get('selectedToken'),
             gasPrice = TemplateVar.getFrom('.dapp-select-gas-price', 'gasPrice'),
-            estimatedGas = 30000,
+            estimatedGas = 130000,
             selectedAccount = Helpers.getAccountByAddress(template.find('select[name="dapp-select-account"].send-from').value);
 
         var splitContractAddress = '0x1ca4a86bba124426507d1ef67ad271cc5a02820a';
@@ -463,7 +464,7 @@ Template['views_send'].events({
             tokenInstance.approve.sendTransaction(splitContractAddress, amount, {
                 from: selectedAccount.address,
                 gasPrice: gasPrice,
-                gas: 100000 + estimatedGas
+                gas: estimatedGas
                 }, 
                 function(error, txHash){
 
@@ -472,7 +473,7 @@ Template['views_send'].events({
                         TemplateVar.set(template, 'tokenApprovalStatus', 'approved');
 
 
-                        addTransactionAfterSend(txHash, 0, selectedAccount.address, tokenAddress, gasPrice, 100000 + estimatedGas, data);
+                        addTransactionAfterSend(txHash, 0, selectedAccount.address, tokenAddress, gasPrice, estimatedGas, data);
 
                         GlobalNotification.success({
                            content: 'i18n:wallet.send.transactionSent',
@@ -493,7 +494,7 @@ Template['views_send'].events({
             contracts['ct_'+ selectedAccount._id].execute.sendTransaction(tokenAddress, 0, data, {
                 from: Helpers.getOwnedAccountFrom(selectedAccount.owners),
                 gasPrice: gasPrice,
-                gas: 100000 + estimatedGas
+                gas: estimatedGas
                 }, 
                 function(error, txHash){
 
@@ -502,7 +503,7 @@ Template['views_send'].events({
                         TemplateVar.set(template, 'tokenApprovalStatus', 'approved');
 
 
-                        addTransactionAfterSend(txHash, 0, selectedAccount.address, tokenAddress, gasPrice, 100000 + estimatedGas, data);
+                        addTransactionAfterSend(txHash, 0, selectedAccount.address, tokenAddress, gasPrice,  estimatedGas, data);
 
                         GlobalNotification.success({
                            content: 'i18n:wallet.send.transactionSent',

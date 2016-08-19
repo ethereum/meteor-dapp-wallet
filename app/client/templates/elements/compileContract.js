@@ -76,23 +76,20 @@ Template['elements_compileContract'].onCreated(function() {
         var txData = amount = token = '';
 
         if(selectedType && selectedType === 'source-code' && selectedContract){  
+            // add the default web3 sendTransaction arguments
+            constructorInputs.push({
+                data: selectedContract.bytecode
+            });
+    
+            // generate new contract code
+            // TemplateVar.set('txData', );
+            txData = web3.eth.contract(selectedContract.jsonInterface).new.getData.apply(null, constructorInputs);
+            TemplateVar.set('contract', selectedContract);
+    
+            // Save data to localstorage
+            localStorage.setItem('selectedContract', JSON.stringify(selectedContract));
 
-                // add the default web3 sendTransaction arguments
-                constructorInputs.push({
-                    data: selectedContract.bytecode
-                });
-        
-                // generate new contract code
-                // TemplateVar.set('txData', );
-                txData = web3.eth.contract(selectedContract.jsonInterface).new.getData.apply(null, constructorInputs);
-                TemplateVar.set('contract', selectedContract);
-        
-                // Save data to localstorage
-                localStorage.setItem('selectedContract', JSON.stringify(selectedContract));
-        } else if(selectedType && selectedType === 'byte-code' ){  
-                txData = textareaData;
         } else {
-
             // Bytecode Data
             if (replayProtectionOn){
                 // set up the splitter
@@ -124,6 +121,7 @@ Template['elements_compileContract'].onCreated(function() {
             }
         }
         
+        console.log('txData', txData)
         TemplateVar.set("txData", txData);   
     });
 });
@@ -274,14 +272,6 @@ Template['elements_compileContract'].helpers({
         return selectedContract ? selectedContract.constructorInputs : [];
     },
     /**
-    List options on the replay attack selector
-
-    @method (replayAttackOptions)
-    */
-    'replayAttackOptions' : function(){
-        return [{value:"foo", text:"prevent it from being accepted"},{value:"bar", text:"send to this address:"}];
-    },
-    /**
     return accounts 
 
     @method replayAttackAccounts
@@ -416,6 +406,6 @@ Template['elements_compileContract'].events({
     */
     'change textarea.dapp-data-textarea': function(e){
         var value = e.currentTarget.value;
-        TemplateVar.set('value', value);
+        TemplateVar.set('txData', value);
     }
 });
