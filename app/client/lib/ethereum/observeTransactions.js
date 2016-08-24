@@ -39,6 +39,7 @@ addTransactionAfterSend = function(txHash, amount, from, to, gasPrice, estimated
     EthAccounts.update({address: to}, {$addToSet: {
         transactions: txId
     }});
+
 };
 
 
@@ -147,6 +148,10 @@ var updateTransaction = function(newDocument, transaction, receipt){
 
                     // Add contract to the contract list
                     if(oldTx && oldTx.jsonInterface) {
+                        GlobalNotification.success({
+                            content: TAPi18n.__('wallet.transactions.notifications.contractUploaded'),
+                            duration: 3
+                        });
                         CustomContracts.upsert({address: receipt.contractAddress}, {$set: {
                             address: receipt.contractAddress,
                             name: ( oldTx.contractName || 'New Contract') + ' ' + receipt.contractAddress.substr(2, 4),
@@ -199,6 +204,11 @@ var updateTransaction = function(newDocument, transaction, receipt){
                     }
                 }
             })
+        } else {
+            GlobalNotification.success({
+                content: TAPi18n.__('wallet.transactions.notifications.transactionExecuted'),
+                duration: 3
+            });            
         }
 
         newDocument.contractAddress = receipt.contractAddress;

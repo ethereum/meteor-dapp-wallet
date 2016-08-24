@@ -185,7 +185,10 @@
                 "tokenTransfer": {
                     "title": "__token__ - Token transfer",
                     "text": "__amount__ __token__  were send from __from__ to __to__."
-                }
+                },
+                "transactionExecuted": "Transaction executed",
+                "contractUploaded": "Contract Uploaded"
+
             }
         },
         "newWallet": {
