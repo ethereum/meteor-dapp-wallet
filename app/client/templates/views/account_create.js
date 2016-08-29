@@ -17,9 +17,11 @@ Template['views_account_create'].onCreated(function(){
     // number of owners of the account
     var walletId = FlowRouter.getQueryParam('walletId');
     var maxOwners = FlowRouter.getQueryParam('ownersNum');
+    var requireSigForAll = FlowRouter.getQueryParam('requireSigForAll');
     if(maxOwners && Helpers.isWatchOnly(walletId))
         maxOwners++;
     TemplateVar.set('multisigSignees', maxOwners || 3);     
+    TemplateVar.set('requireSigForAllTransactions', requireSigForAll || false);     
 
     // number of required signatures    
     TemplateVar.set('multisigSignatures', Number(FlowRouter.getQueryParam('requiredSignatures')) || 2);   
@@ -195,6 +197,20 @@ Template['views_account_create'].helpers({
 
         return returnArray;
     },
+        /**
+    Get the number of required multisignatures
+
+    @method (multisigSignatures)
+    */
+    'requireSigForAllTransactions': function() {
+        var signees = TemplateVar.get('alwaysRequireMultiSig');
+        var returnArray = []
+        
+        returnArray.push({value:false, text:TAPi18n.__('wallet.newWallet.accountType.multisig.overLimit')});
+        returnArray.push({value:true, text:TAPi18n.__('wallet.newWallet.accountType.multisig.requireForAll')});
+
+        return returnArray;
+    },
     /**
     Is simple checked
 
@@ -323,6 +339,7 @@ Template['views_account_create'].events({
                 balance: '0',
                 dailyLimit: web3.toWei(formValues.dailyLimitAmount, 'ether'),
                 requiredSignatures: formValues.multisigSignatures,
+                requireSigForAllTransactions: formValues.requireSigForAllTransactions,
                 creationBlock: EthBlocks.latest.number,
                 code: code
             });
