@@ -198,12 +198,11 @@ Template['views_account_create'].helpers({
         return returnArray;
     },
         /**
-    Get the number of required multisignatures
+    Get the condition that controls when multi-sig is required
 
-    @method (multisigSignatures)
+    @method (requireSigForAllTransactions)
     */
     'requireSigForAllTransactions': function() {
-        var signees = TemplateVar.get('alwaysRequireMultiSig');
         var returnArray = []
         
         returnArray.push({value:false, text:TAPi18n.__('wallet.newWallet.accountType.multisig.overLimit')});
@@ -211,6 +210,7 @@ Template['views_account_create'].helpers({
 
         return returnArray;
     },
+    
     /**
     Is simple checked
 
