@@ -206,9 +206,9 @@
                     "text2": "owners. You can send up to",
                     "text3": "ether per day.",
                     "text4": "Any transaction ",
-                    "overLimit": "over that daily limit"
-                    "requireForAll": "including those that do not transfer ether"
-                    "text4ending": "requires the confirmation of"
+                    "overLimit": "over that daily limit",
+                    "requireForAll": "including those that do not transfer ether",
+                    "text4ending": "requires the confirmation of",
                     "text5": "owners.",
                     "accountOwnersTitle": "Account owners",
                     "ownerAddress": "Owner address"
