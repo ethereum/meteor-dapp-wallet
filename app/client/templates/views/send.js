@@ -686,7 +686,6 @@ Template['views_send'].events({
 
                         TemplateVar.set(template, 'sending', false);
 
-                        console.log(error, txHash);
                         if(!error) {
                             console.log('SEND from contract', amount);
 
@@ -729,7 +728,6 @@ Template['views_send'].events({
 
                         TemplateVar.set(template, 'sending', false);
 
-                        console.log(error, txHash);
                         if(!error) {
                             console.log('SEND simple');
 
