@@ -32,7 +32,7 @@ Sort method for accounts and wallets to sort by balance
 @method sortByBalance
 **/
 Helpers.sortByBalance = function(a, b){
-    return !b.disabled && new BigNumber(parseInt(b.balance 10), 10).gt(new BigNumber(parseInt(a.balance, 10), 10)) ? 1 : -1;
+    return !b.disabled && new BigNumber(parseInt(b.balance, 10), 10).gt(new BigNumber(parseInt(a.balance, 10), 10)) ? 1 : -1;
 };
 
 
