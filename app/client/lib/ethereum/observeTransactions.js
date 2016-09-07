@@ -271,7 +271,7 @@ observeTransactions = function(){
         var confCount = 0;
 
         // check for confirmations
-        if(!tx.confirmed) {
+        if(!tx.confirmed && tx.transactionHash) {
             var filter = web3.eth.filter('latest');
             filter.watch(function(e, blockHash){
                 if(!e) {
@@ -324,9 +324,16 @@ observeTransactions = function(){
                         web3.eth.getTransaction(tx.transactionHash, function(e, transaction){
                             web3.eth.getTransactionReceipt(tx.transactionHash, function(e, receipt){
                                 if(!e) {
-
                                     // if still not mined, remove tx
                                     if(!transaction || !transaction.blockNumber) {
+
+                                        var warningText = TAPi18n.__('wallet.transactions.error.outOfGas', {from: Helpers.getAccountNameByAddress(tx.from), to: Helpers.getAccountNameByAddress(tx.to)});
+                                        Helpers.eventLogs(warningText);
+                                        GlobalNotification.warning({
+                                            content: warningText,
+                                            duration: 10
+                                        });
+
                                         Transactions.remove(tx._id);
                                         filter.stopWatching();
 
