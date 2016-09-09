@@ -12,6 +12,8 @@ The Helpers class containing helper functions
 **/
 Helpers = {};
 
+
+
 /**
 Reruns functions reactively, based on an interval. Use it like so:
 
@@ -81,7 +83,7 @@ Make a ID out of a given hash and prefix.
 @param {String} hash
 */
 Helpers.makeId = function(prefix, hash){
-    return _.isString(hash) ? prefix +'_'+ hash.replace('0x','').substr(0,10) : null;
+    return _.isString(hash) ? prefix +'_'+ hash.replace('0x','').substr(0,10) + '_' + NetworkInfo.uniqueId: null;
 };
 
 
