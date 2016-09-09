@@ -34,20 +34,32 @@ Tokens = new NetworkInfo.ProxyCollection(Tokens);
 
 // as soon as we know what network we're on let's port old data over
 NetworkInfo.promise.then(function() {
-    // load Contracts which aren't assigned to a network
-    var contracts = Contract._coll.find({
-        network: { 
-          $in: [null, undefined] 
-        }         
-    });
-    
-    contracts.forEach(function(contract) {
-        // if code found on current network
-        if ("0x" !== web3.eth.getCode(contract.address)) {
-            console.log('Assigning contract ' + contract._id + ' at address ' + contract.address ' to current network');
-            
-            // update it (and assign network)
-            Contract.update({ _id: contract._id }, { address: contract.address });
-        }
-    });
+    console.log('[DATA CHECK]: Check if there is data not assigned to a network...');
+
+    setTimeout(function() {
+        // load Contracts which aren't assigned to a network
+        var contracts = CustomContracts._coll.find({
+            network: { 
+              $in: [null, undefined] 
+            }         
+        });
+        
+        contracts.forEach(function(contract) {        
+            // if code found on current network
+            if ("0x" !== web3.eth.getCode(contract.address)) {
+                console.log('[DATA CHECK]: Assigning contract ' + contract._id + ' at address ' + contract.address + ' to current network');
+                
+                // update it (and assign network)
+                CustomContracts._coll.update({ _id: contract._id }, { 
+                    $set: {
+                        network: NetworkInfo.uniqueId 
+                    }
+                });
+            } else {
+                console.log('[DATA CHECK]: Contract ' + contract._id + ' at address ' + contract.address + ' does not belong to current network');
+            }
+        });
+
+        console.log('[DATA CHECK]: ...done checking to see if there is data not assigned to a network.');
+    }, 2000);
 });
