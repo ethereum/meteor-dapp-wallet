@@ -60,7 +60,7 @@ span.address {
     border: 0;
 
     // ANIMATION
-    .transition(background-color @animationSpeed*4, -webkit-filter @animationSpeed*20);
+    .transition(background-color @animationSpeed*4, opacity @animationSpeed);
 
     &:active {
         border: 0;
@@ -70,10 +70,9 @@ span.address {
         background-color: fadeout( #ffc107, 20%);
     }
 
-    &.disabled,
+    &.disabled:not(:hover),
     &.creating {
         .opacity(0.4);
-        pointer-events: none;
     }
     &.disabled {
         .filter(grayscale(100%));
