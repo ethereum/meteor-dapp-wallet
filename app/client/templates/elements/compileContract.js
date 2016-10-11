@@ -142,16 +142,7 @@ Template['elements_compileContract'].onRendered(function() {
     this.aceEditor.$blockScrolling = Infinity;
     this.aceEditor.focus();
 
-    var defaultCode = localStorage['contractSource'] || 
-`pragma solidity ^0.4.2;
-
-contract MyContract {
-    /* Constructor */
-    function MyContract() {
-
-    }
-}`;
-
+    var defaultCode = localStorage['contractSource'] || 'pragma solidity ^0.4.2;\n\ncontract MyContract {\n    /* Constructor */\n    function MyContract() {\n\n    }\n}';
     this.aceEditor.setValue(defaultCode);
     this.aceEditor.selection.selectTo(0);
 
