@@ -22,7 +22,6 @@ observeEvents = function(){
             CustomContracts.update({address: newDocument.address.toLowerCase()}, {$addToSet: {
                 contractEvents: newDocument._id
             }});
-
         },
         /**
         Remove events confirmations from the accounts

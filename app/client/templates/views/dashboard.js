@@ -39,7 +39,7 @@ Template['views_dashboard'].helpers({
 
         return accounts;
     },
-    /** 
+    /**
     Are there any accounts?
 
     @method (hasAccounts)
@@ -47,13 +47,13 @@ Template['views_dashboard'].helpers({
     'hasAccounts' : function() {
         return (EthAccounts.find().count() > 0);
     },
-    /** 
+    /**
     Are there any accounts?
 
     @method (hasAccounts)
     */
     'hasMinimumBalance' : function() {
-        
+
         var enoughBalance = false;
         _.each(_.pluck(EthAccounts.find({}).fetch(), 'balance'), function(bal){
             if(new BigNumber(bal, '10').gt(1000000000000000000)) enoughBalance = true;
@@ -71,7 +71,7 @@ Template['views_dashboard'].helpers({
     },
     /**
     Returns an array of pending confirmations, from all accounts
-    
+
     @method (pendingConfirmations)
     @return {Array}
     */
@@ -84,7 +84,7 @@ Template['views_dashboard'].helpers({
 Template['views_dashboard'].events({
     /**
     Request to create an account in mist
-    
+
     @event click .create.account
     */
     'click .create.account': function(e){

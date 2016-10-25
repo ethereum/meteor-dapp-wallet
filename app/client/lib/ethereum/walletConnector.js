@@ -59,43 +59,55 @@ connectToNode = function(){
     console.time('startNode')
     console.log('Connect to node...');
 
-    EthAccounts.init();
-    EthBlocks.init();
-    EthTools.ticker.start({extraParams: (typeof mist !== 'undefined') ? 'Mist-'+ mist.version : ''});
+    NetworkInfo.promise.then(function() {
+        EthAccounts.init({
+            network: NetworkInfo.uniqueId,
+        });
 
-    if (EthAccounts.find().count() > 0) {
-        checkForOriginalWallet();
-    }
+        assignUnassignedCollectionDataToNetwork(EthAccounts._collection, NetworkInfo.uniqueId, function(item) {
+            return true;
+        });
 
-    // EthBlocks.detectFork(function(oldBlock, block){
-    //     console.log('FORK detected from Block #'+ oldBlock.number + ' -> #'+ block.number +', rolling back!');
+        EthBlocks.init();
         
-    //     // Go through all accounts and re-run
-    //     _.each(Wallets.find({}).fetch(), function(wallet){
-    //         // REMOVE ADDRESS for YOUNG ACCOUNTS, so that it tries to get the Created event and correct address again
-    //         if(wallet.creationBlock + ethereumConfig.requiredConfirmations >= block.number)
-    //             delete wallet.address;
+        EthTools.ticker.start({extraParams: (typeof mist !== 'undefined') ? 'Mist-'+ mist.version : ''});
 
-    //         setupContractFilters(wallet);
-    //     });
-    // });
+        EthBlocks.init();    
+
+        if (EthAccounts.find().count() > 0) {
+            checkForOriginalWallet();
+        }
+
+        // EthBlocks.detectFork(function(oldBlock, block){
+        //     console.log('FORK detected from Block #'+ oldBlock.number + ' -> #'+ block.number +', rolling back!');
+            
+        //     // Go through all accounts and re-run
+        //     _.each(Wallets.find({}).fetch(), function(wallet){
+        //         // REMOVE ADDRESS for YOUNG ACCOUNTS, so that it tries to get the Created event and correct address again
+        //         if(wallet.creationBlock + ethereumConfig.requiredConfirmations >= block.number)
+        //             delete wallet.address;
+
+        //         setupContractFilters(wallet);
+        //     });
+        // });
 
 
-    observeLatestBlocks();
+        observeLatestBlocks();
 
-    observeWallets();
+        observeWallets();
 
-    observeTransactions();
+        observeTransactions();
 
-    observeEvents();
+        observeEvents();
 
-    observeTokens();
+        observeTokens();
 
-    observePendingConfirmations();
+        observePendingConfirmations();
 
-    observeCustomContracts();
+        observeCustomContracts();
 
-    console.timeEnd('startNode')
+        console.timeEnd('startNode')    
+    });
 };
 
 /**
