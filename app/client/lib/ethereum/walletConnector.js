@@ -64,6 +64,10 @@ connectToNode = function(){
             network: NetworkInfo.uniqueId,
         });
 
+        assignUnassignedCollectionDataToNetwork(EthAccounts._collection, NetworkInfo.uniqueId, function(item) {
+            return true;
+        });
+
         EthBlocks.init();
         
         EthTools.ticker.start({extraParams: (typeof mist !== 'undefined') ? 'Mist-'+ mist.version : ''});
