@@ -84,7 +84,7 @@ Template['views_send'].onCreated(function(){
 
     // SET THE DEFAULT VARIABLES
     TemplateVar.set('amount', '0');
-    TemplateVar.set('estimatedGas', 0);
+    TemplateVar.set('estimatedGas', 300000);
     TemplateVar.set('sendAll', false);
     TemplateVar.set(template, 'tokenApprovalStatus', 'notSent');
 
