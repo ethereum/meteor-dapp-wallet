@@ -88,6 +88,9 @@ Template['views_send'].onCreated(function(){
     TemplateVar.set('sendAll', false);
     TemplateVar.set(template, 'tokenApprovalStatus', 'notSent');
 
+    // EthBlocks.latest
+    // console.log('EthBlocks.latest.gasPrice', EthBlocks.latest.gasPrice);
+    // console.log('latestBlock.gasPrice', latestBlock.gasPrice);
 
     // check if we are still on the correct chain
     Helpers.checkChain(function(error) {

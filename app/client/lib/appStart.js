@@ -47,13 +47,13 @@ web3.eth.isSyncing(function(error, syncing) {
             syncing.progress = Math.floor(((syncing.currentBlock - syncing.startingBlock) / (syncing.highestBlock - syncing.startingBlock)) * 100);
             syncing.blockDiff = numeral(syncing.highestBlock - syncing.currentBlock).format('0,0');
 
-            TemplateVar.setTo('header nav', 'syncing', syncing);
+            // TemplateVar.setTo('header nav', 'syncing', syncing);
             
         } else {
             console.timeEnd('nodeRestarted')            
             console.log('Restart app operation again');
 
-            TemplateVar.setTo('header nav', 'syncing', false);
+            // TemplateVar.setTo('header nav', 'syncing', false);
 
             // re-gain app operation
             connectToNode();

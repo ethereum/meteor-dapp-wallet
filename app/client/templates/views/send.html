@@ -129,9 +129,9 @@
         <!-- fee -->
         <div class="row clear">
             <div class="col col-7 mobile-full">
-                <h3>{{i18n 'wallet.send.fee'}}</h3>
+                <h3>{{i18n 'wallet.send.fee'}} ${{latestBlock.gasPrice}}</h3>
 
-                {{> dapp_selectGasPrice gas=(TemplateVar.get "estimatedGas")}}
+                {{> dapp_selectGasPrice gas=(TemplateVar.get "estimatedGas") gasPrice=latestBlock.gasPrice}}
             </div>
             
             <div class="col col-5 mobile-full send-info">
