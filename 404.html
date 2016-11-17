@@ -1,13 +1,40 @@
 <html>
    <head>  
       <title>404 page for github pages</title>
-      <META http-equiv="refresh" content="0;URL=http://wallet.ethereum.org">
+      <META http-equiv="refresh" content="1;URL=https://wallet.ethereum.org">
+   <style type="text/css">
+      body {
+         background-color: #f0f0f0;
+         color: #ACACAC;
+         text-shadow: 0 -1px #fff;
+         font: 20px Helvetica Neue, Arial;
+         font-weight: 200;
+         text-align: center;
+         padding: 10px;
+         padding-top: 100px; 
+      }
+
+      a {
+         text-decoration: none;
+         color: #02a8f3;
+         font-weight: bold;
+      }
+      
+   </style>
    </head>
    
-   <body>
-      <p>Page not found.  
-         <a href="http://wallet.ethereum.org"> Click here to redirect to the main page</a>
-      </p>
-      <p> This page is required to add 404 on github pages</p>
+   <body onload="setTimeout(onTimerElapsed, 5000);">
+      <div id="msg" style="display: none;">
+         <p>
+            <a href="https://wallet.ethereum.org"> Click here to redirect to the main wallet page</a>
+         </p>
+      </div>
    </body>
+
+   <script type="text/javascript">
+       function onTimerElapsed() {
+           var myDiv = document.getElementById('msg');
+           myDiv.style.display = 'block';
+       }
+   </script>   
 </html>
