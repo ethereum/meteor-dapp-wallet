@@ -1,7 +1,6 @@
 app/browser
 app/packages
 app/packages/*
-build/
 packages/
 app/public/i18n/*.json
 app/.meteor/dev_bundle
