@@ -1,30 +1,50 @@
 <html>
    <head>  
       <title>404 page for github pages</title>
-      <META http-equiv="refresh" content="0;URL=http://wallet.ethereum.org">
-      <style>
-      .error {
-         width: 320px;
-         margin: 100px auto;
-      }
-      a {
-         font: 100 16px 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-         margin: 16px 0;
-         margin-bottom: 48px;
-         font-weight: 600;
-         font-size: 2.2em;
-         line-height: 1.4em;
-         color: #02a8f3;
-         text-decoration: none;
-      }
-      </style>
+      <META http-equiv="refresh" content="1;URL=https://wallet.ethereum.org">
+      <style type="text/css">
+         body {
+            background-color: #f0f0f0;
+            color: #ACACAC;
+            text-shadow: 0 -1px #fff;
+            font: 20px Helvetica Neue, Arial;
+            font-weight: 200;
+            text-align: center;
+            padding: 10px;
+            padding-top: 100px; 
+         }
+
+         a {
+            margin: 16px 0;
+            margin-bottom: 48px;
+            font: 100 16px 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            text-decoration: none;
+            color: #02a8f3;
+            font-weight: 600;
+            font-size: 1em;
+            line-height: 1.4em;
+         }
+
+         #msg {
+            opacity: 0;
+            transition: opacity 1s ease-in-out;            
+         }
+      
+   </style>
    </head>
    
-   <body>
-   <div class="error">
-      <p>  
-         <a href="http://wallet.ethereum.org"> Redirecting to the main page... </a>
-      </p>
-   </div>
+   <body onload="setTimeout(onTimerElapsed, 1000);">
+      <div id="msg">
+         <p>
+            <a href="https://wallet.ethereum.org"> Click here to redirect to the main wallet page</a>
+         </p>
+      </div>
    </body>
+
+   <script type="text/javascript">
+       function onTimerElapsed() {
+           var myDiv = document.getElementById('msg');
+           myDiv.style.opacity = 1;
+       }
+   </script>   
 </html>

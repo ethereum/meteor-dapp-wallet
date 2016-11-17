@@ -84,7 +84,7 @@ Template['views_send'].onCreated(function(){
 
     // SET THE DEFAULT VARIABLES
     TemplateVar.set('amount', '0');
-    TemplateVar.set('estimatedGas', 0);
+    TemplateVar.set('estimatedGas', 300000);
     TemplateVar.set('sendAll', false);
     TemplateVar.set(template, 'tokenApprovalStatus', 'notSent');
 
@@ -696,7 +696,7 @@ Template['views_send'].events({
 
                             addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
 
-                            localStorage.setItem('contractSource', 'contract MyContract {\n    /* Constructor */\n    function MyContract() {\n \n    }\n}');
+                            localStorage.setItem('contractSource', 'pragma solidity ^0.4.2;\n\ncontract MyContract {\n    /* Constructor */\n    function MyContract() {\n\n    }\n}');
                             localStorage.setItem('compiledContracts', null);
                             localStorage.setItem('selectedContract', null);
 
@@ -738,8 +738,8 @@ Template['views_send'].events({
                                 : data;
 
                             addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
-                            
-                            localStorage.setItem('contractSource', 'contract MyContract {\n    /* Constructor */\n    function MyContract() {\n \n    }\n}');
+
+                            localStorage.setItem('contractSource', 'pragma solidity ^0.4.2;\n\ncontract MyContract {\n    /* Constructor */\n    function MyContract() {\n\n    }\n}');
                             localStorage.setItem('compiledContracts', null);
                             localStorage.setItem('selectedContract', null);
 
