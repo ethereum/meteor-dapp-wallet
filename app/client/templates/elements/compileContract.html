@@ -7,37 +7,11 @@
                     
                         <button class="hide-data dapp-block-button dapp-small">{{i18n 'wallet.send.showLessOptions'}}</button>
 
-                        {{#if TemplateVar.get "hasSplitter"}}
-                        <br>
-                        <h3> {{i18n 'wallet.send.preventReplay'}} </h3>
-                        <label>
-                        <input type="checkbox" class="replay-protection">
-                        
-                        {{i18n 'wallet.send.onOtherChainSendTo'}}   
-
-                        {{#if TemplateVar.get "show-address-field"}}
-                            {{> dapp_addressInput placeholder="0x000000.." name="alt-chain-recipient" class="alt-chain-recipient inline" value=(TemplateVar.get "replay-protection-to")}}
-                        {{else}}
-                            {{> dapp_selectAccount accounts=(replayAttackList) showAccountTypes=false class='inline replay-protection-to'}}
-                        {{/if}}
-
-                        </label>
-                        <br>
-                        <br>
-                        {{/if}}
-
                         <h3>{{i18n 'wallet.send.data'}}</h3>
-                    </div>
-                    <div class="col col-4 mobile-full">
-                        {{#if TemplateVar.get "hasSplitter"}}
-                        <br><br><br><br>
-                        {{i18n 'wallet.send.replayExplanation'}}
-                        {{/if}}
-                    </div>   
+                    </div>  
 
             {{else}}
                 <div class="col col-12 mobile-full">
-                    
                     {{TemplateVar.set "byteTextareaShown" false}}
                     <button class="show-data dapp-block-button dapp-small">{{i18n 'wallet.send.showMoreOptions'}}</button>
                 </div>
