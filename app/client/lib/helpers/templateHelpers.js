@@ -37,7 +37,7 @@ Check if in mist and in mist mode
 @method (isMistMode)
 **/
 Template.registerHelper('isMistMode', function(){
-    return (typeof mist !== 'undefined' && mist.mode === 'mist');
+    return (typeof mistMode !== 'undefined' && mistMode === 'mist');
 });
 
 /**
