@@ -61,10 +61,9 @@ Template['elements_compileContract'].onCreated(function() {
         var selectedContract = TemplateVar.get('selectedContract');
         var constructorInputs = _.clone(TemplateVar.get('constructorInputs'));
         var selectedToken = TemplateVar.getFrom('.select-token', 'selectedToken');
-        var mainRecipient = TemplateVar.getFrom('div.dapp-address-input input.to', 'value');
         var selectedType = TemplateVar.get('selectedType');
         var textareaData = TemplateVar.getFrom('.dapp-data-textarea', 'value');
-        var txData = amount = token = '';
+        var txData = '';
 
         if(selectedType && selectedType === 'source-code' && selectedContract){  
             // add the default web3 sendTransaction arguments
@@ -83,15 +82,11 @@ Template['elements_compileContract'].onCreated(function() {
         } else {
             // Bytecode Data  
             if (!selectedToken || selectedToken === 'ether') {
+
                 // send ether         
                 txData = (TemplateVar.get('show')) ? textareaData : '';
-            } else {
-                // send tokens 
-                amount = TemplateVar.getFrom('.amount input[name="amount"]', 'amount') || '0';
-                token = Tokens.findOne({address: selectedToken});                
-                var tokenInstance = TokenContract.at(selectedToken);
-                txData = tokenInstance.transfer.getData( mainRecipient, amount,  {});
-            } 
+
+            }
         }
         
         console.log('txData', txData)

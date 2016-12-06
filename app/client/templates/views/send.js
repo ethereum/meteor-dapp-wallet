@@ -52,6 +52,21 @@ var getDataField = function(){
     // make reactive to the show/hide of the textarea
     TemplateVar.getFrom('.compile-contract','byteTextareaShown');
 
+
+
+    // send tokens
+    var selectedToken = TemplateVar.get('selectedToken');
+
+    if(selectedToken && selectedToken !== 'ether') {
+        var mainRecipient = TemplateVar.getFrom('div.dapp-address-input input.to', 'value');
+        var amount = TemplateVar.get('amount') || '0';
+        var token = Tokens.findOne({address: selectedToken});        
+        var tokenInstance = TokenContract.at(selectedToken);
+        var txData = tokenInstance.transfer.getData( mainRecipient, amount,  {});
+
+        return txData;
+    }
+
     return TemplateVar.getFrom('.compile-contract', 'txData');
 };
 
@@ -94,14 +109,24 @@ Template['views_send'].onCreated(function(){
         }
     });
 
+    // change the token type when the account is changed
+    template.autorun(function(c){
+        var address = TemplateVar.getFrom('.dapp-select-account.send-from', 'value');
+
+        if(!c.firstRun) {
+            TemplateVar.set('selectedToken', 'ether');
+        }
+    });
+
 
     // check daily limit again, when the account was switched
     template.autorun(function(c){
         var address = TemplateVar.getFrom('.dapp-select-account.send-from', 'value'),
             amount = TemplateVar.get('amount') || '0';
 
-        if(!c.firstRun)
+        if(!c.firstRun) {
             checkOverDailyLimit(address, amount, template);
+        }
     });
 
     // change the amount when the currency unit is changed

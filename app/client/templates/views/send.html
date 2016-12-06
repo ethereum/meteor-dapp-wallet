@@ -123,7 +123,9 @@
             <div class="dapp-clear-fix"></div>
         </div>
 
-        {{> elements_compileContract onlyByteCode=showOnlyByteTextarea codeNotExecutable=(TemplateVar.get "codeNotExecutable")}}
+        {{#if $eq (TemplateVar.get "selectedToken") "ether"}}
+            {{> elements_compileContract onlyByteCode=showOnlyByteTextarea codeNotExecutable=(TemplateVar.get "codeNotExecutable")}}
+        {{/if}}
 
 
         <!-- fee -->
