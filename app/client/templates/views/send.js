@@ -337,7 +337,7 @@ Template['views_send'].helpers({
             // deduct fee if account, for contracts use full amount
             amount = (selectedAccount.owners)
                 ? selectedAccount.balance
-                : new BigNumber(selectedAccount.balance, 10).minus(new BigNumber(gasInWei, 10)).toString(10);
+                : BigNumber.max(0, new BigNumber(selectedAccount.balance, 10).minus(new BigNumber(gasInWei, 10))).toString(10);
         } else {
             var token = Tokens.findOne({address: TemplateVar.get('selectedToken')});
 
