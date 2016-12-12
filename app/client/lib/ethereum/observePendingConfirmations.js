@@ -10,18 +10,38 @@ observePendingConfirmations = function(){
     @class PendingConfirmations({}).observe
     @constructor
     */
-    // collectionObservers[collectionObservers.length] = PendingConfirmations.find({}).observe({
+    collectionObservers[collectionObservers.length] = PendingConfirmations.find({}).observe({
         /**
         Add pending confirmations to the accounts
 
         @method added
         */
-        // added: function(document) {
-        //     if(document.operation && (!document.confirmedOwners || document.confirmedOwners.length > 0))
-        //         Accounts.update({address: document.from}, {$addToSet: {
-        //             pendingConfirmations: document._id
-        //         }});
-        // },
+        added: function(document) {
+            var wallet = Helpers.getAccountByAddress(document.from);
+            if(wallet && wallet.requiredSignatures > document.confirmedOwners.length) {
+                var removed = false;
+                var contract = contracts['ct_'+ wallet._id];
+
+                _.each(wallet.owners, function(owner){
+                    contract.hasConfirmed(document.operation, owner, function(e, res){
+                        if(!removed && !e) {
+                            if(res) {
+                                PendingConfirmations.update(document._id, {$addToSet: {confirmedOwners: owner}});
+                            } else {
+                                PendingConfirmations.update(document._id, {$pull: {confirmedOwners: owner}});
+                            }
+                            
+                            var pendingConf = PendingConfirmations.findOne(document._id);
+
+                            if(!pendingConf.confirmedOwners.length || Number(wallet.requiredSignatures) === pendingConf.confirmedOwners.length) {
+                                PendingConfirmations.remove(document._id);
+                                removed = true;
+                            }
+                        }
+                    });
+                });
+            }
+        },
         /**
         Remove pending confirmations from the accounts
 
@@ -51,5 +71,5 @@ observePendingConfirmations = function(){
         //         }});
         //     }
         // }
-    // });
+    });
 };
