@@ -399,8 +399,7 @@ observeTransactions = function(){
 
             // remove pending confirmations, if present
             if(newDocument.operation) {
-                var confirmationId = Helpers.makeId('pc', newDocument.operation);
-                PendingConfirmations.remove(confirmationId);
+                checkConfirmation(Helpers.makeId('pc', newDocument.operation));
             }
 
 
@@ -458,6 +457,11 @@ observeTransactions = function(){
             Wallets.update({address: newDocument.to}, {$addToSet: {
                 transactions: newDocument._id
             }});
+
+            // remove pending confirmations, if present
+            if(newDocument.operation) {
+                checkConfirmation(Helpers.makeId('pc', newDocument.operation));
+            }
         },
         /**
         Remove transactions confirmations from the accounts
