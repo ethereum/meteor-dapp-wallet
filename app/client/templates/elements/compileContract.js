@@ -89,7 +89,6 @@ Template['elements_compileContract'].onCreated(function() {
             }
         }
         
-        console.log('txData', txData)
         TemplateVar.set("txData", txData);   
     });
 });
