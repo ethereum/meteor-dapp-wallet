@@ -44,7 +44,7 @@ To deploy them to the **wallet.ethereum.org** site, execute these commands (from
     git checkout gh-pages
     git merge develop
     cd app
-    meteor-build-client ../build --path ""
+    meteor-build-client ../build --path "/"
           
 And push (or PR) your changes to the gh-pages branch.
 
