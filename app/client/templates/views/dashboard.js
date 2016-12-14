@@ -56,7 +56,7 @@ Template['views_dashboard'].helpers({
         
         var enoughBalance = false;
         _.each(_.pluck(EthAccounts.find({}).fetch(), 'balance'), function(bal){
-            if(new BigNumber(bal, '10').gt(100000000000000000)) enoughBalance = true;
+            if(new BigNumber(bal, '10').gt(10000000000000000)) enoughBalance = true;
         });
 
         return enoughBalance;
