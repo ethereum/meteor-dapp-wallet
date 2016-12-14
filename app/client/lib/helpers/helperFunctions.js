@@ -13,6 +13,13 @@ The Helpers class containing helper functions
 Helpers = {};
 
 /**
+The default contract example
+
+@property defaultContractExample
+**/
+Helpers.defaultContractExample = 'pragma solidity ^0.4.5;\n\ncontract MyContract {\n    /* Constructor */\n    function MyContract() {\n\n    }\n}';
+
+/**
 Reruns functions reactively, based on an interval. Use it like so:
 
     Helpers.rerun['10s'].tick();
