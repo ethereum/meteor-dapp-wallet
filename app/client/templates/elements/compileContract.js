@@ -174,6 +174,7 @@ Template['elements_compileContract'].onRendered(function() {
 
 
                 } else {
+                    
                     // Converts error into multiple bits
                     var errorLine = error.toString().split(':');
 
