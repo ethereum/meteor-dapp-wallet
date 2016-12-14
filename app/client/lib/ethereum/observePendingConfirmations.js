@@ -1,4 +1,42 @@
 /**
+Check if a pending confirmation is still pending
+
+@method checkConfirmation
+*/
+checkConfirmation = function(confirmationId){
+    var conf = PendingConfirmations.findOne(confirmationId);
+    if(!conf) return;
+
+    var wallet = Helpers.getAccountByAddress(conf.from);
+
+    if(conf.operation && wallet && wallet.requiredSignatures > conf.confirmedOwners.length) {
+        var removed = false;
+        var contract = contracts['ct_'+ wallet._id];
+
+        setTimeout(function(){
+            _.each(wallet.owners, function(owner){
+                contract.hasConfirmed(conf.operation, owner, function(e, res){
+                    if(!removed && !e) {
+                        if(res) {
+                            PendingConfirmations.update(confirmationId, {$addToSet: {confirmedOwners: owner}});
+                        } else {
+                            PendingConfirmations.update(confirmationId, {$pull: {confirmedOwners: owner}});
+                        }
+                        
+                        var pendingConf = PendingConfirmations.findOne(confirmationId);
+
+                        if(pendingConf && (!pendingConf.confirmedOwners.length || Number(wallet.requiredSignatures) === pendingConf.confirmedOwners.length)) {
+                            PendingConfirmations.remove(confirmationId);
+                            removed = true;
+                        }
+                    }
+                });
+            });
+        }, 1000);
+    }
+};
+
+/**
 Observe pending confirmations
 
 @method observePendingConfirmations
@@ -17,29 +55,10 @@ observePendingConfirmations = function(){
         @method added
         */
         added: function(document) {
-            var wallet = Helpers.getAccountByAddress(document.from);
-            if(wallet && wallet.requiredSignatures > document.confirmedOwners.length) {
-                var removed = false;
-                var contract = contracts['ct_'+ wallet._id];
+            checkConfirmation(document._id);
 
-                _.each(wallet.owners, function(owner){
-                    contract.hasConfirmed(document.operation, owner, function(e, res){
-                        if(!removed && !e) {
-                            if(res) {
-                                PendingConfirmations.update(document._id, {$addToSet: {confirmedOwners: owner}});
-                            } else {
-                                PendingConfirmations.update(document._id, {$pull: {confirmedOwners: owner}});
-                            }
-                            
-                            var pendingConf = PendingConfirmations.findOne(document._id);
-
-                            if(!pendingConf.confirmedOwners.length || Number(wallet.requiredSignatures) === pendingConf.confirmedOwners.length) {
-                                PendingConfirmations.remove(document._id);
-                                removed = true;
-                            }
-                        }
-                    });
-                });
+            if(typeof mist !== 'undefined' && document.confirmedOwners && document.confirmedOwners.length) {
+                mist.menu.setBadge(TAPi18n.__('wallet.app.texts.pendingConfirmationsBadge'));
             }
         },
         /**
@@ -47,29 +66,18 @@ observePendingConfirmations = function(){
 
         @method removed
         */
-        // removed: function(document) {
-        //     Accounts.update({address: document.from}, {$pull: {
-        //         pendingConfirmations: document._id
-        //     }});
-        // },
+        removed: function(document) {
+            updateMistBadge();
+        },
         /**
         Add pending confirmations to the accounts
 
         @method changed
         */
-        // changed: function(id, fields) {
-        //     var document = PendingConfirmations.findOne(id);
-
-        //     if(fields.operation || (fields.confirmedOwners && fields.confirmedOwners.length > 0)) {
-        //         Accounts.update({address: document.from}, {$addToSet: {
-        //             pendingConfirmations: document._id
-        //         }});
-        //     }
-        //     if(fields.confirmedOwners && fields.confirmedOwners.length === 0) {
-        //         Accounts.update({address: document.from}, {$pull: {
-        //             pendingConfirmations: document._id
-        //         }});
-        //     }
-        // }
+        changed: function(id, fields) {
+            if(typeof mist !== 'undefined' && document.confirmedOwners && document.confirmedOwners.length) {
+                mist.menu.setBadge(TAPi18n.__('wallet.app.texts.pendingConfirmationsBadge'));
+            }
+        }
     });
 };
