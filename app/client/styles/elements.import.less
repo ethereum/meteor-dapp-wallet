@@ -87,6 +87,11 @@ span.address {
         }
     }
 
+    &.creating { 
+        pointer-events: none;
+        cursor: default;
+    }
+
     &:last-child {
         flex: 1 0 @gridWidth * 6.5;
         max-width: @gridWidth * 13.5;
