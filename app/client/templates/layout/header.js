@@ -43,10 +43,7 @@ Template['layout_header'].helpers({
 
         var balance = _.reduce(_.pluck(_.union(accounts, wallets), 'balance'), function(memo, num){ return memo + Number(num); }, 0);
 
-        // set total balance in Mist menu, of no pending confirmation is Present
-        if(typeof mist !== 'undefined' && !PendingConfirmations.findOne({operation: {$exists: true}})) {
-            mist.menu.setBadge(EthTools.formatBalance(balance, '0.0 a','ether') + ' ETH');
-        }
+        updateMistBadge();
 
         return balance;
     },

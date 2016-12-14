@@ -1,3 +1,16 @@
+updateMistBadge = function(){
+    var conf = PendingConfirmations.findOne({operation: {$exists: true}});
+    // set total balance in Mist menu, of no pending confirmation is Present
+    if(typeof mist !== 'undefined' && (!conf || !conf.confirmedOwners.length)) {
+        var accounts = EthAccounts.find({}).fetch();
+        var wallets = Wallets.find({owners: {$in: _.pluck(accounts, 'address')}}).fetch();
+
+        var balance = _.reduce(_.pluck(_.union(accounts, wallets), 'balance'), function(memo, num){ return memo + Number(num); }, 0);
+
+        mist.menu.setBadge(EthTools.formatBalance(balance, '0.0 a','ether') + ' ETH');
+    }
+};
+
 // ADD MIST MENU
 updateMistMenu = function(){
     if(typeof mist === 'undefined')
@@ -42,15 +55,6 @@ updateMistMenu = function(){
         // set total balance in header.js
     }, 10);
 };
-
-Tracker.autorun(function(){
-    var pendingConfirmation = PendingConfirmations.findOne({operation: {$exists: true}, confirmedOwners: {$ne: []}});
-
-    if(typeof mist !== 'undefined' && pendingConfirmation) {
-        mist.menu.setBadge(TAPi18n.__('wallet.app.texts.pendingConfirmationsBadge'));
-    }
-
-});
 
 
 Meteor.startup(function() {
