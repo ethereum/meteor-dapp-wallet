@@ -1,3 +1,15 @@
+// FlowRouter fix
+
+FlowRouter.wait();
+
+setTimeout(function(){
+    FlowRouter.initialize()
+    
+}, 500);
+
+// FlowRouter fix - end
+
+
 // configure
 BlazeLayout.setRoot('body');
 

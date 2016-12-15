@@ -22,6 +22,9 @@ updateMistMenu = function(){
     accounts.sort(Helpers.sortByBalance);
 
     Meteor.setTimeout(function(){
+        var route = FlowRouter.current().route;
+        if(!route) return;
+
         var routeName = FlowRouter.current().route.name;
 
         // add/update mist menu
