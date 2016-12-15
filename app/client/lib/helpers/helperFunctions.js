@@ -17,7 +17,7 @@ The default contract example
 
 @property defaultContractExample
 **/
-Helpers.defaultContractExample = 'pragma solidity ^0.4.5;\n\ncontract MyContract {\n    /* Constructor */\n    function MyContract() {\n\n    }\n}';
+Helpers.defaultContractExample = 'pragma solidity ^0.4.6;\n\ncontract MyContract {\n    /* Constructor */\n    function MyContract() {\n\n    }\n}';
 
 /**
 Reruns functions reactively, based on an interval. Use it like so:
