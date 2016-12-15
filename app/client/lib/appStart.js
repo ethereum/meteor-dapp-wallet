@@ -5,7 +5,7 @@ if(location.hostname !== 'localhost' && location.hostname !== '127.0.0.1')
 
 // Make sure the example contract code is up to date
 var shortExample = Helpers.defaultContractExample.substr(Helpers.defaultContractExample.indexOf("\n\n")+2);
-if (localStorage.getItem('contractSource').indexOf(shortExample) !== -1) {
+if (localStorage.getItem('contractSource') && localStorage.getItem('contractSource').indexOf(shortExample) !== -1) {
     localStorage.setItem('contractSource', Helpers.defaultContractExample);
 }
  
