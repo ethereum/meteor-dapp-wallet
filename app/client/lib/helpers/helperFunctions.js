@@ -13,11 +13,15 @@ The Helpers class containing helper functions
 Helpers = {};
 
 /**
-The default contract example
+Get the default contract example
 
-@property defaultContractExample
+@method getDefaultContractExample
 **/
-Helpers.defaultContractExample = 'pragma solidity ^0.4.6;\n\ncontract MyContract {\n    /* Constructor */\n    function MyContract() {\n\n    }\n}';
+Helpers.getDefaultContractExample = function() {
+    solcVersion = mist.solidity.version || '0.4.7';
+    
+    return `pragma solidity ^${solcVersion};\n\ncontract MyContract {\n    /* Constructor */\n    function MyContract() {\n\n    }\n}`;
+}
 
 /**
 Reruns functions reactively, based on an interval. Use it like so:
