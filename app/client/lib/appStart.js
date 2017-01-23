@@ -4,9 +4,13 @@ if(location.hostname !== 'localhost' && location.hostname !== '127.0.0.1')
 
 
 // Make sure the example contract code is up to date
-var shortExample = Helpers.defaultContractExample.substr(Helpers.defaultContractExample.indexOf("\n\n")+2);
-if (localStorage.getItem('contractSource') && localStorage.getItem('contractSource').indexOf(shortExample) !== -1) {
-    localStorage.setItem('contractSource', Helpers.defaultContractExample);
+var contractSource = localStorage.getItem('contractSource');
+
+if (contractSource  // repopulate placeholder contract if:
+    && (contractSource === ""  // source is empty or
+    || (contractSource.indexOf(Helpers.getDefaultContractExample(true)) !== -1)  // default 'MyContract' exists and
+    && contractSource.split('contract ').length-1 === 1)) {  // 'MyContract' is the only contract
+    localStorage.setItem('contractSource', Helpers.getDefaultContractExample());
 }
  
 

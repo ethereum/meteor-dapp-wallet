@@ -109,7 +109,7 @@ Template['elements_compileContract'].onRendered(function() {
     this.aceEditor.$blockScrolling = Infinity;
     this.aceEditor.focus();
 
-    var defaultCode = localStorage['contractSource'] || Helpers.defaultContractExample;
+    var defaultCode = localStorage['contractSource'] || Helpers.getDefaultContractExample();
     this.aceEditor.setValue(defaultCode);
     this.aceEditor.selection.selectTo(0);
 
