@@ -596,7 +596,7 @@ Template['views_send'].events({
 
                             addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
 
-                            localStorage.setItem('contractSource', Helpers.defaultContractExample);
+                            localStorage.setItem('contractSource', Helpers.getDefaultContractExample());
                             localStorage.setItem('compiledContracts', null);
                             localStorage.setItem('selectedContract', null);
 
@@ -639,7 +639,7 @@ Template['views_send'].events({
 
                             addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
 
-                            localStorage.setItem('contractSource', Helpers.defaultContractExample);
+                            localStorage.setItem('contractSource', Helpers.getDefaultContractExample());
                             localStorage.setItem('compiledContracts', null);
                             localStorage.setItem('selectedContract', null);
 
