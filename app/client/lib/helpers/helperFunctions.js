@@ -13,11 +13,20 @@ The Helpers class containing helper functions
 Helpers = {};
 
 /**
-The default contract example
+Get the default contract example
 
-@property defaultContractExample
+@method getDefaultContractExample
 **/
-Helpers.defaultContractExample = 'pragma solidity ^0.4.6;\n\ncontract MyContract {\n    /* Constructor */\n    function MyContract() {\n\n    }\n}';
+Helpers.getDefaultContractExample = function(withoutPragma) {
+    const source = 'contract MyContract {\n    /* Constructor */\n    function MyContract() {\n\n    }\n}';
+
+    if (withoutPragma) {
+        return source;
+    } else {
+        solcVersion = mist.solidity.version || '0.4.6';  // Keep this for now as the Mist-API object will only be availabe from Mist version >= 0.8.9 so that older versions that will query code from wallet.ethereum.org won't use broken example code.
+        return 'pragma solidity ' + solcVersion + ';\n\n' + source;
+    }
+}
 
 /**
 Reruns functions reactively, based on an interval. Use it like so:
