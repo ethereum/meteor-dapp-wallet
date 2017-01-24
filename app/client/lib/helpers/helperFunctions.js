@@ -23,7 +23,17 @@ Helpers.getDefaultContractExample = function(withoutPragma) {
     if (withoutPragma) {
         return source;
     } else {
-        solcVersion = mist.solidity.version || '0.4.6';  // Keep this for now as the Mist-API object will only be availabe from Mist version >= 0.8.9 so that older versions that will query code from wallet.ethereum.org won't use broken example code.
+        var solcVersion;
+
+        // Keep this for now as the Mist-API object will only be availabe from Mist version >= 0.8.9 
+        // so that older versions that will query code from wallet.ethereum.org won't use broken example code.
+        if (mist && mist.solidity && mist.solidity.version) {
+            solcVersion = mist.solidity.version;
+        }
+        else {
+            solcVersion = '0.4.6';
+        }
+
         return 'pragma solidity ' + solcVersion + ';\n\n' + source;
     }
 }
