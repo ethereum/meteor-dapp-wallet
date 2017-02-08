@@ -143,6 +143,7 @@ Template['elements_executeContract_constant'].onCreated(function(){
         // get args for the constant function and add callback
         var args = TemplateVar.get('inputs').concat(function(e, r) {
             if(!e) {
+                console.log('r', r);
                 var outputs = [];
                 // single return value
                 if(template.data.outputs.length === 1) {
@@ -161,6 +162,7 @@ Template['elements_executeContract_constant'].onCreated(function(){
             } 
         });
 
+        console.log('contractInstance[\''+template.data.name+'\'].apply(null, ' + JSON.stringify(args) + ')');
         template.data.contractInstance[template.data.name].apply(null, args);
 
     });
@@ -204,6 +206,10 @@ Template['elements_executeContract_constant'].events({
     */
     'change .abi-input, input .abi-input': function(e, template) {
         var inputs = Helpers.addInputValue(template.data.inputs, this, e.currentTarget);
+        _.each(inputs, function(e,i){
+            console.log('input:', e,i, typeof i);
+        })
+        console.log('inputs', inputs);
         TemplateVar.set('inputs', inputs);
     }
 });
