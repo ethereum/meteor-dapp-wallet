@@ -238,8 +238,9 @@ contract daylimit is multiowned {
     // METHODS
 
     // constructor - stores initial daily limit and records the present day's index.
-    function daylimit(uint _limit) {
+    function daylimit(uint _limit, bool _alwaysRequireMutliSig) {
         m_dailyLimit = _limit;
+        m_alwaysRequireMutliSig = _alwaysRequireMutliSig;
         m_lastDay = today();
     }
     // (re)sets the daily limit. needs many of the owners to confirm. doesn't alter the amount already spent today.
@@ -261,6 +262,11 @@ contract daylimit is multiowned {
             m_spentToday = 0;
             m_lastDay = today();
         }
+        
+        if (m_alwaysRequireMutliSig) {
+            return false;
+        }
+        
         // check to see if there's enough left - if so, subtract and return true.
         if (m_spentToday + _value >= m_spentToday && m_spentToday + _value <= m_dailyLimit) {
             m_spentToday += _value;
@@ -274,6 +280,7 @@ contract daylimit is multiowned {
     // FIELDS
 
     uint public m_dailyLimit;
+    bool public m_alwaysRequireMutliSig;
     uint public m_spentToday;
     uint public m_lastDay;
 }
@@ -321,8 +328,8 @@ contract Wallet is multisig, multiowned, daylimit {
 
     // constructor - just pass on the owner array to the multiowned and
     // the limit to daylimit
-    function Wallet(address[] _owners, uint _required, uint _daylimit)
-            multiowned(_owners, _required) daylimit(_daylimit) {
+    function Wallet(address[] _owners, uint _required, uint _daylimit, bool _alwaysRequireMultiSig)
+            multiowned(_owners, _required) daylimit(_daylimit, _alwaysRequireMultiSig) {
     }
     
     // kills the contract sending everything to `_to`.
