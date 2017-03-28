@@ -14,6 +14,11 @@ Start an `geth` node and and the app using meteor and open http://localhost:3000
 
 Starting the wallet dapp using [Meteor](http://meteor.com/install)
 
+    $ apt-get install nodejs-legacy
+    $ apt-get install npm 
+    $ npm update
+    $ npm install -g meteor
+    $ meteor update
     $ cd meteor-dapp-wallet/app
     $ meteor
 
