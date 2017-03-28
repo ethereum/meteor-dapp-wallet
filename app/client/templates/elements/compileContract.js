@@ -142,7 +142,7 @@ Template['elements_compileContract'].onRendered(function() {
                 if(!error) {
 
                     compiledContracts = _.map(compiledContracts, function(contract, name){
-                        var jsonInterface = JSON.parse(contract.interface);
+                        var jsonInterface = contract.info.abiDefinition;
                         
                         // find the constructor function
                         var constructor = _.find(jsonInterface, function(func){
@@ -162,7 +162,7 @@ Template['elements_compileContract'].onRendered(function() {
 
                         return {
                             name: name,
-                            bytecode: contract.bytecode,
+                            bytecode: contract.code,
                             jsonInterface: jsonInterface,
                             constructorInputs: constructor.inputs
                         };
