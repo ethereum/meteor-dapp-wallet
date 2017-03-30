@@ -504,7 +504,7 @@ Template['views_send'].events({
             contract = TemplateVar.getFrom('.compile-contract', 'contract'),
             sendAll = TemplateVar.get('sendAll');
             
-
+            
         if(selectedAccount && !TemplateVar.get('sending')) {
 
             // set gas down to 21 000, if its invalid data, to prevent high gas usage.
@@ -550,7 +550,14 @@ Template['views_send'].events({
                         duration: 2
                     });
 
-            } else {
+            } else { // Token transfer
+
+                if(!to)
+                return GlobalNotification.warning({
+                    content: 'i18n:wallet.send.error.noReceiver',
+                    duration: 2
+                });
+
                 // Change recipient and amount
                 to = tokenAddress;
                 amount = 0;
