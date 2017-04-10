@@ -160,6 +160,15 @@ Template['views_send'].onRendered(function(){
         TemplateVar.setTo('select[name="dapp-select-account"].send-from', 'value', FlowRouter.getParam('from').toLowerCase());
 
 
+    // initialize send view correctly when directly switching from deploy view
+    template.autorun(function(c){
+        if(FlowRouter.getRouteName() === 'send') {
+            TemplateVar.set('selectedAction', 'send');
+            TemplateVar.setTo('.dapp-data-textarea', 'value', ''); 
+        }
+    });
+    
+
     // ->> GAS PRICE ESTIMATION
     template.autorun(function(c){
         var address = TemplateVar.getFrom('.dapp-select-account.send-from', 'value'),
