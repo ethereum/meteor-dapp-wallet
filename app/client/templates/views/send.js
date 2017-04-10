@@ -103,7 +103,7 @@ Template['views_send'].onCreated(function(){
     TemplateVar.set('sendAll', false);
     
     // Deploy contract
-    if(this && this.deployContract) {
+    if(FlowRouter.getRouteName() === 'deployContract') {
         TemplateVar.set('selectedAction', 'deploy-contract');
         TemplateVar.set('selectedToken', 'ether');
 
