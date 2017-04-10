@@ -276,7 +276,7 @@
             "title": "客製化 <strong>token</strong>",
             "subTitle": "新增 token",
             "admin": "__name__ (管理頁面)",
-            "description": "Tokens 為貨幣或其他基於 Ethereum 平台的代幣。您需要添加 token 位址至此清單以便發送或觀察該 token 。您可以修改 <a href=\"http://chriseth.github.io/browser-solidity/?gist=0d1a998d949e26942212\" target=\"_blank\">客製化 token 契約範例</a> 以創建客製化 token，或見 <a href=\"https://www.ethereum.org/token#the-code\" target=\"_blank\">Ethereum Tokens</a> 以深入學習。",
+            "description": "Tokens 為貨幣或其他基於 Ethereum 平台的代幣。您需要添加 token 位址至此清單以便發送或觀察該 token 。您可以修改 <a href=\"https://ethereum.org/token#the-code\" target=\"_blank\">客製化 token 契約範例</a> 以創建客製化 token，或見 <a href=\"https://www.ethereum.org/token\" target=\"_blank\">Ethereum Tokens</a> 以深入學習。",
             "deleteToken": "您確定要從清單中移除 token <strong>__token__</strong> ？",
             "addedToken": "添加 __token__ 至您的觀察清單",
             "editedToken": "編輯 token __token__",
