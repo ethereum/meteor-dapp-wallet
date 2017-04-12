@@ -101,38 +101,49 @@ Template['views_send'].onCreated(function(){
     TemplateVar.set('amount', '0');
     TemplateVar.set('estimatedGas', 300000);
     TemplateVar.set('sendAll', false);
+    
+    // Deploy contract
+    if(FlowRouter.getRouteName() === 'deployContract') {
+        TemplateVar.set('selectedAction', 'deploy-contract');
+        TemplateVar.set('selectedToken', 'ether');
 
+    // Send funds
+    } else {
+        TemplateVar.set('selectedAction', 'send-funds');
+        TemplateVar.set('selectedToken', FlowRouter.getParam('token') || 'ether');
+    }
+    
     // check if we are still on the correct chain
     Helpers.checkChain(function(error) {
         if(error && (EthAccounts.find().count() > 0)) {
             checkForOriginalWallet();
         }
     });
-
+    
     // change the token type when the account is changed
     template.autorun(function(c){
         var address = TemplateVar.getFrom('.dapp-select-account.send-from', 'value');
-
-        if(!c.firstRun) {
+        
+        if(!c.firstRun && FlowRouter.getParam('from') !== address) {
             TemplateVar.set('selectedToken', 'ether');
         }
     });
 
-
+    
     // check daily limit again, when the account was switched
     template.autorun(function(c){
         var address = TemplateVar.getFrom('.dapp-select-account.send-from', 'value'),
             amount = TemplateVar.get('amount') || '0';
-
+    
         if(!c.firstRun) {
             checkOverDailyLimit(address, amount, template);
         }
     });
-
+    
     // change the amount when the currency unit is changed
     template.autorun(function(c){
         var unit = EthTools.getUnit();
-
+    
         if(!c.firstRun && TemplateVar.get('selectedToken') === 'ether') {
             TemplateVar.set('amount', EthTools.toWei(template.find('input[name="amount"]').value.replace(',','.'), unit));
         }
@@ -207,24 +218,6 @@ Template['views_send'].onRendered(function(){
 
 
 Template['views_send'].helpers({
-    /**
-    React on the template data context
-
-    @method (reactiveData)
-    */
-    'reactiveData': function(deployContract){
-
-        // Deploy contract
-        if(this && this.deployContract) {
-            TemplateVar.set('selectedAction', 'deploy-contract');
-            TemplateVar.set('selectedToken', 'ether');
-
-        // Send funds
-        } else {
-            TemplateVar.set('selectedAction', 'send-funds');
-            TemplateVar.set('selectedToken', FlowRouter.getParam('token') || 'ether');
-        }
-    },
     /**
     Get the current selected account
 
