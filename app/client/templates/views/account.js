@@ -297,10 +297,6 @@ Template['views_account'].events({
                 name: text
             }});
 
-            Tracker.afterFlush(function(argument) {
-                $el.text(text);
-            });
-
             // make it non-editable
             $el.attr('contenteditable', null);
         }
