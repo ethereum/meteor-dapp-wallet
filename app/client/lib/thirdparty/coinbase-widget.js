@@ -13,7 +13,7 @@ CoinBaseWidget = function(buttonElem, params) {
     };
 
     self.generateParams = function() {
-        return "?address=" + encodeURIComponent(params.address) + ("&amount=" + encodeURIComponent(params.amount)) + ("&code=" + encodeURIComponent(params.code)) + ("&currency=" + encodeURIComponent(params.currency)) + ("&crypto_currency=" + encodeURIComponent(params.crypto_currency)) + ("&state=" + encodeURIComponent(params.state));
+        return "?address=" + encodeURIComponent(params.address) + ("&code=" + encodeURIComponent(params.code)) + ("&currency=" + encodeURIComponent(params.currency)) + ("&crypto_currency=" + encodeURIComponent(params.crypto_currency)) + ("&state=" + encodeURIComponent(params.state));
     };
 
     self.modalIframeStyle = function() {

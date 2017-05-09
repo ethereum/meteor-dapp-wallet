@@ -84,7 +84,7 @@ var addToken = function(e) {
         symbol = $('.modals-add-token input.symbol').val(),
         decimals = $('.modals-add-token input.decimals').val();
 
-    address = address.toLowerCase();
+    address = address.toLowerCase().trim();
 
     tokenId = Helpers.makeId('token', address);
 

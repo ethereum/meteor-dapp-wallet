@@ -44,6 +44,9 @@ ethereum:web3
 ethereum:blocks
 ethereum:accounts
 ethereum:dapp-styles
-numeral:numeral
 jrudio:bluebird
 tap:i18n-bundler
+numeral:numeral
+numeral:languages
+ecmascript
+hashanp:geopattern

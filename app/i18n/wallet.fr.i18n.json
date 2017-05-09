@@ -102,17 +102,17 @@
                 }
             }
         },
-        "events": {     
-            "eventInfoTitle": "Événement",      
-            "latest": "Derniers événements",      
-            "filter": "Filtrer les événements",      
-            "transactionHash": "Hash de transaction",      
-            "block": "Bloc",       
-            "originContract": "Contrat d'origine",        
-            "logIndex": "Indice de log",        
-            "transactionIndex": "Indice de transaction",        
-            "returnValues": "Valeurs de retour",        
-            "eventName": "Nom de l'événement"      
+        "events": {
+            "eventInfoTitle": "Événement",
+            "latest": "Derniers événements",
+            "filter": "Filtrer les événements",
+            "transactionHash": "Hash de transaction",
+            "block": "Bloc",
+            "originContract": "Contrat d'origine",
+            "logIndex": "Indice de log",
+            "transactionIndex": "Indice de transaction",
+            "returnValues": "Valeurs de retour",
+            "eventName": "Nom de l'événement"
         },
         "transactions": {
             "transactionInfoTitle": "Transaction",
@@ -126,7 +126,7 @@
             "amount": "Montant",
             "gasPrice": "Prix du gaz",
             "perMillionGas": "par millions de gaz",
-            "gasUsed": "Gaz utilisé", 
+            "gasUsed": "Gaz utilisé",
             "feePaid": "Commission payée",
             "data": "Données envoyées",
             "deployedData": "Données déployées",
@@ -145,7 +145,7 @@
             },
             "error": {
                 "noDataDeployed": "Aucune donnée n'est déployée à l'adresse du contrat !",
-                "outOfGas": "La transaction depuis __from__ à __to__ n'a pas pu s'exécuter correctement."  
+                "outOfGas": "La transaction depuis __from__ à __to__ n'a pas pu s'exécuter correctement."
             },
             "types": {
                 "executeContract": "Exécution du contrat",
@@ -168,7 +168,7 @@
                 },
                 "outgoingTransaction": {
                     "title": "Paiement envoyé",
-                    "text": "Vous avez envoyé __amount__ depuis __from__ à __to__."    
+                    "text": "Vous avez envoyé __amount__ depuis __from__ à __to__."
                 },
                 "pendingConfirmation": {
                     "title": "Confirmation requise",
@@ -274,7 +274,7 @@
             "title": "<strong>Jetons</strong> que vous suivez",
             "subTitle": "Jetons ajoutés",
             "admin": "__name__ (page d'administration)",
-            "description": "Les jetons sont des devises et autres fongibles construits sur la plateforme Expanse. Pour que les comptes puissent voir et envoyer des jetons, vous devez ajouter l'adresse de leur contrat à cette liste. Vous pouvez créer votre propre jeton simplement en modifiant <a href=\"http://chriseth.github.io/browser-solidity/?gist=0d1a998d949e26942212\" target=\"_blank\">cet exemple d'un contrat de jeton</a> ou en en apprenant plus sur <a href=\"https://www.Ethereum.org/token#the-code\" target=\"_blank\">les jetons dans Ethereum</a>.",
+            "description": "Les jetons sont des devises et autres fongibles construits sur la plateforme Ethereum. Pour que les comptes puissent voir et envoyer des jetons, vous devez ajouter l'adresse de leur contrat à cette liste. Vous pouvez créer votre propre jeton simplement en modifiant <a href=\"https://ethereum.org/token#the-code\" target=\"_blank\">cet exemple d'un contrat de jeton</a> ou en en apprenant plus sur <a href=\"https://www.Ethereum.org/token\" target=\"_blank\">les jetons dans Ethereum</a>.",
             "deleteToken": "Voulez-vous supprimer le jeton <strong>__token__</strong> de votre liste ?",
             "addedToken": "__token__ ajouté à votre liste",
             "editedToken": "Jeton __token__ modifié",

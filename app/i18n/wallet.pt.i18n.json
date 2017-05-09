@@ -281,7 +281,7 @@
             "title": "<strong>Fichas</strong> customizadas",
             "subTitle": "Ficha adicionada",
             "admin": "__name__ (administração)",
-            "description": "Fichas são moedas, fichas colecionáveis ou outros tokens fungíveis construídos na plataforma Ethereum. Para que suas contas possam ver o seu saldo e enviar fichas, é necessário adicionar o endereço do token aqui. Você pode criar sua ficha modificando esse  <a href=\"http://chriseth.github.io/browser-solidity/?gist=0d1a998d949e26942212\" target=\"_blank\">exemplo de ficha</a>. Leia mais sobre isso no nosso tutorial <a href=\"https://www.ethereum.org/token#the-code\" target=\"_blank\">como criar fichas no Ethereum (em inglês)</a>.",
+            "description": "Fichas são moedas, fichas colecionáveis ou outros tokens fungíveis construídos na plataforma Ethereum. Para que suas contas possam ver o seu saldo e enviar fichas, é necessário adicionar o endereço do token aqui. Você pode criar sua ficha modificando esse  <a href=\"https://ethereum.org/token#the-code\" target=\"_blank\">exemplo de ficha</a>. Leia mais sobre isso no nosso tutorial <a href=\"https://www.ethereum.org/token\" target=\"_blank\">como criar fichas no Ethereum (em inglês)</a>.",
             "deleteToken": "Você quer parar de observar a ficha <strong>__token__</strong>?",
             "addedToken": "Ficha __token__ adicinada na sua lista",
             "editedToken": "Ficha __token__ enviada",
