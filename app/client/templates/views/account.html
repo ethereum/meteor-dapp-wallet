@@ -108,6 +108,7 @@
                     <div class="account-info">
                         <h3>{{i18n "wallet.app.texts.note"}}</h3>
                         <p>{{{i18n "wallet.accounts.accountNote"}}}</p>
+                        <p><strong>{{i18n "wallet.accounts.outOfSyncNote"}}</strong></p>
                     </div>
                 {{/if}}
 
@@ -140,6 +141,15 @@
                                     {{i18n "wallet.accounts.buttons.depositUsingCreditCard"}}
                                 </button>
                             </li>  
+                        {{/if}}
+
+                        {{#if $eq ($.Session.get "network") "main"}}
+                        <li>
+                            <a href="https://etherscan.io/address/{{address}}">
+                                <i class="icon-info"></i>
+                                {{i18n "wallet.accounts.buttons.viewOnExplorer"}}
+                            </a>
+                        </li>                        
                         {{/if}}
 
                         <li>
