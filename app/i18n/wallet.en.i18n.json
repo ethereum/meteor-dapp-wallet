@@ -79,7 +79,7 @@
             "defaultName": "Unnamed",
             "creating": "Creating",
             "importing": "Importing",
-            "accountNote": "Accounts can't display incoming transactions, but hold and send ether. To see incoming transactions <a href=\"/account/new\">create a wallet contract</a> to store ether.",
+            "accountNote": "Accounts can't display incoming transactions, but hold and send ether. To see incoming transactions <a href=\"/account/new\">create a wallet contract</a> to store ether.<br><br> <strong>If your balance doesn't seem right, make sure that you are in sync with the network.</strong>",
             "walletNote": "Most exchanges don't support receiving ether from a contract wallet yet. Be sure to move the money to an account address first!",
             "addressCopiedToClipboard": "Copied to clipboard",
             "addressNotCopiedToClipboard": "Error copying address to clipboard. Please try again.",
