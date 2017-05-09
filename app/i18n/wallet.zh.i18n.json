@@ -95,6 +95,7 @@
             "buttons": {
                 "deposit": "存入以太币",
                 "depositBitcoin": "使用比特币做存款",
+                "viewOnExplorer": "View on Etherscan",
                 "copyAddress": "复制地址",
                 "scanQRCode": "显示二维码",
                 "showInterface": "显示界面"

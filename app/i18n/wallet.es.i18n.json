@@ -90,6 +90,7 @@
             "buttons": {
                 "deposit": "Deposit Ether",
                 "depositBitcoin": "Deposit using Bitcoin",
+                "viewOnExplorer": "View on Etherscan",
                 "copyAddress": "Copy address",
                 "scanQRCode": "Show QR-Code",
                 "showInterface": "Show Interface"
