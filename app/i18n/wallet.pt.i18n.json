@@ -80,6 +80,7 @@
             "creating": "Criando",
             "importing": "Importando",
             "accountNote": "Contas podem armazenar ether mas não exibem transações recebidas. Para tal, <a href=\"/account/new\">crie um contrato de carteira</a>.",
+            "outOfSyncNote": "Caso seu saldo aparente incorreto, cheque se a Wallet está completamente sincronizada com a rede ethereum.",
             "walletNote": "Algumas exchanges tem dificuldades técnicas com transações enviadas de contratos. Passe o ether para uma conta simples antes",
             "addressCopiedToClipboard": "Copiado para área de transferência",
             "addressNotCopiedToClipboard": "Erro ao copiar endereço. Tente novamente.",
@@ -94,6 +95,7 @@
             "buttons": {
                 "deposit": "Depositar Ether",
                 "depositBitcoin": "Depositar com Bitcoin",
+                "viewOnExplorer": "Ver no Etherscan",
                 "copyAddress": "Copiar endereço",
                 "scanQRCode": "Mostrar código QR",
                 "showInterface": "Mostrar Interface"
