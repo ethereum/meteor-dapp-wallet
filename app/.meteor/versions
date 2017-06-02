@@ -2,7 +2,7 @@
 agnito:simptip@0.0.1
 aldeed:simple-schema@1.3.3
 alexvandesande:identicon@2.0.2
-allow-deny@1.0.5
+allow-deny@1.0.4
 amplify@1.0.0
 arillo:flow-router-helpers@0.5.1
 autoupdate@1.2.9
@@ -42,7 +42,7 @@ frozeman:animation-helper@0.2.6
 frozeman:global-notifications@0.2.1
 frozeman:inline-form@0.1.0
 frozeman:persistent-minimongo@0.1.8
-frozeman:persistent-minimongo2@0.3.5
+frozeman:persistent-minimongo2@0.3.4
 frozeman:reactive-timer@0.1.7
 frozeman:simple-modal@0.0.7
 frozeman:storage@0.1.9
