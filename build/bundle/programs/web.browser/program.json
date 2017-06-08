@@ -1,0 +1,425 @@
+{
+  "format": "web-program-pre1",
+  "manifest": [
+    {
+      "path": "783501a78635f8d70ba0e8e6568622f9d915c9b6.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/783501a78635f8d70ba0e8e6568622f9d915c9b6.css?meteor_css_resource=true",
+      "size": 110016,
+      "hash": "783501a78635f8d70ba0e8e6568622f9d915c9b6"
+    },
+    {
+      "path": "packages/ethereum_elements/identicon-load.gif",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/ethereum_elements/identicon-load.gif",
+      "size": 313159,
+      "hash": "c68743600669f488c482be8736f848ea5922f6c3"
+    },
+    {
+      "path": "packages/ethereum_dapp-styles/icons/Simple-Line-Icons.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/ethereum_dapp-styles/icons/Simple-Line-Icons.svg",
+      "size": 179404,
+      "hash": "3d19e859a0bc585e2b774387794660f0512ea934"
+    },
+    {
+      "path": "packages/ethereum_dapp-styles/icons/Simple-Line-Icons.eot",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/ethereum_dapp-styles/icons/Simple-Line-Icons.eot",
+      "size": 35514,
+      "hash": "b0a7481e951313c07727c5667093361fe8711165"
+    },
+    {
+      "path": "packages/ethereum_dapp-styles/icons/Simple-Line-Icons.ttf",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/ethereum_dapp-styles/icons/Simple-Line-Icons.ttf",
+      "size": 35304,
+      "hash": "75ae9f188ccd47c61bb0e67c5317912fc5f4dfd7"
+    },
+    {
+      "path": "packages/ethereum_dapp-styles/icons/Simple-Line-Icons.woff",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/ethereum_dapp-styles/icons/Simple-Line-Icons.woff",
+      "size": 59324,
+      "hash": "c5b25a1cf3a44813208a744d2d9aa83e464a3a33"
+    },
+    {
+      "path": "packages/ethereum_dapp-styles/fonts/Montserrat-Black.otf",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/ethereum_dapp-styles/fonts/Montserrat-Black.otf",
+      "size": 45336,
+      "hash": "3241faa8ec478fe116f0efdfb3a1dd7b45820107"
+    },
+    {
+      "path": "packages/ethereum_dapp-styles/fonts/Montserrat-Bold.otf",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/ethereum_dapp-styles/fonts/Montserrat-Bold.otf",
+      "size": 45968,
+      "hash": "a151dad32ee38ab51af9515200d1adac0b667689"
+    },
+    {
+      "path": "packages/ethereum_dapp-styles/fonts/Montserrat-Hairline.otf",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/ethereum_dapp-styles/fonts/Montserrat-Hairline.otf",
+      "size": 44156,
+      "hash": "36d142c0b04d5541b31d2f8a450a83fcea5cbed8"
+    },
+    {
+      "path": "packages/ethereum_dapp-styles/fonts/Montserrat-Light.otf",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/ethereum_dapp-styles/fonts/Montserrat-Light.otf",
+      "size": 44792,
+      "hash": "fd907f0af43919ff000ae1c216815af86cdce5e3"
+    },
+    {
+      "path": "packages/ethereum_dapp-styles/fonts/Montserrat-Regular.otf",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/ethereum_dapp-styles/fonts/Montserrat-Regular.otf",
+      "size": 45360,
+      "hash": "713c997ce002a4d8762c2dcc405213061233e4bc"
+    },
+    {
+      "path": "packages/ethereum_dapp-styles/fonts/SourceSansPro-Black.otf",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/ethereum_dapp-styles/fonts/SourceSansPro-Black.otf",
+      "size": 122372,
+      "hash": "6e7b6149675a30e167b1fb8b0956ee894c320db9"
+    },
+    {
+      "path": "packages/ethereum_dapp-styles/fonts/SourceSansPro-Bold.otf",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/ethereum_dapp-styles/fonts/SourceSansPro-Bold.otf",
+      "size": 129212,
+      "hash": "3271218b3f4ea98b7e0abbecb475f6e5d38deab6"
+    },
+    {
+      "path": "packages/ethereum_dapp-styles/fonts/SourceSansPro-Light.otf",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/ethereum_dapp-styles/fonts/SourceSansPro-Light.otf",
+      "size": 124476,
+      "hash": "4c111fe637ef3184af05a7cd7ca8ab48b9cb1600"
+    },
+    {
+      "path": "packages/ethereum_dapp-styles/fonts/SourceSansPro-ExtraLight.otf",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/ethereum_dapp-styles/fonts/SourceSansPro-ExtraLight.otf",
+      "size": 117832,
+      "hash": "2363f3cb900942f06e365a71443d6a3a840b792e"
+    },
+    {
+      "path": "packages/ethereum_dapp-styles/fonts/SourceSansPro-Regular.otf",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/ethereum_dapp-styles/fonts/SourceSansPro-Regular.otf",
+      "size": 127448,
+      "hash": "50ce0cb693f273403cdbac7f205c618b682505ec"
+    },
+    {
+      "path": "packages/ethereum_dapp-styles/fonts/SourceSansPro-Semibold.otf",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/ethereum_dapp-styles/fonts/SourceSansPro-Semibold.otf",
+      "size": 127336,
+      "hash": "d144279f84ebea0306b84b6f512b94471fecfbda"
+    },
+    {
+      "path": "app/bitcoin-icon.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/bitcoin-icon.svg",
+      "size": 3382,
+      "hash": "4e7880edf79c4c8b9a05c64f0ade2be6b044ec50"
+    },
+    {
+      "path": "app/loading.css",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/loading.css",
+      "size": 1705,
+      "hash": "687cf1964b189206016236ce06b4171f1b85e5a3"
+    },
+    {
+      "path": "app/wallet-icon.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/wallet-icon.png",
+      "size": 15282,
+      "hash": "6c1ae338f8de0d4944de15ca023847ca9df28578"
+    },
+    {
+      "path": "app/fontawesome/animated.less",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/fontawesome/animated.less",
+      "size": 713,
+      "hash": "421f2c4e10191f148c13b8a34e5ff3f484d4c393"
+    },
+    {
+      "path": "app/fontawesome/bordered-pulled.less",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/fontawesome/bordered-pulled.less",
+      "size": 330,
+      "hash": "0469b430cd1567145ba800b22537588be2d1934d"
+    },
+    {
+      "path": "app/fontawesome/core.less",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/fontawesome/core.less",
+      "size": 509,
+      "hash": "28a1cef1326b3ec309dd6bd40794277ebdf8203a"
+    },
+    {
+      "path": "app/fontawesome/fixed-width.less",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/fontawesome/fixed-width.less",
+      "size": 119,
+      "hash": "ec0c24b97184dab86177660f486b8d08cd636c42"
+    },
+    {
+      "path": "app/fontawesome/font-awesome.less",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/fontawesome/font-awesome.less",
+      "size": 465,
+      "hash": "01e7881cf0678c71dd94297fa185ba6cb0395460"
+    },
+    {
+      "path": "app/fontawesome/icons.less",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/fontawesome/icons.less",
+      "size": 37290,
+      "hash": "9275cddbfa0de814e2101ba712c36c6d3ad07db9"
+    },
+    {
+      "path": "app/fontawesome/larger.less",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/fontawesome/larger.less",
+      "size": 370,
+      "hash": "e7119e82dc50540dbc3472bba7d74282815a7ecc"
+    },
+    {
+      "path": "app/fontawesome/list.less",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/fontawesome/list.less",
+      "size": 377,
+      "hash": "f53bc20884a1410d950b4a36a330c5181a8b55ab"
+    },
+    {
+      "path": "app/fontawesome/mixins.less",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/fontawesome/mixins.less",
+      "size": 983,
+      "hash": "f3c8a37970571c365deeb86256ea62f8342e0695"
+    },
+    {
+      "path": "app/fontawesome/path.less",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/fontawesome/path.less",
+      "size": 770,
+      "hash": "47108f118b6a9643774b718dd4c56f4c81ce681b"
+    },
+    {
+      "path": "app/fontawesome/rotated-flipped.less",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/fontawesome/rotated-flipped.less",
+      "size": 622,
+      "hash": "95de5de9009714692430b04f9cd4388be8fba8f3"
+    },
+    {
+      "path": "app/fontawesome/stacked.less",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/fontawesome/stacked.less",
+      "size": 476,
+      "hash": "f044077bc8be1a989c245254e81eb084d52d29a7"
+    },
+    {
+      "path": "app/fontawesome/variables.less",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/fontawesome/variables.less",
+      "size": 16792,
+      "hash": "6b4d6a74d5491ec667c1ddf7eb19b34ead46947f"
+    },
+    {
+      "path": "app/i18n/de.json",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/i18n/de.json",
+      "size": 16444,
+      "hash": "fac4a173974b245a0705a1e82c5e8ca150949f4f"
+    },
+    {
+      "path": "app/i18n/es.json",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/i18n/es.json",
+      "size": 15152,
+      "hash": "c91f73cbf3f733bd251e340eabbcdbb1cc70aaf9"
+    },
+    {
+      "path": "app/i18n/fa.json",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/i18n/fa.json",
+      "size": 674,
+      "hash": "b4d101a1cbf04af3437031bcb672a193a582fef9"
+    },
+    {
+      "path": "app/i18n/fr.json",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/i18n/fr.json",
+      "size": 17231,
+      "hash": "349c843514ee7fc57ce99b98da75d9b0a72a3cd2"
+    },
+    {
+      "path": "app/i18n/ja.json",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/i18n/ja.json",
+      "size": 19022,
+      "hash": "998058553d59d7a63cad4c7e911bc6cdf862d14b"
+    },
+    {
+      "path": "app/i18n/ko.json",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/i18n/ko.json",
+      "size": 17804,
+      "hash": "cd153f38ce88a189ec0965df4ed14823424e2b2f"
+    },
+    {
+      "path": "app/i18n/pt.json",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/i18n/pt.json",
+      "size": 15946,
+      "hash": "9e496630cb8cf4fbc8a1ce2c9566f6d0369b792f"
+    },
+    {
+      "path": "app/i18n/ro.json",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/i18n/ro.json",
+      "size": 15727,
+      "hash": "34018a5819f5aeee8f9dac1549e840c1103757b7"
+    },
+    {
+      "path": "app/i18n/ru.json",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/i18n/ru.json",
+      "size": 23097,
+      "hash": "bc507c8af3435a6b30b56f172671d406e7f2fa19"
+    },
+    {
+      "path": "app/i18n/tap-i18n.json",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/i18n/tap-i18n.json",
+      "size": 190866,
+      "hash": "dc2e837feb35f95916611c20a9c7db617e88f716"
+    },
+    {
+      "path": "app/i18n/ua.json",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/i18n/ua.json",
+      "size": 21028,
+      "hash": "f5fc4611ee17dda274daf99564cafcea53b51519"
+    },
+    {
+      "path": "app/i18n/zh-TW.json",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/i18n/zh-TW.json",
+      "size": 14161,
+      "hash": "9af5c7411e3c1449cbacb882f181f28cd3292fc9"
+    },
+    {
+      "path": "app/i18n/zh.json",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/i18n/zh.json",
+      "size": 14504,
+      "hash": "615b8f40fa8a40b623b96b85ec3ba1df1bf75a64"
+    },
+    {
+      "path": "head.html",
+      "where": "internal",
+      "type": "head",
+      "hash": "d26b997132ce052a13378d168b85fd4a292b03e3"
+    }
+  ]
+}

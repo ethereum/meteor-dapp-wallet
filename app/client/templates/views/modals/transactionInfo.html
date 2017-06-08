@@ -6,7 +6,7 @@
                 <a href="http://etherscan.io/tx/{{transactionHash}}" target="_blank" style="font-size: 0.4em;">{{transactionHash}}</a>
             {{else}}
                 {{#if $eq ($.Session.get "network") "test"}}
-                    <a href="http://testnet.etherscan.io/tx/{{transactionHash}}" target="_blank" style="font-size: 0.4em;">{{transactionHash}}</a>
+                    <a href="http://ropsten.etherscan.io/tx/{{transactionHash}}" target="_blank" style="font-size: 0.4em;">{{transactionHash}}</a>
                 {{else}}
                     <span style="font-size: 0.4em;">{{transactionHash}}</span>
                 {{/if}}
@@ -87,7 +87,7 @@
                             </a>
                             {{else}}
                                 {{#if $eq ($.Session.get "network") "test"}}
-                                <a href="http://testnet.etherscan.io/block/{{blockHash}}" title="{{blockHash}}" target="_blank" class="dapp-shorten-text">
+                                <a href="http://ropsten.etherscan.io/block/{{blockHash}}" title="{{blockHash}}" target="_blank" class="dapp-shorten-text">
                                     {{blockNumber}}
                                     <br>
                                     {{blockHash.substr 0 40}}...
