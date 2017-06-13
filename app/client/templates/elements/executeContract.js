@@ -245,7 +245,6 @@ Template['elements_executeContract_function'].helpers({
             TemplateVar.set('executeData', this.contractInstance[this.name].getData());
     }, 
     'payable': function(){
-        console.log('log', this, this.payable);
         return this && this.payable;
     }
 });
