@@ -143,7 +143,6 @@ Template['elements_executeContract_constant'].onCreated(function(){
         // get args for the constant function and add callback
         var args = TemplateVar.get('inputs').concat(function(e, r) {
             if(!e) {
-                console.log('r', r);
                 var outputs = [];
                 // single return value
                 if(template.data.outputs.length === 1) {
@@ -206,9 +205,6 @@ Template['elements_executeContract_constant'].events({
     */
     'change .abi-input, input .abi-input': function(e, template) {
         var inputs = Helpers.addInputValue(template.data.inputs, this, e.currentTarget);
-        _.each(inputs, function(e,i){
-            console.log('input:', e,i, typeof i);
-        })
         console.log('inputs', inputs);
         TemplateVar.set('inputs', inputs);
     }
@@ -247,6 +243,10 @@ Template['elements_executeContract_function'].helpers({
     'reactiveDataContext': function(){
         if(this.inputs.length === 0)
             TemplateVar.set('executeData', this.contractInstance[this.name].getData());
+    }, 
+    'payable': function(){
+        console.log('log', this, this.payable);
+        return this && this.payable;
     }
 });
 
