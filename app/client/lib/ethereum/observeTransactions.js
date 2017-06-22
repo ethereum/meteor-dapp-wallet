@@ -160,7 +160,7 @@ var updateTransaction = function(newDocument, transaction, receipt){
                         console.log("isToken: ",isToken)
 
                         if(isToken) {
-                            
+
                             tokenId = Helpers.makeId('token', receipt.contractAddress);
 
                             Tokens.upsert(tokenId, {$set: {
@@ -171,7 +171,7 @@ var updateTransaction = function(newDocument, transaction, receipt){
                                 decimals: 0
                             }});
 
-                            
+
                             // check if the token has information about itself asynchrounously
                             var tokenInstance = TokenContract.at(receipt.contractAddress);
 
@@ -183,7 +183,7 @@ var updateTransaction = function(newDocument, transaction, receipt){
                                     name: TAPi18n.__('wallet.tokens.admin', { name: i } )
                                 }});
                             });
-                            
+
                             tokenInstance.decimals(function(e, i){
                                 Tokens.upsert(tokenId, {$set: {
                                     decimals: Number(i)
@@ -409,12 +409,14 @@ observeTransactions = function(){
             }
 
             // add price data
-            if(newDocument.timestamp && 
-               (!newDocument.exchangeRates || 
+            if(newDocument.timestamp &&
+               (!newDocument.exchangeRates ||
                !newDocument.exchangeRates.btc ||
                !newDocument.exchangeRates.usd ||
-               !newDocument.exchangeRates.eur)) {
-                var url = 'https://min-api.cryptocompare.com/data/pricehistorical?fsym=ETH&tsyms=BTC,USD,EUR&ts='+ newDocument.timestamp;
+               !newDocument.exchangeRates.eur ||
+               !newDocument.exchangeRates.gbp ||
+               !newDocument.exchangeRates.brl)) {
+                var url = 'https://min-api.cryptocompare.com/data/pricehistorical?fsym=ETH&tsyms=BTC,USD,EUR,GBP,BRL&ts='+ newDocument.timestamp;
 
                 if(typeof mist !== 'undefined')
                     url += '&extraParams=Mist-'+ mist.version;
@@ -445,7 +447,7 @@ observeTransactions = function(){
             }
         },
         /**
-        Will check if the transaction is confirmed 
+        Will check if the transaction is confirmed
 
         @method changed
         */
