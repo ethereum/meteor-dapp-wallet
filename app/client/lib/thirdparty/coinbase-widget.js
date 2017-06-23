@@ -38,7 +38,7 @@ CoinBaseWidget = function(buttonElem, params) {
                 break;
             case "buy_completed":
                 self.modal.style.display = "none";
-                window.alert("Your purchased Ether will be added to your account (" + e.data.address + ").")
+                window.alert("Your purchased Ether will be added to your account (" + e.data.address + "). Make sure you wallet is in sync with ethereum network.")
                 break;
         }
     };
