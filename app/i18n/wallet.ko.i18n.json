@@ -92,6 +92,7 @@
             "buttons": {
                 "deposit": "이더 입금",
                 "depositBitcoin": "비트코인을 사용한 입금",
+                "viewOnExplorer": "View on Etherscan",
                 "copyAddress": "주소 복사",
                 "scanQRCode": "QR 코드 보기",
                 "showInterface": "인터페이스 보기"

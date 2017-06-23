@@ -92,6 +92,7 @@
             "buttons": {
                 "deposit": "存入 Ether",
                 "depositBitcoin": "使用 Bitcoin 做存款",
+                "viewOnExplorer": "View on Etherscan",
                 "copyAddress": "複製位址",
                 "scanQRCode": "顯示二維條碼",
                 "showInterface": "顯示界面"

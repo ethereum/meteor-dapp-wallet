@@ -76,7 +76,7 @@
             "defaultName": "Unnamed",
             "creating": "Creating",
             "importing": "Importing",
-            "accountNote": "Accounts can't display incoming transactions, but hold and send ether. To see incoming transactions <a href=\"/account/new\">create a wallet contract</a> to store ether.",
+            "accountNote": "Accounts can't display incoming transactions, but can receive, hold and send ether. To see incoming transactions <a href=\"/account/new\">create a wallet contract</a> to store ether.",
             "walletNote": "Most exchanges don't support receiving ether from a contract wallet yet. Be sure to move the money to an account address first!",
             "addressCopiedToClipboard": "Copied to clipboard",
             "qrCodeLabel": "Point a compatible mobile app to this code",
@@ -90,12 +90,13 @@
             "buttons": {
                 "deposit": "Deposit Ether",
                 "depositBitcoin": "Deposit using Bitcoin",
+                "viewOnExplorer": "View on Etherscan",
                 "copyAddress": "Copy address",
                 "scanQRCode": "Show QR-Code",
                 "showInterface": "Show Interface"
             },
             "modal": {
-                "deleteText": "Do you really want to delete this wallet contract? The account will still exist on the blockchain but <br>if you delete the address, you will not be able to find and will lose access to the funds deposited<br><br> Type \"delete\" confirm the deletion.",
+                "deleteText": "Do you really want to delete this wallet contract? The account will still exist on the blockchain, but <br>if you delete the address, you may not be able to find it and may lose access to the funds deposited<br><br> Type \"delete\" confirm the deletion.",
                 "backupWallet": {
                     "title": "Backup your wallet contract address!",
                     "description": "Make sure to write down the wallet contract address:"
@@ -176,7 +177,7 @@
                 },
                 "tokenTransfer": {
                     "title": "__token__ - Token transfer",
-                    "text": "__amount__ __token__  were send from __from__ to __to__."
+                    "text": "__amount__ __token__  were sent from __from__ to __to__."
                 }
             }
         },
@@ -214,7 +215,7 @@
             "error": {
                 "emptySignees": "You didn't provided all owners.",
                 "alreadyExists": "Account already exists.",
-                "stubHasNoOrigWalletAddress": "Your stub contract has no original account address set, please restart your App!",
+                "stubHasNoOrigWalletAddress": "Your stub contract has no original account address set.  Please restart your App!",
                 "contractsCantBeOwners": "Contracts can't be owners.",
                 "checkOwnerAddress": "Please change the contract address __address__ to an account."
             }
@@ -257,16 +258,16 @@
                 "sendFee": "This is the most amount of money that might be used to process this transaction. Your transaction will be mined <strong>__timetext__</strong>.",
                 "noCodeInRecipient": "The recipient account is not a contract, so you can't execute anything. <strong> Put a contract address on the 'TO' field. </strong>",
                 "addData": "You can add extra data to send along with your transaction. If you leave the \"to\" field empty it will try to deploy a contract from your data.",
-                "dataNotExecutable": "The data seems not to be executabe, that means this transaction will use all the gas you provide.",
+                "dataNotExecutable": "We aren't able to execute this data.  This means this transaction will use all the gas you provide.",
                 "cantEstimateGas": "We can't estimate your gas usage properly, as you need at least 1 ether in your account.",
                 "estimatedGas": "Estimated required gas",
                 "timeTexts": {
                     "0": "in a few minutes or more",
                     "1": "likely within a few minutes",
                     "2": "usually within a minute",
-                    "3": "probably within 30 seconds",
-                    "4": "probably within a few seconds",
-                    "5": "probably within a few seconds"
+                    "3": "often within 30 seconds",
+                    "4": "often within 15-30 seconds",
+                    "5": "often within 15 seconds"
                 }
             }
         },
@@ -312,7 +313,7 @@
             },
             "error": {
                 "compile": "Could not compile source code.",
-                "noDataProvided": "No Data found: select a contract from the 'select contract' menu",
+                "noDataProvided": "No data found: select a contract from the 'select contract' menu",
                 "invalidAddress": "Contract not added, invalid address.",
                 "jsonInterfaceParseError": "Couldn't parse the JSON Interface."
             }
