@@ -34,6 +34,7 @@ Helpers.getDefaultContractExample = function(withoutPragma) {
             solcVersion = '0.4.6';
         }
         return 'pragma solidity ^' + solcVersion + ';\n\n' + source;
+
     }
 }
 
