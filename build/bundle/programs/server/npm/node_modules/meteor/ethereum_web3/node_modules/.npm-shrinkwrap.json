@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "xmlhttprequest": {
-      "version": "1.7.0"
-    }
-  }
-}
