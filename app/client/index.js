@@ -24,7 +24,7 @@ Meteor.startup(function() {
             try {
                 numeral.language(lang);
             } catch (err) {
-                console.warn(`numeral.js couldn't set number formating: ${err.message}`);
+                console.warn('numeral.js couldn\'t set number formating: ', err.message);
             }
             EthTools.setLocale(lang);
         }
@@ -43,7 +43,7 @@ Meteor.startup(function() {
                     symbol: '🦄',
                     balances: {},
                     decimals: 0
-                }});    
+                }});
             }, 5000);
         }
     });
