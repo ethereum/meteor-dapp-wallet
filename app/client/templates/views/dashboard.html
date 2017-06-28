@@ -52,9 +52,6 @@
             {{#each wallets}}
                 {{> elements_account account=_id wallets=true}}
             {{/each}}
-            {{#each (wallets true)}}
-                {{> elements_account account=_id wallets=true}}
-            {{/each}}
             </div>
 
             {{#if hasMinimumBalance}}
