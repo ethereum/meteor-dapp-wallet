@@ -162,7 +162,7 @@ Template['elements_compileContract'].onRendered(function() {
 
                         return {
                             name: name,
-                            bytecode: contract.bytecode,
+                            bytecode: '0x' + contract.bytecode.replace(/^0x/, ''),
                             jsonInterface: jsonInterface,
                             constructorInputs: constructor.inputs
                         };

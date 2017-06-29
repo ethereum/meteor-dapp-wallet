@@ -21,7 +21,11 @@ Meteor.startup(function() {
         if(_.isString(TAPi18n.getLanguage())) {
             var lang = TAPi18n.getLanguage().substr(0,2);
             moment.locale(lang);
-            numeral.language(lang);
+            try {
+                numeral.language(lang);
+            } catch (err) {
+                console.warn('numeral.js couldn\'t set number formating: ', err.message);
+            }
             EthTools.setLocale(lang);
         }
 
@@ -39,7 +43,7 @@ Meteor.startup(function() {
                     symbol: '🦄',
                     balances: {},
                     decimals: 0
-                }});    
+                }});
             }, 5000);
         }
     });

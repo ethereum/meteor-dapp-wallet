@@ -92,6 +92,7 @@
             "buttons": {
                 "deposit": "이더 입금",
                 "depositBitcoin": "비트코인을 사용한 입금",
+                "viewOnExplorer": "View on Etherscan",
                 "copyAddress": "주소 복사",
                 "scanQRCode": "QR 코드 보기",
                 "showInterface": "인터페이스 보기"
@@ -279,7 +280,7 @@
             "title": "주문형 <strong>토큰</strong>",
             "subTitle": "추가된 토큰",
             "admin": "__name__ (관리자 페이지)",
-            "description": "토큰은 이더리움 플랫폼 위에 만들어진 화폐와 다른 대체수단들을 말합니다. 토큰들을 열람하고 송금하기 위해서는, 토큰들의 주소를 이 목록에 등록해야 합니다. <a href=\"http://chriseth.github.io/browser-solidity/?gist=0d1a998d949e26942212\" target=\"_blank\">주문형 토큰 예제</a>를 수정해 주문형 토큰을 만들거나, <a href=\"https://www.ethereum.org/token#the-code\" target=\"_blank\">이더리움 토큰들</a>를 통해 더 학습을 할 수도 있습니다.",
+            "description": "토큰은 이더리움 플랫폼 위에 만들어진 화폐와 다른 대체수단들을 말합니다. 토큰들을 열람하고 송금하기 위해서는, 토큰들의 주소를 이 목록에 등록해야 합니다. <a href=\"https://ethereum.org/token#the-code\" target=\"_blank\">주문형 토큰 예제</a>를 수정해 주문형 토큰을 만들거나, <a href=\"https://www.ethereum.org/token\" target=\"_blank\">이더리움 토큰들</a>를 통해 더 학습을 할 수도 있습니다.",
             "deleteToken": "목록에서 <strong>__token__</strong> 토큰을 삭제하고 싶습니까?",
             "addedToken": "리스트에 __token__ 토큰 추가됨",
             "editedToken": "__token__ 토큰 수정됨",

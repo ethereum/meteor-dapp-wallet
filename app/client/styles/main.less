@@ -200,7 +200,7 @@ body {
 
     .block-info {
         padding-bottom: @defaultPaddingVertical;        
-        color: lighten(@colorGrayDark, 30%);
+        color: lighten(@colorGrayDark, 5%);
         text-align: center;
         flex: 1 0;
 
@@ -476,6 +476,10 @@ body {
         float: left; 
         margin-right: @defaultMargin/2;
     }
+}
+
+.dapp-full-header + .dapp-flex-content .accounts-page .dapp-sticky-bar.sticky {
+    top: floor(@gridHeight * 5.5);
 }
 
 .dapp-actionbar nav ul li button, 

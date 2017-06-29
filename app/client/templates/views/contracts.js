@@ -84,7 +84,7 @@ var addToken = function(e) {
         symbol = $('.modals-add-token input.symbol').val(),
         decimals = $('.modals-add-token input.decimals').val();
 
-    address = address.toLowerCase();
+    address = address.toLowerCase().trim();
 
     tokenId = Helpers.makeId('token', address);
 
@@ -125,7 +125,7 @@ Template['views_contracts'].helpers({
     @method (customContracts)
     */
     'customContracts': function(){
-        return CustomContracts.find({}, {sort:{symbol:1}});
+        return CustomContracts.find({}, {sort:{name:1}});
     }, 
     /**
     Get all tokens
@@ -133,7 +133,7 @@ Template['views_contracts'].helpers({
     @method (tokens)
     */
     'tokens': function(){
-        return Tokens.find({}, {sort:{symbol:1}});
+        return Tokens.find({}, {sort:{name:1}});
     }
 });
 

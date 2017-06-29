@@ -241,6 +241,9 @@ Template['elements_executeContract_function'].helpers({
     'reactiveDataContext': function(){
         if(this.inputs.length === 0)
             TemplateVar.set('executeData', this.contractInstance[this.name].getData());
+    }, 
+    'payable': function(){
+        return this && this.payable;
     }
 });
 

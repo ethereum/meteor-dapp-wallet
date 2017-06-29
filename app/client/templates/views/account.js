@@ -297,10 +297,6 @@ Template['views_account'].events({
                 name: text
             }});
 
-            Tracker.afterFlush(function(argument) {
-                $el.text(text);
-            });
-
             // make it non-editable
             $el.attr('contenteditable', null);
         }
@@ -329,7 +325,6 @@ Template['views_account'].events({
 
         (new CoinBaseWidget(e.currentTarget, {
             address: this.address,
-            amount: "5",
             code: "eb44c52c-9c3f-5fb6-8b11-fc3ec3022519",
             currency: "USD",
             crypto_currency: "ETH",

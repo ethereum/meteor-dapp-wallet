@@ -79,6 +79,7 @@
             "creating": "Erstellen",
             "importing": "Importieren",
             "accountNote": "Konten können keine eingehende Transaktionen anzeigen. Trotzdem können Sie mit Konten Ether empfangen und versenden. Um eingehende Transaktionen zu sehen, <a href=\"/account/new\">erstellen Sie einen Wallet-Vertrag</a>.",
+            "outOfSyncNote": "Wenn dein Kontostand nicht korrekt erscheint, überprüfe ob dein Netzwerk sychronisiert ist.",
             "walletNote": "Die meisten Börsen akzeptieren bisher keine Transaktionen von einem Wallet-Vertrag. Transferieren Sie daher Ether zunächst auf ein Konto, um es von dort weiter an eine Börse zu überweisen!",
             "addressCopiedToClipboard": "In die Zwischenablage kopiert",
             "qrCodeLabel": "Scannen Sie diesen Code mit einer kompatiblen Smartphone App",
@@ -92,6 +93,7 @@
             "buttons": {
                 "deposit": "Ether hinterlegen",
                 "depositBitcoin": "Ether mit Bitcoin hinterlegen",
+                "viewOnExplorer": "View on Etherscan",
                 "copyAddress": "Adresse kopieren",
                 "scanQRCode": "QR-Code anzeigen",
                 "showInterface": "Interface anzeigen"
@@ -276,7 +278,7 @@
             "title": "Eigene <strong>Token</strong>",
             "subTitle": "Hinzugefügte Token",
             "admin": "__name__ (Admin Seite)",
-            "description": "Token sind Währungen oder Tauschgegenstände, die auf der Ethereum-Plattform aufsetzen. Damit ein Konto ein Token beobachten oder versenden kann, müssen Sie die Kontoadressen in die folgende Liste einfügen. Sie können Ihren eigenen Token erzeugen, in dem Sie z.B. folgendes <a href=\"http://chriseth.github.io/browser-solidity/?gist=0d1a998d949e26942212\" target=\"_blank\">Beispiel eines Token Vertrags</a> anpassen, oder mehr über <a href=\"https://www.ethereum.org/token#the-code\" target=\"_blank\">Ethereum Token</a> lernen.",
+            "description": "Token sind Währungen oder Tauschgegenstände, die auf der Ethereum-Plattform aufsetzen. Damit ein Konto ein Token beobachten oder versenden kann, müssen Sie die Kontoadressen in die folgende Liste einfügen. Sie können Ihren eigenen Token erzeugen, in dem Sie z.B. folgendes <a href=\"https://ethereum.org/token#the-code\" target=\"_blank\">Beispiel eines Token Vertrags</a> anpassen, oder mehr über <a href=\"https://www.ethereum.org/token\" target=\"_blank\">Ethereum Token</a> lernen.",
             "deleteToken": "Möchten Sie den Token <strong>__token__</strong> von Ihrer Liste entfernen?",
             "addedToken": "__token__ wurde Ihrer Beobachtungsliste hinzugefügt",
             "editedToken": "Token __token__ wurde bearbeitet",

@@ -2,7 +2,7 @@ CoinBaseWidget = function(buttonElem, params) {
     var self = this;
 
     self.domain = "https://buy.coinbase.com";
-    
+
     self.show = function() {
         self.modal.style.display = "block";
     };
@@ -13,7 +13,7 @@ CoinBaseWidget = function(buttonElem, params) {
     };
 
     self.generateParams = function() {
-        return "?address=" + encodeURIComponent(params.address) + ("&amount=" + encodeURIComponent(params.amount)) + ("&code=" + encodeURIComponent(params.code)) + ("&currency=" + encodeURIComponent(params.currency)) + ("&crypto_currency=" + encodeURIComponent(params.crypto_currency)) + ("&state=" + encodeURIComponent(params.state));
+        return "?address=" + encodeURIComponent(params.address) + ("&code=" + encodeURIComponent(params.code)) + ("&currency=" + encodeURIComponent(params.currency)) + ("&crypto_currency=" + encodeURIComponent(params.crypto_currency)) + ("&state=" + encodeURIComponent(params.state));
     };
 
     self.modalIframeStyle = function() {
@@ -35,13 +35,10 @@ CoinBaseWidget = function(buttonElem, params) {
         switch (e.data.event) {
             case "modal_closed":
                 self.modal.style.display = "none";
-
                 break;
             case "buy_completed":
                 self.modal.style.display = "none";
-
-                window.alert("Your purchased Ether will be added to your account (" + e.data.address + ") shortly.")
-
+                window.alert("Your purchased Ether will be added to your account (" + e.data.address + "). Make sure you wallet is in sync with ethereum network.")
                 break;
         }
     };
