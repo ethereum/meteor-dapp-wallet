@@ -161,7 +161,6 @@ Template['elements_executeContract_constant'].onCreated(function(){
             } 
         });
 
-        console.log('contractInstance[\''+template.data.name+'\'].apply(null, ' + JSON.stringify(args) + ')');
         template.data.contractInstance[template.data.name].apply(null, args);
 
     });
@@ -205,7 +204,6 @@ Template['elements_executeContract_constant'].events({
     */
     'change .abi-input, input .abi-input': function(e, template) {
         var inputs = Helpers.addInputValue(template.data.inputs, this, e.currentTarget);
-        console.log('inputs', inputs);
         TemplateVar.set('inputs', inputs);
     }
 });
