@@ -66,6 +66,13 @@ Template['views_modals_addToken'].events({
     */
     'change input[name="address"], input input[name="address"]': function(e, template) {
         var tokenAddress = TemplateVar.getFrom('.token-address', 'value');
+
+        var l = e.currentTarget.value.length;
+        if (!tokenAddress && l > 2 && l < 6) {
+            e.currentTarget.value += '.thetoken.eth';
+            e.currentTarget.setSelectionRange(l,l+13);
+        }
+        
         
         if(!tokenAddress || (template.data && template.data.address && template.data.address == tokenAddress))
             return;

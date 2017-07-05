@@ -387,7 +387,8 @@ Helpers.addInputValue = function (inputs, currentInput, formField){
                 } else if(!_.isEmpty(formField.value) &&
                    (input.typeShort === 'bytes' ||
                     input.typeShort === 'address')) {
-                    value = '0x'+ formField.value.replace('0x','');
+                    // If it looks like hex, then add 0x before
+                    value = /^[0-9a-f]+$/.test(formField.value.replace('0x','').toLowerCase()) ? '0x'+ formField.value.replace('0x','') : null;
 
                 // bool
                 } else if(input.typeShort === 'bool') {
