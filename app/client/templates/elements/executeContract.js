@@ -202,7 +202,7 @@ Template['elements_executeContract_constant'].events({
 
     @event change .abi-input, input .abi-input
     */
-    'change .abi-input, input .abi-input': function(e, template) {
+    'change .abi-input, input .abi-input, blur .abi-input': function(e, template) {
         var inputs = Helpers.addInputValue(template.data.inputs, this, e.currentTarget);
         TemplateVar.set('inputs', inputs);
     }
@@ -262,7 +262,7 @@ Template['elements_executeContract_function'].events({
 
     @event change .abi-input, input .abi-input
     */
-    'change .abi-input, input .abi-input': function(e, template) {
+    'change .abi-input, input .abi-input, blur .abi-input': function(e, template) {
         var inputs = Helpers.addInputValue(template.data.inputs, this, e.currentTarget);
     
         TemplateVar.set('executeData', template.data.contractInstance[template.data.name].getData.apply(null, inputs));
