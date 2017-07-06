@@ -388,7 +388,7 @@ Helpers.addInputValue = function (inputs, currentInput, formField){
                    (input.typeShort === 'bytes' ||
                     input.typeShort === 'address')) {
                     // If it looks like hex, then add 0x before
-                    value = /^[0-9a-f]+$/.test(formField.value.replace('0x','').toLowerCase()) ? '0x'+ formField.value.replace('0x','') : null;
+                    value = /^[0-9a-f]+$/i.test(formField.value.replace('0x','')) ? '0x'+ formField.value.replace('0x','') : null;
 
                 // bool
                 } else if(input.typeShort === 'bool') {
@@ -433,3 +433,4 @@ Returns true if Main is the current network.
 Helpers.isOnMainNetwork = function () {
     return Session.get('network') == 'main';
 };
+
