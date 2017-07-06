@@ -25,11 +25,13 @@ Template['layout_header'].helpers({
     */
     'goToSend': function() {
         FlowRouter.watchPathChange();
-        var address = web3.toChecksumAddress(FlowRouter.getParam('address'));
-            
+        var address = web3.toChecksumAddress(FlowRouter.getParam('address'));  
+        var accounts = EthAccounts.find({}).fetch();
+
+        // For some reason the path /send/ doesn't show tokens anymore
         return (address)
             ? FlowRouter.path('sendFrom', {from: address})
-            : FlowRouter.path('send');
+            : FlowRouter.path('sendFrom', {from: accounts[0] ? accounts[0].address : null });
     },
     /**
     Calculates the total balance of all accounts + wallets.
