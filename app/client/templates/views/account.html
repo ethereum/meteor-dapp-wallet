@@ -11,9 +11,8 @@
                     {{/if}}
                 {{else}}
                     {{> dapp_identicon identity=address}}
-                    <h1>
-                        <span class="edit-name">{{name}}</span> <i class="edit-icon icon-pencil"></i>
-
+                    <h1 class="{{ensClass}}">
+                        <span>{{displayName}}</span> 
                         {{#if $or owners jsonInterface}}
                             <button class="dapp-icon-button delete icon-trash"></button>
                         {{/if}}
@@ -25,8 +24,13 @@
             <div class="accounts-page-summary">
                 {{> dapp_identicon identity=address}}
                 <header>
-                    <h1>
-                        <span class="edit-name">{{name}}</span> <i class="edit-icon icon-pencil"></i>
+                    <h1 class="{{ensClass}}"> 
+                        {{#if ens}}
+                        <span>{{displayName}}</span> 
+                        {{else}}
+                        <em class="edit-name">{{displayName}}</em> 
+                        <i class="edit-icon icon-pencil"></i>
+                        {{/if}}
                         {{#if $or owners jsonInterface}}
                             <button class="dapp-icon-button delete icon-trash"></button>
                         {{/if}}

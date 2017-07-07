@@ -54,14 +54,32 @@ updateBalances = function() {
     // UPDATE TOKEN BALANCES
     var walletsContractsAndAccounts = EthAccounts.find().fetch().concat(walletsAndContracts);
 
-    _.each(Tokens.find().fetch(), function(token){
-        if(!token.address)
-            return;
+    
 
-        var tokenInstance = TokenContract.at(token.address);
+    // go through all existing accounts, for each token
+    _.each(walletsContractsAndAccounts, function(account){
 
-        // go through all existing accounts, for each token
-        _.each(walletsContractsAndAccounts, function(account){
+        // Only check ENS names every N minutes
+        if (!account.ensCheck || (account.ensCheck && Date.now() - account.ensCheck > 1*60*1000)) {
+            console.log('ensCheck', account.name, Date.now() - account.ensCheck)
+            Helpers.getENSName(account.address, (err, name, returnedAddr) => {
+                console.log('ensCheck returns for ', account.name, err, name, returnedAddr);
+                if (!err && account.address.toLowerCase() == returnedAddr){
+                    EthAccounts.update({address: account.address}, {$set:{ name: name, ens: true, ensCheck: Date.now()}})
+                } else {
+                    EthAccounts.update({address: account.address}, {$set:{ens: false, ensCheck: Date.now()}})
+                }
+            });  
+        }
+        
+
+
+        _.each(Tokens.find().fetch(), function(token){
+            if(!token.address)
+                return;
+
+            var tokenInstance = TokenContract.at(token.address);
+
             tokenInstance.balanceOf(account.address, function(e, balance){
                 var currentBalance = (token && token.balances) ? token.balances[account._id] : 0;
 
