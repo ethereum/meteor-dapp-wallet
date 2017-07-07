@@ -434,7 +434,6 @@ Helpers.isOnMainNetwork = function () {
     return Session.get('network') == 'main';
 };
 
-
 /**
 ENS Functions
 **/
@@ -509,7 +508,4 @@ Helpers.getENSName = function(address, callback) {
         })
     });
 }
-
-
-    
 

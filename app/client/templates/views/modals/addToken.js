@@ -72,7 +72,7 @@ Template['views_modals_addToken'].events({
             e.currentTarget.value += '.thetoken.eth';
             e.currentTarget.setSelectionRange(l,l+13);
         }
-                
+
         if(!tokenAddress || (template.data && template.data.address && template.data.address == tokenAddress))
             return;
         
