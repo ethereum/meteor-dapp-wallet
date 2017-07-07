@@ -22,7 +22,7 @@ Template['views_modals_addCustomContract'].events({
 
         Helpers.getENSName(address, (err, name, returnedAddr) => {
             if (address.toLowerCase() == returnedAddr)
-                template.$('input.name').val(name).change();            
+                template.$('input.name').attr('disabled','true').val(name).change();            
         });
     }
 })
