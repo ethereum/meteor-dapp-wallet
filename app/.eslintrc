@@ -1,0 +1,5 @@
+
+
+rules:
+  no-var: off
+  object-shorthand: off
