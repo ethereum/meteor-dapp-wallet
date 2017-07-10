@@ -29,16 +29,16 @@
             {{#with tokens}}
                 <ul class="token-list">
                     {{#each this}}
-                        <li data-tooltip="{{name}} ({{formattedTokenBalance}})" class="simptip-position-right simptip-movable">{{> dapp_identicon identity=address class="dapp-tiny"}}</li>
+                        <li data-tooltip="{{displayName}} ({{formattedTokenBalance}})" class="simptip-position-right simptip-movable">{{> dapp_identicon identity=address class="dapp-tiny"}}</li>
                     {{/each}}
                 </ul>
             {{/with}}
 
-            <h3>
+            <h3 class="{{ensClass}}">
                 {{#if isVulnerable}}
                     <span class="red">
                         <i class="icon-info"></i>
-                        {{name}}
+                        {{displayName}}
                     </span>
                 {{else}}
                     {{#if ../isContract}}
@@ -46,7 +46,7 @@
                     {{else}}
                         {{walletIcon}}
                     {{/if}}
-                    {{name}}
+                    {{displayName}}
                 {{/if}}
             </h3>
 

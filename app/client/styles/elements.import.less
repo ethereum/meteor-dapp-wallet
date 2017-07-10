@@ -21,6 +21,14 @@ span.address {
     font-size: 0.9em;
     color: @colorLink;
 
+    &.ens-name {
+        font-weight: 400;
+    }
+    
+    &.not-ens-name {
+        font-style: italic;
+    }
+
     > .dapp-identicon {
         position: relative;
         top: 5px;
@@ -227,6 +235,13 @@ span.address {
         color: @colorLink;
         max-width: @gridWidth*4.4;
         float: left;
+
+        &.ens-name {
+            font-weight: 600;
+        }
+        &.not-ens-name {
+            font-style: italic;
+        }
     }
     &:not(.create) > h3 {
         .dapp-shorten-text;
@@ -587,7 +602,3 @@ table {
         width: @gridWidth * 13;
     }
 }
-
-
-
-
