@@ -50,11 +50,11 @@ updateBalances = function() {
     });
 
 
-    
+
     // UPDATE TOKEN BALANCES
     var walletsContractsAndAccounts = EthAccounts.find().fetch().concat(walletsAndContracts);
 
-    
+
 
     // go through all existing accounts, for each token
     _.each(walletsContractsAndAccounts, function(account){
@@ -70,10 +70,11 @@ updateBalances = function() {
                     EthAccounts.update({address: account.address}, {$set:{ens: false, ensCheck: Date.now()}});
                     CustomContracts.update({address: account.address}, {$set:{ens: false, ensCheck: Date.now()}});
                     Wallets.update({address: account.address}, {$set:{ens: false, ensCheck: Date.now()}});
+
                 }
-            });  
+            });
         }
-        
+
 
 
         _.each(Tokens.find().fetch(), function(token){
@@ -94,7 +95,7 @@ updateBalances = function() {
                         set['balances.'+ account._id] = '';
                         Tokens.update(token._id, {$unset: set});
                     }
-                    
+
                 }
             });
         });
@@ -108,7 +109,7 @@ Observe the latest blocks
 @method observeLatestBlocks
 */
 observeLatestBlocks = function(){
-    // update balances on start 
+    // update balances on start
     updateBalances();
 
     // GET the latest blockchain information

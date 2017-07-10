@@ -18,11 +18,11 @@ Template['views_modals_addCustomContract'].events({
     @event change input[name="address"], input input[name="address"]
     */
     'blur input[name="address"]': function(e, template) {
-        let address = e.currentTarget.value;
+        var address = e.currentTarget.value;
 
-        Helpers.getENSName(address, (err, name, returnedAddr) => {
+        Helpers.getENSName(address, function(err, name, returnedAddr) {
             if (address.toLowerCase() == returnedAddr)
-                template.$('input.name').attr('disabled','true').val(name).change();            
+                template.$('input.name').attr('disabled','true').val(name).change();
         });
     }
 })
