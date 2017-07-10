@@ -6,6 +6,7 @@ install:
   - curl https://install.meteor.com/ | sh
 
 script:
+  - cd app
   - echo `pwd`
-  - cd app && meteor-build-client ../build --path ""
+  - meteor-build-client ../build --path ""
 
