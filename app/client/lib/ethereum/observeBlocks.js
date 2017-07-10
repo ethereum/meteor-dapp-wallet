@@ -50,18 +50,18 @@ updateBalances = function() {
     });
 
 
-    
+
     // UPDATE TOKEN BALANCES
     var walletsContractsAndAccounts = EthAccounts.find().fetch().concat(walletsAndContracts);
 
-    
+
 
     // go through all existing accounts, for each token
     _.each(walletsContractsAndAccounts, function(account){
 
         // Only check ENS names every N minutes
         if (!account.ensCheck || (account.ensCheck && Date.now() - account.ensCheck > 10*60*1000)) {
-            Helpers.getENSName(account.address, (err, name, returnedAddr) => {
+            Helpers.getENSName(account.address, function(err, name, returnedAddr) {
                 if (!err && account.address.toLowerCase() == returnedAddr){
                     if(EthAccounts.findOne({address: account.address}))
                         EthAccounts.update({address: account.address}, {$set:{ name: name, ens: true, ensCheck: Date.now()}});
@@ -71,17 +71,17 @@ updateBalances = function() {
                         Wallets.update({address: account.address}, {$set:{ name: name, ens: true, ensCheck: Date.now()}});
 
                 } else {
-                    if(EthAccounts.findOne({address: account.address}))                    
+                    if(EthAccounts.findOne({address: account.address}))
                         EthAccounts.update({address: account.address}, {$set:{ens: false, ensCheck: Date.now()}});
-                    if(CustomContracts.findOne({address: account.address}))                    
+                    if(CustomContracts.findOne({address: account.address}))
                         CustomContracts.update({address: account.address}, {$set:{ens: false, ensCheck: Date.now()}});
-                    if(Wallets.findOne({address: account.address}))                    
+                    if(Wallets.findOne({address: account.address}))
                         Wallets.update({address: account.address}, {$set:{ens: false, ensCheck: Date.now()}});
 
                 }
-            });  
+            });
         }
-        
+
 
 
         _.each(Tokens.find().fetch(), function(token){
@@ -102,7 +102,7 @@ updateBalances = function() {
                         set['balances.'+ account._id] = '';
                         Tokens.update(token._id, {$unset: set});
                     }
-                    
+
                 }
             });
         });
@@ -116,7 +116,7 @@ Observe the latest blocks
 @method observeLatestBlocks
 */
 observeLatestBlocks = function(){
-    // update balances on start 
+    // update balances on start
     updateBalances();
 
     // GET the latest blockchain information
