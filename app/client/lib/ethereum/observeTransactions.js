@@ -272,8 +272,10 @@ observeTransactions = function(){
 
         // check for confirmations
         if(!tx.confirmed && tx.transactionHash) {
-            var filter = web3.eth.filter('latest');
-            filter.watch(function(e, blockHash){
+
+            var updateTransactions = function(e, blockHash){
+                console.log('updateTransactions', e, blockHash);
+
                 if(!e) {
                     var confirmations = (tx.blockNumber && EthBlocks.latest.number) ? (EthBlocks.latest.number + 1) - tx.blockNumber : 0;
                     confCount++;
@@ -370,6 +372,16 @@ observeTransactions = function(){
                         });
                     }
                 }
+            };
+            
+            // remove this if the filter works again
+            var interval = setInterval(function(e, blockHash) { 
+                updateTransactions(e, blockHash) 
+            }, 15000);
+
+            var filter = web3.eth.filter('latest').watch(setInterval(function(e, blockHash) {
+                updateTransactions(e, blockHash);
+                clearInterval(interval);
             });
         }
     };
