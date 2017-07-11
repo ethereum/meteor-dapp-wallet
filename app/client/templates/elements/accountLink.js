@@ -22,8 +22,6 @@ Template['elements_account_link'].helpers({
     */
     'ensClass': function(){
         return this.ens ?  'ens-name' : 'not-ens-name';
-        // return this.ens ? this.name.split('.').slice(0, -1).reverse().join(' ▸ ') : this.name;
-
     },
     /**
     Displays ENS names with triangles
