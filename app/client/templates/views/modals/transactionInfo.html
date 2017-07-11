@@ -5,10 +5,14 @@
             {{#if $eq ($.Session.get "network") "main"}} 
                 <a href="http://etherscan.io/tx/{{transactionHash}}" target="_blank" style="font-size: 0.4em;">{{transactionHash}}</a>
             {{else}}
-                {{#if $eq ($.Session.get "network") "test"}}
-                    <a href="http://ropsten.etherscan.io/tx/{{transactionHash}}" target="_blank" style="font-size: 0.4em;">{{transactionHash}}</a>
+                {{#if $eq ($.Session.get "network") "rinkeby"}}
+                    <a href="http://rinkeby.etherscan.io/tx/{{transactionHash}}" target="_blank" style="font-size: 0.4em;">{{transactionHash}}</a>
                 {{else}}
-                    <span style="font-size: 0.4em;">{{transactionHash}}</span>
+                    {{#if $eq ($.Session.get "network") "ropsten"}}
+                        <a href="http://ropsten.etherscan.io/tx/{{transactionHash}}" target="_blank" style="font-size: 0.4em;">{{transactionHash}}</a>
+                    {{else}}
+                        <span style="font-size: 0.4em;">{{transactionHash}}</span>
+                    {{/if}}
                 {{/if}}
             {{/if}}
 
