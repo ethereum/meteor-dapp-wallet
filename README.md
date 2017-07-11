@@ -2,6 +2,8 @@
 
 The Ethereum wallet.
 
+[![Build Status](https://travis-ci.org/ethereum/meteor-dapp-wallet.svg?branch=master)](https://travis-ci.org/ethereum/meteor-dapp-wallet)
+
 **NOTE** The wallet is not yet official released,
 can contain severe bugs!
 
