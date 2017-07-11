@@ -408,8 +408,9 @@ observeTransactions = function(){
                 checkTransactionConfirmations(newDocument);
             }
 
-            // add price data
-            if(newDocument.timestamp &&
+            // If on main net, add price data
+            if( Session.get('network') == 'main' && 
+                newDocument.timestamp &&
                (!newDocument.exchangeRates ||
                !newDocument.exchangeRates.btc ||
                !newDocument.exchangeRates.usd ||
@@ -426,7 +427,7 @@ observeTransactions = function(){
                     if(!e && res && res.statusCode === 200) {
                         var content = JSON.parse(res.content);
 
-                        if(content){
+                        if(content && content.Response !== "Error"){
                             _.each(content, function(price, key){
                                 if(price && _.isFinite(price)) {
                                     var name = key.toLowerCase();
