@@ -379,7 +379,7 @@ observeTransactions = function(){
                 updateTransactions(e, blockHash) 
             }, 15000);
 
-            var filter = web3.eth.filter('latest').watch(setInterval(function(e, blockHash) {
+            var filter = web3.eth.filter('latest').watch(function(e, blockHash) {
                 updateTransactions(e, blockHash);
                 clearInterval(interval);
             });

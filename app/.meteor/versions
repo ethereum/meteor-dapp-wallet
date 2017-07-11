@@ -34,7 +34,7 @@ ejson@1.0.11
 ethereum:accounts@0.4.0
 ethereum:blocks@0.3.2
 ethereum:dapp-styles@0.5.7
-ethereum:elements@0.7.16
+ethereum:elements@0.7.17
 ethereum:tools@0.7.0
 ethereum:web3@0.15.3
 fastclick@1.0.11
