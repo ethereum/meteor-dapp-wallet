@@ -1,12 +1,11 @@
 <template name="views_modals_addCustomContract">
     <h1>{{i18n "wallet.contracts.addCustomContract"}}</h1>
+    
+    <h3>{{i18n "wallet.contracts.address"}}</h3>
+    {{> dapp_addressInput placeholder="0x000000.." value=this.address name="address" class='contract-address'}}
 
     <h3>{{i18n "wallet.contracts.name"}}</h3>
     <input type="string" value="" name="name" placeholder="Name this contract" class="name">
-
-    <h3>{{i18n "wallet.contracts.address"}}</h3>
-
-    {{> dapp_addressInput placeholder="0x000000.." value=this.address name="address" class='contract-address'}}
 
     <h3>{{i18n "wallet.contracts.jsonInterface"}}</h3>
     <textarea name="jsonInterface" class="jsonInterface" placeholder='[{type: "constructor", name: "MyContract", "inputs":[{"name":"_param1", "type":"address"}]}, {...}]' cols="30" rows="10"></textarea>

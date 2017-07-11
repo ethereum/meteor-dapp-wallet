@@ -159,8 +159,7 @@ Template['views_send'].onRendered(function(){
     // focus address input field
     if(FlowRouter.getParam('address')) {
         this.find('input[name="to"]').value = FlowRouter.getParam('address');
-        this.$('input[name="to"]').trigger('change');
-
+        this.$('input[name="to"]').trigger('input');
     } else if(!this.data){
         this.$('input[name="to"]').focus();
     }

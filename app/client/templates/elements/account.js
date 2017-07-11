@@ -118,6 +118,20 @@ Template['elements_account'].helpers({
                 percent: (confirmations / (blocksForConfirmation)) * 100
             }
             : false;
+    },
+    /**
+    Displays ENS names with triangles
+    @method (nameDisplay)
+    */
+    'displayName': function(){
+        return this.ens ? this.name.split('.').slice(0, -1).reverse().join(' ▸ ') : this.name;
+    },
+    /**
+    Adds class about ens
+    @method (ensClass)
+    */
+    'ensClass': function(){
+        return this.ens ?  'ens-name' : 'not-ens-name';
     }
 });
 

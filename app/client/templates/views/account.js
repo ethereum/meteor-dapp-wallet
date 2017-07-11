@@ -174,7 +174,16 @@ Template['views_account'].helpers({
     */
     'customContract': function(){
         return CustomContracts.findOne({address: this.address.toLowerCase()});
-    }
+    },
+    /**
+     Displays ENS names with triangles
+ 
+     @method (nameDisplay)
+     */
+    'displayName': function(){
+         return this.ens ? this.name.split('.').slice(0, -1).reverse().join(' ▸ ') : this.name;
+    }           
+
 });
 
 var accountClipboardEventHandler = function(e){
