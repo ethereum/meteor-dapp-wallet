@@ -88,6 +88,14 @@ Template['elements_selectableUnit'].helpers({
     */
     'units': function(){
         return selectableUnits;
+    },
+    /**
+    Can select units
+
+    @method (selectedUnit)
+    */
+    'selectable': function(){
+        return Session.get('network') == 'main';
     }
 });
 

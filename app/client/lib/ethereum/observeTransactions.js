@@ -272,8 +272,10 @@ observeTransactions = function(){
 
         // check for confirmations
         if(!tx.confirmed && tx.transactionHash) {
-            var filter = web3.eth.filter('latest');
-            filter.watch(function(e, blockHash){
+
+            var updateTransactions = function(e, blockHash){
+                console.log('updateTransactions', e, blockHash);
+
                 if(!e) {
                     var confirmations = (tx.blockNumber && EthBlocks.latest.number) ? (EthBlocks.latest.number + 1) - tx.blockNumber : 0;
                     confCount++;
@@ -370,6 +372,16 @@ observeTransactions = function(){
                         });
                     }
                 }
+            };
+            
+            // remove this if the filter works again
+            var interval = setInterval(function(e, blockHash) { 
+                updateTransactions(e, blockHash) 
+            }, 15000);
+
+            var filter = web3.eth.filter('latest').watch(function(e, blockHash) {
+                updateTransactions(e, blockHash);
+                clearInterval(interval);
             });
         }
     };
@@ -408,8 +420,9 @@ observeTransactions = function(){
                 checkTransactionConfirmations(newDocument);
             }
 
-            // add price data
-            if(newDocument.timestamp &&
+            // If on main net, add price data
+            if( Session.get('network') == 'main' && 
+                newDocument.timestamp &&
                (!newDocument.exchangeRates ||
                !newDocument.exchangeRates.btc ||
                !newDocument.exchangeRates.usd ||
@@ -426,7 +439,7 @@ observeTransactions = function(){
                     if(!e && res && res.statusCode === 200) {
                         var content = JSON.parse(res.content);
 
-                        if(content){
+                        if(content && content.Response !== "Error"){
                             _.each(content, function(price, key){
                                 if(price && _.isFinite(price)) {
                                     var name = key.toLowerCase();
