@@ -112,20 +112,29 @@ Template['views_send'].onCreated(function(){
         TemplateVar.set('selectedAction', 'send-funds');
         TemplateVar.set('selectedToken', FlowRouter.getParam('token') || 'ether');
     }
-    
+
     // check if we are still on the correct chain
     Helpers.checkChain(function(error) {
         if(error && (EthAccounts.find().count() > 0)) {
             checkForOriginalWallet();
         }
     });
-    
+
     // change the token type when the account is changed
     template.autorun(function(c){
+        if (c.firstRun) return;
+
         var address = TemplateVar.getFrom('.dapp-select-account.send-from', 'value');
-        
-        if(!c.firstRun && FlowRouter.getParam('from') !== address) {
-            TemplateVar.set('selectedToken', 'ether');
+        var fromAddress = FlowRouter.getParam('from');
+
+        if (address !== null)
+          address = address.toLowerCase();
+
+        if (fromAddress !== null)
+          fromAddress = fromAddress.toLowerCase();
+
+        if (address !== fromAddress) {
+          TemplateVar.set('selectedToken', 'ether');
         }
     });
 
