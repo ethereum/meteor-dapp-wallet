@@ -48,7 +48,6 @@ updateBalances = function() {
                 }, 1000);
             }
         }
-
     });
 
 
@@ -73,8 +72,6 @@ updateBalances = function() {
                 }
             });
         }
-    });
-
     });
 
 
