@@ -19,7 +19,7 @@ Template['views_dashboard'].helpers({
     @method (wallets)
     */
     'wallets': function(){
-        var wallets = Wallets.find({disabled: false}, {sort: {creationBlock: 1}}).fetch();
+        var wallets = Wallets.find({$or: [{disabled: {$exists: false}}, {disabled: false}]}, {sort: {creationBlock: 1}}).fetch();
 
         // sort wallets by balance
         wallets.sort(Helpers.sortByBalance);

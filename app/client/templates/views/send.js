@@ -553,11 +553,12 @@ Template['views_send'].events({
 
             } else { // Token transfer
 
-                if(!to)
-                return GlobalNotification.warning({
-                    content: 'i18n:wallet.send.error.noReceiver',
-                    duration: 2
-                });
+                if(!to) {
+                    return GlobalNotification.warning({
+                        content: 'i18n:wallet.send.error.noReceiver',
+                        duration: 2
+                    });
+                }
 
                 // Change recipient and amount
                 to = tokenAddress;
