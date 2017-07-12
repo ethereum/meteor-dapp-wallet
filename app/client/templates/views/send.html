@@ -1,10 +1,8 @@
 <template name="views_send">
-    
-    {{reactiveData}}
 
     <!-- we use a form, which posts into the "dapp-form-helper-iframe" iframe, so that the browser stores inout fields for native autocpmplete -->
     <form class="account-send-form" action="about:blank" target="dapp-form-helper-iframe" autocomplete="on">
-            
+
         {{#if deployContract}}
             <h1>{{{i18n 'wallet.contracts.deployContract'}}}</h1>
         {{else}}
@@ -69,17 +67,17 @@
                         {{sendExplanation}}
                     {{/if}}
                 </p>
-              
+
             </div>
-            
+
             <div class="col col-6 mobile-full">
                 <br><br>
 
                 {{#if hasTokens}}
                     <ul class="select-token">
                         <li>
-                            <input type="radio" id="ether" value="ether" name="choose-token" {{tokenSelectedAttr 'ether'}}> 
-                            <label for="ether"> 
+                            <input type="radio" id="ether" value="ether" name="choose-token" {{tokenSelectedAttr 'ether'}}>
+                            <label for="ether">
                                 <span class="ether-symbol">Ξ</span>
                                 <span class="token-name">ETHER</span>
                                 <span class="balance">
@@ -94,9 +92,9 @@
                         {{#each tokens}}
                             {{#if formattedCoinBalance}}
                                 <li>
-                                    <input type="radio" id="token-{{address}}" value="{{address}}"  name="choose-token" {{tokenSelectedAttr address}}> 
-                                    <label for="token-{{address}}"> 
-                                        {{> dapp_identicon identity=address class="dapp-tiny"}} 
+                                    <input type="radio" id="token-{{address}}" value="{{address}}"  name="choose-token" {{tokenSelectedAttr address}}>
+                                    <label for="token-{{address}}">
+                                        {{> dapp_identicon identity=address class="dapp-tiny"}}
                                         <span class="token-name">{{name}}</span>
                                         <span class="balance">{{formattedCoinBalance}}</span>
                                     </label>
@@ -105,7 +103,7 @@
                         {{/each}}
                     </ul>
                 {{else}}
-                    <div class="token-ether"> 
+                    <div class="token-ether">
                         <span class="ether-symbol">Ξ</span>
                         <span class="token-name">ETHER</span>
                         <span class="balance">
@@ -135,7 +133,7 @@
 
                 {{> dapp_selectGasPrice gas=(TemplateVar.get "estimatedGas") gasPrice=latestBlock.gasPrice}}
             </div>
-            
+
             <div class="col col-5 mobile-full send-info">
                 <br><br>
                 {{{i18n 'wallet.send.texts.sendFee' timetext=timeText}}}
@@ -176,11 +174,11 @@
         </div>
 
         <hr>
-        
+
         <!-- a button type="submit" will send the form -->
 
         <button type="submit" class="dapp-block-button">
-            {{#if TemplateVar.get "sending"}} 
+            {{#if TemplateVar.get "sending"}}
                 {{i18n 'buttons.sending'}}
             {{else}}
                 {{#if deployContract}}
@@ -190,7 +188,7 @@
                 {{/if}}
             {{/if}}
         </button>
-        
+
     </form>
 
 </template>

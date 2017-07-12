@@ -412,10 +412,10 @@ Takes a camelcase and shows it with spaces
 @return {string} sentence    The same name, sanitized, with spaces
 **/
 Helpers.toSentence = function (inputString, noHTML) {
-    if (typeof inputString == 'undefined')
+    if (typeof inputString == 'undefined') {
       return false;
-    else {
-        inputString = inputString.replace(/[^a-zA-Z0-9_]/g, '');
+    } else {
+        inputString = inputString.replace(/[^a-z0-9_]/gi, '');
       if (noHTML === true) // only consider explicit true
         return inputString.replace(/([A-Z]+|[0-9]+)/g, ' $1').trim();
       else

@@ -373,15 +373,9 @@ observeTransactions = function(){
                     }
                 }
             };
-            
-            // remove this if the filter works again
-            var interval = setInterval(function(e, blockHash) { 
-                updateTransactions(e, blockHash) 
-            }, 15000);
 
             var filter = web3.eth.filter('latest').watch(function(e, blockHash) {
                 updateTransactions(e, blockHash);
-                clearInterval(interval);
             });
         }
     };
