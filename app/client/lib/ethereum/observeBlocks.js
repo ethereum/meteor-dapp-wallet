@@ -49,7 +49,13 @@ updateBalances = function() {
             }
         }
 
+    });
 
+
+    // UPDATE ENS
+    var allAccounts = EthAccounts.find().fetch().concat(walletsAndContracts);
+    _.each(allAccounts, function(account){
+        
         // Only check ENS names every N minutes
         var now = Date.now();
         if (!account.ensCheck || (account.ensCheck && now - account.ensCheck > 10*60*1000)) {
@@ -67,7 +73,6 @@ updateBalances = function() {
                 }
             });
         }
-
     });
 
 
