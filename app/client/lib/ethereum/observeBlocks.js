@@ -48,7 +48,6 @@ updateBalances = function() {
                 }, 1000);
             }
         }
-
     });
 
 
