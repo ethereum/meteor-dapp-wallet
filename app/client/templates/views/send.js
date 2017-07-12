@@ -19,7 +19,7 @@ when the user actually wants to send the dummy data.
 
 @property defaultEstimateGas
 */
-var defaultEstimateGas = 5000000;
+var defaultEstimateGas = 50000000;
 
 
 /**
@@ -120,24 +120,6 @@ Template['views_send'].onCreated(function(){
         }
     });
 
-    // change the token type when the account is changed
-    template.autorun(function(c){
-        if (c.firstRun) return;
-
-        var address = TemplateVar.getFrom('.dapp-select-account.send-from', 'value');
-        var fromAddress = FlowRouter.getParam('from');
-
-        if (address !== null)
-          address = address.toLowerCase();
-
-        if (fromAddress !== null)
-          fromAddress = fromAddress.toLowerCase();
-
-        if (address !== fromAddress) {
-          TemplateVar.set('selectedToken', 'ether');
-        }
-    });
-
 
     // check daily limit again, when the account was switched
     template.autorun(function(c){
@@ -187,6 +169,25 @@ Template['views_send'].onRendered(function(){
         }
     });
 
+
+    // change the token type when the account is changed
+    var selectedAddress;
+    template.autorun(function(c){
+
+        address = TemplateVar.getFrom('.dapp-select-account.send-from', 'value');
+        
+        if (c.firstRun) {
+            selectedAddress = address;
+            return;
+        };
+
+
+        if (selectedAddress !== address) {
+            TemplateVar.set('selectedToken', 'ether');
+        }
+
+        selectedAddress = address;
+    });
 
     // ->> GAS PRICE ESTIMATION
     template.autorun(function(c){
@@ -519,7 +520,7 @@ Template['views_send'].events({
 
             // set gas down to 21 000, if its invalid data, to prevent high gas usage.
             if(estimatedGas === defaultEstimateGas || estimatedGas === 0)
-                estimatedGas = 21000;
+                estimatedGas = 22000;
 
             // if its a wallet contract and tokens, don't need to remove the gas addition on send-all, as the owner pays
             if(sendAll && (selectedAccount.owners || tokenAddress !== 'ether'))
