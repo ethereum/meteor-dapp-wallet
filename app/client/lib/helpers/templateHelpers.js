@@ -37,7 +37,7 @@ Check if in mist and in mist mode
 @method (isMistMode)
 **/
 Template.registerHelper('isWalletMode', function(){
-    return (typeof mist !== 'undefined' && mist.mode === 'wallet');
+    return window.mistMode === 'wallet' || typeof mist === 'undefined'; // also show network info in normal browsers
 });
 
 /**
