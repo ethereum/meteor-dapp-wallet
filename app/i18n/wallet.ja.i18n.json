@@ -90,6 +90,7 @@
             "buttons": {
                 "deposit": "Etherをデポジット",
                 "depositBitcoin": "Bitcoinを使ってデポジット",
+                "viewOnExplorer": "View on Etherscan",
                 "copyAddress": "アドレスをコピー",
                 "scanQRCode": "QRコードを表示",
                 "showInterface": "インターフェイスを表示"
@@ -274,7 +275,7 @@
             "title": "カスタム <strong>トークン</strong>",
             "subTitle": "トークンを足す",
             "admin": "__名前__ (admin page)",
-            "description": "トークンはイーサリアムのプラットホーム上に構築された通貨であり、他の代替可能なものです。アカウントがトークンを送るためには、それらのアドレスをリストに追加しなければなりません。次のものを修正することによって簡単に自分のトークンを作ることができます、 <a href=\"http://chriseth.github.io/browser-solidity/?gist=0d1a998d949e26942212\" target=\"_blank\">カスタムトークンコントラクトの例トークン</a> もしくはこちらをもっと学ぶ <a href=\"https://www.ethereum.org/token#the-code\" target=\"_blank\">Ethereum Tokens</a>.",
+            "description": "トークンはイーサリアムのプラットホーム上に構築された通貨であり、他の代替可能なものです。アカウントがトークンを送るためには、それらのアドレスをリストに追加しなければなりません。次のものを修正することによって簡単に自分のトークンを作ることができます、 <a href=\"https://ethereum.org/token#the-code\" target=\"_blank\">カスタムトークンコントラクトの例トークン</a> もしくはこちらをもっと学ぶ <a href=\"https://www.ethereum.org/token\" target=\"_blank\">Ethereum Tokens</a>.",
             "deleteToken": "トークンを削除しますか<strong>__token__</strong> あなたのリストから",
             "addedToken": "Added __token__ to your watch list",
             "editedToken": "Edited token __token__",

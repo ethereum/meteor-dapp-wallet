@@ -64,8 +64,15 @@ Template['views_modals_addToken'].events({
 
     @event change input[name="address"], input input[name="address"]
     */
-    'change input[name="address"], input input[name="address"]': function(e, template) {
+    'change input[name="address"], input input[name="address"], blur input[name="address"]': function(e, template) {
         var tokenAddress = TemplateVar.getFrom('.token-address', 'value');
+
+        var l = e.currentTarget.value.length;
+        if (!tokenAddress && l > 2 && l < 6) {
+            e.currentTarget.value += '.thetoken.eth';
+            e.currentTarget.setSelectionRange(l,l+13);
+        }
+        
         
         if(!tokenAddress || (template.data && template.data.address && template.data.address == tokenAddress))
             return;
@@ -80,18 +87,15 @@ Template['views_modals_addToken'].events({
         var tokenInstance = TokenContract.at(tokenAddress);
 
         tokenInstance.symbol(function(e, i){
-            if(template.$('input.symbol').val() === '')
-                template.$('input.symbol').val(i).change();
+            template.$('input.symbol').val(i).change();
         });
 
         tokenInstance.name(function(e, i){
-            if(template.$('input.name').val() === '')
-                template.$('input.name').val(i).change();
+            template.$('input.name').val(i).change();
         });
         
         tokenInstance.decimals(function(e, i){
-            if(template.$('input.decimals').val() === '')
-                template.$('input.decimals').val(i).change();
+            template.$('input.decimals').val(i).change();
         });
 
     },    

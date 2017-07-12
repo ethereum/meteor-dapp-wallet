@@ -2,6 +2,8 @@
 
 The Ethereum wallet.
 
+[![Build Status](https://travis-ci.org/ethereum/meteor-dapp-wallet.svg?branch=master)](https://travis-ci.org/ethereum/meteor-dapp-wallet)
+
 **NOTE** The wallet is not yet official released,
 can contain severe bugs!
 
@@ -12,7 +14,7 @@ Start an `geth` node and and the app using meteor and open http://localhost:3000
 
     $ geth --rpccorsdomain "http://localhost:3000" --rpc --unlock <your account>
 
-Starting the wallet dapp using [Meteor](http://meteor.com/install)
+Starting the wallet dapp using [Meteor](https://meteor.com/install)
 
     $ cd meteor-dapp-wallet/app
     $ meteor

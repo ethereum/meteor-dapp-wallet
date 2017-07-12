@@ -61,7 +61,10 @@ connectToNode = function(){
 
     EthAccounts.init();
     EthBlocks.init();
-    EthTools.ticker.start({extraParams: (typeof mist !== 'undefined') ? 'Mist-'+ mist.version : ''});
+    EthTools.ticker.start({
+      extraParams: (typeof mist !== 'undefined') ? 'Mist-'+ mist.version : '',
+      currencies: ['BTC', 'USD', 'EUR', 'BRL', 'GBP']
+    });
 
     if (EthAccounts.find().count() > 0) {
         checkForOriginalWallet();
@@ -69,7 +72,7 @@ connectToNode = function(){
 
     // EthBlocks.detectFork(function(oldBlock, block){
     //     console.log('FORK detected from Block #'+ oldBlock.number + ' -> #'+ block.number +', rolling back!');
-        
+
     //     // Go through all accounts and re-run
     //     _.each(Wallets.find({}).fetch(), function(wallet){
     //         // REMOVE ADDRESS for YOUNG ACCOUNTS, so that it tries to get the Created event and correct address again
@@ -107,7 +110,7 @@ resetWallet = function function_name (argument) {
     _.each(Transactions.find().fetch(), function(tx) {
         console.log(tx._id);
         try {
-            Transactions.remove(tx._id); 
+            Transactions.remove(tx._id);
         } catch(e){
             console.error(e);
         }
@@ -115,7 +118,7 @@ resetWallet = function function_name (argument) {
 
     _.each(PendingConfirmations.find().fetch(), function(pc) {
         try {
-            PendingConfirmations.remove(pc._id); 
+            PendingConfirmations.remove(pc._id);
         } catch(e){
             console.error(e);
         }
@@ -133,7 +136,6 @@ resetWallet = function function_name (argument) {
 
     setTimeout(function() {
         console.log('Fetching logs...');
-        connectToNode();    
+        connectToNode();
     }, 1000 * 6);
 }
-

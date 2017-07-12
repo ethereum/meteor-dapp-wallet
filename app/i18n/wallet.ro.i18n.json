@@ -90,6 +90,7 @@
             "buttons": {
                 "deposit": "Depunere",
                 "depositBitcoin": "Depunere Bitcoin",
+                "viewOnExplorer": "View on Etherscan",
                 "copyAddress": "Copiaza adresa",
                 "scanQRCode": "Arata QR-Code",
                 "showInterface": "Arata Interfata"

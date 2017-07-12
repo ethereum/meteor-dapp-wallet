@@ -160,7 +160,7 @@ var updateTransaction = function(newDocument, transaction, receipt){
                         console.log("isToken: ",isToken)
 
                         if(isToken) {
-                            
+
                             tokenId = Helpers.makeId('token', receipt.contractAddress);
 
                             Tokens.upsert(tokenId, {$set: {
@@ -171,7 +171,7 @@ var updateTransaction = function(newDocument, transaction, receipt){
                                 decimals: 0
                             }});
 
-                            
+
                             // check if the token has information about itself asynchrounously
                             var tokenInstance = TokenContract.at(receipt.contractAddress);
 
@@ -183,7 +183,7 @@ var updateTransaction = function(newDocument, transaction, receipt){
                                     name: TAPi18n.__('wallet.tokens.admin', { name: i } )
                                 }});
                             });
-                            
+
                             tokenInstance.decimals(function(e, i){
                                 Tokens.upsert(tokenId, {$set: {
                                     decimals: Number(i)
@@ -272,8 +272,10 @@ observeTransactions = function(){
 
         // check for confirmations
         if(!tx.confirmed && tx.transactionHash) {
-            var filter = web3.eth.filter('latest');
-            filter.watch(function(e, blockHash){
+
+            var updateTransactions = function(e, blockHash){
+                console.log('updateTransactions', e, blockHash);
+
                 if(!e) {
                     var confirmations = (tx.blockNumber && EthBlocks.latest.number) ? (EthBlocks.latest.number + 1) - tx.blockNumber : 0;
                     confCount++;
@@ -370,6 +372,10 @@ observeTransactions = function(){
                         });
                     }
                 }
+            };
+
+            var filter = web3.eth.filter('latest').watch(function(e, blockHash) {
+                updateTransactions(e, blockHash);
             });
         }
     };
@@ -408,13 +414,16 @@ observeTransactions = function(){
                 checkTransactionConfirmations(newDocument);
             }
 
-            // add price data
-            if(newDocument.timestamp && 
-               (!newDocument.exchangeRates || 
+            // If on main net, add price data
+            if( Session.get('network') == 'main' && 
+                newDocument.timestamp &&
+               (!newDocument.exchangeRates ||
                !newDocument.exchangeRates.btc ||
                !newDocument.exchangeRates.usd ||
-               !newDocument.exchangeRates.eur)) {
-                var url = 'https://min-api.cryptocompare.com/data/pricehistorical?fsym=ETH&tsyms=BTC,USD,EUR&ts='+ newDocument.timestamp;
+               !newDocument.exchangeRates.eur ||
+               !newDocument.exchangeRates.gbp ||
+               !newDocument.exchangeRates.brl)) {
+                var url = 'https://min-api.cryptocompare.com/data/pricehistorical?fsym=ETH&tsyms=BTC,USD,EUR,GBP,BRL&ts='+ newDocument.timestamp;
 
                 if(typeof mist !== 'undefined')
                     url += '&extraParams=Mist-'+ mist.version;
@@ -424,7 +433,7 @@ observeTransactions = function(){
                     if(!e && res && res.statusCode === 200) {
                         var content = JSON.parse(res.content);
 
-                        if(content){
+                        if(content && content.Response !== "Error"){
                             _.each(content, function(price, key){
                                 if(price && _.isFinite(price)) {
                                     var name = key.toLowerCase();
@@ -445,7 +454,7 @@ observeTransactions = function(){
             }
         },
         /**
-        Will check if the transaction is confirmed 
+        Will check if the transaction is confirmed
 
         @method changed
         */

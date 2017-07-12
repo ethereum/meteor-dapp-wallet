@@ -18,8 +18,8 @@ Template['views_dashboard'].helpers({
 
     @method (wallets)
     */
-    'wallets': function(disabled){
-        var wallets = Wallets.find({disabled: disabled}, {sort: {creationBlock: 1}}).fetch();
+    'wallets': function(){
+        var wallets = Wallets.find({$or: [{disabled: {$exists: false}}, {disabled: false}]}, {sort: {creationBlock: 1}}).fetch();
 
         // sort wallets by balance
         wallets.sort(Helpers.sortByBalance);
@@ -90,13 +90,18 @@ Template['views_dashboard'].events({
     'click .create.account': function(e){
         e.preventDefault();
 
-        mist.requestAccount(function(e, account) {
+        mist.requestAccount(function(e, accounts) {
             if(!e) {
-                account = account.toLowerCase();
-                EthAccounts.upsert({address: account}, {$set: {
-                    address: account,
-                    new: true
-                }});
+                if(!_.isArray(accounts)) {
+                    accounts = [accounts];
+                }
+                accounts.forEach(function(account){                
+                    account = account.toLowerCase();
+                    EthAccounts.upsert({address: account}, {$set: {
+                        address: account,
+                        new: true
+                    }});
+                });
             }
         });
     }

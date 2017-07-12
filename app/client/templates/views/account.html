@@ -11,8 +11,8 @@
                     {{/if}}
                 {{else}}
                     {{> dapp_identicon identity=address}}
-                    <h1>
-                        <span class="edit-name">{{name}}</span> <i class="edit-icon icon-pencil"></i>
+                    <h1 class="{{ensClass}}">
+                        <span>{{displayName}}</span> 
 
                         {{#if $or owners jsonInterface}}
                             <button class="dapp-icon-button delete icon-trash"></button>
@@ -24,12 +24,14 @@
 
             <div class="accounts-page-summary">
                 {{> dapp_identicon identity=address}}
-                <header>
+                <header class="{{ensClass}}">
                     <h1>
-                        <span class="edit-name">{{name}}</span> <i class="edit-icon icon-pencil"></i>
-                        {{#if $or owners jsonInterface}}
-                            <button class="dapp-icon-button delete icon-trash"></button>
-                        {{/if}}
+                        {{#if ens}}
+                        <span>{{displayName}}</span> 
+                        {{else}}
+                        <em class="edit-name">{{displayName}}</em> 
+                        <i class="edit-icon icon-pencil"></i>
+                        {{/if}}                        
                     </h1>
                     <h2 class="copyable-address">{{walletIcon}}
                         <!-- <input type="text" value="{{toChecksumAddress address}}" readonly class=""> -->
@@ -108,6 +110,7 @@
                     <div class="account-info">
                         <h3>{{i18n "wallet.app.texts.note"}}</h3>
                         <p>{{{i18n "wallet.accounts.accountNote"}}}</p>
+                        <p><strong>{{i18n "wallet.accounts.outOfSyncNote"}}</strong></p>
                     </div>
                 {{/if}}
 
@@ -140,6 +143,15 @@
                                     {{i18n "wallet.accounts.buttons.depositUsingCreditCard"}}
                                 </button>
                             </li>  
+                        {{/if}}
+
+                        {{#if $eq ($.Session.get "network") "main"}}
+                        <li>
+                            <a href="https://etherscan.io/address/{{address}}">
+                                <i class="icon-info"></i>
+                                {{i18n "wallet.accounts.buttons.viewOnExplorer"}}
+                            </a>
+                        </li>                        
                         {{/if}}
 
                         <li>
