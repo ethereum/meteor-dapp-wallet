@@ -75,8 +75,6 @@ updateBalances = function() {
         }
     });
 
-    });
-
 
     // UPDATE TOKEN BALANCES
     var walletsContractsAndAccounts = EthAccounts.find().fetch().concat(Wallets.find().fetch());
