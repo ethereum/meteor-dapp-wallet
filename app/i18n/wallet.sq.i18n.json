@@ -55,7 +55,7 @@
                 "title": "Zgjidhni një llogari"
             },
             "testnetWallet": {
-                "walletNeedsDeployment": "You seem to be on a testnet.<br><br>There is no original wallet contract code found.  We need to deploy one, which can be used by the wallet contract stub contracts, from your address: <br><br><small><code>__account__</code></small><br><br><em>Please make sure this address has at least 1 Ether!</em>",
+                "walletNeedsDeployment": "Duket se ndodheni në një rrjet provë.<br><br>Nuk u gjet kod origjinal kontrate. Duhet ta krijojmë një, i cili mund të përdoret nga kontratat cungje, nga adresa juaj: <br><br><small><code>__account__</code></small><br><br><em>Ju lutemi sigurohuni që kjo adresë ka të paktën 1 Ether!</em>",
                 "testnetWalletDeployed": "Kontrata origjinale e kuletës u vendos!<br>Një kontratë origjinale kulete u vendos në adresën:<br><br><small><code>__address__</code></small>."
             },
             "addToken": {
@@ -79,8 +79,8 @@
             "defaultName": "Pa emër",
             "creating": "Duke krijuar",
             "importing": "Duke marrë",
-            "accountNote": "Accounts can't display incoming transactions, but can receive, hold and send Ether. To see incoming transactions <a href=\"/account/new\">create a wallet contract</a> to store ether.",
-            "outOfSyncNote": "If your balance doesn't seem updated, make sure that you are in sync with the network.",
+            "accountNote": "Llogaritë nuk mund të tregojnë transaksionet hyrëse, por mund të ruajnë, mbajnë dhe dërgojnë Ether. Për të parë transaksionet ardhëse <a href=\"/account/new\">krijoni një kontratë kulete</a> për të ruajtur ether.",
+            "outOfSyncNote": "Nëse balanca e llogarisë nuk duket e përditësuar, sigurohuni që jeni të sinkronizuar me rrjetin.",
             "walletNote": "Most exchanges don't support receiving ether from a contract wallet yet. Be sure to move your balance to an account address first!",
             "addressCopiedToClipboard": "Copied to clipboard",
             "addressNotCopiedToClipboard": "Error copying address to clipboard. Please try again.",
