@@ -1,0 +1,334 @@
+{
+    "elements": {
+        "selectGasPrice": {
+            "high": "Més ràpid",
+            "low": "Més barat"
+        },
+        "checksumAlert":"Aquesta adreça sembla vàlida, però no té mesures de seguretat que ajuden a no equivocar-te errors tipogràfics, re-comprova que és la correcta. Si pots, comprova que la icona de seguretat coincideix.",
+        "identiconHelper": "Aquesta és la icona de seguretat. Si hi hagués cap canvi a l'adreça, la icona seria una completament diferent"
+    },
+    "wallet": {
+        "app": {
+            "buttons": {
+                "wallet": "Wallets",
+                "send": "Enviar",
+                "contracts": "Contractes",
+                "deploy": "Desplegar",
+                "tokens": "Tokens",
+                "receive": "Rebre",
+                "addWallet": "Afegir un contracte wallet",
+                "addAccount": "Afegir compte",
+                "addToken": "Observar token"
+            },
+            "texts": {
+                "note": "Nota",
+                "balance": "Balanç",
+                "connectionErrorMist": "No s'ha pogut connectar. Si us plau inicia geth utilitzant:<br><br><small><code>__node__</code><br><br>Assegura't que la ruta al teu IPC és per defecte, quan utilitzis un <code>datadir</code> diferent, ex.<br><code>geth --datadir ... --ipcpath /Users/&lt;elTeuUsuari&gt;/Library/Ethereum/geth.ipc</code><br>o<br><code>geth --datadir ... --ipcpath /Users/&lt;elTeuUsuari&gt;/.ethereum/geth.ipc</code>. <br><br>Afegeix opcionalment: <code>--unlock &lt;elTeuCompte&gt;.</code></small>",
+                "connectionErrorBrowser": "No s'ha pogut connectar. Si us plau inicia geth amb les següents opcions:<br><br><small><code>__node__</code><br><br>Opcionalment afegeix: <code>--unlock &lt;elTeuCompte&gt;.</code></small>",
+                "pendingConfirmationsBadge": "Confirmació Pendent!",
+                "nodeSyncing": "__blockDiff__ blocs restants",
+                "blockReceived": "Nou bloc rebut",
+                "timeSinceBlock": "des de l'últim bloc",
+                "peers": "peers",
+                "waitingForBlocks": "Esperant blocs..",
+                "testnetExplain": "Ets a la testnet. NO ENVIÏS cap Ether real a aquestes adreces",
+                "noAccounts": {
+                    "title": "Encara no tens cap compte",
+                    "text": "Necessites crear com a mínim un compte amb una contrasenya segura."
+                }
+            },
+            "error": {
+                "wrongChain": "Sembla que estàs en una cadena diferent. Si us plau reinicia l'aplicació Ethereum!"
+            },
+            "warnings": {
+                "txOriginVulnerabilityWallet": "Aquest smart contract conté codi obsolet que pot ser subjecte a atacs de phishing. ",
+                "txOriginVulnerabilityCallToAction": "Actualitza el teu contracte ara i transfereix els fons a la versió actualitzada.",
+                "txOriginVulnerabilityAccount": "Aquest compte és propietari d'un contracte vulnerable. Utilitzant aquest compte en contractes maliciosos pot posar en perill els fons dels teus wallets. Actualitza el teu wallet abans de fer cap transacció amb aquest compte.",
+                "txOriginVulnerabilityPopup": "Hem trobat wallets vulnerables! Assegura't de desplegar nous wallets i moure-hi els fons!",
+                "checkThisNow": "Mostra el wallet vulnerable",
+                "checkThisLater": "Després",
+                "learnMore": "Aprendre més sobre aquesta vulnerabilitat"
+            }
+        },
+        "modals": {
+            "selectAccount": {
+                "title": "Selecciona un compte"
+            },
+            "testnetWallet": {
+                "walletNeedsDeployment": "Sembla que estàs a la testnet.<br><br>No s'ha trobat cap wallet de contracte original.  Necessitem desplegar-ne un, que pot ser utilitzat com a contracte 'stub', des de la teva adreça: <br><br><small><code>__account__</code></small><br><br><em>Si us plau assegurat que aquesta adreça té al menys 1 Ether!</em>",
+                "testnetWalletDeployed": "S'ha desplegat el wallet de contracte original!<br>Un wallet de contracte original s'ha desplegat a l'adreça:<br><br><small><code>__address__</code></small>."
+            },
+            "addToken": {
+                "title": "Afegir token",
+                "titleEdit": "Editar token",
+                "contractAddress": "Adreça de contracte del token",
+                "tokenName": "Nom del token",
+                "tokenSymbol": "Símbol del token",
+                "decimalPlaces": "Decimals de la unitat més petita",
+                "preview": "Previsualitzar"
+            },
+            "interface": {
+                "title": "Interfície JSON del contracte",
+                "description": "Si vols que algú executi aquest contracte, envia aquesta informació amb l'adreça del contracte."
+            }
+        },
+        "accounts": {
+            "title": "Visió general dels <strong>Comptes</strong>",
+            "walletsTitle": "Wallets de contracte",
+            "accountsTitle": "Comptes",
+            "defaultName": "Sense nom",
+            "creating": "Creant",
+            "importing": "Important",
+            "accountNote": "Els comptes no poden mostrar transaccions entrant, però poden rebre, mantenir i enviar Ether. Per veure les transaccions entrant <a href=\"/account/new\">crea un wallet de contracte</a> per poder desar Ether.",
+            "outOfSyncNote": "Si el teu balanç no sembla actualitzat, assegura't que estàs sincronitzat amb la xarxa.",
+            "walletNote": "La majoria dels intercanvis no suporten rebre Ether d'un wallet de contracte encara. Assegura't que mous el teu balanç a un compte primer!",
+            "addressCopiedToClipboard": "Copiat al portapapers",
+            "addressNotCopiedToClipboard": "Error copiant l'adreça al portapapers. Si us plau torna-ho a intentar.",
+            "qrCodeLabel": "Escaneja aquest codi amb una app mòbil compatible",
+            "dailyLimit": "Límit diari",
+            "dailyLimitRemaining": "restant avui",
+            "requiredSignatures": "Signatures necessàries",
+            "owners": "Propietaris",
+            "walletsDescription": "Aquests contractes s'allotgen a la blockchain i mantenen i asseguren Ether. Poden tenir diversos comptes com a propietaris i mantenir un registre complet de totes les transaccions.",
+            "walletsDescriptionNotEnoughFunds": "Una vegada que tingueu més d'1 Ether, podeu crear contractes més sofisticats. Els Wallets són contractes intel·ligents que permeten controlar els vostres fons mitjançant diversos comptes. Poden tenir un límit diari opcional sobre retirades per augmentar la seguretat. Creeu els vostres propis contractes personalitzats a la pestanya <em>Contractes</em>.",
+            "accountsDescription": "Els comptes estan protegits per contrasenyes i poden contenir Ether i tokens basats en Ethereum.  Poden controlar contractes, però no poden mostrar transaccions entrants.",
+            "buttons": {
+                "deposit": "Transfereix Ether & Tokens",
+                "depositBitcoin": "Finança amb Bitcoin",
+                "depositUsingCreditCard": "Finança amb targeta de crèdit (només U.S.)",
+                "viewOnExplorer": "Veure a Etherscan",
+                "copyAddress": "Copiar adreça",
+                "scanQRCode": "Mostrar codi QR",
+                "showInterface": "Mostrar interfície"
+            },
+            "modal": {
+                "deleteText": "Estàs segur que vols eliminar aquest wallet de contracte? Si no en deses els detalls i la seva clau privada, és possible que no la trobis a la blockchain i perdis tots els fons dispositats<br><br> Escriu \"delete\" per confirmar-ne l'eliminació.",
+                "backupWallet": {
+                    "title": "Fes una copia de seguretat de l'adreça del teu wallet de contracte!",
+                    "description": "Assegura't d'escriure a algun lloc l'adreça del wallet de contracte:"
+                },
+                "copyAddressWarning": "<strong>Perill:</strong> estàs a la xarxa de Test. Vigila no transferir fons realsa aquest compte.",
+                "buttonOk": "Copia igualment",
+                "buttonCancel": "Oblida-te'n..."
+            }
+        },
+        "events": {
+            "eventInfoTitle": "Esdeveniment",
+            "latest": "Ultims esdeveniments",
+            "filter": "Filtra els esdeveniments",
+            "transactionHash": "Hash de la transacció",
+            "block": "Bloc",
+            "originContract": "Contracte origen",
+            "logIndex": "Índex del registre",
+            "transactionIndex": "Índex de la transacció",
+            "returnValues": "Valors de retorn",
+            "eventName": "Nom de l'esdeveniment"
+        },
+        "transactions": {
+            "transactionInfoTitle": "Transacció",
+            "latest": "Últimes transaccions",
+            "block": "Bloc",
+            "pendingConfirmations": "Confirmació necessària",
+            "none": "Cap transacció encara",
+            "time": "Temps",
+            "from": "De",
+            "to": "A",
+            "amount": "Quantitat",
+            "gasPrice": "Preu del gas",
+            "perMillionGas": " PER MILLIÓ DE GAS",
+            "gasUsed": "Gas utilitzat", 
+            "feePaid": "Comissió pagada",
+            "data": "Dades enviades",
+            "deployedData": "Dades desplegades",
+            "confirmations": "Confirmacions",
+            "unconfirmed": "Sense confirmar",
+            "showMore": "Mostrar-ne més",
+            "filter": "Filtrar transaccions",
+            "noneFound": "No s'ha trobat cap transacció coincident.",
+            "noOwnerAccount": "Mostrar només confirmacions",
+            "outOfGasDesc": "La transacció sembla que no tingui prou gas per executar-se.",
+            "buttons": {
+                "approve": "Aprova",
+                "approved": "Aprovat",
+                "revoke": "Revocar",
+                "revoked": "Revocat"
+            },
+            "error": {
+                "noDataDeployed": "No hi ha dades desplegades a l'adreça del contracte!",
+                "outOfGas": "No s'han pogut executar transaccions de la __from__ a la __to__."  
+            },
+            "types": {
+                "executeContract": "Executar contracte",
+                "betweenWallets": "Transfereix entre comptes",
+                "sent": "Enviat",
+                "received": "Rebut",
+                "outOfGas": "Transacció no executada",
+                "createdContract": {
+                    "title": "Contracte creat",
+                    "at": "Contracte creat a"
+                },
+                "creatingContract": "Creant contracte",
+                "tokenTransfer": "__token__ - Transferència de Tokens",
+                "pendingConfirmations": "__initiator__ vol enviar des de __from__"
+            },
+            "notifications": {
+                "incomingTransaction": {
+                    "title": "Pagament rebut",
+                    "text": "Has rebut __amount__ a __to__ de __from__."
+                },
+                "outgoingTransaction": {
+                    "title": "Pagament enviat",
+                    "text": "Has enviat __amount__ de __from__ a __to__."    
+                },
+                "pendingConfirmation": {
+                    "title": "Confirmació necessària",
+                    "text": "__initiator__ vol enviar __amount__ de __from__ a __to__"
+                },
+                "tokenTransfer": {
+                    "title": "__token__ - Transferència de Tokens",
+                    "text": "__amount__ __token__ s'han enviat des de __from__ a __to__."
+                }
+            }
+        },
+        "newWallet": {
+            "title": "Nou <strong>contracte de wallet</strong>",
+            "accountName": "Nom del contracte de wallet",
+            "selectOwner": "Selecciona el propietari",
+            "accountType": {
+                "title": "Tipus de contracte de wallet",
+                "simple": {
+                    "title": "Compte d'un sol propietari",
+                    "description": "Un contracte simple sense mesures de seguretat addicionals.",
+                    "warning": "Nota: Si el teu compte de propietari és compromès, el teu wallet no té protecció."
+                },
+                "multisig": {
+                    "title": "Contracte de wallet multifirma",
+                    "description": "Un contracte controlat per múltiples comptes",
+                    "text1": "Això és un compte conjunt controlat per",
+                    "text2": "propietaris. Pots enviar fins a",
+                    "text3": "Ether per dia.",
+                    "text4": "Qualsevol transacció per sobre d'aquest límit diari necessita la confirmació de",
+                    "text5": "propietaris.",
+                    "accountOwnersTitle": "Propietaris del compte",
+                    "ownerAddress": "Adreça del propietari"
+                },
+                "import": {
+                    "title": "Importar wallet",
+                    "description": "Importar un wallet (multifirma) existent.",
+                    "walletAddress": "Adreça del wallet",
+                    "youreOwner": "El teu compte \"__account__\" és el propietari d'aquest wallet de contracte.",
+                    "watchOnly": "No ets el propietari del compte, però pots afegir-lo com a compte \"WATCH ONLY\".",
+                    "notWallet": "Aquesta adreça no conté cap contracte de wallet."
+                }
+            },
+            "error": {
+                "emptySignees": "No has proporcionat tots els propietaris.",
+                "alreadyExists": "El wallet de contracte ja existeix.",
+                "stubHasNoOrigWalletAddress": "El teu contracte stub no té cap adreça original fixada.  Si us plau reinicia la teva App!",
+                "contractsCantBeOwners": "Els contractes no poden ser propietaris.",
+                "checkOwnerAddress": "Si us plau canvia l'adreça de contracte __address__ per un compte."
+            }
+        },
+        "send": {
+            "title": "<strong>Envia</strong> fons",
+            "sendInfoTitle": "Envia",
+            "pickAddress": "Escull una adreça",
+            "to": "A",
+            "from": "De",
+            "amount": "Quantitat",
+            "tokenAmount": "Quantitat de tokens",
+            "sendFunds": "Envia fons",
+            "deployContract": "Desplega el contracte",
+            "data": "Dades",
+            "moreOptions": "Més opcions",
+            "showMoreOptions": "Mostra més opcions",
+            "showLessOptions": "Mostra menys opcions",
+            "fee": "Escull la comissió",
+            "feeLow": "Més barat",
+            "feeHigh": "Més ràpid",
+            "addData": "Afegir-hi dades",
+            "sendAll": "Envia-ho tot",
+            "removeData": "Elimina'n dades",
+            "estimatedFee": "Comissió prevista",
+            "createContract": "Crea contracte",
+            "provideGas": "Proporciona gas",
+            "transactionSent": "Transacció enviada",
+            "error": {
+                "emptyWallet": "El compte des del que vols enviar és buit.",
+                "notEnoughFunds": "El saldo en el compte és insuficient.",
+                "noReceiver": "No has especificat un receptor.",
+                "noAmount": "No has especificat la quantitat a enviar."
+            },
+            "texts": {
+                "ownerPaysGas": "El gas el paga el propietari del wallet de contracte",
+                "sendAmount": "Vols enviar <strong>__amount__</strong>.",
+                "sendAmountEquivalent": "Vols enviar <strong>__amount__</strong> Ethers, utilitzant l'intercanvi de <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a>.<br>Que és actualment equivalent a <strong>__etherAmount__</strong>.",
+                "sendToken": "Vols enviar <strong>__amount__ __symbol__</strong> de <strong> __name__</strong>.",
+                "overDailyLimit": "<p class=\"over-daily\">Aquesta quantitat supera el restant del límit diari de __limit__ (de __total__ al dia), necessites que __count__ comptes ho confirmin</p>",
+                "overDailyLimit_plural": "<p class=\"over-daily\">Aquesta quantitat és per sobre del restant del límit diari de __limit__ (de __total__ al dia), necessites que __count__ comptes ho confirmin</p>",
+                "underDailyLimit": "<p class=\"under-daily\">Aquesta quantitat és per sota del restant del __limit__ (de __total__ al dia), s'enviarà immediatament.</p>",
+                "sendFee": "Aquesta és la quantitat màxima de diners que s'utilitzarà per processar la transacció. La teva transacció serà minada <strong>__timetext__</strong>.",
+                "noCodeInRecipient": "El compte destinatari no és un contracte, no pots executar res. <strong> Escriure una adreça d'un contracte al camp 'A'. </strong>",
+                "addData": "Pots afegir dades extres per enviar amb les teves transaccions. Si no saps que és això, <strong>no ho toquis o poden passar coses dolentes</strong>.",
+                "dataNotExecutable": "Les dades semblen no executables, això vol dir que la transacció utilitzarà tot el gas que proporciones.",
+                "cantEstimateGas": "No podem preveure degudament l'ús de gas, necessites com a mínim 1 Ether al teu compte.",
+                "estimatedGas": "Gas previst requerit",
+                "timeTexts": {
+                    "0": "en pocs minuts o més",
+                    "1": "segurament en els propers minuts",
+                    "2": "normalment en un minut",
+                    "3": "probablement en 30 segons",
+                    "4": "probablement en uns quants segons",
+                    "5": "probablement en uns quants segons"
+                }
+            }
+        },
+        "tokens": {
+            "title": "<strong>Tokens</strong> personalitzats",
+            "subTitle": "Tokens agegits",
+            "admin": "__name__ (pàgina d'administració)",
+            "description": "Els tokens són monedes i altres fungibles construïts sobre la platforma d'Ethereum. Per tal que tots els comptes puguin veure i enviar els tokens, necessites afegir la seva adreça a aquesta llista. Pots crear el teu propi token simplement modificant <a href=\"https://ethereum.org/token#the-code\" target=\"_blank\">aquest exemple d'un contracte de token personalitzat</a> o aprenent-ne més sobre <a href=\"https://www.ethereum.org/token\" target=\"_blank\">tokens d'Ethereum</a>.",
+            "deleteToken": "Vols eliminar aquest token <strong>__token__</strong> de la teva llista?",
+            "addedToken": "__token__ afegit a la teva llista de visualització",
+            "editedToken": "Token __token__ editat",
+            "error": {
+                "invalidAddress": "Token no afegit.  Adreça invàlida."
+            }
+        },
+        "contracts": {
+            "contractTitle" : "Contractes",
+            "deployNewContract": "Desplega un nou contracte",
+            "addCustomContract": "Visualitza el contracte",
+            "customContracts": "Contractes personalitzats",
+            "description": "Per veure i interactuar amb un contracte ja desplegat a la blockchain, necessites saber-ne l'adreça i la descripció de la seva interfície amb format JSON.",
+            "deployContract": "<strong>Desplega</strong> el contracte",
+            "contractSourceCode": "Codi font Solidity del contracte",
+            "contractByteCode": "Byte code del contracte",
+            "selectContract": "Selecciona el contracte a desplegar",
+            "constructorParameters": "Paràmetres del constructor",
+            "name": "Nom del contracte",
+            "address": "Adreça del contracte",
+            "jsonInterface": "Interfície JSON",
+            "contractInformation": "Informació del contracte",
+            "addedContract": "Afegir un contracte personalitzat",
+            "readFromContract": "Llegir del contracte",
+            "writeToContract": "Escriure al contracte",
+            "pickContract": "Selecciona un contracte",
+            "pickFunction": "Selecciona una funció",
+            "noContract": "<p>Posa la font del contracte que vulguis aquí. Pots trobar molts exemples de contracte a <a href=\"http://ethereum.org\" target=\"_blank\">ethereum.org</a>: </p> <ul><li><a href=\"http://ethereum.org/token#the-code\" target=\"_blank\">Crear un token</a></li><li><a href=\"http://ethereum.org/crowdsale#the-code\" target=\"_blank\">Començar una crowdsale</a></li><li><a href=\"http://ethereum.org/dao#the-code\" target=\"_blank\">Crear una organització a la blockchain</a></li></ul>",
+            "buttons": {
+                "showContractInfo": "Mostrar informació del contracte",
+                "hideContractInfo": "Ocultar informació del contracte",
+                "watchContractEvents": "Visualitzar esdeveniments del contracte",
+                "execute": "Executa",
+                "yes": "Sí"
+            },
+            "error": {
+                "compile": "No s'ha pogut compilar el codi font.",
+                "noDataProvided": "No s'han trobat dades: selecciona  un contracte del menú 'selecciona contracte'",
+                "invalidAddress": "Aquesta adreça no és vàlida.",
+                "jsonInterfaceParseError": "No s'ha pogut parsejar la interfície JSON."
+            }
+        }
+    }
+}
