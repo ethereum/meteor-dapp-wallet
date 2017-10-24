@@ -5,7 +5,7 @@
         "logginIn": "Duke u kyçur..."
     },
     "error": {
-        "insufficientRights": "Nuk keni të drejta të mjaftueshme për tv kryer këtë veprim."
+        "insufficientRights": "Nuk keni të drejta të mjaftueshme për të kryer këtë veprim."
     },
     "buttons": {
         "ok": "OK",
