@@ -42,7 +42,7 @@ agnito:simptip
 ethereum:elements
 ethereum:web3
 ethereum:blocks
-ethereum:accounts
+wanchain:accounts
 ethereum:dapp-styles
 jrudio:bluebird
 tap:i18n-bundler
