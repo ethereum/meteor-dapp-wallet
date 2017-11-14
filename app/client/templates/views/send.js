@@ -636,43 +636,79 @@ Template['views_send'].events({
 
                     console.log('Gas Price: '+ gasPrice);
                     console.log('Amount:', amount);
-
-                    web3.eth.sendTransaction({
+                    var txArgs = {
                         from: selectedAccount.address,
                         to: to,
                         data: data,
                         value: amount,
                         gasPrice: gasPrice,
                         gas: estimatedGas
-                    }, function(error, txHash){
+                    };
 
-                        TemplateVar.set(template, 'sending', false);
+                    var wanSendTransaction = function(args) {
+                        web3.eth.sendTransaction(args, function (error, txHash) {
 
-                        console.log(error, txHash);
-                        if(!error) {
-                            console.log('SEND simple');
+                            TemplateVar.set(template, 'sending', false);
 
-                            data = (!to && contract)
-                                ? {contract: contract, data: data}
-                                : data;
+                            console.log(error, txHash);
+                            if (!error) {
+                                console.log('SEND simple');
 
-                            addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
+                                data = (!to && contract)
+                                    ? {contract: contract, data: data}
+                                    : data;
 
-                            localStorage.setItem('contractSource', Helpers.getDefaultContractExample());
-                            localStorage.setItem('compiledContracts', null);
-                            localStorage.setItem('selectedContract', null);
+                                addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
 
-                            FlowRouter.go('dashboard');
-                        } else {
+                                localStorage.setItem('contractSource', Helpers.getDefaultContractExample());
+                                localStorage.setItem('compiledContracts', null);
+                                localStorage.setItem('selectedContract', null);
 
-                            // EthElements.Modal.hide();
+                                FlowRouter.go('dashboard');
+                            } else {
 
-                            GlobalNotification.error({
-                                content: error.message,
-                                duration: 8
-                            });
-                        }
-                    });
+                                // EthElements.Modal.hide();
+
+                                GlobalNotification.error({
+                                    content: error.message,
+                                    duration: 8
+                                });
+                            }
+                        });
+                    };
+                    var test_is_privacy_transaction = true;
+                    if(test_is_privacy_transaction){
+                        var toWaddr = "0x02867468ae39a4c3738250b135bcbcdd76f73482d3a7dbea7f16171531bc1a54e203fceef9d537caed2ad0f65881d6637c69b2c1bac29eb556e0a478bf084f83fd12";
+                        web3.wan.generateOneTimeAddress(toWaddr,function(error, otaAddr){
+                            if(!error){
+                                console.log("XXXXXXXXXXXXXXX testWaddr:", toWaddr);
+                                console.log("XXXXXXXXXXXXXXX otaAddr:", otaAddr);
+                                var txBuyData = CoinContractInstance.buyCoinNote.getData(otaAddr, web3.toWei(1));
+                                console.log("XXXXXXXXXXXXX txBuyData:", txBuyData);
+                                var privTxArgs = {
+                                    from: txArgs.from,
+                                    to: CoinContractAddr,
+                                    data: txBuyData,
+                                    value: txArgs.value,
+                                    gasPrice: txArgs.gasPrice,
+                                    gas: txArgs.gas
+                                };
+                                console.log("XXXXXXXXXXXXX privTxArgs:", privTxArgs);
+                                wanSendTransaction(privTxArgs);
+                            }else {
+                                // EthElements.Modal.hide();
+                                console.log("generateOneTimeAddress error:",error);
+                                GlobalNotification.error({
+                                    content: error.message,
+                                    duration: 8
+                                });
+                            }
+
+                        });
+                    }
+                    else{
+                        wanSendTransaction(txArgs);
+                    }
                 }
             };
 

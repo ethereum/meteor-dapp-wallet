@@ -202,7 +202,6 @@ Helpers.getAccountByAddress = function(address, reactive) {
     if(_.isString(address))
         address = address.toLowerCase();
     var account = EthAccounts.findOne({address: address}, options) || Wallets.findOne({address: address}, options) || CustomContracts.findOne({address: address}, options);
-    account.waddress = web3.wan.getWanAddress(address);
     return account;
 };
 
