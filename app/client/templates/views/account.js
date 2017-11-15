@@ -91,8 +91,22 @@ Template['views_account'].helpers({
     @method (account)
     */
     'account': function() {
-        return Helpers.getAccountByAddress(FlowRouter.getParam('address'));
+    	  var account = Helpers.getAccountByAddress(FlowRouter.getParam('address'));
+    	  console.log('views account: ', account);
+        return account;
     },
+		/**
+		 Get all transactions
+
+		 @method (allTransactions)
+		 */
+		'allTransactions': function(){
+			var allTransactions = Transactions.find({from: FlowRouter.getParam('address').toLowerCase()}, {sort: {timestamp: -1}}).count();
+			return allTransactions;
+		},
+		'theAddress': function () {
+			return FlowRouter.getParam('address');
+		},
     /**
     Get the current jsonInterface, or use the wallet jsonInterface
 
@@ -187,55 +201,64 @@ Template['views_account'].helpers({
 });
 
 var accountClipboardEventHandler = function(e){
-    if (Session.get('tmpAllowCopy') === true) {
-        Session.set('tmpAllowCopy', false);
-        return true;
-    }
-    else {
-        e.preventDefault();
-    }
+	if (Session.get('tmpAllowCopy') === true) {
+		Session.set('tmpAllowCopy', false);
+		return true;
+	}
+	else {
+		e.preventDefault();
+	}
 
-    function copyAddress(){
-        var copyTextarea = document.querySelector('.copyable-address span');
-        var selection = window.getSelection();            
-        var range = document.createRange();
-        range.selectNodeContents(copyTextarea);
-        selection.removeAllRanges();
-        selection.addRange(range);
+	function copyAddress(){
+		var type = e.target.name;
+		var typeId = e.target.id;
 
-        try {
-            document.execCommand('copy');
-            
-            GlobalNotification.info({
-               content: 'i18n:wallet.accounts.addressCopiedToClipboard',
-               duration: 3
-            });
-        } catch (err) {
-            GlobalNotification.error({
-                content: 'i18n:wallet.accounts.addressNotCopiedToClipboard',
-                closeable: false,
-                duration: 3
-            });
-        }
-        selection.removeAllRanges();
-    }
+		var copyTextarea;
+		if (type === 'address' || typeId === 'address') {
+			copyTextarea = document.querySelector('.copyable-address span');
+		} else {
+			copyTextarea = document.querySelector('.copyable-waddress span');
+		}
 
-    if (Helpers.isOnMainNetwork()) {
-        Session.set('tmpAllowCopy', true);
-        copyAddress();
-    }
-    else {
-        EthElements.Modal.question({
-            text: new Spacebars.SafeString(TAPi18n.__('wallet.accounts.modal.copyAddressWarning')),
-            ok: function(){
-                Session.set('tmpAllowCopy', true);
-                copyAddress();
-            },
-            cancel: true,
-            modalQuestionOkButtonText: TAPi18n.__('wallet.accounts.modal.buttonOk'),
-            modalQuestionCancelButtonText: TAPi18n.__('wallet.accounts.modal.buttonCancel')
-        });
-    }
+		var selection = window.getSelection();
+		var range = document.createRange();
+		range.selectNodeContents(copyTextarea);
+		selection.removeAllRanges();
+		selection.addRange(range);
+
+		try {
+			document.execCommand('copy');
+
+			GlobalNotification.info({
+				content: 'i18n:wallet.accounts.addressCopiedToClipboard',
+				duration: 3
+			});
+		} catch (err) {
+			GlobalNotification.error({
+				content: 'i18n:wallet.accounts.addressNotCopiedToClipboard',
+				closeable: false,
+				duration: 3
+			});
+		}
+		selection.removeAllRanges();
+	}
+
+	if (Helpers.isOnMainNetwork()) {
+		Session.set('tmpAllowCopy', true);
+		copyAddress();
+	}
+	else {
+		EthElements.Modal.question({
+			text: new Spacebars.SafeString(TAPi18n.__('wallet.accounts.modal.copyAddressWarning')),
+			ok: function(){
+				Session.set('tmpAllowCopy', true);
+				copyAddress();
+			},
+			cancel: true,
+			modalQuestionOkButtonText: TAPi18n.__('wallet.accounts.modal.buttonOk'),
+			modalQuestionCancelButtonText: TAPi18n.__('wallet.accounts.modal.buttonCancel')
+		});
+	}
 };
 
 Template['views_account'].events({
@@ -316,6 +339,7 @@ Template['views_account'].events({
     @event click a.create.account
     */
     'click .copy-to-clipboard-button': accountClipboardEventHandler,
+		'click .copy-to-clipboard-wbutton': accountClipboardEventHandler,
 
     /**
     Tries to copy account token.
@@ -323,6 +347,7 @@ Template['views_account'].events({
     @event copy .copyable-address span
     */
     'copy .copyable-address': accountClipboardEventHandler,
+		'copy .copyable-waddress': accountClipboardEventHandler,
 
     /**
     Click to launch Coinbase widget
@@ -336,7 +361,7 @@ Template['views_account'].events({
             address: this.address,
             code: "eb44c52c-9c3f-5fb6-8b11-fc3ec3022519",
             currency: "USD",
-            crypto_currency: "ETH",
+            crypto_currency: "ETH"
         })).show();
     },
 
@@ -348,17 +373,24 @@ Template['views_account'].events({
     */
     'click .qrcode-button': function(e){
         e.preventDefault();
+
+        var name = e.target.name;
+        var address;
+        if (name === 'address') {
+        	address = this.address
+        } else {
+        	address = this.waddress
+        }
         
         // Open a modal showing the QR Code
         EthElements.Modal.show({
             template: 'views_modals_qrCode',
             data: {
-                address: this.address
+                address: address
             }
         });
-
-        
     },
+
     /**
     Click to reveal the jsonInterface
     
@@ -371,7 +403,7 @@ Template['views_account'].events({
         //clean ABI from circular references
         var cleanJsonInterface = _.map(jsonInterface, function(e, i) {
             return _.omit(e, 'contractInstance');
-        })
+        });
 
         // Open a modal showing the QR Code
         EthElements.Modal.show({

@@ -66,7 +66,8 @@
                     {{/if}}
                 {{/each}}
             {{/if}} -->
-            <span class="account-id {{#if creating}}creating{{/if}}">{{toChecksumAddress address}}</span>                
+            <span class="account-id {{#if creating}}creating{{/if}}">address: {{toChecksumAddress address}}</span>
+	          <span class="account-id {{#if creating}}creating{{/if}}">waddress: {{waddress}}</span>
         </a>
     {{/with}}
 </template>

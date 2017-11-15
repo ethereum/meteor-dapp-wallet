@@ -1,0 +1,10 @@
+<template name="dapp_waddress_identicon">
+	<span class="dapp-identicon {{class}}" style="background-image: url('{{identiconData identity}}')" title={{i18nTextIcon}}></span>
+    {{#if identity}}
+        {{#if link}}
+            <a href="{{link}}" class="dapp-identicon {{class}}" style="background-image: url('{{identiconData identity}}')" title={{i18nTextIcon}}></a>
+        {{else}}
+
+        {{/if}}
+    {{/if}}
+</template>

@@ -31,7 +31,6 @@ diff-sequence@1.0.5
 ecmascript@0.4.3
 ecmascript-runtime@0.2.10
 ejson@1.0.11
-ethereum:accounts@0.4.0
 ethereum:blocks@0.3.2
 ethereum:dapp-styles@0.5.7
 ethereum:elements@0.7.17
@@ -107,6 +106,7 @@ tracker@1.0.13
 ui@1.0.11
 underscore@1.0.8
 url@1.0.9
+wanchain:accounts@0.4.0
 webapp@1.2.8
 webapp-hashing@1.0.9
 zimme:active-route@2.3.2

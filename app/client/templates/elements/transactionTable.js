@@ -34,6 +34,7 @@ Template['elements_transactions_table'].onCreated(function(){
     };
 
     TemplateVar.set('limit', this.data.limit || defaultLimit);
+		TemplateVar.set('address', this.data.address || '');
 });
 
 Template['elements_transactions_table'].helpers({
@@ -49,7 +50,7 @@ Template['elements_transactions_table'].helpers({
             searchQuery = TemplateVar.get('search'),
             limit = TemplateVar.get('limit'),
             collection = window[this.collection] || Transactions,
-            selector = this.ids ? {_id: {$in: this.ids}} : {};
+            selector = {from: TemplateVar.get('address').toLowerCase()};
 
         // if search
         if(searchQuery) {

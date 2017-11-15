@@ -34,34 +34,30 @@
             {{/if}}
 
 
-            <h2>{{i18n "wallet.accounts.walletsTitle"}}</h2>
-            
-            {{#if hasMinimumBalance}}
-                <p>
-                    {{i18n "wallet.accounts.walletsDescription"}}     
-                </p>
-            {{else}}
-                <p>
-                    {{{i18n "wallet.accounts.walletsDescriptionNotEnoughFunds"}}}
-                </p>           
-            {{/if}}
-
-            
-
-            <div class="wallet-box-list">
-            {{#each wallets}}
-                {{> elements_account account=_id wallets=true}}
-            {{/each}}
-            </div>
-
-            {{#if hasMinimumBalance}}
-                <a href="{{pathFor route='createAccount'}}" class="wallet-box create">
-                    <div class="account-pattern">
-                        +
-                    </div>
-                    <h3>{{i18n "wallet.app.buttons.addWallet"}}</h3>
-                </a>
-            {{/if}}
+            <!--<h2>{{i18n "wallet.accounts.walletsTitle"}}</h2>-->
+            <!---->
+            <!--{{#if hasMinimumBalance}}-->
+                <!--<p>-->
+                    <!--{{i18n "wallet.accounts.walletsDescription"}}     -->
+                <!--</p>-->
+            <!--{{else}}-->
+                <!--<p>-->
+                    <!--{{{i18n "wallet.accounts.walletsDescriptionNotEnoughFunds"}}}-->
+                <!--</p>           -->
+            <!--{{/if}}-->
+            <!--<div class="wallet-box-list">-->
+            <!--{{#each wallets}}-->
+                <!--{{> elements_account account=_id wallets=true}}-->
+            <!--{{/each}}-->
+            <!--</div>-->
+            <!--{{#if hasMinimumBalance}}-->
+                <!--<a href="{{pathFor route='createAccount'}}" class="wallet-box create">-->
+                    <!--<div class="account-pattern">-->
+                        <!--+-->
+                    <!--</div>-->
+                    <!--<h3>{{i18n "wallet.app.buttons.addWallet"}}</h3>-->
+                <!--</a>-->
+            <!--{{/if}}-->
 
         {{else}}
             <div class="col col-5 mobile-full ">
@@ -81,17 +77,12 @@
             </div>
         {{/if}}
 
-        <div class="dapp-clear-fix"></div>
-
-
-        {{#if allTransactions}}
-            <h2>{{i18n 'wallet.transactions.latest'}}</h2>
-
-            {{> elements_transactions_table limit=5}}
-
-        {{else}}
-
-            <h2>{{i18n 'wallet.transactions.none'}}</h2>
-        {{/if}}
+        <!--<div class="dapp-clear-fix"></div>-->
+        <!--{{#if allTransactions}}-->
+            <!--<h2>{{i18n 'wallet.transactions.latest'}}</h2>-->
+            <!--{{> elements_transactions_table limit=5}}-->
+        <!--{{else}}-->
+            <!--<h2>{{i18n 'wallet.transactions.none'}}</h2>-->
+        <!--{{/if}}-->
     </div>
 </template>

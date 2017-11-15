@@ -35,8 +35,11 @@
                     </h1>
                     <h2 class="copyable-address">{{walletIcon}}
                         <!-- <input type="text" value="{{toChecksumAddress address}}" readonly class=""> -->
-                        <span>{{toChecksumAddress address}}</span>
+                        <span id="address">{{toChecksumAddress address}}</span>
                     </h2>
+	                  <h2 class="copyable-waddress" style="margin: 0; padding: 0;background: #fafafa; color:rgba(130, 122, 122, 0.5);">{{walletIcon}}
+		                  <span id="waddress">{{waddress}}</span>
+	                  </h2>
                     <div class="clear"></div>
                     {{> elements_balance balance=balance changeUnit=true showAllDecimals=true}}
                 </header>
@@ -68,51 +71,50 @@
                     {{/if}}
                 {{/with}}
 
-                {{#if owners}}
-                    <!-- Wallet infos -->
+                <!--{{#if owners}}-->
+                    <!--&lt;!&ndash; Wallet infos &ndash;&gt;-->
 
-                    <div class="row clear wallet-info">
-                        {{#if showDailyLimit}}
-                            <div class="col col-4 mobile-full">
-                                {{#if $gte version 1}}
-                                    <h3>{{i18n "wallet.accounts.dailyLimit"}} <span style="font-weight: 200;">{{dapp_formatBalance dailyLimit "0,0.00 unit"}}</span></h3>
-                                    {{dapp_formatBalance availableToday "0,0.00 unit"}} {{i18n "wallet.accounts.dailyLimitRemaining"}}
-                                {{else}}
-                                    <h3>{{i18n "wallet.accounts.dailyLimit"}}</h3>
-                                    {{dapp_formatBalance dailyLimit "0,0.00 unit"}}
-                                {{/if}}
-                            </div>
-                        {{/if}}
-                        {{#if showRequiredSignatures}}
-                            <div class="col col-4 mobile-full">
-                                <h3>{{i18n "wallet.accounts.requiredSignatures"}}</h3> {{requiredSignatures}}
-                            </div>
-                        {{/if}}
-                        <div class="col col-4 mobile-full">
-                            <h3>{{i18n "wallet.accounts.owners"}}</h3>
-                            {{#each owners}}
-                                <span data-tooltip="{{accountNameOrAddress this}}" class="simptip-position-bottom simptip-movable">
-                                    {{> dapp_identicon identity=this class="dapp-tiny" link=ownerLink}}
-                                </span>
-                            {{/each}}
-                        </div>
-                    </div>
+                    <!--<div class="row clear wallet-info">-->
+                        <!--{{#if showDailyLimit}}-->
+                            <!--<div class="col col-4 mobile-full">-->
+                                <!--{{#if $gte version 1}}-->
+                                    <!--<h3>{{i18n "wallet.accounts.dailyLimit"}} <span style="font-weight: 200;">{{dapp_formatBalance dailyLimit "0,0.00 unit"}}</span></h3>-->
+                                    <!--{{dapp_formatBalance availableToday "0,0.00 unit"}} {{i18n "wallet.accounts.dailyLimitRemaining"}}-->
+                                <!--{{else}}-->
+                                    <!--<h3>{{i18n "wallet.accounts.dailyLimit"}}</h3>-->
+                                    <!--{{dapp_formatBalance dailyLimit "0,0.00 unit"}}-->
+                                <!--{{/if}}-->
+                            <!--</div>-->
+                        <!--{{/if}}-->
+                        <!--{{#if showRequiredSignatures}}-->
+                            <!--<div class="col col-4 mobile-full">-->
+                                <!--<h3>{{i18n "wallet.accounts.requiredSignatures"}}</h3> {{requiredSignatures}}-->
+                            <!--</div>-->
+                        <!--{{/if}}-->
+                        <!--<div class="col col-4 mobile-full">-->
+                            <!--<h3>{{i18n "wallet.accounts.owners"}}</h3>-->
+                            <!--{{#each owners}}-->
+                                <!--<span data-tooltip="{{accountNameOrAddress this}}" class="simptip-position-bottom simptip-movable">-->
+                                    <!--{{> dapp_identicon identity=this class="dapp-tiny" link=ownerLink}}-->
+                                <!--</span>-->
+                            <!--{{/each}}-->
+                        <!--</div>-->
+                    <!--</div>-->
 
-                    <!-- Account infos -->
-                    <div class="account-info">
-                        <h3>{{i18n "wallet.app.texts.note"}}</h3>
-                        <p>{{i18n "wallet.accounts.walletNote"}}</p>
-                    </div>
-                {{/if}}
-
-                {{#if $eq type "account"}}
-                    <!-- Account infos -->
-                    <div class="account-info">
-                        <h3>{{i18n "wallet.app.texts.note"}}</h3>
-                        <p>{{{i18n "wallet.accounts.accountNote"}}}</p>
-                        <p><strong>{{i18n "wallet.accounts.outOfSyncNote"}}</strong></p>
-                    </div>
-                {{/if}}
+                    <!--&lt;!&ndash; Account infos &ndash;&gt;-->
+                    <!--<div class="account-info">-->
+                        <!--<h3>{{i18n "wallet.app.texts.note"}}</h3>-->
+                        <!--<p>{{i18n "wallet.accounts.walletNote"}}</p>-->
+                    <!--</div>-->
+                <!--{{/if}}-->
+                <!--{{#if $eq type "account"}}-->
+                    <!--&lt;!&ndash; Account infos &ndash;&gt;-->
+                    <!--<div class="account-info">-->
+                        <!--<h3>{{i18n "wallet.app.texts.note"}}</h3>-->
+                        <!--<p>{{{i18n "wallet.accounts.accountNote"}}}</p>-->
+                        <!--<p><strong>{{i18n "wallet.accounts.outOfSyncNote"}}</strong></p>-->
+                    <!--</div>-->
+                <!--{{/if}}-->
 
             </div>
 
@@ -155,17 +157,31 @@
                         {{/if}}
 
                         <li>
-                            <button class="copy-to-clipboard-button">
+                            <button class="copy-to-clipboard-button" name="address">
                                 <i class="icon-docs"></i>
                                 {{i18n "wallet.accounts.buttons.copyAddress"}}
                             </button>
-                        </li>                        
-                        <li>
-                            <button class="qrcode-button">
+                        </li>
+	                      <li>
+		                      <button class="copy-to-clipboard-wbutton" name="waddress">
+			                      <i class="icon-docs"></i>
+			                      copy wAddress
+		                      </button>
+	                      </li>
+
+	                      <li>
+                            <button class="qrcode-button" name="address">
                                 <i class="icon-camera"></i>
                                 {{i18n "wallet.accounts.buttons.scanQRCode"}}
                             </button>
                         </li>
+	                      <li>
+		                      <button class="qrcode-button" name="waddress">
+			                      <i class="icon-camera"></i>
+			                      Show waddress QR-Code
+		                      </button>
+	                      </li>
+
                         {{#if jsonInterface}}
                             <li>
                                 <button class="interface-button">
@@ -193,11 +209,11 @@
                     {{> elements_transactions_table collection="PendingConfirmations" ids=pendingConfirmations account=_id}}
                 {{/if}}
 
-                {{#if transactions}}
-                    <h2>{{i18n 'wallet.transactions.latest'}}</h2>
+                <!--{{#if transactions}}-->
+                    <!--<h2>{{i18n 'wallet.transactions.latest'}}</h2>-->
 
-                    {{> elements_transactions_table ids=transactions account=_id}}
-                {{/if}}
+                    <!--{{> elements_transactions_table ids=transactions account=_id}}-->
+                <!--{{/if}}-->
 
                 {{#with customContract}}
                     <h2>{{i18n 'wallet.events.latest'}}</h2>
@@ -218,5 +234,17 @@
                 {{/with}}
             </div>
         </div>
+
+	    <div class="dapp-clear-fix"></div>
     {{/with}}
+
+		{{#if allTransactions}}
+			<h2>{{i18n 'wallet.transactions.latest'}}</h2>
+
+			{{> elements_transactions_table limit=5 address=theAddress}}
+
+		{{else}}
+
+			<h2>{{i18n 'wallet.transactions.none'}}</h2>
+		{{/if}}
 </template>
