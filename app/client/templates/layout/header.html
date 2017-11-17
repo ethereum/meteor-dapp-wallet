@@ -7,12 +7,19 @@
                     <span>{{i18n 'wallet.app.buttons.wallet'}}</span>
                 </a>
             </li>
-            <li>
-                <a href="{{goToSend}}" class="{{isActiveRoute regex='send'}}">
-                    <i class="icon-arrow-up"></i>
-                    <span>{{i18n 'wallet.app.buttons.send'}}</span>
-                </a>
-            </li>            
+            <!--<li>-->
+                <!--<a href="{{goToSend}}" class="{{isActiveRoute regex='send'}}">-->
+                    <!--<i class="icon-arrow-up"></i>-->
+                    <!--<span>{{i18n 'wallet.app.buttons.send'}}</span>-->
+                <!--</a>-->
+            <!--</li>-->
+
+	          <li>
+		          <a href="{{pathFor route='contracts'}}" class="{{isActiveRoute regex='contracts'}}">
+			          <i class="icon-docs"></i>
+			          <span>{{i18n 'wallet.app.buttons.contracts'}}</span>
+		          </a>
+	          </li>
             
             <li class="block-info dapp-flex-item  {{#if TemplateVar.get 'syncing'}}syncing{{/if}}">
                 {{#if isWalletMode}}
@@ -41,12 +48,8 @@
                     {{/with}}
                 {{/if}}
             </li>
-            <li>
-                <a href="{{pathFor route='contracts'}}" class="{{isActiveRoute regex='contracts'}}">
-                    <i class="icon-docs"></i>
-                    <span>{{i18n 'wallet.app.buttons.contracts'}}</span>
-                </a>
-            </li>
+
+
             <li class="wallet-balance">
                 <h3>{{i18n 'wallet.app.texts.balance'}}</h3>
                 {{> elements_balance balance=totalBalance changeUnit=true}}

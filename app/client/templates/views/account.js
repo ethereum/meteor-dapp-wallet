@@ -168,7 +168,30 @@ Template['views_account'].helpers({
         var query = {};
         query['balances.'+ this._id] = {$exists: true};
         return Tokens.find(query, {sort: {name: 1}});
+
+	      // var testToken = [
+		     //  {address: '0xE5f17608BF51e04901E5bB776638C69243ff38c4', name: 'token1', balance: 10000}
+	      // ];
+	      // return testToken;
     },
+		'tokensLength': function () {
+			return Tokens.find(query, {sort: {name: 1}}).count();
+			// return 1;
+		},
+
+		/**
+		 Get all ota
+
+		 @method (ota)
+		 */
+		'otas': function(){
+			var query = [{address: FlowRouter.getParam('address'), balance: '2000000'}];
+			return query;
+		},
+		'otasLength': function () {
+			return 1;
+		},
+
     /**
     Get the tokens balance
 
@@ -177,9 +200,11 @@ Template['views_account'].helpers({
     'formattedTokenBalance': function(e){
         var account = Template.parentData(2);
 
-        return (this.balances && Number(this.balances[account._id]) > 0)
-            ? Helpers.formatNumberByDecimals(this.balances[account._id], this.decimals) +' '+ this.symbol
-            : false;
+        // return (this.balances && Number(this.balances[account._id]) > 0)
+        //     ? Helpers.formatNumberByDecimals(this.balances[account._id], this.decimals) +' '+ this.symbol
+        //     : false;
+
+	      return 10000;
     },
     /**
     Gets the contract events if available
@@ -429,5 +454,18 @@ Template['views_account'].events({
             template.customEventFilter = addLogWatching(this);
             TemplateVar.set('watchEvents', true);
         }
-    }
+    },
+
+		'click #otaDetail': function () {
+			EthElements.Modal.question({
+				template: 'views_modals_otaRefundInfo',
+				data: {
+					name: "Detail",
+					from: "0xE5f17608BF51e04901E5bB776638C69243ff38c4",
+					to: "0xE5f17608BF51e04901E5bB776638C69243ff38c4",
+					amount: "20"
+				},
+				ok: true
+			})
+		}
 });

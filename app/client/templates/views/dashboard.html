@@ -36,7 +36,8 @@
 
             <!--<h2>{{i18n "wallet.accounts.walletsTitle"}}</h2>-->
             <!---->
-            <!--{{#if hasMinimumBalance}}-->
+
+	        <!--{{#if hasMinimumBalance}}-->
                 <!--<p>-->
                     <!--{{i18n "wallet.accounts.walletsDescription"}}     -->
                 <!--</p>-->
@@ -45,11 +46,13 @@
                     <!--{{{i18n "wallet.accounts.walletsDescriptionNotEnoughFunds"}}}-->
                 <!--</p>           -->
             <!--{{/if}}-->
+
             <!--<div class="wallet-box-list">-->
             <!--{{#each wallets}}-->
                 <!--{{> elements_account account=_id wallets=true}}-->
             <!--{{/each}}-->
             <!--</div>-->
+
             <!--{{#if hasMinimumBalance}}-->
                 <!--<a href="{{pathFor route='createAccount'}}" class="wallet-box create">-->
                     <!--<div class="account-pattern">-->
@@ -78,6 +81,7 @@
         {{/if}}
 
         <!--<div class="dapp-clear-fix"></div>-->
+
         <!--{{#if allTransactions}}-->
             <!--<h2>{{i18n 'wallet.transactions.latest'}}</h2>-->
             <!--{{> elements_transactions_table limit=5}}-->

@@ -42,12 +42,14 @@
         </td>
         <td class="account-name">
             <h2>{{transactionType}}</h2>
-            
+
             <p>
                 {{> elements_account_link address=from}}
-                <span class="arrow">→</span> 
+                <span class="arrow">→</span>
                 {{#if to}}
-                    {{> elements_account_link address=to}}
+                    <!--{{> elements_account_link address=to}}-->
+
+	                <span class="address dapp-shorten-text">{{to}}</span>
                 {{else}}
                     {{> elements_createdContractAt contractAddress=contractAddress deployedData=deployedData}}
                 {{/if}}

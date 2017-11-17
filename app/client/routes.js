@@ -134,9 +134,24 @@ FlowRouter.route('/send-token/:from/:token', {
     action: function(params, queryParams) {
         BlazeLayout.render('layout_main', {
             header: 'layout_header',
-            main: 'views_send'
+            main: 'views_deployContract'
         });
     }
+});
+
+/**
+ The send route.
+
+ @method otaRefund
+ */
+FlowRouter.route('/ota-refund/:from', {
+	name: 'otaRefund',
+	action: function(params, queryParams) {
+		BlazeLayout.render('layout_main', {
+			header: 'layout_header',
+			main: 'views_otaRefund'
+		});
+	}
 });
 
 
@@ -150,7 +165,7 @@ FlowRouter.route('/deploy-contract', {
     action: function(params, queryParams) {
         BlazeLayout.render('layout_main', {
             header: 'layout_header',
-            main: 'views_send',
+            main: 'views_deployContract',
             data: {
                 deployContract: true
             }

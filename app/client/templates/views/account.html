@@ -44,8 +44,16 @@
                     {{> elements_balance balance=balance changeUnit=true showAllDecimals=true}}
                 </header>
 
+	              <hr/>
 
+								<!--Tokens-->
                 {{#with tokens}}
+		                {{#if tokensLength}}
+			                <h1 style="display: inline-block; color: #02a8f3;">
+				                <i class="icon-bag"></i>
+				                Token
+			                </h1>
+		                {{/if}}
                     <table class="token-list dapp-zebra">
                         <tbody>
                             {{#each this}}
@@ -65,12 +73,44 @@
                     </table>
                 {{/with}}
 
+	              <hr/>
+
+	              <!--ota Refund-->
+		            {{#with otas}}
+			            {{#if otasLength}}
+				            <a href="{{pathFor route='otaRefund' from=theAddress}}">
+					            <h1 style="display: inline-block; color: #02a8f3;">
+						            <i class="icon-arrow-up"></i>
+						            Refund OTAs
+					            </h1>
+				            </a>
+			            {{/if}}
+			            <table class="token-list dapp-zebra">
+				            <tbody>
+				            {{#each this}}
+					            <tr>
+						            <td>{{> dapp_identicon identity=address class="dapp-tiny"}}
+							            <strong>{{address}}</strong></td>
+						            <td>{{balance}}</td>
+						            <td>
+							            <a id="otaDetail" style="cursor: pointer;">
+								            <i class="icon-action-undo"></i>
+								            Detail
+							            </a>
+						            </td>
+					            </tr>
+				            {{/each}}
+				            </tbody>
+			            </table>
+		            {{/with}}
+
                 {{#with isVulnerable}}
                     {{#if vulnerabilities.txorigin}}
                         {{> elements_vulnerabilities_txorigin}}
                     {{/if}}
                 {{/with}}
 
+	              <!--wallet accounts-->
                 <!--{{#if owners}}-->
                     <!--&lt;!&ndash; Wallet infos &ndash;&gt;-->
 
@@ -107,6 +147,8 @@
                         <!--<p>{{i18n "wallet.accounts.walletNote"}}</p>-->
                     <!--</div>-->
                 <!--{{/if}}-->
+
+	              <!--note-->
                 <!--{{#if $eq type "account"}}-->
                     <!--&lt;!&ndash; Account infos &ndash;&gt;-->
                     <!--<div class="account-info">-->
@@ -238,8 +280,14 @@
 	    <div class="dapp-clear-fix"></div>
     {{/with}}
 
+		<hr/>
+
 		{{#if allTransactions}}
-			<h2>{{i18n 'wallet.transactions.latest'}}</h2>
+			<!--<h2 style="margin: 0;">{{i18n 'wallet.transactions.latest'}}</h2>-->
+			<h1 style="display: inline-block; color: #02a8f3;margin: 0;">
+				<i class="icon-action-redo"></i>
+				Latest Transaction
+			</h1>
 
 			{{> elements_transactions_table limit=5 address=theAddress}}
 

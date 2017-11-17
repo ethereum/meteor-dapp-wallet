@@ -1,0 +1,43 @@
+<template name="views_modals_otaRefundInfo">
+	<h1>{{name}}<br>
+		<small>{{amount}}</small>
+	</h1>
+	<p>
+		<span class="address dapp-shorten-text">{{from}}</span>
+	</p>
+	<i class="icon-arrow-down"></i>
+	<p>
+		{{#if to}}
+			<span class="address dapp-shorten-text">{{to}}</span>
+		{{else}}
+			<i class="icon-docs"></i> {{i18n "wallet.send.createContract"}}
+		{{/if}}
+	</p>
+
+	<hr>
+
+	{{#if estimatedFee}}
+	<p class="tx-info">
+		<small>+ {{i18n "wallet.send.estimatedFee"}}</small> {{estimatedFee}}
+		<br>
+		<small class="gas-price">
+			{{i18n "wallet.transactions.gasPrice"}} {{dapp_formatBalance gasPrice "0,0.0[000000000000000000] unit" "ether"}}
+			<br>
+			{{i18n "wallet.send.texts.estimatedGas"}} {{estimatedGas}}
+		</small>
+		<br>
+		<small>
+			{{i18n "wallet.send.provideGas"}} <input type="number" min="21000" class="gas dapp-tiny" value="{{estimatedGasPlusAddition}}">
+		</small>
+	</p>
+	{{/if}}
+
+	{{#if data}}
+		<hr>
+
+		<p class="tx-info">
+			<small>{{i18n "wallet.send.data"}}</small>
+		<pre>{{data}}</pre>
+		</p>
+	{{/if}}
+</template>

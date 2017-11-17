@@ -3,10 +3,14 @@
         <span class="address dapp-shorten-text {{ensClass}}">
             {{> dapp_identicon identity=address class="dapp-tiny"}} 
             {{#if name}}
-                <a href="{{pathFor route='account' address=address}}">{{displayName}}</a>
+                <!--<a href="{{pathFor route='account' address=address}}">{{displayName}}</a>-->
+	              <span>{{displayName}}</span>
             {{else}}
                 {{tryENS}}
-                <a href="{{pathFor route='sendTo' address=address}}" title="{{address}}">{{address}}</a>
+                <!--<a href="{{pathFor route='sendTo' address=address}}" title="{{address}}">{{address}}</a>-->
+                <span style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: 31em;display: block;
+                position: relative;top: -16px;padding-left: 2em;">
+	                {{address}}</span>
             {{/if}}
         </span>
     {{/with}}
