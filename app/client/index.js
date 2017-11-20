@@ -1,5 +1,38 @@
 Meteor.startup(function() {
 
+    if(mist)
+    {
+        mist.addPermanentCallbacks('requestAccount',function(e, accounts) {
+            if(!e) {
+                console.log('PermanentCallbacksrequestAccount :' + JSON.stringify(accounts));
+                if(!_.isArray(accounts)) {
+                    accounts = [accounts];
+                }
+                accounts.forEach(function(account){
+                    addr = account.address.toLowerCase();
+                    var wAddress = EthAccounts.getWaddress(addr);
+                    var doc = EthAccounts.findAll({
+                        address: addr,
+                    }).fetch()[0];
+                    var insert = {
+                        type: 'account',
+                        address: addr,
+                        waddress: wAddress,
+                        balance: 0,
+                        name: account.name
+                    };
+
+                    if(doc) {
+                        EthAccounts.updateAll(doc._id, {
+                            $set: insert
+                        });
+                    } else {
+                        EthAccounts.insert(insert);
+                    }
+                });
+            }
+        })
+    }
     // SET default language
     if(Cookie.get('TAPi18next')) {
         TAPi18n.setLanguage(Cookie.get('TAPi18next'));
