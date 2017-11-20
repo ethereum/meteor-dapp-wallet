@@ -18,7 +18,7 @@ Get the default contract example
 @method getDefaultContractExample
 **/
 Helpers.getDefaultContractExample = function(withoutPragma) {
-    var source = 'contract MyContract {\n    /* Constructor */\n    function MyContract() {\n\n    }\n}';
+    var source = 'contract MyContract {\n    /* Constructor */\n    function MyContract() public {\n\n    }\n}';
 
     if (withoutPragma) {
         return source;
