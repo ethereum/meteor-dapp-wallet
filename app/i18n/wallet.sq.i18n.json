@@ -136,7 +136,7 @@
             "amount": "Sasia",
             "gasPrice": "Çmimi i karburantit",
             "perMillionGas": " PËR 1 MILION KARBURANT",
-            "gasUsed": "Karburanti i përdorur", 
+            "gasUsed": "Karburanti i përdorur",
             "feePaid": "Tarifa e paguar",
             "data": "Dërgo të dhëna",
             "deployedData": "Të dhëna të lëshuara",
@@ -155,7 +155,7 @@
             },
             "error": {
                 "noDataDeployed": "Nuk ka të dhëna në adresën e kontratës!",
-                "outOfGas": "Transaksioni nga __from__ drejt __to__ nuk mund të kryhet me sukses."  
+                "outOfGas": "Transaksioni nga __from__ drejt __to__ nuk mund të kryhet me sukses."
             },
             "types": {
                 "executeContract": "Ekzekutimi i kontratës",
@@ -178,7 +178,7 @@
                 },
                 "outgoingTransaction": {
                     "title": "Pagesa u dërgua",
-                    "text": "Ju dërguat __amount__ nga __from__ drejt __to__."    
+                    "text": "Ju dërguat __amount__ nga __from__ drejt __to__."
                 },
                 "pendingConfirmation": {
                     "title": "Nevojitet konfirmim",
@@ -279,7 +279,7 @@
                     "2": "zakonisht brenda një minute",
                     "3": "me shumë mundësi brenda 30 sekondave",
                     "4": "me shumë mundësi brenda pak sekondave",
-                    "5": "me shumë mundësi brenda pak sekondave",
+                    "5": "me shumë mundësi brenda pak sekondave"
                 }
             }
         },
