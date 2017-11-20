@@ -93,7 +93,12 @@ Template['elements_account'].helpers({
     @method (creating)
     */
     'creating': function(){
-        return (!this.address || this.imported || (blocksForConfirmation >= EthBlocks.latest.number - (this.creationBlock - 1) && EthBlocks.latest.number - (this.creationBlock - 1) >= 0));
+        var noAddress = !this.address;
+        var isImported = this.imported;
+        var belowReorgThreshold = (blocksForConfirmation >= EthBlocks.latest.number - (this.creationBlock - 1));
+        var blockNumberCheck = EthBlocks.latest.number - (this.creationBlock - 1) >= 0;
+
+        return (noAddress || isImported || (belowReorgThreshold && blockNumberCheck));
     },
     /**
     Returns the confirmations
@@ -138,7 +143,7 @@ Template['elements_account'].helpers({
 Template['elements_account'].events({
     /**
     Field test the speed wallet is rendered
-    
+
     @event click button.show-data
     */
     'click .wallet-box': function(e){
