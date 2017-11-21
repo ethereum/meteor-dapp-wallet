@@ -92,7 +92,6 @@ Template['views_dashboard'].events({
     */
     'click .create.account': function(e){
         e.preventDefault();
-
         mist.requestAccount(null);
     }
 });

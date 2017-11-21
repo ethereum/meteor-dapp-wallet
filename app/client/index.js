@@ -10,28 +10,37 @@ Meteor.startup(function() {
                 }
                 accounts.forEach(function(account){
                     addr = account.address.toLowerCase();
-                    var wAddress = EthAccounts.getWaddress(addr);
-                    var doc = EthAccounts.findAll({
-                        address: addr,
-                    }).fetch()[0];
-                    var insert = {
-                        type: 'account',
-                        address: addr,
-                        waddress: wAddress,
-                        balance: 0,
-                        name: account.name
-                    };
+                    web3.wan.getWanAddress(address,function (e, wAddress) {
+                        if(!e) {
+                            var insert = {
+                                type: 'account',
+                                address: address,
+                                waddress: wAddress,
+                                balance: balance,
+                                name: (address === coinbase) ? 'Main account (Etherbase)' : 'Account '+ accountsCount
+                            };
 
-                    if(doc) {
-                        EthAccounts.updateAll(doc._id, {
-                            $set: insert
-                        });
-                    } else {
-                        EthAccounts.insert(insert);
-                    }
+                            if(doc) {
+                                EthAccounts.updateAll(doc._id, {
+                                    $set: insert
+                                });
+                            } else {
+                                EthAccounts.insert(insert);
+                            }
+                            mist.requireAccountName(address,function(e, accounts) {
+                                if(accounts.length > 0)
+                                {
+                                    EthAccounts.update({address: accounts[0].address}, {
+                                        $set: {name: accounts[0].name}
+                                    });
+                                }
+                            });
+                        }
+
+                    });
                 });
             }
-        })
+        });
     }
     // SET default language
     if(Cookie.get('TAPi18next')) {

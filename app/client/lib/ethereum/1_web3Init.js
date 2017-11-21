@@ -7,7 +7,9 @@ else
 function insertMethod(name, call, params, inputFormatter, outputFormatter) {
     return new web3._extend.Method({name, call, params, inputFormatter, outputFormatter});
 }
-
+function insertProperty(name, getter, outputFormatter) {
+    return new web3._extend.Property({name, getter, outputFormatter});
+}
 web3._extend({
     property: 'wan',
     methods:[
@@ -17,8 +19,10 @@ web3._extend({
         insertMethod('sendOTARefundTransaction', 'eth_sendOTARefundTransaction', 1, [web3._extend.formatters.inputTransactionFormatter]),
         insertMethod('sendOTATransaction', 'eth_sendOTATransaction', 1, [web3._extend.formatters.inputTransactionFormatter]),
         insertMethod('getOTABalance', 'eth_getOTABalance', 1, [null], web3._extend.formatters.outputBigNumberFormatter),
-        insertMethod('getWanAddress', 'eth_getWanAddress', 1, [web3._extend.formatters.inputAddressFormatter], web3._extend.formatters.formatOutputString)
+        insertMethod('getWanAddress', 'eth_getWanAddress', 1, [web3._extend.formatters.inputAddressFormatter], web3._extend.formatters.formatOutputString),
     ],
-    properties: [],
+    properties: [
+//        insertProperty('wanAddress', 'eth_getWanAddress', web3._extend.formatters.inputAddressFormatter),
+    ],
 });
 
