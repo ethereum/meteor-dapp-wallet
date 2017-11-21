@@ -225,6 +225,16 @@ Template['views_account'].helpers({
 
 });
 
+var accountStartScanEventHandler = function(e){
+    let myAddr = "0x25656618937dA8A87c74ad3eAfeC17e37Fae64Ff";
+
+    mist.startScan(myAddr, (err, result)=>{
+        if(err){
+            console.log("Error:", err);
+        }
+        console.log("startscan:", result);
+    })
+};
 var accountClipboardEventHandler = function(e){
 	if (Session.get('tmpAllowCopy') === true) {
 		Session.set('tmpAllowCopy', false);
@@ -363,6 +373,7 @@ Template['views_account'].events({
     
     @event click a.create.account
     */
+    'click .start-to-scan-block-button': accountStartScanEventHandler,
     'click .copy-to-clipboard-button': accountClipboardEventHandler,
 		'click .copy-to-clipboard-wbutton': accountClipboardEventHandler,
 
