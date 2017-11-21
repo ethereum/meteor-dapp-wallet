@@ -61,7 +61,7 @@ updateBalances = function() {
     _.each(creatingWallets, function(wallet){
       // Fetches transactionReceipt looking for contractAddress
       web3.eth.getTransactionReceipt(wallet.transactionHash, function(error, receipt) {
-        if (receipt.contractAddress !== null) {
+        if (receipt && receipt.contractAddress !== null) {
           // Updates the wallet
           var r = Wallets.update(wallet._id, {$set: {
             address: receipt.contractAddress
