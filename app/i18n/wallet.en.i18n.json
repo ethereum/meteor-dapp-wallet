@@ -186,7 +186,7 @@
                 },
                 "tokenTransfer": {
                     "title": "__token__ - Token transfer",
-                    "text": "__amount__ __token__  were send from __from__ to __to__."
+                    "text": "__amount__ __token__ were sent from __from__ to __to__."
                 }
             }
         },
