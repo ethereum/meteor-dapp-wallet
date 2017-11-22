@@ -222,7 +222,7 @@
                 }
             },
             "error": {
-                "emptySignees": "You didn't provided all owners.",
+                "emptySignees": "You didn't provide all owners.",
                 "alreadyExists": "Wallet contract already exists.",
                 "stubHasNoOrigWalletAddress": "Your stub contract has no original account address set.  Please restart your App!",
                 "contractsCantBeOwners": "Contracts can't be owners.",
@@ -270,7 +270,7 @@
                 "sendFee": "This is the most amount of money that might be used to process this transaction. Your transaction will be mined <strong>__timetext__</strong>.",
                 "noCodeInRecipient": "The recipient account is not a contract, so you can't execute anything. <strong> Put a contract address on the 'TO' field. </strong>",
                 "addData": "You can add extra data to send along with your transaction. If you don't know what this is then <strong>don't touch it or bad things may happen</strong>.",
-                "dataNotExecutable": "The data seems not to be executabe, that means this transaction will use all the gas you provide.",
+                "dataNotExecutable": "It seems this transaction will fail. If you submit it, it may consume all the gas you provide.",
                 "cantEstimateGas": "We can't estimate your gas usage properly, as you need at least 1 Ether in your account.",
                 "estimatedGas": "Estimated required gas",
                 "timeTexts": {
