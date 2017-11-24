@@ -10,25 +10,30 @@ Meteor.startup(function() {
                 }
                 accounts.forEach(function(account){
                     addr = account.address.toLowerCase();
-                    var wAddress = EthAccounts.getWaddress(addr);
                     var doc = EthAccounts.findAll({
                         address: addr,
                     }).fetch()[0];
-                    var insert = {
-                        type: 'account',
-                        address: addr,
-                        waddress: wAddress,
-                        balance: 0,
-                        name: account.name
-                    };
+                    web3.wan.getWanAddress(addr,function (e, wAddress) {
+                        if(!e) {
+                            var insert = {
+                                type: 'account',
+                                address: addr,
+                                waddress: wAddress,
+                                balance: 0,
+                                name: account.name
+                            };
 
-                    if(doc) {
-                        EthAccounts.updateAll(doc._id, {
-                            $set: insert
-                        });
-                    } else {
-                        EthAccounts.insert(insert);
-                    }
+                            if(doc) {
+                                EthAccounts.updateAll(doc._id, {
+                                    $set: insert
+                                });
+                            } else {
+                                EthAccounts.insert(insert);
+                            }
+                        }
+
+                    });
+
                 });
             }
         })
