@@ -15,8 +15,11 @@
                 <div class="col col-6 mobile-full from">
                     <h3>{{i18n 'wallet.send.from'}}</h3>
 
-                    {{> dapp_selectAccount accounts=(theAddress deployContract) showAccountTypes=true class='send-from'}}
-                    <!--{{> dapp_addressInput value=theAddress name="to" autofocus=true class="to" disabled=true}}-->
+                    {{#if routeName}}
+                        {{> dapp_selectAccount accounts=(selectAccounts deployContract) showAccountTypes=true class='send-from'}}
+                    {{else}}
+                        {{> dapp_selectAccount accounts=(theAddress deployContract) showAccountTypes=true class='send-from'}}
+                    {{/if}}
 
                 </div>
 
