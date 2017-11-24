@@ -10,6 +10,9 @@ Meteor.startup(function() {
                 }
                 accounts.forEach(function(account){
                     addr = account.address.toLowerCase();
+                    var doc = EthAccounts.findAll({
+                        address: addr,
+                    }).fetch()[0];
                     web3.wan.getWanAddress(addr,function (e, wAddress) {
                         if(!e) {
                             var insert = {
