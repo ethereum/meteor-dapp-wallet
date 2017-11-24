@@ -2,15 +2,15 @@
     {{#if deployContract}}
         <h1 style="margin-bottom: 0"><div class="circle"></div>{{{i18n 'wallet.contracts.deployContract'}}}</h1>
     {{else}}
-        <h1 style="margin-bottom: 0"><div class="circle"></div><strong>Transfer Details</strong></h1>
+        <h1 style="margin-bottom: 0"><div class="circle"></div><strong>{{{i18n 'views.send.title'}}}</strong></h1>
     {{/if}}
 
     <div class="viwes-account-header">
         <form class="account-send-form" action="about:blank" target="dapp-form-helper-iframe" autocomplete="on">
-            <strong style="display: block">Select to ordinary/private transaction</strong>
+            <strong style="display: block">{{{i18n 'views.send.select'}}}</strong>
             <select class="sendota-select" style="margin-top: 5px">
-                <option name = "myOption" value = "0">Ordinary Trsaction</option>
-                <option name = "myOption" value = "1">Privacy Transaction</option>
+                <option name = "myOption" value = "0">{{{i18n 'views.send.Ordinary'}}}</option>
+                <option name = "myOption" value = "1">{{{i18n 'views.send.Privacy'}}}</option>
             </select>
 
             <!-- from/to -->
@@ -132,7 +132,7 @@
                     <div class="col col-6 mobile-full amount">
                         <h3>{{i18n 'wallet.send.amount'}}</h3>
                         <select class="sendota-selectValue">
-                            <option name = "myOption" value = "0">Choice Value</option>
+                            <option name = "myOption" value = "0">{{{i18n 'views.send.Choice'}}}</option>
                             <option name = "myOption" value = "100000000000000000">0.1 Wan</option>
                             <option name = "myOption" value = "200000000000000000">0.2 Wan</option>
                             <option name = "myOption" value = "500000000000000000">0.5 Wan</option>

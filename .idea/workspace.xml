@@ -2,10 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0390f3c1-a35e-4c80-8043-9737ce6223ea" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/.meteor/versions" afterPath="$PROJECT_DIR$/app/.meteor/versions" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/styles/main.less" afterPath="$PROJECT_DIR$/app/client/styles/main.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/account.html" afterPath="$PROJECT_DIR$/app/client/templates/views/account.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/account.js" afterPath="$PROJECT_DIR$/app/client/templates/views/account.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/deployContract.html" afterPath="$PROJECT_DIR$/app/client/templates/views/deployContract.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/deployContract.js" afterPath="$PROJECT_DIR$/app/client/templates/views/deployContract.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/otaRefund.html" afterPath="$PROJECT_DIR$/app/client/templates/views/otaRefund.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/send.html" afterPath="$PROJECT_DIR$/app/client/templates/views/send.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/i18n/wallet.en.i18n.json" afterPath="$PROJECT_DIR$/app/i18n/wallet.en.i18n.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/i18n/wallet.zh.i18n.json" afterPath="$PROJECT_DIR$/app/i18n/wallet.zh.i18n.json" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -20,248 +24,48 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="account.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/client/templates/views/account.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2112">
-              <caret line="96" column="32" lean-forward="false" selection-start-line="96" selection-start-column="32" selection-end-line="96" selection-end-column="32" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="account.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/client/templates/views/account.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="594">
-              <caret line="87" column="30" lean-forward="true" selection-start-line="87" selection-start-column="30" selection-end-line="87" selection-end-column="30" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="deployContract.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/client/templates/views/deployContract.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="21" column="27" lean-forward="false" selection-start-line="21" selection-start-column="27" selection-end-line="21" selection-end-column="27" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="deployContract.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/client/templates/views/deployContract.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="241" column="31" lean-forward="false" selection-start-line="241" selection-start-column="31" selection-end-line="241" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="routes.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/client/routes.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="145">
-              <caret line="136" column="39" lean-forward="false" selection-start-line="136" selection-start-column="19" selection-end-line="136" selection-end-column="39" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="send.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/client/templates/views/send.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+            <state relative-caret-position="673">
+              <caret line="198" column="21" lean-forward="true" selection-start-line="198" selection-start-column="21" selection-end-line="198" selection-end-column="21" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="send.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/client/templates/views/send.js">
+      <file leaf-file-name="wallet.en.i18n.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/i18n/wallet.en.i18n.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="143" column="0" lean-forward="true" selection-start-line="143" selection-start-column="0" selection-end-line="143" selection-end-column="0" />
+            <state relative-caret-position="22">
+              <caret line="1" column="4" lean-forward="false" selection-start-line="1" selection-start-column="4" selection-end-line="36" selection-end-column="6" />
+              <folding>
+                <element signature="n#!!block;n#wallet#0;n#!!top" expanded="false" />
+                <element signature="n#!!block;n#transactions#0;n#!!block;n#wallet#0;n#!!top" expanded="false" />
+                <element signature="n#!!block;n#newWallet#0;n#!!block;n#wallet#0;n#!!top" expanded="false" />
+                <element signature="n#!!block;n#send#0;n#!!block;n#wallet#0;n#!!top" expanded="false" />
+                <element signature="n#!!block;n#tokens#0;n#!!block;n#wallet#0;n#!!top" expanded="false" />
+                <element signature="n#!!block;n#contracts#0;n#!!block;n#wallet#0;n#!!top" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="wallet.zh.i18n.json" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/i18n/wallet.zh.i18n.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="792">
+              <caret line="36" column="6" lean-forward="false" selection-start-line="36" selection-start-column="6" selection-end-line="36" selection-end-column="6" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="observeTransactions.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/client/lib/ethereum/observeTransactions.js">
+      <file leaf-file-name="wallet.zh-TW.i18n.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/i18n/wallet.zh-TW.i18n.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="440">
-              <caret line="20" column="19" lean-forward="false" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
-              <folding>
-                <marker date="1510283669743" expanded="true" signature="1:105" ph="/** Add a pending transaction to the transaction list, after sending ...*/" />
-                <marker date="1510283669743" expanded="true" signature="206:1133" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="348:504" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="536:903" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="543:902" ph="{&quot;tokenId&quot;: tokenId...}" />
-                <marker date="1510283669743" expanded="true" signature="971:1018" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="983:1017" ph="{&quot;transactions&quot;: txId...}" />
-                <marker date="1510283669743" expanded="true" signature="1082:1129" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="1094:1128" ph="{&quot;transactions&quot;: txId...}" />
-                <marker date="1510283669743" expanded="true" signature="1138:1338" ph="/** Add new in/outgoing transaction ...*/" />
-                <marker date="1510283669743" expanded="true" signature="1386:2642" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="1508:1572" ph="{&quot;to&quot;: to...}" />
-                <marker date="1510283669743" expanded="true" signature="1654:2598" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="1673:2592" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="1760:2580" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="1802:2566" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="1898:2546" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="2059:2181" ph="{&quot;_id&quot;: txId...}" />
-                <marker date="1510283669743" expanded="true" signature="2423:2524" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="2645:2968" ph="/** Updates a transaction. ...*/" />
-                <marker date="1510283669743" expanded="true" signature="3036:9140" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="3453:4003" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="4036:7391" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="4148:7059" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="4222:7048" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="4266:7034" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="4319:4393" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="4326:4392" ph="{&quot;deployedData&quot;: code...}" />
-                <marker date="1510283669743" expanded="true" signature="4507:7016" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="4592:4872" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="4599:4871" ph="{&quot;address&quot;: receipt.contractAddress...}" />
-                <marker date="1510283669743" expanded="true" signature="5284:6994" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="5427:5808" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="5434:5807" ph="{&quot;address&quot;: receipt.contractAddress...}" />
-                <marker date="1510283669743" expanded="true" signature="6061:6464" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="6118:6205" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="6125:6204" ph="{&quot;name&quot;: i...}" />
-                <marker date="1510283669743" expanded="true" signature="6299:6432" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="6306:6431" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="6533:6721" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="6590:6689" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="6597:6688" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="6787:6965" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="6844:6933" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="6851:6932" ph="{&quot;symbol&quot;: i...}" />
-                <marker date="1510283669743" expanded="true" signature="7407:7814" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="7527:7714" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="7931:9138" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="8183:8993" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="8276:8981" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="8301:8967" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="8405:8947" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="8480:8706" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="8712:8925" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="8769:8897" ph="{&quot;content&quot;: warningText...}" />
-                <marker date="1510283669743" expanded="true" signature="8999:9132" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="9040:9120" ph="{&quot;content&quot;: warningText...}" />
-                <marker date="1510283669743" expanded="true" signature="9144:9226" ph="/** Observe transactions and pending confirmations ...*/" />
-                <marker date="1510283669743" expanded="true" signature="9259:19162" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="9267:9432" ph="/** Checking for confirmations of transactions. ...*/" />
-                <marker date="1510283669743" expanded="true" signature="9485:14836" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="9598:14830" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="9660:14670" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="9751:14656" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="10101:10203" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="10305:11771" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="10612:11746" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="10713:11718" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="11224:11325" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="11232:11324" ph="{&quot;disabled&quot;: ''...}" />
-                <marker date="1510283669743" expanded="true" signature="11485:11688" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="11551:11652" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="11557:11651" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="11904:14638" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="12053:14614" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="12154:14586" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="12195:14556" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="12347:13031" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="12691:12857" ph="{&quot;content&quot;: warningText...}" />
-                <marker date="1510283669743" expanded="true" signature="13065:14522" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="13109:13238" ph="//..." />
-                <marker date="1510283669743" expanded="true" signature="13341:14481" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="13394:14439" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="13486:14183" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="13882:14023" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="13890:14022" ph="{&quot;disabled&quot;: ''...}" />
-                <marker date="1510283669743" expanded="true" signature="14189:14321" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="14753:14818" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="14843:14970" ph="/** Observe transactions, listen for new created transactions. ...*/" />
-                <marker date="1510283669743" expanded="true" signature="15055:19157" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="15065:15229" ph="/** This will observe the transactions creation and create watchers for outgoing transactions, to see when they are mined. ...*/" />
-                <marker date="1510283669743" expanded="true" signature="15267:17862" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="15440:15514" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="15452:15513" ph="{&quot;transactions&quot;: newDocument._id...}" />
-                <marker date="1510283669743" expanded="true" signature="15571:15645" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="15583:15644" ph="{&quot;transactions&quot;: newDocument._id...}" />
-                <marker date="1510283669743" expanded="true" signature="15743:15838" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="15944:16019" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="16451:17852" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="16758:17836" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="16821:17629" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="16954:17607" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="17020:17579" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="17085:17549" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="17269:17426" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="17635:17818" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="17872:17962" ph="/** Will check if the transaction is confirmed ...*/" />
-                <marker date="1510283669743" expanded="true" signature="18001:18498" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="18090:18164" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="18102:18163" ph="{&quot;transactions&quot;: newDocument._id...}" />
-                <marker date="1510283669743" expanded="true" signature="18221:18295" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="18233:18294" ph="{&quot;transactions&quot;: newDocument._id...}" />
-                <marker date="1510283669743" expanded="true" signature="18393:18488" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="18508:18607" ph="/** Remove transactions confirmations from the accounts ...*/" />
-                <marker date="1510283669743" expanded="true" signature="18644:19151" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="18699:18766" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="18707:18765" ph="{&quot;transactions&quot;: document._id...}" />
-                <marker date="1510283669743" expanded="true" signature="18820:18887" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="18828:18886" ph="{&quot;transactions&quot;: document._id...}" />
-                <marker date="1510283669743" expanded="true" signature="18947:19014" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="18955:19013" ph="{&quot;transactions&quot;: document._id...}" />
-                <marker date="1510283669743" expanded="true" signature="19072:19139" ph="{...}" />
-                <marker date="1510283669743" expanded="true" signature="19080:19138" ph="{&quot;transactions&quot;: document._id...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="header.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/client/templates/layout/header.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="550">
-              <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-              <folding>
-                <marker date="1510647142436" expanded="false" signature="0:46" ph="/** Template Controllers ...*/" />
-                <marker date="1510647142436" expanded="true" signature="48:120" ph="/** The header template ...*/" />
-                <marker date="1510647142436" expanded="true" signature="168:196" ph="{...}" />
-                <marker date="1510647142436" expanded="true" signature="235:3484" ph="{...}" />
-                <marker date="1510647142436" expanded="true" signature="241:346" ph="/** Returns the correct url for the send to route ...*/" />
-                <marker date="1510647142436" expanded="true" signature="374:802" ph="{...}" />
-                <marker date="1510647142436" expanded="true" signature="808:927" ph="/** Calculates the total balance of all accounts + wallets. ...*/" />
-                <marker date="1510647142436" expanded="true" signature="958:1297" ph="{...}" />
-                <marker date="1510647142436" expanded="true" signature="1303:1404" ph="/** Formats the last block number ...*/" />
-                <marker date="1510647142436" expanded="true" signature="1444:1514" ph="{...}" />
-                <marker date="1510647142436" expanded="true" signature="1520:1599" ph="/** Gets the time since the last block ...*/" />
-                <marker date="1510647142436" expanded="true" signature="1634:2393" ph="{...}" />
-                <marker date="1510647142436" expanded="true" signature="1957:2088" ph="{...}" />
-                <marker date="1510647142436" expanded="true" signature="2109:2205" ph="{...}" />
-                <marker date="1510647142436" expanded="true" signature="2225:2298" ph="{...}" />
-                <marker date="1510647142436" expanded="true" signature="2304:2387" ph="{...}" />
-                <marker date="1510647142436" expanded="true" signature="2399:2485" ph="/** Formats the time since the last block ...*/" />
-                <marker date="1510647142436" expanded="true" signature="2524:3482" ph="{...}" />
-                <marker date="1510647142436" expanded="true" signature="2889:3042" ph="{...}" />
-                <marker date="1510647142436" expanded="true" signature="3063:3181" ph="{...}" />
-                <marker date="1510647142436" expanded="true" signature="3201:3353" ph="{...}" />
-                <marker date="1510647142436" expanded="true" signature="3359:3476" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="header.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/client/templates/layout/header.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="13" column="12" lean-forward="false" selection-start-line="13" selection-start-column="12" selection-end-line="13" selection-end-column="12" />
+            <state relative-caret-position="264">
+              <caret line="12" column="31" lean-forward="true" selection-start-line="12" selection-start-column="31" selection-end-line="12" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -271,14 +75,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>dapp-select-account</find>
-      <find>amount</find>
-      <find>clearAmountFromChars</find>
-      <find>selectedAccountIsWalletContract</find>
-      <find>timeText</find>
-      <find>sendFeefeeMultiplicator</find>
-      <find>tokenTotal</find>
-      <find>total</find>
       <find>selectedToken</find>
       <find>selectedAccount</find>
       <find>estimationCallback</find>
@@ -299,8 +95,16 @@
       <find>FlowRouter.getParam('token').toLowerCase()</find>
       <find>FlowRouter.getParam('from').toLowerCase()</find>
       <find>token</find>
-      <find>views_deployContract</find>
       <find>toLowerCase()</find>
+      <find>views_deployContract</find>
+      <find>i1</find>
+      <find>copy</find>
+      <find>QR-Code</find>
+      <find>wallet</find>
+      <find>edit-icon</find>
+      <find>transactions</find>
+      <find>transaction</find>
+      <find>balacne</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/app</dir>
@@ -312,9 +116,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/client/templates/views/myDashboard.html" />
-        <option value="$PROJECT_DIR$/app/client/templates/views/senota.html" />
-        <option value="$PROJECT_DIR$/app/client/templates/layout/header.js" />
         <option value="$PROJECT_DIR$/app/client/templates/views/accountwan.html" />
         <option value="$PROJECT_DIR$/app/client/templates/views/accountwan.js" />
         <option value="$PROJECT_DIR$/app/client/styles/elements.import.less" />
@@ -347,22 +148,25 @@
         <option value="$PROJECT_DIR$/app/client/templates/views/modals/choiceAccounts.html" />
         <option value="$PROJECT_DIR$/app/client/templates/views/modals/choiceAccount.html" />
         <option value="$PROJECT_DIR$/app/client/templates/views/modals/choiceAccount.js" />
-        <option value="$PROJECT_DIR$/app/client/templates/views/send.html" />
         <option value="$PROJECT_DIR$/app/client/routes.js" />
         <option value="$PROJECT_DIR$/app/client/templates/views/modals/sendTransactionInfo.html" />
         <option value="$PROJECT_DIR$/app/client/templates/views/modals/otaRefundInfo.js" />
-        <option value="$PROJECT_DIR$/app/client/templates/views/otaRefund.html" />
         <option value="$PROJECT_DIR$/app/client/templates/views/otaRefund.js" />
-        <option value="$PROJECT_DIR$/app/client/templates/views/account.html" />
         <option value="$PROJECT_DIR$/app/client/templates/views/modals/transactionInfo.html" />
         <option value="$PROJECT_DIR$/app/client/templates/elements/transactionTable.html" />
         <option value="$PROJECT_DIR$/app/client/templates/elements/accountLink.html" />
         <option value="$PROJECT_DIR$/app/client/templates/views/modals/otaRefundInfo.html" />
         <option value="$PROJECT_DIR$/app/client/templates/elements/account.js" />
         <option value="$PROJECT_DIR$/app/client/templates/views/send.js" />
-        <option value="$PROJECT_DIR$/app/client/templates/views/deployContract.html" />
-        <option value="$PROJECT_DIR$/app/client/templates/views/account.js" />
         <option value="$PROJECT_DIR$/app/client/templates/views/deployContract.js" />
+        <option value="$PROJECT_DIR$/app/client/styles/main.less" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/account.js" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/account.html" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/deployContract.html" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/otaRefund.html" />
+        <option value="$PROJECT_DIR$/app/i18n/wallet.en.i18n.json" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/send.html" />
+        <option value="$PROJECT_DIR$/app/i18n/wallet.zh.i18n.json" />
       </list>
     </option>
   </component>
@@ -523,6 +327,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="i18n" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meteor-dapp-wallet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meteor-dapp-wallet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="client" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -593,11 +415,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="elements" />
+              <option name="myItemId" value="styles" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -643,6 +461,53 @@
     </option>
   </component>
   <component name="RunManager" selected="Meteor.Wanwallet">
+    <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
+      <method />
+    </configuration>
+    <configuration default="true" type="DartTestRunConfigurationType" factoryName="Dart Test">
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerJest" factoryName="Jest">
+      <node-interpreter value="project" />
+      <working-dir value="" />
+      <envs />
+      <scope-kind value="ALL" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma">
+      <config-file value="" />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerProtractor" factoryName="Protractor">
+      <config-file value="" />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="project" working-dir="">
+      <method />
+    </configuration>
+    <configuration default="true" type="cucumber.js" factoryName="Cucumber.js">
+      <option name="cucumberJsArguments" value="" />
+      <option name="executablePath" />
+      <option name="filePath" />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.npm" factoryName="npm">
+      <command value="run" />
+      <scripts />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
     <configuration default="true" type="meteor-app-runner" factoryName="Meteor">
       <option name="exePath" value="/usr/local/bin/meteor" />
       <option name="startBrowserSettings">
@@ -653,6 +518,19 @@
           <browser url="http://localhost:3000" />
         </startBrowserSettings>
       </meteor-runner-state>
+      <method />
+    </configuration>
+    <configuration default="true" type="mocha-javascript-test-runner" factoryName="Mocha">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <working-directory />
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui />
+      <extra-mocha-options />
+      <test-kind>DIRECTORY</test-kind>
+      <test-directory />
+      <recursive>false</recursive>
       <method />
     </configuration>
     <configuration default="false" name="Wanwallet" type="meteor-app-runner" factoryName="Meteor" workingDirectory="$PROJECT_DIR$/app">
@@ -684,12 +562,12 @@
       <workItem from="1510283681342" duration="104989000" />
       <workItem from="1510724525246" duration="43679000" />
       <workItem from="1510832340533" duration="5140000" />
-      <workItem from="1511444425041" duration="8821000" />
+      <workItem from="1511444425041" duration="13776000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="162629000" />
+    <option name="totallyTimeSpent" value="167584000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1851" height="911" extended-state="6" />
@@ -701,7 +579,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3539267" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37070063" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37070063" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -744,39 +622,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/client/templates/elements/accountwan.html" />
-    <entry file="file://$PROJECT_DIR$/app/client/templates/elements/transactionBalance.js" />
-    <entry file="file://$PROJECT_DIR$/app/client/templates/elements/transactionBalance.html" />
-    <entry file="file://$PROJECT_DIR$/app/client/templates/views/modals/transactionBalanceInfo.js" />
-    <entry file="file://$PROJECT_DIR$/app/client/templates/views/modals/transactionBalanceInfo.html" />
-    <entry file="file://$PROJECT_DIR$/app/client/templates/views/modals/waddressInput.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="27" lean-forward="false" selection-start-line="2" selection-start-column="27" selection-end-line="2" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/client/templates/views/modals/waddressInput.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="89">
-          <caret line="65" column="4" lean-forward="true" selection-start-line="65" selection-start-column="4" selection-end-line="65" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/client/templates/views/contracts.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/client/templates/views/contracts.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.meteor/packages/frozeman_template-var/1.3.0/web.browser/TemplateVar.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2837">
@@ -848,13 +693,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/client/templates/views/otaRefund.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="18" column="19" lean-forward="true" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.meteor/packages/frozeman_persistent-minimongo2/0.3.4/web.browser/persistent-minimongo.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2358">
@@ -908,13 +746,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="16" lean-forward="false" selection-start-line="0" selection-start-column="16" selection-end-line="0" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/client/templates/views/dashboard.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="8" column="29" lean-forward="false" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -1172,22 +1003,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/client/templates/views/send.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/client/templates/views/account.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2112">
-          <caret line="96" column="32" lean-forward="false" selection-start-line="96" selection-start-column="32" selection-end-line="96" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/client/templates/elements/account.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="94">
@@ -1204,34 +1019,145 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/client/templates/views/account.js">
+    <entry file="file://$PROJECT_DIR$/app/client/templates/views/deployContract.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="594">
-          <caret line="87" column="30" lean-forward="true" selection-start-line="87" selection-start-column="30" selection-end-line="87" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/client/templates/views/deployContract.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="21" column="27" lean-forward="false" selection-start-line="21" selection-start-column="27" selection-end-line="21" selection-end-column="27" />
+        <state relative-caret-position="2420">
+          <caret line="240" column="0" lean-forward="true" selection-start-line="240" selection-start-column="0" selection-end-line="240" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/client/routes.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
+        <state relative-caret-position="176">
           <caret line="136" column="39" lean-forward="false" selection-start-line="136" selection-start-column="19" selection-end-line="136" selection-end-column="39" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/client/templates/views/deployContract.js">
+    <entry file="file://$PROJECT_DIR$/app/i18n/app.zh.i18n.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/i18n/app.zh-TW.i18n.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/i18n/wallet.zh-TW.i18n.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="264">
-          <caret line="241" column="31" lean-forward="false" selection-start-line="241" selection-start-column="31" selection-end-line="241" selection-end-column="31" />
+          <caret line="12" column="31" lean-forward="true" selection-start-line="12" selection-start-column="31" selection-end-line="12" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/i18n/app.en.i18n.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/templates/views/account.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="94" column="6" lean-forward="true" selection-start-line="94" selection-start-column="6" selection-end-line="94" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/templates/views/account_create.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1043">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/templates/views/contracts.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-655">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/templates/views/dashboard.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-193">
+          <caret line="8" column="29" lean-forward="false" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/styles/main.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="437" column="0" lean-forward="true" selection-start-line="437" selection-start-column="0" selection-end-line="437" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/templates/views/account.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2002">
+          <caret line="91" column="42" lean-forward="true" selection-start-line="91" selection-start-column="42" selection-end-line="91" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/templates/views/deployContract.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3691">
+          <caret line="5" column="106" lean-forward="false" selection-start-line="5" selection-start-column="106" selection-end-line="5" selection-end-column="106" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/templates/views/otaRefund.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="52" column="52" lean-forward="true" selection-start-line="52" selection-start-column="52" selection-end-line="52" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/templates/views/send.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="673">
+          <caret line="198" column="21" lean-forward="true" selection-start-line="198" selection-start-column="21" selection-end-line="198" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/i18n/wallet.en.i18n.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22">
+          <caret line="1" column="4" lean-forward="false" selection-start-line="1" selection-start-column="4" selection-end-line="36" selection-end-column="6" />
+          <folding>
+            <element signature="n#!!block;n#wallet#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#transactions#0;n#!!block;n#wallet#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#newWallet#0;n#!!block;n#wallet#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#send#0;n#!!block;n#wallet#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#tokens#0;n#!!block;n#wallet#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#contracts#0;n#!!block;n#wallet#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/i18n/wallet.zh.i18n.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="792">
+          <caret line="36" column="6" lean-forward="false" selection-start-line="36" selection-start-column="6" selection-end-line="36" selection-end-column="6" />
           <folding />
         </state>
       </provider>

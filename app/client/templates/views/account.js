@@ -81,8 +81,8 @@ Template['views_account'].helpers({
             {name: 'Token5', address: '0x67ABC83C87BE7F9214B2518723A51D1d34e82837', balance: '100000'}
         ];
 
-        // return Tokens.find(query, {sort: {name: 1}});
-        return testTokens;
+        return Tokens.find(query, {sort: {name: 1}});
+        // return testTokens;
     },
 
 	'tokenLength': function () {
@@ -90,8 +90,8 @@ Template['views_account'].helpers({
         query['balances.'+ this._id] = {$exists: true};
         var totalToken = Tokens.find(query, {sort: {name: 1}}).count();
 
-        // return totalToken;
-        return 1;
+        return totalToken;
+        // return 1;
     },
 
 		/**

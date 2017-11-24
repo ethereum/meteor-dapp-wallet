@@ -1,6 +1,6 @@
 <template name="views_otaRefund">
 
-    <h1 style="margin-bottom: 0"><div class="circle"></div><strong>Refund OTAs</strong></h1>
+    <h1 style="margin-bottom: 0"><div class="circle"></div>{{i18n "views.otaRefund.title"}}</h1>
 
     <div class="viwes-account-header">
         <!-- we use a form, which posts into the "dapp-form-helper-iframe" iframe, so that the browser stores inout fields for native autocpmplete -->
@@ -31,7 +31,7 @@
             <!-- amount -->
             <div class="row clear">
                 <div class="col col-6 mobile-full amount">
-                    <h3>Total</h3>
+                    <h3>{{i18n "views.otaRefund.amountTotal"}}</h3>
                     {{> elements_balance balance=otaTotal changeUnit=true showAllDecimals=true}}
                 </div>
                 <div class="dapp-clear-fix"></div>
@@ -61,7 +61,7 @@
             <hr/>
 
             <!-- a button type="submit" will send the form -->
-            <button type="submit" class="dapp-block-button">Refund</button>
+            <button type="submit" class="dapp-block-button">{{i18n "views.otaRefund.send"}}</button>
 
         </form>
     </div>

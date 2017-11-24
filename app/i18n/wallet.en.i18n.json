@@ -1,4 +1,42 @@
 {
+    "views": {
+        "account": {
+            "title": "Account Detail",
+            "transfer": "Transfer",
+            "OTAs": "Get OTAs",
+            "copyAddress": "copy address",
+            "copyWaddress": "copy wAddress",
+            "scanAddressQRCode": "Show address QR-Code",
+            "scanWaddressQRCode": "Show wAddress QR-Code",
+
+            "balacne": {
+                "title": "Balance",
+                "des": "in ordinary address",
+                "ota": "in OTAs",
+                "refund": "[Refund]"
+            },
+            "transaction": {
+                "title": "Transaction List"
+            }
+        },
+        "deployContract": {
+            "title": "Token transfer"
+        },
+        "otaRefund": {
+            "title": "<strong>Refund OTAs</strong>",
+            "amountTotal": "Total",
+            "send": "Refund"
+        },
+        "send": {
+            "title": "Transfer Details",
+            "select": "Select to ordinary/private transaction",
+            "Ordinary": "Ordinary Transaction",
+            "Privacy": "Privacy Transaction",
+            "Choice": "Choice Value"
+        }
+    },
+
+
     "elements": {
         "selectGasPrice": {
             "high": "Faster",

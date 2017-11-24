@@ -1,4 +1,41 @@
 {
+    "views": {
+        "account": {
+            "title": "账户详情",
+            "transfer": "Transfer",
+            "OTAs": "Get OTAs",
+            "copyAddress": "copy address",
+            "copyWaddress": "copy wAddress",
+            "scanAddressQRCode": "Show address QR-Code",
+            "scanWaddressQRCode": "Show wAddress QR-Code",
+
+            "balacne": {
+                "title": "余额",
+                "des": "in ordinary address",
+                "ota": "in OTAs",
+                "refund": "[提币]"
+            },
+            "transaction": {
+                "title": "交易列表"
+            }
+        },
+        "deployContract": {
+            "title": "代币交易"
+        },
+        "otaRefund": {
+            "title": "<strong>提币</strong>",
+            "amountTotal": "总额",
+            "send": "确定"
+        },
+        "send": {
+            "title": "交易详情",
+            "select": "选择普通交易或者隐私交易",
+            "Ordinary": "普通交易",
+            "Privacy": "隐私交易",
+            "Choice": "选择金额"
+        }
+    },
+
     "elements": {
         "selectGasPrice": {
             "high": "更快",

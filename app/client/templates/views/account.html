@@ -1,6 +1,6 @@
 <template name="views_account">
     {{#with account}}
-        <h1 style="margin-bottom: 0"><div class="circle"></div><strong>Account Detail</strong></h1>
+        <h1 style="margin-bottom: 0"><div class="circle"></div><strong>{{i18n 'views.account.title'}}</strong></h1>
         <div class="dapp-container accounts-page">
             <div class="accounts-page-summary">
 	              <!--account detail-->
@@ -24,23 +24,23 @@
                             <ul>
                                 <li>
                                     <a href="{{pathFor route='sendTo' address=(toChecksumAddress address)}}" title="{{toChecksumAddress address}}">
-                                        <i class="icon-arrow-up"></i>Transfer</a>
+                                        <i class="icon-arrow-up"></i>{{i18n 'views.account.transfer'}}</a>
                                 </li>
                                 <li>
-                                    <button class="start-to-scan-block-button"><i class="icon-action-redo"></i>Get OTAs</button>
+                                    <button class="start-to-scan-block-button"><i class="icon-action-redo"></i>{{i18n 'views.account.OTAs'}}</button>
                                 </li>
                                 <li>
-                                    <button class="copy-to-clipboard-button" name="address"><i class="icon-docs"></i>copy address</button>
+                                    <button class="copy-to-clipboard-button" name="address"><i class="icon-docs"></i>{{i18n 'views.account.copyAddress'}}</button>
                                 </li>
                                 <li>
-                                    <button class="copy-to-clipboard-wbutton" name="waddress"><i class="icon-docs"></i>copy wAddress</button>
+                                    <button class="copy-to-clipboard-wbutton" name="waddress"><i class="icon-docs"></i>{{i18n 'views.account.copyWaddress'}}</button>
                                 </li>
 
                                 <li>
-                                    <button class="qrcode-button" name="address"><i class="icon-camera"></i>Show address QR-Code</button>
+                                    <button class="qrcode-button" name="address"><i class="icon-camera"></i>{{i18n 'views.account.scanAddressQRCode'}}</button>
                                 </li>
                                 <li>
-                                    <button class="qrcode-button" name="waddress"><i class="icon-camera"></i>Show wAddress QR-Code</button>
+                                    <button class="qrcode-button" name="waddress"><i class="icon-camera"></i>{{i18n 'views.account.scanWaddressQRCode'}}</button>
                                 </li>
                             </ul>
                         </nav>
@@ -49,11 +49,11 @@
 
 	              <!--Balance-->
 	              <div class="viwes-account-header">
-		              <h1><div class="viwes-account-line"></div><span>Balance</span></h1>
+		              <h1><div class="viwes-account-line"></div><span>{{i18n 'views.account.balacne.title'}}</span></h1>
 		              <div class="viwes-account-balance-left">
                           <p><div class="circle" style="width: 6px;height: 6px;"></div>
                             <strong style="display: inline-block;">{{> elements_balance balance=balance changeUnit=true showAllDecimals=true}}</strong>
-                            <span>in ordinary address</span>
+                            <span>{{i18n 'views.account.balacne.des'}}</span>
                           </p>
 		              </div>
 
@@ -61,7 +61,8 @@
                           <div class="viwes-account-balance-left">
                               <p><div class="circle" style="width: 6px;height: 6px;"></div>
                                 <strong style="display: inline-block;">{{> elements_balance balance=otasValue changeUnit=true showAllDecimals=true}}</strong>
-                                <span>in OTAs<a href="{{pathFor route='otaRefund' address=theAddress}}">[Refund]</a>
+                                <span>{{i18n 'views.account.balacne.ota'}}<a href="{{pathFor route='otaRefund' address=theAddress}}">
+                                    {{i18n 'views.account.balacne.refund'}}</a>
 			                </span>
                               </p>
                           </div>
@@ -94,7 +95,7 @@
 		<!--transaction list-->
 		<div class="viwes-account-header">
 			{{#if allTransactions}}
-                <h1 style="margin-bottom: 0;"><div class="viwes-account-line"></div><span>Transaction List</span></h1>
+                <h1 style="margin-bottom: 0;"><div class="viwes-account-line"></div><span>{{i18n 'views.account.transaction.title'}}</span></h1>
 				{{> elements_transactions_table limit=5 address=theAddress}}
 			{{else}}
 				<h2>{{i18n 'wallet.transactions.none'}}</h2>
