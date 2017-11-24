@@ -95,6 +95,8 @@ var estimationCallback = function(e, res){
 Template['views_send'].onCreated(function(){
 	var template = this;
 
+  TemplateVar.set('theAddress', FlowRouter.getParam('address').toLowerCase());
+
 	// SET THE DEFAULT VARIABLES
 	TemplateVar.set('amount', '0');
 	TemplateVar.set('estimatedGas', 300000);
@@ -237,7 +239,7 @@ Template['views_send'].helpers({
 	},
 
 	'theAccount': function () {
-		var account = EthAccounts.find({balance:{$ne:"0"}, address: FlowRouter.getParam('address').toLowerCase()}, {sort: {balance: 1}}).fetch();
+		var account = EthAccounts.find({balance:{$ne:"0"}, address: TemplateVar.get('theAddress')}, {sort: {balance: 1}}).fetch();
 		return account;
   },
 
@@ -246,7 +248,7 @@ Template['views_send'].helpers({
 	},
 
 	'selectedAccount': function(){
-		return Helpers.getAccountByAddress(FlowRouter.getParam('address').toLowerCase());
+		return Helpers.getAccountByAddress( TemplateVar.get('theAddress'));
 	},
 
 	'selectedToken': function(){
@@ -265,7 +267,7 @@ Template['views_send'].helpers({
 	},
 
 	'hasTokens': function() {
-		var selectedAccount = Helpers.getAccountByAddress(FlowRouter.getParam('address').toLowerCase()),
+		var selectedAccount = Helpers.getAccountByAddress(TemplateVar.get('theAddress')),
 			query = {};
 
 		if(!selectedAccount)
@@ -281,7 +283,7 @@ Template['views_send'].helpers({
 	},
 
 	'total': function(ether){
-		var selectedAccount = Helpers.getAccountByAddress(FlowRouter.getParam('address').toLowerCase());
+		var selectedAccount = Helpers.getAccountByAddress(TemplateVar.get('theAddress'));
 		var amount = TemplateVar.get('amount');
 		if(!_.isFinite(amount))
 			return '0';
@@ -310,7 +312,7 @@ Template['views_send'].helpers({
 	},
 
 	'sendAllAmount': function(){
-		var selectedAccount = Helpers.getAccountByAddress(FlowRouter.getParam('address').toLowerCase());
+		var selectedAccount = Helpers.getAccountByAddress(TemplateVar.get('theAddress'));
 		var amount = 0;
 
 		if (TemplateVar.get('selectedToken') === 'ether') {
@@ -361,7 +363,7 @@ Template['views_send'].helpers({
 	},
 
 	'formattedCoinBalance': function(e){
-		var selectedAccount = Helpers.getAccountByAddress(FlowRouter.getParam('address').toLowerCase());
+		var selectedAccount = Helpers.getAccountByAddress(TemplateVar.get('theAddress'));
 
 		return (this.balances && Number(this.balances[selectedAccount._id]) > 0)
 			? Helpers.formatNumberByDecimals(this.balances[selectedAccount._id], this.decimals) +' '+ this.symbol
@@ -369,7 +371,7 @@ Template['views_send'].helpers({
 	},
 
 	'selectedAccountIsWalletContract': function(){
-		var selectedAccount = Helpers.getAccountByAddress(FlowRouter.getParam('address').toLowerCase());
+		var selectedAccount = Helpers.getAccountByAddress(TemplateVar.get('theAddress'));
 		return selectedAccount ? !!selectedAccount.owners : false;
 	},
 
@@ -454,7 +456,7 @@ Template['views_send'].events({
 			to = TemplateVar.getFrom('.dapp-address-input .to', 'value') || checkWaddress(document.getElementById("waddress-input").value),
 			gasPrice = TemplateVar.getFrom('.dapp-select-gas-price', 'gasPrice'),
 			estimatedGas = TemplateVar.get('estimatedGas'),
-			selectedAccount = Helpers.getAccountByAddress(FlowRouter.getParam('address').toLowerCase()),
+			selectedAccount = Helpers.getAccountByAddress(TemplateVar.get('theAddress')),
 			selectedAction = TemplateVar.get("selectedAction"),
 			data = getDataField(),
 			contract = TemplateVar.getFrom('.compile-contract', 'contract'),

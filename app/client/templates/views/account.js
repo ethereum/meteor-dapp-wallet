@@ -17,7 +17,7 @@ Template['views_account'].onCreated(function () {
                 var otaValue = 0;
                 if (!e && result.length >0) {
                     _.each(result, function(ota){
-                        otaValue += ota.value;
+                        otaValue += parseInt(ota.value);
                     });
                 }
                 TemplateVar.set(template,'otasValue',otaValue);
@@ -100,6 +100,7 @@ Template['views_account'].helpers({
 		 @method (ota)
 		 */
 		'otasValue': function () {
+		  console.log('otasValue: ', TemplateVar.get('otasValue'));
 			return TemplateVar.get('otasValue');
         // return 1000000000000000000;
     },
