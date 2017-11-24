@@ -3,85 +3,40 @@ Template Controllers
 
 @module Templates
 */
+var InterID;
 
-/**
-Watches custom events
+Template['views_account'].onCreated(function () {
+    var template = this;
 
-@param {Object} newDocument  the account object with .jsonInterface
-*/
-var addLogWatching = function(newDocument){
-    var contractInstance = web3.eth.contract(newDocument.jsonInterface).at(newDocument.address);
-    var blockToCheckBack = (newDocument.checkpointBlock || 0) - ethereumConfig.rollBackBy;
-    
-    if(blockToCheckBack < 0)
-        blockToCheckBack = 0;
-
-    console.log('EVENT LOG:  Checking Custom Contract Events for '+ newDocument.address +' (_id: '+ newDocument._id + ') from block # '+ blockToCheckBack);
-
-    // delete the last logs until block -500
-    _.each(Events.find({_id: {$in: newDocument.contractEvents || []}, blockNumber: {$exists: true, $gt: blockToCheckBack}}).fetch(), function(log){
-        if(log)
-            Events.remove({_id: log._id});
-    });
-
-    var filter = contractInstance.allEvents({fromBlock: blockToCheckBack, toBlock: 'latest'});
-    
-    // get past logs, to set the new blockNumber
-    var currentBlock = EthBlocks.latest.number;
-    filter.get(function(error, logs) {
-        if(!error) {
-            // update last checkpoint block
-            CustomContracts.update({_id: newDocument._id}, {$set: {
-                checkpointBlock: (currentBlock || EthBlocks.latest.number) - ethereumConfig.rollBackBy
-            }});
-        }
-    });
-
-    filter.watch(function(error, log){
-        if(!error) {
-            var id = Helpers.makeId('log', web3.sha3(log.logIndex + 'x' + log.transactionHash + 'x' + log.blockHash));
-
-            if(log.removed) {
-                Events.remove(id);
-            } else {
-
-                _.each(log.args, function(value, key){
-                    // if bignumber
-                    if((_.isObject(value) || value instanceof BigNumber) && value.toFormat) {
-                        value = value.toString(10);
-                        log.args[key] = value;
-                    }
-                });
-
-                // store right now, so it could be removed later on, if removed: true
-                Events.upsert(id, log);
-
-                // update events timestamp
-                web3.eth.getBlock(log.blockHash, function(err, block){
-                    if(!err) {
-                        Events.update(id, {$set: {timestamp: block.timestamp}});
-                    }
-                });
+    InterID = Meteor.setInterval(function(){
+        var waddress = Helpers.getAccountByAddress(FlowRouter.getParam('address')).waddress.slice(2);
+        mist.requestOTACollection(waddress, function (e, result) {
+            var oldOtas = TemplateVar.get(template,'otaValue');
+            if(!oldOtas || oldOtas.length !== result.length)
+            {
+                var otaValue = 0;
+                if (!e && result.length >0) {
+                    _.each(result, function(ota){
+                        otaValue += ota.value;
+                    });
+                }
+                TemplateVar.set(template,'otasValue',otaValue);
+                Session.set('otas', result);
             }
-        }
-    });
+        })
+    }, 2000);
+});
 
-    return filter;
-};
+Template['views_account'].onDestroyed(function () {
+    var template = this;
+    TemplateVar.set(template,'otas',[]);
+    TemplateVar.set(template,'otasValue',0);
 
-
+    Meteor.clearInterval(InterID);
+});
 
 Template['views_account'].onRendered(function(){
     console.timeEnd('renderAccountPage');
-});
-
-Template['views_account'].onDestroyed(function(){
-    // stop watching custom events, on destroy
-    if(this.customEventFilter) {
-        this.customEventFilter.stopWatching();
-        this.customEventFilter = null;
-        TemplateVar.set('watchEvents', false);
-    }
 });
 
 Template['views_account'].helpers({
@@ -107,90 +62,47 @@ Template['views_account'].helpers({
 		'theAddress': function () {
 			return FlowRouter.getParam('address');
 		},
-    /**
-    Get the current jsonInterface, or use the wallet jsonInterface
 
-    @method (jsonInterface)
-    */
-    'jsonInterface': function() {
-        return (this.owners) ? _.clone(walletInterface) : _.clone(this.jsonInterface);
-    },
     /**
-    Get the pending confirmations of this account.
-
-    @method (pendingConfirmations)
-    */
-    'pendingConfirmations': function(){
-        return _.pluck(PendingConfirmations.find({operation: {$exists: true}, confirmedOwners: {$ne: []}, from: this.address}).fetch(), '_id');
-    },
-    /**
-    Return the daily limit available today.
-
-    @method (availableToday)
-    */
-    'availableToday': function() {
-        return new BigNumber(this.dailyLimit || '0', 10).minus(new BigNumber(this.dailyLimitSpent || '0', '10')).toString(10);  
-    },
-    /**
-    Show dailyLimit section
-
-    @method (showDailyLimit)
-    */
-    'showDailyLimit': function(){
-        return (this.dailyLimit && this.dailyLimit !== ethereumConfig.dailyLimitDefault);
-    },
-    /**
-    Show requiredSignatures section
-
-    @method (showRequiredSignatures)
-    */
-    'showRequiredSignatures': function(){
-        return (this.requiredSignatures && this.requiredSignatures > 1);
-    },
-    /**
-    Link the owner either to send or to the account itself.
-
-    @method (ownerLink)
-    */
-    'ownerLink': function(){
-        var owner = String(this);
-        if(Helpers.getAccountByAddress(owner))
-            return FlowRouter.path('account', {address: owner});
-        else
-            return FlowRouter.path('sendTo', {address: owner});
-    },
-    /**
-    Get all tokens
+    Get all tokens, tokens number
 
     @method (tokens)
     */
     'tokens': function(){
         var query = {};
         query['balances.'+ this._id] = {$exists: true};
-        return Tokens.find(query, {sort: {name: 1}});
 
-	      // var testToken = [
-		     //  {address: '0xE5f17608BF51e04901E5bB776638C69243ff38c4', name: 'token1', balance: 10000}
-	      // ];
-	      // return testToken;
+        var testTokens = [
+            {name: 'Token1', address: '0x67ABC83C87BE7F9214B2518723A51D1d34e82837', balance: '100000'},
+            {name: 'Token2', address: '0x67ABC83C87BE7F9214B2518723A51D1d34e82837', balance: '100000'},
+            {name: 'Token3', address: '0x67ABC83C87BE7F9214B2518723A51D1d34e82837', balance: '100000'},
+            {name: 'Token4', address: '0x67ABC83C87BE7F9214B2518723A51D1d34e82837', balance: '100000'},
+            {name: 'Token5', address: '0x67ABC83C87BE7F9214B2518723A51D1d34e82837', balance: '100000'},
+            {name: 'Token5', address: '0x67ABC83C87BE7F9214B2518723A51D1d34e82837', balance: '100000'}
+        ];
+
+        return Tokens.find(query, {sort: {name: 1}});
+        // return testTokens;
     },
-		'tokensLength': function () {
-			return Tokens.find(query, {sort: {name: 1}}).count();
-			// return 1;
-		},
+
+	'tokenLength': function () {
+        var query = {};
+        query['balances.'+ this._id] = {$exists: true};
+        var totalToken = Tokens.find(query, {sort: {name: 1}}).count();
+
+        return totalToken;
+        // return 1;
+    },
 
 		/**
-		 Get all ota
+		 Get all OTAs
 
 		 @method (ota)
 		 */
-		'otas': function(){
-			var query = [{address: FlowRouter.getParam('address'), balance: '2000000'}];
-			return query;
-		},
-		'otasLength': function () {
-			return 1;
-		},
+		'otasValue': function () {
+			return TemplateVar.get('otasValue');
+        // return 1000000000000000000;
+    },
 
     /**
     Get the tokens balance
@@ -200,11 +112,9 @@ Template['views_account'].helpers({
     'formattedTokenBalance': function(e){
         var account = Template.parentData(2);
 
-        // return (this.balances && Number(this.balances[account._id]) > 0)
-        //     ? Helpers.formatNumberByDecimals(this.balances[account._id], this.decimals) +' '+ this.symbol
-        //     : false;
-
-	      return 10000;
+        return (this.balances && Number(this.balances[account._id]) > 0)
+            ? Helpers.formatNumberByDecimals(this.balances[account._id], this.decimals) +' '+ this.symbol
+            : false;
     },
     /**
     Gets the contract events if available
@@ -226,9 +136,8 @@ Template['views_account'].helpers({
 });
 
 var accountStartScanEventHandler = function(e){
-    let myAddr = "0x25656618937dA8A87c74ad3eAfeC17e37Fae64Ff";
 
-    mist.startScan(myAddr, (err, result)=> {
+    mist.startScan(FlowRouter.getParam('address'), (err, result)=>{
         if(err){
             console.log("Error:", err);
         }
@@ -248,11 +157,14 @@ var accountClipboardEventHandler = function(e){
 		var type = e.target.name;
 		var typeId = e.target.id;
 
+		console.log('type: ', type);
+      console.log('typeId: ', typeId);
+
 		var copyTextarea;
 		if (type === 'address' || typeId === 'address') {
-			copyTextarea = document.querySelector('.copyable-address span');
+			copyTextarea = document.querySelector('.copyable-address');
 		} else {
-			copyTextarea = document.querySelector('.copyable-waddress span');
+			copyTextarea = document.querySelector('.copyable-waddress');
 		}
 
 		var selection = window.getSelection();
@@ -297,29 +209,7 @@ var accountClipboardEventHandler = function(e){
 };
 
 Template['views_account'].events({
-    /**
-    Clicking the delete button will show delete modal
 
-    @event click button.delete
-    */
-    'click button.delete': function(e, template){
-        var data = this;
-
-        EthElements.Modal.question({
-            text: new Spacebars.SafeString(TAPi18n.__('wallet.accounts.modal.deleteText') + 
-                '<br><input type="text" class="deletionConfirmation" autofocus="true">'),
-            ok: function(){
-                if($('input.deletionConfirmation').val() === 'delete') {
-                    Wallets.remove(data._id);
-                    CustomContracts.remove(data._id);
-
-                    FlowRouter.go('dashboard');
-                    return true;
-                }
-            },
-            cancel: true
-        });
-    },
     /**
     Clicking the name, will make it editable
 
@@ -385,21 +275,6 @@ Template['views_account'].events({
     'copy .copyable-address': accountClipboardEventHandler,
 		'copy .copyable-waddress': accountClipboardEventHandler,
 
-    /**
-    Click to launch Coinbase widget
-    
-    @event click deposit-using-coinbase
-    */
-    'click .deposit-using-coinbase': function(e){
-        e.preventDefault();
-
-        (new CoinBaseWidget(e.currentTarget, {
-            address: this.address,
-            code: "eb44c52c-9c3f-5fb6-8b11-fc3ec3022519",
-            currency: "USD",
-            crypto_currency: "ETH"
-        })).show();
-    },
 
 
     /**
@@ -425,58 +300,5 @@ Template['views_account'].events({
                 address: address
             }
         });
-    },
-
-    /**
-    Click to reveal the jsonInterface
-    
-    @event click .interface-button
-    */
-    'click .interface-button': function(e){
-        e.preventDefault();
-        var jsonInterface = (this.owners) ? _.clone(walletInterface) : _.clone(this.jsonInterface);
-        
-        //clean ABI from circular references
-        var cleanJsonInterface = _.map(jsonInterface, function(e, i) {
-            return _.omit(e, 'contractInstance');
-        });
-
-        // Open a modal showing the QR Code
-        EthElements.Modal.show({
-            template: 'views_modals_interface',
-            data: {
-                jsonInterface: cleanJsonInterface
-            }
-        });   
-    },
-    /**
-    Click watch contract events
-    
-    @event change button.toggle-watch-events
-    */
-    'change .toggle-watch-events': function(e, template){
-        e.preventDefault();
-
-        if(template.customEventFilter) {
-            template.customEventFilter.stopWatching();
-            template.customEventFilter = null;
-            TemplateVar.set('watchEvents', false);
-        } else {
-            template.customEventFilter = addLogWatching(this);
-            TemplateVar.set('watchEvents', true);
-        }
-    },
-
-		'click #otaDetail': function () {
-			EthElements.Modal.question({
-				template: 'views_modals_otaRefundInfo',
-				data: {
-					name: "Detail",
-					from: "0xE5f17608BF51e04901E5bB776638C69243ff38c4",
-					to: "0xE5f17608BF51e04901E5bB776638C69243ff38c4",
-					amount: "20"
-				},
-				ok: true
-			})
-		}
+    }
 });

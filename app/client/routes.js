@@ -129,7 +129,7 @@ The send route.
 
 @method send
 */
-FlowRouter.route('/send-token/:from/:token', {
+FlowRouter.route('/send-token/:token', {
     name: 'sendToken',
     action: function(params, queryParams) {
         BlazeLayout.render('layout_main', {
@@ -144,7 +144,7 @@ FlowRouter.route('/send-token/:from/:token', {
 
  @method otaRefund
  */
-FlowRouter.route('/ota-refund/:from', {
+FlowRouter.route('/ota-refund/:address', {
 	name: 'otaRefund',
 	action: function(params, queryParams) {
 		BlazeLayout.render('layout_main', {

@@ -13,20 +13,6 @@ The dashboard template
 
 
 Template['views_dashboard'].helpers({
-    // /**
-    // Get all current wallets
-    //
-    // @method (wallets)
-    // */
-    // 'wallets': function(){
-    //     var wallets = Wallets.find({$or: [{disabled: {$exists: false}}, {disabled: false}]}, {sort: {creationBlock: 1}}).fetch();
-    //
-    //     // sort wallets by balance
-    //     wallets.sort(Helpers.sortByBalance);
-    //
-    //     return wallets;
-    // },
-
     /**
     Get all current accounts
 
@@ -49,29 +35,6 @@ Template['views_dashboard'].helpers({
         return (EthAccounts.find().count() > 0);
     },
 
-    // /**
-    // Are there any accounts?
-    //
-    // @method (hasAccounts)
-    // */
-    // 'hasMinimumBalance' : function() {
-    //
-    //     var enoughBalance = false;
-    //     _.each(_.pluck(EthAccounts.find({}).fetch(), 'balance'), function(bal){
-    //         if(new BigNumber(bal, '10').gt(10000000000000000)) enoughBalance = true;
-    //     });
-    //
-    //     return enoughBalance;
-    // },
-
-    // /**
-    // Get all transactions
-    //
-    // @method (allTransactions)
-    // */
-    // 'allTransactions': function(){
-    //     return Transactions.find({}, {sort: {timestamp: -1}}).count();
-    // },
     /**
     Returns an array of pending confirmations, from all accounts
     
@@ -92,6 +55,7 @@ Template['views_dashboard'].events({
     */
     'click .create.account': function(e){
         e.preventDefault();
+
         mist.requestAccount(null);
     }
 });

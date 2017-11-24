@@ -8,9 +8,7 @@
             {{else}}
                 {{tryENS}}
                 <!--<a href="{{pathFor route='sendTo' address=address}}" title="{{address}}">{{address}}</a>-->
-                <span style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: 31em;display: block;
-                position: relative;top: -16px;padding-left: 2em;">
-	                {{address}}</span>
+                <span class="accountLink-span">{{address}}</span>
             {{/if}}
         </span>
     {{/with}}

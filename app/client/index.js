@@ -16,8 +16,8 @@ Meteor.startup(function() {
                                 type: 'account',
                                 address: addr,
                                 waddress: wAddress,
-                                balance: balance,
-                                name: (addr === coinbase) ? 'Main account (Etherbase)' : 'Account '+ accountsCount
+                                balance: 0,
+                                name: account.name
                             };
 
                             if(doc) {
@@ -27,20 +27,13 @@ Meteor.startup(function() {
                             } else {
                                 EthAccounts.insert(insert);
                             }
-                            mist.requireAccountName(addr,function(e, accounts) {
-                                if(accounts.length > 0)
-                                {
-                                    EthAccounts.update({address: accounts[0].address}, {
-                                        $set: {name: accounts[0].name}
-                                    });
-                                }
-                            });
                         }
 
                     });
+
                 });
             }
-        });
+        })
     }
     // SET default language
     if(Cookie.get('TAPi18next')) {

@@ -1,304 +1,103 @@
 <template name="views_account">
     {{#with account}}
-
+        <h1 style="margin-bottom: 0"><div class="circle"></div><strong>Account Detail</strong></h1>
         <div class="dapp-container accounts-page">
-
-            <div class="dapp-sticky-bar dapp-container">
-
-                {{#with isVulnerable}}
-                    {{#if vulnerabilities.txorigin}}
-                        {{> elements_vulnerabilities_txorigin}}
-                    {{/if}}
-                {{else}}
-                    {{> dapp_identicon identity=address}}
-                    <h1 class="{{ensClass}}">
-                        <span>{{displayName}}</span> 
-
-                        {{#if $or owners jsonInterface}}
-                            <button class="dapp-icon-button delete icon-trash"></button>
-                        {{/if}}
-                    </h1>
-                    {{> elements_balance balance=balance changeUnit=true showAllDecimals=true}}                
-                {{/with}}
-            </div>
-
             <div class="accounts-page-summary">
-                {{> dapp_identicon identity=address}}
-                <header class="{{ensClass}}">
-                    <h1>
-                        {{#if ens}}
-                        <span>{{displayName}}</span> 
-                        {{else}}
-                        <em class="edit-name">{{displayName}}</em> 
-                        <i class="edit-icon icon-pencil"></i>
-                        {{/if}}                        
-                    </h1>
-                    <h2 class="copyable-address">{{walletIcon}}
-                        <!-- <input type="text" value="{{toChecksumAddress address}}" readonly class=""> -->
-                        <span id="address">{{toChecksumAddress address}}</span>
-                    </h2>
-	                  <h2 class="copyable-waddress" style="margin: 0; padding: 0;background: #fafafa; color:rgba(130, 122, 122, 0.5);">{{walletIcon}}
-		                  <span id="waddress">{{waddress}}</span>
-	                  </h2>
-                    <div class="clear"></div>
-                    {{> elements_balance balance=balance changeUnit=true showAllDecimals=true}}
-                </header>
+	              <!--account detail-->
+                <div class="viwes-account-header" style="padding: 20px;">
+                    {{> dapp_identicon identity=address}}
+                    <header class="{{ensClass}}" style="display: inline-block;padding: 0;padding-left: 10px;">
+                        <h1>
+                            {{#if ens}}
+                                <span>{{displayName}}</span>
+                            {{else}}
+                                <em class="edit-name">{{displayName}}</em>
+                                <i class="edit-icon icon-pencil"></i>
+                            {{/if}}
+                        </h1>
 
-	              <hr/>
+                        <p ><span id="address" class="copyable-address">{{toChecksumAddress address}}</span></p>
+                        <p ><span class="accountLink-span copyable-waddress" id="waddress">{{waddress}}</span></p>
 
-								<!--Tokens-->
-                {{#with tokens}}
-		                {{#if tokensLength}}
-			                <h1 style="display: inline-block; color: #02a8f3;">
-				                <i class="icon-bag"></i>
-				                Token
-			                </h1>
-		                {{/if}}
-                    <table class="token-list dapp-zebra">
-                        <tbody>
-                            {{#each this}}
-                                <tr>
-                                    <td>{{> dapp_identicon identity=address class="dapp-tiny"}}
-                                    <strong>{{name}}</strong></td>
-                                    <td>{{formattedTokenBalance}}</td>
-                                    <td>
-                                        <a href="{{pathFor route='sendToken' from=../../address token=address}}">
-                                            <i class="icon-arrow-up"></i>
-                                            {{i18n "wallet.app.buttons.send"}}
-                                        </a>
-                                    </td>
-                                </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
-                {{/with}}
+                        <div class="clear"></div>
+                        <nav class="viwes-account-nav">
+                            <ul>
+                                <li>
+                                    <a href="{{pathFor route='sendTo' address=(toChecksumAddress address)}}" title="{{toChecksumAddress address}}">
+                                        <i class="icon-arrow-up"></i>Transfer</a>
+                                </li>
+                                <li>
+                                    <button class="start-to-scan-block-button"><i class="icon-action-redo"></i>Get OTAs</button>
+                                </li>
+                                <li>
+                                    <button class="copy-to-clipboard-button" name="address"><i class="icon-docs"></i>copy address</button>
+                                </li>
+                                <li>
+                                    <button class="copy-to-clipboard-wbutton" name="waddress"><i class="icon-docs"></i>copy wAddress</button>
+                                </li>
 
-	              <hr/>
+                                <li>
+                                    <button class="qrcode-button" name="address"><i class="icon-camera"></i>Show address QR-Code</button>
+                                </li>
+                                <li>
+                                    <button class="qrcode-button" name="waddress"><i class="icon-camera"></i>Show wAddress QR-Code</button>
+                                </li>
+                            </ul>
+                        </nav>
+                    </header>
+                </div>
 
-	              <!--ota Refund-->
-		            {{#with otas}}
-			            {{#if otasLength}}
-				            <a href="{{pathFor route='otaRefund' from=theAddress}}">
-					            <h1 style="display: inline-block; color: #02a8f3;">
-						            <i class="icon-arrow-up"></i>
-						            Refund OTAs
-					            </h1>
-				            </a>
-			            {{/if}}
-			            <table class="token-list dapp-zebra">
-				            <tbody>
-				            {{#each this}}
-					            <tr>
-						            <td>{{> dapp_identicon identity=address class="dapp-tiny"}}
-							            <strong>{{address}}</strong></td>
-						            <td>{{balance}}</td>
-						            <td>
-							            <a id="otaDetail" style="cursor: pointer;">
-								            <i class="icon-action-undo"></i>
-								            Detail
-							            </a>
-						            </td>
-					            </tr>
-				            {{/each}}
-				            </tbody>
-			            </table>
-		            {{/with}}
+	              <!--Balance-->
+	              <div class="viwes-account-header">
+		              <h1><div class="viwes-account-line"></div><span>Balance</span></h1>
+		              <div class="viwes-account-balance-left">
+                          <p><div class="circle" style="width: 6px;height: 6px;"></div>
+                            <strong style="display: inline-block;">{{> elements_balance balance=balance changeUnit=true showAllDecimals=true}}</strong>
+                            <span>in ordinary address</span>
+                          </p>
+		              </div>
 
-                {{#with isVulnerable}}
-                    {{#if vulnerabilities.txorigin}}
-                        {{> elements_vulnerabilities_txorigin}}
-                    {{/if}}
-                {{/with}}
-
-	              <!--wallet accounts-->
-                <!--{{#if owners}}-->
-                    <!--&lt;!&ndash; Wallet infos &ndash;&gt;-->
-
-                    <!--<div class="row clear wallet-info">-->
-                        <!--{{#if showDailyLimit}}-->
-                            <!--<div class="col col-4 mobile-full">-->
-                                <!--{{#if $gte version 1}}-->
-                                    <!--<h3>{{i18n "wallet.accounts.dailyLimit"}} <span style="font-weight: 200;">{{dapp_formatBalance dailyLimit "0,0.00 unit"}}</span></h3>-->
-                                    <!--{{dapp_formatBalance availableToday "0,0.00 unit"}} {{i18n "wallet.accounts.dailyLimitRemaining"}}-->
-                                <!--{{else}}-->
-                                    <!--<h3>{{i18n "wallet.accounts.dailyLimit"}}</h3>-->
-                                    <!--{{dapp_formatBalance dailyLimit "0,0.00 unit"}}-->
-                                <!--{{/if}}-->
-                            <!--</div>-->
-                        <!--{{/if}}-->
-                        <!--{{#if showRequiredSignatures}}-->
-                            <!--<div class="col col-4 mobile-full">-->
-                                <!--<h3>{{i18n "wallet.accounts.requiredSignatures"}}</h3> {{requiredSignatures}}-->
-                            <!--</div>-->
-                        <!--{{/if}}-->
-                        <!--<div class="col col-4 mobile-full">-->
-                            <!--<h3>{{i18n "wallet.accounts.owners"}}</h3>-->
-                            <!--{{#each owners}}-->
-                                <!--<span data-tooltip="{{accountNameOrAddress this}}" class="simptip-position-bottom simptip-movable">-->
-                                    <!--{{> dapp_identicon identity=this class="dapp-tiny" link=ownerLink}}-->
-                                <!--</span>-->
-                            <!--{{/each}}-->
-                        <!--</div>-->
-                    <!--</div>-->
-
-                    <!--&lt;!&ndash; Account infos &ndash;&gt;-->
-                    <!--<div class="account-info">-->
-                        <!--<h3>{{i18n "wallet.app.texts.note"}}</h3>-->
-                        <!--<p>{{i18n "wallet.accounts.walletNote"}}</p>-->
-                    <!--</div>-->
-                <!--{{/if}}-->
-
-	              <!--note-->
-                <!--{{#if $eq type "account"}}-->
-                    <!--&lt;!&ndash; Account infos &ndash;&gt;-->
-                    <!--<div class="account-info">-->
-                        <!--<h3>{{i18n "wallet.app.texts.note"}}</h3>-->
-                        <!--<p>{{{i18n "wallet.accounts.accountNote"}}}</p>-->
-                        <!--<p><strong>{{i18n "wallet.accounts.outOfSyncNote"}}</strong></p>-->
-                    <!--</div>-->
-                <!--{{/if}}-->
-
-            </div>
-
-            {{#unless isVulnerable}}
-            <aside class="dapp-actionbar">
-                <nav>
-                    <ul>
-                        <li>
-                            <a href="{{pathFor route='sendTo' address=(toChecksumAddress address)}}" title="{{toChecksumAddress address}}">
-                                <i class="icon-arrow-down"></i>
-                                {{i18n "wallet.accounts.buttons.deposit"}}
-                            </a>
-                        </li>
-
-                        {{#if $eq ($.Session.get "network") "main"}}
-                            <li>
-                                <a href="https://shapeshift.io/shifty.html?destination={{address}}&amp;output=ETH&amp;apiKey=ef8312d8c9b9dda64fb852e8683eac6c33123f8743ff11383fb3bab29a364c01c27343fced4e628db8d5d66d763565763f8699c0fc903ec23db31cb908a944c8" target="_popup" data-popup-width="" data-popup-height="">
-                                    <i class="icon-bitcoin"></i>
-                                    {{i18n "wallet.accounts.buttons.depositBitcoin"}}
-                                </a>
-                            </li>  
-                        {{/if}}
-
-                        {{#if $eq ($.Session.get "network") "main"}}
-                            <li>
-                                <button class="deposit-using-coinbase">
-                                    <i class="icon-credit-card"></i>
-                                    {{i18n "wallet.accounts.buttons.depositUsingCreditCard"}}
-                                </button>
-                            </li>  
-                        {{/if}}
-
-                        {{#if $eq ($.Session.get "network") "main"}}
-                        <li>
-                            <a href="https://etherscan.io/address/{{address}}">
-                                <i class="icon-info"></i>
-                                {{i18n "wallet.accounts.buttons.viewOnExplorer"}}
-                            </a>
-                        </li>                        
-                        {{/if}}
-                        <li>
-                            <button class="start-to-scan-block-button">
-                                <i class="icon-docs"></i>
-                                "Start Scan"
-                            </button>
-                        </li>
-
-                        <li>
-                            <button class="copy-to-clipboard-button" name="address">
-                                <i class="icon-docs"></i>
-                                {{i18n "wallet.accounts.buttons.copyAddress"}}
-                            </button>
-                        </li>
-	                      <li>
-		                      <button class="copy-to-clipboard-wbutton" name="waddress">
-			                      <i class="icon-docs"></i>
-			                      copy wAddress
-		                      </button>
-	                      </li>
-
-	                      <li>
-                            <button class="qrcode-button" name="address">
-                                <i class="icon-camera"></i>
-                                {{i18n "wallet.accounts.buttons.scanQRCode"}}
-                            </button>
-                        </li>
-	                      <li>
-		                      <button class="qrcode-button" name="waddress">
-			                      <i class="icon-camera"></i>
-			                      Show waddress QR-Code
-		                      </button>
-	                      </li>
-
-                        {{#if jsonInterface}}
-                            <li>
-                                <button class="interface-button">
-                                    <i class="icon-settings"></i>
-                                    {{i18n "wallet.accounts.buttons.showInterface"}}
-                                </button>
-                            </li>
-                        {{/if}}                    
-
-                    </ul>
-                </nav>
-            </aside>
-            {{/unless}}
-
-            {{#if jsonInterface}}
-                {{> elements_executeContract address=address jsonInterface=jsonInterface}}
-            {{/if}}
+                      {{#if otasValue}}
+                          <div class="viwes-account-balance-left">
+                              <p><div class="circle" style="width: 6px;height: 6px;"></div>
+                                <strong style="display: inline-block;">{{> elements_balance balance=otasValue changeUnit=true showAllDecimals=true}}</strong>
+                                <span>in OTAs<a href="{{pathFor route='otaRefund' address=theAddress}}">[Refund]</a>
+			                </span>
+                              </p>
+                          </div>
+                      {{/if}}
 
 
-            <div class="accounts-transactions">
-
-                {{#if pendingConfirmations}}
-                    <h2>{{i18n 'wallet.transactions.pendingConfirmations'}}</h2>
-
-                    {{> elements_transactions_table collection="PendingConfirmations" ids=pendingConfirmations account=_id}}
-                {{/if}}
-
-                <!--{{#if transactions}}-->
-                    <!--<h2>{{i18n 'wallet.transactions.latest'}}</h2>-->
-
-                    <!--{{> elements_transactions_table ids=transactions account=_id}}-->
-                <!--{{/if}}-->
-
-                {{#with customContract}}
-                    <h2>{{i18n 'wallet.events.latest'}}</h2>
-                    <br>
-                    
-                    <div>
-                        <input type="checkbox" id="watch-events-checkbox" class="toggle-watch-events" checked="{{TemplateVar.get 'watchEvents'}}">
-                        <label for="watch-events-checkbox">{{i18n "wallet.contracts.buttons.watchContractEvents"}}</label>
-                    </div>
-
-                    {{#if (TemplateVar.get "watchEvents")}}
-                        <div class="watch-events-spinner">
-                            {{> spinner}}
-                        </div>
-                    {{/if}}
-            
-                    {{> elements_event_table ids=contractEvents}}
-                {{/with}}
+                      {{#if tokenLength}}
+		              <div >
+                          <hr class="viwes-account-balance-hr viwes-account-balance-left"/>
+                          {{#each tokens}}
+                              <div class="viwes-account-balance-right">
+                                  <a href="{{pathFor route='sendToken' token=address}}">
+                                      <p >
+                                          <span class="views_account_token">{{name}}</span>
+                                          <div class="circle" style="width: 6px;height: 6px;"></div>
+                                          <span id="views_account_token_balance">{{balance}} <i class="icon-arrow-up"></i></span>
+                                      </p>
+                                  </a>
+                              </div>
+                          {{/each}}
+		              </div>
+                      {{/if}}
+	              </div>
             </div>
         </div>
 
 	    <div class="dapp-clear-fix"></div>
     {{/with}}
 
-		<hr/>
-
-		{{#if allTransactions}}
-			<!--<h2 style="margin: 0;">{{i18n 'wallet.transactions.latest'}}</h2>-->
-			<h1 style="display: inline-block; color: #02a8f3;margin: 0;">
-				<i class="icon-action-redo"></i>
-				Latest Transaction
-			</h1>
-
-			{{> elements_transactions_table limit=5 address=theAddress}}
-
-		{{else}}
-
-			<h2>{{i18n 'wallet.transactions.none'}}</h2>
-		{{/if}}
+		<!--transaction list-->
+		<div class="viwes-account-header">
+			{{#if allTransactions}}
+                <h1 style="margin-bottom: 0;"><div class="viwes-account-line"></div><span>Transaction List</span></h1>
+				{{> elements_transactions_table limit=5 address=theAddress}}
+			{{else}}
+				<h2>{{i18n 'wallet.transactions.none'}}</h2>
+			{{/if}}
+		</div>
 </template>
