@@ -10,14 +10,14 @@ Meteor.startup(function() {
                 }
                 accounts.forEach(function(account){
                     addr = account.address.toLowerCase();
-                    web3.wan.getWanAddress(address,function (e, wAddress) {
+                    web3.wan.getWanAddress(addr,function (e, wAddress) {
                         if(!e) {
                             var insert = {
                                 type: 'account',
-                                address: address,
+                                address: addr,
                                 waddress: wAddress,
                                 balance: balance,
-                                name: (address === coinbase) ? 'Main account (Etherbase)' : 'Account '+ accountsCount
+                                name: (addr === coinbase) ? 'Main account (Etherbase)' : 'Account '+ accountsCount
                             };
 
                             if(doc) {
@@ -27,7 +27,7 @@ Meteor.startup(function() {
                             } else {
                                 EthAccounts.insert(insert);
                             }
-                            mist.requireAccountName(address,function(e, accounts) {
+                            mist.requireAccountName(addr,function(e, accounts) {
                                 if(accounts.length > 0)
                                 {
                                     EthAccounts.update({address: accounts[0].address}, {

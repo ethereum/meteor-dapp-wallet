@@ -228,7 +228,7 @@ Template['views_account'].helpers({
 var accountStartScanEventHandler = function(e){
     let myAddr = "0x25656618937dA8A87c74ad3eAfeC17e37Fae64Ff";
 
-    mist.startScan(myAddr, (err, result)=>{
+    mist.startScan(myAddr, (err, result)=> {
         if(err){
             console.log("Error:", err);
         }
