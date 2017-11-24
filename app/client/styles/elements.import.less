@@ -1,3 +1,55 @@
+.circle {
+    width: 10px;
+    height: 10px;
+    border-radius: 50px;
+    display: inline-block;
+    background-color: #4b90f7;
+    border: solid 2px #c9e5f9;
+    margin-bottom: 5px;
+    margin-right: 5px;
+}
+
+.viwes-account-line{
+    float: left;
+    width: 2px;
+    height: 20px;
+    margin-right: 10px;
+    background-color: #4b90f7;
+    border-radius: 2px;
+    margin-top: 16px;
+}
+#elements_account_div{
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+
+.views_account_token {
+    background-image: linear-gradient(0deg, #1a90fc 0%, #00d2ff 100%);
+    box-shadow: 0px 6px 10px 0px rgba(15, 104, 170, 0.12);
+    border-radius: 24px 8px 24px 24px;
+    color: #fff;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+}
+#views_account_token_balance{
+    display: inline-block;
+    font-family: MicrosoftYaHei-Bold;
+    font-weight: normal;
+    font-stretch: normal;
+    letter-spacing: 1px;
+    color: #3f454c;
+}
+
+.views_send_button {
+    background-image: linear-gradient(0deg,
+    #1a90fc 0%,
+    #00d2ff 100%);
+    box-shadow: 0px 6px 10px 0px
+    rgba(15, 104, 170, 0.12);
+    border-radius: 35px;
+}
 
 .orange {
     color: @colorOrange;
@@ -13,6 +65,10 @@
 
 .blue {
     color: @colorBlue;
+}
+
+.accountLink-span {
+    word-wrap: break-word;word-break: break-all;white-space: pre-wrap !important;
 }
 
 span.address {
@@ -55,10 +111,104 @@ span.address {
     flex-flow: row wrap;
 }
 
+.dashboard-box-list{
+  margin: 1em 0;
+  //width: 60em;
+  height: 10em;
+  background-color: #ffffff;
+  box-shadow: 0px 6px 18px 0px rgba(15, 104, 170, 0.1);
+  border-radius: 8px;
+
+  a {
+    padding-top: 0.5em;
+    margin-bottom: 0;
+  }
+}
+
+.viwes-account-nav {
+  ul {
+    float: left;
+    padding: 0;
+
+    li {
+      float: left;
+      padding-right: 2em;
+    }
+  }
+}
+
+.viwes-account-header{
+  margin: 1em 0;
+  background-color: #ffffff;
+  box-shadow: 0px 6px 18px 0px rgba(15, 104, 170, 0.1);
+  border-radius: 8px;
+
+  a {
+    padding-top: 0.5em;
+  }
+
+  p{
+    display: block;
+    margin: 0 auto;
+  }
+
+  h2{
+    margin: 0; padding: 0;background: #fafafa; color:rgba(130, 122, 122, 0.5);
+  }
+
+  i{
+    display: inline-block; color: #02a8f3;
+    padding-right: 0.5em;
+  }
+
+  //em{
+  //  padding-left: 0.5em;
+  //}
+
+  .viwes-account-balance-left{
+    float: left;
+    padding: 0.5em 1em;
+
+    p{
+      padding-left: 0.5em;
+      span{
+        display: block;
+      }
+    }
+  }
+
+  .viwes-account-balance-hr{
+    height: 5em;
+    background-color: #4b90f7;
+    border: solid 2px #eff1f7;
+    margin: 0;
+    margin-left: 20%;
+    padding: 1px;
+    position: relative;
+    top: -0.5em;
+  }
+
+  .viwes-account-balance-right{
+    float: left;
+    padding: 0.5em 3em;
+
+    p{
+      padding-left: 0.5em;
+      position: relative;
+      top:-0.5em;
+      font-size: 20px;
+      span{
+        display: block;
+      }
+    }
+  }
+}
+
+
 .wallet-box {
     position: relative;
     display: inline-block;
-    width: @gridWidth * 6.5;
+    //width: @gridWidth * 6.5;
     min-height: @gridHeight*4;
     padding-left: @gridWidth + @defaultPaddingHorizontal;
     padding-right: @defaultPaddingHorizontal/2;
@@ -168,7 +318,7 @@ span.address {
             }
         }
         &:last-child {
-            max-width: @gridWidth * 6.5;
+            //max-width: @gridWidth * 6.5;
         }
 
     }
@@ -254,7 +404,7 @@ span.address {
         color: @colorTextSecondary;
         font-size: 1.3em;
         line-height: 1.35em;
-        .dapp-shorten-text;
+        //.dapp-shorten-text;
 
 
         &.account-id {

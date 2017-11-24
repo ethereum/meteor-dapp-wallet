@@ -37,8 +37,8 @@ Template['elements_account'].helpers({
     @method (account)
     */
     'account': function(){
-    	  var account = EthAccounts.findOne(this.account) || Wallets.findOne(this.account) || CustomContracts.findOne(this.account);
-    	  console.log('elements account: ', account);
+    	  var account = EthAccounts.findOne(this.account);
+    	  // console.log('elements account: ', account);
         return account;
     },
     /**

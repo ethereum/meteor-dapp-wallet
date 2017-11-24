@@ -57,6 +57,10 @@ updateMistMenu = function(){
 };
 
 
+getOTAsData = function () {
+    
+}
+
 Meteor.startup(function() {
 
     // make reactive

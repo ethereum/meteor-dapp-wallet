@@ -230,6 +230,10 @@ Template['views_deployContract'].onRendered(function(){
 
 
 Template['views_deployContract'].helpers({
+
+	'theAddress': function () {
+			return Tokens.findOne({address:  FlowRouter.getParam('token').toLowerCase()});
+  },
 	/**
 	 Get the current selected account
 	 @method (selectedAccount)

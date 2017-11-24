@@ -146,7 +146,8 @@ Template['views_send'].onRendered(function(){
 
 	// focus address input field
 	if(FlowRouter.getParam('address')) {
-		this.find('input[name="to"]').value = FlowRouter.getParam('address');
+		// this.find('input[name="to"]').value = FlowRouter.getParam('address');
+    this.find('input[name="to"]').value = "";
 		this.$('input[name="to"]').trigger('input');
 	} else if(!this.data){
 		this.$('input[name="to"]').focus();
@@ -235,12 +236,17 @@ Template['views_send'].helpers({
 		return FlowRouter.getParam('address');
 	},
 
+	'theAccount': function () {
+		var account = EthAccounts.find({balance:{$ne:"0"}, address: FlowRouter.getParam('address').toLowerCase()}, {sort: {balance: 1}}).fetch();
+		return account;
+  },
+
 	'selectTransaction': function () {
 		return TemplateVar.get('transaction');
 	},
 
 	'selectedAccount': function(){
-		return Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account.send-from', 'value'));
+		return Helpers.getAccountByAddress(FlowRouter.getParam('address').toLowerCase());
 	},
 
 	'selectedToken': function(){
@@ -259,7 +265,7 @@ Template['views_send'].helpers({
 	},
 
 	'hasTokens': function() {
-		var selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account.send-from', 'value')),
+		var selectedAccount = Helpers.getAccountByAddress(FlowRouter.getParam('address').toLowerCase()),
 			query = {};
 
 		if(!selectedAccount)
@@ -275,7 +281,7 @@ Template['views_send'].helpers({
 	},
 
 	'total': function(ether){
-		var selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account.send-from', 'value'));
+		var selectedAccount = Helpers.getAccountByAddress(FlowRouter.getParam('address').toLowerCase());
 		var amount = TemplateVar.get('amount');
 		if(!_.isFinite(amount))
 			return '0';
@@ -304,7 +310,7 @@ Template['views_send'].helpers({
 	},
 
 	'sendAllAmount': function(){
-		var selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account.send-from', 'value'));
+		var selectedAccount = Helpers.getAccountByAddress(FlowRouter.getParam('address').toLowerCase());
 		var amount = 0;
 
 		if (TemplateVar.get('selectedToken') === 'ether') {
@@ -339,7 +345,8 @@ Template['views_send'].helpers({
 	'sendExplanation': function(){
 
 		var amount = TemplateVar.get('amount') || '0',
-			selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account.send-from', 'value')),
+		// 	selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account.send-from', 'value')),
+      selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account.send-from', 'value')),
 			token = Tokens.findOne({address: TemplateVar.get('selectedToken')});
 
 		if(!token || !selectedAccount)
@@ -354,7 +361,7 @@ Template['views_send'].helpers({
 	},
 
 	'formattedCoinBalance': function(e){
-		var selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account.send-from', 'value'));
+		var selectedAccount = Helpers.getAccountByAddress(FlowRouter.getParam('address').toLowerCase());
 
 		return (this.balances && Number(this.balances[selectedAccount._id]) > 0)
 			? Helpers.formatNumberByDecimals(this.balances[selectedAccount._id], this.decimals) +' '+ this.symbol
@@ -362,7 +369,7 @@ Template['views_send'].helpers({
 	},
 
 	'selectedAccountIsWalletContract': function(){
-		var selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account.send-from', 'value'));
+		var selectedAccount = Helpers.getAccountByAddress(FlowRouter.getParam('address').toLowerCase());
 		return selectedAccount ? !!selectedAccount.owners : false;
 	},
 
@@ -447,7 +454,7 @@ Template['views_send'].events({
 			to = TemplateVar.getFrom('.dapp-address-input .to', 'value') || checkWaddress(document.getElementById("waddress-input").value),
 			gasPrice = TemplateVar.getFrom('.dapp-select-gas-price', 'gasPrice'),
 			estimatedGas = TemplateVar.get('estimatedGas'),
-			selectedAccount = Helpers.getAccountByAddress(template.find('select[name="dapp-select-account"].send-from').value),
+			selectedAccount = Helpers.getAccountByAddress(FlowRouter.getParam('address').toLowerCase()),
 			selectedAction = TemplateVar.get("selectedAction"),
 			data = getDataField(),
 			contract = TemplateVar.getFrom('.compile-contract', 'contract'),

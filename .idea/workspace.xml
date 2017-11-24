@@ -2,15 +2,224 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0390f3c1-a35e-4c80-8043-9737ce6223ea" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/public/wallet-icon.png" afterPath="$PROJECT_DIR$/app/public/wallet-icon.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/packages/ethereum_dapp-styles/fonts/Montserrat-Black.otf" afterPath="$PROJECT_DIR$/build/packages/ethereum_dapp-styles/fonts/Montserrat-Black.otf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/packages/ethereum_dapp-styles/fonts/Montserrat-Bold.otf" afterPath="$PROJECT_DIR$/build/packages/ethereum_dapp-styles/fonts/Montserrat-Bold.otf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/packages/ethereum_dapp-styles/fonts/Montserrat-Hairline.otf" afterPath="$PROJECT_DIR$/build/packages/ethereum_dapp-styles/fonts/Montserrat-Hairline.otf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/packages/ethereum_dapp-styles/fonts/Montserrat-Light.otf" afterPath="$PROJECT_DIR$/build/packages/ethereum_dapp-styles/fonts/Montserrat-Light.otf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/packages/ethereum_dapp-styles/fonts/Montserrat-Regular.otf" afterPath="$PROJECT_DIR$/build/packages/ethereum_dapp-styles/fonts/Montserrat-Regular.otf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/packages/ethereum_dapp-styles/fonts/SourceSansPro-Black.otf" afterPath="$PROJECT_DIR$/build/packages/ethereum_dapp-styles/fonts/SourceSansPro-Black.otf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/packages/ethereum_dapp-styles/fonts/SourceSansPro-Bold.otf" afterPath="$PROJECT_DIR$/build/packages/ethereum_dapp-styles/fonts/SourceSansPro-Bold.otf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/packages/ethereum_dapp-styles/fonts/SourceSansPro-ExtraLight.otf" afterPath="$PROJECT_DIR$/build/packages/ethereum_dapp-styles/fonts/SourceSansPro-ExtraLight.otf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/packages/ethereum_dapp-styles/fonts/SourceSansPro-Light.otf" afterPath="$PROJECT_DIR$/build/packages/ethereum_dapp-styles/fonts/SourceSansPro-Light.otf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/packages/ethereum_dapp-styles/fonts/SourceSansPro-Regular.otf" afterPath="$PROJECT_DIR$/build/packages/ethereum_dapp-styles/fonts/SourceSansPro-Regular.otf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/packages/ethereum_dapp-styles/fonts/SourceSansPro-Semibold.otf" afterPath="$PROJECT_DIR$/build/packages/ethereum_dapp-styles/fonts/SourceSansPro-Semibold.otf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/packages/ethereum_dapp-styles/icons/Simple-Line-Icons.eot" afterPath="$PROJECT_DIR$/build/packages/ethereum_dapp-styles/icons/Simple-Line-Icons.eot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/packages/ethereum_dapp-styles/icons/Simple-Line-Icons.ttf" afterPath="$PROJECT_DIR$/build/packages/ethereum_dapp-styles/icons/Simple-Line-Icons.ttf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/packages/ethereum_dapp-styles/icons/Simple-Line-Icons.woff" afterPath="$PROJECT_DIR$/build/packages/ethereum_dapp-styles/icons/Simple-Line-Icons.woff" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/packages/ethereum_elements/identicon-load.gif" afterPath="$PROJECT_DIR$/build/packages/ethereum_elements/identicon-load.gif" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/wallet-icon.png" afterPath="$PROJECT_DIR$/build/wallet-icon.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/body-bg.png" afterPath="$PROJECT_DIR$/images/body-bg.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/highlight-bg.jpg" afterPath="$PROJECT_DIR$/images/highlight-bg.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/hr.png" afterPath="$PROJECT_DIR$/images/hr.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/octocat-icon.png" afterPath="$PROJECT_DIR$/images/octocat-icon.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/tar-gz-icon.png" afterPath="$PROJECT_DIR$/images/tar-gz-icon.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/zip-icon.png" afterPath="$PROJECT_DIR$/images/zip-icon.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/meteor_packages_auto_import_browser.xml" afterPath="$PROJECT_DIR$/.idea/libraries/meteor_packages_auto_import_browser.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/404.html" afterPath="$PROJECT_DIR$/404.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AUTHORS" afterPath="$PROJECT_DIR$/AUTHORS" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/LICENSE" afterPath="$PROJECT_DIR$/LICENSE" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Wallet.sol" afterPath="$PROJECT_DIR$/Wallet.sol" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/index.html" afterPath="$PROJECT_DIR$/app/client/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/index.js" afterPath="$PROJECT_DIR$/app/client/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/lib/appStart.js" afterPath="$PROJECT_DIR$/app/client/lib/appStart.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/lib/collections.js" afterPath="$PROJECT_DIR$/app/client/lib/collections.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/lib/ethereum/1_web3Init.js" afterPath="$PROJECT_DIR$/app/client/lib/ethereum/1_web3Init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/lib/ethereum/observeBlocks.js" afterPath="$PROJECT_DIR$/app/client/lib/ethereum/observeBlocks.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/lib/ethereum/observeCustomContracts.js" afterPath="$PROJECT_DIR$/app/client/lib/ethereum/observeCustomContracts.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/lib/ethereum/observeEvents.js" afterPath="$PROJECT_DIR$/app/client/lib/ethereum/observeEvents.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/lib/ethereum/observePendingConfirmations.js" afterPath="$PROJECT_DIR$/app/client/lib/ethereum/observePendingConfirmations.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/lib/ethereum/observeTokens.js" afterPath="$PROJECT_DIR$/app/client/lib/ethereum/observeTokens.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/lib/ethereum/observeTransactions.js" afterPath="$PROJECT_DIR$/app/client/lib/ethereum/observeTransactions.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/lib/ethereum/observeWallets.js" afterPath="$PROJECT_DIR$/app/client/lib/ethereum/observeWallets.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/lib/ethereum/tokenInterface.js" afterPath="$PROJECT_DIR$/app/client/lib/ethereum/tokenInterface.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/lib/ethereum/walletConnector.js" afterPath="$PROJECT_DIR$/app/client/lib/ethereum/walletConnector.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/lib/ethereum/walletInterface.js" afterPath="$PROJECT_DIR$/app/client/lib/ethereum/walletInterface.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/lib/helpers/helperFunctions.js" afterPath="$PROJECT_DIR$/app/client/lib/helpers/helperFunctions.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/lib/helpers/templateHelpers.js" afterPath="$PROJECT_DIR$/app/client/lib/helpers/templateHelpers.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/lib/thirdparty/chance.min.js" afterPath="$PROJECT_DIR$/app/client/lib/thirdparty/chance.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/lib/thirdparty/coinbase-widget.js" afterPath="$PROJECT_DIR$/app/client/lib/thirdparty/coinbase-widget.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/lib/wanchain/contractInterface.js" afterPath="$PROJECT_DIR$/app/client/lib/wanchain/contractInterface.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/mist.js" afterPath="$PROJECT_DIR$/app/client/mist.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/routes.js" afterPath="$PROJECT_DIR$/app/client/routes.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/styles/elements.import.less" afterPath="$PROJECT_DIR$/app/client/styles/elements.import.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/styles/main.less" afterPath="$PROJECT_DIR$/app/client/styles/main.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/elements/account.html" afterPath="$PROJECT_DIR$/app/client/templates/elements/account.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/elements/account.js" afterPath="$PROJECT_DIR$/app/client/templates/elements/account.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/elements/accountLink.html" afterPath="$PROJECT_DIR$/app/client/templates/elements/accountLink.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/elements/accountLink.js" afterPath="$PROJECT_DIR$/app/client/templates/elements/accountLink.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/elements/balance.html" afterPath="$PROJECT_DIR$/app/client/templates/elements/balance.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/elements/balance.js" afterPath="$PROJECT_DIR$/app/client/templates/elements/balance.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/elements/compileContract.html" afterPath="$PROJECT_DIR$/app/client/templates/elements/compileContract.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/elements/compileContract.js" afterPath="$PROJECT_DIR$/app/client/templates/elements/compileContract.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/elements/createdContractAt.html" afterPath="$PROJECT_DIR$/app/client/templates/elements/createdContractAt.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/elements/eventsTable.html" afterPath="$PROJECT_DIR$/app/client/templates/elements/eventsTable.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/elements/eventsTable.js" afterPath="$PROJECT_DIR$/app/client/templates/elements/eventsTable.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/elements/executeContract.html" afterPath="$PROJECT_DIR$/app/client/templates/elements/executeContract.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/elements/executeContract.js" afterPath="$PROJECT_DIR$/app/client/templates/elements/executeContract.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/elements/inputs/address.html" afterPath="$PROJECT_DIR$/app/client/templates/elements/inputs/address.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/elements/inputs/address.js" afterPath="$PROJECT_DIR$/app/client/templates/elements/inputs/address.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/elements/inputs/bool.html" afterPath="$PROJECT_DIR$/app/client/templates/elements/inputs/bool.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/elements/inputs/bytes.html" afterPath="$PROJECT_DIR$/app/client/templates/elements/inputs/bytes.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/elements/inputs/int.html" afterPath="$PROJECT_DIR$/app/client/templates/elements/inputs/int.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/elements/inputs/json.html" afterPath="$PROJECT_DIR$/app/client/templates/elements/inputs/json.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/elements/inputs/string.html" afterPath="$PROJECT_DIR$/app/client/templates/elements/inputs/string.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/elements/inputs/uint.html" afterPath="$PROJECT_DIR$/app/client/templates/elements/inputs/uint.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/elements/selectableUnit.html" afterPath="$PROJECT_DIR$/app/client/templates/elements/selectableUnit.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/elements/selectableUnit.js" afterPath="$PROJECT_DIR$/app/client/templates/elements/selectableUnit.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/elements/tokenBox.html" afterPath="$PROJECT_DIR$/app/client/templates/elements/tokenBox.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/elements/tokenBox.js" afterPath="$PROJECT_DIR$/app/client/templates/elements/tokenBox.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/elements/transactionTable.html" afterPath="$PROJECT_DIR$/app/client/templates/elements/transactionTable.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/elements/transactionTable.js" afterPath="$PROJECT_DIR$/app/client/templates/elements/transactionTable.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/elements/vulnerabilities.html" afterPath="$PROJECT_DIR$/app/client/templates/elements/vulnerabilities.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/elements/vulnerabilities.js" afterPath="$PROJECT_DIR$/app/client/templates/elements/vulnerabilities.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/layout/header.html" afterPath="$PROJECT_DIR$/app/client/templates/layout/header.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/layout/header.js" afterPath="$PROJECT_DIR$/app/client/templates/layout/header.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/layout/main.html" afterPath="$PROJECT_DIR$/app/client/templates/layout/main.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/layout/notFound.html" afterPath="$PROJECT_DIR$/app/client/templates/layout/notFound.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/account.html" afterPath="$PROJECT_DIR$/app/client/templates/views/account.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/account.js" afterPath="$PROJECT_DIR$/app/client/templates/views/account.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/account_create.html" afterPath="$PROJECT_DIR$/app/client/templates/views/account_create.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/account_create.js" afterPath="$PROJECT_DIR$/app/client/templates/views/account_create.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/contracts.html" afterPath="$PROJECT_DIR$/app/client/templates/views/contracts.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/contracts.js" afterPath="$PROJECT_DIR$/app/client/templates/views/contracts.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/dashboard.html" afterPath="$PROJECT_DIR$/app/client/templates/views/dashboard.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/dashboard.js" afterPath="$PROJECT_DIR$/app/client/templates/views/dashboard.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/deployContract.html" afterPath="$PROJECT_DIR$/app/client/templates/views/deployContract.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/deployContract.js" afterPath="$PROJECT_DIR$/app/client/templates/views/deployContract.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/addCustomContract.html" afterPath="$PROJECT_DIR$/app/client/templates/views/modals/addCustomContract.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/addCustomContract.js" afterPath="$PROJECT_DIR$/app/client/templates/views/modals/addCustomContract.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/addToken.html" afterPath="$PROJECT_DIR$/app/client/templates/views/modals/addToken.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/addToken.js" afterPath="$PROJECT_DIR$/app/client/templates/views/modals/addToken.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/backupContractAddress.html" afterPath="$PROJECT_DIR$/app/client/templates/views/modals/backupContractAddress.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/choiceAccount.html" afterPath="$PROJECT_DIR$/app/client/templates/views/modals/choiceAccount.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/choiceAccount.js" afterPath="$PROJECT_DIR$/app/client/templates/views/modals/choiceAccount.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/eventInfo.html" afterPath="$PROJECT_DIR$/app/client/templates/views/modals/eventInfo.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/eventInfo.js" afterPath="$PROJECT_DIR$/app/client/templates/views/modals/eventInfo.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/identicon.html" afterPath="$PROJECT_DIR$/app/client/templates/views/modals/identicon.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/identicon.js" afterPath="$PROJECT_DIR$/app/client/templates/views/modals/identicon.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/interface.html" afterPath="$PROJECT_DIR$/app/client/templates/views/modals/interface.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/interface.js" afterPath="$PROJECT_DIR$/app/client/templates/views/modals/interface.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/loading.html" afterPath="$PROJECT_DIR$/app/client/templates/views/modals/loading.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/otaRefundInfo.html" afterPath="$PROJECT_DIR$/app/client/templates/views/modals/otaRefundInfo.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/otaRefundInfo.js" afterPath="$PROJECT_DIR$/app/client/templates/views/modals/otaRefundInfo.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/qrCode.html" afterPath="$PROJECT_DIR$/app/client/templates/views/modals/qrCode.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/qrCode.js" afterPath="$PROJECT_DIR$/app/client/templates/views/modals/qrCode.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/selectAccount.html" afterPath="$PROJECT_DIR$/app/client/templates/views/modals/selectAccount.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/selectAccount.js" afterPath="$PROJECT_DIR$/app/client/templates/views/modals/selectAccount.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/sendTransactionInfo.html" afterPath="$PROJECT_DIR$/app/client/templates/views/modals/sendTransactionInfo.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/sendTransactionInfo.js" afterPath="$PROJECT_DIR$/app/client/templates/views/modals/sendTransactionInfo.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/transactionInfo.html" afterPath="$PROJECT_DIR$/app/client/templates/views/modals/transactionInfo.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/transactionInfo.js" afterPath="$PROJECT_DIR$/app/client/templates/views/modals/transactionInfo.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/waddressInput.html" afterPath="$PROJECT_DIR$/app/client/templates/views/modals/waddressInput.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/waddressInput.js" afterPath="$PROJECT_DIR$/app/client/templates/views/modals/waddressInput.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/otaRefund.html" afterPath="$PROJECT_DIR$/app/client/templates/views/otaRefund.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/otaRefund.js" afterPath="$PROJECT_DIR$/app/client/templates/views/otaRefund.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/send.html" afterPath="$PROJECT_DIR$/app/client/templates/views/send.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/send.js" afterPath="$PROJECT_DIR$/app/client/templates/views/send.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/window.js" afterPath="$PROJECT_DIR$/app/client/window.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/i18n/app.ca.i18n.json" afterPath="$PROJECT_DIR$/app/i18n/app.ca.i18n.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/i18n/app.de.i18n.json" afterPath="$PROJECT_DIR$/app/i18n/app.de.i18n.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/i18n/app.en.i18n.json" afterPath="$PROJECT_DIR$/app/i18n/app.en.i18n.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/i18n/app.es.i18n.json" afterPath="$PROJECT_DIR$/app/i18n/app.es.i18n.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/i18n/app.fa.i18n.json" afterPath="$PROJECT_DIR$/app/i18n/app.fa.i18n.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/i18n/app.fr.i18n.json" afterPath="$PROJECT_DIR$/app/i18n/app.fr.i18n.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/i18n/app.ja.i18n.json" afterPath="$PROJECT_DIR$/app/i18n/app.ja.i18n.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/i18n/app.ko.i18n.json" afterPath="$PROJECT_DIR$/app/i18n/app.ko.i18n.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/i18n/app.pt.i18n.json" afterPath="$PROJECT_DIR$/app/i18n/app.pt.i18n.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/i18n/app.ro.i18n.json" afterPath="$PROJECT_DIR$/app/i18n/app.ro.i18n.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/i18n/app.ru.i18n.json" afterPath="$PROJECT_DIR$/app/i18n/app.ru.i18n.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/i18n/app.ua.i18n.json" afterPath="$PROJECT_DIR$/app/i18n/app.ua.i18n.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/i18n/app.zh-TW.i18n.json" afterPath="$PROJECT_DIR$/app/i18n/app.zh-TW.i18n.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/i18n/app.zh.i18n.json" afterPath="$PROJECT_DIR$/app/i18n/app.zh.i18n.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/i18n/wallet.ca.i18n.json" afterPath="$PROJECT_DIR$/app/i18n/wallet.ca.i18n.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/i18n/wallet.de.i18n.json" afterPath="$PROJECT_DIR$/app/i18n/wallet.de.i18n.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/i18n/wallet.en.i18n.json" afterPath="$PROJECT_DIR$/app/i18n/wallet.en.i18n.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/i18n/wallet.es.i18n.json" afterPath="$PROJECT_DIR$/app/i18n/wallet.es.i18n.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/i18n/wallet.fr.i18n.json" afterPath="$PROJECT_DIR$/app/i18n/wallet.fr.i18n.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/i18n/wallet.ja.i18n.json" afterPath="$PROJECT_DIR$/app/i18n/wallet.ja.i18n.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/i18n/wallet.ko.i18n.json" afterPath="$PROJECT_DIR$/app/i18n/wallet.ko.i18n.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/i18n/wallet.pt.i18n.json" afterPath="$PROJECT_DIR$/app/i18n/wallet.pt.i18n.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/i18n/wallet.ro.i18n.json" afterPath="$PROJECT_DIR$/app/i18n/wallet.ro.i18n.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/i18n/wallet.ru.i18n.json" afterPath="$PROJECT_DIR$/app/i18n/wallet.ru.i18n.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/i18n/wallet.ua.i18n.json" afterPath="$PROJECT_DIR$/app/i18n/wallet.ua.i18n.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/i18n/wallet.zh-TW.i18n.json" afterPath="$PROJECT_DIR$/app/i18n/wallet.zh-TW.i18n.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/i18n/wallet.zh.i18n.json" afterPath="$PROJECT_DIR$/app/i18n/wallet.zh.i18n.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/project-tap.i18n" afterPath="$PROJECT_DIR$/app/project-tap.i18n" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/public/bitcoin-icon.svg" afterPath="$PROJECT_DIR$/app/public/bitcoin-icon.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/public/fontawesome/animated.less" afterPath="$PROJECT_DIR$/app/public/fontawesome/animated.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/public/fontawesome/bordered-pulled.less" afterPath="$PROJECT_DIR$/app/public/fontawesome/bordered-pulled.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/public/fontawesome/core.less" afterPath="$PROJECT_DIR$/app/public/fontawesome/core.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/public/fontawesome/fixed-width.less" afterPath="$PROJECT_DIR$/app/public/fontawesome/fixed-width.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/public/fontawesome/font-awesome.less" afterPath="$PROJECT_DIR$/app/public/fontawesome/font-awesome.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/public/fontawesome/icons.less" afterPath="$PROJECT_DIR$/app/public/fontawesome/icons.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/public/fontawesome/larger.less" afterPath="$PROJECT_DIR$/app/public/fontawesome/larger.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/public/fontawesome/list.less" afterPath="$PROJECT_DIR$/app/public/fontawesome/list.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/public/fontawesome/mixins.less" afterPath="$PROJECT_DIR$/app/public/fontawesome/mixins.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/public/fontawesome/path.less" afterPath="$PROJECT_DIR$/app/public/fontawesome/path.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/public/fontawesome/rotated-flipped.less" afterPath="$PROJECT_DIR$/app/public/fontawesome/rotated-flipped.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/public/fontawesome/stacked.less" afterPath="$PROJECT_DIR$/app/public/fontawesome/stacked.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/public/fontawesome/variables.less" afterPath="$PROJECT_DIR$/app/public/fontawesome/variables.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/public/i18n/de.json" afterPath="$PROJECT_DIR$/app/public/i18n/de.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/public/i18n/es.json" afterPath="$PROJECT_DIR$/app/public/i18n/es.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/public/i18n/fa.json" afterPath="$PROJECT_DIR$/app/public/i18n/fa.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/public/i18n/ko.json" afterPath="$PROJECT_DIR$/app/public/i18n/ko.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/public/loading.css" afterPath="$PROJECT_DIR$/app/public/loading.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/public/sockjs/info" afterPath="$PROJECT_DIR$/app/public/sockjs/info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/tests/mocha/client/sampleClientTest.js" afterPath="$PROJECT_DIR$/app/tests/mocha/client/sampleClientTest.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/tests/mocha/server/sampleServerTest.js" afterPath="$PROJECT_DIR$/app/tests/mocha/server/sampleServerTest.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/02b455f4c0af3eded31fa30d60cfbd102aeb7143.css" afterPath="$PROJECT_DIR$/build/02b455f4c0af3eded31fa30d60cfbd102aeb7143.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/53c9069d40730c170019815f60e23b125869a233.js" afterPath="$PROJECT_DIR$/build/53c9069d40730c170019815f60e23b125869a233.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/8b6a88501779bf9280244f0c67f8a8576b03dd58.js" afterPath="$PROJECT_DIR$/build/8b6a88501779bf9280244f0c67f8a8576b03dd58.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/bitcoin-icon.svg" afterPath="$PROJECT_DIR$/build/bitcoin-icon.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/fontawesome/animated.less" afterPath="$PROJECT_DIR$/build/fontawesome/animated.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/fontawesome/bordered-pulled.less" afterPath="$PROJECT_DIR$/build/fontawesome/bordered-pulled.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/fontawesome/core.less" afterPath="$PROJECT_DIR$/build/fontawesome/core.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/fontawesome/fixed-width.less" afterPath="$PROJECT_DIR$/build/fontawesome/fixed-width.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/fontawesome/font-awesome.less" afterPath="$PROJECT_DIR$/build/fontawesome/font-awesome.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/fontawesome/icons.less" afterPath="$PROJECT_DIR$/build/fontawesome/icons.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/fontawesome/larger.less" afterPath="$PROJECT_DIR$/build/fontawesome/larger.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/fontawesome/list.less" afterPath="$PROJECT_DIR$/build/fontawesome/list.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/fontawesome/mixins.less" afterPath="$PROJECT_DIR$/build/fontawesome/mixins.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/fontawesome/path.less" afterPath="$PROJECT_DIR$/build/fontawesome/path.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/fontawesome/rotated-flipped.less" afterPath="$PROJECT_DIR$/build/fontawesome/rotated-flipped.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/fontawesome/stacked.less" afterPath="$PROJECT_DIR$/build/fontawesome/stacked.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/fontawesome/variables.less" afterPath="$PROJECT_DIR$/build/fontawesome/variables.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/i18n/de.json" afterPath="$PROJECT_DIR$/build/i18n/de.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/i18n/es.json" afterPath="$PROJECT_DIR$/build/i18n/es.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/i18n/fa.json" afterPath="$PROJECT_DIR$/build/i18n/fa.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/i18n/fr.json" afterPath="$PROJECT_DIR$/build/i18n/fr.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/i18n/ja.json" afterPath="$PROJECT_DIR$/build/i18n/ja.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/i18n/ko.json" afterPath="$PROJECT_DIR$/build/i18n/ko.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/i18n/pt.json" afterPath="$PROJECT_DIR$/build/i18n/pt.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/i18n/ro.json" afterPath="$PROJECT_DIR$/build/i18n/ro.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/i18n/ru.json" afterPath="$PROJECT_DIR$/build/i18n/ru.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/i18n/tap-i18n.json" afterPath="$PROJECT_DIR$/build/i18n/tap-i18n.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/i18n/ua.json" afterPath="$PROJECT_DIR$/build/i18n/ua.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/i18n/zh-TW.json" afterPath="$PROJECT_DIR$/build/i18n/zh-TW.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/i18n/zh.json" afterPath="$PROJECT_DIR$/build/i18n/zh.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/index.html" afterPath="$PROJECT_DIR$/build/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/loading.css" afterPath="$PROJECT_DIR$/build/loading.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/packages/ethereum_dapp-styles/icons/Simple-Line-Icons.svg" afterPath="$PROJECT_DIR$/build/packages/ethereum_dapp-styles/icons/Simple-Line-Icons.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/sockjs/info" afterPath="$PROJECT_DIR$/build/sockjs/info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascripts/main.js" afterPath="$PROJECT_DIR$/javascripts/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/params.json" afterPath="$PROJECT_DIR$/params.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stylesheets/github-dark.css" afterPath="$PROJECT_DIR$/stylesheets/github-dark.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stylesheets/print.css" afterPath="$PROJECT_DIR$/stylesheets/print.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stylesheets/stylesheet.css" afterPath="$PROJECT_DIR$/stylesheets/stylesheet.css" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -22,31 +231,35 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="account.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/client/templates/views/account.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="756">
+            <state relative-caret-position="2112">
               <caret line="96" column="32" lean-forward="false" selection-start-line="96" selection-start-column="32" selection-end-line="96" selection-end-column="32" />
-              <folding>
-                <element signature="e#4667#6950#0#Spacebars" expanded="false" />
-                <element signature="e#7002#7461#0#Spacebars" expanded="false" />
-                <element signature="e#11711#11927#0#Spacebars" expanded="false" />
-                <marker date="1510821762465" expanded="false" signature="5096:5113" ph="..." />
-              </folding>
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="account.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/client/templates/views/account.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="133">
+              <caret line="137" column="47" lean-forward="false" selection-start-line="137" selection-start-column="47" selection-end-line="137" selection-end-column="47" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="account.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/client/templates/views/account.js">
+        <entry file="file://$PROJECT_DIR$/app/client/templates/elements/account.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="262">
-              <caret line="176" column="33" lean-forward="false" selection-start-line="176" selection-start-column="33" selection-end-line="176" selection-end-column="33" />
-              <folding>
-                <element signature="e#188#2411#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="94">
+              <caret line="41" column="23" lean-forward="true" selection-start-line="41" selection-start-column="23" selection-end-line="41" selection-end-column="23" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -54,8 +267,8 @@
       <file leaf-file-name="send.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/client/templates/views/send.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="18">
-              <caret line="6" column="11" lean-forward="false" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
+            <state relative-caret-position="132">
+              <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -64,11 +277,121 @@
       <file leaf-file-name="send.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/client/templates/views/send.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-23">
+            <state relative-caret-position="14630">
               <caret line="669" column="28" lean-forward="false" selection-start-line="669" selection-start-column="28" selection-end-line="669" selection-end-column="28" />
               <folding>
-                <element signature="e#4336#6692#0" expanded="false" />
-                <element signature="e#14657#14692#0" expanded="false" />
+                <marker date="1511439040997" expanded="false" signature="0:46" ph="/** Template Controllers ...*/" />
+                <marker date="1511439040997" expanded="true" signature="48:119" ph="/** The add user template ...*/" />
+                <marker date="1511439040997" expanded="true" signature="122:366" ph="/** The default gas to provide for estimates. This is set manually, ...*/" />
+                <marker date="1511439040997" expanded="true" signature="443:758" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="618:646" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="727:746" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="819:1828" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="1079:1777" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="1860:2504" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="2097:2441" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="2548:2915" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="2630:2913" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="2962:4287" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="3240:3362" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="3368:3500" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="3585:3672" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="3635:3669" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="3764:3970" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="3911:3967" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="4059:4283" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="4161:4280" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="4336:6741" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="4428:4600" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="4620:4662" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="4960:5117" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="5005:5114" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="5226:5491" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="5324:5370" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="5407:5458" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="5553:6737" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="5944:6564" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="6013:6217" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="6040:6146" ph="{&quot;from&quot;: address...}" />
+                <marker date="1511439040997" expanded="true" signature="6291:6530" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="6420:6488" ph="{&quot;gas&quot;: defaultEstimateGas...}" />
+                <marker date="1511439040997" expanded="true" signature="6570:6734" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="6640:6693" ph="{&quot;from&quot;: address...}" />
+                <marker date="1511439040997" expanded="true" signature="6777:11421" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="6804:6849" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="6879:7042" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="7079:7124" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="7157:7245" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="7276:7350" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="7391:7479" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="7503:7609" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="7637:7972" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="8011:8083" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="8111:8656" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="8443:8584" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="8590:8636" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="8684:8920" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="8951:9750" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="9123:9455" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="9461:9692" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="9781:9897" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="9923:10078" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="10111:10711" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="10587:10704" ph="{&quot;name&quot;: token.name...}" />
+                <marker date="1511439040997" expanded="true" signature="10750:11046" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="11095:11259" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="11303:11419" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="11455:20843" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="11506:11738" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="11636:11682" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="11688:11735" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="11778:11875" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="11922:12059" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="12113:12369" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="12481:13059" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="12545:12784" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="12790:13056" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="13109:13221" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="13261:20840" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="14015:20837" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="14583:14667" ph="{&quot;content&quot;: 'i18n:wallet.contracts.error.noDataProvided'...}" />
+                <marker date="1511439040997" expanded="true" signature="14805:14881" ph="{&quot;content&quot;: 'i18n:wallet.send.error.emptyWallet'...}" />
+                <marker date="1511439040997" expanded="true" signature="14888:15051" ph="//..." />
+                <marker date="1511439040997" expanded="true" signature="15111:15186" ph="{&quot;content&quot;: 'i18n:wallet.send.error.noReceiver'...}" />
+                <marker date="1511439040997" expanded="true" signature="15222:15632" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="15342:15418" ph="{&quot;content&quot;: 'i18n:wallet.send.error.noAmount'...}" />
+                <marker date="1511439040997" expanded="true" signature="15542:15624" ph="{&quot;content&quot;: 'i18n:wallet.send.error.notEnoughFunds'...}" />
+                <marker date="1511439040997" expanded="true" signature="15638:16195" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="15671:15798" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="15712:15790" ph="{&quot;content&quot;: 'i18n:wallet.send.error.noReceiver'...}" />
+                <marker date="1511439040997" expanded="true" signature="16106:16188" ph="{&quot;content&quot;: 'i18n:wallet.send.error.notEnoughFunds'...}" />
+                <marker date="1511439040997" expanded="true" signature="16287:19774" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="16605:17640" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="16711:16834" ph="{&quot;gasPrice&quot;: gasPrice...}" />
+                <marker date="1511439040997" expanded="true" signature="16859:17613" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="16965:17457" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="17463:17606" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="17534:17596" ph="{&quot;content&quot;: error.message...}" />
+                <marker date="1511439040997" expanded="true" signature="17646:19769" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="17747:17895" ph="{&quot;from&quot;: selectedAccount.address...}" />
+                <marker date="1511439040997" expanded="true" signature="17943:18776" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="18007:18767" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="18117:18603" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="18609:18759" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="18683:18748" ph="{&quot;content&quot;: error.message...}" />
+                <marker date="1511439040997" expanded="true" signature="18805:19711" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="18872:19702" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="18891:19480" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="19181:19368" ph="{&quot;from&quot;: txArgs.from...}" />
+                <marker date="1511439040997" expanded="true" signature="19485:19693" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="19617:19682" ph="{&quot;content&quot;: error.message...}" />
+                <marker date="1511439040997" expanded="true" signature="19721:19763" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="19857:20752" ph="{...}" />
+                <marker date="1511439040997" expanded="true" signature="19926:20201" ph="{&quot;from&quot;: selectedAccount.address...}" />
+                <marker date="1511439040997" expanded="true" signature="20270:20660" ph="{&quot;template&quot;: 'views_modals_sendTransactionInfo'...}" />
+                <marker date="1511439040997" expanded="true" signature="20334:20609" ph="{&quot;from&quot;: selectedAccount.address...}" />
+                <marker date="1511439040997" expanded="true" signature="20661:20704" ph="{&quot;class&quot;: 'send-transaction-info'...}" />
+                <marker date="1511439040997" expanded="true" signature="20758:20833" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -77,9 +400,133 @@
       <file leaf-file-name="observeTransactions.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/client/lib/ethereum/observeTransactions.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="20" column="19" lean-forward="true" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
-              <folding />
+            <state relative-caret-position="440">
+              <caret line="20" column="19" lean-forward="false" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
+              <folding>
+                <marker date="1510283669743" expanded="true" signature="1:105" ph="/** Add a pending transaction to the transaction list, after sending ...*/" />
+                <marker date="1510283669743" expanded="true" signature="206:1133" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="348:504" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="536:903" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="543:902" ph="{&quot;tokenId&quot;: tokenId...}" />
+                <marker date="1510283669743" expanded="true" signature="971:1018" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="983:1017" ph="{&quot;transactions&quot;: txId...}" />
+                <marker date="1510283669743" expanded="true" signature="1082:1129" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="1094:1128" ph="{&quot;transactions&quot;: txId...}" />
+                <marker date="1510283669743" expanded="true" signature="1138:1338" ph="/** Add new in/outgoing transaction ...*/" />
+                <marker date="1510283669743" expanded="true" signature="1386:2642" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="1508:1572" ph="{&quot;to&quot;: to...}" />
+                <marker date="1510283669743" expanded="true" signature="1654:2598" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="1673:2592" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="1760:2580" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="1802:2566" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="1898:2546" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="2059:2181" ph="{&quot;_id&quot;: txId...}" />
+                <marker date="1510283669743" expanded="true" signature="2423:2524" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="2645:2968" ph="/** Updates a transaction. ...*/" />
+                <marker date="1510283669743" expanded="true" signature="3036:9140" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="3453:4003" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="4036:7391" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="4148:7059" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="4222:7048" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="4266:7034" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="4319:4393" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="4326:4392" ph="{&quot;deployedData&quot;: code...}" />
+                <marker date="1510283669743" expanded="true" signature="4507:7016" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="4592:4872" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="4599:4871" ph="{&quot;address&quot;: receipt.contractAddress...}" />
+                <marker date="1510283669743" expanded="true" signature="5284:6994" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="5427:5808" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="5434:5807" ph="{&quot;address&quot;: receipt.contractAddress...}" />
+                <marker date="1510283669743" expanded="true" signature="6061:6464" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="6118:6205" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="6125:6204" ph="{&quot;name&quot;: i...}" />
+                <marker date="1510283669743" expanded="true" signature="6299:6432" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="6306:6431" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="6533:6721" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="6590:6689" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="6597:6688" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="6787:6965" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="6844:6933" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="6851:6932" ph="{&quot;symbol&quot;: i...}" />
+                <marker date="1510283669743" expanded="true" signature="7407:7814" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="7527:7714" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="7931:9138" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="8183:8993" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="8276:8981" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="8301:8967" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="8405:8947" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="8480:8706" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="8712:8925" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="8769:8897" ph="{&quot;content&quot;: warningText...}" />
+                <marker date="1510283669743" expanded="true" signature="8999:9132" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="9040:9120" ph="{&quot;content&quot;: warningText...}" />
+                <marker date="1510283669743" expanded="true" signature="9144:9226" ph="/** Observe transactions and pending confirmations ...*/" />
+                <marker date="1510283669743" expanded="true" signature="9259:19162" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="9267:9432" ph="/** Checking for confirmations of transactions. ...*/" />
+                <marker date="1510283669743" expanded="true" signature="9485:14836" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="9598:14830" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="9660:14670" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="9751:14656" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="10101:10203" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="10305:11771" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="10612:11746" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="10713:11718" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="11224:11325" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="11232:11324" ph="{&quot;disabled&quot;: ''...}" />
+                <marker date="1510283669743" expanded="true" signature="11485:11688" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="11551:11652" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="11557:11651" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="11904:14638" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="12053:14614" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="12154:14586" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="12195:14556" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="12347:13031" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="12691:12857" ph="{&quot;content&quot;: warningText...}" />
+                <marker date="1510283669743" expanded="true" signature="13065:14522" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="13109:13238" ph="//..." />
+                <marker date="1510283669743" expanded="true" signature="13341:14481" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="13394:14439" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="13486:14183" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="13882:14023" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="13890:14022" ph="{&quot;disabled&quot;: ''...}" />
+                <marker date="1510283669743" expanded="true" signature="14189:14321" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="14753:14818" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="14843:14970" ph="/** Observe transactions, listen for new created transactions. ...*/" />
+                <marker date="1510283669743" expanded="true" signature="15055:19157" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="15065:15229" ph="/** This will observe the transactions creation and create watchers for outgoing transactions, to see when they are mined. ...*/" />
+                <marker date="1510283669743" expanded="true" signature="15267:17862" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="15440:15514" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="15452:15513" ph="{&quot;transactions&quot;: newDocument._id...}" />
+                <marker date="1510283669743" expanded="true" signature="15571:15645" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="15583:15644" ph="{&quot;transactions&quot;: newDocument._id...}" />
+                <marker date="1510283669743" expanded="true" signature="15743:15838" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="15944:16019" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="16451:17852" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="16758:17836" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="16821:17629" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="16954:17607" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="17020:17579" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="17085:17549" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="17269:17426" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="17635:17818" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="17872:17962" ph="/** Will check if the transaction is confirmed ...*/" />
+                <marker date="1510283669743" expanded="true" signature="18001:18498" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="18090:18164" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="18102:18163" ph="{&quot;transactions&quot;: newDocument._id...}" />
+                <marker date="1510283669743" expanded="true" signature="18221:18295" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="18233:18294" ph="{&quot;transactions&quot;: newDocument._id...}" />
+                <marker date="1510283669743" expanded="true" signature="18393:18488" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="18508:18607" ph="/** Remove transactions confirmations from the accounts ...*/" />
+                <marker date="1510283669743" expanded="true" signature="18644:19151" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="18699:18766" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="18707:18765" ph="{&quot;transactions&quot;: document._id...}" />
+                <marker date="1510283669743" expanded="true" signature="18820:18887" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="18828:18886" ph="{&quot;transactions&quot;: document._id...}" />
+                <marker date="1510283669743" expanded="true" signature="18947:19014" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="18955:19013" ph="{&quot;transactions&quot;: document._id...}" />
+                <marker date="1510283669743" expanded="true" signature="19072:19139" ph="{...}" />
+                <marker date="1510283669743" expanded="true" signature="19080:19138" ph="{&quot;transactions&quot;: document._id...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -87,9 +534,32 @@
       <file leaf-file-name="header.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/client/templates/layout/header.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
+            <state relative-caret-position="550">
               <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-              <folding />
+              <folding>
+                <marker date="1510647142436" expanded="false" signature="0:46" ph="/** Template Controllers ...*/" />
+                <marker date="1510647142436" expanded="true" signature="48:120" ph="/** The header template ...*/" />
+                <marker date="1510647142436" expanded="true" signature="168:196" ph="{...}" />
+                <marker date="1510647142436" expanded="true" signature="235:3484" ph="{...}" />
+                <marker date="1510647142436" expanded="true" signature="241:346" ph="/** Returns the correct url for the send to route ...*/" />
+                <marker date="1510647142436" expanded="true" signature="374:802" ph="{...}" />
+                <marker date="1510647142436" expanded="true" signature="808:927" ph="/** Calculates the total balance of all accounts + wallets. ...*/" />
+                <marker date="1510647142436" expanded="true" signature="958:1297" ph="{...}" />
+                <marker date="1510647142436" expanded="true" signature="1303:1404" ph="/** Formats the last block number ...*/" />
+                <marker date="1510647142436" expanded="true" signature="1444:1514" ph="{...}" />
+                <marker date="1510647142436" expanded="true" signature="1520:1599" ph="/** Gets the time since the last block ...*/" />
+                <marker date="1510647142436" expanded="true" signature="1634:2393" ph="{...}" />
+                <marker date="1510647142436" expanded="true" signature="1957:2088" ph="{...}" />
+                <marker date="1510647142436" expanded="true" signature="2109:2205" ph="{...}" />
+                <marker date="1510647142436" expanded="true" signature="2225:2298" ph="{...}" />
+                <marker date="1510647142436" expanded="true" signature="2304:2387" ph="{...}" />
+                <marker date="1510647142436" expanded="true" signature="2399:2485" ph="/** Formats the time since the last block ...*/" />
+                <marker date="1510647142436" expanded="true" signature="2524:3482" ph="{...}" />
+                <marker date="1510647142436" expanded="true" signature="2889:3042" ph="{...}" />
+                <marker date="1510647142436" expanded="true" signature="3063:3181" ph="{...}" />
+                <marker date="1510647142436" expanded="true" signature="3201:3353" ph="{...}" />
+                <marker date="1510647142436" expanded="true" signature="3359:3476" ph="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -97,14 +567,9 @@
       <file leaf-file-name="header.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/client/templates/layout/header.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="234">
+            <state relative-caret-position="286">
               <caret line="13" column="12" lean-forward="false" selection-start-line="13" selection-start-column="12" selection-end-line="13" selection-end-column="12" />
-              <folding>
-                <element signature="e#1939#1945#0#HTML" expanded="true" />
-                <element signature="e#1945#1951#0#HTML" expanded="true" />
-                <element signature="e#1952#1958#0#HTML" expanded="true" />
-                <element signature="e#1958#1964#0#HTML" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -174,7 +639,6 @@
         <option value="$PROJECT_DIR$/app/client/templates/elements/accountwan.js" />
         <option value="$PROJECT_DIR$/app/client/templates/views/sendota.html" />
         <option value="$PROJECT_DIR$/app/client/templates/views/sendota.js" />
-        <option value="$PROJECT_DIR$/app/client/templates/elements/account.js" />
         <option value="$PROJECT_DIR$/app/client/templates/elements/account.html" />
         <option value="$PROJECT_DIR$/app/client/templates/views/account_wan.js" />
         <option value="$PROJECT_DIR$/app/client/templates/views/dashboard.js" />
@@ -205,20 +669,27 @@
         <option value="$PROJECT_DIR$/app/client/templates/elements/accountLink.html" />
         <option value="$PROJECT_DIR$/app/client/templates/views/modals/otaRefundInfo.html" />
         <option value="$PROJECT_DIR$/app/client/templates/views/account.js" />
+        <option value="$PROJECT_DIR$/app/client/templates/elements/account.js" />
       </list>
     </option>
   </component>
   <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
   <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <annotation-enable>false</annotation-enable>
+    <other-services-enabled>true</other-services-enabled>
+  </component>
   <component name="JsGulpfileManager">
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds">
     <option name="x" value="65" />
     <option name="y" value="-4" />
-    <option name="width" value="1855" />
-    <option name="height" value="1084" />
+    <option name="width" value="1851" />
+    <option name="height" value="911" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -318,55 +789,114 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
-          <expand>
-            <path>
-              <item name="meteor-dapp-wallet" type="b2602c69:ProjectViewProjectNode" />
-              <item name="meteor-dapp-wallet" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="meteor-dapp-wallet" type="b2602c69:ProjectViewProjectNode" />
-              <item name="meteor-dapp-wallet" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="meteor-dapp-wallet" type="b2602c69:ProjectViewProjectNode" />
-              <item name="meteor-dapp-wallet" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="meteor-dapp-wallet" type="b2602c69:ProjectViewProjectNode" />
-              <item name="meteor-dapp-wallet" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="meteor-dapp-wallet" type="b2602c69:ProjectViewProjectNode" />
-              <item name="meteor-dapp-wallet" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meteor-dapp-wallet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meteor-dapp-wallet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meteor-dapp-wallet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meteor-dapp-wallet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meteor-dapp-wallet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meteor-dapp-wallet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meteor-dapp-wallet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meteor-dapp-wallet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meteor-dapp-wallet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meteor-dapp-wallet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="elements" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.file-colors" />
+    <property name="settings.editor.selected.configurable" value="Settings.JavaScript" />
     <property name="nodejs_interpreter_path" value="/usr/bin/node" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../meteor-package-elements" />
     <property name="HbShouldOpenHtmlAsHb" value="enabled" />
     <property name="js.meteor.project" value="true" />
     <property name="js.meteor.library.was.enabled" value="true" />
+    <property name="JavaScriptPreferStrict" value="false" />
+    <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -394,7 +924,7 @@
     </option>
   </component>
   <component name="RunManager" selected="Meteor.Wanwallet">
-    <configuration name="Wanwallet" type="meteor-app-runner" factoryName="Meteor" workingDirectory="$PROJECT_DIR$/app">
+    <configuration default="true" type="meteor-app-runner" factoryName="Meteor">
       <option name="exePath" value="/usr/local/bin/meteor" />
       <option name="startBrowserSettings">
         <browser url="http://localhost:3000" />
@@ -404,7 +934,23 @@
           <browser url="http://localhost:3000" />
         </startBrowserSettings>
       </meteor-runner-state>
+      <method />
     </configuration>
+    <configuration default="false" name="Wanwallet" type="meteor-app-runner" factoryName="Meteor" workingDirectory="$PROJECT_DIR$/app">
+      <option name="exePath" value="/usr/local/bin/meteor" />
+      <option name="startBrowserSettings">
+        <browser url="http://localhost:3000" />
+      </option>
+      <meteor-runner-state>
+        <startBrowserSettings>
+          <browser url="http://localhost:3000" />
+        </startBrowserSettings>
+      </meteor-runner-state>
+      <method />
+    </configuration>
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="Meteor.Wanwallet" />
+    </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
@@ -419,23 +965,24 @@
       <workItem from="1510283681342" duration="104989000" />
       <workItem from="1510724525246" duration="43679000" />
       <workItem from="1510832340533" duration="5140000" />
+      <workItem from="1511444425041" duration="834000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="153808000" />
+    <option name="totallyTimeSpent" value="154642000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
+    <frame x="65" y="-4" width="1851" height="911" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16375546" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16356674" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3539267" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37068063" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37070063" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -466,7 +1013,7 @@
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="processedProjectFiles" value="true" />
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -515,16 +1062,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="795">
           <caret line="416" column="30" lean-forward="false" selection-start-line="416" selection-start-column="30" selection-end-line="416" selection-end-column="30" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-            <element signature="e#578#1582#0" expanded="false" />
-            <element signature="e#1738#2385#0" expanded="false" />
-            <element signature="e#2491#2858#0" expanded="false" />
-            <element signature="e#2938#4226#0" expanded="false" />
-            <element signature="e#4286#6645#0" expanded="false" />
-            <element signature="e#6691#12194#0" expanded="false" />
-            <element signature="e#12239#19887#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -532,7 +1069,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2837">
           <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -561,13 +1097,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-357">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/client/templates/elements/account.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="49" column="23" lean-forward="true" selection-start-line="49" selection-start-column="23" selection-end-line="49" selection-end-column="23" />
         </state>
       </provider>
     </entry>
@@ -706,9 +1235,133 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/client/lib/ethereum/observeTransactions.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="20" column="19" lean-forward="true" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
-          <folding />
+        <state relative-caret-position="440">
+          <caret line="20" column="19" lean-forward="false" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
+          <folding>
+            <marker date="1510283669743" expanded="true" signature="1:105" ph="/** Add a pending transaction to the transaction list, after sending ...*/" />
+            <marker date="1510283669743" expanded="true" signature="206:1133" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="348:504" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="536:903" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="543:902" ph="{&quot;tokenId&quot;: tokenId...}" />
+            <marker date="1510283669743" expanded="true" signature="971:1018" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="983:1017" ph="{&quot;transactions&quot;: txId...}" />
+            <marker date="1510283669743" expanded="true" signature="1082:1129" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="1094:1128" ph="{&quot;transactions&quot;: txId...}" />
+            <marker date="1510283669743" expanded="true" signature="1138:1338" ph="/** Add new in/outgoing transaction ...*/" />
+            <marker date="1510283669743" expanded="true" signature="1386:2642" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="1508:1572" ph="{&quot;to&quot;: to...}" />
+            <marker date="1510283669743" expanded="true" signature="1654:2598" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="1673:2592" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="1760:2580" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="1802:2566" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="1898:2546" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="2059:2181" ph="{&quot;_id&quot;: txId...}" />
+            <marker date="1510283669743" expanded="true" signature="2423:2524" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="2645:2968" ph="/** Updates a transaction. ...*/" />
+            <marker date="1510283669743" expanded="true" signature="3036:9140" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="3453:4003" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="4036:7391" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="4148:7059" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="4222:7048" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="4266:7034" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="4319:4393" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="4326:4392" ph="{&quot;deployedData&quot;: code...}" />
+            <marker date="1510283669743" expanded="true" signature="4507:7016" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="4592:4872" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="4599:4871" ph="{&quot;address&quot;: receipt.contractAddress...}" />
+            <marker date="1510283669743" expanded="true" signature="5284:6994" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="5427:5808" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="5434:5807" ph="{&quot;address&quot;: receipt.contractAddress...}" />
+            <marker date="1510283669743" expanded="true" signature="6061:6464" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="6118:6205" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="6125:6204" ph="{&quot;name&quot;: i...}" />
+            <marker date="1510283669743" expanded="true" signature="6299:6432" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="6306:6431" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="6533:6721" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="6590:6689" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="6597:6688" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="6787:6965" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="6844:6933" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="6851:6932" ph="{&quot;symbol&quot;: i...}" />
+            <marker date="1510283669743" expanded="true" signature="7407:7814" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="7527:7714" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="7931:9138" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="8183:8993" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="8276:8981" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="8301:8967" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="8405:8947" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="8480:8706" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="8712:8925" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="8769:8897" ph="{&quot;content&quot;: warningText...}" />
+            <marker date="1510283669743" expanded="true" signature="8999:9132" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="9040:9120" ph="{&quot;content&quot;: warningText...}" />
+            <marker date="1510283669743" expanded="true" signature="9144:9226" ph="/** Observe transactions and pending confirmations ...*/" />
+            <marker date="1510283669743" expanded="true" signature="9259:19162" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="9267:9432" ph="/** Checking for confirmations of transactions. ...*/" />
+            <marker date="1510283669743" expanded="true" signature="9485:14836" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="9598:14830" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="9660:14670" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="9751:14656" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="10101:10203" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="10305:11771" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="10612:11746" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="10713:11718" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="11224:11325" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="11232:11324" ph="{&quot;disabled&quot;: ''...}" />
+            <marker date="1510283669743" expanded="true" signature="11485:11688" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="11551:11652" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="11557:11651" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="11904:14638" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="12053:14614" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="12154:14586" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="12195:14556" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="12347:13031" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="12691:12857" ph="{&quot;content&quot;: warningText...}" />
+            <marker date="1510283669743" expanded="true" signature="13065:14522" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="13109:13238" ph="//..." />
+            <marker date="1510283669743" expanded="true" signature="13341:14481" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="13394:14439" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="13486:14183" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="13882:14023" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="13890:14022" ph="{&quot;disabled&quot;: ''...}" />
+            <marker date="1510283669743" expanded="true" signature="14189:14321" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="14753:14818" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="14843:14970" ph="/** Observe transactions, listen for new created transactions. ...*/" />
+            <marker date="1510283669743" expanded="true" signature="15055:19157" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="15065:15229" ph="/** This will observe the transactions creation and create watchers for outgoing transactions, to see when they are mined. ...*/" />
+            <marker date="1510283669743" expanded="true" signature="15267:17862" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="15440:15514" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="15452:15513" ph="{&quot;transactions&quot;: newDocument._id...}" />
+            <marker date="1510283669743" expanded="true" signature="15571:15645" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="15583:15644" ph="{&quot;transactions&quot;: newDocument._id...}" />
+            <marker date="1510283669743" expanded="true" signature="15743:15838" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="15944:16019" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="16451:17852" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="16758:17836" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="16821:17629" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="16954:17607" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="17020:17579" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="17085:17549" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="17269:17426" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="17635:17818" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="17872:17962" ph="/** Will check if the transaction is confirmed ...*/" />
+            <marker date="1510283669743" expanded="true" signature="18001:18498" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="18090:18164" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="18102:18163" ph="{&quot;transactions&quot;: newDocument._id...}" />
+            <marker date="1510283669743" expanded="true" signature="18221:18295" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="18233:18294" ph="{&quot;transactions&quot;: newDocument._id...}" />
+            <marker date="1510283669743" expanded="true" signature="18393:18488" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="18508:18607" ph="/** Remove transactions confirmations from the accounts ...*/" />
+            <marker date="1510283669743" expanded="true" signature="18644:19151" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="18699:18766" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="18707:18765" ph="{&quot;transactions&quot;: document._id...}" />
+            <marker date="1510283669743" expanded="true" signature="18820:18887" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="18828:18886" ph="{&quot;transactions&quot;: document._id...}" />
+            <marker date="1510283669743" expanded="true" signature="18947:19014" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="18955:19013" ph="{&quot;transactions&quot;: document._id...}" />
+            <marker date="1510283669743" expanded="true" signature="19072:19139" ph="{...}" />
+            <marker date="1510283669743" expanded="true" signature="19080:19138" ph="{&quot;transactions&quot;: document._id...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -716,7 +1369,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
           <caret line="9" column="52" lean-forward="true" selection-start-line="9" selection-start-column="52" selection-end-line="9" selection-end-column="52" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -724,7 +1376,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18">
           <caret line="5100" column="24" lean-forward="false" selection-start-line="5100" selection-start-column="17" selection-end-line="5100" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -732,19 +1383,37 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="131">
           <caret line="131" column="39" lean-forward="true" selection-start-line="131" selection-start-column="39" selection-end-line="131" selection-end-column="39" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <marker date="1510647270612" expanded="true" signature="9411:9419" ph=" " />
-            <marker date="1510647270612" expanded="true" signature="9454:9462" ph=" " />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/client/templates/layout/header.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
+        <state relative-caret-position="550">
           <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-          <folding />
+          <folding>
+            <marker date="1510647142436" expanded="false" signature="0:46" ph="/** Template Controllers ...*/" />
+            <marker date="1510647142436" expanded="true" signature="48:120" ph="/** The header template ...*/" />
+            <marker date="1510647142436" expanded="true" signature="168:196" ph="{...}" />
+            <marker date="1510647142436" expanded="true" signature="235:3484" ph="{...}" />
+            <marker date="1510647142436" expanded="true" signature="241:346" ph="/** Returns the correct url for the send to route ...*/" />
+            <marker date="1510647142436" expanded="true" signature="374:802" ph="{...}" />
+            <marker date="1510647142436" expanded="true" signature="808:927" ph="/** Calculates the total balance of all accounts + wallets. ...*/" />
+            <marker date="1510647142436" expanded="true" signature="958:1297" ph="{...}" />
+            <marker date="1510647142436" expanded="true" signature="1303:1404" ph="/** Formats the last block number ...*/" />
+            <marker date="1510647142436" expanded="true" signature="1444:1514" ph="{...}" />
+            <marker date="1510647142436" expanded="true" signature="1520:1599" ph="/** Gets the time since the last block ...*/" />
+            <marker date="1510647142436" expanded="true" signature="1634:2393" ph="{...}" />
+            <marker date="1510647142436" expanded="true" signature="1957:2088" ph="{...}" />
+            <marker date="1510647142436" expanded="true" signature="2109:2205" ph="{...}" />
+            <marker date="1510647142436" expanded="true" signature="2225:2298" ph="{...}" />
+            <marker date="1510647142436" expanded="true" signature="2304:2387" ph="{...}" />
+            <marker date="1510647142436" expanded="true" signature="2399:2485" ph="/** Formats the time since the last block ...*/" />
+            <marker date="1510647142436" expanded="true" signature="2524:3482" ph="{...}" />
+            <marker date="1510647142436" expanded="true" signature="2889:3042" ph="{...}" />
+            <marker date="1510647142436" expanded="true" signature="3063:3181" ph="{...}" />
+            <marker date="1510647142436" expanded="true" signature="3201:3353" ph="{...}" />
+            <marker date="1510647142436" expanded="true" signature="3359:3476" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -752,7 +1421,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="36">
           <caret line="2" column="31" lean-forward="true" selection-start-line="2" selection-start-column="31" selection-end-line="2" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -760,7 +1428,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="5" column="80" lean-forward="true" selection-start-line="5" selection-start-column="80" selection-end-line="5" selection-end-column="80" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -768,7 +1435,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
           <caret line="16" column="73" lean-forward="true" selection-start-line="16" selection-start-column="73" selection-end-line="16" selection-end-column="73" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -784,7 +1450,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
           <caret line="20" column="38" lean-forward="false" selection-start-line="20" selection-start-column="38" selection-end-line="20" selection-end-column="38" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -792,62 +1457,167 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-234">
           <caret line="62" column="60" lean-forward="false" selection-start-line="62" selection-start-column="60" selection-end-line="62" selection-end-column="60" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/client/templates/layout/header.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
+        <state relative-caret-position="286">
           <caret line="13" column="12" lean-forward="false" selection-start-line="13" selection-start-column="12" selection-end-line="13" selection-end-column="12" />
-          <folding>
-            <element signature="e#1939#1945#0#HTML" expanded="true" />
-            <element signature="e#1945#1951#0#HTML" expanded="true" />
-            <element signature="e#1952#1958#0#HTML" expanded="true" />
-            <element signature="e#1958#1964#0#HTML" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/client/templates/views/send.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-23">
+        <state relative-caret-position="14630">
           <caret line="669" column="28" lean-forward="false" selection-start-line="669" selection-start-column="28" selection-end-line="669" selection-end-column="28" />
           <folding>
-            <element signature="e#4336#6692#0" expanded="false" />
-            <element signature="e#14657#14692#0" expanded="false" />
+            <marker date="1511439040997" expanded="false" signature="0:46" ph="/** Template Controllers ...*/" />
+            <marker date="1511439040997" expanded="true" signature="48:119" ph="/** The add user template ...*/" />
+            <marker date="1511439040997" expanded="true" signature="122:366" ph="/** The default gas to provide for estimates. This is set manually, ...*/" />
+            <marker date="1511439040997" expanded="true" signature="443:758" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="618:646" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="727:746" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="819:1828" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="1079:1777" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="1860:2504" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="2097:2441" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="2548:2915" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="2630:2913" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="2962:4287" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="3240:3362" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="3368:3500" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="3585:3672" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="3635:3669" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="3764:3970" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="3911:3967" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="4059:4283" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="4161:4280" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="4336:6741" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="4428:4600" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="4620:4662" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="4960:5117" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="5005:5114" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="5226:5491" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="5324:5370" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="5407:5458" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="5553:6737" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="5944:6564" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="6013:6217" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="6040:6146" ph="{&quot;from&quot;: address...}" />
+            <marker date="1511439040997" expanded="true" signature="6291:6530" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="6420:6488" ph="{&quot;gas&quot;: defaultEstimateGas...}" />
+            <marker date="1511439040997" expanded="true" signature="6570:6734" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="6640:6693" ph="{&quot;from&quot;: address...}" />
+            <marker date="1511439040997" expanded="true" signature="6777:11421" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="6804:6849" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="6879:7042" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="7079:7124" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="7157:7245" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="7276:7350" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="7391:7479" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="7503:7609" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="7637:7972" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="8011:8083" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="8111:8656" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="8443:8584" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="8590:8636" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="8684:8920" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="8951:9750" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="9123:9455" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="9461:9692" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="9781:9897" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="9923:10078" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="10111:10711" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="10587:10704" ph="{&quot;name&quot;: token.name...}" />
+            <marker date="1511439040997" expanded="true" signature="10750:11046" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="11095:11259" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="11303:11419" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="11455:20843" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="11506:11738" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="11636:11682" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="11688:11735" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="11778:11875" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="11922:12059" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="12113:12369" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="12481:13059" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="12545:12784" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="12790:13056" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="13109:13221" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="13261:20840" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="14015:20837" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="14583:14667" ph="{&quot;content&quot;: 'i18n:wallet.contracts.error.noDataProvided'...}" />
+            <marker date="1511439040997" expanded="true" signature="14805:14881" ph="{&quot;content&quot;: 'i18n:wallet.send.error.emptyWallet'...}" />
+            <marker date="1511439040997" expanded="true" signature="14888:15051" ph="//..." />
+            <marker date="1511439040997" expanded="true" signature="15111:15186" ph="{&quot;content&quot;: 'i18n:wallet.send.error.noReceiver'...}" />
+            <marker date="1511439040997" expanded="true" signature="15222:15632" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="15342:15418" ph="{&quot;content&quot;: 'i18n:wallet.send.error.noAmount'...}" />
+            <marker date="1511439040997" expanded="true" signature="15542:15624" ph="{&quot;content&quot;: 'i18n:wallet.send.error.notEnoughFunds'...}" />
+            <marker date="1511439040997" expanded="true" signature="15638:16195" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="15671:15798" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="15712:15790" ph="{&quot;content&quot;: 'i18n:wallet.send.error.noReceiver'...}" />
+            <marker date="1511439040997" expanded="true" signature="16106:16188" ph="{&quot;content&quot;: 'i18n:wallet.send.error.notEnoughFunds'...}" />
+            <marker date="1511439040997" expanded="true" signature="16287:19774" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="16605:17640" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="16711:16834" ph="{&quot;gasPrice&quot;: gasPrice...}" />
+            <marker date="1511439040997" expanded="true" signature="16859:17613" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="16965:17457" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="17463:17606" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="17534:17596" ph="{&quot;content&quot;: error.message...}" />
+            <marker date="1511439040997" expanded="true" signature="17646:19769" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="17747:17895" ph="{&quot;from&quot;: selectedAccount.address...}" />
+            <marker date="1511439040997" expanded="true" signature="17943:18776" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="18007:18767" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="18117:18603" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="18609:18759" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="18683:18748" ph="{&quot;content&quot;: error.message...}" />
+            <marker date="1511439040997" expanded="true" signature="18805:19711" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="18872:19702" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="18891:19480" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="19181:19368" ph="{&quot;from&quot;: txArgs.from...}" />
+            <marker date="1511439040997" expanded="true" signature="19485:19693" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="19617:19682" ph="{&quot;content&quot;: error.message...}" />
+            <marker date="1511439040997" expanded="true" signature="19721:19763" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="19857:20752" ph="{...}" />
+            <marker date="1511439040997" expanded="true" signature="19926:20201" ph="{&quot;from&quot;: selectedAccount.address...}" />
+            <marker date="1511439040997" expanded="true" signature="20270:20660" ph="{&quot;template&quot;: 'views_modals_sendTransactionInfo'...}" />
+            <marker date="1511439040997" expanded="true" signature="20334:20609" ph="{&quot;from&quot;: selectedAccount.address...}" />
+            <marker date="1511439040997" expanded="true" signature="20661:20704" ph="{&quot;class&quot;: 'send-transaction-info'...}" />
+            <marker date="1511439040997" expanded="true" signature="20758:20833" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/client/templates/views/send.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="6" column="11" lean-forward="false" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
+        <state relative-caret-position="132">
+          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/client/templates/views/account.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="756">
+        <state relative-caret-position="2112">
           <caret line="96" column="32" lean-forward="false" selection-start-line="96" selection-start-column="32" selection-end-line="96" selection-end-column="32" />
-          <folding>
-            <element signature="e#4667#6950#0#Spacebars" expanded="false" />
-            <element signature="e#7002#7461#0#Spacebars" expanded="false" />
-            <element signature="e#11711#11927#0#Spacebars" expanded="false" />
-            <marker date="1510821762465" expanded="false" signature="5096:5113" ph="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/client/templates/views/account.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="176" column="33" lean-forward="false" selection-start-line="176" selection-start-column="33" selection-end-line="176" selection-end-column="33" />
-          <folding>
-            <element signature="e#188#2411#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="133">
+          <caret line="137" column="47" lean-forward="false" selection-start-line="137" selection-start-column="47" selection-end-line="137" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/templates/elements/account.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="94">
+          <caret line="41" column="23" lean-forward="true" selection-start-line="41" selection-start-column="23" selection-end-line="41" selection-end-column="23" />
+          <folding />
         </state>
       </provider>
     </entry>
