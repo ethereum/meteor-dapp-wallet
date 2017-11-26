@@ -73,15 +73,16 @@ Template['views_account'].helpers({
         var query = {};
         query['balances.'+ this._id] = {$exists: true};
 
-        var testTokens = [
-            {name: 'Token1', address: '0x67ABC83C87BE7F9214B2518723A51D1d34e82837', balance: '100000'},
-            {name: 'Token2', address: '0x67ABC83C87BE7F9214B2518723A51D1d34e82837', balance: '100000'},
-            {name: 'Token3', address: '0x67ABC83C87BE7F9214B2518723A51D1d34e82837', balance: '100000'},
-            {name: 'Token4', address: '0x67ABC83C87BE7F9214B2518723A51D1d34e82837', balance: '100000'},
-            {name: 'Token5', address: '0x67ABC83C87BE7F9214B2518723A51D1d34e82837', balance: '100000'},
-            {name: 'Token5', address: '0x67ABC83C87BE7F9214B2518723A51D1d34e82837', balance: '100000'}
-        ];
+        // var testTokens = [{address: "0x3096d1b1bc00eb99eb28c73504c8b415077ab66c",
+        //  balances: { ZvEu7E6eMxLeEBCet: "100000000000000000000000000"},
+        //     checkpointBlock:368692,
+        //     decimals:18,
+        //     name:"DsfundToken",
+        //     symbol:"DST",
+        //     _id:"token_3096d1b1bc"
+        // }];
 
+        console.log("Tokens: ", Tokens.find(query, {sort: {name: 1}}));
         return Tokens.find(query, {sort: {name: 1}});
         // return testTokens;
     },
@@ -101,9 +102,7 @@ Template['views_account'].helpers({
 		 @method (ota)
 		 */
 		'otasValue': function () {
-		  console.log('otasValue: ', TemplateVar.get('otasValue'));
 			return TemplateVar.get('otasValue');
-        // return 1000000000000000000;
     },
 
     /**
