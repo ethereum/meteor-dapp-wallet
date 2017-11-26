@@ -69,23 +69,20 @@
                       {{/if}}
 
 
-                      {{#if tokenLength}}
-		              <div >
+                      <div >
                           <hr class="viwes-account-balance-hr viwes-account-balance-left"/>
                           {{#each tokens}}
                               <div class="viwes-account-balance-right">
-                                  <a href="{{pathFor route='sendToken' token=address}}">
-                                      <p >
-                                          <span class="views_account_token">{{name}}</span>
-                                          <div class="circle" style="width: 6px;height: 6px;"></div>
-                                          <span id="views_account_token_balance">
-                                              {{formattedTokenBalance}} <i class="icon-arrow-up"></i></span>
-                                      </p>
-                                  </a>
+                                  <p >
+                                      <span class="views_account_token">{{name}}</span>
+                                      <span >{{address}}</span>
+                                  <div class="circle" style="width: 6px;height: 6px;"></div>
+                                  <span id="views_account_token_balance">
+                                              {{balance}} <i class="icon-arrow-up"></i></span>
+                                  </p>
                               </div>
                           {{/each}}
-		              </div>
-                      {{/if}}
+                      </div>
 	              </div>
             </div>
         </div>

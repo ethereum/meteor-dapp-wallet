@@ -95,6 +95,8 @@ var estimationCallback = function(e, res){
 Template['views_send'].onCreated(function(){
 	var template = this;
 
+  TemplateVar.set('selectType', '0');
+
   TemplateVar.set('theAddress', FlowRouter.getParam('address').toLowerCase());
 
 	// SET THE DEFAULT VARIABLES
@@ -233,6 +235,10 @@ Template['views_send'].onRendered(function(){
 
 
 Template['views_send'].helpers({
+	'selecteType': function () {
+     var desc =  TemplateVar.get('selectType') === '0' ? '[Switch to private]' : '[Switch to ordinary]';
+     return desc;
+  },
 
 	'address': function () {
 		return FlowRouter.getParam('address');
@@ -240,6 +246,18 @@ Template['views_send'].helpers({
 
 	'theAccount': function () {
 		var account = EthAccounts.find({balance:{$ne:"0"}, address: TemplateVar.get('theAddress')}, {sort: {balance: 1}}).fetch();
+
+      var query = {};
+      query['balances.'+ this._id] = {$exists: true};
+
+      var tokens = Tokens.find(query, {sort: {name: 1}}).fetch();
+      _.each(tokens, (token) => {
+          token.balance =token.balances[this._id];
+      });
+
+      console.log('send token: ', tokens);
+      console.log('send account: ', account);
+
 		return account;
   },
 
@@ -386,18 +404,6 @@ Template['views_send'].helpers({
 
 Template['views_send'].events({
 
-	'change select.sendota-select': function(event){
-		event.preventDefault();
-		var selectValue = event.target.value;
-
-		TemplateVar.set('amount', '0');
-		if (selectValue === "0") {
-			TemplateVar.set('transaction', true);
-		} else {
-			TemplateVar.set('transaction', false);
-		}
-	},
-
 	'change input.send-all': function(e){
 		TemplateVar.set('sendAll', $(e.currentTarget)[0].checked);
 		TemplateVar.set('amount', 0);
@@ -447,6 +453,16 @@ Template['views_send'].events({
 		var selectValue = event.target.value;
 		TemplateVar.set('amount', selectValue);
 	},
+
+	'click #selectType': function () {
+      TemplateVar.get('selectType') === '0' ? TemplateVar.set('selectType', '1') : TemplateVar.set('selectType', '0');
+
+      if (TemplateVar.get('selectType') === '0') {
+          TemplateVar.set('transaction', true);
+			} else {
+          TemplateVar.set('transaction', false);
+      }
+  },
 
 	'submit form': function(e, template){
 

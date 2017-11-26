@@ -10,8 +10,7 @@ Template['views_account'].onCreated(function () {
 
     InterID = Meteor.setInterval(function(){
         var waddress = Helpers.getAccountByAddress(FlowRouter.getParam('address')).waddress.slice(2);
-        const status = 0;
-        mist.requestOTACollection(waddress, status, function (e, result) {
+        mist.requestOTACollection(waddress, function (e, result) {
             var oldOtas = TemplateVar.get(template,'otaValue');
             if(!oldOtas || oldOtas.length !== result.length)
             {
@@ -65,24 +64,21 @@ Template['views_account'].helpers({
 		},
 
     /**
-    Get all tokens, tokens number
-
-    @method (tokens)
-    */
+     Get all tokens
+     @method (tokens)
+     */
     'tokens': function(){
         var query = {};
         query['balances.'+ this._id] = {$exists: true};
 
-        console.log("Tokens: ", Tokens.find(query, {sort: {name: 1}}));
-        return Tokens.find(query, {sort: {name: 1}});
-    },
+        var tokens = Tokens.find(query, {sort: {name: 1}}).fetch();
+        _.each(tokens, (token) => {
+            token.balance =token.balances[this._id];
+        });
 
-	'tokenLength': function () {
-        var query = {};
-        query['balances.'+ this._id] = {$exists: true};
-        var totalToken = Tokens.find(query, {sort: {name: 1}}).count();
+        console.log('account token: ', tokens);
 
-        return totalToken;
+        return tokens;
     },
 
 		/**
@@ -94,19 +90,6 @@ Template['views_account'].helpers({
 			return TemplateVar.get('otasValue');
     },
 
-    /**
-    Get the tokens balance
-
-    @method (formattedTokenBalance)
-    */
-    'formattedTokenBalance': function(e){
-        var account = Template.parentData(2);
-
-        console.log('balances: ', Helpers.formatNumberByDecimals(this.balances[account._id], this.decimals));
-        return (this.balances && Number(this.balances[account._id]) > 0)
-            ? Helpers.formatNumberByDecimals(this.balances[account._id], this.decimals) +' '+ this.symbol
-            : false;
-    },
     /**
     Gets the contract events if available
 

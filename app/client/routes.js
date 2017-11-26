@@ -114,7 +114,7 @@ The send route.
 
 @method send
 */
-FlowRouter.route('/send-from/:from', {
+FlowRouter.route('/send-from/:from/:token', {
     name: 'sendFrom',
     action: function(params, queryParams) {
         BlazeLayout.render('layout_main', {

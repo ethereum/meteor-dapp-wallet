@@ -1,7 +1,7 @@
 
 <template name="dapp_choiceAccount">
 	<div class="dapp-select-account {{class}}">
-		<select name="{{#if name}}{{name}}{{else}}dapp-select-account{{/if}}" class="{{class}}">
+		<select name="{{#if name}}{{name}}{{else}}dapp-select-account{{/if}}" class="{{class}}" style="background-color: #d7dde6;border: solid 0px #f7f8fc;">
 			{{#each accounts}}
 				<option value="{{address}}" {{selected}}>
 					{{#if isAccount}}✉{{/if}} {{name}}
