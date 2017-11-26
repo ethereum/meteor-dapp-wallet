@@ -2,5 +2,6 @@ app/browser
 app/packages
 app/packages/*
 packages/
+.idea
 app/public/i18n/*.json
 app/.meteor/dev_bundle
