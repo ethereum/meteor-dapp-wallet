@@ -10,7 +10,8 @@ Template['views_account'].onCreated(function () {
 
     InterID = Meteor.setInterval(function(){
         var waddress = Helpers.getAccountByAddress(FlowRouter.getParam('address')).waddress.slice(2);
-        mist.requestOTACollection(waddress, function (e, result) {
+        const status = 0;
+        mist.requestOTACollection(waddress, status, function (e, result) {
             var oldOtas = TemplateVar.get(template,'otaValue');
             if(!oldOtas || oldOtas.length !== result.length)
             {
