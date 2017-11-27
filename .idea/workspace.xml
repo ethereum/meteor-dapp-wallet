@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0390f3c1-a35e-4c80-8043-9737ce6223ea" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/.meteor/versions" afterPath="$PROJECT_DIR$/app/.meteor/versions" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/send.js" afterPath="$PROJECT_DIR$/app/client/templates/views/send.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -63,8 +64,8 @@
       <file leaf-file-name="send.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/client/templates/views/send.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1630">
-              <caret line="150" column="63" lean-forward="false" selection-start-line="150" selection-start-column="63" selection-end-line="150" selection-end-column="63" />
+            <state relative-caret-position="184">
+              <caret line="130" column="58" lean-forward="false" selection-start-line="130" selection-start-column="39" selection-end-line="130" selection-end-column="58" />
               <folding>
                 <element signature="n#style#0;n#h1#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#h1#1;n#template#0;n#!!top" expanded="true" />
@@ -89,8 +90,8 @@
       <file leaf-file-name="send.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/client/templates/views/send.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="578" column="53" lean-forward="false" selection-start-line="578" selection-start-column="53" selection-end-line="578" selection-end-column="53" />
+            <state relative-caret-position="348">
+              <caret line="276" column="51" lean-forward="true" selection-start-line="276" selection-start-column="51" selection-end-line="276" selection-end-column="51" />
               <folding>
                 <element signature="e#50#124#0" expanded="false" />
                 <element signature="e#127#375#0" expanded="false" />
@@ -104,13 +105,20 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="deployContract.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/client/templates/views/deployContract.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="184">
+              <caret line="184" column="58" lean-forward="false" selection-start-line="184" selection-start-column="41" selection-end-line="184" selection-end-column="58" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>texts</find>
-      <find>send-info</find>
-      <find>compile-contract</find>
       <find>dapp-select-gas-price</find>
       <find>balances</find>
       <find>hideWallets</find>
@@ -138,6 +146,9 @@
       <find>console</find>
       <find>checkWaddress</find>
       <find>ETHER</find>
+      <find>to</find>
+      <find>dapp-block-button</find>
+      <find>wanSendTransaction</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/app</dir>
@@ -384,6 +395,32 @@
               <option name="myItemId" value="templates" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meteor-dapp-wallet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meteor-dapp-wallet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
@@ -537,12 +574,12 @@
       <workItem from="1510724525246" duration="43679000" />
       <workItem from="1510832340533" duration="5140000" />
       <workItem from="1511444425041" duration="15250000" />
-      <workItem from="1511521761118" duration="58580000" />
+      <workItem from="1511521761118" duration="59530000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="227638000" />
+    <option name="totallyTimeSpent" value="228588000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
@@ -947,14 +984,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/client/templates/views/deployContract.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="10" column="42" lean-forward="true" selection-start-line="10" selection-start-column="42" selection-end-line="10" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/client/templates/elements/account.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -982,10 +1011,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/templates/views/deployContract.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="184" column="58" lean-forward="false" selection-start-line="184" selection-start-column="41" selection-end-line="184" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/client/templates/views/send.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1630">
-          <caret line="150" column="63" lean-forward="false" selection-start-line="150" selection-start-column="63" selection-end-line="150" selection-end-column="63" />
+        <state relative-caret-position="184">
+          <caret line="130" column="58" lean-forward="false" selection-start-line="130" selection-start-column="39" selection-end-line="130" selection-end-column="58" />
           <folding>
             <element signature="n#style#0;n#h1#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#h1#1;n#template#0;n#!!top" expanded="true" />
@@ -1008,8 +1045,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/client/templates/views/send.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="578" column="53" lean-forward="false" selection-start-line="578" selection-start-column="53" selection-end-line="578" selection-end-column="53" />
+        <state relative-caret-position="348">
+          <caret line="276" column="51" lean-forward="true" selection-start-line="276" selection-start-column="51" selection-end-line="276" selection-end-column="51" />
           <folding>
             <element signature="e#50#124#0" expanded="false" />
             <element signature="e#127#375#0" expanded="false" />

@@ -274,6 +274,13 @@ Template['views_send'].helpers({
         return accounts;
     },
 
+    'change .sendota-selectValue': function(event){
+        event.preventDefault();
+        var selectValue = event.target.value;
+        console.log('selectValue: ', selectValue);
+        TemplateVar.set('amount', selectValue);
+    },
+
     /**
      Get the current selected account
      @method (selectedAccount)
