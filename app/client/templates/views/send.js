@@ -252,12 +252,13 @@ Template['views_send'].helpers({
 
 		var account = EthAccounts.find({balance:{$ne:"0"}, address: TemplateVar.get('theAddress')}, {sort: {balance: 1}}).fetch();
 
+		console.log('send account: ', account[0]._id);
       var query = {};
       query['balances.'+ account._id] = {$exists: true};
 
       var tokens = Tokens.find(query, {sort: {name: 1}}).fetch();
       _.each(tokens, (token) => {
-          token.balance =token.balances[this._id];
+          token.balance =token.balances[account[0]._id];
           account.push(token);
       });
 
@@ -457,8 +458,6 @@ Template['views_send'].events({
 	'change .send-from': function (event) {
       event.preventDefault();
 			var value =	event.target.value;
-			console.log('from: ', value);
-      console.log('address: ', FlowRouter.getParam('address').toLowerCase());
 
       if (value === FlowRouter.getParam('address').toLowerCase() || value === '0') {
           TemplateVar.set('transaction', true);
