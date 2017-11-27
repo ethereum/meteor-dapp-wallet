@@ -254,7 +254,7 @@ Template['views_send'].helpers({
 
 		console.log('send account: ', account[0]._id);
       var query = {};
-      query['balances.'+ account._id] = {$exists: true};
+      query['balances.'+ account[0]._id] = {$exists: true};
 
       var tokens = Tokens.find(query, {sort: {name: 1}}).fetch();
       _.each(tokens, (token) => {
