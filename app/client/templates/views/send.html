@@ -1,114 +1,87 @@
 <template name="views_send">
-    {{#if deployContract}}
-        <h1 style="margin-bottom: 0"><div class="circle"></div>{{{i18n 'wallet.contracts.deployContract'}}}</h1>
-    {{else}}
-        <h1 style="margin-bottom: 0"><div class="circle"></div><strong>{{{i18n 'views.send.title'}}}</strong></h1>
-    {{/if}}
 
-    <div class="viwes-account-header">
-        <form class="account-send-form" action="about:blank" target="dapp-form-helper-iframe" autocomplete="on">
+    <!-- we use a form, which posts into the "dapp-form-helper-iframe" iframe, so that the browser stores inout fields for native autocpmplete -->
+    <form class="account-send-form" action="about:blank" target="dapp-form-helper-iframe" autocomplete="on">
 
-            <!-- from/to -->
-            <!--from-->
-            <div class="row clear from-to">
-                <div class="col col-12 mobile-full from">
-                    <strong class="views_send_strong">{{i18n 'wallet.send.from'}}</strong>
-                    {{#if switchStype}}
-                        <a id="selectType" style="cursor: pointer;">{{selecteType}}</a>
-                    {{/if}}
-                    {{> dapp_choiceAccount accounts=(theAccount deployContract) showAccountTypes=true class='send-from'}}
-                </div>
-                <!--to-->
-                <div class="col col-12 mobile-full">
-                    {{#unless deployContract}}
-                        <strong class="views_send_strong">{{i18n 'wallet.send.to'}}</strong>
-                        {{#if selectTransaction}}
-                            {{> dapp_addrInput placeholder="the recipient address which shorter one is for ordinary transaction." name="to" autofocus=true class="to"}}
-                        {{else}}
-                            {{> dapp_waddressInput placeholder="the recipient address which longer for private transaction." name="to" autofocus=true class="to"}}
-                        {{/if}}
-                    {{/unless}}
-                </div>
+        {{#if deployContract}}
+            <h1>{{{i18n 'wallet.contracts.deployContract'}}}</h1>
+        {{else}}
+            <h1>{{{i18n 'wallet.send.title'}}}</h1>
+        {{/if}}
 
-                <div class="dapp-clear-fix"></div>
+        <!-- from/to -->
+        <div class="row clear from-to">
+            <div class="col col-6 mobile-full from">
+                <h3>{{i18n 'wallet.send.from'}}</h3>
+                {{#if switchStype}}
+                    <a id="selectType" style="cursor: pointer;">{{selecteType}}</a>
+                {{/if}}
+                {{> dapp_selectAccount accounts=(selectAccount deployContract) showAccountTypes=true class='send-from'}}
+
             </div>
 
-            {{#with isVulnerable (TemplateVar.getFrom ".dapp-select-account" "value")}}
-                {{#if vulnerabilities.txorigin}}
-                    {{> elements_vulnerabilities_txorigin}}
+            <div class="col col-6 mobile-full">
+                {{#unless deployContract}}
+                    <h3>{{i18n 'wallet.send.to'}}</h3>
+
+                    {{> dapp_addressInput placeholder="0x000000.." name="to" autofocus=true class="to"}}
+                {{/unless}}
+            </div>
+
+            <div class="dapp-clear-fix"></div>
+        </div>
+
+        {{#with isVulnerable (TemplateVar.getFrom ".dapp-select-account" "value")}}
+            {{#if vulnerabilities.txorigin}}
+                {{> elements_vulnerabilities_txorigin}}
+            {{/if}}
+        {{/with}}
+
+        <!-- amount -->
+        <div class="row clear">
+            <div class="col col-6 mobile-full amount">
+                <h3>{{i18n 'wallet.send.amount'}}</h3>
+                {{#if TemplateVar.get "sendAll"}}
+                    {{#if $eq (TemplateVar.get "selectedToken") "ether"}}
+                        <input type="text" name="amount" class="dapp-large" value="{{clearAmountFromChars (dapp_formatBalance sendAllAmount '0,0.[000000000000000000]')}}" disabled>
+                    {{else}}
+                        <input type="text" name="amount" class="dapp-large" value="{{clearAmountFromChars (formatNumberByDecimals sendAllAmount tokenDecimals)}}" disabled>
+                    {{/if}}
+                {{else}}
+                    <input type="text" min="0" step="any" name="amount" placeholder="0.0" class="dapp-large" pattern="[0-9\.,]*">
                 {{/if}}
-            {{/with}}
 
-            <!-- amount -->
-            {{#if selectTransaction}}
-                <div class="row clear">
-                    <div class="col col-6 mobile-full amount">
-                        <strong style="display: block" class="views_send_strong">{{i18n 'wallet.send.amount'}}</strong>
-                        {{#if TemplateVar.get "sendAll"}}
-                            {{#if $eq (TemplateVar.get "selectedToken") "ether"}}
-                                <input type="text" name="amount" class="dapp-large" value="{{clearAmountFromChars (dapp_formatBalance sendAllAmount '0,0.[000000000000000000]')}}" disabled style="margin-top: 5px; background-color: #d7dde6;border: solid 0px #f7f8fc;">
-                            {{else}}
-                                <input type="text" name="amount" class="dapp-large" value="{{clearAmountFromChars (formatNumberByDecimals sendAllAmount tokenDecimals)}}" disabled style="margin-top: 5px; background-color: #d7dde6;border: solid 0px #f7f8fc;">
-                            {{/if}}
+                <br>
+                <label>
+                    <input type="checkbox" class="send-all">
+                    {{i18n 'wallet.send.sendAll'}}
+                </label>
+
+                <p class="send-info">
+                    {{#if $eq (TemplateVar.get "selectedToken") "ether"}}
+                        {{#if isEtherUnit}}
+                            {{{i18n 'wallet.send.texts.sendAmount' amount=(dapp_formatBalance (TemplateVar.get "amount") "0,0.[000000000000000000] UNIT" "ether")}}}
                         {{else}}
-                            <input type="text" min="0" step="any" name="amount" placeholder="0.0" class="dapp-large" pattern="[0-9\.,]*" style="margin-top: 5px; background-color: #d7dde6;border: solid 0px #f7f8fc;">
+                            {{{i18n 'wallet.send.texts.sendAmountEquivalent' amount=(dapp_formatBalance (TemplateVar.get "amount") "0,0.[000000] UNIT") etherAmount=(dapp_formatBalance (TemplateVar.get "amount") "0,0.[000000000000000000] UNIT" "ether")}}}
                         {{/if}}
+                        {{TemplateVar.get "dailyLimitText"}}
+                    {{else}}
+                        {{sendExplanation}}
+                    {{/if}}
+                </p>
 
-                        <br>
-                        <label>
-                            <input type="checkbox" class="send-all">
-                            {{i18n 'wallet.send.sendAll'}}
-                        </label>
+            </div>
 
-                        <p class="send-info">
-                            {{#if $eq (TemplateVar.get "selectedToken") "ether"}}
-                                {{#if isEtherUnit}}
-                                    {{{i18n 'wallet.send.texts.sendAmount' amount=(dapp_formatBalance (TemplateVar.get "amount") "0,0.[000000000000000000] UNIT" "ether")}}}
-                                {{else}}
-                                    {{{i18n 'wallet.send.texts.sendAmountEquivalent' amount=(dapp_formatBalance (TemplateVar.get "amount") "0,0.[000000] UNIT") etherAmount=(dapp_formatBalance (TemplateVar.get "amount") "0,0.[000000000000000000] UNIT" "ether")}}}
-                                {{/if}}
-                                {{TemplateVar.get "dailyLimitText"}}
-                            {{else}}
-                                {{sendExplanation}}
-                            {{/if}}
-                        </p>
+            <div class="col col-6 mobile-full">
+                <br><br>
 
-                    </div>
-
-                    <div class="col col-6 mobile-full">
-                        {{#if hasTokens}}
-                            <ul class="select-token" style="margin-top: 30px;">
-                                <li>
-                                    <input type="radio" id="ether" value="ether" name="choose-token" {{tokenSelectedAttr 'ether'}}>
-                                    <label for="ether">
-                                        <span class="ether-symbol">Ξ</span>
-                                        <span class="token-name">WAN</span>
-                                        <span class="balance">
-                                            {{#if $neq unit 'ether'}}
-                                                {{dapp_formatBalance selectedAccount.balance "0,0.00 UNIT"}} ({{dapp_formatBalance selectedAccount.balance "0,0.00[0000000000000000] UNIT" "ether"}})
-                                            {{else}}
-                                                {{dapp_formatBalance selectedAccount.balance "0,0.00[0000000000000000] UNIT" "ether"}}
-                                            {{/if}}
-                                        </span>
-                                    </label>
-                                </li>
-                                {{#each tokens}}
-                                    {{#if formattedCoinBalance}}
-                                        <li>
-                                            <input type="radio" id="token-{{address}}" value="{{address}}"  name="choose-token" {{tokenSelectedAttr address}}>
-                                            <label for="token-{{address}}">
-                                                {{> dapp_identicon identity=address class="dapp-tiny"}}
-                                                <span class="token-name">{{name}}</span>
-                                                <span class="balance">{{formattedCoinBalance}}</span>
-                                            </label>
-                                        </li>
-                                    {{/if}}
-                                {{/each}}
-                            </ul>
-                        {{else}}
-                            <div class="token-ether" style="margin-top: 30px">
+                {{#if hasTokens}}
+                    <ul class="select-token">
+                        <li>
+                            <input type="radio" id="ether" value="ether" name="choose-token" {{tokenSelectedAttr 'ether'}}>
+                            <label for="ether">
                                 <span class="ether-symbol">Ξ</span>
-                                <span class="token-name">WAN</span>
+                                <span class="token-name">ETHER</span>
                                 <span class="balance">
                                     {{#if $neq unit 'ether'}}
                                         {{dapp_formatBalance selectedAccount.balance "0,0.00 UNIT"}} ({{dapp_formatBalance selectedAccount.balance "0,0.00[0000000000000000] UNIT" "ether"}})
@@ -116,84 +89,108 @@
                                         {{dapp_formatBalance selectedAccount.balance "0,0.00[0000000000000000] UNIT" "ether"}}
                                     {{/if}}
                                 </span>
-                            </div>
-                        {{/if}}
-                    </div>
-
-                    <div class="dapp-clear-fix"></div>
-                </div>
-            {{else}}
-                <div class="row clear">
-                    <div class="col col-6 mobile-full amount" style="margin-bottom: 20px;">
-                        <strong style="display: block" class="views_send_strong">{{i18n 'wallet.send.amount'}}</strong>
-                        <select class="sendota-selectValue" style="margin-top: 5px; background-color: #d7dde6;border: solid 0px #f7f8fc;">
-                            <option name = "myOption" value = "0">{{{i18n 'views.send.Choice'}}}</option>
-                            <option name = "myOption" value = "100000000000000000">0.1 Wan</option>
-                            <option name = "myOption" value = "200000000000000000">0.2 Wan</option>
-                            <option name = "myOption" value = "500000000000000000">0.5 Wan</option>
-                            <option name = "myOption" value = "1000000000000000000">1 Wan</option>
-                            <option name = "myOption" value = "1000000000000000000">2 Wan</option>
-                            <option name = "myOption" value = "1000000000000000000">5 Wan</option>
-                            <option name = "myOption" value = "10000000000000000000">10 Wan</option>
-                            <option name = "myOption" value = "20000000000000000000">20 Wan</option>
-                            <option name = "myOption" value = "50000000000000000000">50 Wan</option>
-                            <option name = "myOption" value = "100000000000000000000">100 Wan</option>
-                        </select>
-                    </div>
-                </div>
-            {{/if}}
-
-
-            <!-- fee -->
-            <div class="row clear">
-                <div class="col col-7 mobile-full">
-                    <strong style="display: block" class="views_send_strong">{{i18n 'wallet.send.fee'}}</strong>
-                    {{> dapp_selectGasPrice gas=(TemplateVar.get "estimatedGas") gasPrice=latestBlock.gasPrice}}
-                </div>
-
-            </div>
-
-            <!-- Total -->
-            <div class="row clear total">
-                <div class="col col-12 mobile-full" style="margin-top: 50px;">
-                    <strong style="display: block" class="views_send_strong">Total</strong>
-                    {{#if $eq (TemplateVar.get "selectedToken") "ether"}}
-                        <span class="amount">{{dapp_formatBalance total "0,0.00[0000000000000000] UNIT"}}</span>
-                        {{#if $neq unit 'ether'}}
-                            <br>
-                            ({{dapp_formatBalance total "0,0.00[0000000000000000] UNIT" "ether"}})
-                        {{/if}}
-                    {{else}}
-                        <span class="amount">{{tokenTotal}}</span> {{selectedToken.symbol}}
-                        <br>
-                        {{i18n "wallet.send.estimatedFee"}}: {{dapp_formatBalance total "0,0.00[000000] UNIT" "ether"}}
-                    {{/if}}
-
-                    {{#if selectedAccountIsWalletContract}}
-                        <br>
-                        {{i18n "wallet.send.texts.ownerPaysGas"}} ({{dapp_formatBalance (TemplateVar.getFrom ".dapp-select-gas-price" "gasInWei") "0,0.00[0000000000000000] UNIT" "ether"}})
-                    {{/if}}
-                </div>
-
-                <div class="dapp-clear-fix"></div>
-            </div>
-
-            <hr>
-
-            <!-- a button type="submit" will send the form -->
-            <button type="submit" class="dapp-block-button views_send_button">
-                {{#if TemplateVar.get "sending"}}
-                    {{i18n 'buttons.sending'}}
+                            </label>
+                        </li>
+                        {{#each tokens}}
+                            {{#if formattedCoinBalance}}
+                                <li>
+                                    <input type="radio" id="token-{{address}}" value="{{address}}"  name="choose-token" {{tokenSelectedAttr address}}>
+                                    <label for="token-{{address}}">
+                                        {{> dapp_identicon identity=address class="dapp-tiny"}}
+                                        <span class="token-name">{{name}}</span>
+                                        <span class="balance">{{formattedCoinBalance}}</span>
+                                    </label>
+                                </li>
+                            {{/if}}
+                        {{/each}}
+                    </ul>
                 {{else}}
-                    {{#if deployContract}}
-                        {{i18n 'wallet.app.buttons.deploy'}}
-                    {{else}}
-                        {{i18n 'buttons.send'}}
-                    {{/if}}
+                    <div class="token-ether">
+                        <span class="ether-symbol">Ξ</span>
+                        <span class="token-name">ETHER</span>
+                        <span class="balance">
+                            {{#if $neq unit 'ether'}}
+                                {{dapp_formatBalance selectedAccount.balance "0,0.00 UNIT"}} ({{dapp_formatBalance selectedAccount.balance "0,0.00[0000000000000000] UNIT" "ether"}})
+                            {{else}}
+                                {{dapp_formatBalance selectedAccount.balance "0,0.00[0000000000000000] UNIT" "ether"}}
+                            {{/if}}
+                        </span>
+                    </div>
                 {{/if}}
-            </button>
+            </div>
 
-        </form>
-    </div>
+
+            <div class="dapp-clear-fix"></div>
+        </div>
+
+        {{#if $eq (TemplateVar.get "selectedToken") "ether"}}
+            {{> elements_compileContract onlyByteCode=showOnlyByteTextarea codeNotExecutable=(TemplateVar.get "codeNotExecutable")}}
+        {{/if}}
+
+
+        <!-- fee -->
+        <div class="row clear">
+            <div class="col col-7 mobile-full">
+                <h3>{{i18n 'wallet.send.fee'}}</h3>
+
+                {{> dapp_selectGasPrice gas=(TemplateVar.get "estimatedGas") gasPrice=latestBlock.gasPrice}}
+            </div>
+
+            <div class="col col-5 mobile-full send-info">
+                <br><br>
+                {{{i18n 'wallet.send.texts.sendFee' timetext=timeText}}}
+
+                {{#if $eq (TemplateVar.get "estimatedGas") 0}}
+                    <p class="orange">
+                        <i class="icon-info"></i> {{i18n 'wallet.send.texts.cantEstimateGas'}}
+                    </p>
+                {{/if}}
+            </div>
+
+            <div class="dapp-clear-fix"></div>
+        </div>
+
+        <!-- Total -->
+        <div class="row clear total">
+            <div class="col col-12 mobile-full">
+                <h3>{{i18n "commonWords.total"}}</h3>
+                {{#if $eq (TemplateVar.get "selectedToken") "ether"}}
+                    <span class="amount">{{dapp_formatBalance total "0,0.00[0000000000000000] UNIT"}}</span>
+                    {{#if $neq unit 'ether'}}
+                        <br>
+                        ({{dapp_formatBalance total "0,0.00[0000000000000000] UNIT" "ether"}})
+                    {{/if}}
+                {{else}}
+                    <span class="amount">{{tokenTotal}}</span> {{selectedToken.symbol}}
+                    <br>
+                    {{i18n "wallet.send.estimatedFee"}}: {{dapp_formatBalance total "0,0.00[000000] UNIT" "ether"}}
+                {{/if}}
+
+                {{#if selectedAccountIsWalletContract}}
+                    <br>
+                    {{i18n "wallet.send.texts.ownerPaysGas"}} ({{dapp_formatBalance (TemplateVar.getFrom ".dapp-select-gas-price" "gasInWei") "0,0.00[0000000000000000] UNIT" "ether"}})
+                {{/if}}
+            </div>
+
+            <div class="dapp-clear-fix"></div>
+        </div>
+
+        <hr>
+
+        <!-- a button type="submit" will send the form -->
+
+        <button type="submit" class="dapp-block-button">
+            {{#if TemplateVar.get "sending"}}
+                {{i18n 'buttons.sending'}}
+            {{else}}
+                {{#if deployContract}}
+                    {{i18n 'wallet.app.buttons.deploy'}}
+                {{else}}
+                    {{i18n 'buttons.send'}}
+                {{/if}}
+            {{/if}}
+        </button>
+
+    </form>
 
 </template>
