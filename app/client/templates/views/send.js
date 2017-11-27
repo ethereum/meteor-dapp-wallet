@@ -655,43 +655,79 @@ Template['views_send'].events({
 
                     console.log('Gas Price: '+ gasPrice);
                     console.log('Amount:', amount);
-
-                    web3.eth.sendTransaction({
+                    var txArgs = {
                         from: selectedAccount.address,
                         to: to,
                         data: data,
                         value: amount,
                         gasPrice: gasPrice,
                         gas: estimatedGas
-                    }, function(error, txHash){
+                    };
 
-                        TemplateVar.set(template, 'sending', false);
+                    var wanSendTransaction = function(args) {
+                        web3.eth.sendTransaction(args, function (error, txHash) {
 
-                        console.log(error, txHash);
-                        if(!error) {
-                            console.log('SEND simple');
+                            TemplateVar.set(template, 'sending', false);
 
-                            data = (!to && contract)
-                                ? {contract: contract, data: data}
-                                : data;
+                            console.log(error, txHash);
+                            if (!error) {
+                                console.log('SEND simple');
 
-                            addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
+                                data = (!to && contract)
+                                    ? {contract: contract, data: data}
+                                    : data;
 
-                            localStorage.setItem('contractSource', Helpers.getDefaultContractExample());
-                            localStorage.setItem('compiledContracts', null);
-                            localStorage.setItem('selectedContract', null);
+                                addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
 
-                            FlowRouter.go('dashboard');
-                        } else {
+                                localStorage.setItem('contractSource', Helpers.getDefaultContractExample());
+                                localStorage.setItem('compiledContracts', null);
+                                localStorage.setItem('selectedContract', null);
 
-                            // EthElements.Modal.hide();
+                                FlowRouter.go('dashboard');
+                            } else {
 
-                            GlobalNotification.error({
-                                content: error.message,
-                                duration: 8
-                            });
-                        }
-                    });
+                                // EthElements.Modal.hide();
+
+                                GlobalNotification.error({
+                                    content: error.message,
+                                    duration: 8
+                                });
+                            }
+                        });
+                    };
+
+
+                    if(TemplateVar.get('selectType') === '1'){
+                        web3.wan.generateOneTimeAddress(to,function(error, otaAddr){
+                            if(!error){
+                                console.log("XXXXXXXXXXXXXXX testWaddr:", to);
+                                console.log("XXXXXXXXXXXXXXX otaAddr:", otaAddr);
+                                var txBuyData = CoinContractInstance.buyCoinNote.getData(otaAddr, web3.toWei(1));
+                                console.log("XXXXXXXXXXXXX txBuyData:", txBuyData);
+                                var privTxArgs = {
+                                    from: txArgs.from,
+                                    to: CoinContractAddr,
+                                    data: txBuyData,
+                                    value: txArgs.value,
+                                    gasPrice: txArgs.gasPrice,
+                                    gas: txArgs.gas
+                                };
+                                console.log("XXXXXXXXXXXXX privTxArgs:", privTxArgs);
+                                wanSendTransaction(privTxArgs);
+                            }else {
+                                // EthElements.Modal.hide();
+                                console.log("generateOneTimeAddress error:",error);
+                                GlobalNotification.error({
+                                    content: error.message,
+                                    duration: 8
+                                });
+                            }
+
+                        });
+                    }
+                    else{
+                        wanSendTransaction(txArgs);
+                    }
                 }
             };
 
@@ -699,6 +735,17 @@ Template['views_send'].events({
             if(typeof mist === 'undefined') {
 
                 console.log('estimatedGas: ' + estimatedGas);
+                var	datas = {
+                    from: selectedAccount.address,
+                    to: to,
+                    amount: amount,
+                    gasPrice: gasPrice,
+                    estimatedGas: estimatedGas,
+                    estimatedGasPlusAddition: sendAll ? estimatedGas : estimatedGas + 100000, // increase the provided gas by 100k
+                    data: data
+                };
+
+                console.log('dats: ', datas);
 
                 EthElements.Modal.question({
                     template: 'views_modals_sendTransactionInfo',

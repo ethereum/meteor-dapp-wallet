@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0390f3c1-a35e-4c80-8043-9737ce6223ea" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/elements/account.js" afterPath="$PROJECT_DIR$/app/client/templates/elements/account.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/account.js" afterPath="$PROJECT_DIR$/app/client/templates/views/account.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/send.html" afterPath="$PROJECT_DIR$/app/client/templates/views/send.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/send.js" afterPath="$PROJECT_DIR$/app/client/templates/views/send.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -69,8 +66,8 @@
       <file leaf-file-name="send.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/client/templates/views/send.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="462">
-              <caret line="45" column="31" lean-forward="false" selection-start-line="45" selection-start-column="14" selection-end-line="45" selection-end-column="31" />
+            <state relative-caret-position="352">
+              <caret line="16" column="77" lean-forward="false" selection-start-line="16" selection-start-column="66" selection-end-line="16" selection-end-column="77" />
               <folding>
                 <element signature="n#style#0;n#h3#0;n#div#0;n#div#0;n#form#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="e#2010#8532#0#Spacebars" expanded="false" />
@@ -85,8 +82,8 @@
       <file leaf-file-name="send.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/client/templates/views/send.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
-              <caret line="95" column="41" lean-forward="false" selection-start-line="95" selection-start-column="41" selection-end-line="95" selection-end-column="41" />
+            <state relative-caret-position="-618">
+              <caret line="700" column="0" lean-forward="false" selection-start-line="700" selection-start-column="0" selection-end-line="700" selection-end-column="0" />
               <folding>
                 <element signature="e#50#124#0" expanded="false" />
                 <element signature="e#127#375#0" expanded="false" />
@@ -104,8 +101,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>strong</find>
-      <find>wallet</find>
       <find>sendTo</find>
       <find>name</find>
       <find>accounts</find>
@@ -130,10 +125,12 @@
       <find>switchStype</find>
       <find>select-token</find>
       <find>token-ether</find>
+      <find>transaction</find>
+      <find>selectedAccount</find>
+      <find>transactionType</find>
+      <find>selectTransaction</find>
       <find>selecteType</find>
       <find>selectType</find>
-      <find>selectTransaction</find>
-      <find>transaction</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/app</dir>
@@ -559,15 +556,16 @@
       <workItem from="1510724525246" duration="43679000" />
       <workItem from="1510832340533" duration="5140000" />
       <workItem from="1511444425041" duration="15250000" />
-      <workItem from="1511521761118" duration="51766000" />
+      <workItem from="1511521761118" duration="53550000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="220824000" />
+    <option name="totallyTimeSpent" value="222608000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1632096" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1009,8 +1007,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/client/templates/views/send.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="45" column="31" lean-forward="false" selection-start-line="45" selection-start-column="14" selection-end-line="45" selection-end-column="31" />
+        <state relative-caret-position="352">
+          <caret line="16" column="77" lean-forward="false" selection-start-line="16" selection-start-column="66" selection-end-line="16" selection-end-column="77" />
           <folding>
             <element signature="n#style#0;n#h3#0;n#div#0;n#div#0;n#form#0;n#template#0;n#!!top" expanded="true" />
             <element signature="e#2010#8532#0#Spacebars" expanded="false" />
@@ -1023,8 +1021,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/client/templates/views/send.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="95" column="41" lean-forward="false" selection-start-line="95" selection-start-column="41" selection-end-line="95" selection-end-column="41" />
+        <state relative-caret-position="-618">
+          <caret line="700" column="0" lean-forward="false" selection-start-line="700" selection-start-column="0" selection-end-line="700" selection-end-column="0" />
           <folding>
             <element signature="e#50#124#0" expanded="false" />
             <element signature="e#127#375#0" expanded="false" />
