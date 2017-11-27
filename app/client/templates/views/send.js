@@ -576,7 +576,7 @@ Template['views_send'].events({
                     duration: 2
                 });
 
-            if(!web3.isAddress(to) && !data)
+            if(TemplateVar.get('selectType') === '0' && !web3.isAddress(to) && !data)
                 return GlobalNotification.warning({
                     content: 'i18n:wallet.send.error.noReceiver',
                     duration: 2
