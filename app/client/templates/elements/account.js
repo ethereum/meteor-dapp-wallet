@@ -39,24 +39,23 @@ Template['elements_account'].helpers({
     'account': function(){
     	  var account = EthAccounts.findOne(this.account);
 
-    	  console.log('ele account:', account);
+    	  if ( FlowRouter.getRouteName() === 'dashboard') {
+            var tokenBalance = 0;
 
-        var query = {};
-        query['balances.'+ account._id] = {$exists: true};
+            var query = {};
+            query['balances.'+ account._id] = {$exists: true};
 
-        var tokens = Tokens.find(query, {sort: {name: 1}}).fetch();
+            var tokens = Tokens.find(query, {sort: {name: 1}}).fetch();
 
-        var tokenBalance = 0;
-        _.each(tokens, (token) => {
-            tokenBalance += parseInt(token.balances[account._id]);
-        });
+            _.each(tokens, (token) => {
+                tokenBalance += parseInt(token.balances[account._id]);
+            });
 
-        console.log("tokenBalance: ", tokenBalance);
-
-        if (account.balance === "0" && tokenBalance === 0) {
-            account.hrefType = false;
-        }  else {
-            account.hrefType = true;
+            if (account.balance === "0" && tokenBalance === 0) {
+                account.hrefType = false;
+            }  else {
+                account.hrefType = true;
+            }
         }
 
         return account;

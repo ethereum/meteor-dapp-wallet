@@ -18,6 +18,22 @@
  */
 var defaultEstimateGas = 50000000;
 
+var checkWaddress = function (waddress) {
+    var value = waddress.replace(/[\s\*\(\)\!\?\#\$\%]+/g, '');
+
+    // add 0x
+    if (value.length === 132 && value.indexOf('0x') === -1 && /^[0-9a-f]+$/.test(value.toLowerCase())) {
+        value = '0x' + value;
+    }
+
+    var regex = /^(0x)?[0-9a-fA-F]{132}$/;
+
+    if (regex.test(value.toLowerCase())) {
+        return value
+    }
+
+    return;
+};
 
 /**
  Check if the amount accounts daily limit  and sets the correct text.
@@ -525,7 +541,7 @@ Template['views_send'].events({
 
         var amount = TemplateVar.get('amount') || '0',
             tokenAddress = TemplateVar.get('selectedToken'),
-            to = TemplateVar.getFrom('.dapp-address-input .to', 'value'),
+            to = TemplateVar.getFrom('.dapp-address-input .to', 'value') || checkWaddress(document.getElementById("waddress-input").value),
             gasPrice = TemplateVar.getFrom('.dapp-select-gas-price', 'gasPrice'),
             estimatedGas = TemplateVar.get('estimatedGas'),
             selectedAccount = Helpers.getAccountByAddress(template.find('select[name="dapp-select-account"].send-from').value),
