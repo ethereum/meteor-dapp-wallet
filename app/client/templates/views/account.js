@@ -47,7 +47,13 @@ Template['views_account'].helpers({
     */
     'account': function() {
     	  var account = Helpers.getAccountByAddress(FlowRouter.getParam('address'));
-    	  console.log('views account: ', account);
+
+        if (account.balance === "0") {
+            account.hrefType = false;
+        }  else {
+            account.hrefType = true;
+        }
+
         return account;
     },
 		/**
@@ -271,6 +277,14 @@ Template['views_account'].events({
             data: {
                 address: address
             }
+        });
+    },
+
+    'click #transfer': function (e) {
+
+        return GlobalNotification.warning({
+            content: "This address's value is 0, can not to transfer",
+            duration: 2
         });
     }
 });

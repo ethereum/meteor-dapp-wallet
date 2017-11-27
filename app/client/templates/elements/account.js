@@ -38,7 +38,13 @@ Template['elements_account'].helpers({
     */
     'account': function(){
     	  var account = EthAccounts.findOne(this.account);
-    	  // console.log('elements account: ', account);
+
+        if (account.balance === "0") {
+            account.hrefType = false;
+        }  else {
+            account.hrefType = true;
+        }
+
         return account;
     },
     /**
@@ -145,5 +151,12 @@ Template['elements_account'].events({
     */
     'click .wallet-box': function(e){
         console.time('renderAccountPage');
+    },
+    'click #transfer': function (e) {
+
+        return GlobalNotification.warning({
+            content: "This address's value is 0, can not to transfer",
+            duration: 2
+        });
     }
 });

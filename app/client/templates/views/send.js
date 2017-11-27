@@ -372,7 +372,6 @@ Template['views_send'].helpers({
 	'sendExplanation': function(){
 
 		var amount = TemplateVar.get('amount') || '0',
-		// 	selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account.send-from', 'value')),
       selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account.send-from', 'value')),
 			token = Tokens.findOne({address: TemplateVar.get('selectedToken')});
 
@@ -460,10 +459,9 @@ Template['views_send'].events({
 			var value =	event.target.value;
 
       if (value === FlowRouter.getParam('address').toLowerCase() || value === '0') {
-          TemplateVar.set('transaction', true);
           TemplateVar.set('switchStype', true);
       } else {
-          TemplateVar.set('transaction', false);
+          TemplateVar.set('transaction', true);
           TemplateVar.set('switchStype', false);
       }
 

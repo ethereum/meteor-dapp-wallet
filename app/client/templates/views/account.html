@@ -22,10 +22,17 @@
                         <div class="clear"></div>
                         <nav class="viwes-account-nav">
                             <ul>
-                                <li>
-                                    <a href="{{pathFor route='sendTo' address=(toChecksumAddress address)}}" title="{{toChecksumAddress address}}">
-                                        <i class="icon-arrow-up"></i>{{i18n 'views.account.transfer'}}</a>
-                                </li>
+                                {{#if hrefType}}
+                                    <li>
+                                        <a href="{{pathFor route='sendTo' address=(toChecksumAddress address)}}" title="{{toChecksumAddress address}}">
+                                            <i class="icon-arrow-up"></i>{{i18n 'views.account.transfer'}}</a>
+                                    </li>
+                                {{else}}
+                                    <li>
+                                        <a href="" title="{{toChecksumAddress address}}" id="transfer">
+                                            <i class="icon-arrow-up"></i>{{i18n 'views.account.transfer'}}</a>
+                                    </li>
+                                {{/if}}
                                 <li>
                                     <button class="start-to-scan-block-button"><i class="icon-action-redo"></i>{{i18n 'views.account.OTAs'}}</button>
                                 </li>
