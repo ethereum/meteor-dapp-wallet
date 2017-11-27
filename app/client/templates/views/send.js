@@ -92,6 +92,8 @@ Template['views_send'].onCreated(function(){
     var template = this;
 
     TemplateVar.set('switchStype', true);
+    TemplateVar.set('selectType', '0');
+    TemplateVar.set('transaction', true);
 
     // SET THE DEFAULT VARIABLES
     TemplateVar.set('amount', '0');
@@ -232,7 +234,18 @@ Template['views_send'].onRendered(function(){
 
 
 Template['views_send'].helpers({
+
+    'selectTransaction': function () {
+        return TemplateVar.get('transaction');
+    },
+
+    'selecteType': function () {
+        var desc =  TemplateVar.get('selectType') === '0' ? '[Switch to private]' : '[Switch to ordinary]';
+        return desc;
+    },
+
     'switchStype': function () {
+        console.log("TemplateVar.get('switchStype'): ", TemplateVar.get('switchStype'));
         return TemplateVar.get('switchStype');
     },
 
@@ -430,18 +443,15 @@ Template['views_send'].helpers({
 
 
 Template['views_send'].events({
-    'change .send-from': function (event) {
-        event.preventDefault();
-        var value =	event.target.value;
 
-        console.log('value: ', value);
+    'click #selectType': function () {
+        TemplateVar.get('selectType') === '0' ? TemplateVar.set('selectType', '1') : TemplateVar.set('selectType', '0');
 
-        // if (value === FlowRouter.getParam('address').toLowerCase() || value === '0') {
-        //     TemplateVar.set('switchStype', true);
-        // } else {
-        //     TemplateVar.set('transaction', true);
-        //     TemplateVar.set('switchStype', false);
-        // }
+        if (TemplateVar.get('selectType') === '0') {
+            TemplateVar.set('transaction', true);
+        } else {
+            TemplateVar.set('transaction', false);
+        }
     },
 
     /**
@@ -457,7 +467,10 @@ Template['views_send'].events({
      @event click .token-ether
      */
     'click .token-ether': function(e, template){
+
         TemplateVar.set('selectedToken', 'ether');
+
+        TemplateVar.set('switchStype', true);
 
         // trigger amount box change
         template.$('input[name="amount"]').trigger('change');
@@ -470,8 +483,12 @@ Template['views_send'].events({
         var value = e.currentTarget.value;
         TemplateVar.set('selectedToken', value);
 
-        if (value === 'ether')
+        if (value === 'ether') {
             TemplateVar.setTo('.dapp-data-textarea', 'value', '');
+            TemplateVar.set('switchStype', true);
+        } else {
+            TemplateVar.set('switchStype', false);
+        }
 
         // trigger amount box change
         template.$('input[name="amount"]').trigger('change');

@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0390f3c1-a35e-4c80-8043-9737ce6223ea" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/account.html" afterPath="$PROJECT_DIR$/app/client/templates/views/account.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/elements/account.js" afterPath="$PROJECT_DIR$/app/client/templates/elements/account.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/account.js" afterPath="$PROJECT_DIR$/app/client/templates/views/account.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/send.html" afterPath="$PROJECT_DIR$/app/client/templates/views/send.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/client/templates/views/send.js" afterPath="$PROJECT_DIR$/app/client/templates/views/send.js" />
     </list>
@@ -23,8 +23,8 @@
       <file leaf-file-name="account.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/client/templates/views/account.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1110">
-              <caret line="66" column="39" lean-forward="true" selection-start-line="66" selection-start-column="39" selection-end-line="66" selection-end-column="39" />
+            <state relative-caret-position="-1188">
+              <caret line="3" column="8" lean-forward="false" selection-start-line="3" selection-start-column="8" selection-end-line="3" selection-end-column="8" />
               <folding>
                 <element signature="n#style#0;n#a#0;n#li#1;n#ul#0;n#nav#0;n#header#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
@@ -33,23 +33,60 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="send.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/client/templates/views/send.html">
+      <file leaf-file-name="account.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/client/templates/views/account.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="388">
-              <caret line="18" column="62" lean-forward="false" selection-start-line="18" selection-start-column="62" selection-end-line="18" selection-end-column="62" />
+            <state relative-caret-position="102">
+              <caret line="39" column="3" lean-forward="true" selection-start-line="39" selection-start-column="3" selection-end-line="39" selection-end-column="3" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="account.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/client/templates/elements/account.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="159">
+              <caret line="29" column="16" lean-forward="false" selection-start-line="29" selection-start-column="16" selection-end-line="29" selection-end-column="16" />
               <folding>
-                <element signature="n#style#0;n#a#0;n#div#0;n#div#0;n#form#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#1;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="send.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="account.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/client/templates/elements/account.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="256">
+              <caret line="41" column="8" lean-forward="false" selection-start-line="41" selection-start-column="8" selection-end-line="41" selection-end-column="45" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="send.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/client/templates/views/send.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="462">
+              <caret line="45" column="31" lean-forward="false" selection-start-line="45" selection-start-column="14" selection-end-line="45" selection-end-column="31" />
+              <folding>
+                <element signature="n#style#0;n#h3#0;n#div#0;n#div#0;n#form#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="e#2010#8532#0#Spacebars" expanded="false" />
+                <element signature="n#style#0;n#div#0;n#div#2;n#form#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#strong#0;n#div#0;n#div#2;n#form#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#select#0;n#div#0;n#div#2;n#form#0;n#template#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="send.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/client/templates/views/send.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="388">
-              <caret line="239" column="62" lean-forward="true" selection-start-line="239" selection-start-column="62" selection-end-line="239" selection-end-column="62" />
+            <state relative-caret-position="242">
+              <caret line="95" column="41" lean-forward="false" selection-start-line="95" selection-start-column="41" selection-end-line="95" selection-end-column="41" />
               <folding>
                 <element signature="e#50#124#0" expanded="false" />
                 <element signature="e#127#375#0" expanded="false" />
@@ -63,101 +100,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="routes.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/client/routes.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="82">
-              <caret line="101" column="32" lean-forward="false" selection-start-line="101" selection-start-column="25" selection-end-line="101" selection-end-column="32" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="templateHelpers.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/client/lib/helpers/templateHelpers.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="586">
-              <caret line="121" column="3" lean-forward="true" selection-start-line="121" selection-start-column="3" selection-end-line="121" selection-end-column="3" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="choiceAccount.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/client/templates/views/modals/choiceAccount.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-264">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="deployContract.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/client/templates/views/deployContract.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="498">
-              <caret line="562" column="78" lean-forward="true" selection-start-line="562" selection-start-column="78" selection-end-line="562" selection-end-column="78" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="account.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/client/templates/views/account.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="592">
-              <caret line="117" column="49" lean-forward="false" selection-start-line="117" selection-start-column="19" selection-end-line="117" selection-end-column="49" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="account.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/client/templates/elements/account.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="543">
-              <caret line="73" column="24" lean-forward="true" selection-start-line="73" selection-start-column="24" selection-end-line="73" selection-end-column="33" />
-              <folding>
-                <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#1;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="account.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/client/templates/elements/account.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2326">
-              <caret line="16" column="2" lean-forward="false" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="2" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>parentData</find>
-      <find>each</find>
-      <find>myOption</find>
-      <find>sendota-select</find>
-      <find>dapp_addressInput</find>
-      <find>sendota-selectValue</find>
-      <find>toChecksumAddress</find>
-      <find>theAccount</find>
-      <find>sendToken</find>
-      <find>switchStype</find>
       <find>strong</find>
-      <find>selectType</find>
-      <find>transaction</find>
-      <find>select-token</find>
       <find>wallet</find>
       <find>sendTo</find>
       <find>name</find>
@@ -165,15 +112,28 @@
       <find>texts</find>
       <find>send-info</find>
       <find>compile-contract</find>
-      <find>selectedToken</find>
       <find>dapp-select-gas-price</find>
       <find>balances</find>
       <find>hideWallets</find>
-      <find>selectAccounts</find>
       <find>deployContract</find>
       <find>selectAccount</find>
-      <find>account</find>
       <find>address</find>
+      <find>sendAll</find>
+      <find>selectAccounts</find>
+      <find>account</find>
+      <find>tokens</find>
+      <find>console</find>
+      <find>hrefType</find>
+      <find>if (value === 'ether')</find>
+      <find>sendAllAmount</find>
+      <find>selectedToken</find>
+      <find>switchStype</find>
+      <find>select-token</find>
+      <find>token-ether</find>
+      <find>selecteType</find>
+      <find>selectType</find>
+      <find>selectTransaction</find>
+      <find>transaction</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/app</dir>
@@ -231,9 +191,9 @@
         <option value="$PROJECT_DIR$/app/client/templates/views/modals/choiceAccount.html" />
         <option value="$PROJECT_DIR$/app/client/templates/views/dashboard.js" />
         <option value="$PROJECT_DIR$/app/client/templates/elements/account.html" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/account.html" />
         <option value="$PROJECT_DIR$/app/client/templates/elements/account.js" />
         <option value="$PROJECT_DIR$/app/client/templates/views/account.js" />
-        <option value="$PROJECT_DIR$/app/client/templates/views/account.html" />
         <option value="$PROJECT_DIR$/app/client/templates/views/send.html" />
         <option value="$PROJECT_DIR$/app/client/templates/views/send.js" />
       </list>
@@ -417,7 +377,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -439,11 +403,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="helpers" />
+              <option name="myItemId" value="templates" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -599,17 +559,17 @@
       <workItem from="1510724525246" duration="43679000" />
       <workItem from="1510832340533" duration="5140000" />
       <workItem from="1511444425041" duration="15250000" />
-      <workItem from="1511521761118" duration="46129000" />
+      <workItem from="1511521761118" duration="51766000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="215187000" />
+    <option name="totallyTimeSpent" value="220824000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1632096" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1632096" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32879582" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -925,25 +885,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/client/templates/views/dashboard.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="454">
-          <caret line="31" column="25" lean-forward="true" selection-start-line="31" selection-start-column="25" selection-end-line="31" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/client/templates/elements/account.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="543">
-          <caret line="73" column="24" lean-forward="true" selection-start-line="73" selection-start-column="24" selection-end-line="73" selection-end-column="33" />
-          <folding>
-            <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#1;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/i18n/wallet.en.i18n.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="169">
@@ -973,17 +914,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/client/templates/views/account.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1110">
-          <caret line="66" column="39" lean-forward="true" selection-start-line="66" selection-start-column="39" selection-end-line="66" selection-end-column="39" />
-          <folding>
-            <element signature="n#style#0;n#a#0;n#li#1;n#ul#0;n#nav#0;n#header#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/client/lib/helpers/helperFunctions.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -1003,12 +933,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/client/templates/views/send.html">
+    <entry file="file://$PROJECT_DIR$/app/client/routes.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="388">
-          <caret line="18" column="62" lean-forward="false" selection-start-line="18" selection-start-column="62" selection-end-line="18" selection-end-column="62" />
+        <state relative-caret-position="82">
+          <caret line="101" column="32" lean-forward="false" selection-start-line="101" selection-start-column="25" selection-end-line="101" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/lib/helpers/templateHelpers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="564">
+          <caret line="120" column="14" lean-forward="true" selection-start-line="120" selection-start-column="14" selection-end-line="120" selection-end-column="14" />
           <folding>
-            <element signature="n#style#0;n#a#0;n#div#0;n#div#0;n#form#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1018,39 +956,75 @@
         <state relative-caret-position="-264">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/client/templates/elements/account.js">
+    <entry file="file://$PROJECT_DIR$/app/client/templates/views/account.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2326">
-          <caret line="16" column="2" lean-forward="false" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="2" />
+        <state relative-caret-position="-1188">
+          <caret line="3" column="8" lean-forward="false" selection-start-line="3" selection-start-column="8" selection-end-line="3" selection-end-column="8" />
+          <folding>
+            <element signature="n#style#0;n#a#0;n#li#1;n#ul#0;n#nav#0;n#header#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/templates/elements/account.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="159">
+          <caret line="29" column="16" lean-forward="false" selection-start-line="29" selection-start-column="16" selection-end-line="29" selection-end-column="16" />
+          <folding>
+            <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#1;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/templates/views/dashboard.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="388">
+          <caret line="31" column="25" lean-forward="true" selection-start-line="31" selection-start-column="25" selection-end-line="31" selection-end-column="25" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/client/templates/views/account.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="592">
-          <caret line="117" column="49" lean-forward="false" selection-start-line="117" selection-start-column="19" selection-end-line="117" selection-end-column="49" />
+        <state relative-caret-position="102">
+          <caret line="39" column="3" lean-forward="true" selection-start-line="39" selection-start-column="3" selection-end-line="39" selection-end-column="3" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/client/routes.js">
+    <entry file="file://$PROJECT_DIR$/app/client/templates/elements/account.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="82">
-          <caret line="101" column="32" lean-forward="false" selection-start-line="101" selection-start-column="25" selection-end-line="101" selection-end-column="32" />
+        <state relative-caret-position="256">
+          <caret line="41" column="8" lean-forward="false" selection-start-line="41" selection-start-column="8" selection-end-line="41" selection-end-column="45" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/templates/views/send.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="45" column="31" lean-forward="false" selection-start-line="45" selection-start-column="14" selection-end-line="45" selection-end-column="31" />
+          <folding>
+            <element signature="n#style#0;n#h3#0;n#div#0;n#div#0;n#form#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#2010#8532#0#Spacebars" expanded="false" />
+            <element signature="n#style#0;n#div#0;n#div#2;n#form#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#strong#0;n#div#0;n#div#2;n#form#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#select#0;n#div#0;n#div#2;n#form#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/client/templates/views/send.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="388">
-          <caret line="239" column="62" lean-forward="true" selection-start-line="239" selection-start-column="62" selection-end-line="239" selection-end-column="62" />
+        <state relative-caret-position="242">
+          <caret line="95" column="41" lean-forward="false" selection-start-line="95" selection-start-column="41" selection-end-line="95" selection-end-column="41" />
           <folding>
             <element signature="e#50#124#0" expanded="false" />
             <element signature="e#127#375#0" expanded="false" />
@@ -1059,16 +1033,6 @@
             <element signature="e#1645#1768#0" expanded="false" />
             <element signature="e#1798#2502#0" expanded="false" />
             <element signature="e#2608#3029#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/client/lib/helpers/templateHelpers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="586">
-          <caret line="121" column="3" lean-forward="true" selection-start-line="121" selection-start-column="3" selection-end-line="121" selection-end-column="3" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>

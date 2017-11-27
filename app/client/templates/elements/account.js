@@ -39,7 +39,21 @@ Template['elements_account'].helpers({
     'account': function(){
     	  var account = EthAccounts.findOne(this.account);
 
-        if (account.balance === "0") {
+    	  console.log('ele account:', account);
+
+        var query = {};
+        query['balances.'+ account._id] = {$exists: true};
+
+        var tokens = Tokens.find(query, {sort: {name: 1}}).fetch();
+
+        var tokenBalance = 0;
+        _.each(tokens, (token) => {
+            tokenBalance += parseInt(token.balances[account._id]);
+        });
+
+        console.log("tokenBalance: ", tokenBalance);
+
+        if (account.balance === "0" && tokenBalance === 0) {
             account.hrefType = false;
         }  else {
             account.hrefType = true;
