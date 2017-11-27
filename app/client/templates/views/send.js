@@ -96,6 +96,7 @@ Template['views_send'].onCreated(function(){
 	var template = this;
 
   TemplateVar.set('selectType', '0');
+  TemplateVar.set('switchStype', true);
 
   TemplateVar.set('theAddress', FlowRouter.getParam('address').toLowerCase());
 
@@ -239,20 +240,25 @@ Template['views_send'].helpers({
      var desc =  TemplateVar.get('selectType') === '0' ? '[Switch to private]' : '[Switch to ordinary]';
      return desc;
   },
+	'switchStype': function () {
+			return TemplateVar.get('switchStype');
+  },
 
 	'address': function () {
 		return FlowRouter.getParam('address');
 	},
 
 	'theAccount': function () {
+
 		var account = EthAccounts.find({balance:{$ne:"0"}, address: TemplateVar.get('theAddress')}, {sort: {balance: 1}}).fetch();
 
       var query = {};
-      query['balances.'+ this._id] = {$exists: true};
+      query['balances.'+ account._id] = {$exists: true};
 
       var tokens = Tokens.find(query, {sort: {name: 1}}).fetch();
       _.each(tokens, (token) => {
           token.balance =token.balances[this._id];
+          account.push(token);
       });
 
       console.log('send token: ', tokens);
@@ -448,9 +454,25 @@ Template['views_send'].events({
 		}
 	},
 
+	'change .send-from': function (event) {
+      event.preventDefault();
+			var value =	event.target.value;
+			console.log('from: ', value);
+      console.log('address: ', FlowRouter.getParam('address').toLowerCase());
+
+      if (value === FlowRouter.getParam('address').toLowerCase() || value === '0') {
+          TemplateVar.set('transaction', true);
+          TemplateVar.set('switchStype', true);
+      } else {
+          TemplateVar.set('transaction', false);
+          TemplateVar.set('switchStype', false);
+      }
+
+  },
 	'change .sendota-selectValue': function(event){
 		event.preventDefault();
 		var selectValue = event.target.value;
+      console.log('selectValue: ', selectValue);
 		TemplateVar.set('amount', selectValue);
 	},
 

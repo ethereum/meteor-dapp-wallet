@@ -76,8 +76,6 @@ Template['views_account'].helpers({
             token.balance =token.balances[this._id];
         });
 
-        console.log('account token: ', tokens);
-
         return tokens;
     },
 

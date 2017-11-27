@@ -13,7 +13,9 @@
             <div class="row clear from-to">
                 <div class="col col-12 mobile-full from">
                     <strong class="views_send_strong">{{i18n 'wallet.send.from'}}</strong>
-                    <a id="selectType" style="cursor: pointer;">{{selecteType}}</a>
+                    {{#if switchStype}}
+                        <a id="selectType" style="cursor: pointer;">{{selecteType}}</a>
+                    {{/if}}
                     {{> dapp_choiceAccount accounts=(theAccount deployContract) showAccountTypes=true class='send-from'}}
                 </div>
                 <!--to-->
