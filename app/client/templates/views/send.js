@@ -107,6 +107,8 @@ var estimationCallback = function(e, res){
 Template['views_send'].onCreated(function(){
     var template = this;
 
+    TemplateVar.set('fromAddress', FlowRouter.getParam('address'));
+
     TemplateVar.set('switchStype', true);
     TemplateVar.set('selectType', '0');
     TemplateVar.set('transaction', true);
@@ -261,7 +263,6 @@ Template['views_send'].helpers({
     },
 
     'switchStype': function () {
-        console.log("TemplateVar.get('switchStype'): ", TemplateVar.get('switchStype'));
         return TemplateVar.get('switchStype');
     },
 
@@ -278,7 +279,7 @@ Template['views_send'].helpers({
      @method (selectedAccount)
      */
     'selectedAccount': function(){
-        return Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account.send-from', 'value'));
+        return Helpers.getAccountByAddress(TemplateVar.get('fromAddress'));
     },
     /**
      Get the current selected token document
@@ -309,7 +310,7 @@ Template['views_send'].helpers({
      @method (hasTokens)
      */
     'hasTokens': function() {
-        var selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account.send-from', 'value')),
+        var selectedAccount = Helpers.getAccountByAddress(TemplateVar.get('fromAddress')),
             query = {};
 
 
@@ -332,7 +333,7 @@ Template['views_send'].helpers({
      @method (total)
      */
     'total': function(ether){
-        var selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account.send-from', 'value'));
+        var selectedAccount = Helpers.getAccountByAddress(TemplateVar.get('fromAddress'));
         var amount = TemplateVar.get('amount');
         if(!_.isFinite(amount))
             return '0';
@@ -367,7 +368,7 @@ Template['views_send'].helpers({
      @method (sendAllAmount)
      */
     'sendAllAmount': function(){
-        var selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account.send-from', 'value'));
+        var selectedAccount = Helpers.getAccountByAddress(TemplateVar.get('fromAddress'));
         var amount = 0;
 
         if (TemplateVar.get('selectedToken') === 'ether') {
@@ -411,7 +412,7 @@ Template['views_send'].helpers({
     'sendExplanation': function(){
 
         var amount = TemplateVar.get('amount') || '0',
-            selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account.send-from', 'value')),
+            selectedAccount = Helpers.getAccountByAddress(TemplateVar.get('fromAddress')),
             token = Tokens.findOne({address: TemplateVar.get('selectedToken')});
 
         if(!token || !selectedAccount)
@@ -429,7 +430,7 @@ Template['views_send'].helpers({
      @method (formattedCoinBalance)
      */
     'formattedCoinBalance': function(e){
-        var selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account.send-from', 'value'));
+        var selectedAccount = Helpers.getAccountByAddress(TemplateVar.get('fromAddress'));
 
         return (this.balances && Number(this.balances[selectedAccount._id]) > 0)
             ? Helpers.formatNumberByDecimals(this.balances[selectedAccount._id], this.decimals) +' '+ this.symbol
@@ -440,7 +441,8 @@ Template['views_send'].helpers({
      @method (selectedAccountIsWalletContract)
      */
     'selectedAccountIsWalletContract': function(){
-        var selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account.send-from', 'value'));
+
+        var selectedAccount = Helpers.getAccountByAddress(TemplateVar.get('fromAddress'));
         return selectedAccount ? !!selectedAccount.owners : false;
     },
     /**
@@ -462,7 +464,6 @@ Template['views_send'].events({
     'change .sendota-selectValue': function(event){
         event.preventDefault();
         var selectValue = event.target.value;
-        console.log('selectValue: ', selectValue);
         TemplateVar.set('amount', selectValue);
     },
 
@@ -504,10 +505,12 @@ Template['views_send'].events({
     'click .select-token input': function(e, template){
         var value = e.currentTarget.value;
         TemplateVar.set('selectedToken', value);
+        TemplateVar.set('transaction', true);
 
         if (value === 'ether') {
             TemplateVar.setTo('.dapp-data-textarea', 'value', '');
             TemplateVar.set('switchStype', true);
+
         } else {
             TemplateVar.set('switchStype', false);
         }
@@ -550,13 +553,13 @@ Template['views_send'].events({
             to = TemplateVar.getFrom('.dapp-address-input .to', 'value') || checkWaddress(document.getElementById("waddress-input").value),
             gasPrice = TemplateVar.getFrom('.dapp-select-gas-price', 'gasPrice'),
             estimatedGas = TemplateVar.get('estimatedGas'),
-            selectedAccount = Helpers.getAccountByAddress(template.find('select[name="dapp-select-account"].send-from').value),
+            // selectedAccount = Helpers.getAccountByAddress(template.find('select[name="dapp-select-account"].send-from').value),
+            selectedAccount = Helpers.getAccountByAddress(TemplateVar.get('fromAddress')),
             selectedAction = TemplateVar.get("selectedAction"),
             data = getDataField(),
             contract = TemplateVar.getFrom('.compile-contract', 'contract'),
             sendAll = TemplateVar.get('sendAll');
 
-        console.log('amount: ', amount);
 
 
         if(selectedAccount && !TemplateVar.get('sending')) {
