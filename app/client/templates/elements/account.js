@@ -19,7 +19,63 @@ Block required until a transaction is confirmed.
 */
 var blocksForConfirmation = 12;
 
+var accountClipboardEventHandler = function(e){
+    if (Session.get('tmpAllowCopy') === true) {
+        Session.set('tmpAllowCopy', false);
+        return true;
+    }
+    else {
+        e.preventDefault();
+    }
 
+    function copyAddress(){
+
+        var typeClass = e.target.name;
+
+        var copyTextarea = document.querySelector('.copyable-address' + typeClass.toString());
+
+        console.log('copyTextarea', copyTextarea);
+
+        var selection = window.getSelection();
+        var range = document.createRange();
+        range.selectNodeContents(copyTextarea);
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        try {
+            document.execCommand('copy');
+
+            GlobalNotification.info({
+                content: 'i18n:wallet.accounts.addressCopiedToClipboard',
+                duration: 3
+            });
+        } catch (err) {
+            GlobalNotification.error({
+                content: 'i18n:wallet.accounts.addressNotCopiedToClipboard',
+                closeable: false,
+                duration: 3
+            });
+        }
+        selection.removeAllRanges();
+    }
+
+    if (Helpers.isOnMainNetwork()) {
+        Session.set('tmpAllowCopy', true);
+        copyAddress();
+    }
+    else {
+        EthElements.Modal.question({
+            text: new Spacebars.SafeString(TAPi18n.__('wallet.accounts.modal.copyAddressWarning')),
+            ok: function(){
+                Session.set('tmpAllowCopy', true);
+                copyAddress();
+            },
+            cancel: true,
+            modalQuestionOkButtonText: TAPi18n.__('wallet.accounts.modal.buttonOk'),
+            modalQuestionCancelButtonText: TAPi18n.__('wallet.accounts.modal.buttonCancel')
+        });
+    }
+};
 
 
 Template['elements_account'].rendered = function(){
@@ -171,5 +227,24 @@ Template['elements_account'].events({
             content: "This address's value is 0, can not to transfer",
             duration: 2
         });
+    },
+
+    'click .copy-to-clipboard-button': accountClipboardEventHandler,
+
+    'click .qrcode-button': function(e){
+        e.preventDefault();
+
+        var name = e.target.name;
+
+        console.log('name: ', name);
+
+        // Open a modal showing the QR Code
+        EthElements.Modal.show({
+            template: 'views_modals_qrCode',
+            data: {
+                address: name
+            }
+        });
     }
+
 });

@@ -50,9 +50,17 @@
 					    {{displayName}}
 				    {{/if}}
 			    </h3>
+                <p style="margin-top: 30px;margin-bottom: 0;">
+                    <span class="copyable-address{{address}} accountLink-span account-id {{#if creating}}creating{{/if}}" style="padding-top: 5px; color: #827a7a">{{toChecksumAddress address}}</span>
+                    <button class="copy-to-clipboard-button icon-docs" style="margin: 0 10px;" name={{address}} ></button>
+                    <button class="qrcode-button icon-camera" name={{address}} ></button>
+                </p>
+                <p style="margin-top: 0;margin-bottom: 0;">
+                <span class="copyable-address{{waddress}} accountLink-span account-id {{#if creating}}creating{{/if}}" style="color: #827a7a">{{waddress}}</span>
+                    <button class="copy-to-clipboard-button icon-docs" style="margin: 0 10px;" name={{waddress}} ></button>
+                    <button class="qrcode-button icon-camera" name={{waddress}} ></button>
+                </p>
 
-                <span class="accountLink-span account-id {{#if creating}}creating{{/if}}" style="padding-top: 5px;">{{toChecksumAddress address}}</span>
-                <span class="accountLink-span account-id {{#if creating}}creating{{/if}}">{{waddress}}</span>
 
 			    {{#unless creating}}
 				    {{> elements_balance balance=balance}}
