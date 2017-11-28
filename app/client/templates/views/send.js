@@ -266,19 +266,11 @@ Template['views_send'].helpers({
     },
 
 		'selectAccount': function () {
-    		var address = FlowRouter.getParam('address').toLowerCase();
-    		console.log('address: ', address);
+
+    		var address = FlowRouter.getRouteName() === 'dashboard' ? FlowRouter.getParam('address') : FlowRouter.getParam('address').toLowerCase();
         var accounts = EthAccounts.find({balance:{$ne:"0"}, address: address}, {sort: {balance: 1}}).fetch();
-        console.log('accounts: ', accounts);
 
         return accounts;
-    },
-
-    'change .sendota-selectValue': function(event){
-        event.preventDefault();
-        var selectValue = event.target.value;
-        console.log('selectValue: ', selectValue);
-        TemplateVar.set('amount', selectValue);
     },
 
     /**
@@ -467,6 +459,13 @@ Template['views_send'].helpers({
 
 Template['views_send'].events({
 
+    'change .sendota-selectValue': function(event){
+        event.preventDefault();
+        var selectValue = event.target.value;
+        console.log('selectValue: ', selectValue);
+        TemplateVar.set('amount', selectValue);
+    },
+
     'click #selectType': function () {
         TemplateVar.get('selectType') === '0' ? TemplateVar.set('selectType', '1') : TemplateVar.set('selectType', '0');
 
@@ -556,6 +555,8 @@ Template['views_send'].events({
             data = getDataField(),
             contract = TemplateVar.getFrom('.compile-contract', 'contract'),
             sendAll = TemplateVar.get('sendAll');
+
+        console.log('amount: ', amount);
 
 
         if(selectedAccount && !TemplateVar.get('sending')) {
