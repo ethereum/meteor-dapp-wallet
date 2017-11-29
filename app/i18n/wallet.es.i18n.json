@@ -285,6 +285,7 @@
         },
         "contracts": {
             "contractTitle" : "Contracts",
+            "tokenTitle" : "Tokens",
             "deployNewContract": "Deploy new contract",
             "addCustomContract": "Watch contract",
             "customContracts": "Custom contracts",
