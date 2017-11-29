@@ -1,3 +1,39 @@
+.triangle{
+    border-top: 5px solid transparent;
+    border-left: 5px solid #3f454c;
+    border-bottom: 5px solid transparent;
+    display: inline-block;
+    margin: 5px;
+}
+
+.account-h1 {
+    margin-bottom: 0;
+    strong {
+        font-family: MicrosoftYaHei-Bold;
+        font-weight: normal;
+        font-stretch: normal;
+        line-height: 25px;
+        letter-spacing: 1px;
+        color: #3f454c;
+    }
+}
+
+.copyable-address {
+    font-family: MicrosoftYaHei;
+    font-weight: normal;
+    font-stretch: normal;
+    line-height: 25px;
+    color: #929cb8;
+}
+
+.copyable-waddress {
+    font-family: MicrosoftYaHei;
+    font-weight: normal;
+    font-stretch: normal;
+    line-height: 25px;
+    color: #929cb8;
+}
+
 .circle {
     width: 10px;
     height: 10px;
@@ -32,6 +68,7 @@
     text-align: center;
     margin-bottom: 10px;
     padding-bottom: 5px;
+    font-size: 14px;
 }
 #views_account_token_balance{
     display: inline-block;
@@ -153,6 +190,15 @@ span.address {
   box-shadow: 0px 6px 18px 0px rgba(15, 104, 170, 0.1);
   border-radius: 8px;
 
+  .header-span {
+      span{
+          width: 50px;
+          height: 50px;
+          border: solid 2px #f7f8fc;
+          float: left;
+      }
+  }
+
   a {
     padding-top: 0.5em;
   }
@@ -180,9 +226,14 @@ span.address {
     padding: 0.5em 1em;
 
     p{
-      padding-left: 0.5em;
+      padding-left: 1em;
+      float: right;
       span{
         display: block;
+      }
+      .balance-span{
+          font-family: MicrosoftYaHei;
+          color: #929cb8;
       }
     }
   }
@@ -192,7 +243,7 @@ span.address {
     background-color: #4b90f7;
     border: solid 2px #eff1f7;
     margin: 0;
-    margin-left: 20%;
+    margin-left: 20px;
     padding: 1px;
     position: relative;
     top: -0.5em;
@@ -209,9 +260,15 @@ span.address {
       font-size: 20px;
       span{
         display: block;
+        width: 100px;
       }
     }
   }
+}
+
+.filter-transactions{
+    background-color: #d7dde6;
+    border: solid #f7f8fc;
 }
 
 

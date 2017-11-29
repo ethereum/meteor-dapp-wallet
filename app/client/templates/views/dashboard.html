@@ -1,7 +1,7 @@
 <template name="views_dashboard">
     <div class="dapp-container">
 
-        <h1 style="margin-bottom: 0"><div class="circle"></div>{{{i18n "wallet.accounts.title"}}}</h1>
+        <h1 class="account-h1"><div class="circle"></div><strong>{{{i18n "wallet.accounts.title"}}}</strong></h1>
 
         {{#if pendingConfirmations}}
             <h2>{{i18n 'wallet.transactions.pendingConfirmations'}}</h2>

@@ -70,7 +70,7 @@
             }
         },
         "accounts": {
-            "title": "<strong>Accounts</strong> Overview",
+            "title": "Accounts Overview",
             "walletsTitle": "Wallet contracts",
             "accountsTitle": "Accounts",
             "defaultName": "Unnamed",

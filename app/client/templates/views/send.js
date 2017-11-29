@@ -502,8 +502,8 @@ Template['views_send'].events({
      Select a token
      @event click .select-token
      */
-    'click .select-token input': function(e, template){
-        var value = e.currentTarget.value;
+    'change .select-token': function(e, template){
+        var value = e.target.value;
         TemplateVar.set('selectedToken', value);
         TemplateVar.set('transaction', true);
 

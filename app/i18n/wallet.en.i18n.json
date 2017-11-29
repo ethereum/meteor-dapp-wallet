@@ -111,7 +111,7 @@
             }
         },
         "accounts": {
-            "title": "<strong>Accounts Overview</strong>",
+            "title": "Accounts Overview",
             "walletsTitle": "Wallet contracts",
             "accountsTitle": "Accounts",
             "defaultName": "Unnamed",
@@ -336,6 +336,7 @@
         },
         "contracts": {
             "contractTitle" : "Contracts",
+            "tokenTitle" : "Tokens",
             "deployNewContract": "Deploy new contract",
             "addCustomContract": "Watch contract",
             "customContracts": "Custom contracts",

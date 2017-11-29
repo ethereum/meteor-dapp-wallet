@@ -1,12 +1,14 @@
 <template name="views_account">
     {{#with account}}
-        <h1 style="margin-bottom: 0"><div class="circle"></div><strong>{{i18n 'views.account.title'}}</strong></h1>
+        <h1 class="account-h1"><div class="circle"></div><strong>{{i18n 'views.account.title'}}</strong></h1>
         <div class="dapp-container accounts-page">
             <div class="accounts-page-summary">
 	              <!--account detail-->
                 <div class="viwes-account-header" style="padding: 20px;">
-                    {{> dapp_identicon identity=address}}
-                    <header class="{{ensClass}}" style="display: inline-block;padding: 0;padding-left: 10px;">
+                    <div class="header-span">
+                        {{> dapp_identicon identity=address}}
+                    </div>
+                    <header class="{{ensClass}}" style="float: left; padding-left: 10px;">
                         <h1>
                             {{#if ens}}
                                 <span>{{displayName}}</span>
@@ -56,29 +58,29 @@
 
 	              <!--Balance-->
 	              <div class="viwes-account-header">
-		              <h1><div class="viwes-account-line"></div><span>{{i18n 'views.account.balacne.title'}}</span></h1>
+		              <h1 class="account-h1"><div class="viwes-account-line"></div><strong>{{i18n 'views.account.balacne.title'}}</strong></h1>
 		              <div class="viwes-account-balance-left">
+                          <img src="/images/wanchain.png"/>
                           <p><div class="circle" style="width: 6px;height: 6px;"></div>
                             <strong style="display: inline-block;">{{> elements_balance balance=balance changeUnit=true showAllDecimals=true}}</strong>
-                            <span>{{i18n 'views.account.balacne.des'}}</span>
+                            <span class="balance-span">{{i18n 'views.account.balacne.des'}}</span>
                           </p>
 		              </div>
 
                       {{#if otasValue}}
                           <div class="viwes-account-balance-left">
                               <p><div class="circle" style="width: 6px;height: 6px;"></div>
-                                <strong style="display: inline-block;">{{> elements_balance balance=otasValue changeUnit=true showAllDecimals=true}}</strong>
-                                <span>{{i18n 'views.account.balacne.ota'}}<a href="{{pathFor route='otaRefund' address=theAddress}}">
-                                    {{i18n 'views.account.balacne.refund'}}</a>
-			                </span>
+                              <strong style="display: inline-block;">{{> elements_balance balance=otasValue changeUnit=true showAllDecimals=true}}</strong>
+                              <span class="balance-span">{{i18n 'views.account.balacne.ota'}}
+                                  <a href="{{pathFor route='otaRefund' address=theAddress}}">{{i18n 'views.account.balacne.refund'}}</a>
+                          </span>
                               </p>
                           </div>
                       {{/if}}
 
-
                       <div >
-                          <hr class="viwes-account-balance-hr viwes-account-balance-left"/>
                           {{#each tokens}}
+                              <hr class="viwes-account-balance-hr viwes-account-balance-left"/>
                               <div class="viwes-account-balance-right">
                                   <p >
                                       <span class="views_account_token">{{name}}</span>
@@ -96,9 +98,9 @@
     {{/with}}
 
 		<!--transaction list-->
-		<div class="viwes-account-header">
+		<div class="viwes-account-header" style="margin: 20px;">
 			{{#if allTransactions}}
-                <h1 style="margin-bottom: 0;"><div class="viwes-account-line"></div><span>{{i18n 'views.account.transaction.title'}}</span></h1>
+                <h1 class="account-h1"><div class="viwes-account-line"></div><strong>{{i18n 'views.account.transaction.title'}}</strong></h1>
 				{{> elements_transactions_table limit=5 address=theAddress}}
 			{{else}}
 				<h2>{{i18n 'wallet.transactions.none'}}</h2>
