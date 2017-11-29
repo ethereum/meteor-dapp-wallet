@@ -1,35 +1,35 @@
 <template name="views_contracts">
-    <h1 style="margin-bottom: 0"><div class="circle"></div><strong>{{i18n "wallet.contracts.contractTitle"}}</strong></h1>
-    <div class="viwes-account-header">
-        <div class="dapp-container">
+    <!--<h1 style="margin-bottom: 0"><div class="circle"></div><strong>{{i18n "wallet.contracts.contractTitle"}}</strong></h1>-->
+    <!--<div class="viwes-account-header">-->
+        <!--<div class="dapp-container">-->
 
-            <a href="{{pathFor route='deployContract'}}" class="wallet-box create">
-                <div class="account-pattern">
-                    +
-                </div>
-                <h3>{{i18n "wallet.contracts.deployNewContract"}}</h3>
-            </a>
+            <!--<a href="{{pathFor route='deployContract'}}" class="wallet-box create">-->
+                <!--<div class="account-pattern">-->
+                    <!--+-->
+                <!--</div>-->
+                <!--<h3>{{i18n "wallet.contracts.deployNewContract"}}</h3>-->
+            <!--</a>-->
 
-            <h2>{{i18n "wallet.contracts.customContracts"}}</h2>
+            <!--<h2>{{i18n "wallet.contracts.customContracts"}}</h2>-->
 
-            <p>{{i18n "wallet.contracts.description" }}</p>
-            <div class="dapp-clear-fix"></div>
+            <!--<p>{{i18n "wallet.contracts.description" }}</p>-->
+            <!--<div class="dapp-clear-fix"></div>-->
 
-            <div class="wallet-box-list">
-                {{#each customContracts}}
-                    {{> elements_account account=_id isContract=true}}
-                {{/each}}
-            </div>
+            <!--<div class="wallet-box-list">-->
+                <!--{{#each customContracts}}-->
+                    <!--{{> elements_account account=_id isContract=true}}-->
+                <!--{{/each}}-->
+            <!--</div>-->
 
-            <button class="wallet-box create add-contract">
-                <div class="account-pattern">
-                    +
-                </div>
-                <h3>{{i18n "wallet.contracts.addCustomContract"}}</h3>
-            </button>
-            <div class="dapp-clear-fix"></div>
-        </div>
-    </div>
+            <!--<button class="wallet-box create add-contract">-->
+                <!--<div class="account-pattern">-->
+                    <!--+-->
+                <!--</div>-->
+                <!--<h3>{{i18n "wallet.contracts.addCustomContract"}}</h3>-->
+            <!--</button>-->
+            <!--<div class="dapp-clear-fix"></div>-->
+        <!--</div>-->
+    <!--</div>-->
 
     <h1 style="margin-bottom: 0"><div class="circle"></div><strong>{{i18n "wallet.contracts.tokenTitle"}}</strong></h1>
     <div class="viwes-account-header">
