@@ -92,11 +92,6 @@ Template['views_account'].helpers({
             token.balance =token.balances[this._id];
         });
 
-        var tokens = [
-                {name: 'DsfundToken', balance: '100000000000000000000000000'},
-                {name: 'DsfundToken', balance: '99992000000000000000000000'},
-        ];
-
         return tokens;
     },
 
