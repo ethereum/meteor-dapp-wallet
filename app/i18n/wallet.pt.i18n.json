@@ -266,7 +266,7 @@
                 "sendFee": "Essa é a taxa máxima que será paga pela transação, você irá receber qualquer troco que for gerado automaticamente. Sua transação irá demorar <strong>__timetext__</strong> para ser incluída no blockchain.",
                 "noCodeInRecipient": "The recipient account is not a contract, so you can't execute anything. <strong> Put a contract address on the 'TO' field. </strong>",
                 "addData": "You can add extra data to send along with your transaction. If you leave the \"to\" field empty it will try to deploy a contract from your data.",
-                "dataNotExecutable": "The data seems not to be executabe, that means this transaction will use all the gas you provide.",
+                "dataNotExecutable": "It seems this transaction will fail. If you submit it, it may consume all the gas you provide.",
                 "cantEstimateGas": "We can't estimate your gas usage properly, as you need at least 1 ether in your account.",
                 "estimatedGas": "Estimated required gas",
                 "timeTexts": {
