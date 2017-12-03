@@ -55,7 +55,7 @@
 
     .dapp-container {
         padding: 20px;
-        max-width: none; 
+        max-width: none;
 
         > h2 {
             margin-bottom: @gridHeight * 1;
@@ -63,8 +63,8 @@
 
         > h2 + p {
             margin-bottom: @gridHeight * 2;
-        } 
-    }   
+        }
+    }
 }
 
 
@@ -77,7 +77,7 @@ body {
 }
 .app-blur {
     .dapp-header {
-        background: @colorWinBackgroundBlur;
+        background: #ffffff;
     }
 }
 
@@ -156,9 +156,10 @@ body {
 .dapp-header {
     padding-right: @gridWidth * 2.5;
     padding-left: @gridWidth * 2.5;
-    background-color: @colorWinBackgroundFocus;
+    background: #ffffff;
+    box-shadow: 0px 3px 8px 0px
+rgba(15, 104, 170, 0.06);
     -webkit-app-region: drag; // necessary to drag the wallet window
-    .background-image(linear-gradient(to bottom,  @colorWinBackgroundFocus 50%, #ddd9d9 90%));
 
     &.dapp-small {
         z-index: 30;
@@ -167,13 +168,13 @@ body {
         left: 0;
         right: 0;
         .dapp-shadow-medium;
-  
+
         .block-info {
             padding-bottom: @defaultPaddingVertical - 2;
         }
-        
+
         .wallet-balance ,
-        .block-info {            
+        .block-info {
             .text,
             h3 {
                 display: none;
@@ -200,7 +201,7 @@ body {
     }
 
     .block-info {
-        padding-bottom: @defaultPaddingVertical;        
+        padding-bottom: @defaultPaddingVertical;
         color: lighten(@colorGrayDark, 5%);
         text-align: center;
         flex: 1 0;
@@ -225,9 +226,9 @@ body {
             border-radius: 2px;
             top: 1px;
         }
-        
+
     }
-    
+
     .wallet-balance {
         padding-bottom: @defaultPaddingVertical - 5px;
         padding-left: @defaultPaddingHorizontal;
@@ -263,7 +264,7 @@ body {
     span {
         font-size: 0.6em;
     }
-    
+
     .inline-form {
         button {
             border: 0;
@@ -311,7 +312,7 @@ body {
             text-transform: uppercase;
             padding-left: @gridWidth;
         }
-        
+
         .account-balance {
             position: absolute;
             right: @gridWidth * 2;
@@ -362,16 +363,16 @@ body {
                 margin-top: 0;
                 position: absolute;
             }
-            
+
             tr {
                 &:hover td:last-child a {
                     visibility: visible;
                 }
-                
+
                 td:last-child {
                     text-align: right;
 
-                    
+
                     a {
                         visibility: hidden;
                     }
@@ -380,7 +381,7 @@ body {
                     padding-left: @gridWidth;
                 }
             }
-            
+
         }
     }
 
@@ -407,7 +408,7 @@ body {
     .execute-contract {
         flex: 1 100%;
     }
-    
+
     > .dapp-identicon {
         float: left;
         margin-right: 20px;
@@ -471,7 +472,7 @@ body {
             background-color: transparent;
             color: @colorTextTertiary;
             text-transform: none;
-            // font-size: 0.9em; 
+            // font-size: 0.9em;
         }
     }
 
@@ -481,7 +482,7 @@ body {
     }
 
     input[type='checkbox'] {
-        float: left; 
+        float: left;
         margin-right: @defaultMargin/2;
     }
 }
@@ -490,10 +491,10 @@ body {
     top: floor(@gridHeight * 5.5);
 }
 
-.dapp-actionbar nav ul li button, 
-.dapp-actionbar nav ul li a, 
+.dapp-actionbar nav ul li button,
+.dapp-actionbar nav ul li a,
 .dapp-actionbar nav ul li a:visited {
-    color: @colorLink;
+    color: #4b90f7;
 }
 
 .account-send-form {
@@ -529,11 +530,11 @@ body {
             .dapp-address-input input {
                 width: 100%;
             }
-            
+
         }
 
         &.compile-contract {
-            
+
             // switch editor sourcecode/bytecode
             .dapp-data-textarea {
                 display: block;
@@ -578,7 +579,7 @@ body {
                 width: 100%;
             }
             input[type='checkbox'] {
-                float: left; 
+                float: left;
                 margin-right: @defaultMargin/2;
             }
 
@@ -657,7 +658,7 @@ body {
                 font-size: 2em;
             }
         }
-         
+
     }
 
     textarea {
@@ -739,7 +740,7 @@ body {
         span {
             color: @colorTextSecondary;
         }
-        
+
     }
 
     .indented-box {
@@ -780,7 +781,7 @@ body {
     }
 
     .contract-info {
-        
+
         h3 {
             color: @colorGrayDark;
             text-transform: lowercase;
@@ -811,7 +812,7 @@ body {
                 display: inline-block;
                 color: @colorGray;
                 padding-left: @gridWidth / 2;
-                
+
                 .icon {
                     position: absolute;
                     left:  @gridWidth;
@@ -820,13 +821,13 @@ body {
                 }
             }
         }
-        
+
         table {
             table-layout: fixed;
-            
+
             tr:nth-child(odd) {
                 border-radius: 4px 4px 0 0;
-            }        
+            }
 
             tr:nth-child(even) {
                 background-color: #FFF;
@@ -838,7 +839,7 @@ body {
                 vertical-align: top;
                 word-wrap: break-word;
 
-                h3 {    
+                h3 {
                     margin: 0;
                 }
 
@@ -849,7 +850,7 @@ body {
                         margin-bottom: @gridHeight;
                         word-wrap: break-word;
                     }
-                }    
+                }
             }
         }
         .dapp-punctuation {
@@ -867,6 +868,19 @@ body {
     opacity: 0.25;
 }
 
+.dapp-header nav > ul > li.active a, .dapp-header nav > ul > li.active button, .dapp-header nav > ul > li button.active, .dapp-header nav > ul > li a.active {
+    color: #4b90f7;
+    border-bottom: 3px solid #4b90f7;
+}
+
+.dapp-header nav > ul a:focus, .dapp-header nav > ul a:visited:focus, .dapp-header nav > ul button:focus {
+    border-bottom: 3px solid #4b90f7;
+}
+
+.dapp-header nav > ul a, .dapp-header nav > ul a:visited, .dapp-header nav > ul button {
+    color: #b7a6a6;
+}
+
 /* #### Small wallet #### */
 @media screen and (max-width: 1099px){
     .hide-on-small {
@@ -882,9 +896,10 @@ body {
         visibility: hidden;
         padding: 0;
     }
-  
+
     .wallet-balance {
         font-size: 75%;
     }
 }
+
 

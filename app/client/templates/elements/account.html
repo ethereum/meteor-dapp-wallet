@@ -84,7 +84,7 @@
                 {{/if}}
 
                 <a href="{{pathFor route='account' address=address}}" class="wallet-box {{#if creating}}creating{{/if}} {{#if disabled}}disabled{{/if}} {{#if ../wallets}}wallets{{/if}} {{#if new}}new{{/if}}"
-                   style="min-height: 10px; margin: 0;" ><i class="icon-arrow-right"></i>Detail</a>
+                   style="min-height: 10px; margin: 0;" id={{address}}><i class="icon-arrow-right"></i>Detail</a>
             </div>
 	    {{/with}}
     </div>

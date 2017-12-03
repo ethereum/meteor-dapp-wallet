@@ -10,20 +10,24 @@ Template['views_account'].onCreated(function () {
 
     InterID = Meteor.setInterval(function(){
         var waddress = Helpers.getAccountByAddress(FlowRouter.getParam('address')).waddress.slice(2);
-        mist.requestOTACollection(waddress, function (e, result) {
-            var oldOtas = TemplateVar.get(template,'otaValue');
-            if(!oldOtas || oldOtas.length !== result.length)
-            {
-                var otaValue = 0;
-                if (!e && result.length >0) {
-                    _.each(result, function(ota){
-                        otaValue += parseInt(ota.value);
-                    });
+
+        if (typeof mist !== 'undefined') {
+            mist.requestOTACollection(waddress, function (e, result) {
+                var oldOtas = TemplateVar.get(template,'otaValue');
+                if(!oldOtas || oldOtas.length !== result.length)
+                {
+                    var otaValue = 0;
+                    if (!e && result.length >0) {
+                        _.each(result, function(ota){
+                            otaValue += parseInt(ota.value);
+                        });
+                    }
+                    TemplateVar.set(template,'otasValue',otaValue);
+                    Session.set('otas', result);
                 }
-                TemplateVar.set(template,'otasValue',otaValue);
-                Session.set('otas', result);
-            }
-        })
+            })
+        }
+
     }, 2000);
 });
 
@@ -125,12 +129,16 @@ Template['views_account'].helpers({
 
 var accountStartScanEventHandler = function(e){
 
-    mist.startScan(FlowRouter.getParam('address'), (err, result)=>{
-        if(err){
-            console.log("Error:", err);
-        }
-        console.log("startscan:", result);
-    })
+    if (typeof mist !== 'undefined') {
+        mist.startScan(FlowRouter.getParam('address'), (err, result)=>{
+            if(err){
+                console.log("Error:", err);
+            }
+            console.log("startscan:", result);
+        })
+    } else {
+        console.warn("mist is undefiend")
+    }
 };
 var accountClipboardEventHandler = function(e){
 	if (Session.get('tmpAllowCopy') === true) {

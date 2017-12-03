@@ -1,0 +1,1129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="0390f3c1-a35e-4c80-8043-9737ce6223ea" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/.meteor/.finished-upgraders" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/.meteor/.gitignore" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/.meteor/.id" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/.meteor/cordova-plugins" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/.meteor/packages" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/.meteor/platforms" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/.meteor/release" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/.meteor/versions" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/index.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/lib/appStart.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/lib/collections.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/lib/ethereum/1_web3Init.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/lib/ethereum/observeBlocks.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/lib/ethereum/observeCustomContracts.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/lib/ethereum/observeEvents.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/lib/ethereum/observePendingConfirmations.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/lib/ethereum/observeTokens.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/lib/ethereum/observeTransactions.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/lib/ethereum/observeWallets.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/lib/ethereum/tokenInterface.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/lib/ethereum/walletConnector.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/lib/ethereum/walletInterface.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/lib/helpers/helperFunctions.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/lib/helpers/templateHelpers.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/lib/thirdparty/ace.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/lib/thirdparty/chance.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/lib/thirdparty/coinbase-widget.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/lib/thirdparty/geopattern.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/lib/thirdparty/mode-java.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/lib/thirdparty/mode-typescript.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/lib/thirdparty/theme-solarized_dark.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/lib/thirdparty/theme-solarized_light.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/lib/thirdparty/theme-tomorrow.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/lib/thirdparty/theme-tomorrow_night.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/lib/wanchain/contractInterface.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/mist.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/routes.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/styles/elements.import.less" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/styles/main.less" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/elements/account.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/elements/account.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/elements/accountLink.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/elements/accountLink.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/elements/addressInput.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/elements/addressInput.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/elements/balance.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/elements/balance.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/elements/compileContract.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/elements/compileContract.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/elements/createdContractAt.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/elements/eventsTable.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/elements/eventsTable.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/elements/executeContract.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/elements/executeContract.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/elements/inputs/address.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/elements/inputs/address.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/elements/inputs/bool.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/elements/inputs/bytes.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/elements/inputs/int.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/elements/inputs/json.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/elements/inputs/string.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/elements/inputs/uint.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/elements/selectableUnit.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/elements/selectableUnit.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/elements/tokenBox.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/elements/tokenBox.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/elements/transactionTable.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/elements/transactionTable.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/elements/vulnerabilities.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/elements/vulnerabilities.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/layout/header.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/layout/header.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/layout/main.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/layout/notFound.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/account.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/account.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/account_create.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/account_create.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/contracts.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/contracts.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/dashboard.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/dashboard.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/deployContract.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/deployContract.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/addCustomContract.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/addCustomContract.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/addToken.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/addToken.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/backupContractAddress.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/choiceAccount.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/choiceAccount.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/eventInfo.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/eventInfo.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/identicon.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/identicon.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/interface.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/interface.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/loading.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/otaRefundInfo.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/otaRefundInfo.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/qrCode.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/qrCode.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/selectAccount.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/selectAccount.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/sendTransactionInfo.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/sendTransactionInfo.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/transactionInfo.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/transactionInfo.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/waddressInput.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/modals/waddressInput.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/otaRefund.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/otaRefund.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/send.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/templates/views/send.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/client/window.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/i18n/app.ca.i18n.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/i18n/app.de.i18n.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/i18n/app.en.i18n.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/i18n/app.es.i18n.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/i18n/app.fa.i18n.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/i18n/app.fr.i18n.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/i18n/app.ja.i18n.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/i18n/app.ko.i18n.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/i18n/app.pt.i18n.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/i18n/app.ro.i18n.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/i18n/app.ru.i18n.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/i18n/app.ua.i18n.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/i18n/app.zh-TW.i18n.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/i18n/app.zh.i18n.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/i18n/wallet.ca.i18n.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/i18n/wallet.de.i18n.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/i18n/wallet.en.i18n.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/i18n/wallet.es.i18n.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/i18n/wallet.fr.i18n.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/i18n/wallet.ja.i18n.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/i18n/wallet.ko.i18n.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/i18n/wallet.pt.i18n.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/i18n/wallet.ro.i18n.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/i18n/wallet.ru.i18n.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/i18n/wallet.ua.i18n.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/i18n/wallet.zh-TW.i18n.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/i18n/wallet.zh.i18n.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/project-tap.i18n" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/public/bitcoin-icon.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/public/fontawesome/animated.less" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/public/fontawesome/bordered-pulled.less" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/public/fontawesome/core.less" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/public/fontawesome/fixed-width.less" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/public/fontawesome/font-awesome.less" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/public/fontawesome/icons.less" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/public/fontawesome/larger.less" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/public/fontawesome/list.less" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/public/fontawesome/mixins.less" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/public/fontawesome/path.less" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/public/fontawesome/rotated-flipped.less" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/public/fontawesome/stacked.less" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/public/fontawesome/variables.less" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/public/i18n/de.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/public/i18n/es.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/public/i18n/fa.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/public/i18n/ko.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/public/images/wanchain.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/public/loading.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/public/sockjs/info" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/public/wallet-icon.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/tests/mocha/client/sampleClientTest.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/tests/mocha/server/sampleServerTest.js" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
+    <ignored path="$PROJECT_DIR$/.tmp/" />
+    <ignored path="$PROJECT_DIR$/temp/" />
+    <ignored path="$PROJECT_DIR$/tmp/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="account.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/client/templates/elements/account.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="670">
+              <caret line="86" column="59" lean-forward="false" selection-start-line="86" selection-start-column="59" selection-end-line="86" selection-end-column="59" />
+              <folding>
+                <element signature="n#style#0;n#a#2;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>ontainers.import</find>
+      <find>containers.import</find>
+      <find>containers.import.</find>
+      <find>containers.import.l</find>
+      <find>containers.import.le</find>
+      <find>containers.import.les</find>
+      <find>containers.import.less</find>
+      <find>border-bottom:</find>
+      <find>v</find>
+      <find>n</find>
+      <find>na</find>
+      <find>nav</find>
+      <find>dapp-header</find>
+      <find>header</find>
+      <find>#4b90f7</find>
+      <find>@#4b90f7</find>
+      <find>active</find>
+      <find>text-transform: uppercase;</find>
+      <find>text-transform: uppercase</find>
+      <find>@colorTextSecondary</find>
+      <find>b</find>
+      <find>bo</find>
+      <find>bor</find>
+      <find>borser</find>
+      <find>button</find>
+      <find>border-bottom</find>
+      <find>colorWhite</find>
+      <find>account-balance-lef</find>
+      <find>dapp-small</find>
+    </findStrings>
+    <dirStrings>
+      <dir>$PROJECT_DIR$/app</dir>
+      <dir>$PROJECT_DIR$</dir>
+    </dirStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/app/packages/wanchain_accounts/accounts.js" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/dashboardwan.js" />
+        <option value="$PROJECT_DIR$/app/client/templates/elements/accountwan.js" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/sendota.html" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/sendota.js" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/account_wan.js" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/modals/identicon.js" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/modals/identicon.html" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/modals/waddressInput.js" />
+        <option value="$PROJECT_DIR$/app/client/templates/elements/transactionTable.js" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/contract.html" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/contract.js" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/modals/choiceAccounts.html" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/modals/choiceAccount.js" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/modals/sendTransactionInfo.html" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/modals/otaRefundInfo.js" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/otaRefund.js" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/modals/transactionInfo.html" />
+        <option value="$PROJECT_DIR$/app/client/templates/elements/transactionTable.html" />
+        <option value="$PROJECT_DIR$/app/client/templates/elements/accountLink.html" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/modals/otaRefundInfo.html" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/deployContract.js" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/deployContract.html" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/otaRefund.html" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/modals/waddressInput.html" />
+        <option value="$PROJECT_DIR$/app/client/routes.js" />
+        <option value="$PROJECT_DIR$/app/client/templates/elements/addressInput.html" />
+        <option value="$PROJECT_DIR$/app/client/templates/elements/addressInput.js" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/dashboard.js" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/modals/choiceAccount.html" />
+        <option value="$PROJECT_DIR$/app/i18n/wallet.zh.i18n.json" />
+        <option value="$PROJECT_DIR$/app/client/templates/elements/account.js" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/dashboard.html" />
+        <option value="$PROJECT_DIR$/stylesheets/stylesheet.css" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/send.js" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/send.html" />
+        <option value="$PROJECT_DIR$/app/i18n/wallet.en.i18n.json" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/contracts.html" />
+        <option value="$PROJECT_DIR$/app/i18n/wallet.es.i18n.json" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/account.html" />
+        <option value="$PROJECT_DIR$/app/.meteor/versions" />
+        <option value="$PROJECT_DIR$/app/client/lib/helpers/templateHelpers.js" />
+        <option value="$PROJECT_DIR$/app/client/index.js" />
+        <option value="$PROJECT_DIR$/app/client/templates/views/account.js" />
+        <option value="$PROJECT_DIR$/app/client/templates/layout/main.html" />
+        <option value="$PROJECT_DIR$/app/client/index.html" />
+        <option value="$PROJECT_DIR$/app/client/styles/main.less" />
+        <option value="$PROJECT_DIR$/app/client/templates/layout/header.html" />
+        <option value="$PROJECT_DIR$/app/client/styles/elements.import.less" />
+        <option value="$PROJECT_DIR$/app/client/window.js" />
+        <option value="$PROJECT_DIR$/app/client/templates/elements/account.html" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <annotation-enable>false</annotation-enable>
+    <other-services-enabled>true</other-services-enabled>
+  </component>
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="65" />
+    <option name="y" value="-4" />
+    <option name="width" value="1851" />
+    <option name="height" value="893" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+          <State>
+            <id>Assignment issuesJavaScript</id>
+          </State>
+          <State>
+            <id>CSS</id>
+          </State>
+          <State>
+            <id>Code style issuesJavaScript</id>
+          </State>
+          <State>
+            <id>CoffeeScript</id>
+          </State>
+          <State>
+            <id>Control flow issuesJavaScript</id>
+          </State>
+          <State>
+            <id>Dart</id>
+          </State>
+          <State>
+            <id>Data flow issuesJavaScript</id>
+          </State>
+          <State>
+            <id>Error handlingJavaScript</id>
+          </State>
+          <State>
+            <id>General</id>
+          </State>
+          <State>
+            <id>GeneralJavaScript</id>
+          </State>
+          <State>
+            <id>HTML</id>
+          </State>
+          <State>
+            <id>JSON</id>
+          </State>
+          <State>
+            <id>JavaScript</id>
+          </State>
+          <State>
+            <id>JavaScript function metricsJavaScript</id>
+          </State>
+          <State>
+            <id>JavaScript validity issuesJavaScript</id>
+          </State>
+          <State>
+            <id>Naming conventionsJavaScript</id>
+          </State>
+          <State>
+            <id>Potentially confusing code constructsJavaScript</id>
+          </State>
+          <State>
+            <id>Probable bugsCSS</id>
+          </State>
+          <State>
+            <id>Probable bugsCoffeeScript</id>
+          </State>
+          <State>
+            <id>Probable bugsJavaScript</id>
+          </State>
+          <State>
+            <id>Pug/Jade</id>
+          </State>
+          <State>
+            <id>XML</id>
+          </State>
+          <State>
+            <id>XPath</id>
+          </State>
+        </expanded-state>
+      </profile-state>
+    </entry>
+  </component>
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meteor-dapp-wallet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meteor-dapp-wallet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meteor-dapp-wallet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meteor-dapp-wallet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meteor-dapp-wallet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meteor-dapp-wallet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meteor-dapp-wallet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meteor-dapp-wallet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meteor-dapp-wallet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meteor-dapp-wallet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="elements" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="settings.editor.selected.configurable" value="Settings.JavaScript" />
+    <property name="nodejs_interpreter_path" value="/usr/bin/node" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="HbShouldOpenHtmlAsHb" value="enabled" />
+    <property name="js.meteor.project" value="true" />
+    <property name="js.meteor.library.was.enabled" value="true" />
+    <property name="JavaScriptPreferStrict" value="false" />
+    <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
+    <property name="meteor.settings.import.codes.2" value="" />
+    <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/app/.meteor/versions" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/public/images" />
+      <recent name="$PROJECT_DIR$/app/public" />
+      <recent name="$PROJECT_DIR$/images" />
+      <recent name="$PROJECT_DIR$/app/client/styles/images" />
+      <recent name="$PROJECT_DIR$/app/client/templates/elements" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/public/images" />
+      <recent name="$PROJECT_DIR$/app/client/templates/views" />
+      <recent name="$PROJECT_DIR$/app/client/templates/elements" />
+      <recent name="$PROJECT_DIR$/app/client/templates/layout_old" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Meteor.Wanwallet">
+    <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
+      <method />
+    </configuration>
+    <configuration default="true" type="DartTestRunConfigurationType" factoryName="Dart Test">
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerJest" factoryName="Jest">
+      <node-interpreter value="project" />
+      <working-dir value="" />
+      <envs />
+      <scope-kind value="ALL" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma">
+      <config-file value="" />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerProtractor" factoryName="Protractor">
+      <config-file value="" />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="project" working-dir="">
+      <method />
+    </configuration>
+    <configuration default="true" type="cucumber.js" factoryName="Cucumber.js">
+      <option name="cucumberJsArguments" value="" />
+      <option name="executablePath" />
+      <option name="filePath" />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.npm" factoryName="npm">
+      <command value="run" />
+      <scripts />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="meteor-app-runner" factoryName="Meteor">
+      <option name="exePath" value="/usr/local/bin/meteor" />
+      <option name="startBrowserSettings">
+        <browser url="http://localhost:3000" />
+      </option>
+      <meteor-runner-state>
+        <startBrowserSettings>
+          <browser url="http://localhost:3000" />
+        </startBrowserSettings>
+      </meteor-runner-state>
+      <method />
+    </configuration>
+    <configuration default="true" type="mocha-javascript-test-runner" factoryName="Mocha">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <working-directory />
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui />
+      <extra-mocha-options />
+      <test-kind>DIRECTORY</test-kind>
+      <test-directory />
+      <recursive>false</recursive>
+      <method />
+    </configuration>
+    <configuration default="false" name="Wanwallet" type="meteor-app-runner" factoryName="Meteor" workingDirectory="$PROJECT_DIR$/app">
+      <option name="exePath" value="/usr/local/bin/meteor" />
+      <option name="startBrowserSettings">
+        <browser url="http://localhost:3000" />
+      </option>
+      <meteor-runner-state>
+        <startBrowserSettings>
+          <browser url="http://localhost:3000" />
+        </startBrowserSettings>
+      </meteor-runner-state>
+      <method />
+    </configuration>
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="Meteor.Wanwallet" />
+    </list>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0390f3c1-a35e-4c80-8043-9737ce6223ea" name="Default" comment="" />
+      <created>1510283679948</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1510283679948</updated>
+      <workItem from="1510283681342" duration="104989000" />
+      <workItem from="1510724525246" duration="43679000" />
+      <workItem from="1510832340533" duration="5140000" />
+      <workItem from="1511444425041" duration="15250000" />
+      <workItem from="1511521761118" duration="96843000" />
+      <workItem from="1511957426283" duration="33000" />
+      <workItem from="1511957669650" duration="3083000" />
+      <workItem from="1512008076008" duration="15605000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="286334000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="65" y="-4" width="1851" height="893" extended-state="6" />
+    <layout>
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24124727" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32776618" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.44198173" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36951983" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+    <layout-to-restore>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12356021" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32984293" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18886463" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="processedProjectFiles" value="true" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="9" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/app/client/templates/views/modals/waddressInput.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" column="45" lean-forward="false" selection-start-line="2" selection-start-column="31" selection-end-line="2" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/templates/views/modals/choiceAccount.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="4" column="30" lean-forward="true" selection-start-line="4" selection-start-column="30" selection-end-line="4" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2222">
+          <caret line="101" column="32" lean-forward="false" selection-start-line="101" selection-start-column="25" selection-end-line="101" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/i18n/wallet.zh.i18n.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="484">
+          <caret line="268" column="24" lean-forward="true" selection-start-line="268" selection-start-column="24" selection-end-line="268" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stylesheets/print.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-198">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/lib/helpers/helperFunctions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="332">
+          <caret line="203" column="4" lean-forward="false" selection-start-line="203" selection-start-column="4" selection-end-line="203" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/public/images/wanchain.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/templates/views/dashboard.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/templates/views/send.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="397">
+          <caret line="505" column="33" lean-forward="true" selection-start-line="505" selection-start-column="33" selection-end-line="505" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/templates/elements/transactionTable.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="3" column="53" lean-forward="false" selection-start-line="3" selection-start-column="34" selection-end-line="3" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.meteor/packages/ethereum_tools/0.7.0/web.browser/globalHelpers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="484">
+          <caret line="22" column="24" lean-forward="false" selection-start-line="22" selection-start-column="24" selection-end-line="22" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/images/body-bg.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/images/octocat-icon.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/images/zip-icon.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/images/tar-gz-icon.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/images/highlight-bg.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/templates/views/deployContract.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4048">
+          <caret line="184" column="58" lean-forward="false" selection-start-line="184" selection-start-column="41" selection-end-line="184" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/templates/views/contracts.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="660">
+          <caret line="54" column="55" lean-forward="false" selection-start-line="54" selection-start-column="47" selection-end-line="54" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/i18n/wallet.en.i18n.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="313">
+          <caret line="338" column="12" lean-forward="false" selection-start-line="338" selection-start-column="12" selection-end-line="338" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/i18n/wallet.es.i18n.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="313">
+          <caret line="287" column="36" lean-forward="false" selection-start-line="287" selection-start-column="36" selection-end-line="287" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/.meteor/platforms">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/.meteor/cordova-plugins">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/.meteor/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/.meteor/.finished-upgraders">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/images/hr.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/templates/views/send.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="112" column="25" lean-forward="false" selection-start-line="112" selection-start-column="25" selection-end-line="112" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/.meteor/packages">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/.meteor/release">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/public/bitcoin-icon.svg">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/public/wallet-icon.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/.meteor/.id">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/packages/wanchain_accounts/.versions">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="733">
+          <caret line="40" column="21" lean-forward="false" selection-start-line="40" selection-start-column="21" selection-end-line="40" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/.meteor/versions">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="131">
+          <caret line="85" column="18" lean-forward="true" selection-start-line="85" selection-start-column="18" selection-end-line="85" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/templates/views/account.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="130" column="0" lean-forward="true" selection-start-line="130" selection-start-column="0" selection-end-line="130" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" column="34" lean-forward="false" selection-start-line="2" selection-start-column="34" selection-end-line="2" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/lib/ethereum/observePendingConfirmations.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="310">
+          <caret line="59" column="15" lean-forward="false" selection-start-line="59" selection-start-column="15" selection-end-line="59" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/templates/views/account.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1195">
+          <caret line="61" column="40" lean-forward="true" selection-start-line="61" selection-start-column="40" selection-end-line="61" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/templates/elements/account.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-330">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/lib/helpers/templateHelpers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="249">
+          <caret line="205" column="33" lean-forward="true" selection-start-line="205" selection-start-column="33" selection-end-line="205" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/02b455f4c0af3eded31fa30d60cfbd102aeb7143.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="310">
+          <caret line="0" column="101365" lean-forward="false" selection-start-line="0" selection-start-column="101365" selection-end-line="0" selection-end-column="101365" />
+          <folding>
+            <element signature="e#54517#55148#2" expanded="false" />
+            <element signature="e#70945#71576#2" expanded="false" />
+            <element signature="e#85366#86013#2" expanded="false" />
+            <element signature="e#92072#92715#2" expanded="false" />
+            <element signature="e#97338#97969#2" expanded="false" />
+            <element signature="e#98620#99251#2" expanded="false" />
+            <element signature="e#99813#100444#2" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="10" column="73" lean-forward="true" selection-start-line="10" selection-start-column="73" selection-end-line="10" selection-end-column="73" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="572">
+          <caret line="26" column="7" lean-forward="true" selection-start-line="26" selection-start-column="7" selection-end-line="26" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stylesheets/stylesheet.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="137">
+          <caret line="139" column="77" lean-forward="true" selection-start-line="139" selection-start-column="77" selection-end-line="139" selection-end-column="77" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/styles/main.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-227">
+          <caret line="674" column="0" lean-forward="false" selection-start-line="674" selection-start-column="0" selection-end-line="674" selection-end-column="0" />
+          <folding>
+            <element signature="e#5292#5470#0" expanded="false" />
+            <element signature="e#14505#15184#0" expanded="false" />
+            <element signature="e#15199#16111#0" expanded="false" />
+            <element signature="e#16132#18257#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/templates/layout/header.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="13" column="47" lean-forward="true" selection-start-line="13" selection-start-column="47" selection-end-line="13" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="5" column="22" lean-forward="true" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/templates/layout/main.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="4" column="19" lean-forward="false" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/styles/elements.import.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-330">
+          <caret line="12" column="19" lean-forward="false" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/window.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="18" column="6" lean-forward="true" selection-start-line="18" selection-start-column="6" selection-end-line="18" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/templates/layout/header.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="4" column="41" lean-forward="false" selection-start-line="4" selection-start-column="28" selection-end-line="4" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/templates/elements/account.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="670">
+          <caret line="86" column="59" lean-forward="false" selection-start-line="86" selection-start-column="59" selection-end-line="86" selection-end-column="59" />
+          <folding>
+            <element signature="n#style#0;n#a#2;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
