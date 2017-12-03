@@ -3,10 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="0390f3c1-a35e-4c80-8043-9737ce6223ea" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/app/client/lib/helpers/helperFunctions.js" afterPath="$PROJECT_DIR$/app/client/lib/helpers/helperFunctions.js" />
-      <change beforePath="$PROJECT_DIR$/app/client/lib/helpers/templateHelpers.js" afterPath="$PROJECT_DIR$/app/client/lib/helpers/templateHelpers.js" />
-      <change beforePath="$PROJECT_DIR$/app/client/templates/views/modals/choiceAccount.html" afterPath="$PROJECT_DIR$/app/client/templates/views/modals/choiceAccount.html" />
-      <change beforePath="$PROJECT_DIR$/app/client/templates/views/send.html" afterPath="$PROJECT_DIR$/app/client/templates/views/send.html" />
+      <change beforePath="$PROJECT_DIR$/app/client/templates/elements/executeContract.html" afterPath="$PROJECT_DIR$/app/client/templates/elements/executeContract.html" />
+      <change beforePath="$PROJECT_DIR$/app/client/templates/elements/transactionTable.html" afterPath="$PROJECT_DIR$/app/client/templates/elements/transactionTable.html" />
+      <change beforePath="$PROJECT_DIR$/app/client/templates/views/deployContract.html" afterPath="$PROJECT_DIR$/app/client/templates/views/deployContract.html" />
+      <change beforePath="$PROJECT_DIR$/app/client/templates/views/modals/otaRefundInfo.html" afterPath="$PROJECT_DIR$/app/client/templates/views/modals/otaRefundInfo.html" />
+      <change beforePath="$PROJECT_DIR$/app/client/templates/views/modals/sendTransactionInfo.html" afterPath="$PROJECT_DIR$/app/client/templates/views/modals/sendTransactionInfo.html" />
+      <change beforePath="$PROJECT_DIR$/app/client/templates/views/modals/transactionInfo.html" afterPath="$PROJECT_DIR$/app/client/templates/views/modals/transactionInfo.html" />
+      <change beforePath="$PROJECT_DIR$/app/client/templates/views/otaRefund.html" afterPath="$PROJECT_DIR$/app/client/templates/views/otaRefund.html" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -20,11 +23,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="send.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="send.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/client/templates/views/send.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="143">
-              <caret line="92" column="0" lean-forward="true" selection-start-line="92" selection-start-column="0" selection-end-line="92" selection-end-column="0" />
+            <state relative-caret-position="1620">
+              <caret line="108" column="26" lean-forward="true" selection-start-line="108" selection-start-column="26" selection-end-line="108" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -54,11 +57,21 @@
         <entry file="file://$PROJECT_DIR$/app/client/lib/helpers/helperFunctions.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="645">
-              <caret line="516" column="32" lean-forward="false" selection-start-line="516" selection-start-column="32" selection-end-line="516" selection-end-column="32" />
+              <caret line="516" column="32" lean-forward="false" selection-start-line="516" selection-start-column="14" selection-end-line="516" selection-end-column="32" />
               <folding>
                 <marker date="1512314292792" expanded="true" signature="9564:9572" ph=" " />
                 <marker date="1512314292792" expanded="true" signature="9607:9615" ph=" " />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="executeContract.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/client/templates/elements/executeContract.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="96" column="0" lean-forward="true" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -109,7 +122,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/client/templates/views/sendota.html" />
         <option value="$PROJECT_DIR$/app/client/templates/views/sendota.js" />
         <option value="$PROJECT_DIR$/app/client/templates/views/account_wan.js" />
         <option value="$PROJECT_DIR$/app/client/templates/views/modals/identicon.js" />
@@ -160,6 +172,7 @@
         <option value="$PROJECT_DIR$/app/client/templates/views/modals/choiceAccount.html" />
         <option value="$PROJECT_DIR$/app/client/lib/helpers/helperFunctions.js" />
         <option value="$PROJECT_DIR$/app/client/templates/views/send.html" />
+        <option value="$PROJECT_DIR$/app/client/templates/elements/executeContract.html" />
       </list>
     </option>
   </component>
@@ -495,21 +508,21 @@
       <workItem from="1511957669650" duration="3083000" />
       <workItem from="1512008076008" duration="15605000" />
       <workItem from="1512310366025" duration="2813000" />
-      <workItem from="1512313631937" duration="930000" />
+      <workItem from="1512313631937" duration="1332000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="290077000" />
+    <option name="totallyTimeSpent" value="290479000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25229034" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32776618" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44198173" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -521,7 +534,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32776618" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -566,13 +578,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/client/templates/views/dashboard.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/images/body-bg.png">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -833,6 +838,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="304">
           <caret line="98" column="71" lean-forward="false" selection-start-line="98" selection-start-column="58" selection-end-line="98" selection-end-column="71" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -854,14 +860,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="267">
           <caret line="0" column="3466" lean-forward="false" selection-start-line="0" selection-start-column="3466" selection-end-line="0" selection-end-column="3466" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/client/lib/helpers/templateHelpers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="230" column="55" lean-forward="false" selection-start-line="230" selection-start-column="55" selection-end-line="230" selection-end-column="55" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -891,17 +889,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/client/lib/helpers/helperFunctions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="645">
-          <caret line="516" column="32" lean-forward="false" selection-start-line="516" selection-start-column="32" selection-end-line="516" selection-end-column="32" />
-          <folding>
-            <marker date="1512314292792" expanded="true" signature="9564:9572" ph=" " />
-            <marker date="1512314292792" expanded="true" signature="9607:9615" ph=" " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/client/templates/views/modals/choiceAccount.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
@@ -912,8 +899,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/client/templates/views/send.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143">
-          <caret line="92" column="0" lean-forward="true" selection-start-line="92" selection-start-column="0" selection-end-line="92" selection-end-column="0" />
+        <state relative-caret-position="1620">
+          <caret line="108" column="26" lean-forward="true" selection-start-line="108" selection-start-column="26" selection-end-line="108" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/lib/helpers/templateHelpers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="660">
+          <caret line="230" column="55" lean-forward="false" selection-start-line="230" selection-start-column="55" selection-end-line="230" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/lib/helpers/helperFunctions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="645">
+          <caret line="516" column="32" lean-forward="false" selection-start-line="516" selection-start-column="14" selection-end-line="516" selection-end-column="32" />
+          <folding>
+            <marker date="1512314292792" expanded="true" signature="9564:9572" ph=" " />
+            <marker date="1512314292792" expanded="true" signature="9607:9615" ph=" " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/client/templates/elements/executeContract.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="96" column="0" lean-forward="true" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
           <folding />
         </state>
       </provider>
