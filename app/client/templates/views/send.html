@@ -164,7 +164,7 @@
             <div class="row clear">
                 <div class="col col-7 mobile-full">
                     <strong style="display: block" class="views_send_strong"><div class="triangle"></div>{{i18n 'wallet.send.fee'}}</strong>
-                    {{> dapp_selectGasPrice gas=(TemplateVar.get "estimatedGas") gasPrice=latestBlock.gasPrice}}
+                    {{> modal_selectGasPrice gas=(TemplateVar.get "estimatedGas") gasPrice=latestBlock.gasPrice}}
                 </div>
 
                 <div class="col col-5 mobile-full send-info">
