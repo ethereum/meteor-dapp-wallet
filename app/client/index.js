@@ -1,6 +1,6 @@
 Meteor.startup(function() {
 
-    if(mist)
+    if(typeof mist !== 'undefined')
     {
         mist.addPermanentCallbacks('requestAccount',function(e, accounts) {
             if(!e) {
