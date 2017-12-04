@@ -138,7 +138,7 @@ var accountStartScanEventHandler = function(e){
     if (typeof mist !== 'undefined') {
         mist.startScan(FlowRouter.getParam('address'), (err, result)=>{
             if(err){
-                console.log("Error:", err);
+                console.error(err);
             }
             console.log("startscan:", result);
         })
@@ -158,9 +158,6 @@ var accountClipboardEventHandler = function(e){
 	function copyAddress(){
 		var type = e.target.name;
 		var typeId = e.target.id;
-
-		console.log('type: ', type);
-      console.log('typeId: ', typeId);
 
 		var copyTextarea;
 		if (type === 'address' || typeId === 'address') {
@@ -239,7 +236,6 @@ Template['views_account'].events({
         if(!e.keyCode || e.keyCode === 13) {
             var $el = $(e.currentTarget);
             var text = $el.text();
-
 
             if(_.isEmpty(text)) {
                 text = TAPi18n.__('wallet.accounts.defaultName');
