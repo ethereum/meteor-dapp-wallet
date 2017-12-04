@@ -93,9 +93,14 @@ Template['views_account'].helpers({
         query['balances.'+ this._id] = {$exists: true};
 
         var tokens = Tokens.find(query, {sort: {name: 1}}).fetch();
+
         _.each(tokens, (token) => {
-            token.balance =token.balances[this._id];
+            token.balance =(Number(token.balances[this._id]) > 0)
+            ? Helpers.formatNumberByDecimals(token.balances[this._id], token.decimals) +' '+ token.symbol
+            : false;
         });
+
+        // tokens = [tokens[0], tokens[0],tokens[0]];
 
         return tokens;
     },

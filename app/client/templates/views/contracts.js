@@ -126,7 +126,15 @@ Template['views_contracts'].helpers({
     */
     'customContracts': function(){
         return CustomContracts.find({}, {sort:{name:1}});
-    }, 
+    },
+
+    'customContractsLength': function(){
+        var contractsLength = CustomContracts.find({}, {sort:{name:1}});
+
+        console.log('aaaccc', contractsLength.length);
+        return contractsLength.length;
+
+    },
     /**
     Get all tokens
 

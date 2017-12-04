@@ -94,9 +94,11 @@ Template['views_otaRefund'].events({
     otaData.gasPrice = gasPrice;
 
     // sendTransaction(sendAll ? estimatedGas : estimatedGas + 100000);
-    mist.refundCoin(otaData,(err, result)=>{
-				console.log("error:", err);
-				console.log("result:", result);
-		});
+    if (typeof mist !== "undefined") {
+        mist.refundCoin(otaData, function(err, result){
+        	console.log("error:", err);
+        	console.log("result:", result);
+    });
+	}
 	}
 });
