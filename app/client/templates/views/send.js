@@ -730,7 +730,7 @@ Template['views_send'].events({
                             if(!error){
                                 console.log("XXXXXXXXXXXXXXX testWaddr:", to);
                                 console.log("XXXXXXXXXXXXXXX otaAddr:", otaAddr);
-                                var txBuyData = CoinContractInstance.buyCoinNote.getData(otaAddr, web3.toWei(1));
+                                var txBuyData = CoinContractInstance.buyCoinNote.getData(otaAddr, txArgs.value);
                                 console.log("XXXXXXXXXXXXX txBuyData:", txBuyData);
                                 var privTxArgs = {
                                     from: txArgs.from,
