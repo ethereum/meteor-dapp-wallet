@@ -164,12 +164,13 @@ Template['views_send'].onRendered(function(){
     var template = this;
 
     // focus address input field
-    if(FlowRouter.getParam('address')) {
-        this.find('input[name="to"]').value = FlowRouter.getParam('address');
-        this.$('input[name="to"]').trigger('input');
-    } else if(!this.data){
-        this.$('input[name="to"]').focus();
-    }
+    // if(FlowRouter.getParam('address')) {
+    //     this.find('input[name="to"]').value = FlowRouter.getParam('address');
+    //     this.$('input[name="to"]').trigger('input');
+    // } else if(!this.data){
+    //     this.$('input[name="to"]').focus();
+    // }
+    this.$('input[name="to"]').focus();
 
     // set the from
     var from = FlowRouter.getParam('from');

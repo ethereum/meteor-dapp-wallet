@@ -34,8 +34,6 @@ var accountClipboardEventHandler = function(e){
 
         var copyTextarea = document.querySelector('.copyable-address' + typeClass.toString());
 
-        console.log('copyTextarea', copyTextarea);
-
         var selection = window.getSelection();
         var range = document.createRange();
         range.selectNodeContents(copyTextarea);
@@ -235,8 +233,6 @@ Template['elements_account'].events({
         e.preventDefault();
 
         var name = e.target.name;
-
-        console.log('name: ', name);
 
         // Open a modal showing the QR Code
         EthElements.Modal.show({

@@ -319,7 +319,8 @@ Helpers.formatTransactionBalance = function(value, exchangeRates, unit) {
         var price = new BigNumber(String(web3.fromWei(value, 'ether')), 10).times(exchangeRates[unit].price);
         return EthTools.formatNumber(price, format) + ' '+ unit.toUpperCase();
     } else {
-        return EthTools.formatBalance(value, format + '[0000000000000000] UNIT');
+        // console.log('bal: ', EthTools.formatBalance(value, format + '[0000000000000000] UNIT').split(' ')[0] + ' wan');
+        return EthTools.formatBalance(value, format + '[0000000000000000] UNIT').split(' ')[0] + ' WAN';
     }
 };
 
@@ -510,4 +511,11 @@ Helpers.getENSName = function(address, callback) {
             }
         })
     });
-}
+};
+
+Helpers.transferBanlance = function (number, format, unit) {
+    //replace dapp_formatBalance
+
+    // console.log('aaa: ', EthTools.formatBalance(number, format, unit).split(' ')[0]);
+    return EthTools.formatBalance(number, format, unit).split(' ')[0] + ' WAN';
+};

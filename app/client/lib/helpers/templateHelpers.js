@@ -228,3 +228,5 @@ Takes a camelcase and shows it with spaces
 **/
 Template.registerHelper('toSentence', Helpers.toSentence);
 
+Template.registerHelper('transferBanlance', Helpers.transferBanlance);
+
