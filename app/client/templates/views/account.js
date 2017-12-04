@@ -12,7 +12,8 @@ Template['views_account'].onCreated(function () {
         var waddress = Helpers.getAccountByAddress(FlowRouter.getParam('address')).waddress.slice(2);
 
         if (typeof mist !== 'undefined') {
-            mist.requestOTACollection(waddress, function (e, result) {
+            // state ==0 means only fetch unrefund ota.
+            mist.requestOTACollection(waddress,0, function (e, result) {
                 var oldOtas = TemplateVar.get(template,'otaValue');
                 if(!oldOtas || oldOtas.length !== result.length)
                 {
