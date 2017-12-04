@@ -24,7 +24,7 @@ span.address {
     &.ens-name {
         font-weight: 400;
     }
-    
+
     &.not-ens-name {
         font-style: italic;
     }
@@ -95,7 +95,7 @@ span.address {
         }
     }
 
-    &.creating { 
+    &.creating {
         pointer-events: none;
         cursor: default;
     }
@@ -127,9 +127,9 @@ span.address {
         transform-style: preserve-3d;
 
         .dapp-identicon {
-            border: @colorWhite solid 2px; 
+            border: @colorWhite solid 2px;
             .transition(transform 0.3s);
-            backface-visibility: hidden;       
+            backface-visibility: hidden;
         }
 
         .delete-token {
@@ -275,7 +275,7 @@ span.address {
     background: @colorGrayLight;
     margin-top: @gridHeight*0.75;
 
-    
+
     &:hover {
         .dapp-shadow-medium;
     }
@@ -289,7 +289,7 @@ span.address {
         border-color: @colorGray;
         color: @colorGrayDark;
         padding: @defaultPaddingVertical/2 @defaultPaddingHorizontal/2;
-        opacity: 1;        
+        opacity: 1;
         background: @colorGray;
         font-weight: 400;
 
@@ -308,7 +308,7 @@ span.address {
         display: flex;
         overflow: hidden;
         height: @gridHeight * 2;
-        padding: @defaultPaddingVertical/2 @defaultPaddingHorizontal/2;  
+        padding: @defaultPaddingVertical/2 @defaultPaddingHorizontal/2;
         .transition(height @animationSpeed/2, opacity @animationSpeed/2, padding @animationSpeed/2);
         cursor: pointer;
 
@@ -417,7 +417,7 @@ table {
         td {
 
             &.plus, .plus {
-                color: @colorTextSecondary;                
+                color: @colorTextSecondary;
             }
             &.minus, .minus {
                 color: @colorError;
@@ -495,7 +495,7 @@ table {
 
                 button {
                     width: 120px;
-                    margin-right: @defaultMargin;  
+                    margin-right: @defaultMargin;
                     text-align: center;
                     .transition(background-color @animationSpeed/2);
 
@@ -503,8 +503,8 @@ table {
                         display: none;
                     }
                     &:hover {
-                        .label { 
-                            display: none;                      
+                        .label {
+                            display: none;
                         }
                         .hover-label {
                             display: block;
@@ -551,13 +551,13 @@ table {
 
         a {
             color: @colorWhite;
-        } 
+        }
 
         &:hover {
             background: lighten(@colorError, 10%);
-        }       
+        }
     }
-  
+
     a.learn-more-link {
         display: block;
         padding-top: @gridHeight;
@@ -569,7 +569,7 @@ table {
             cursor: pointer;
             text-decoration: underline;
         }
-    }  
+    }
 }
 
 .sticky + div .account-page-notification {
@@ -601,4 +601,97 @@ table {
         display: inline-block;
         width: @gridWidth * 13;
     }
+}
+
+
+// Alert
+.alert-banner {
+  z-index: 100;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: rgba(255, 221, 221, 0.97);
+  left: 0;
+  padding: 12.26666667px 80px 24.53333333px;
+  -webkit-transition: all 300ms ease-out;
+  opacity: 1;
+
+  &.is-hidden {
+    bottom: -500px;
+    opacity: 0;
+  }
+
+  h1 {
+    color: @colorError;
+    font-weight: bold;
+    margin: initial;
+  }
+
+  p {
+    color: @colorError;
+  }
+
+  .close-button {
+    position: absolute;
+    font-size: 30px;
+    right: 1em;
+    top: 0.5em;
+    color: @colorError;
+  }
+
+  .button {
+    display: inline-block;
+    border-radius: 8px;
+    padding: 8px 10px;
+    margin-top: 0.3em;
+    margin-right: 0.3em;
+
+    background: white;
+    color: rgb(75, 75, 75);
+    font-weight: 400;
+
+    &:active, &:focus {
+      outline: 0;
+    }
+  }
+
+  .download-button {
+    background: @colorLink;
+    color: white;
+  }
+}
+
+.alert-bubble {
+  position: fixed;
+  bottom: .75em;
+  right: .75em;
+
+  border-radius: 50%;
+  background: @colorError;
+  font-size: 1.25em;
+
+  &.is-hidden {
+    display: none;
+  }
+
+  button {
+    animation: jiggle 0.4s infinite;
+    animation-delay: 2s;
+    animation-direction: alternate-reverse;
+    transform-origin: 50% 10%;
+    color: white;
+    width: 35px;
+    height: 35px;
+
+    &:active, &:focus {
+      outline: 0;
+      border: 0;
+    }
+  }
+}
+
+
+@keyframes jiggle {
+  0% { transform: rotate(-10deg); }
+  100% { transform: rotate(10deg); }
 }
