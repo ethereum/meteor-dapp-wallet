@@ -516,6 +516,6 @@ Helpers.getENSName = function(address, callback) {
 Helpers.transferBanlance = function (number, format, unit) {
     //replace dapp_formatBalance
 
-    // console.log('aaa: ', EthTools.formatBalance(number, format, unit).split(' ')[0]);
-    return EthTools.formatBalance(number, format, unit).split(' ')[0] + ' WAN';
+    var balance = EthTools.formatBalance(number, format, unit).split(' ')[0];
+    return balance + ' WAN';
 };

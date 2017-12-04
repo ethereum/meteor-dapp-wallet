@@ -1,6 +1,6 @@
 <template name="views_otaRefund">
 
-    <h1 style="margin-bottom: 0"><div class="circle"></div>{{i18n "views.otaRefund.title"}}</h1>
+    <h1 style="margin-bottom: 0"><div class="circle"></div>{{{i18n "views.otaRefund.title"}}}</h1>
 
     <div class="viwes-account-header">
         <!-- we use a form, which posts into the "dapp-form-helper-iframe" iframe, so that the browser stores inout fields for native autocpmplete -->
@@ -42,7 +42,7 @@
                 <div class="col col-7 mobile-full">
                     <h3>{{i18n 'wallet.send.fee'}}</h3>
 
-                    {{> dapp_selectGasPrice gas=(TemplateVar.get "estimatedGas") gasPrice=latestBlock.gasPrice}}
+                    {{> modal_selectGasPrice gas=(TemplateVar.get "estimatedGas") gasPrice=latestBlock.gasPrice}}
                 </div>
 
                 <div class="dapp-clear-fix"></div>

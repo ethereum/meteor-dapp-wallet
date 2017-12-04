@@ -267,9 +267,9 @@ Template['views_send'].helpers({
         return TemplateVar.get('switchStype');
     },
 
-		'selectAccount': function () {
+    'selectAccount': function () {
 
-    		var address = FlowRouter.getRouteName() === 'dashboard' ? FlowRouter.getParam('address') : FlowRouter.getParam('address').toLowerCase();
+        var address = FlowRouter.getRouteName() === 'dashboard' ? FlowRouter.getParam('address') : FlowRouter.getParam('address').toLowerCase();
         var accounts = EthAccounts.find({balance:{$ne:"0"}, address: address}, {sort: {balance: 1}}).fetch();
 
         return accounts;

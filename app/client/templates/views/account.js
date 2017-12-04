@@ -94,9 +94,14 @@ Template['views_account'].helpers({
         query['balances.'+ this._id] = {$exists: true};
 
         var tokens = Tokens.find(query, {sort: {name: 1}}).fetch();
+
         _.each(tokens, (token) => {
-            token.balance =token.balances[this._id];
+            token.balance =(Number(token.balances[this._id]) > 0)
+            ? Helpers.formatNumberByDecimals(token.balances[this._id], token.decimals) +' '+ token.symbol
+            : false;
         });
+
+        // tokens = [tokens[0], tokens[0],tokens[0]];
 
         return tokens;
     },
@@ -134,7 +139,7 @@ var accountStartScanEventHandler = function(e){
     if (typeof mist !== 'undefined') {
         mist.startScan(FlowRouter.getParam('address'), (err, result)=>{
             if(err){
-                console.log("Error:", err);
+                console.error(err);
             }
             console.log("startscan:", result);
         })
@@ -154,9 +159,6 @@ var accountClipboardEventHandler = function(e){
 	function copyAddress(){
 		var type = e.target.name;
 		var typeId = e.target.id;
-
-		console.log('type: ', type);
-      console.log('typeId: ', typeId);
 
 		var copyTextarea;
 		if (type === 'address' || typeId === 'address') {
@@ -235,7 +237,6 @@ Template['views_account'].events({
         if(!e.keyCode || e.keyCode === 13) {
             var $el = $(e.currentTarget);
             var text = $el.text();
-
 
             if(_.isEmpty(text)) {
                 text = TAPi18n.__('wallet.accounts.defaultName');
