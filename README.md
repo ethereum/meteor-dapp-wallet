@@ -10,7 +10,7 @@ can contain severe bugs!
 
 ## Development
 
-Start an `geth` node and and the app using meteor and open http://localhost:3000 in your browser:
+Start an `geth` node and the app using meteor and open http://localhost:3000 in your browser:
 
     $ geth --rpccorsdomain "http://localhost:3000" --rpc --unlock <your account>
 
