@@ -96,8 +96,18 @@ Template['views_otaRefund'].events({
     // sendTransaction(sendAll ? estimatedGas : estimatedGas + 100000);
     if (typeof mist !== "undefined") {
         mist.refundCoin(otaData, function(err, result){
-        	console.log("error:", err);
-        	console.log("result:", result);
+
+        	if (!error) {
+              console.log("result:", result);
+							FlowRouter.go('dashboard');
+					} else {
+              console.log("err:", err);
+							// EthElements.Modal.hide();
+							GlobalNotification.error({
+									content: error.message,
+									duration: 8
+							});
+					}
     });
 	}
 	}
