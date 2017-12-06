@@ -230,3 +230,5 @@ Template.registerHelper('toSentence', Helpers.toSentence);
 
 Template.registerHelper('transferBanlance', Helpers.transferBanlance);
 
+Template.registerHelper('waddressTransfer', Helpers.waddressTransfer);
+

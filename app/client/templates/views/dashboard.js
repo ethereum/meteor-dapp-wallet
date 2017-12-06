@@ -45,17 +45,3 @@ Template['views_dashboard'].helpers({
         return _.pluck(PendingConfirmations.find({operation: {$exists: true}, confirmedOwners: {$ne: []}}).fetch(), '_id');
     }
 });
-
-
-Template['views_dashboard'].events({
-    /**
-    Request to create an account in mist
-    
-    @event click .create.account
-    */
-    'click .create.account': function(e){
-        e.preventDefault();
-
-        mist.requestAccount(null);
-    }
-});

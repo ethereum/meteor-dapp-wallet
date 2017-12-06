@@ -519,3 +519,22 @@ Helpers.transferBanlance = function (number, format, unit) {
     var balance = EthTools.formatBalance(number, format, unit).split(' ')[0];
     return balance + ' WAN';
 };
+
+
+Helpers.toFixed = function (balance) {
+    var balType = balance.split('.');
+    var balTypeOne = balType[0];
+    var balTypeTwo = '.' + balType[1].substring(2,0);
+
+    return balTypeOne + balTypeTwo;
+};
+
+Helpers.waddressTransfer = function (waddress) {
+    var start = waddress;
+    if (waddress.length >42) {
+        start = waddress.substr(0, 42);
+        start = start + '...'
+    }
+
+    return start
+};

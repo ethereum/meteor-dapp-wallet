@@ -2,60 +2,55 @@
     <nav>
         <ul>
             <li>
-                <img class="wanchain-logo"/>
+                <img class="wanchain-logo wanchain-log-small"/>
             </li>
+            
+            <li class="block-info dapp-flex-item  {{#if TemplateVar.get 'syncing'}}syncing{{/if}}" style="text-align: left">
+                <div style="display: inline-block;padding: 3px 10px;border-radius: 12px;background: #f7f8fc;">
+                    {{#if isWalletMode}}
+
+                        {{#if $eq ($.Session.get "network") "test"}}
+                            <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">TEST-NET</span> &nbsp;&nbsp;
+                        {{/if}}
+                        {{#if $eq ($.Session.get "network") "private"}}
+                            <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">PRIVATE-NET</span> &nbsp;&nbsp;
+                        {{/if}}
+
+                        {{#with TemplateVar.get "syncing"}}
+                            <span class="text">
+                            <i class="icon-feed"></i> {{$.Session.get "peerCount"}} <span class="hide-on-small">{{i18n 'wallet.app.texts.peers'}}</span>
+                            &nbsp;&nbsp;|&nbsp;&nbsp;
+                            <i class="icon-layers"></i> {{i18n "wallet.app.texts.nodeSyncing" blockDiff=blockDiff}}
+                                &nbsp;&nbsp;|&nbsp;&nbsp;
+                            <i class="icon-cloud-download"></i> {{progress}}%
+                            <br>
+                        </span>
+                            <progress max="100" value="{{progress}}"></progress>
+                        {{else}}
+                            <i class="icon-feed"></i> {{$.Session.get "peerCount"}} <span class="hide-on-small">{{i18n 'wallet.app.texts.peers'}}</span>
+                            &nbsp;&nbsp;|&nbsp;&nbsp;
+                            <i class="icon-layers"></i> {{formattedBlockNumber}} <i class="icon-clock" style="margin-left: 10px;"></i> {{{timeSinceBlock}}} <span class="hide-on-small">{{{timeSinceBlockText}}}</span>
+                        {{/with}}
+                    {{/if}}
+                </div>
+            </li>
+
             <li>
                 <a href="{{pathFor route='dashboard'}}" class="{{isActiveRoute regex='dashboard'}}">
                     <i class="icon-wallet"></i>
                     <span>{{i18n 'wallet.app.buttons.wallet'}}</span>
                 </a>
             </li>
-            <!--<li>-->
-                <!--<a href="{{goToSend}}" class="{{isActiveRoute regex='send'}}">-->
-                    <!--<i class="icon-arrow-up"></i>-->
-                    <!--<span>{{i18n 'wallet.app.buttons.send'}}</span>-->
-                <!--</a>-->
-            <!--</li>-->
 
-		        <li>
-			        <a href="{{pathFor route='contracts'}}" class="{{isActiveRoute regex='contracts'}}">
-				        <i class="icon-docs"></i>
-				        <span>{{i18n 'wallet.app.buttons.contracts'}}</span>
-			        </a>
-		        </li>
-            
-            <li class="block-info dapp-flex-item  {{#if TemplateVar.get 'syncing'}}syncing{{/if}}">
-                {{#if isWalletMode}}
-
-                    {{#if $eq ($.Session.get "network") "test"}}
-                        <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">TEST-NET</span> &nbsp;&nbsp; 
-                    {{/if}}
-                    {{#if $eq ($.Session.get "network") "private"}}
-                        <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">PRIVATE-NET</span> &nbsp;&nbsp; 
-                    {{/if}}
-
-                    {{#with TemplateVar.get "syncing"}}
-                        <span class="text">
-                            <i class="icon-feed"></i> {{$.Session.get "peerCount"}} <span class="hide-on-small">{{i18n 'wallet.app.texts.peers'}}</span>
-                            &nbsp;&nbsp;|&nbsp;&nbsp;
-                            <i class="icon-layers"></i> {{i18n "wallet.app.texts.nodeSyncing" blockDiff=blockDiff}}
-                            &nbsp;&nbsp;|&nbsp;&nbsp;
-                            <i class="icon-cloud-download"></i> {{progress}}%
-                            <br>
-                        </span>
-                        <progress max="100" value="{{progress}}"></progress>
-                    {{else}}
-                        <i class="icon-feed"></i> {{$.Session.get "peerCount"}} <span class="hide-on-small">{{i18n 'wallet.app.texts.peers'}}</span>
-                        &nbsp;&nbsp;|&nbsp;&nbsp;
-                        <i class="icon-layers"></i> {{formattedBlockNumber}} <i class="icon-clock" style="margin-left: 10px;"></i> {{{timeSinceBlock}}} <span class="hide-on-small">{{{timeSinceBlockText}}}</span>
-                    {{/with}}
-                {{/if}}
+            <li>
+                <a href="{{pathFor route='contracts'}}" class="{{isActiveRoute regex='contracts'}}">
+                    <i class="icon-docs"></i>
+                    <span>{{i18n 'wallet.app.buttons.contracts'}}</span>
+                </a>
             </li>
 
-
-            <li class="wallet-balance">
-                <h3>{{i18n 'wallet.app.texts.balance'}}</h3>
-                {{> elements_balance balance=totalBalance changeUnit=true}}
+            <li>
+                <a class="header-account" style="padding: 2.5px 17px; margin-bottom: 7px;"> <span>Account</span> </a>
             </li>
 
             </ul>

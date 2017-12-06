@@ -110,7 +110,7 @@
             }
         },
         "accounts": {
-            "title": "<strong>账户</strong> 总览",
+            "title": "账户总览",
             "walletsTitle": "钱包合约",
             "accountsTitle": "账户",
             "defaultName": "未命名",

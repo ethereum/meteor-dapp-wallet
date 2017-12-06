@@ -51,6 +51,7 @@ Template['modal_selectGasPrice'].onCreated(function(){
     TemplateVar.set('gasInWei', '0');
     TemplateVar.set('gasPrice', '0');
     TemplateVar.set('feeMultiplicator', 0);
+    TemplateVar.set('options', false);
 });
 
 
@@ -112,4 +113,9 @@ Template['modal_selectGasPrice'].events({
 
         TemplateVar.set('feeMultiplicator', Number(e.currentTarget.value));
     },
+
+    'click .options': function () {
+
+        TemplateVar.set('options', !TemplateVar.get('options'));
+    }
 });

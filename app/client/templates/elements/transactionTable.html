@@ -4,13 +4,21 @@
         <input type="text" class="filter-transactions" placeholder="{{i18n 'wallet.transactions.filter'}}">
     {{/unless}}
     <table class="dapp-zebra transactions">
-        <tbody>
+        <thead style="background-color: #ffffff;color: #3f454c;text-transform: capitalize;">
+        <tr>
+            <th>Time</th>
+            <th>From</th>
+            <th></th>
+            <th>to</th>
+            <th>Value</th>
+        </tr>
+        </thead>
+        <tbody class="transfer-list-tbody">
             {{#each items}}
                 {{> elements_transactions_row}}
             {{else}}
                 <tr class="full-width">
                     <td colspan="5">
-                        {{! > spinner}}
                         {{i18n "wallet.transactions.noneFound"}}
                     </td>
                 </tr>
@@ -41,75 +49,57 @@
             <p>{{formatTime timestamp "D"}}</p>
         </td>
         <td class="account-name">
-            <h2>{{transactionType}}</h2>
-
-            <p>
-                {{> elements_account_link address=from}}
-                <span class="arrow">→</span>
-                {{#if to}}
-	                <span class="address dapp-shorten-text">{{to}}</span>
-                {{else}}
-                    {{> elements_createdContractAt contractAddress=contractAddress deployedData=deployedData}}
-                {{/if}}
-            </p>
-
-            {{#if ownerConfirmationCount}}
-                <div class="owner-confirmations">
-                    {{#each owners}}
-                        <div data-tooltip="{{accountNameOrAddress this}}" class="simptip-position-bottom simptip-movable">
-                            {{#if ownerIsConfirmed}}<i class="icon-check"></i>{{/if}}
-                            {{> dapp_identicon identity=this class="dapp-tiny"}}
-                        </div>
-                    {{/each}}
-                    <span>{{ownerConfirmationCount}}</span>
-                </div>
-            {{/if}}
+            {{> elements_account_link address=from}}
         </td>
-        <td class="info">
-            {{#with unConfirmed}}
-                {{confirmations}} {{i18n "commonWords.of"}} {{totalConfirmations}} {{i18n "wallet.transactions.confirmations"}}
+
+        {{#if outOfGas}}
+            <td ><span style="padding: 3px 10px;background: #ff750f;border-radius: 20px;color: #ffffff;">OUT</span></td>
+        {{else}}
+            {{#if incomingTx ../account}}
+                <td ><span style="padding: 3px 18px;background: #1993fd;border-radius: 20px;color: #ffffff;">IN</span></td>
             {{else}}
-                {{fromNowTime}}
-            {{/with}}
+                <td ><span style="padding: 3px 10px;background: #ff750f;border-radius: 20px;color: #ffffff;">OUT</span></td>
+            {{/if}}
+        {{/if}}
+
+        <td>
+        {{#if to}}
+            <span class="address dapp-shorten-text">{{waddressTransfer to}}</span>
+        {{else}}
+            {{> elements_createdContractAt contractAddress=contractAddress deployedData=deployedData}}
+        {{/if}}
         </td>
+
         {{#if outOfGas}}
             <td class="transaction-amount minus">
-                -{{transferBanlance fee '0,0.00[000] UNIT'}}
-            </td>
-            <td>
-                <i class="icon-shield minus"></i>
+                {{transferBanlance fee '0,0.00[000] UNIT'}}
             </td>
         {{else}}
             {{#if incomingTx ../account}}
-                <td class="transaction-amount plus">
+                <td >
                     {{#if tokenId}}
                         {{tokenValue}}
                     {{else}}
                         {{formatTransactionBalance value exchangeRates}}
                     {{/if}}
                 </td>
-                <td>
-                    <i class="icon-arrow-left plus"></i>
-                </td>
             {{else}}
-                <td class="transaction-amount minus">
+                <td >
                     {{#if tokenId}}
-                        -{{tokenValue}}
+                        {{tokenValue}}
                     {{else}}
-                        -{{formatTransactionBalance value exchangeRates}}
+                        {{formatTransactionBalance value exchangeRates}}
                     {{/if}}
-                </td>
-                <td>
-                    <i class="icon-arrow-right minus"></i>
                 </td>
             {{/if}}
         {{/if}}
+
         {{#if $eq ../collection "PendingConfirmations"}}
             {{#if sending}}
                 <td colspan='2' class="button">
                     {{> spinner}}
                 </td>
-            {{else}}           
+            {{else}}
                 {{#if multipleOwnersApproved}}
                     {{#if approved}}
                     <td class="button">
@@ -139,11 +129,11 @@
                         </button>
                     </td>
                     {{else}}
-                    <td class="info" colspan="2"> 
+                    <td class="info" colspan="2">
                         <i class="icon-info"></i> {{i18n "wallet.transactions.noOwnerAccount"}}
                     </td>
                     {{/if}}
-                {{/if}}                                   
+                {{/if}}
             {{/if}}
         {{/if}}
     </tr>

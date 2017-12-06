@@ -132,9 +132,16 @@ Template['elements_account'].helpers({
     'formattedTokenBalance': function(e){
         var account = Template.parentData(2);
 
-        return (this.balances && Number(this.balances[account._id]) > 0)
-            ? Helpers.formatNumberByDecimals(this.balances[account._id], this.decimals) +' '+ this.symbol
-            : false;
+        var balance;
+        if (this.balances && Number(this.balances[account._id]) > 0) {
+            balance = Helpers.formatNumberByDecimals(this.balances[account._id], this.decimals);
+
+            var balType = Helpers.toFixed(balance);
+
+            return balType + ' ' + this.symbol;
+        } else {
+            return false;
+        }
     },
     /**
     Get the name

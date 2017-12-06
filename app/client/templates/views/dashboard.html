@@ -1,5 +1,5 @@
 <template name="views_dashboard">
-    <div class="dapp-container">
+    <div class="dapp-container" style="padding-top: 0">
 
         <h1 class="account-h1"><div class="circle"></div><strong>{{{i18n "wallet.accounts.title"}}}</strong></h1>
 
@@ -17,28 +17,8 @@
                 {{/each}}
             </div>
 
-            {{#if isMist}}
-                <button class="wallet-box create account">
-                    <div class="account-pattern">
-                        +
-                    </div>
-                    <h3>{{i18n "wallet.app.buttons.addAccount"}}</h3>
-                </button>
-            {{/if}}
-
         {{else}}
-            <div class="col col-5 mobile-full ">
-                <br>
-                {{#if isMist}}
-                    <button class="wallet-box create account">
-                        <div class="account-pattern">
-                            +
-                        </div>
-                        <h3>{{i18n "wallet.app.buttons.addAccount"}}</h3>
-                    </button>
-                {{/if}}
-            </div>
-            <div class="col col-5 mobile-full ">
+            <div class="col col-8 mobile-full ">
                 <h3>{{i18n "wallet.app.texts.noAccounts.title"}}</h3>
                 <p>{{i18n "wallet.app.texts.noAccounts.text"}}</p>
             </div>

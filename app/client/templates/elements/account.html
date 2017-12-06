@@ -1,5 +1,5 @@
 <template name="elements_account">
-    <div class="dashboard-box-list">
+    <div class="dashboard-box-list" style="position: relative">
 	    {{#with account}}
 		    <div class="wallet-box {{#if creating}}creating{{/if}} {{#if disabled}}disabled{{/if}} {{#if ../wallets}}wallets{{/if}} {{#if new}}new{{/if}}" id="elements_account_div">
 			    {{#with unConfirmed}}
@@ -9,31 +9,14 @@
 			    {{/with}}
 
 			    {{#unless ../main}}
-				    <!-- <div class="account-pattern"> -->
 				    {{#if address}}
 					    {{> dapp_identicon identity=address class="dapp-small"}}
 				    {{else}}
 					    <span class="dapp-identicon dapp-small dapp-icon-loading"></span>
 				    {{/if}}
-				    <!-- </div> -->
 			    {{else}}
-				    <div class="account-pattern">
-					    {{#if address}}
-						    {{> dapp_identicon identity=address class="dapp-small"}}
-					    {{else}}
-						    {{> spinner}}
-					    {{/if}}
-				    </div>
+
 			    {{/unless}}
-
-
-			    {{#with tokens}}
-				    <ul class="token-list">
-					    {{#each this}}
-						    <li data-tooltip="{{displayName}} ({{formattedTokenBalance}})" class="simptip-position-right simptip-movable">{{> dapp_identicon identity=address class="dapp-tiny"}}</li>
-					    {{/each}}
-				    </ul>
-			    {{/with}}
 
 			    <h3 class="{{ensClass}}">
 				    {{#if isVulnerable}}
@@ -42,20 +25,15 @@
 						    {{displayName}}
                     </span>
 				    {{else}}
-					    {{#if ../isContract}}
-						    <i class="icon-doc"></i>
-					    {{else}}
-						    {{walletIcon}}
-					    {{/if}}
 					    {{displayName}}
 				    {{/if}}
 			    </h3>
-                <p style="margin-top: 30px;margin-bottom: 0;">
+                <p style="margin-top: 30px;margin-bottom: 0;width: 52%;">
                     <span class="copyable-address{{address}} accountLink-span account-id {{#if creating}}creating{{/if}}" style="padding-top: 5px; color: #827a7a">{{toChecksumAddress address}}</span>
                     <button class="copy-to-clipboard-button icon-docs" style="margin: 0 10px;" name={{address}} ></button>
                     <button class="qrcode-button icon-camera" name={{address}} ></button>
                 </p>
-                <p style="margin-top: 0;margin-bottom: 0;">
+                <p style="margin-top: 0;margin-bottom: 0;width: 52%;">
                 <span class="copyable-address{{waddress}} accountLink-span account-id {{#if creating}}creating{{/if}}" style="color: #827a7a">{{waddress}}</span>
                     <button class="copy-to-clipboard-button icon-docs" style="margin: 0 10px;" name={{waddress}} ></button>
                     <button class="qrcode-button icon-camera" name={{waddress}} ></button>
@@ -63,7 +41,16 @@
 
 
 			    {{#unless creating}}
-				    {{> elements_balance balance=balance}}
+
+                    <p>
+                        {{> elements_balance balance=balance}}
+
+                        {{#with tokens}}
+                            {{#each this}}
+                                <span class="account-balance">{{formattedTokenBalance}}</span>
+                            {{/each}}
+                        {{/with}}
+                    </p>
 			    {{else}}
 				    {{#if imported}}
 					    <span class="account-balance">{{i18n "wallet.accounts.importing"}} <span>...</span></span>
@@ -73,18 +60,18 @@
 			    {{/unless}}
 		    </div>
 
-            <div>
+            <div style="position: absolute;top: 60px; right: 120px;">
                 {{#if hrefType}}
                 <a  href="{{pathFor route='sendTo' address=(toChecksumAddress address)}}"
                    class="wallet-box {{#if creating}}creating{{/if}} {{#if disabled}}disabled{{/if}} {{#if ../wallets}}wallets{{/if}} {{#if new}}new{{/if}}"
-                   style="min-height: 10px; margin: 0;"><i class="icon-arrow-right"></i>Transfer</a>
+                   style="min-height: 10px; margin: 0;"><i class="icon-arrow-right" style="padding-right: 3px;"></i>Transfer</a>
                 {{else}}
                     <a  href= "" class="wallet-box {{#if creating}}creating{{/if}} {{#if disabled}}disabled{{/if}} {{#if ../wallets}}wallets{{/if}} {{#if new}}new{{/if}}"
-                       style="min-height: 10px; margin: 0;" id="transfer" name={{balance}}><i class="icon-arrow-right"></i>Transfer</a>
+                       style="min-height: 10px; margin: 0;" id="transfer" name={{balance}}><i class="icon-arrow-right" style="padding-right: 3px;"></i>Transfer</a>
                 {{/if}}
 
                 <a href="{{pathFor route='account' address=address}}" class="wallet-box {{#if creating}}creating{{/if}} {{#if disabled}}disabled{{/if}} {{#if ../wallets}}wallets{{/if}} {{#if new}}new{{/if}}"
-                   style="min-height: 10px; margin: 0;" id={{address}}><i class="icon-arrow-right"></i>Detail</a>
+                   style="min-height: 10px; margin: 0;" id={{address}}><i class="icon-arrow-right" style="padding-right: 3px;"></i>Detail</a>
             </div>
 	    {{/with}}
     </div>

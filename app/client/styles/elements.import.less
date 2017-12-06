@@ -1,3 +1,29 @@
+
+.transfer-list-tbody{
+    td {
+        text-align: center;
+    }
+}
+
+.dapp-modal-container{
+    background: #ffffff;
+}
+
+table.dapp-zebra tbody tr:nth-child(odd) {
+    background-color: #f7f8fc;
+}
+
+table.dapp-zebra thead + tbody tr:nth-child(even) {
+    background-color: #ffffff;
+}
+
+input[type="checkbox"]::before, input[type="radio"]::before{
+    background: #f7f8fc;
+}
+.dapp-flex-content{
+    background: #f7f8fc;
+}
+
 .wanchain-logo{
     background-image: url(/images/wanchain-logo.png);
     background-repeat: no-repeat;
@@ -10,6 +36,16 @@
     display: none;
 }
 
+.header-account {
+    background-image: linear-gradient(80deg, #1a90fc 0%, #00aeff 100%);
+    border-radius: 30px;
+
+    span{
+        color: #ffffff;
+    };
+}
+
+
 .wanchain-log-small {
     display: inline-block;
 }
@@ -20,17 +56,19 @@
     border-bottom: 5px solid transparent;
     display: inline-block;
     margin: 5px;
+    margin-bottom: 0;
 }
 
 .account-h1 {
     margin-bottom: 0;
     strong {
         font-family: MicrosoftYaHei-Bold;
-        font-weight: normal;
+        font-size: 16px;
         font-stretch: normal;
         line-height: 25px;
         letter-spacing: 1px;
         color: #3f454c;
+        font-weight: 600;
     }
 }
 
@@ -72,7 +110,7 @@
 }
 #elements_account_div{
     margin-bottom: 0;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .views_account_token {
@@ -97,7 +135,7 @@
 
 .views_send_strong {
     font-family: MicrosoftYaHei-Bold;
-    font-size: 26px;
+    font-size: 16px;
     font-weight: normal;
     font-stretch: normal;
     line-height: 25px;
@@ -106,12 +144,9 @@
 }
 
 .views_send_button {
-    background-image: linear-gradient(0deg,
-    #1a90fc 0%,
-    #00d2ff 100%);
-    box-shadow: 0px 6px 10px 0px
-    rgba(15, 104, 170, 0.12);
-    border-radius: 35px;
+    background-image: linear-gradient(50deg, #1a90fc 0%, #00d2ff 100%);
+    box-shadow: 0px 6px 10px 0px rgba(15, 104, 170, 0.12);
+    border-radius: 50px;
 }
 
 .orange {
@@ -138,14 +173,15 @@ span.address {
     display: inline;
     position: relative;
     font-size: 0.9em;
-    color: @colorLink;
+    //color: @colorLink;
 
     &.ens-name {
         font-weight: 400;
     }
     
     &.not-ens-name {
-        font-style: italic;
+        color: #3f454c;
+        font-style: inherit;
     }
 
     > .dapp-identicon {
@@ -189,6 +225,11 @@ span.address {
 }
 
 .viwes-account-nav {
+    position: relative;
+    top: -50px;
+    right: 120px;
+    float: right;
+
   ul {
     float: left;
     padding: 0;
@@ -255,25 +296,26 @@ span.address {
     p{
       padding-left: 1em;
       float: right;
+      line-height: 0;
       span{
         display: block;
       }
       .balance-span{
           font-family: MicrosoftYaHei;
           color: #929cb8;
+          line-height: 30px;
       }
     }
   }
 
   .viwes-account-balance-hr{
-    height: 5em;
-    background-color: #4b90f7;
-    border: solid 2px #eff1f7;
-    margin: 0;
-    margin-left: 20px;
-    padding: 1px;
-    position: relative;
-    top: -0.5em;
+      height: 5em;
+      background-color: #eff1f7;
+      margin: 0;
+      margin-left: 20px;
+      padding: 1px;
+      position: relative;
+      top: -0.5em;
   }
 
   .viwes-account-balance-right{
@@ -294,7 +336,7 @@ span.address {
 }
 
 .filter-transactions{
-    background-color: #d7dde6;
+    background-color: #f7f8fc;
     border: solid #f7f8fc;
 }
 
@@ -304,7 +346,8 @@ span.address {
     display: inline-block;
     //width: @gridWidth * 6.5;
     min-height: @gridHeight*4;
-    padding-left: @gridWidth + @defaultPaddingHorizontal;
+    //padding-left: @gridWidth + @defaultPaddingHorizontal;
+    padding-left: 85px;
     padding-right: @defaultPaddingHorizontal/2;
     margin-right: @defaultMargin;
     margin-bottom: @defaultMargin;
@@ -420,7 +463,9 @@ span.address {
     > .dapp-identicon {
         position: absolute;
         left: 12px;
-        top: 20px;
+        top: 6px;
+        width: 50px;
+        height: 50px;
     }
     .spinner-container {
         position: absolute;
@@ -484,7 +529,8 @@ span.address {
             font-weight: 600;
         }
         &.not-ens-name {
-            font-style: italic;
+            color: #3f454c;
+            font-style: inherit;
         }
     }
     &:not(.create) > h3 {

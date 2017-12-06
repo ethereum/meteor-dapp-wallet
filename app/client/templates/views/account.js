@@ -96,12 +96,21 @@ Template['views_account'].helpers({
         var tokens = Tokens.find(query, {sort: {name: 1}}).fetch();
 
         _.each(tokens, (token) => {
-            token.balance =(Number(token.balances[this._id]) > 0)
-            ? Helpers.formatNumberByDecimals(token.balances[this._id], token.decimals) +' '+ token.symbol
-            : false;
-        });
+            // token.balance =(Number(token.balances[this._id]) > 0)
+            // ? Helpers.formatNumberByDecimals(token.balances[this._id], token.decimals) +' '+ token.symbol
+            // : false;
 
-        // tokens = [tokens[0], tokens[0],tokens[0]];
+            token.balance = false;
+
+            var bal;
+        if (Number(token.balances[this._id]) > 0) {
+            bal = Helpers.formatNumberByDecimals(token.balances[this._id], token.decimals);
+            var balType = Helpers.toFixed(bal);
+            token.balance = balType + ' ' + token.symbol;
+        }
+    });
+
+        tokens = [tokens[0], tokens[0],tokens[0]];
 
         return tokens;
     },
@@ -112,7 +121,8 @@ Template['views_account'].helpers({
 		 @method (ota)
 		 */
 		'otasValue': function () {
-			return TemplateVar.get('otasValue');
+			// return TemplateVar.get('otasValue');
+            return 1;
     },
 
     /**

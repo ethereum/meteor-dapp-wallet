@@ -20,8 +20,8 @@ $(window).on('scroll', function() {
         $('.wanchain-logo').addClass('wanchain-log-small');
         $('.dapp-sticky-bar').removeClass('sticky');
     } else {
-        $('.dapp-header').removeClass('dapp-small');
-        $('.wanchain-logo').removeClass('wanchain-log-small');
-        $('.dapp-sticky-bar').removeClass('sticky');
+        // $('.dapp-header').removeClass('dapp-small');
+        // $('.wanchain-logo').removeClass('wanchain-log-small');
+        // $('.dapp-sticky-bar').removeClass('sticky');
     }
 })

@@ -54,7 +54,6 @@
     max-width: none;
 
     .dapp-container {
-        padding: 20px;
         max-width: none;
 
         > h2 {
@@ -162,11 +161,13 @@ rgba(15, 104, 170, 0.06);
     -webkit-app-region: drag; // necessary to drag the wallet window
 
     &.dapp-small {
+        height: 50px;
         z-index: 30;
         position: fixed;
         top:0;
         left: 0;
         right: 0;
+
         .dapp-shadow-medium;
 
         .block-info {
@@ -220,8 +221,8 @@ rgba(15, 104, 170, 0.06);
 
 
         .private-chain {
-            color: @colorWhite;
-            background-color: @colorError;
+            //color: @colorWhite;
+            //background-color: @colorError;
             padding: 1px 5px 2px;
             border-radius: 2px;
             top: 1px;
@@ -256,11 +257,14 @@ rgba(15, 104, 170, 0.06);
 }
 
 .dapp-header.dapp-small + .dapp-flex-content > .dapp-content {
-    padding-top: @gridHeight * 6 - 3px;
+    padding-top: @gridHeight * 3 - 3px;
 }
 
 
 .account-balance {
+    padding-top: 20px;
+    padding-right: 20px;
+    font-weight: 600;
     span {
         font-size: 0.6em;
     }
@@ -438,21 +442,21 @@ rgba(15, 104, 170, 0.06);
         }
 
         .edit-name {
-            outline: 0;
-            font-family: MicrosoftYaHei-Bold;
-            font-size: 32px;
-            font-weight: normal;
-            font-stretch: normal;
-            line-height: 25px;
-            letter-spacing: 1px;
-            color: #3f454c;
+          outline: 0;
+          font-family: MicrosoftYaHei-Bold, arial;
+          font-size: 16px;
+          font-weight: normal;
+          font-stretch: normal;
+          line-height: 25px;
+          letter-spacing: 1px;
+          color: #3f454c;
+          font-style: inherit;
 
             + .edit-icon {
-                display: none;
                 position: absolute;
-                top: @gridHeight*4.0;
+                top: 72.6px;
                 margin-left: 5px;
-                font-size: 0.6em;
+                font-size: 16px;
             }
 
             &:hover, &:focus {
@@ -538,6 +542,7 @@ rgba(15, 104, 170, 0.06);
             // switch editor sourcecode/bytecode
             .dapp-data-textarea {
                 display: block;
+                background: #f7f8fc;
             }
             .ace_editor {
                 display: none;
@@ -648,6 +653,7 @@ rgba(15, 104, 170, 0.06);
             border-radius: 10px;
             margin: 10px;
             padding: 10px;
+            margin-top: 0;
         }
 
         &.total {
@@ -670,6 +676,7 @@ rgba(15, 104, 170, 0.06);
 .send-transaction-info {
     pre {
         max-height: 100px;
+      background-color: #f7f8fc;
     }
 }
 
@@ -868,17 +875,22 @@ rgba(15, 104, 170, 0.06);
     opacity: 0.25;
 }
 
-.dapp-header nav > ul > li.active a, .dapp-header nav > ul > li.active button, .dapp-header nav > ul > li button.active, .dapp-header nav > ul > li a.active {
-    color: #4b90f7;
-    border-bottom: 3px solid #4b90f7;
+.dapp-header nav{
+    padding-bottom: 10px;
 }
 
-.dapp-header nav > ul a:focus, .dapp-header nav > ul a:visited:focus, .dapp-header nav > ul button:focus {
-    border-bottom: 3px solid #4b90f7;
+.dapp-header nav > ul > li.active a, .dapp-header nav > ul > li.active button, .dapp-header nav > ul > li button.active, .dapp-header nav > ul > li a.active {
+    color: #4b90f7;
+    border-bottom: 5px solid white;
 }
+
 
 .dapp-header nav > ul a, .dapp-header nav > ul a:visited, .dapp-header nav > ul button {
     color: #b7a6a6;
+}
+
+.dapp-header nav > ul a:focus, .dapp-header nav > ul a:visited:focus, .dapp-header nav > ul button:focus {
+    border-color: white;
 }
 
 /* #### Small wallet #### */

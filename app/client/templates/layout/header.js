@@ -117,3 +117,23 @@ Template['layout_header'].helpers({
         }
     }
 });
+
+
+Template['layout_header'].events({
+    /**
+     Request to create an account in mist
+
+     @event click .create.account
+     */
+    'click .header-account': function(e){
+        e.preventDefault();
+
+        if (typeof mist !== "undefined") {
+            mist.requestAccount(null);
+        } else {
+            alert("create account in mist");
+        }
+
+    }
+});
+

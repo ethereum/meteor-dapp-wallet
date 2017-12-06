@@ -4,11 +4,11 @@
         <div class="dapp-container accounts-page">
             <div class="accounts-page-summary">
 	              <!--account detail-->
-                <div class="viwes-account-header" style="padding: 20px;">
-                    <div class="header-span">
+                <div class="viwes-account-header" style="padding: 0 20px; max-height: 185px;">
+                    <div class="header-span" style="position: relative;top: 40px;">
                         {{> dapp_identicon identity=address}}
                     </div>
-                    <header class="{{ensClass}}" style="padding-left: 60px;position: relative;top: -50px;">
+                    <header class="{{ensClass}}" style="padding-left: 60px;position: relative;top: -30px;">
                         <h1>
                             {{#if ens}}
                                 <span>{{displayName}}</span>
@@ -18,8 +18,16 @@
                             {{/if}}
                         </h1>
 
-                        <p ><span id="address" class="copyable-address">{{toChecksumAddress address}}</span></p>
-                        <p ><span class="accountLink-span copyable-waddress" id="waddress">{{waddress}}</span></p>
+                        <p style=" width: 50%;margin: 0;">
+                            <span id="address" class="copyable-address">{{toChecksumAddress address}}</span>
+                            <button class="copy-to-clipboard-button" name="address"><i class="icon-docs"></i></button>
+                            <button class="qrcode-button" name="address"><i class="icon-camera"></i></button>
+                        </p>
+                        <p style=" width: 50%;margin: 0;">
+                            <span class="accountLink-span copyable-waddress" id="waddress">{{waddress}}</span>
+                            <button class="copy-to-clipboard-wbutton" name="waddress"><i class="icon-docs"></i></button>
+                            <button class="qrcode-button" name="waddress"><i class="icon-camera"></i></button>
+                        </p>
 
                         <div class="clear"></div>
                         <nav class="viwes-account-nav">
@@ -37,19 +45,6 @@
                                 {{/if}}
                                 <li>
                                     <button class="start-to-scan-block-button"><i class="icon-action-redo"></i>{{i18n 'views.account.OTAs'}}</button>
-                                </li>
-                                <li>
-                                    <button class="copy-to-clipboard-button" name="address"><i class="icon-docs"></i>{{i18n 'views.account.copyAddress'}}</button>
-                                </li>
-                                <li>
-                                    <button class="copy-to-clipboard-wbutton" name="waddress"><i class="icon-docs"></i>{{i18n 'views.account.copyWaddress'}}</button>
-                                </li>
-
-                                <li>
-                                    <button class="qrcode-button" name="address"><i class="icon-camera"></i>{{i18n 'views.account.scanAddressQRCode'}}</button>
-                                </li>
-                                <li>
-                                    <button class="qrcode-button" name="waddress"><i class="icon-camera"></i>{{i18n 'views.account.scanWaddressQRCode'}}</button>
                                 </li>
                             </ul>
                         </nav>
@@ -98,7 +93,7 @@
     {{/with}}
 
 		<!--transaction list-->
-		<div class="viwes-account-header" style="margin: 20px;">
+		<div class="viwes-account-header">
 			{{#if allTransactions}}
                 <h1 class="account-h1"><div class="viwes-account-line"></div><strong>{{i18n 'views.account.transaction.title'}}</strong></h1>
 				{{> elements_transactions_table limit=5 address=theAddress}}
