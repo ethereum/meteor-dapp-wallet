@@ -240,6 +240,7 @@ Template['elements_account'].events({
         e.preventDefault();
 
         var name = e.target.name;
+        console.log('name: ', name);
 
         // Open a modal showing the QR Code
         EthElements.Modal.show({

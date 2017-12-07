@@ -294,18 +294,13 @@ Template['views_account'].events({
         e.preventDefault();
 
         var name = e.target.name;
-        var address;
-        if (name === 'address') {
-        	address = this.address
-        } else {
-        	address = this.waddress
-        }
+        console.log('name: ', name);
         
         // Open a modal showing the QR Code
         EthElements.Modal.show({
             template: 'views_modals_qrCode',
             data: {
-                address: address
+                address: name
             }
         });
     },

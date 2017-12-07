@@ -532,9 +532,15 @@ Helpers.otasBalance = function (number, otaTotal, format, unit) {
 
 
 Helpers.toFixed = function (balance) {
+    var balance = balance.replace(/[\,|\.]/g,".");
+
     var balType = balance.split('.');
     var balTypeOne = balType[0];
-    var balTypeTwo = '.' + balType[1].substring(2,0);
+
+    var balTypeTwo = '.00';
+    if (balType[1].substr(2,0)) {
+        balTypeTwo = '.' + balType[1].substr(2,0);
+    }
 
     return balTypeOne + balTypeTwo;
 };
