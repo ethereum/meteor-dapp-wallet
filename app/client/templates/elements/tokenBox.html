@@ -1,11 +1,12 @@
 <template name="elements_tokenBox">
-    <button class="wallet-box tokens {{#if disabled}}disabled{{/if}}" style="background-image:{{geoPattern}}" data="{{address}}">
+    <button class="wallet-box tokens {{#if disabled}}disabled{{/if}}" data="{{address}}" style="width: 100%;">
         {{> dapp_identicon identity=address class="dapp-small"}}
-        <h3>{{name}}</h3>
+        <h3 style="padding-top: 4px;color: #000000;">{{name}}</h3>
         <button class="delete-token" data="{{address}}"><i class="icon-trash"></i></button>
-        <span class="account-balance"> 
+
+        <span class="account-id" style="color: #929cb8;font-size: 14px;">{{address}}</span>
+        <span class="account-balance" style="padding: 0;padding-bottom: 5px;">
             {{formattedTotalBalance}}<span> {{symbol}}</span>
-        </span>            
-        <span class="account-id">{{address}}</span>                
+        </span>
     </button>
 </template>

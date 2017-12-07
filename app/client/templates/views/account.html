@@ -20,13 +20,13 @@
 
                         <p style=" width: 50%;margin: 0;">
                             <span id="address" class="copyable-address">{{toChecksumAddress address}}</span>
-                            <img class="copy-to-clipboard-button" src="/images/copy.png" style=" width: 15px; margin-left: 5px; cursor: pointer;" name={{address}}>
-                            <img class="qrcode-button" src="/images/code.png" style=" width: 15px; margin-left: 5px; cursor: pointer;" name={{address}}>
+                            <img class=" copy-to-clipboard-button copy-address" name={{address}}/>
+                            <img class=" qrcode-button qrcode-address" name={{address}}/>
                         </p>
                         <p style=" width: 50%;margin: 0;">
                             <span class="accountLink-span copyable-waddress" id="waddress">{{waddress}}</span>
-                            <img class="copy-to-clipboard-button" src="/images/copy.png" style=" width: 15px; margin-left: 5px; cursor: pointer;" name={{waddress}}>
-                            <img class="qrcode-button" src="/images/code.png" style=" width: 15px; margin-left: 5px; cursor: pointer;" name={{waddress}}>
+                            <img class=" copy-to-clipboard-button copy-address" name={{waddress}}/>
+                            <img class=" qrcode-button qrcode-address" name={{waddress}}/>
                         </p>
 
                         <div class="clear"></div>
@@ -35,20 +35,20 @@
                                 {{#if hrefType}}
                                     <!--<i class="icon-arrow-right" style="padding-right: 3px;"></i>-->
                                     <a  href="{{pathFor route='sendTo' address=(toChecksumAddress address)}}" title="{{toChecksumAddress address}}">
-                                        <img src="/images/transfer.png" style="width: 20px;">
-                                    <p style="margin: 0;margin-left: -10px;font-size: 14px;color: #929cb8;">{{i18n 'views.account.transfer'}}</p>
+                                        <img class=" wanchain-transfer"/>
+                                    <p style="margin: 0;margin-left: -5px;font-size: 14px;color: #929cb8;">{{i18n 'views.account.transfer'}}</p>
                                     </a>
                                 {{else}}
                                     <a style="cursor: pointer" title="{{toChecksumAddress address}}" id="transfer">
-                                        <img src="/images/transfer.png" style="width: 20px;">
-                                        <p style="margin: 0;margin-left: -10px;font-size: 14px;color: #929cb8;">{{i18n 'views.account.transfer'}}</p>
+                                        <img class=" wanchain-transfer"/>
+                                        <p style="margin: 0;margin-left: -8px;font-size: 14px;color: #929cb8;">{{i18n 'views.account.transfer'}}</p>
                                     </a>
                                 {{/if}}
                             </p>
 
                             <p>
                                 <a class="start-to-scan-block-button">
-                                    <img src="/images/detail.png" style="width: 20px; cursor: pointer;">
+                                    <img class=" wanchain-detail"/>
                                 <p style="margin: 0;margin-left: -10px;font-size: 14px;color: #929cb8;;">{{i18n 'views.account.OTAs'}}</p>
                                 </a>
                             </p>
@@ -60,7 +60,7 @@
 	              <div class="viwes-account-header">
 		              <h1 class="account-h1"><div class="viwes-account-line"></div><strong>{{i18n 'views.account.balacne.title'}}</strong></h1>
 		              <div class="viwes-account-balance-left">
-                          <img src="/images/wanchain.png"/>
+                          <img/>
                           <p><div class="circle" style="width: 6px;height: 6px; margin-bottom: 5px;"></div>
                             <strong style="display: inline-block;">{{> elements_balance balance=balance changeUnit=true showAllDecimals=true}}</strong>
                             <span class="balance-span">{{i18n 'views.account.balacne.des'}}</span>

@@ -1,19 +1,22 @@
 
 .ele-p {
     margin-top: 30px;margin-bottom: 0;width: 52%;
-
-    //img{
-    //    background-image: url(/images/copy.png);
-    //    background-repeat: no-repeat;
-    //    background-position: center;
-    //    width: 40px;
-    //    height: 40px;
-    //    box-shadow: 0px 6px 18px 0px rgba(15, 104, 170, 0.1);
-    //    border-radius: 100%;
-    //    padding: 5px;
-    //}
 }
 
+.token-address{
+    width: 32px;
+    height: 32px;
+}
+
+.account-pattern{
+    padding: 13px 20px;
+    border-radius: 50%;
+    display: inline-block;
+    background-image: linear-gradient(0deg, #1a90fc 0%, #00d2ff 1000%);
+    box-shadow: 0px 6px 8px 0 rgba(15, 104,170,0.2);
+    color: #ffffff;
+    font-size: 20px;
+}
 .otaRefund-account{
     color: #929cb8;
 
@@ -52,17 +55,55 @@ input[type="checkbox"]::before, input[type="radio"]::before{
     background: #f7f8fc;
 }
 
-//.wanchain-logo{
-//    background-image: url(/images/wanchain-logo.png);
-//    background-repeat: no-repeat;
-//    background-position: center;
-//    background-size: 100%;
-//    padding: 24px;
-//    float: left;
-//    margin-right: 50px;
-//    margin-bottom: -6px;
-//    display: none;
-//}
+.wanchain-logo{
+    background-image: url(/images/wanchain-logo.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    padding: 24px;
+    float: left;
+    margin-right: 50px;
+    margin-bottom: -6px;
+    display: none;
+}
+
+.copy-address{
+    background-image: url(/images/copy.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 9px;
+    cursor: pointer;
+}
+
+.qrcode-address{
+    background-image: url(/images/code.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    padding: 9px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.wanchain-transfer{
+    background-image: url(/images/transfer.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    padding: 9px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.wanchain-detail {
+    background-image: url(/images/detail.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    padding: 9px;
+    margin-left: 5px;
+    cursor: pointer;
+}
 
 .header-account {
     background-image: linear-gradient(80deg, #1a90fc 0%, #00aeff 100%);
@@ -134,7 +175,7 @@ input[type="checkbox"]::before, input[type="radio"]::before{
     margin-right: 10px;
     background-color: #4b90f7;
     border-radius: 2px;
-    margin-top: 16px;
+    margin-top: 20px;
 }
 #elements_account_div{
     margin-bottom: 0;
@@ -310,16 +351,16 @@ span.address {
     float: left;
     padding: 0.5em 1em;
 
-    //img {
-    //    background-image: url(/images/wanchain.png);
-    //    background-repeat: no-repeat;
-    //    background-position: center;
-    //    width: 40px;
-    //    height: 40px;
-    //    box-shadow: 0px 6px 18px 0px rgba(15, 104, 170, 0.1);
-    //    border-radius: 100%;
-    //    padding: 5px;
-    //}
+    img {
+        background-image: url(/images/wanchain.png);
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 40px;
+        height: 40px;
+        box-shadow: 0px 6px 18px 0px rgba(15, 104, 170, 0.1);
+        border-radius: 100%;
+        padding: 5px;
+    }
 
     p{
       padding-left: 1em;
@@ -433,7 +474,7 @@ span.address {
         perspective: 800px;
         position: relative;
         background-repeat: repeat-y;
-        background-color: @colorGray;
+        background-color: #f7f8fc;
         background-size: cover;
         // background-size: @gridWidth * 3;
         background-position-x: 4px;
