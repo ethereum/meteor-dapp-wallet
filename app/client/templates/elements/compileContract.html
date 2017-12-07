@@ -5,7 +5,7 @@
                 {{TemplateVar.set "byteTextareaShown" true}}
                     <div class="col col-12 mobile-full replay-protection-div">
                     
-                        <button class="hide-data dapp-block-button dapp-small" >[{{i18n 'wallet.send.showLessOptions'}}]</button>
+                        <button class="hide-data dapp-block-button dapp-small" style="color: #02a8f3; background: #ffffff">{{i18n 'wallet.send.showLessOptions'}}</button>
 
                         <h3>{{i18n 'wallet.send.data'}}</h3>
                     </div>  
@@ -13,7 +13,7 @@
             {{else}}
                 <div class="col col-12 mobile-full">
                     {{TemplateVar.set "byteTextareaShown" false}}
-                    <button class="show-data dapp-block-button dapp-small">[{{i18n 'wallet.send.showMoreOptions'}}]</button>
+                    <button class="show-data dapp-block-button dapp-small" style="color: #02a8f3; background: #ffffff">{{i18n 'wallet.send.showMoreOptions'}}</button>
                 </div>
             {{/if}}
         {{/if}}
@@ -42,7 +42,6 @@
         </div>
         
         <div class="col col-4 mobile-full send-info">
-            <br>
             
             {{#if $eq (TemplateVar.get "selectedType") "source-code"}}
 

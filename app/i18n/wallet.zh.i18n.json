@@ -32,7 +32,7 @@
             "select": "选择普通交易或者隐私交易",
             "Ordinary": "普通交易",
             "Privacy": "隐私交易",
-            "Choice": "选择金额"
+            "Choose": "选择金额"
         }
     },
 

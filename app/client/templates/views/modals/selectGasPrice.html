@@ -5,8 +5,8 @@
         <br>
         {{#if TemplateVar.get "options"}}
             <input type="range" name="fee" min="-4" max="1" step="1" value="{{TemplateVar.get 'feeMultiplicator'}}">
-            <span>{{i18nText 'low'}}</span>
-            <span>{{i18nText 'high'}}</span>
+            <span style="left: 10px;margin-top: 10px;">{{i18nText 'low'}}</span>
+            <span style="right: 10px;margin-top: 10px;">{{i18nText 'high'}}</span>
         {{/if}}
     </div>
 </template>

@@ -20,34 +20,39 @@
 
                         <p style=" width: 50%;margin: 0;">
                             <span id="address" class="copyable-address">{{toChecksumAddress address}}</span>
-                            <button class="copy-to-clipboard-button" name="address"><i class="icon-docs"></i></button>
-                            <button class="qrcode-button" name="address"><i class="icon-camera"></i></button>
+                            <img class="copy-to-clipboard-button" src="/images/copy.png" style=" width: 15px; margin-left: 5px; cursor: pointer;" name={{address}}>
+                            <img class="qrcode-button" src="/images/code.png" style=" width: 15px; margin-left: 5px; cursor: pointer;" name={{address}}>
                         </p>
                         <p style=" width: 50%;margin: 0;">
                             <span class="accountLink-span copyable-waddress" id="waddress">{{waddress}}</span>
-                            <button class="copy-to-clipboard-wbutton" name="waddress"><i class="icon-docs"></i></button>
-                            <button class="qrcode-button" name="waddress"><i class="icon-camera"></i></button>
+                            <img class="copy-to-clipboard-button" src="/images/copy.png" style=" width: 15px; margin-left: 5px; cursor: pointer;" name={{waddress}}>
+                            <img class="qrcode-button" src="/images/code.png" style=" width: 15px; margin-left: 5px; cursor: pointer;" name={{waddress}}>
                         </p>
 
                         <div class="clear"></div>
-                        <nav class="viwes-account-nav">
-                            <ul>
+                        <div class="viwes-account-nav">
+                            <p style="position: absolute;left: -100px;">
                                 {{#if hrefType}}
-                                    <li>
-                                        <a href="{{pathFor route='sendTo' address=(toChecksumAddress address)}}" title="{{toChecksumAddress address}}">
-                                            <i class="icon-arrow-up"></i>{{i18n 'views.account.transfer'}}</a>
-                                    </li>
+                                    <!--<i class="icon-arrow-right" style="padding-right: 3px;"></i>-->
+                                    <a  href="{{pathFor route='sendTo' address=(toChecksumAddress address)}}" title="{{toChecksumAddress address}}">
+                                        <img src="/images/transfer.png" style="width: 20px;">
+                                    <p style="margin: 0;margin-left: -10px;font-size: 14px;color: #929cb8;">{{i18n 'views.account.transfer'}}</p>
+                                    </a>
                                 {{else}}
-                                    <li>
-                                        <a style="cursor: pointer" title="{{toChecksumAddress address}}" id="transfer">
-                                            <i class="icon-arrow-up"></i>{{i18n 'views.account.transfer'}}</a>
-                                    </li>
+                                    <a style="cursor: pointer" title="{{toChecksumAddress address}}" id="transfer">
+                                        <img src="/images/transfer.png" style="width: 20px;">
+                                        <p style="margin: 0;margin-left: -10px;font-size: 14px;color: #929cb8;">{{i18n 'views.account.transfer'}}</p>
+                                    </a>
                                 {{/if}}
-                                <li>
-                                    <button class="start-to-scan-block-button"><i class="icon-action-redo"></i>{{i18n 'views.account.OTAs'}}</button>
-                                </li>
-                            </ul>
-                        </nav>
+                            </p>
+
+                            <p>
+                                <a class="start-to-scan-block-button">
+                                    <img src="/images/detail.png" style="width: 20px; cursor: pointer;">
+                                <p style="margin: 0;margin-left: -10px;font-size: 14px;color: #929cb8;;">{{i18n 'views.account.OTAs'}}</p>
+                                </a>
+                            </p>
+                        </div>
                     </header>
                 </div>
 
@@ -55,23 +60,23 @@
 	              <div class="viwes-account-header">
 		              <h1 class="account-h1"><div class="viwes-account-line"></div><strong>{{i18n 'views.account.balacne.title'}}</strong></h1>
 		              <div class="viwes-account-balance-left">
-                          <img />
-                          <p><div class="circle" style="width: 6px;height: 6px;"></div>
+                          <img src="/images/wanchain.png"/>
+                          <p><div class="circle" style="width: 6px;height: 6px; margin-bottom: 5px;"></div>
                             <strong style="display: inline-block;">{{> elements_balance balance=balance changeUnit=true showAllDecimals=true}}</strong>
                             <span class="balance-span">{{i18n 'views.account.balacne.des'}}</span>
                           </p>
 		              </div>
 
-                      {{#if otasValue}}
-                          <div class="viwes-account-balance-left">
-                              <p><div class="circle" style="width: 6px;height: 6px;"></div>
-                              <strong style="display: inline-block;">{{> elements_balance balance=otasValue changeUnit=true showAllDecimals=true}}</strong>
-                              <span class="balance-span">{{i18n 'views.account.balacne.ota'}}
+                      <div class="viwes-account-balance-left">
+                          <p><div class="circle" style="width: 6px;height: 6px; margin-bottom: 5px;"></div>
+                          <strong style="display: inline-block;">{{> elements_balance balance=otasValue changeUnit=true showAllDecimals=true}}</strong>
+                          <span class="balance-span">{{i18n 'views.account.balacne.ota'}}
+                              {{#if otasValue}}
                                   <a href="{{pathFor route='otaRefund' address=theAddress}}">{{i18n 'views.account.balacne.refund'}}</a>
+                              {{/if}}
                           </span>
-                              </p>
-                          </div>
-                      {{/if}}
+                          </p>
+                      </div>
 
                       <div >
                           <hr class="viwes-account-balance-hr viwes-account-balance-left"/>
@@ -79,7 +84,7 @@
                               <div class="viwes-account-balance-right">
                                   <p >
                                       <span class="views_account_token" style="max-width: 100px">{{name}}</span>
-                                  <div class="circle" style="width: 6px;height: 6px;"></div>
+                                  <div class="circle" style="width: 6px;height: 6px; margin-bottom: 5px;"></div>
                                   <span id="views_account_token_balance">{{balance}}</span>
                                   </p>
                               </div>

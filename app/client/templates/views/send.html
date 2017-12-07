@@ -14,7 +14,7 @@
                 {{> dapp_identicon identity=address class="dapp-small"}}
                 <p style="display: inline-block;margin-left: 10px;">
                     <span style="display: block;font-weight: 600;">{{name}}</span>
-                    <span style="color: #b8bed0;font-weight: 400;">{{address}}</span>
+                    <span style="color:#929cb8;">{{address}}</span>
                 </p>
             {{/each}}
         </div>
@@ -137,7 +137,7 @@
                     <div class="col col-2 mobile-full amount" style="margin-bottom: 20px;">
                         <div class="triangle"></div><strong class="views_send_strong">{{i18n 'wallet.send.amount'}}</strong>
                         <select class="sendota-selectValue" style="margin-top: 5px; background-color: #f7f8fc;border: solid 0px #f7f8fc;">
-                            <option name = "myOption" value = "0">{{{i18n 'views.send.Choice'}}}</option>
+                            <option name = "myOption" value = "0">{{{i18n 'views.send.Choose'}}}</option>
                             <option name = "myOption" value = "100000000000000000">0.1</option>
                             <option name = "myOption" value = "200000000000000000">0.2</option>
                             <option name = "myOption" value = "500000000000000000">0.5</option>
@@ -170,7 +170,6 @@
 
 
             <!-- fee -->
-
             <div class="row clear" style="padding-top: 0;margin-top: 10px;">
                 <div class="col col-12 mobile-full">
                     <strong style="display: block" class="views_send_strong"><div class="triangle"></div>{{i18n 'wallet.send.fee'}}</strong>
@@ -204,10 +203,7 @@
             </div>
 
 
-            <hr style="background-color: #d7dde6; border: solid 2px #e8ebf0;">
-
             <!-- a button type="submit" will send the form -->
-
             <button type="submit" class="dapp-block-button views_send_button">
                 {{#if TemplateVar.get "sending"}}
                     {{i18n 'buttons.sending'}}

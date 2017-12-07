@@ -110,7 +110,7 @@ Template['views_account'].helpers({
         }
     });
 
-        tokens = [tokens[0], tokens[0],tokens[0]];
+        // tokens = [tokens[0], tokens[0],tokens[0]];
 
         return tokens;
     },
@@ -121,8 +121,7 @@ Template['views_account'].helpers({
 		 @method (ota)
 		 */
 		'otasValue': function () {
-			// return TemplateVar.get('otasValue');
-            return 1;
+			return TemplateVar.get('otasValue');
     },
 
     /**

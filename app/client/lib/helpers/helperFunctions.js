@@ -517,7 +517,17 @@ Helpers.transferBanlance = function (number, format, unit) {
     //replace dapp_formatBalance
 
     var balance = EthTools.formatBalance(number, format, unit).split(' ')[0];
+
     return balance + ' WAN';
+};
+
+Helpers.otasBalance = function (number, otaTotal, format, unit) {
+
+    var balance = EthTools.formatBalance(number, format, unit).split(' ')[0];
+
+    var amount = EthTools.formatBalance(otaTotal, format, unit);
+
+    return parseFloat(balance) + parseFloat(amount) + ' WAN';
 };
 
 
@@ -537,4 +547,21 @@ Helpers.waddressTransfer = function (waddress) {
     }
 
     return start
+};
+
+Helpers.stampToDate = function (meta) {
+
+    function add0(m){return m<10?'0'+m:m }
+
+    var time = new Date(meta.created);
+    var y = time.getFullYear();
+    var m = time.getMonth()+1;
+    var d = time.getDate();
+    var h = time.getHours();
+    var mm = time.getMinutes();
+    var s = time.getSeconds();
+
+    var create_time = y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
+
+    return create_time;
 };

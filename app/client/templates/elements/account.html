@@ -1,4 +1,4 @@
-<template name="elements_account">
+<template name="elements_account" xmlns="http://www.w3.org/1999/html">
     <div class="dashboard-box-list" style="position: relative">
 	    {{#with account}}
 		    <div class="wallet-box {{#if creating}}creating{{/if}} {{#if disabled}}disabled{{/if}} {{#if ../wallets}}wallets{{/if}} {{#if new}}new{{/if}}" id="elements_account_div">
@@ -28,15 +28,21 @@
 					    {{displayName}}
 				    {{/if}}
 			    </h3>
-                <p style="margin-top: 30px;margin-bottom: 0;width: 52%;">
-                    <span class="copyable-address{{address}} accountLink-span account-id {{#if creating}}creating{{/if}}" style="padding-top: 5px; color: #827a7a">{{toChecksumAddress address}}</span>
-                    <button class="copy-to-clipboard-button icon-docs" style="margin: 0 10px;" name={{address}} ></button>
-                    <button class="qrcode-button icon-camera" name={{address}} ></button>
+                <p class="ele-p">
+                    <span class="copyable-address{{address}} accountLink-span account-id {{#if creating}}creating{{/if}}"
+                          style="padding-top: 5px;color: #929cb8;font-size: 14px;">{{toChecksumAddress address}}</span>
+                    <img class="copy-to-clipboard-button" src="/images/copy.png" style=" width: 15px; margin-left: 5px; cursor: pointer;" name={{address}}>
+                    <img class="qrcode-button" src="/images/code.png" style=" width: 15px; margin-left: 5px; cursor: pointer;" name={{address}}>
+                    <!--<button class="copy-to-clipboard-button icon-docs" style="margin: 0 10px;" name={{address}} ></button>-->
+                    <!--<button class="qrcode-button icon-camera" name={{address}} ></button>-->
                 </p>
                 <p style="margin-top: 0;margin-bottom: 0;width: 52%;">
-                <span class="copyable-address{{waddress}} accountLink-span account-id {{#if creating}}creating{{/if}}" style="color: #827a7a">{{waddress}}</span>
-                    <button class="copy-to-clipboard-button icon-docs" style="margin: 0 10px;" name={{waddress}} ></button>
-                    <button class="qrcode-button icon-camera" name={{waddress}} ></button>
+                <span class="copyable-address{{waddress}} accountLink-span account-id {{#if creating}}creating{{/if}}"
+                      style="color: #929cb8;font-size: 14px;">{{waddress}}</span>
+                    <img class="copy-to-clipboard-button" src="/images/copy.png" style=" width: 15px; margin-left: 5px; cursor: pointer;" name={{waddress}}>
+                    <img class="qrcode-button" src="/images/code.png" style=" width: 15px; margin-left: 5px; cursor: pointer;" name={{waddress}}>
+                    <!--<button class="copy-to-clipboard-button icon-docs" style="margin: 0 10px;" name={{waddress}} ></button>-->
+                    <!--<button class="qrcode-button icon-camera" name={{waddress}} ></button>-->
                 </p>
 
 
@@ -62,16 +68,24 @@
 
             <div style="position: absolute;top: 60px; right: 120px;">
                 {{#if hrefType}}
+                    <!--<i class="icon-arrow-right" style="padding-right: 3px;"></i>-->
                 <a  href="{{pathFor route='sendTo' address=(toChecksumAddress address)}}"
                    class="wallet-box {{#if creating}}creating{{/if}} {{#if disabled}}disabled{{/if}} {{#if ../wallets}}wallets{{/if}} {{#if new}}new{{/if}}"
-                   style="min-height: 10px; margin: 0;"><i class="icon-arrow-right" style="padding-right: 3px;"></i>Transfer</a>
+                   style="min-height: 10px; margin: 0;">
+                    <img src="/images/transfer.png" style="width: 20px;">
+                    <p style="margin: 0;font-size: 14px;color: #929cb8;margin-left: -8px;">Transfer</p>
+                </a>
                 {{else}}
                     <a  href= "" class="wallet-box {{#if creating}}creating{{/if}} {{#if disabled}}disabled{{/if}} {{#if ../wallets}}wallets{{/if}} {{#if new}}new{{/if}}"
-                       style="min-height: 10px; margin: 0;" id="transfer" name={{balance}}><i class="icon-arrow-right" style="padding-right: 3px;"></i>Transfer</a>
+                       style="min-height: 10px; margin: 0;" id="transfer" name={{balance}}><img src="/images/transfer.png" style="width: 20px;">
+                        <p style="margin: 0;font-size: 14px;color: #929cb8; margin-left: -8px;">Transfer</p>
+                    </a>
                 {{/if}}
 
                 <a href="{{pathFor route='account' address=address}}" class="wallet-box {{#if creating}}creating{{/if}} {{#if disabled}}disabled{{/if}} {{#if ../wallets}}wallets{{/if}} {{#if new}}new{{/if}}"
-                   style="min-height: 10px; margin: 0;" id={{address}}><i class="icon-arrow-right" style="padding-right: 3px;"></i>Detail</a>
+                   style="min-height: 10px; margin: 0;" id={{address}}><img src="/images/detail.png" style="width: 20px;">
+                    <p style="margin: 0;font-size: 14px;color: #929cb8; margin-left: -5px;">Detail</p>
+                </a>
             </div>
 	    {{/with}}
     </div>
