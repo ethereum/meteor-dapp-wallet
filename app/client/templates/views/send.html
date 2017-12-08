@@ -36,7 +36,6 @@
                             <option id="ether" value="ether" name="choose-token" {{tokenSelectedAttr 'ether'}}>
                                 <label for="ether">
                                     <span class="ether-symbol">Ξ</span>
-                                    <span class="token-name">WAN</span>
                                     <span class="balance">
                                         {{#if $neq unit 'ether'}}
                                             {{transferBanlance selectedAccount.balance "0,0.00 UNIT"}} ({{transferBanlance selectedAccount.balance "0,0.00[0000000000000000] UNIT" "ether"}})
@@ -121,14 +120,6 @@
                         <label><input type="checkbox" class="send-all">{{i18n 'wallet.send.sendAll'}}</label>
 
                     </div>
-
-                    {{#unless hasTokens }}
-                        <div class="token-ether" style="margin-top: 37px">
-                            <span class="ether-symbol">Ξ</span>
-                            <span class="token-name">WAN</span>
-
-                        </div>
-                    {{/unless}}
 
                     <div class="dapp-clear-fix"></div>
                 </div>
