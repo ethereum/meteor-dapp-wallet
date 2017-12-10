@@ -93,6 +93,20 @@ input[type="checkbox"]::before, input[type="radio"]::before{
     }
 }
 
+.wanchain-passwd{
+    background-image: url(/images/passwd.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    padding: 9px;
+    margin-left: 5px;
+    cursor: pointer;
+
+    &:hover {
+        background-image: url(/images/passwd1.png);
+    }
+}
+
 .wanchain-transfer{
     background-image: url(/images/transfer.png);
     background-repeat: no-repeat;
@@ -306,8 +320,10 @@ span.address {
   a {
     padding-top: 0.5em;
     margin-bottom: 0;
+      padding-left: 25px;
   }
 }
+
 
 .viwes-account-nav {
     position: relative;

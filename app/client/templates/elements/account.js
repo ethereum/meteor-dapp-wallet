@@ -240,7 +240,6 @@ Template['elements_account'].events({
         e.preventDefault();
 
         var name = e.target.name;
-        console.log('name: ', name);
 
         // Open a modal showing the QR Code
         EthElements.Modal.show({
@@ -249,6 +248,20 @@ Template['elements_account'].events({
                 address: name
             }
         });
+    },
+
+    'click .wanchain-passwd': function (e) {
+        e.preventDefault();
+
+        var name = e.target.name;
+        console.log('name: ', name);
+
+        if (typeof mist !== "undefined") {
+            mist.changePassword(
+                name
+            )
+        }
+
     }
 
 });
