@@ -78,8 +78,11 @@ Template['elements_selectableUnit'].helpers({
             return unit.value === EthTools.getUnit();
         });
 
-        if(unit)
+        if(unit && unit.value !== 'ether') {
             return unit.value;
+        } else {
+            return 'wan';
+        }
     },
     /**
     Return the selectable units
@@ -87,6 +90,14 @@ Template['elements_selectableUnit'].helpers({
     @method (selectedUnit)
     */
     'units': function(){
+
+        _.each(selectableUnits, function(selectableUnit){
+            if (selectableUnit.text == 'ETHER') {
+                selectableUnit.text = 'WAN';
+                selectableUnit.value = "wan";
+            }
+        });
+
         return selectableUnits;
     },
     /**

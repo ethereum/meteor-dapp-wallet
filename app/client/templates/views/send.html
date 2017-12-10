@@ -67,7 +67,7 @@
                         {{#if switchStype}}
                             <a id="selectType" style="cursor: pointer;">{{selecteType}}</a>
                         {{/if}}
-                        {{> dapp_choiceAccount accounts=(selectAccount deployContract) showAccountTypes=true class='send-from'}}
+                        {{> dapp_choiceAccount accounts=(selectAccounts deployContract) showAccountTypes=true class='send-from'}}
                     </div>
                 {{else}}
                     <div class="col col-12 mobile-full from">
@@ -75,7 +75,7 @@
                         {{#if switchStype}}
                             <a id="selectType" style="cursor: pointer;">{{selecteType}}</a>
                         {{/if}}
-                        {{> dapp_choiceAccount accounts=(selectAccount deployContract) showAccountTypes=true class='send-from'}}
+                        {{> dapp_choiceAccount accounts=(selectAccounts deployContract) showAccountTypes=true class='send-from'}}
                     </div>
                 {{/if}}
 
@@ -129,16 +129,9 @@
                         <div class="triangle"></div><strong class="views_send_strong">{{i18n 'wallet.send.amount'}}</strong>
                         <select class="sendota-selectValue" style="margin-top: 5px; background-color: #f7f8fc;border: solid 0px #f7f8fc;">
                             <option name = "myOption" value = "0">{{{i18n 'views.send.Choose'}}}</option>
-                            <option name = "myOption" value = "100000000000000000">0.1</option>
-                            <option name = "myOption" value = "200000000000000000">0.2</option>
-                            <option name = "myOption" value = "500000000000000000">0.5</option>
-                            <option name = "myOption" value = "1000000000000000000">1</option>
-                            <option name = "myOption" value = "2000000000000000000">2</option>
-                            <option name = "myOption" value = "5000000000000000000">5</option>
-                            <option name = "myOption" value = "10000000000000000000">10</option>
-                            <option name = "myOption" value = "20000000000000000000">20</option>
-                            <option name = "myOption" value = "50000000000000000000">50</option>
-                            <option name = "myOption" value = "100000000000000000000">100</option>
+                            {{#each wanBalance}}
+                                <option name = "myOption" value = {{balance}}>{{name}}</option>
+                            {{/each}}
                         </select>
                     </div>
 
@@ -152,12 +145,6 @@
                     </div>
                 </div>
             {{/if}}
-
-            <!--{{#if $eq (TemplateVar.get "selectedToken") "ether"}}-->
-            <!--{{/if}}-->
-            {{> elements_compileContract onlyByteCode=showOnlyByteTextarea codeNotExecutable=(TemplateVar.get "codeNotExecutable")}}
-
-
 
 
             <!-- fee -->

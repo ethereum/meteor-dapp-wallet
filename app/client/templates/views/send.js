@@ -253,6 +253,21 @@ Template['views_send'].onRendered(function(){
 
 
 Template['views_send'].helpers({
+    'wanBalance': function () {
+        var wanBalance = [
+            {'name': '10', 'balance': 10000000000000000000},
+            {'name': '20', 'balance': 20000000000000000000},
+            {'name': '50', 'balance': 50000000000000000000},
+            {'name': '100', 'balance': 100000000000000000000},
+            {'name': '200', 'balance': 200000000000000000000},
+            {'name': '500', 'balance': 500000000000000000000},
+            {'name': '1000', 'balance': 1000000000000000000000},
+            {'name': '5000', 'balance': 5000000000000000000000},
+            {'name': '50000', 'balance': 50000000000000000000000}
+        ];
+
+        return wanBalance;
+    },
 
     'selectTransaction': function () {
         return TemplateVar.get('transaction');

@@ -42,7 +42,7 @@ Template['views_otaRefund'].helpers({
 		var otaTotal = 0;
 
 		_.each(otas, function(ota){
-            otaTotal += parseFloat(ota.value);
+            otaTotal += parseFloat(parseInt(ota.value, 16));
 		});
 
     	TemplateVar.set('otaTotal', otaTotal);
