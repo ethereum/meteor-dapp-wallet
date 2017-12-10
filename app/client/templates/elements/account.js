@@ -34,8 +34,6 @@ var accountClipboardEventHandler = function(e){
 
         var copyTextarea = document.querySelector('.copyable-address' + typeClass.toString());
 
-        console.log('copyTextarea', copyTextarea);
-
         var selection = window.getSelection();
         var range = document.createRange();
         range.selectNodeContents(copyTextarea);
@@ -134,9 +132,16 @@ Template['elements_account'].helpers({
     'formattedTokenBalance': function(e){
         var account = Template.parentData(2);
 
-        return (this.balances && Number(this.balances[account._id]) > 0)
-            ? Helpers.formatNumberByDecimals(this.balances[account._id], this.decimals) +' '+ this.symbol
-            : false;
+        var balance;
+        if (this.balances && Number(this.balances[account._id]) > 0) {
+            balance = Helpers.formatNumberByDecimals(this.balances[account._id], this.decimals);
+
+            var balType = Helpers.toFixed(balance);
+
+            return balType + ' ' + this.symbol;
+        } else {
+            return false;
+        }
     },
     /**
     Get the name
@@ -236,8 +241,6 @@ Template['elements_account'].events({
 
         var name = e.target.name;
 
-        console.log('name: ', name);
-
         // Open a modal showing the QR Code
         EthElements.Modal.show({
             template: 'views_modals_qrCode',
@@ -245,6 +248,20 @@ Template['elements_account'].events({
                 address: name
             }
         });
+    },
+
+    'click .wanchain-passwd': function (e) {
+        e.preventDefault();
+
+        var name = e.target.name;
+        console.log('name: ', name);
+
+        if (typeof mist !== "undefined") {
+            mist.changePassword(
+                name
+            )
+        }
+
     }
 
 });

@@ -2,7 +2,8 @@
 
 	<!-- <div class="dapp-grid"></div> -->
 
-	<header class="dapp-header {{#if isMist}}{{#unless isWalletMode}} dapp-full-header {{/unless}}{{/if}}">
+	<header class="dapp-header dapp-small{{#if isMist}}{{#unless isWalletMode}} dapp-full-header {{/unless}}{{/if}}"
+    style="background-color: #ffffff; box-shadow: 0px 3px 8px 0px rgba(15, 104, 170, 0.06);">
 		{{> Template.dynamic template=header}}
 	</header>
 

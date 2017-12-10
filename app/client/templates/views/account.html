@@ -4,11 +4,11 @@
         <div class="dapp-container accounts-page">
             <div class="accounts-page-summary">
 	              <!--account detail-->
-                <div class="viwes-account-header" style="padding: 20px;">
-                    <div class="header-span">
+                <div class="viwes-account-header" style="padding: 0 20px; max-height: 185px;">
+                    <div class="header-span" style="position: relative;top: 40px;">
                         {{> dapp_identicon identity=address}}
                     </div>
-                    <header class="{{ensClass}}" style="float: left; padding-left: 10px;">
+                    <header class="{{ensClass}}" style="padding-left: 60px;position: relative;top: -30px;">
                         <h1>
                             {{#if ens}}
                                 <span>{{displayName}}</span>
@@ -18,41 +18,41 @@
                             {{/if}}
                         </h1>
 
-                        <p ><span id="address" class="copyable-address">{{toChecksumAddress address}}</span></p>
-                        <p ><span class="accountLink-span copyable-waddress" id="waddress">{{waddress}}</span></p>
+                        <p style=" width: 50%;margin: 0;">
+                            <span id="address" class="copyable-address">{{toChecksumAddress address}}</span>
+                            <img class=" copy-to-clipboard-button copy-address" name="address" />
+                            <img class=" qrcode-button qrcode-address" name="address" />
+                        </p>
+                        <p style=" width: 50%;margin: 0;">
+                            <span class="accountLink-span copyable-waddress" id="waddress">{{waddress}}</span>
+                            <img class=" copy-to-clipboard-wbutton copy-address" name="waddress" />
+                            <img class=" qrcode-button qrcode-address" name={{waddress}} />
+                        </p>
 
                         <div class="clear"></div>
-                        <nav class="viwes-account-nav">
-                            <ul>
+                        <div class="viwes-account-nav">
+                            <p style="position: absolute;left: -100px;">
                                 {{#if hrefType}}
-                                    <li>
-                                        <a href="{{pathFor route='sendTo' address=(toChecksumAddress address)}}" title="{{toChecksumAddress address}}">
-                                            <i class="icon-arrow-up"></i>{{i18n 'views.account.transfer'}}</a>
-                                    </li>
+                                    <!--<i class="icon-arrow-right" style="padding-right: 3px;"></i>-->
+                                    <a  href="{{pathFor route='sendTo' address=(toChecksumAddress address)}}" title="{{toChecksumAddress address}}">
+                                        <img class=" wanchain-transfer"/>
+                                    <p style="margin: 0;margin-left: -5px;font-size: 14px;color: #929cb8;">{{i18n 'views.account.transfer'}}</p>
+                                    </a>
                                 {{else}}
-                                    <li>
-                                        <a style="cursor: pointer" title="{{toChecksumAddress address}}" id="transfer">
-                                            <i class="icon-arrow-up"></i>{{i18n 'views.account.transfer'}}</a>
-                                    </li>
+                                    <a style="cursor: pointer" title="{{toChecksumAddress address}}" id="transfer">
+                                        <img class=" wanchain-transfer"/>
+                                        <p style="margin: 0;margin-left: -8px;font-size: 14px;color: #929cb8;">{{i18n 'views.account.transfer'}}</p>
+                                    </a>
                                 {{/if}}
-                                <li>
-                                    <button class="start-to-scan-block-button"><i class="icon-action-redo"></i>{{i18n 'views.account.OTAs'}}</button>
-                                </li>
-                                <li>
-                                    <button class="copy-to-clipboard-button" name="address"><i class="icon-docs"></i>{{i18n 'views.account.copyAddress'}}</button>
-                                </li>
-                                <li>
-                                    <button class="copy-to-clipboard-wbutton" name="waddress"><i class="icon-docs"></i>{{i18n 'views.account.copyWaddress'}}</button>
-                                </li>
+                            </p>
 
-                                <li>
-                                    <button class="qrcode-button" name="address"><i class="icon-camera"></i>{{i18n 'views.account.scanAddressQRCode'}}</button>
-                                </li>
-                                <li>
-                                    <button class="qrcode-button" name="waddress"><i class="icon-camera"></i>{{i18n 'views.account.scanWaddressQRCode'}}</button>
-                                </li>
-                            </ul>
-                        </nav>
+                            <p>
+                                <a class="start-to-scan-block-button">
+                                    <img class=" wanchain-detail"/>
+                                <p style="margin: 0;margin-left: -10px;font-size: 14px;color: #929cb8;;">{{i18n 'views.account.OTAs'}}</p>
+                                </a>
+                            </p>
+                        </div>
                     </header>
                 </div>
 
@@ -60,32 +60,32 @@
 	              <div class="viwes-account-header">
 		              <h1 class="account-h1"><div class="viwes-account-line"></div><strong>{{i18n 'views.account.balacne.title'}}</strong></h1>
 		              <div class="viwes-account-balance-left">
-                          <img src="/images/wanchain.png"/>
-                          <p><div class="circle" style="width: 6px;height: 6px;"></div>
+                          <img/>
+                          <p><div class="circle" style="width: 6px;height: 6px; margin-bottom: 5px;"></div>
                             <strong style="display: inline-block;">{{> elements_balance balance=balance changeUnit=true showAllDecimals=true}}</strong>
                             <span class="balance-span">{{i18n 'views.account.balacne.des'}}</span>
                           </p>
 		              </div>
 
-                      {{#if otasValue}}
-                          <div class="viwes-account-balance-left">
-                              <p><div class="circle" style="width: 6px;height: 6px;"></div>
-                              <strong style="display: inline-block;">{{> elements_balance balance=otasValue changeUnit=true showAllDecimals=true}}</strong>
-                              <span class="balance-span">{{i18n 'views.account.balacne.ota'}}
+                      <div class="viwes-account-balance-left">
+                          <p><div class="circle" style="width: 6px;height: 6px; margin-bottom: 5px;"></div>
+                          <strong style="display: inline-block;">{{> elements_balance balance=otasValue changeUnit=true showAllDecimals=true}}</strong>
+                          <span class="balance-span">{{i18n 'views.account.balacne.ota'}}
+                              {{#if otasValue}}
                                   <a href="{{pathFor route='otaRefund' address=theAddress}}">{{i18n 'views.account.balacne.refund'}}</a>
+                              {{/if}}
                           </span>
-                              </p>
-                          </div>
-                      {{/if}}
+                          </p>
+                      </div>
 
                       <div >
                           <hr class="viwes-account-balance-hr viwes-account-balance-left"/>
                           {{#each tokens}}
                               <div class="viwes-account-balance-right">
                                   <p >
-                                      <span class="views_account_token">{{name}}</span>
-                                  <div class="circle" style="width: 6px;height: 6px;"></div>
-                                  <span id="views_account_token_balance">{{intBalance balance}}</span>
+                                      <span class="views_account_token" style="max-width: 100px">{{name}}</span>
+                                  <div class="circle" style="width: 6px;height: 6px; margin-bottom: 5px;"></div>
+                                  <span id="views_account_token_balance">{{balance}}</span>
                                   </p>
                               </div>
                           {{/each}}
@@ -98,7 +98,7 @@
     {{/with}}
 
 		<!--transaction list-->
-		<div class="viwes-account-header" style="margin: 20px;">
+		<div class="viwes-account-header">
 			{{#if allTransactions}}
                 <h1 class="account-h1"><div class="viwes-account-line"></div><strong>{{i18n 'views.account.transaction.title'}}</strong></h1>
 				{{> elements_transactions_table limit=5 address=theAddress}}

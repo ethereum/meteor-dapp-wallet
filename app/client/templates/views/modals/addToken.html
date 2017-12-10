@@ -1,26 +1,25 @@
 <template name="views_modals_addToken">
     {{#if this.address}}
-        <h1>{{i18n "wallet.modals.addToken.titleEdit"}}</h1>
+        <h1 style="font-size: 16px;font-weight: 600;margin-bottom: 10px;">{{i18n "wallet.modals.addToken.titleEdit"}}</h1>
     {{else}}
-        <h1>{{i18n "wallet.modals.addToken.title"}}</h1>
+        <h1 style="font-size: 16px;font-weight: 600;margin-bottom: 10px;">{{i18n "wallet.modals.addToken.title"}}</h1>
     {{/if}}
 
-    <h3>{{i18n "wallet.modals.addToken.contractAddress"}}</h3>
+    <h3 style=" margin-bottom: 5px;font-size: 12px;font-weight: 200;">{{i18n "wallet.modals.addToken.contractAddress"}}</h3>
 
-    {{> dapp_addressInput placeholder="0x000000.." value=this.address name="address" autofocus=true class='token-address'}}
+    {{> dapp_addrInput placeholder="0x000000.." value=this.address name="address" autofocus=true class='token-address'}}
 
-    <h3>{{i18n "wallet.modals.addToken.tokenName"}}</h3>
-    <input type="string" value="{{name}}" name="name" placeholder="Token name" class="name">
+    <h3 style=" margin-bottom: 5px;font-size: 12px;font-weight: 200;">{{i18n "wallet.modals.addToken.tokenName"}}</h3>
+    <input type="string" value="{{name}}" name="name" placeholder="Token name" class="name" style=" background: #f7f8fc;border-bottom: 0;width: 100%;">
 
-    <h3>{{i18n "wallet.modals.addToken.tokenSymbol"}}</h3>
-    <input type="string" value="{{symbol}}" name="symbol" placeholder="Token symbol" class="symbol">
+    <h3 style=" margin-bottom: 5px;font-size: 12px;font-weight: 200;">{{i18n "wallet.modals.addToken.tokenSymbol"}}</h3>
+    <input type="string" value="{{symbol}}" name="symbol" placeholder="Token symbol" class="symbol" style=" background: #f7f8fc;border-bottom: 0;width: 100%;">
 
 
-    <h3>{{i18n "wallet.modals.addToken.decimalPlaces"}}</h3>
-    <input type="number" min="0" step="1" name="division" value="{{decimals}}" placeholder="2" class="decimals">
+    <h3 style=" margin-bottom: 5px;font-size: 12px;font-weight: 200;">{{i18n "wallet.modals.addToken.decimalPlaces"}}</h3>
+    <input type="number" min="0" step="1" name="division" value="{{decimals}}" placeholder="2" class="decimals" style=" background: #f7f8fc;border-bottom: 0;width: 100%;">
 
-    <br>
-    <h3>{{i18n "wallet.modals.addToken.preview"}}</h3>
+    <h3 style=" margin-bottom: 5px;font-size: 12px;font-weight: 200;">{{i18n "wallet.modals.addToken.preview"}}</h3>
 
     {{> elements_tokenBox previewToken}}
 

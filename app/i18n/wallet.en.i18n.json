@@ -32,7 +32,7 @@
             "select": "Select to ordinary/private transaction",
             "Ordinary": "Ordinary Transaction",
             "Privacy": "Privacy Transaction",
-            "Choice": "Choice Value"
+            "Choose": "Choose Value"
         }
     },
 

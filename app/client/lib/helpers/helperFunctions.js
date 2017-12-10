@@ -319,7 +319,8 @@ Helpers.formatTransactionBalance = function(value, exchangeRates, unit) {
         var price = new BigNumber(String(web3.fromWei(value, 'ether')), 10).times(exchangeRates[unit].price);
         return EthTools.formatNumber(price, format) + ' '+ unit.toUpperCase();
     } else {
-        return EthTools.formatBalance(value, format + '[0000000000000000] UNIT');
+        // console.log('bal: ', EthTools.formatBalance(value, format + '[0000000000000000] UNIT').split(' ')[0] + ' wan');
+        return EthTools.formatBalance(value, format + '[0000000000000000] UNIT').split(' ')[0] + ' WAN';
     }
 };
 
@@ -510,4 +511,63 @@ Helpers.getENSName = function(address, callback) {
             }
         })
     });
-}
+};
+
+Helpers.transferBanlance = function (number, format, unit) {
+    //replace dapp_formatBalance
+
+    var balance = EthTools.formatBalance(number, format, unit).split(' ')[0];
+
+    return balance + ' WAN';
+};
+
+Helpers.otasBalance = function (number, otaTotal, format, unit) {
+
+    var balance = EthTools.formatBalance(number, format, unit).split(' ')[0];
+
+    var amount = EthTools.formatBalance(otaTotal, format, unit);
+
+    return parseFloat(balance) + parseFloat(amount) + ' WAN';
+};
+
+
+Helpers.toFixed = function (balance) {
+    var balance = balance.replace(/[\,|\.]/g,".");
+
+    var balType = balance.split('.');
+    var balTypeOne = balType[0];
+
+    var balTypeTwo = '.00';
+    if (balType[1].substr(2,0)) {
+        balTypeTwo = '.' + balType[1].substr(2,0);
+    }
+
+    return balTypeOne + balTypeTwo;
+};
+
+Helpers.waddressTransfer = function (waddress) {
+    var start = waddress;
+    if (waddress.length >42) {
+        start = waddress.substr(0, 42);
+        start = start + '...'
+    }
+
+    return start
+};
+
+Helpers.stampToDate = function (meta) {
+
+    function add0(m){return m<10?'0'+m:m }
+
+    var time = new Date(meta.created);
+    var y = time.getFullYear();
+    var m = time.getMonth()+1;
+    var d = time.getDate();
+    var h = time.getHours();
+    var mm = time.getMinutes();
+    var s = time.getSeconds();
+
+    var create_time = y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
+
+    return create_time;
+};

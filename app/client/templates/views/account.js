@@ -10,20 +10,26 @@ Template['views_account'].onCreated(function () {
 
     InterID = Meteor.setInterval(function(){
         var waddress = Helpers.getAccountByAddress(FlowRouter.getParam('address')).waddress.slice(2);
-        mist.requestOTACollection(waddress, function (e, result) {
-            var oldOtas = TemplateVar.get(template,'otaValue');
-            if(!oldOtas || oldOtas.length !== result.length)
-            {
-                var otaValue = 0;
-                if (!e && result.length >0) {
-                    _.each(result, function(ota){
-                        otaValue += parseInt(ota.value);
-                    });
+
+        if (typeof mist !== 'undefined') {
+            // state ==0 means only fetch unrefund ota.
+            mist.requestOTACollection(waddress,0, function (e, result) {
+                console.log("mist.requestOTACollection result:", e, result);
+                var oldOtas = TemplateVar.get(template,'otaValue');
+                if(!oldOtas || oldOtas.length !== result.length)
+                {
+                    var otaValue = 0;
+                    if (!e && result.length >0) {
+                        _.each(result, function(ota){
+                            otaValue += parseInt(ota.value);
+                        });
+                    }
+                    TemplateVar.set(template,'otasValue',otaValue);
+                    Session.set('otas', result);
                 }
-                TemplateVar.set(template,'otasValue',otaValue);
-                Session.set('otas', result);
-            }
-        })
+            })
+        }
+
     }, 2000);
 });
 
@@ -88,9 +94,23 @@ Template['views_account'].helpers({
         query['balances.'+ this._id] = {$exists: true};
 
         var tokens = Tokens.find(query, {sort: {name: 1}}).fetch();
+
         _.each(tokens, (token) => {
-            token.balance =token.balances[this._id];
-        });
+            // token.balance =(Number(token.balances[this._id]) > 0)
+            // ? Helpers.formatNumberByDecimals(token.balances[this._id], token.decimals) +' '+ token.symbol
+            // : false;
+
+            token.balance = false;
+
+            var bal;
+        if (Number(token.balances[this._id]) > 0) {
+            bal = Helpers.formatNumberByDecimals(token.balances[this._id], token.decimals);
+            var balType = Helpers.toFixed(bal);
+            token.balance = balType + ' ' + token.symbol;
+        }
+    });
+
+        // tokens = [tokens[0], tokens[0],tokens[0]];
 
         return tokens;
     },
@@ -125,12 +145,16 @@ Template['views_account'].helpers({
 
 var accountStartScanEventHandler = function(e){
 
-    mist.startScan(FlowRouter.getParam('address'), (err, result)=>{
-        if(err){
-            console.log("Error:", err);
-        }
-        console.log("startscan:", result);
-    })
+    if (typeof mist !== 'undefined') {
+        mist.startScan(FlowRouter.getParam('address'), (err, result)=>{
+            if(err){
+                console.error(err);
+            }
+            console.log("startscan:", result);
+        })
+    } else {
+        console.warn("mist is undefiend")
+    }
 };
 var accountClipboardEventHandler = function(e){
 	if (Session.get('tmpAllowCopy') === true) {
@@ -144,9 +168,6 @@ var accountClipboardEventHandler = function(e){
 	function copyAddress(){
 		var type = e.target.name;
 		var typeId = e.target.id;
-
-		console.log('type: ', type);
-      console.log('typeId: ', typeId);
 
 		var copyTextarea;
 		if (type === 'address' || typeId === 'address') {
@@ -226,7 +247,6 @@ Template['views_account'].events({
             var $el = $(e.currentTarget);
             var text = $el.text();
 
-
             if(_.isEmpty(text)) {
                 text = TAPi18n.__('wallet.accounts.defaultName');
             }
@@ -274,18 +294,13 @@ Template['views_account'].events({
         e.preventDefault();
 
         var name = e.target.name;
-        var address;
-        if (name === 'address') {
-        	address = this.address
-        } else {
-        	address = this.waddress
-        }
+        console.log('name: ', name);
         
         // Open a modal showing the QR Code
         EthElements.Modal.show({
             template: 'views_modals_qrCode',
             data: {
-                address: address
+                address: name
             }
         });
     },

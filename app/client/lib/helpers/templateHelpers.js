@@ -210,7 +210,7 @@ Formats address to a CaseChecksum
 @return {String} checksumAddress    The returned, checksummed address
 **/
 Template.registerHelper('toChecksumAddress', function(address){
-    return _.isString(address) ? web3.toChecksumAddress(address) : '';
+    return _.isString(address) ? web3.toChecksumAddress(address).toLowerCase() : '';
 });
 
 Template.registerHelper('intBalance', function(balance){
@@ -227,4 +227,11 @@ Takes a camelcase and shows it with spaces
 @return {string} sentence    The same name with spaces
 **/
 Template.registerHelper('toSentence', Helpers.toSentence);
+
+Template.registerHelper('transferBanlance', Helpers.transferBanlance);
+
+Template.registerHelper('waddressTransfer', Helpers.waddressTransfer);
+Template.registerHelper('stampToDate', Helpers.stampToDate);
+
+Template.registerHelper('otasBalance', Helpers.otasBalance);
 

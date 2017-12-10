@@ -21,6 +21,15 @@ Template['views_otaRefund'].onCreated(function(){
 
 
 Template['views_otaRefund'].helpers({
+
+    'selectAccount': function () {
+
+        var address = FlowRouter.getRouteName() === 'dashboard' ? FlowRouter.getParam('address') : FlowRouter.getParam('address').toLowerCase();
+        var accounts = EthAccounts.find({balance:{$ne:"0"}, address: address}, {sort: {balance: 1}}).fetch();
+
+        return accounts;
+    },
+
 	/**
 	 Get the ota list
 	 @method (otaList)
@@ -32,11 +41,11 @@ Template['views_otaRefund'].helpers({
 		var otas = TemplateVar.get('otas');
 		var otaTotal = 0;
 
-    _.each(otas, function(ota){
-          otaTotal += parseInt(ota.value);
-    });
+		_.each(otas, function(ota){
+            otaTotal += parseFloat(ota.value);
+		});
 
-    TemplateVar.set('amount', otaTotal);
+    	TemplateVar.set('otaTotal', otaTotal);
 		return otaTotal;
 	},
 
@@ -45,13 +54,14 @@ Template['views_otaRefund'].helpers({
 	 @method (total)
 	 */
 	'total': function(ether){
-		var amount = TemplateVar.get('amount');
-		if(!_.isFinite(amount))
-			return '0';
+		var balance = TemplateVar.get('amount');
+
+        if(!_.isFinite(balance))
+            return '0';
 
 		// ether
 		var gasInWei = TemplateVar.getFrom('.dapp-select-gas-price', 'gasInWei') || '0';
-		amount = new BigNumber(gasInWei, 10);
+		var amount = new BigNumber(gasInWei, 10);
 
 		return amount;
 	}
@@ -94,9 +104,21 @@ Template['views_otaRefund'].events({
     otaData.gasPrice = gasPrice;
 
     // sendTransaction(sendAll ? estimatedGas : estimatedGas + 100000);
-    mist.refundCoin(otaData,(err, result)=>{
-				console.log("error:", err);
-				console.log("result:", result);
-		});
+    if (typeof mist !== "undefined") {
+        mist.refundCoin(otaData, function(err, result){
+
+        	if (!error) {
+              console.log("result:", result);
+							FlowRouter.go('dashboard');
+					} else {
+              console.log("err:", err);
+							// EthElements.Modal.hide();
+							GlobalNotification.error({
+									content: error.message,
+									duration: 8
+							});
+					}
+    });
+	}
 	}
 });

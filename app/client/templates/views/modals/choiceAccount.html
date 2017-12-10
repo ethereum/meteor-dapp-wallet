@@ -1,14 +1,14 @@
 
 <template name="dapp_choiceAccount">
 	<div class="dapp-select-account {{class}}">
-		<select name="{{#if name}}{{name}}{{else}}dapp-select-account{{/if}}" class="{{class}}" style="background-color: #d7dde6;border: solid 0px #f7f8fc;">
+		<select name="{{#if name}}{{name}}{{else}}dapp-select-account{{/if}}" class="{{class}}" style="background-color: #f7f8fc;border: solid 0px #f7f8fc;">
 			{{#each accounts}}
 				<option value="{{address}}" {{selected}}>
 					{{#if isAccount}}✉{{/if}} {{name}}
 					{{#if balance}}
-						- {{dapp_formatBalance balance "0,0.00 UNIT"}}
+						- {{transferBanlance balance "0,0.00 UNIT"}}
 						{{#if isNotEtherUnit}}
-							({{dapp_formatBalance balance "0,0.00 UNIT" "ether"}})
+							({{transferBanlance balance "0,0.00 UNIT" "ether"}})
 						{{/if}}
 					{{/if}}
 				</option>

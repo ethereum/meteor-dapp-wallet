@@ -1,21 +1,7 @@
 <template name="views_modals_transactionInfo">
     {{#with transaction}}
-        <h1>
+        <h1 style="font-size: 16px;font-weight: 600;margin-bottom: 10px;">
             {{i18n "wallet.transactions.transactionInfoTitle"}}
-            {{#if $eq ($.Session.get "network") "main"}} 
-                <a href="http://etherscan.io/tx/{{transactionHash}}" target="_blank" style="font-size: 0.4em;">{{transactionHash}}</a>
-            {{else}}
-                {{#if $eq ($.Session.get "network") "rinkeby"}}
-                    <a href="http://rinkeby.etherscan.io/tx/{{transactionHash}}" target="_blank" style="font-size: 0.4em;">{{transactionHash}}</a>
-                {{else}}
-                    {{#if $eq ($.Session.get "network") "ropsten"}}
-                        <a href="http://ropsten.etherscan.io/tx/{{transactionHash}}" target="_blank" style="font-size: 0.4em;">{{transactionHash}}</a>
-                    {{else}}
-                        <span style="font-size: 0.4em;">{{transactionHash}}</span>
-                    {{/if}}
-                {{/if}}
-            {{/if}}
-
         </h1>
 
         {{#if outOfGas}}
@@ -23,12 +9,6 @@
             <i class="icon-shield"></i> {{i18n 'wallet.transactions.outOfGasDesc'}}
         </h3>
         {{/if}}
-
-        <p>
-            {{formatTime timestamp "LLLL"}}
-            <br>
-            <small>({{formatTime timestamp "fromNow"}}{{#if $lt confirmations 10000}}, <strong>{{dapp_formatNumber confirmations "0,0"}}</strong> {{i18n "wallet.transactions.confirmations"}}{{/if}})</small>
-        </p>
 
         <table class="dapp-zebra">
             <!-- <thead>
@@ -45,7 +25,7 @@
                             {{#if $neq unit 'ether'}}
                                 <br>
                                 <small>
-                                    ({{dapp_formatBalance value "0,0.00[000000] UNIT" "ether"}})
+                                    ({{transferBanlance value "0,0.00[000000] UNIT" "ether"}})
                                 </small>
                             {{/if}}
                         {{/if}}
@@ -121,6 +101,14 @@
                         </td>
                     </tr>
                 {{/if}}
+
+               <tr>
+                   <td>Date</td>
+                   <td>
+                       {{formatTime timestamp "LLLL"}}
+                       <small>({{formatTime timestamp "fromNow"}}{{#if $lt confirmations 10000}}, <strong>{{dapp_formatNumber confirmations "0,0"}}</strong> {{i18n "wallet.transactions.confirmations"}}{{/if}})</small>
+                   </td>
+               </tr>
             </tbody>
         </table>
     {{/with}}

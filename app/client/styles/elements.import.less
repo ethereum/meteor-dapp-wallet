@@ -1,20 +1,173 @@
+
+.ele-p {
+    margin-top: 30px;margin-bottom: 0;width: 52%;
+}
+
+.token-address{
+    width: 32px;
+    height: 32px;
+}
+
+.account-pattern{
+    padding: 13px 20px;
+    border-radius: 50%;
+    display: inline-block;
+    background-image: linear-gradient(0deg, #1a90fc 0%, #00d2ff 1000%);
+    box-shadow: 0px 6px 8px 0 rgba(15, 104,170,0.2);
+    color: #ffffff;
+    font-size: 20px;
+}
+.otaRefund-account{
+    color: #929cb8;
+
+    span{
+        font-weight: 100;
+    }
+}
+
+.dapp-identicon.dapp-small{
+    width: 50px;
+    height: 50px;
+}
+
+.transfer-list-tbody{
+    td {
+        text-align: center;
+    }
+}
+
+.dapp-modal-container{
+    background: #ffffff;
+}
+
+table.dapp-zebra tbody tr:nth-child(odd) {
+    background-color: #f7f8fc;
+}
+
+table.dapp-zebra thead + tbody tr:nth-child(even) {
+    background-color: #ffffff;
+}
+
+input[type="checkbox"]::before, input[type="radio"]::before{
+    background: #f7f8fc;
+}
+.dapp-flex-content{
+    background: #f7f8fc;
+}
+
+.wanchain-logo{
+    background-image: url(/images/wanchain-logo.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    padding: 24px;
+    float: left;
+    margin-right: 50px;
+    margin-bottom: -6px;
+    display: none;
+}
+
+.copy-address{
+    background-image: url(/images/copy.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 8px;
+    cursor: pointer;
+
+    &:hover {
+        background-image: url(/images/copy1.png);
+    }
+}
+
+.qrcode-address{
+    background-image: url(/images/code.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    padding: 8px;
+    margin-left: 5px;
+    cursor: pointer;
+
+    &:hover {
+        background-image: url(/images/code1.png);
+    }
+}
+
+.wanchain-passwd{
+    background-image: url(/images/passwd.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    padding: 9px;
+    margin-left: 5px;
+    cursor: pointer;
+
+    &:hover {
+        background-image: url(/images/passwd1.png);
+    }
+}
+
+.wanchain-transfer{
+    background-image: url(/images/transfer.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    padding: 9px;
+    margin-left: 5px;
+    cursor: pointer;
+
+    &:hover {
+        background-image: url(/images/transfer1.png);
+    }
+}
+
+.wanchain-detail {
+    background-image: url(/images/detail.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    padding: 9px;
+    margin-left: 5px;
+    cursor: pointer;
+
+    &:hover {
+        background-image: url(/images/detail1.png);
+    }
+}
+
+.header-account {
+    background-image: linear-gradient(80deg, #1a90fc 0%, #00aeff 100%);
+    border-radius: 30px;
+
+    span{
+        color: #ffffff;
+    };
+}
+
+
+.wanchain-log-small {
+    display: inline-block;
+}
+
 .triangle{
     border-top: 5px solid transparent;
     border-left: 5px solid #3f454c;
     border-bottom: 5px solid transparent;
     display: inline-block;
     margin: 5px;
+    margin-bottom: 0;
 }
 
 .account-h1 {
     margin-bottom: 0;
     strong {
-        font-family: MicrosoftYaHei-Bold;
-        font-weight: normal;
+        font-family: MicrosoftYaHei-Bold, arial;
+        font-size: 16px;
         font-stretch: normal;
         line-height: 25px;
         letter-spacing: 1px;
         color: #3f454c;
+        font-weight: 600;
     }
 }
 
@@ -41,7 +194,7 @@
     display: inline-block;
     background-color: #4b90f7;
     border: solid 2px #c9e5f9;
-    margin-bottom: 5px;
+    //margin-bottom: 5px;
     margin-right: 5px;
 }
 
@@ -52,17 +205,17 @@
     margin-right: 10px;
     background-color: #4b90f7;
     border-radius: 2px;
-    margin-top: 16px;
+    margin-top: 20px;
 }
 #elements_account_div{
     margin-bottom: 0;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .views_account_token {
     background-image: linear-gradient(0deg, #1a90fc 0%, #00d2ff 100%);
     box-shadow: 0px 6px 10px 0px rgba(15, 104, 170, 0.12);
-    border-radius: 24px 8px 24px 24px;
+    border-radius: 20px;
     color: #fff;
     font-weight: 600;
     text-align: center;
@@ -80,8 +233,8 @@
 }
 
 .views_send_strong {
-    font-family: MicrosoftYaHei-Bold;
-    font-size: 26px;
+    font-family: MicrosoftYaHei-Bold, arial;
+    font-size: 16px;
     font-weight: normal;
     font-stretch: normal;
     line-height: 25px;
@@ -90,12 +243,9 @@
 }
 
 .views_send_button {
-    background-image: linear-gradient(0deg,
-    #1a90fc 0%,
-    #00d2ff 100%);
-    box-shadow: 0px 6px 10px 0px
-    rgba(15, 104, 170, 0.12);
-    border-radius: 35px;
+    background-image: linear-gradient(50deg, #1a90fc 0%, #00d2ff 100%);
+    box-shadow: 0px 6px 10px 0px rgba(15, 104, 170, 0.12);
+    border-radius: 50px;
 }
 
 .orange {
@@ -122,14 +272,15 @@ span.address {
     display: inline;
     position: relative;
     font-size: 0.9em;
-    color: @colorLink;
+    //color: @colorLink;
 
     &.ens-name {
         font-weight: 400;
     }
     
     &.not-ens-name {
-        font-style: italic;
+        color: #3f454c;
+        font-style: inherit;
     }
 
     > .dapp-identicon {
@@ -161,18 +312,25 @@ span.address {
 .dashboard-box-list{
   margin: 1em 0;
   //width: 60em;
-  height: 10em;
+  height: 11em;
   background-color: #ffffff;
-  box-shadow: 0px 6px 18px 0px rgba(15, 104, 170, 0.1);
+  box-shadow: 0px 3px 9px 0px rgba(15, 104, 170, 0.1);
   border-radius: 8px;
 
   a {
     padding-top: 0.5em;
     margin-bottom: 0;
+      padding-left: 25px;
   }
 }
 
+
 .viwes-account-nav {
+    position: relative;
+    top: -50px;
+    right: 120px;
+    float: right;
+
   ul {
     float: left;
     padding: 0;
@@ -187,7 +345,7 @@ span.address {
 .viwes-account-header{
   margin: 1em 0;
   background-color: #ffffff;
-  box-shadow: 0px 6px 18px 0px rgba(15, 104, 170, 0.1);
+  box-shadow: 0px 3px 9px 0px rgba(15, 104, 170, 0.1);
   border-radius: 8px;
 
   .header-span {
@@ -213,7 +371,7 @@ span.address {
   }
 
   i{
-    display: inline-block; color: #02a8f3;
+    display: inline-block;
     padding-right: 0.5em;
   }
 
@@ -225,33 +383,45 @@ span.address {
     float: left;
     padding: 0.5em 1em;
 
+    img {
+        background-image: url(/images/wanchain.png);
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 40px;
+        height: 40px;
+        box-shadow: 0px 6px 18px 0px rgba(15, 104, 170, 0.1);
+        border-radius: 100%;
+        padding: 5px;
+    }
+
     p{
       padding-left: 1em;
       float: right;
+      line-height: 0;
       span{
         display: block;
       }
       .balance-span{
           font-family: MicrosoftYaHei;
           color: #929cb8;
+          line-height: 30px;
       }
     }
   }
 
   .viwes-account-balance-hr{
-    height: 5em;
-    background-color: #4b90f7;
-    border: solid 2px #eff1f7;
-    margin: 0;
-    margin-left: 20px;
-    padding: 1px;
-    position: relative;
-    top: -0.5em;
+      height: 5em;
+      background-color: #eff1f7;
+      margin: 0;
+      margin-left: 20px;
+      padding: 1px;
+      position: relative;
+      top: -0.5em;
   }
 
   .viwes-account-balance-right{
     float: left;
-    padding: 0.5em 3em;
+    padding: 10px;
 
     p{
       padding-left: 0.5em;
@@ -260,14 +430,14 @@ span.address {
       font-size: 20px;
       span{
         display: block;
-        width: 100px;
+        max-width: 300px;
       }
     }
   }
 }
 
 .filter-transactions{
-    background-color: #d7dde6;
+    background-color: #f7f8fc;
     border: solid #f7f8fc;
 }
 
@@ -277,7 +447,8 @@ span.address {
     display: inline-block;
     //width: @gridWidth * 6.5;
     min-height: @gridHeight*4;
-    padding-left: @gridWidth + @defaultPaddingHorizontal;
+    //padding-left: @gridWidth + @defaultPaddingHorizontal;
+    padding-left: 85px;
     padding-right: @defaultPaddingHorizontal/2;
     margin-right: @defaultMargin;
     margin-bottom: @defaultMargin;
@@ -335,7 +506,7 @@ span.address {
         perspective: 800px;
         position: relative;
         background-repeat: repeat-y;
-        background-color: @colorGray;
+        background-color: #f7f8fc;
         background-size: cover;
         // background-size: @gridWidth * 3;
         background-position-x: 4px;
@@ -351,8 +522,8 @@ span.address {
 
         .delete-token {
             position: absolute;
-            left: 12px;
-            top: 20px;
+            left: 30px;
+            top: 15px;
             background: @colorWhite;
             border-radius: 50%;
             width: @gridWidth;
@@ -372,6 +543,7 @@ span.address {
             i {
                 position: relative;
                 top: 1.5px;
+                padding: 0;
                 text-align: center;
             }
         }
@@ -392,8 +564,10 @@ span.address {
 
     > .dapp-identicon {
         position: absolute;
-        left: 12px;
-        top: 20px;
+        left: 20px;
+        top: 6px;
+        width: 50px;
+        height: 50px;
     }
     .spinner-container {
         position: absolute;
@@ -457,7 +631,8 @@ span.address {
             font-weight: 600;
         }
         &.not-ens-name {
-            font-style: italic;
+            color: #3f454c;
+            font-style: inherit;
         }
     }
     &:not(.create) > h3 {
@@ -642,8 +817,9 @@ table {
 
             &.time {
                 text-align: center;
-                padding-left: @defaultMargin;
+                //padding-left: @defaultMargin;
                 cursor: help;
+                padding: 2px 10px;
 
                 p {
                     font-size: 2em;

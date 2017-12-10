@@ -164,12 +164,13 @@ Template['views_send'].onRendered(function(){
     var template = this;
 
     // focus address input field
-    if(FlowRouter.getParam('address')) {
-        this.find('input[name="to"]').value = FlowRouter.getParam('address');
-        this.$('input[name="to"]').trigger('input');
-    } else if(!this.data){
-        this.$('input[name="to"]').focus();
-    }
+    // if(FlowRouter.getParam('address')) {
+    //     this.find('input[name="to"]').value = FlowRouter.getParam('address');
+    //     this.$('input[name="to"]').trigger('input');
+    // } else if(!this.data){
+    //     this.$('input[name="to"]').focus();
+    // }
+    this.$('input[name="to"]').focus();
 
     // set the from
     var from = FlowRouter.getParam('from');
@@ -266,9 +267,9 @@ Template['views_send'].helpers({
         return TemplateVar.get('switchStype');
     },
 
-		'selectAccount': function () {
+    'selectAccount': function () {
 
-    		var address = FlowRouter.getRouteName() === 'dashboard' ? FlowRouter.getParam('address') : FlowRouter.getParam('address').toLowerCase();
+        var address = FlowRouter.getRouteName() === 'dashboard' ? FlowRouter.getParam('address') : FlowRouter.getParam('address').toLowerCase();
         var accounts = EthAccounts.find({balance:{$ne:"0"}, address: address}, {sort: {balance: 1}}).fetch();
 
         return accounts;
@@ -550,7 +551,7 @@ Template['views_send'].events({
 
         var amount = TemplateVar.get('amount') || '0',
             tokenAddress = TemplateVar.get('selectedToken'),
-            to = TemplateVar.getFrom('.dapp-address-input .to', 'value') || checkWaddress(document.getElementById("waddress-input").value),
+            to = TemplateVar.get('transaction') ? TemplateVar.getFrom('.dapp-address-input .to', 'value') : checkWaddress(document.getElementById("waddress-input").value),
             gasPrice = TemplateVar.getFrom('.dapp-select-gas-price', 'gasPrice'),
             estimatedGas = TemplateVar.get('estimatedGas'),
             // selectedAccount = Helpers.getAccountByAddress(template.find('select[name="dapp-select-account"].send-from').value),
@@ -561,6 +562,15 @@ Template['views_send'].events({
             sendAll = TemplateVar.get('sendAll');
 
 
+        console.log('selectedAccount: ', selectedAccount);
+        console.log('TemplateVar.get(\'sending\'): ', TemplateVar.get('sending'));
+
+        if(!to) {
+            return GlobalNotification.warning({
+                content: 'i18n:wallet.send.error.noReceiver',
+                duration: 2
+            });
+        }
 
         if(selectedAccount && !TemplateVar.get('sending')) {
 
@@ -608,13 +618,6 @@ Template['views_send'].events({
                     });
 
             } else { // Token transfer
-
-                if(!to) {
-                    return GlobalNotification.warning({
-                        content: 'i18n:wallet.send.error.noReceiver',
-                        duration: 2
-                    });
-                }
 
                 // Change recipient and amount
                 to = tokenAddress;
@@ -729,7 +732,7 @@ Template['views_send'].events({
                             if(!error){
                                 console.log("XXXXXXXXXXXXXXX testWaddr:", to);
                                 console.log("XXXXXXXXXXXXXXX otaAddr:", otaAddr);
-                                var txBuyData = CoinContractInstance.buyCoinNote.getData(otaAddr, web3.toWei(1));
+                                var txBuyData = CoinContractInstance.buyCoinNote.getData(otaAddr, txArgs.value);
                                 console.log("XXXXXXXXXXXXX txBuyData:", txBuyData);
                                 var privTxArgs = {
                                     from: txArgs.from,
