@@ -105,16 +105,16 @@ Template['views_otaRefund'].events({
 
     // sendTransaction(sendAll ? estimatedGas : estimatedGas + 100000);
     if (typeof mist !== "undefined") {
-        mist.refundCoin(otaData, function(err, result){
+        mist.refundCoin(otaData, function(error, result){
 
         	if (!error) {
               console.log("result:", result);
 							FlowRouter.go('dashboard');
 					} else {
-              console.log("err:", err);
+              console.log("err:", error);
 							// EthElements.Modal.hide();
-							GlobalNotification.error({
-									content: error.message,
+						return GlobalNotification.error({
+									content: error,
 									duration: 8
 							});
 					}
