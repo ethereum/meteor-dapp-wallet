@@ -107,6 +107,15 @@ var estimationCallback = function(e, res){
 Template['views_send'].onCreated(function(){
     var template = this;
 
+    web3.wan.getPermiWanCoinOTABalances(function (error, result) {
+        var wanBalance = [];
+        _.each(result, function (type) {
+            wanBalance.push({'name': (type/10**18).toFixed(), 'balance': type.toLocaleString()})
+        });
+
+        TemplateVar.set(template, 'wanBalance', wanBalance);
+    });
+
     TemplateVar.set('fromAddress', FlowRouter.getParam('address'));
 
     TemplateVar.set('switchStype', true);
@@ -254,19 +263,9 @@ Template['views_send'].onRendered(function(){
 
 Template['views_send'].helpers({
     'wanBalance': function () {
-        var wanBalance = [
-            {'name': '10', 'balance': 10000000000000000000},
-            {'name': '20', 'balance': 20000000000000000000},
-            {'name': '50', 'balance': 50000000000000000000},
-            {'name': '100', 'balance': 100000000000000000000},
-            {'name': '200', 'balance': 200000000000000000000},
-            {'name': '500', 'balance': 500000000000000000000},
-            {'name': '1000', 'balance': 1000000000000000000000},
-            {'name': '5000', 'balance': 5000000000000000000000},
-            {'name': '50000', 'balance': 50000000000000000000000}
-        ];
+        var wanResult = TemplateVar.get('wanBalance');
 
-        return wanBalance;
+        return wanResult;
     },
 
     'selectTransaction': function () {
@@ -480,7 +479,8 @@ Template['views_send'].events({
     'change .sendota-selectValue': function(event){
         event.preventDefault();
         var selectValue = event.target.value;
-        TemplateVar.set('amount', selectValue);
+
+        TemplateVar.set('amount', selectValue.replace(/,/g, ''));
     },
 
     'click #selectType': function () {
@@ -576,10 +576,6 @@ Template['views_send'].events({
             contract = TemplateVar.getFrom('.compile-contract', 'contract'),
             sendAll = TemplateVar.get('sendAll');
 
-
-        console.log('selectedAccount: ', selectedAccount);
-        console.log('TemplateVar.get(\'sending\'): ', TemplateVar.get('sending'));
-
         if(!to) {
             return GlobalNotification.warning({
                 content: 'i18n:wallet.send.error.noReceiver',
@@ -669,9 +665,9 @@ Template['views_send'].events({
 
                         TemplateVar.set(template, 'sending', false);
 
-                        console.log(error, txHash);
+                        // console.log(error, txHash);
                         if(!error) {
-                            console.log('SEND from contract', amount);
+                            // console.log('SEND from contract', amount);
 
                             data = (!to && contract)
                                 ? {contract: contract, data: data}
@@ -698,8 +694,8 @@ Template['views_send'].events({
                     // SIMPLE TX
                 } else {
 
-                    console.log('Gas Price: '+ gasPrice);
-                    console.log('Amount:', amount);
+                    // console.log('Gas Price: '+ gasPrice);
+                    // console.log('Amount:', amount);
                     var txArgs = {
                         from: selectedAccount.address,
                         to: to,
@@ -714,7 +710,7 @@ Template['views_send'].events({
 
                             TemplateVar.set(template, 'sending', false);
 
-                            console.log(error, txHash);
+                            // console.log(error, txHash);
                             if (!error) {
                                 console.log('SEND simple');
 
@@ -745,8 +741,8 @@ Template['views_send'].events({
                     if(TemplateVar.get('selectType') === '1'){
                         web3.wan.generateOneTimeAddress(to,function(error, otaAddr){
                             if(!error){
-                                console.log("XXXXXXXXXXXXXXX testWaddr:", to);
-                                console.log("XXXXXXXXXXXXXXX otaAddr:", otaAddr);
+                                // console.log("XXXXXXXXXXXXXXX testWaddr:", to);
+                                // console.log("XXXXXXXXXXXXXXX otaAddr:", otaAddr);
                                 var txBuyData = CoinContractInstance.buyCoinNote.getData(otaAddr, txArgs.value);
                                 console.log("XXXXXXXXXXXXX txBuyData:", txBuyData);
                                 var privTxArgs = {
@@ -757,11 +753,11 @@ Template['views_send'].events({
                                     gasPrice: txArgs.gasPrice,
                                     gas: txArgs.gas
                                 };
-                                console.log("XXXXXXXXXXXXX privTxArgs:", privTxArgs);
+                                // console.log("XXXXXXXXXXXXX privTxArgs:", privTxArgs);
                                 wanSendTransaction(privTxArgs);
                             }else {
                                 // EthElements.Modal.hide();
-                                console.log("generateOneTimeAddress error:",error);
+                                // console.log("generateOneTimeAddress error:",error);
                                 GlobalNotification.error({
                                     content: error.message,
                                     duration: 8
@@ -789,8 +785,6 @@ Template['views_send'].events({
                     estimatedGasPlusAddition: sendAll ? estimatedGas : estimatedGas + 100000, // increase the provided gas by 100k
                     data: data
                 };
-
-                console.log('dats: ', datas);
 
                 EthElements.Modal.question({
                     template: 'views_modals_sendTransactionInfo',
