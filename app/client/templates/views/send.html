@@ -67,7 +67,7 @@
                         {{#if switchStype}}
                             <a id="selectType" style="cursor: pointer;">{{selecteType}}</a>
                         {{/if}}
-                        {{> dapp_choiceAccount accounts=(selectAccounts deployContract) showAccountTypes=true class='send-from'}}
+                        {{> dapp_choiceAccount accounts=(selectAccount deployContract) showAccountTypes=true class='send-from'}}
                     </div>
                 {{else}}
                     <div class="col col-12 mobile-full from">
@@ -75,7 +75,7 @@
                         {{#if switchStype}}
                             <a id="selectType" style="cursor: pointer;">{{selecteType}}</a>
                         {{/if}}
-                        {{> dapp_choiceAccount accounts=(selectAccounts deployContract) showAccountTypes=true class='send-from'}}
+                        {{> dapp_choiceAccount accounts=(selectAccount deployContract) showAccountTypes=true class='send-from'}}
                     </div>
                 {{/if}}
 

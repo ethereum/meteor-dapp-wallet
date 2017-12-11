@@ -27,6 +27,8 @@ Template['views_otaRefund'].helpers({
         var address = FlowRouter.getRouteName() === 'dashboard' ? FlowRouter.getParam('address') : FlowRouter.getParam('address').toLowerCase();
         var accounts = EthAccounts.find({balance:{$ne:"0"}, address: address}, {sort: {balance: 1}}).fetch();
 
+        TemplateVar.set('accounts', accounts);
+
         return accounts;
     },
 
@@ -75,6 +77,15 @@ Template['views_otaRefund'].events({
 	 @event submit form
 	 */
 	'submit form': function(e, template){
+
+		var accounts = TemplateVar.get('accounts');
+		console.log('aaaaa', accounts[0].balance);
+		if (parseInt(accounts[0].balance) === 0) {
+            return GlobalNotification.warn({
+                content: "Sorry, your balance is running low.",
+                duration: 8
+            });
+		}
 
 		var gasPrice = TemplateVar.getFrom('.dapp-select-gas-price', 'gasPrice'),
 			estimatedGas = TemplateVar.get('estimatedGas'),

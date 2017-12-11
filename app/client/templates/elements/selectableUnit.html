@@ -1,7 +1,10 @@
 <template name="elements_selectableUnit">
-    {{#if selectable}}
-        {{> InlineForm name="unit" items=units value=selectedUnit}}
-    {{else}}
-        WAN
-    {{/if}}
+    <span class="inline-form">
+        <button>WAN</button>
+    </span>
+    <!--{{#if selectable}}-->
+        <!--{{> InlineForm name="unit" items=units value=selectedUnit}}-->
+    <!--{{else}}-->
+        <!--WAN-->
+    <!--{{/if}}-->
 </template>

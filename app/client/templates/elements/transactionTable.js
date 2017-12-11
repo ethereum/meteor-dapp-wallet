@@ -132,8 +132,9 @@ Template['elements_transactions_row'].helpers({
     */
     'incomingTx': function(account){
         var account = EthAccounts.findOne({_id: account}) || Wallets.findOne({_id: account});
-        return !!((account && this.from !== account.address) ||
-                  (!account && (EthAccounts.findOne({address: this.to}) || Wallets.findOne({address: this.to}))));
+        return !!((account && (this.from !== account.address || this.from !== account.waddress)) ||
+                  (!account && ((EthAccounts.findOne({address: this.to}) || Wallets.findOne({address: this.to})) ||
+                      (EthAccounts.findOne({waddress: this.to}) || Wallets.findOne({waddress: this.to})))));
     },
     /**
     Returns the correct text for this transaction
