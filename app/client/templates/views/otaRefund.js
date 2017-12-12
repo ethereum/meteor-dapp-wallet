@@ -101,7 +101,7 @@ Template['views_otaRefund'].events({
 
       // set gas down to 21 000, if its invalid data, to prevent high gas usage.
       if(estimatedGas === defaultEstimateGas || estimatedGas === 0)
-          estimatedGas = 22000;
+          estimatedGas = 300000;
 
 
     console.log('Providing gas: ', estimatedGas , sendAll ? '' : ' + 100000');
@@ -112,7 +112,7 @@ Template['views_otaRefund'].events({
     otaData.otaNumber = 3;
     otaData.rfAddress =  FlowRouter.getParam('address');
     otaData.gas = estimatedGas;
-    otaData.gasPrice = gasPrice;
+    otaData.gasPrice = Number(gasPrice);
 
     // sendTransaction(sendAll ? estimatedGas : estimatedGas + 100000);
     if (typeof mist !== "undefined") {

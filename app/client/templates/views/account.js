@@ -142,7 +142,7 @@ Template['views_account'].helpers({
 var accountStartScanEventHandler = function(e){
 
     if (typeof mist !== 'undefined') {
-        mist.startScan(FlowRouter.getParam('address'), (err, result)=>{
+        mist.startScan(FlowRouter.getParam('address'), function(err, result){
             if(err){
                 console.error(err);
             }
