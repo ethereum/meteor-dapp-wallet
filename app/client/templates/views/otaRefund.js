@@ -79,9 +79,9 @@ Template['views_otaRefund'].events({
 	'submit form': function(e, template){
 
 		var accounts = TemplateVar.get('accounts');
-		console.log('aaaaa', accounts[0].balance);
-		if (parseInt(accounts[0].balance) === 0) {
-            return GlobalNotification.warn({
+
+		if (accounts.length === 0) {
+            return GlobalNotification.warning({
                 content: "Sorry, your balance is running low.",
                 duration: 8
             });
@@ -109,26 +109,30 @@ Template['views_otaRefund'].events({
     //otaRefund
     var otaData = {};
     otaData.otas = otaResult;
-    otaData.otaNumber = 3;
+    otaData.otaNumber = 8;
     otaData.rfAddress =  FlowRouter.getParam('address');
     otaData.gas = estimatedGas;
     otaData.gasPrice = Number(gasPrice);
 
     // sendTransaction(sendAll ? estimatedGas : estimatedGas + 100000);
     if (typeof mist !== "undefined") {
-        mist.refundCoin(otaData, function(error, result){
+        mist.refundCoin(otaData, function(error, txHash){
 
         	if (!error) {
-              console.log("result:", result);
-							FlowRouter.go('dashboard');
-					} else {
-              console.log("err:", error);
-							// EthElements.Modal.hide();
-						return GlobalNotification.error({
-									content: error,
-									duration: 8
-							});
-					}
+        		// var value = TemplateVar.get('otaTotal');
+
+        		addTransactionAfterSend(txHash, otaData.otas, otaData.rfAddress, otaData.rfAddress, otaData.gasPrice, otaData.gas, '');
+        		FlowRouter.go('dashboard');
+
+        	} else {
+        		console.log("err:", error);
+
+        		// EthElements.Modal.hide();
+				return GlobalNotification.error({
+					content: error,
+					duration: 8
+				});
+        	}
     });
 	}
 	}
