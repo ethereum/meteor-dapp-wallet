@@ -27,6 +27,8 @@ Template['views_otaRefund'].helpers({
         var address = FlowRouter.getRouteName() === 'dashboard' ? FlowRouter.getParam('address') : FlowRouter.getParam('address').toLowerCase();
         var accounts = EthAccounts.find({balance:{$ne:"0"}, address: address}, {sort: {balance: 1}}).fetch();
 
+        TemplateVar.set('accounts', accounts);
+
         return accounts;
     },
 
@@ -42,7 +44,7 @@ Template['views_otaRefund'].helpers({
 		var otaTotal = 0;
 
 		_.each(otas, function(ota){
-            otaTotal += parseFloat(ota.value);
+            otaTotal += parseFloat(parseInt(ota.value, 16));
 		});
 
     	TemplateVar.set('otaTotal', otaTotal);
@@ -76,6 +78,15 @@ Template['views_otaRefund'].events({
 	 */
 	'submit form': function(e, template){
 
+		var accounts = TemplateVar.get('accounts');
+		console.log('aaaaa', accounts[0].balance);
+		if (parseInt(accounts[0].balance) === 0) {
+            return GlobalNotification.warn({
+                content: "Sorry, your balance is running low.",
+                duration: 8
+            });
+		}
+
 		var gasPrice = TemplateVar.getFrom('.dapp-select-gas-price', 'gasPrice'),
 			estimatedGas = TemplateVar.get('estimatedGas'),
 			sendAll = TemplateVar.get('sendAll');
@@ -105,16 +116,16 @@ Template['views_otaRefund'].events({
 
     // sendTransaction(sendAll ? estimatedGas : estimatedGas + 100000);
     if (typeof mist !== "undefined") {
-        mist.refundCoin(otaData, function(err, result){
+        mist.refundCoin(otaData, function(error, result){
 
         	if (!error) {
               console.log("result:", result);
 							FlowRouter.go('dashboard');
 					} else {
-              console.log("err:", err);
+              console.log("err:", error);
 							// EthElements.Modal.hide();
-							GlobalNotification.error({
-									content: error.message,
+						return GlobalNotification.error({
+									content: error,
 									duration: 8
 							});
 					}

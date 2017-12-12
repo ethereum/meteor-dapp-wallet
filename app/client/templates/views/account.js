@@ -1,8 +1,7 @@
 /**
-Template Controllers
-
-@module Templates
-*/
+ Template Controllers
+ @module Templates
+ */
 var InterID;
 
 Template['views_account'].onCreated(function () {
@@ -47,12 +46,11 @@ Template['views_account'].onRendered(function(){
 
 Template['views_account'].helpers({
     /**
-    Get the current selected account
-
-    @method (account)
-    */
+     Get the current selected account
+     @method (account)
+     */
     'account': function() {
-    	  var account = Helpers.getAccountByAddress(FlowRouter.getParam('address'));
+        var account = Helpers.getAccountByAddress(FlowRouter.getParam('address'));
 
         var query = {};
         query['balances.'+ account._id] = {$exists: true};
@@ -62,7 +60,7 @@ Template['views_account'].helpers({
         var tokenBalance = 0;
         _.each(tokens, (token) => {
             tokenBalance += parseInt(token.balances[account._id]);
-        });
+    });
 
         if (account.balance === "0" && tokenBalance === 0) {
             account.hrefType = false;
@@ -72,18 +70,17 @@ Template['views_account'].helpers({
 
         return account;
     },
-		/**
-		 Get all transactions
-
-		 @method (allTransactions)
-		 */
-		'allTransactions': function(){
-			var allTransactions = Transactions.find({from: FlowRouter.getParam('address').toLowerCase()}, {sort: {timestamp: -1}}).count();
-			return allTransactions;
-		},
-		'theAddress': function () {
-			return FlowRouter.getParam('address');
-		},
+    /**
+     Get all transactions
+     @method (allTransactions)
+     */
+    'allTransactions': function(){
+        var allTransactions = Transactions.find({from: FlowRouter.getParam('address').toLowerCase()}, {sort: {timestamp: -1}}).count();
+        return allTransactions;
+    },
+    'theAddress': function () {
+        return FlowRouter.getParam('address');
+    },
 
     /**
      Get all tokens
@@ -102,7 +99,7 @@ Template['views_account'].helpers({
 
             token.balance = false;
 
-            var bal;
+        var bal;
         if (Number(token.balances[this._id]) > 0) {
             bal = Helpers.formatNumberByDecimals(token.balances[this._id], token.decimals);
             var balType = Helpers.toFixed(bal);
@@ -115,31 +112,30 @@ Template['views_account'].helpers({
         return tokens;
     },
 
-		/**
-		 Get all OTAs
-
-		 @method (ota)
-		 */
-		'otasValue': function () {
-			return TemplateVar.get('otasValue');
+    /**
+     Get all OTAs
+     @method (ota)
+     */
+    'otasValue': function () {
+        console.log('otasValue', TemplateVar.get('otasValue'));
+        return TemplateVar.get('otasValue');
     },
 
     /**
-    Gets the contract events if available
-
-    @method (customContract)
-    */
+     Gets the contract events if available
+     @method (customContract)
+     */
     'customContract': function(){
         return CustomContracts.findOne({address: this.address.toLowerCase()});
     },
     /**
      Displays ENS names with triangles
- 
+
      @method (nameDisplay)
      */
     'displayName': function(){
-         return this.ens ? this.name.split('.').slice(0, -1).reverse().join(' ▸ ') : this.name;
-    }           
+        return this.ens ? this.name.split('.').slice(0, -1).reverse().join(' ▸ ') : this.name;
+    }
 
 });
 
@@ -151,97 +147,94 @@ var accountStartScanEventHandler = function(e){
                 console.error(err);
             }
             console.log("startscan:", result);
-        })
+    })
     } else {
         console.warn("mist is undefiend")
     }
 };
 var accountClipboardEventHandler = function(e){
-	if (Session.get('tmpAllowCopy') === true) {
-		Session.set('tmpAllowCopy', false);
-		return true;
-	}
-	else {
-		e.preventDefault();
-	}
+    if (Session.get('tmpAllowCopy') === true) {
+        Session.set('tmpAllowCopy', false);
+        return true;
+    }
+    else {
+        e.preventDefault();
+    }
 
-	function copyAddress(){
-		var type = e.target.name;
-		var typeId = e.target.id;
+    function copyAddress(){
+        var type = e.target.name;
+        var typeId = e.target.id;
 
-		var copyTextarea;
-		if (type === 'address' || typeId === 'address') {
-			copyTextarea = document.querySelector('.copyable-address');
-		} else {
-			copyTextarea = document.querySelector('.copyable-waddress');
-		}
+        var copyTextarea;
+        if (type === 'address' || typeId === 'address') {
+            copyTextarea = document.querySelector('.copyable-address');
+        } else {
+            copyTextarea = document.querySelector('.copyable-waddress');
+        }
 
-		var selection = window.getSelection();
-		var range = document.createRange();
-		range.selectNodeContents(copyTextarea);
-		selection.removeAllRanges();
-		selection.addRange(range);
+        var selection = window.getSelection();
+        var range = document.createRange();
+        range.selectNodeContents(copyTextarea);
+        selection.removeAllRanges();
+        selection.addRange(range);
 
-		try {
-			document.execCommand('copy');
+        try {
+            document.execCommand('copy');
 
-			GlobalNotification.info({
-				content: 'i18n:wallet.accounts.addressCopiedToClipboard',
-				duration: 3
-			});
-		} catch (err) {
-			GlobalNotification.error({
-				content: 'i18n:wallet.accounts.addressNotCopiedToClipboard',
-				closeable: false,
-				duration: 3
-			});
-		}
-		selection.removeAllRanges();
-	}
+            GlobalNotification.info({
+                content: 'i18n:wallet.accounts.addressCopiedToClipboard',
+                duration: 3
+            });
+        } catch (err) {
+            GlobalNotification.error({
+                content: 'i18n:wallet.accounts.addressNotCopiedToClipboard',
+                closeable: false,
+                duration: 3
+            });
+        }
+        selection.removeAllRanges();
+    }
 
-	if (Helpers.isOnMainNetwork()) {
-		Session.set('tmpAllowCopy', true);
-		copyAddress();
-	}
-	else {
-		EthElements.Modal.question({
-			text: new Spacebars.SafeString(TAPi18n.__('wallet.accounts.modal.copyAddressWarning')),
-			ok: function(){
-				Session.set('tmpAllowCopy', true);
-				copyAddress();
-			},
-			cancel: true,
-			modalQuestionOkButtonText: TAPi18n.__('wallet.accounts.modal.buttonOk'),
-			modalQuestionCancelButtonText: TAPi18n.__('wallet.accounts.modal.buttonCancel')
-		});
-	}
+    if (Helpers.isOnMainNetwork()) {
+        Session.set('tmpAllowCopy', true);
+        copyAddress();
+    }
+    else {
+        EthElements.Modal.question({
+            text: new Spacebars.SafeString(TAPi18n.__('wallet.accounts.modal.copyAddressWarning')),
+            ok: function(){
+                Session.set('tmpAllowCopy', true);
+                copyAddress();
+            },
+            cancel: true,
+            modalQuestionOkButtonText: TAPi18n.__('wallet.accounts.modal.buttonOk'),
+            modalQuestionCancelButtonText: TAPi18n.__('wallet.accounts.modal.buttonCancel')
+        });
+    }
 };
 
 Template['views_account'].events({
 
     /**
-    Clicking the name, will make it editable
-
-    @event click .edit-name
-    */
+     Clicking the name, will make it editable
+     @event click .edit-name
+     */
     'click .edit-name': function(e){
         // make it editable
         $(e.currentTarget).attr('contenteditable','true');
     },
     /**
-    Prevent enter
-
-    @event keypress .edit-name
-    */
+     Prevent enter
+     @event keypress .edit-name
+     */
     'keypress .edit-name': function(e){
         if(e.keyCode === 13)
             e.preventDefault();
     },
     /**
-    Bluring the name, will save it
-
-    @event blur .edit-name, keyup .edit-name
-    */
+     Bluring the name, will save it
+     @event blur .edit-name, keyup .edit-name
+     */
     'blur .edit-name, keyup .edit-name': function(e){
         if(!e.keyCode || e.keyCode === 13) {
             var $el = $(e.currentTarget);
@@ -253,49 +246,49 @@ Template['views_account'].events({
 
             // Save new name
             Wallets.update(this._id, {$set: {
-                name: text
-            }});
+                    name: text
+                }});
             EthAccounts.update(this._id, {$set: {
-                name: text
-            }});
+                    name: text
+                }});
             CustomContracts.update(this._id, {$set: {
-                name: text
-            }});
+                    name: text
+                }});
 
             // make it non-editable
             $el.attr('contenteditable', null);
         }
     },
     /**
-    Click to copy the code to the clipboard
-    
-    @event click a.create.account
-    */
+     Click to copy the code to the clipboard
+
+     @event click a.create.account
+     */
     'click .start-to-scan-block-button': accountStartScanEventHandler,
     'click .copy-to-clipboard-button': accountClipboardEventHandler,
-		'click .copy-to-clipboard-wbutton': accountClipboardEventHandler,
+    'click .copy-to-clipboard-wbutton': accountClipboardEventHandler,
 
     /**
-    Tries to copy account token.
-    
-    @event copy .copyable-address span
-    */
+     Tries to copy account token.
+
+     @event copy .copyable-address span
+     */
     'copy .copyable-address': accountClipboardEventHandler,
-		'copy .copyable-waddress': accountClipboardEventHandler,
+    'copy .copyable-waddress': accountClipboardEventHandler,
 
 
 
     /**
-    Click to reveal QR Code
-    
-    @event click a.create.account
-    */
+     Click to reveal QR Code
+
+     @event click a.create.account
+     */
     'click .qrcode-button': function(e){
         e.preventDefault();
 
         var name = e.target.name;
         console.log('name: ', name);
-        
+
         // Open a modal showing the QR Code
         EthElements.Modal.show({
             template: 'views_modals_qrCode',
