@@ -776,15 +776,6 @@ Template['views_send'].events({
             if(typeof mist === 'undefined') {
 
                 console.log('estimatedGas: ' + estimatedGas);
-                var	datas = {
-                    from: selectedAccount.address,
-                    to: to,
-                    amount: amount,
-                    gasPrice: gasPrice,
-                    estimatedGas: estimatedGas,
-                    estimatedGasPlusAddition: sendAll ? estimatedGas : estimatedGas + 100000, // increase the provided gas by 100k
-                    data: data
-                };
 
                 EthElements.Modal.question({
                     template: 'views_modals_sendTransactionInfo',
