@@ -114,14 +114,15 @@ Template['views_otaRefund'].events({
     otaData.gas = estimatedGas;
     otaData.gasPrice = Number(gasPrice);
 
+    var value = TemplateVar.get('otaTotal');
+
     // sendTransaction(sendAll ? estimatedGas : estimatedGas + 100000);
     if (typeof mist !== "undefined") {
         mist.refundCoin(otaData, function(error, txHash){
 
         	if (!error) {
-        		// var value = TemplateVar.get('otaTotal');
 
-        		addTransactionAfterSend(txHash, otaData.otas, otaData.rfAddress, otaData.rfAddress, otaData.gasPrice, otaData.gas, '');
+        		addTransactionAfterSend(txHash, value, otaData.rfAddress, otaData.rfAddress, otaData.gasPrice, otaData.gas, '');
         		FlowRouter.go('dashboard');
 
         	} else {

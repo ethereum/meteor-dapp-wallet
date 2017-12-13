@@ -534,7 +534,7 @@ Helpers.otasBalance = function (number, otaTotal, format, unit) {
 Helpers.toFixed = function (balance) {
     var balance = balance.replace(/,/g,'');
 
-    console.log('balTypebalance', Number(balance).toFixed(2));
+    // console.log('balTypebalance', Number(balance).toFixed(2));
 
     return Number(balance).toFixed(2);
 };

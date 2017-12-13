@@ -553,6 +553,8 @@ Template['views_send'].events({
             var token = Tokens.findOne({address: TemplateVar.get('selectedToken')}),
                 amount = e.currentTarget.value || '0';
 
+            TemplateVar.set('tokenId', token._id);
+
             amount = new BigNumber(amount, 10).times(Math.pow(10, token.decimals || 0)).floor().toString(10);
 
             TemplateVar.set('amount', amount);
@@ -632,6 +634,7 @@ Template['views_send'].events({
 
                 // Change recipient and amount
                 to = tokenAddress;
+                tokenAmount = amount;
                 amount = 0;
 
                 var token = Tokens.findOne({address: tokenAddress}),
@@ -673,6 +676,8 @@ Template['views_send'].events({
                                 ? {contract: contract, data: data}
                                 : data;
 
+                            console.log('amount1aaaa', amount);
+
                             addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
 
                             localStorage.setItem('contractSource', Helpers.getDefaultContractExample());
@@ -710,6 +715,8 @@ Template['views_send'].events({
 
                             TemplateVar.set(template, 'sending', false);
 
+                            var tokenId = TemplateVar.get(template,'tokenId');
+
                             // console.log(error, txHash);
                             if (!error) {
                                 console.log('SEND simple');
@@ -718,7 +725,10 @@ Template['views_send'].events({
                                     ? {contract: contract, data: data}
                                     : data;
 
-                                addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
+
+                                value = amount === 0 ? tokenAmount : amount;
+
+                                addTransactionAfterSend(txHash, value, selectedAccount.address, to, gasPrice, estimatedGas, data, tokenId);
 
                                 localStorage.setItem('contractSource', Helpers.getDefaultContractExample());
                                 localStorage.setItem('compiledContracts', null);
@@ -744,7 +754,7 @@ Template['views_send'].events({
                                 // console.log("XXXXXXXXXXXXXXX testWaddr:", to);
                                 // console.log("XXXXXXXXXXXXXXX otaAddr:", otaAddr);
                                 var txBuyData = CoinContractInstance.buyCoinNote.getData(otaAddr, txArgs.value);
-                                console.log("XXXXXXXXXXXXX txBuyData:", txBuyData);
+                                // console.log("XXXXXXXXXXXXX txBuyData:", txBuyData);
                                 var privTxArgs = {
                                     from: txArgs.from,
                                     to: CoinContractAddr,
