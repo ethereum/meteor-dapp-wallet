@@ -92,11 +92,12 @@ Template['views_otaRefund'].events({
 			sendAll = TemplateVar.get('sendAll');
 
 		var otaResult = [];
-    var otaList = TemplateVar.get('otas') || [];
-    if (otaList.length >0) {
-				_.each(otaList, function(ota){
-						otaResult.push({otaddr: ota._id, otaValue: ota.value});
-				});
+		var otaList = TemplateVar.get('otas') || [];
+
+		if (otaList.length >0) {
+			_.each(otaList, function(ota){
+				otaResult.push({otaddr: ota._id, otaValue: ota.value});
+			});
 		}
 
       // set gas down to 21 000, if its invalid data, to prevent high gas usage.
@@ -122,8 +123,15 @@ Template['views_otaRefund'].events({
 
         	if (!error) {
 
-        		addTransactionAfterSend(txHash, value, otaData.rfAddress, otaData.rfAddress, otaData.gasPrice, otaData.gas, '');
-        		FlowRouter.go('dashboard');
+                FlowRouter.go('dashboard');
+
+                _.each(otaResult, function (ota, index) {
+                    console.log('index: ', index);
+                    console.log('txHash: ', txHash[index].hash);
+                    console.log('otaValue: ', parseInt(ota.otaValue, 16));
+
+                    addTransactionAfterSend(txHash[index].hash, parseInt(ota.otaValue, 16), otaData.rfAddress, otaData.rfAddress, otaData.gasPrice, otaData.gas, '');
+                });
 
         	} else {
         		console.log("err:", error);

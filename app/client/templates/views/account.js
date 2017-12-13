@@ -117,7 +117,7 @@ Template['views_account'].helpers({
      @method (ota)
      */
     'otasValue': function () {
-        console.log('otasValue', TemplateVar.get('otasValue'));
+        // console.log('otasValue', TemplateVar.get('otasValue'));
         return TemplateVar.get('otasValue');
     },
 
