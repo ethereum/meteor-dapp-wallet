@@ -138,7 +138,7 @@ Template['elements_account'].helpers({
 
             var balType = Helpers.toFixed(balance);
 
-            return balType + ' ' + this.symbol;
+            return balType + '<span> ' + this.symbol + '</span>';
         } else {
             return false;
         }
