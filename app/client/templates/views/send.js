@@ -759,10 +759,7 @@ Template['views_send'].events({
                     if(TemplateVar.get('selectType') === '1'){
                         web3.wan.generateOneTimeAddress(to,function(error, otaAddr){
                             if(!error){
-                                // console.log("XXXXXXXXXXXXXXX testWaddr:", to);
-                                // console.log("XXXXXXXXXXXXXXX otaAddr:", otaAddr);
                                 var txBuyData = CoinContractInstance.buyCoinNote.getData(otaAddr, txArgs.value);
-                                // console.log("XXXXXXXXXXXXX txBuyData:", txBuyData);
                                 var privTxArgs = {
                                     from: txArgs.from,
                                     to: CoinContractAddr,
@@ -771,7 +768,6 @@ Template['views_send'].events({
                                     gasPrice: txArgs.gasPrice,
                                     gas: txArgs.gas
                                 };
-                                // console.log("XXXXXXXXXXXXX privTxArgs:", privTxArgs);
                                 wanSendTransaction(privTxArgs);
                             }else {
                                 // EthElements.Modal.hide();
