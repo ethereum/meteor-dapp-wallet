@@ -526,6 +526,7 @@ Template['views_send'].events({
         if (value === 'ether') {
             TemplateVar.setTo('.dapp-data-textarea', 'value', '');
             TemplateVar.set('switchStype', true);
+            TemplateVar.set('tokenId', false);
 
         } else {
             TemplateVar.set('switchStype', false);
@@ -728,7 +729,14 @@ Template['views_send'].events({
 
                                 value = amount === 0 ? tokenAmount : amount;
 
-                                addTransactionAfterSend(txHash, value, selectedAccount.address, to, gasPrice, estimatedGas, data, tokenId);
+                                console.log('tokenId', tokenId);
+                                console.log('amount1bbb', amount);
+
+                                if (tokenId) {
+                                    addTransactionAfterSend(txHash, value, selectedAccount.address, to, gasPrice, estimatedGas, data, tokenId);
+                                } else {
+                                    addTransactionAfterSend(txHash, value, selectedAccount.address, to, gasPrice, estimatedGas, data);
+                                }
 
                                 localStorage.setItem('contractSource', Helpers.getDefaultContractExample());
                                 localStorage.setItem('compiledContracts', null);
