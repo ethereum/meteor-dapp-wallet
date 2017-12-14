@@ -13,7 +13,7 @@
  The the factor by which the gas price should be changeable.
  @property toPowerFactor
  */
-var toPowerFactor = 2;
+var toPowerFactor = 1.1;
 
 /**
  Calculates the gas * gas price.
