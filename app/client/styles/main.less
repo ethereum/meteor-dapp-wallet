@@ -20,7 +20,7 @@
 @colorGreen: #4ECDC4;
 @colorError: #FF6B6B;
 
-@colorLink: #E8F1F2;
+@colorLink: @colorWhite;
 @colorTextSecondary: #375A7F;
 @colorTextPrimary: #E8F1F2;
 
@@ -53,6 +53,26 @@
 
 .account-id {
     color: @colorOrange !important;
+}
+
+.dapp-header .block-info {
+    color: @colorWhite !important;
+}
+
+a.active {
+    color: @colorTextSecondary !important;
+}
+
+.dapp-segmented-control label {
+    color: @colorTextSecondary;
+}
+
+input, select, textarea {
+    color: @colorTextSecondary;
+}
+
+.dapp-block-button {
+    color: @colorTextSecondary;
 }
 
 .global-notifications {
@@ -221,7 +241,7 @@ body {
     }
 
     nav ul a.active {
-        color: @colorTextSecondary;
+        color: @colorWhite;
     }
 
     .block-info {
@@ -539,7 +559,7 @@ body {
             }
 
             select {
-                color: @colorLink;
+                color: @colorTextSecondary;
                 width: 100%;
             }
 
