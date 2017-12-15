@@ -13,7 +13,7 @@ Template['views_account'].onCreated(function () {
         if (typeof mist !== 'undefined') {
             // state ==0 means only fetch unrefund ota.
             mist.requestOTACollection(waddress,0, function (e, result) {
-                console.log("mist.requestOTACollection result:", e, result);
+                //console.log("mist.requestOTACollection result:", e, result);
                 var oldOtas = TemplateVar.get(template,'otaValue');
                 if(!oldOtas || oldOtas.length !== result.length)
                 {
