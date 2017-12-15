@@ -13,7 +13,7 @@
  The the factor by which the gas price should be changeable.
  @property toPowerFactor
  */
-var toPowerFactor = 2;
+var toPowerFactor = 1.1;
 
 /**
  Calculates the gas * gas price.
@@ -76,6 +76,20 @@ Template['modal_selectGasPrice'].helpers({
 
         }
     },
+
+    'feeNum': function () {
+        var route = FlowRouter.getRouteName();
+
+        if (route === 'otaRefund') {
+            console.log('session: ', Session.get('otas'));
+            var otaNum = Session.get('otas').length;
+
+            return  ' x ' + otaNum;
+        } else {
+            return '';
+        }
+    },
+
     /**
      Return the current unit
      @method (unit)

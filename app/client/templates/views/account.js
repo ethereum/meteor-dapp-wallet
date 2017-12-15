@@ -13,7 +13,7 @@ Template['views_account'].onCreated(function () {
         if (typeof mist !== 'undefined') {
             // state ==0 means only fetch unrefund ota.
             mist.requestOTACollection(waddress,0, function (e, result) {
-                console.log("mist.requestOTACollection result:", e, result);
+                //console.log("mist.requestOTACollection result:", e, result);
                 var oldOtas = TemplateVar.get(template,'otaValue');
                 if(!oldOtas || oldOtas.length !== result.length)
                 {
@@ -117,7 +117,7 @@ Template['views_account'].helpers({
      @method (ota)
      */
     'otasValue': function () {
-        console.log('otasValue', TemplateVar.get('otasValue'));
+        // console.log('otasValue', TemplateVar.get('otasValue'));
         return TemplateVar.get('otasValue');
     },
 
@@ -142,7 +142,7 @@ Template['views_account'].helpers({
 var accountStartScanEventHandler = function(e){
 
     if (typeof mist !== 'undefined') {
-        mist.startScan(FlowRouter.getParam('address'), (err, result)=>{
+        mist.startScan(FlowRouter.getParam('address'), function(err, result){
             if(err){
                 console.error(err);
             }

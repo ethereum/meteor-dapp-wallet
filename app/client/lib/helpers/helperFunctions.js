@@ -532,17 +532,11 @@ Helpers.otasBalance = function (number, otaTotal, format, unit) {
 
 
 Helpers.toFixed = function (balance) {
-    var balance = balance.replace(/[\,|\.]/g,".");
+    var balance = balance.replace(/,/g,'');
 
-    var balType = balance.split('.');
-    var balTypeOne = balType[0];
+    // console.log('balTypebalance', Number(balance).toFixed(2));
 
-    var balTypeTwo = '.00';
-    if (balType[1].substr(2,0)) {
-        balTypeTwo = '.' + balType[1].substr(2,0);
-    }
-
-    return balTypeOne + balTypeTwo;
+    return Number(balance).toFixed(2);
 };
 
 Helpers.waddressTransfer = function (waddress) {

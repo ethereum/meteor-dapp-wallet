@@ -79,9 +79,9 @@ Template['views_otaRefund'].events({
 	'submit form': function(e, template){
 
 		var accounts = TemplateVar.get('accounts');
-		console.log('aaaaa', accounts[0].balance);
-		if (parseInt(accounts[0].balance) === 0) {
-            return GlobalNotification.warn({
+
+		if (accounts.length === 0) {
+            return GlobalNotification.warning({
                 content: "Sorry, your balance is running low.",
                 duration: 8
             });
@@ -92,16 +92,17 @@ Template['views_otaRefund'].events({
 			sendAll = TemplateVar.get('sendAll');
 
 		var otaResult = [];
-    var otaList = TemplateVar.get('otas') || [];
-    if (otaList.length >0) {
-				_.each(otaList, function(ota){
-						otaResult.push({otaddr: ota._id, otaValue: ota.value});
-				});
+		var otaList = TemplateVar.get('otas') || [];
+
+		if (otaList.length >0) {
+			_.each(otaList, function(ota){
+				otaResult.push({otaddr: ota._id, otaValue: ota.value});
+			});
 		}
 
       // set gas down to 21 000, if its invalid data, to prevent high gas usage.
       if(estimatedGas === defaultEstimateGas || estimatedGas === 0)
-          estimatedGas = 22000;
+          estimatedGas = 300000;
 
 
     console.log('Providing gas: ', estimatedGas , sendAll ? '' : ' + 100000');
@@ -109,26 +110,38 @@ Template['views_otaRefund'].events({
     //otaRefund
     var otaData = {};
     otaData.otas = otaResult;
-    otaData.otaNumber = 3;
+    otaData.otaNumber = 8;
     otaData.rfAddress =  FlowRouter.getParam('address');
     otaData.gas = estimatedGas;
-    otaData.gasPrice = gasPrice;
+    otaData.gasPrice = Number(gasPrice);
 
     // sendTransaction(sendAll ? estimatedGas : estimatedGas + 100000);
     if (typeof mist !== "undefined") {
-        mist.refundCoin(otaData, function(error, result){
+        mist.refundCoin(otaData, function(error, txHash){
 
         	if (!error) {
-              console.log("result:", result);
-							FlowRouter.go('dashboard');
-					} else {
-              console.log("err:", error);
-							// EthElements.Modal.hide();
-						return GlobalNotification.error({
-									content: error,
-									duration: 8
-							});
-					}
+
+        		var href = '/account/' + otaData.rfAddress;
+
+                FlowRouter.go(href);
+
+                _.each(otaResult, function (ota, index) {
+                    console.log('index: ', index);
+                    console.log('txHash: ', txHash[index].hash);
+                    console.log('otaValue: ', parseInt(ota.otaValue, 16));
+
+                    addTransactionAfterSend(txHash[index].hash, parseInt(ota.otaValue, 16), otaData.rfAddress, otaData.rfAddress, otaData.gasPrice, otaData.gas, '');
+                });
+
+        	} else {
+        		console.log("err:", error);
+
+        		// EthElements.Modal.hide();
+				return GlobalNotification.error({
+					content: error,
+					duration: 8
+				});
+        	}
     });
 	}
 	}

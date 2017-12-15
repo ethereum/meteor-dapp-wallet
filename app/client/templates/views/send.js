@@ -526,6 +526,7 @@ Template['views_send'].events({
         if (value === 'ether') {
             TemplateVar.setTo('.dapp-data-textarea', 'value', '');
             TemplateVar.set('switchStype', true);
+            TemplateVar.set('tokenId', false);
 
         } else {
             TemplateVar.set('switchStype', false);
@@ -552,6 +553,8 @@ Template['views_send'].events({
 
             var token = Tokens.findOne({address: TemplateVar.get('selectedToken')}),
                 amount = e.currentTarget.value || '0';
+
+            TemplateVar.set('tokenId', token._id);
 
             amount = new BigNumber(amount, 10).times(Math.pow(10, token.decimals || 0)).floor().toString(10);
 
@@ -587,7 +590,7 @@ Template['views_send'].events({
 
             // set gas down to 21 000, if its invalid data, to prevent high gas usage.
             if(estimatedGas === defaultEstimateGas || estimatedGas === 0)
-                estimatedGas = 22000;
+                estimatedGas = 50000;
 
             // if its a wallet contract and tokens, don't need to remove the gas addition on send-all, as the owner pays
             if(sendAll && (selectedAccount.owners || tokenAddress !== 'ether'))
@@ -632,6 +635,7 @@ Template['views_send'].events({
 
                 // Change recipient and amount
                 to = tokenAddress;
+                tokenAmount = amount;
                 amount = 0;
 
                 var token = Tokens.findOne({address: tokenAddress}),
@@ -673,6 +677,8 @@ Template['views_send'].events({
                                 ? {contract: contract, data: data}
                                 : data;
 
+                            console.log('amount1aaaa', amount);
+
                             addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
 
                             localStorage.setItem('contractSource', Helpers.getDefaultContractExample());
@@ -710,6 +716,8 @@ Template['views_send'].events({
 
                             TemplateVar.set(template, 'sending', false);
 
+                            var tokenId = TemplateVar.get(template,'tokenId');
+
                             // console.log(error, txHash);
                             if (!error) {
                                 console.log('SEND simple');
@@ -718,7 +726,17 @@ Template['views_send'].events({
                                     ? {contract: contract, data: data}
                                     : data;
 
-                                addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
+
+                                value = amount === 0 ? tokenAmount : amount;
+
+                                console.log('tokenId', tokenId);
+                                console.log('amount1bbb', amount);
+
+                                if (tokenId) {
+                                    addTransactionAfterSend(txHash, value, selectedAccount.address, to, gasPrice, estimatedGas, data, tokenId);
+                                } else {
+                                    addTransactionAfterSend(txHash, value, selectedAccount.address, to, gasPrice, estimatedGas, data);
+                                }
 
                                 localStorage.setItem('contractSource', Helpers.getDefaultContractExample());
                                 localStorage.setItem('compiledContracts', null);
@@ -741,10 +759,7 @@ Template['views_send'].events({
                     if(TemplateVar.get('selectType') === '1'){
                         web3.wan.generateOneTimeAddress(to,function(error, otaAddr){
                             if(!error){
-                                // console.log("XXXXXXXXXXXXXXX testWaddr:", to);
-                                // console.log("XXXXXXXXXXXXXXX otaAddr:", otaAddr);
                                 var txBuyData = CoinContractInstance.buyCoinNote.getData(otaAddr, txArgs.value);
-                                console.log("XXXXXXXXXXXXX txBuyData:", txBuyData);
                                 var privTxArgs = {
                                     from: txArgs.from,
                                     to: CoinContractAddr,
@@ -753,7 +768,6 @@ Template['views_send'].events({
                                     gasPrice: txArgs.gasPrice,
                                     gas: txArgs.gas
                                 };
-                                // console.log("XXXXXXXXXXXXX privTxArgs:", privTxArgs);
                                 wanSendTransaction(privTxArgs);
                             }else {
                                 // EthElements.Modal.hide();
@@ -776,15 +790,6 @@ Template['views_send'].events({
             if(typeof mist === 'undefined') {
 
                 console.log('estimatedGas: ' + estimatedGas);
-                var	datas = {
-                    from: selectedAccount.address,
-                    to: to,
-                    amount: amount,
-                    gasPrice: gasPrice,
-                    estimatedGas: estimatedGas,
-                    estimatedGasPlusAddition: sendAll ? estimatedGas : estimatedGas + 100000, // increase the provided gas by 100k
-                    data: data
-                };
 
                 EthElements.Modal.question({
                     template: 'views_modals_sendTransactionInfo',
