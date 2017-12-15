@@ -12,23 +12,68 @@
 
 
 // Change Default constants
+@colorWhite: #E8F1F2;
+@colorBlack: #050C14;
+@colorBlue: #3196C8;
+@colorOrange: #FDBF61;
+// @colorYellow: #ffc107;
+@colorGreen: #4ECDC4;
+@colorError: #FF6B6B;
 
-@colorLink: #02A8F3;
+@colorLink: @colorWhite;
+@colorTextSecondary: #375A7F;
+@colorTextPrimary: #E8F1F2;
 
 @heightHeader: @gridWidth * 2.5;
 
 
 // Platform specifics
 // Mac OSX
-@colorOSBackgroundFocus: #d9d0d0;
-@colorOSBackgroundBlur: lighten(@colorOSBackgroundFocus, 10%);
+@colorOSBackgroundFocus: @colorBlue;
+@colorOSBackgroundBlur: @colorBlue;
 
-@colorWinBackgroundFocus: #F0F0F0;
-@colorWinBackgroundBlur: #F0F0F0;
+@colorWinBackgroundFocus: @colorBlue;
+@colorWinBackgroundBlur: @colorBlue;
 
-@colorLinuxBackgroundFocus: #403F3A;
-@colorLinuxBackgroundBlur: #3C3B36;
+@colorLinuxBackgroundFocus: @colorBlue;
+@colorLinuxBackgroundBlur: @colorBlue;
 
+
+.dapp-actionbar {
+    background: @colorBlack;
+}
+
+.account-pattern {
+    background-color: @colorBlue !important;
+}
+
+.account-balance {
+    color: @colorWhite !important;
+}
+
+.account-id {
+    color: @colorOrange !important;
+}
+
+.dapp-header .block-info {
+    color: @colorWhite !important;
+}
+
+a.active {
+    color: @colorTextSecondary !important;
+}
+
+.dapp-segmented-control label {
+    color: @colorTextSecondary;
+}
+
+input, select, textarea {
+    color: @colorTextSecondary;
+}
+
+.dapp-block-button {
+    color: @colorTextSecondary;
+}
 
 .global-notifications {
     position: fixed;
@@ -52,6 +97,7 @@
 .dapp-content {
     padding: @defaultPaddingVertical @defaultPaddingHorizontal*2.5 @defaultPaddingVertical*2;
     max-width: none;
+    background: #050C14;
 
     .dapp-container {
         max-width: none; 
@@ -107,7 +153,7 @@ body {
     }
     .dapp-header {
         background-color: @colorLinuxBackgroundFocus;
-        .background-image(linear-gradient(to bottom,  @colorLinuxBackgroundFocus 20%, lighten(@colorLinuxBackgroundFocus, 5%) 90%));
+        .background-image(linear-gradient(to bottom,  @colorWinBackgroundFocus 50%, @colorWinBackgroundFocus 90%));
         color: @colorWhite;
 
         nav a,
@@ -133,7 +179,7 @@ body {
     }
     .dapp-header {
         background-color: @colorOSBackgroundFocus;
-        .background-image(linear-gradient(to top,  @colorOSBackgroundFocus 20%, lighten(@colorOSBackgroundFocus, 10%) 90%));
+        .background-image(linear-gradient(to bottom,  @colorWinBackgroundFocus 50%, @colorWinBackgroundFocus 90%));
 
         nav > ul {
             margin-left: @gridWidth;
@@ -157,7 +203,7 @@ body {
     padding-left: @gridWidth * 2.5;
     background-color: @colorWinBackgroundFocus;
     -webkit-app-region: drag; // necessary to drag the wallet window
-    .background-image(linear-gradient(to bottom,  @colorWinBackgroundFocus 50%, #ddd9d9 90%));
+    .background-image(linear-gradient(to bottom,  @colorWinBackgroundFocus 50%, @colorWinBackgroundFocus 90%));
 
     &.dapp-small {
         z-index: 30;
@@ -195,7 +241,7 @@ body {
     }
 
     nav ul a.active {
-        color: @colorTextSecondary;
+        color: @colorWhite;
     }
 
     .block-info {
@@ -513,7 +559,7 @@ body {
             }
 
             select {
-                color: @colorLink;
+                color: @colorTextSecondary;
                 width: 100%;
             }
 
