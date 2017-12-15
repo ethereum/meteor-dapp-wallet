@@ -32,9 +32,10 @@ contractVersions = [
 // CHECK FOR NETWORK
 web3.eth.getBlock(0, function(e, res){
     if(!e){
+        console.log('dappFuncHash: ', res.hash);
         switch(res.hash) {
             //cranelv genesis block hash
-            case '0xf395db10563a688d5878848b58926f82a251291bc9dba558ab66ae84c84fdeb8':
+            case '0x7e23101e51d11b6c259b0596d80d3168949e13991e83944e5818c5bfd5a6daa5':
                 Session.set('network', 'main');
                 break;
             case '0x6341fd3daf94b748c72ced5a5b26028f2474f5f00d824504e4fa37a75767e177':
