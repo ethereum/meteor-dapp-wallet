@@ -80,12 +80,20 @@ Template['views_otaRefund'].events({
 
 		var accounts = TemplateVar.get('accounts');
 
-		if (accounts.length === 0) {
+
+		if (Number(accounts[0].balance) < 5400000000000000) {
             return GlobalNotification.warning({
                 content: "Sorry, your balance is running low.",
                 duration: 8
             });
 		}
+
+        if (Number(accounts[0].balance) < 6000000000000000) {
+            return GlobalNotification.warning({
+                content: "Sorry, your balance is lower than fee, pls change the fee.",
+                duration: 8
+            });
+        }
 
 		var gasPrice = TemplateVar.getFrom('.dapp-select-gas-price', 'gasPrice'),
 			estimatedGas = TemplateVar.get('estimatedGas'),
