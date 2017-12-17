@@ -35,7 +35,7 @@ web3.eth.getBlock(0, function(e, res){
         console.log('dappFuncHash: ', res.hash);
         switch(res.hash) {
             //cranelv genesis block hash
-            case '0x7e23101e51d11b6c259b0596d80d3168949e13991e83944e5818c5bfd5a6daa5':
+            case '0x1b3ac302cbf7dc7b34dacd1aa4bbec8600bf6a2bbe67d6ce983f143c3f6ac0ca':
                 Session.set('network', 'main');
                 break;
             case '0x6341fd3daf94b748c72ced5a5b26028f2474f5f00d824504e4fa37a75767e177':
