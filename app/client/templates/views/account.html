@@ -69,7 +69,7 @@
 
                       <div class="viwes-account-balance-left">
                           <p><div class="circle" style="width: 6px;height: 6px; margin-bottom: 5px;"></div>
-                          <strong style="display: inline-block;">{{> elements_balance balance=otasValue changeUnit=true showAllDecimals=true}}</strong>
+                          <strong style="display: inline-block;">{{> elements_balance balance=otasValue changeUnit=true}}</strong>
                           <span class="balance-span">{{i18n 'views.account.balacne.ota'}}
                               {{#if otasValue}}
                                   <a href="{{pathFor route='otaRefund' address=theAddress}}">{{i18n 'views.account.balacne.refund'}}</a>

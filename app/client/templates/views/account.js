@@ -20,7 +20,7 @@ Template['views_account'].onCreated(function () {
                     var otaValue = 0;
                     if (!e && result.length >0) {
                         _.each(result, function(ota){
-                            otaValue += parseInt(ota.value);
+                            otaValue += Number(ota.value);
                         });
                     }
                     TemplateVar.set(template,'otasValue',otaValue);

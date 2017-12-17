@@ -725,6 +725,9 @@ Template['views_send'].events({
                     };
 
                     var wanSendTransaction = function(args) {
+
+                        console.log('gas', estimatedGas);
+
                         web3.eth.sendTransaction(args, function (error, txHash) {
 
                             TemplateVar.set(template, 'sending', false);
@@ -823,7 +826,7 @@ Template['views_send'].events({
 
                 // LET MIST HANDLE the CONFIRMATION
             } else {
-                sendTransaction(sendAll ? estimatedGas : estimatedGas + 100000);
+                sendTransaction(estimatedGas);
             }
         }
     }

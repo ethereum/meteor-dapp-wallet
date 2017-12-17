@@ -521,15 +521,6 @@ Helpers.transferBanlance = function (number, format, unit) {
     return balance + ' WAN';
 };
 
-Helpers.otasBalance = function (number, otaTotal, format, unit) {
-
-    var balance = EthTools.formatBalance(number, format, unit).split(' ')[0];
-
-    var amount = EthTools.formatBalance(otaTotal, format, unit);
-
-    return parseFloat(balance) + parseFloat(amount) + ' WAN';
-};
-
 
 Helpers.toFixed = function (balance) {
     var balance = balance.replace(/,/g,'');

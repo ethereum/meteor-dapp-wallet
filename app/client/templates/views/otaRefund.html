@@ -48,17 +48,16 @@
             <div class="col col-12 mobile-full send-info" style="padding-left: 0; margin-top: 10px;">
                 <strong style="display: block" class="views_send_strong"><div class="triangle"></div>Total</strong>
                 <div class="dapp-select-gas-price">
-                    <span class="amount">{{otasBalance 0 otaTotal "0,0.00[0000000000000000] UNIT" }}</span>
+                    <span class="amount">{{otaTotal}}</span>
                 </div>
 
                 <div class="dapp-clear-fix"></div>
             </div>
 
             <!-- a button type="submit" will send the form -->
-            <button type="submit" class="dapp-block-button views_send_button">
+            <button type="submit" class="dapp-block-button views_send_button"  disabled={{TemplateVar.get "button"}}>
                 {{i18n "views.otaRefund.send"}}
             </button>
-
         </form>
     </div>
 

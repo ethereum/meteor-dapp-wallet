@@ -17,6 +17,8 @@ Template['views_otaRefund'].onCreated(function(){
 	TemplateVar.set('estimatedGas', 300000);
 	TemplateVar.set('sendAll', false);
 
+    TemplateVar.set('button', false);
+
 });
 
 
@@ -48,7 +50,8 @@ Template['views_otaRefund'].helpers({
 		});
 
     	TemplateVar.set('otaTotal', otaTotal);
-		return otaTotal;
+
+		return EthTools.formatBalance(otaTotal, '0,0.00') + ' WAN';
 	},
 
 	/**
@@ -78,22 +81,35 @@ Template['views_otaRefund'].events({
 	 */
 	'submit form': function(e, template){
 
+        TemplateVar.set(template, 'button', true);
+
+        setTimeout(() => {
+            TemplateVar.set(template, 'button', true);
+        }, 5000);
+
 		var accounts = TemplateVar.get('accounts');
 
+		if (accounts.length > 0) {
+            if (Number(accounts[0].balance) < 5400000000000000) {
+                return GlobalNotification.warning({
+                    content: "Sorry, your balance is running low.",
+                    duration: 8
+                });
+            }
 
-		if (Number(accounts[0].balance) < 5400000000000000) {
+            if (Number(accounts[0].balance) < 6000000000000000) {
+                return GlobalNotification.warning({
+                    content: "Sorry, your balance is lower than fee, pls change the fee.",
+                    duration: 8
+                });
+            }
+		} else {
             return GlobalNotification.warning({
                 content: "Sorry, your balance is running low.",
                 duration: 8
             });
 		}
 
-        if (Number(accounts[0].balance) < 6000000000000000) {
-            return GlobalNotification.warning({
-                content: "Sorry, your balance is lower than fee, pls change the fee.",
-                duration: 8
-            });
-        }
 
 		var gasPrice = TemplateVar.getFrom('.dapp-select-gas-price', 'gasPrice'),
 			estimatedGas = TemplateVar.get('estimatedGas'),
@@ -108,49 +124,51 @@ Template['views_otaRefund'].events({
 			});
 		}
 
-      // set gas down to 21 000, if its invalid data, to prevent high gas usage.
-      if(estimatedGas === defaultEstimateGas || estimatedGas === 0)
-          estimatedGas = 300000;
+        // set gas down to 21 000, if its invalid data, to prevent high gas usage.
+        if(estimatedGas === defaultEstimateGas || estimatedGas === 0)
+            estimatedGas = 300000;
+
+        //otaRefund
+        var otaData = {};
+        otaData.otas = otaResult;
+        otaData.otaNumber = 8;
+        otaData.rfAddress =  FlowRouter.getParam('address');
+        otaData.gas = estimatedGas;
+        otaData.gasPrice = Number(gasPrice);
+
+        var otaRefund = function () {
+            TemplateVar.set(template, 'button', true);
+
+            mist.refundCoin(otaData, function(error, txHash){
+                if (!error) {
+                    var href = '/account/' + otaData.rfAddress;
+
+                    FlowRouter.go(href);
+
+                    _.each(otaResult, function (ota, index) {
+                        // console.log('index: ', index);
+                        // console.log('txHash: ', txHash[index].hash);
+                        // console.log('otaValue: ', parseInt(ota.otaValue, 16));
+
+                        addTransactionAfterSend(txHash[index].hash, parseInt(ota.otaValue, 16), otaData.rfAddress, otaData.rfAddress, otaData.gasPrice, otaData.gas, '');
+                    });
+
+                } else {
+                    console.log("err:", error);
+
+                    // EthElements.Modal.hide();
+                    return GlobalNotification.error({
+                        content: error,
+                        duration: 8
+                    });
+                }
+            });
+        };
 
 
-    console.log('Providing gas: ', estimatedGas , sendAll ? '' : ' + 100000');
-
-    //otaRefund
-    var otaData = {};
-    otaData.otas = otaResult;
-    otaData.otaNumber = 8;
-    otaData.rfAddress =  FlowRouter.getParam('address');
-    otaData.gas = estimatedGas;
-    otaData.gasPrice = Number(gasPrice);
-
-    // sendTransaction(sendAll ? estimatedGas : estimatedGas + 100000);
-    if (typeof mist !== "undefined") {
-        mist.refundCoin(otaData, function(error, txHash){
-
-        	if (!error) {
-
-        		var href = '/account/' + otaData.rfAddress;
-
-                FlowRouter.go(href);
-
-                _.each(otaResult, function (ota, index) {
-                    console.log('index: ', index);
-                    console.log('txHash: ', txHash[index].hash);
-                    console.log('otaValue: ', parseInt(ota.otaValue, 16));
-
-                    addTransactionAfterSend(txHash[index].hash, parseInt(ota.otaValue, 16), otaData.rfAddress, otaData.rfAddress, otaData.gasPrice, otaData.gas, '');
-                });
-
-        	} else {
-        		console.log("err:", error);
-
-        		// EthElements.Modal.hide();
-				return GlobalNotification.error({
-					content: error,
-					duration: 8
-				});
-        	}
-    });
-	}
+        // sendTransaction(sendAll ? estimatedGas : estimatedGas + 100000);
+        if (typeof mist !== "undefined") {
+            otaRefund();
+        }
 	}
 });
