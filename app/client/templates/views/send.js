@@ -286,6 +286,8 @@ Template['views_send'].helpers({
         var address = FlowRouter.getRouteName() === 'dashboard' ? FlowRouter.getParam('address') : FlowRouter.getParam('address').toLowerCase();
         var accounts = EthAccounts.find({balance:{$ne:"0"}, address: address}, {sort: {balance: 1}}).fetch();
 
+        TemplateVar.set('total', accounts);
+
         return accounts;
     },
 
@@ -363,6 +365,7 @@ Template['views_send'].helpers({
         } else {
             amount = new BigNumber(gasInWei, 10);
         }
+
         return amount;
     },
     /**
@@ -586,6 +589,7 @@ Template['views_send'].events({
             });
         }
 
+
         if(selectedAccount && !TemplateVar.get('sending')) {
 
             // set gas down to 21 000, if its invalid data, to prevent high gas usage.
@@ -619,6 +623,8 @@ Template['views_send'].events({
 
             if(tokenAddress === 'ether') {
 
+                var allBalance = TemplateVar.get('total')[0].balance;
+
                 if((_.isEmpty(amount) || amount === '0' || !_.isFinite(amount)) && !data)
                     return GlobalNotification.warning({
                         content: 'i18n:wallet.send.error.noAmount',
@@ -626,6 +632,12 @@ Template['views_send'].events({
                     });
 
                 if(new BigNumber(amount, 10).gt(new BigNumber(selectedAccount.balance, 10)))
+                    return GlobalNotification.warning({
+                        content: 'i18n:wallet.send.error.notEnoughFunds',
+                        duration: 2
+                    });
+
+                if(allBalance === amount)
                     return GlobalNotification.warning({
                         content: 'i18n:wallet.send.error.notEnoughFunds',
                         duration: 2
@@ -641,7 +653,8 @@ Template['views_send'].events({
                 var token = Tokens.findOne({address: tokenAddress}),
                     tokenBalance = token.balances[selectedAccount._id] || '0';
 
-                if(new BigNumber(amount, 10).gt(new BigNumber(tokenBalance, 10)))
+
+                if(new BigNumber(tokenAmount, 10).gt(new BigNumber(tokenBalance, 10)))
                     return GlobalNotification.warning({
                         content: 'i18n:wallet.send.error.notEnoughFunds',
                         duration: 2

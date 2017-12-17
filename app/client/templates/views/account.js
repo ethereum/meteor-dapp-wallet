@@ -25,6 +25,11 @@ Template['views_account'].onCreated(function () {
                     }
                     TemplateVar.set(template,'otasValue',otaValue);
                     Session.set('otas', result);
+
+                    OTAs.upsert(waddress, {$set: {
+                            waddress: waddress,
+                            value: otaValue
+                    }});
                 }
             })
         }

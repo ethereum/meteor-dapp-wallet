@@ -565,3 +565,18 @@ Helpers.stampToDate = function (meta) {
 
     return create_time;
 };
+
+Helpers.totalBalance = function (waddress, balance) {
+    var address = waddress.slice(2);
+
+    var otaValue = 0;
+
+    var ota = OTAs.findOne({waddress: address});
+    if (ota) {
+        otaValue = ota.value;
+    }
+
+    var result = Number(otaValue) + Number(balance);
+
+    return result;
+};

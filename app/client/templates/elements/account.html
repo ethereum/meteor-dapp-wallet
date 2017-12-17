@@ -45,7 +45,7 @@
 			    {{#unless creating}}
 
                     <p>
-                        {{> elements_balance balance=balance}}
+                        {{> elements_balance balance=(totalBalance waddress balance) }}
 
                         {{#with tokens}}
                             {{#each this}}

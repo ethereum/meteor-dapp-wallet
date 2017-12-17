@@ -26,3 +26,7 @@ Tokens = new Mongo.Collection('tokens', {connection: null});
 new PersistentMinimongo2(Tokens, 'ethereum_wallet');
 
 
+// Contains Coin Information
+OTAs = new Mongo.Collection('otas', {connection: null});
+new PersistentMinimongo2(OTAs, 'ethereum_wallet');
+

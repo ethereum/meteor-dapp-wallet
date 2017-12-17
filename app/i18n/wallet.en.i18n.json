@@ -11,7 +11,7 @@
 
             "balacne": {
                 "title": "Balance",
-                "des": "in ordinary address",
+                "des": "in Public Address",
                 "ota": "in OTAs",
                 "refund": "[Refund]"
             },

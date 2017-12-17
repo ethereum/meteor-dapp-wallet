@@ -232,6 +232,6 @@ Template.registerHelper('transferBanlance', Helpers.transferBanlance);
 
 Template.registerHelper('waddressTransfer', Helpers.waddressTransfer);
 Template.registerHelper('stampToDate', Helpers.stampToDate);
-
 Template.registerHelper('otasBalance', Helpers.otasBalance);
+Template.registerHelper('totalBalance', Helpers.totalBalance);
 
