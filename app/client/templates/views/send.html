@@ -12,10 +12,13 @@
         <div style="padding: 20px; padding-top: 40px;">
             {{#each selectAccount}}
                 {{> dapp_identicon identity=address class="dapp-small"}}
-                <p style="display: inline-block;margin-left: 10px;position: relative;top: -10px;">
-                    <span style="display: block;font-weight: 600;">{{name}}</span>
-                    <span style="color:#929cb8;">{{address}}</span>
-                </p>
+
+                <a href="{{pathFor route='account' address=address}}">
+                    <p style="display: inline-block;margin-left: 10px;position: relative;top: -10px;">
+                        <span style="display: block;font-weight: 600;">{{name}}</span>
+                        <span style="color:#929cb8;">{{address}}</span>
+                    </p>
+                </a>
             {{/each}}
         </div>
 
