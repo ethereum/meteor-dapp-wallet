@@ -102,6 +102,7 @@ Template['views_account'].helpers({
             // ? Helpers.formatNumberByDecimals(token.balances[this._id], token.decimals) +' '+ token.symbol
             // : false;
 
+            token.name = token.name ? token.name : "UNDEFINED";
             token.balance = false;
 
         var bal;

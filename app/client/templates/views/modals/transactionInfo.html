@@ -59,20 +59,21 @@
                     <td>{{i18n "wallet.transactions.gasPrice"}}</td>
                     <td>{{formatTransactionBalance gasPricePerMillion exchangeRates}} {{i18n "wallet.transactions.perMillionGas"}}</td>
                 </tr>
+
                 {{#if blockHash}}
                     <tr>
                         <td>{{i18n "wallet.transactions.block"}}</td>
                         <td>
                            {{#if $eq ($.Session.get "network") "main"}}
-                               <!--href="http://etherscan.io/block/{{blockHash}}"-->
-                            <a title="{{blockHash}}" target="_blank" class="dapp-shorten-text">
+                               <!--href="https://explorer.wanchain.org/block/{{blockNumber}}" -->
+                            <a title="{{blockNumber}}" target="_blank" class="dapp-shorten-text">
                                 {{blockNumber}}
                                 <br>
                                 {{blockHash.substr 0 40}}...
                             </a>
                             {{else}}
                                 {{#if $eq ($.Session.get "network") "test"}}
-                                <a title="{{blockHash}}" target="_blank" class="dapp-shorten-text">
+                                <a title="{{blockNumber}}" target="_blank" class="dapp-shorten-text">
                                     {{blockNumber}}
                                     <br>
                                     {{blockHash.substr 0 40}}...

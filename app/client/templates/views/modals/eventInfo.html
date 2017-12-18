@@ -51,11 +51,12 @@
                 <tr>
                     <td>{{i18n "wallet.events.transactionHash"}}</td>
                     <td>
-                        {{#if $eq ($.Session.get "network") "main"}} 
-                            <a href="http://etherscan.io/tx/{{transactionHash}}" target="_blank">{{transactionHash.substr 0 40}}...</a>
+                        {{#if $eq ($.Session.get "network") "main"}}
+                            <!--href="https://explorer.wanchain.org/block/trans/{{transactionHash}}"-->
+                            <a target="_blank">{{transactionHash.substr 0 40}}...</a>
                         {{else}}
                             {{#if $eq ($.Session.get "network") "test"}}
-                                <a href="http://ropsten.etherscan.io/tx/{{transactionHash}}" target="_blank">{{transactionHash.substr 0 40}}...</a>
+                                <a target="_blank">{{transactionHash.substr 0 40}}...</a>
                             {{else}}
                                 {{transactionHash.substr 0 40}}...
                             {{/if}}
@@ -66,15 +67,15 @@
                     <td>{{i18n "wallet.events.block"}}</td>
                     <td>
                        {{#if $eq ($.Session.get "network") "main"}}
-                           <!--href="http://etherscan.io/block/{{blockHash}}" -->
-                        <a title="{{blockHash}}" target="_blank" class="dapp-shorten-text">
+                           <!--href="https://explorer.wanchain.org/block/{{blockNumber}}" -->
+                        <a title="{{blockNumber}}" target="_blank" class="dapp-shorten-text">
                             {{blockNumber}}
                             <br>
                             {{blockHash.substr 0 40}}...
                         </a>
                         {{else}}
                             {{#if $eq ($.Session.get "network") "test"}}
-                            <a title="{{blockHash}}" target="_blank" class="dapp-shorten-text">
+                            <a title="{{blockNumber}}" target="_blank" class="dapp-shorten-text">
                                 {{blockNumber}}
                                 <br>
                                 {{blockHash.substr 0 40}}...
