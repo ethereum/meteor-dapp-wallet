@@ -1,5 +1,5 @@
 <template name="elements_tokenBox">
-    <button class="wallet-box tokens {{#if disabled}}disabled{{/if}}" data="{{address}}" style="width: 100%;">
+    <button class="wallet-box tokens {{#if disabled}}disabled{{/if}}" data="{{address}}">
         {{> dapp_identicon identity=address class="dapp-small"}}
         <h3 style="padding-top: 4px;color: #000000;">{{name}}</h3>
         <button class="delete-token" data="{{address}}"><i class="icon-trash"></i></button>
