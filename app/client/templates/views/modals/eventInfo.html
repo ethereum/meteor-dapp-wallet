@@ -65,15 +65,16 @@
                 <tr>
                     <td>{{i18n "wallet.events.block"}}</td>
                     <td>
-                       {{#if $eq ($.Session.get "network") "main"}} 
-                        <a href="http://etherscan.io/block/{{blockHash}}" title="{{blockHash}}" target="_blank" class="dapp-shorten-text">
+                       {{#if $eq ($.Session.get "network") "main"}}
+                           <!--href="http://etherscan.io/block/{{blockHash}}" -->
+                        <a title="{{blockHash}}" target="_blank" class="dapp-shorten-text">
                             {{blockNumber}}
                             <br>
                             {{blockHash.substr 0 40}}...
                         </a>
                         {{else}}
                             {{#if $eq ($.Session.get "network") "test"}}
-                            <a href="http://ropsten.etherscan.io/block/{{blockHash}}" title="{{blockHash}}" target="_blank" class="dapp-shorten-text">
+                            <a title="{{blockHash}}" target="_blank" class="dapp-shorten-text">
                                 {{blockNumber}}
                                 <br>
                                 {{blockHash.substr 0 40}}...
