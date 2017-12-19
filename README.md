@@ -1,6 +1,6 @@
-# Ethereum Wallet Ðapp
+# WanWallet Ðapp
 
-The Ethereum wallet.
+The wanchain wallet.
 
 [![Build Status](https://travis-ci.org/ethereum/meteor-dapp-wallet.svg?branch=master)](https://travis-ci.org/ethereum/meteor-dapp-wallet)
 
