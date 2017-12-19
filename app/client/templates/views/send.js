@@ -601,8 +601,6 @@ Template['views_send'].events({
                 sendAll = false;
 
 
-            console.log('Providing gas: ', estimatedGas , sendAll ? '' : ' + 100000');
-
             if(TemplateVar.get('selectedAction') === 'deploy-contract' && !data)
                 return GlobalNotification.warning({
                     content: 'i18n:wallet.contracts.error.noDataProvided',
@@ -637,7 +635,9 @@ Template['views_send'].events({
                         duration: 2
                     });
 
-                if(allBalance === amount)
+                var total = Number(estimatedGas) * Number(gasPrice) + Number(amount);
+
+                if(Number(allBalance) < total)
                     return GlobalNotification.warning({
                         content: 'i18n:wallet.send.error.notEnoughFunds',
                         duration: 2
@@ -725,8 +725,6 @@ Template['views_send'].events({
                     };
 
                     var wanSendTransaction = function(args) {
-
-                        console.log('gas', estimatedGas);
 
                         web3.eth.sendTransaction(args, function (error, txHash) {
 

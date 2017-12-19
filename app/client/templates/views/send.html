@@ -187,8 +187,7 @@
             <!-- a button type="submit" will send the form -->
             <button type="submit" class="dapp-block-button views_send_button" >
                 {{#if TemplateVar.get "sending"}}
-                    <!--{{i18n 'buttons.sending'}}-->
-                    {{i18n 'buttons.send'}}
+                    {{i18n 'buttons.sending'}}
                 {{else}}
                     {{#if deployContract}}
                         {{i18n 'wallet.app.buttons.deploy'}}

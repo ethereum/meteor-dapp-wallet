@@ -250,16 +250,26 @@ Template['elements_account'].events({
         });
     },
 
-    'click .wanchain-passwd': function (e) {
+    'click .wanchain-passwd': function (e, template) {
         e.preventDefault();
 
         var name = e.target.name;
-        console.log('name: ', name);
+
+        if (!TemplateVar.get('sending')) {
+
+            var changePassword = function () {
+
+                // show loading
+                mist.popWindowEvents(function (bool) {
+                    TemplateVar.set(template, 'sending', bool);
+                });
+
+                mist.changePassword(name)
+            }
+        }
 
         if (typeof mist !== "undefined") {
-            mist.changePassword(
-                name
-            )
+            changePassword()
         }
 
     }

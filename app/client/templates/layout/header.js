@@ -125,11 +125,24 @@ Template['layout_header'].events({
 
      @event click .create.account
      */
-    'click .header-account': function(e){
+    'click .header-account': function(e, template){
         e.preventDefault();
 
+        if (!TemplateVar.get('sending')) {
+
+            var requestAccount = function () {
+
+                // show loading
+                mist.popWindowEvents(function (bool) {
+                    TemplateVar.set(template, 'sending', bool);
+                });
+
+                mist.requestAccount(null);
+            }
+        }
+
         if (typeof mist !== "undefined") {
-            mist.requestAccount(null);
+            requestAccount();
         } else {
             alert("create account in mist");
         }

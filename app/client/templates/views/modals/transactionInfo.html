@@ -65,15 +65,15 @@
                         <td>{{i18n "wallet.transactions.block"}}</td>
                         <td>
                            {{#if $eq ($.Session.get "network") "main"}}
-                               <!--href="https://explorer.wanchain.org/block/{{blockNumber}}" -->
-                            <a title="{{blockNumber}}" target="_blank" class="dapp-shorten-text">
+
+                            <a href="http://explorer.wanchain.org/block/{{blockNumber}}" title="{{blockNumber}}" target="_blank" class="dapp-shorten-text">
                                 {{blockNumber}}
                                 <br>
                                 {{blockHash.substr 0 40}}...
                             </a>
                             {{else}}
                                 {{#if $eq ($.Session.get "network") "test"}}
-                                <a title="{{blockNumber}}" target="_blank" class="dapp-shorten-text">
+                                <a href="http://explorer.wanchain.org/block/{{blockNumber}}" title="{{blockNumber}}" target="_blank" class="dapp-shorten-text">
                                     {{blockNumber}}
                                     <br>
                                     {{blockHash.substr 0 40}}...

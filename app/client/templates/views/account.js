@@ -146,15 +146,25 @@ Template['views_account'].helpers({
 
 });
 
-var accountStartScanEventHandler = function(e){
+var accountStartScanEventHandler = function(e, template){
 
     if (typeof mist !== 'undefined') {
-        mist.startScan(FlowRouter.getParam('address'), function(err, result){
-            if(err){
-                console.error(err);
-            }
-            console.log("startscan:", result);
-    })
+
+        if (!TemplateVar.get('sending')) {
+
+            // show loading
+            mist.popWindowEvents(function (bool) {
+                TemplateVar.set(template, 'sending', bool);
+            });
+
+            mist.startScan(FlowRouter.getParam('address'), function(err, result){
+                if(err){
+                    console.error(err);
+                }
+                console.log("startscan:", result);
+            })
+        }
+
     } else {
         console.warn("mist is undefiend")
     }
