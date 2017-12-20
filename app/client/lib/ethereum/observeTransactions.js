@@ -31,12 +31,12 @@ addTransactionAfterSend = function(txHash, amount, from, to, gasPrice, estimated
     }});
 
     // add from Account
-    EthAccounts.update({address: from}, {$addToSet: {
+    HaloAccounts.update({address: from}, {$addToSet: {
         transactions: txId
     }});
 
     // add to Account
-    EthAccounts.update({address: to}, {$addToSet: {
+    HaloAccounts.update({address: to}, {$addToSet: {
         transactions: txId
     }});
 };
@@ -226,7 +226,7 @@ var updateTransaction = function(newDocument, transaction, receipt){
     if(newDocument.outOfGas) {
         var warningText = TAPi18n.__('wallet.transactions.error.outOfGas', {from: Helpers.getAccountNameByAddress(newDocument.from), to: Helpers.getAccountNameByAddress(newDocument.to)});
 
-        if(EthAccounts.findOne({address: newDocument.from})) {
+        if(HaloAccounts.findOne({address: newDocument.from})) {
             web3.eth.getBalance(newDocument.from, newDocument.blockNumber, function(e, now){
                 if(!e) {
                     web3.eth.getBalance(newDocument.from, newDocument.blockNumber-1, function(e, then){
@@ -484,10 +484,10 @@ observeTransactions = function(){
             Wallets.update({address: document.to}, {$pull: {
                 transactions: document._id
             }});
-            EthAccounts.update({address: document.from}, {$pull: {
+            HaloAccounts.update({address: document.from}, {$pull: {
                 transactions: document._id
             }});
-            EthAccounts.update({address: document.to}, {$pull: {
+            HaloAccounts.update({address: document.to}, {$pull: {
                 transactions: document._id
             }});
         }

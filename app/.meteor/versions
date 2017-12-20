@@ -31,7 +31,6 @@ diff-sequence@1.0.5
 ecmascript@0.4.3
 ecmascript-runtime@0.2.10
 ejson@1.0.11
-ethereum:accounts@0.4.0
 ethereum:blocks@0.3.2
 ethereum:dapp-styles@0.5.7
 ethereum:elements@0.7.17
@@ -48,6 +47,7 @@ frozeman:simple-modal@0.0.7
 frozeman:storage@0.1.9
 frozeman:template-var@1.3.0
 geojson-utils@1.0.8
+haloplatform:accounts@0.4.0
 hashanp:geopattern@0.0.1
 hot-code-push@1.0.4
 html-tools@1.0.9

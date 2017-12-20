@@ -70,7 +70,7 @@ Return an account you own, from a list of accounts
 **/
 Helpers.getOwnedAccountFrom = function(accountList){
     // Load the accounts owned by user and sort by balance
-    var accounts = EthAccounts.find({}, {sort: {balance: 1}}).fetch();
+    var accounts = HaloAccounts.find({}, {sort: {balance: 1}}).fetch();
     accounts.sort(Helpers.sortByBalance);
 
     // Looks for them among the wallet account owner
@@ -166,7 +166,7 @@ Check if the given wallet is a watch only wallet, by checking if we are one of o
 @param {String} id the id of the wallet to check
 */
 Helpers.isWatchOnly = function(id) {
-    return !Wallets.findOne({_id: id, owners: {$in: _.pluck(EthAccounts.find({}).fetch(), 'address')}});
+    return !Wallets.findOne({_id: id, owners: {$in: _.pluck(HaloAccounts.find({}).fetch(), 'address')}});
 };
 
 /**
@@ -191,7 +191,7 @@ Helpers.showNotification = function(i18nText, values, callback) {
 };
 
 /**
-Gets the docuement matching the given addess from the EthAccounts or Wallets collection.
+Gets the docuement matching the given addess from the HaloAccounts or Wallets collection.
 
 @method getAccountByAddress
 @param {String} address
@@ -201,11 +201,11 @@ Helpers.getAccountByAddress = function(address, reactive) {
     var options = (reactive === false) ? {reactive: false} : {};
     if(_.isString(address))
         address = address.toLowerCase();
-    return EthAccounts.findOne({address: address}, options) || Wallets.findOne({address: address}, options) || CustomContracts.findOne({address: address}, options);
+    return HaloAccounts.findOne({address: address}, options) || Wallets.findOne({address: address}, options) || CustomContracts.findOne({address: address}, options);
 };
 
 /**
-Gets the docuement matching the given query from the EthAccounts or Wallets collection.
+Gets the docuement matching the given query from the HaloAccounts or Wallets collection.
 
 @method getAccounts
 @param {String} query
@@ -215,11 +215,11 @@ Helpers.getAccounts = function(query, reactive) {
     var options = (reactive === false) ? {reactive: false} : {};
     if(_.isString(query.address))
         query.address = query.address.toLowerCase();
-    return EthAccounts.find(query, options).fetch().concat(Wallets.find(query, options).fetch());
+    return HaloAccounts.find(query, options).fetch().concat(Wallets.find(query, options).fetch());
 };
 
 /**
-Gets the docuement matching the given addess from the EthAccounts or Wallets collection and returns its name or address.
+Gets the docuement matching the given addess from the HaloAccounts or Wallets collection and returns its name or address.
 
 @method getAccountNameByAddress
 @param {String} name or address

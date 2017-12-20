@@ -37,7 +37,7 @@ Template['elements_account'].helpers({
     @method (account)
     */
     'account': function(){
-        return EthAccounts.findOne(this.account) || Wallets.findOne(this.account) || CustomContracts.findOne(this.account);
+        return HaloAccounts.findOne(this.account) || Wallets.findOne(this.account) || CustomContracts.findOne(this.account);
     },
     /**
     Get all tokens
@@ -79,7 +79,7 @@ Template['elements_account'].helpers({
             // remove the "new" field
             var id = this._id;
             Meteor.setTimeout(function() {
-                EthAccounts.update(id, {$unset: {new: ''}});
+                HaloAccounts.update(id, {$unset: {new: ''}});
                 Wallets.update(id, {$unset: {new: ''}});
                 CustomContracts.update(id, {$unset: {new: ''}});
             }, 1000);

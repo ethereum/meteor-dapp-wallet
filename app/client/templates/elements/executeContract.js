@@ -305,7 +305,7 @@ Template['elements_executeContract_function'].events({
                 if(contracts['ct_'+ selectedAccount._id]) {
 
                     // Load the accounts owned by user and sort by balance
-                    var accounts = EthAccounts.find({name: {$exists: true}}, {sort: {name: 1}}).fetch();
+                    var accounts = HaloAccounts.find({name: {$exists: true}}, {sort: {name: 1}}).fetch();
                     accounts.sort(Helpers.sortByBalance);
 
                     // Looks for them among the wallet account owner

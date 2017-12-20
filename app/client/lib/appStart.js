@@ -81,7 +81,7 @@ var connect = function(){
             if(e || !sync) {
                 connectToNode();
             } else {
-                EthAccounts.init();
+                HaloAccounts.init();
             }
         });
 

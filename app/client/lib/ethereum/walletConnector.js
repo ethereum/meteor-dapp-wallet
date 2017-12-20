@@ -59,14 +59,14 @@ connectToNode = function(){
     console.time('startNode')
     console.log('Connect to node...');
 
-    EthAccounts.init();
+    HaloAccounts.init();
     EthBlocks.init();
     EthTools.ticker.start({
       extraParams: (typeof mist !== 'undefined') ? 'Mist-'+ mist.version : '',
       currencies: ['BTC', 'USD', 'EUR', 'BRL', 'GBP']
     });
 
-    if (EthAccounts.find().count() > 0) {
+    if (HaloAccounts.find().count() > 0) {
         checkForOriginalWallet();
     }
 

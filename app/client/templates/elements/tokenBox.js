@@ -13,7 +13,7 @@ Template['elements_tokenBox'].helpers({
     */
     'formattedTotalBalance': function(e){
         // Get wallets and accounts, but not contracts
-        var walletsAndAccounts = _.map(Wallets.find().fetch().concat(EthAccounts.find().fetch()), function(account){  
+        var walletsAndAccounts = _.map(Wallets.find().fetch().concat(HaloAccounts.find().fetch()), function(account){  
                 if(!account.disabled) return account._id; 
             });
         // check the total balance of these accounts only

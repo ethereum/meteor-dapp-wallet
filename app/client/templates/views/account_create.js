@@ -27,7 +27,7 @@ Template['views_account_create'].onCreated(function(){
 
     // check if we are still on the correct chain
     Helpers.checkChain(function(error) {
-        if(error && (EthAccounts.find().count() > 0)) {
+        if(error && (HaloAccounts.find().count() > 0)) {
             checkForOriginalWallet();
         }
     });
@@ -50,7 +50,7 @@ Template['views_account_create'].helpers({
     @method (ownerAccounts)
     */
     'ownerAccounts': function(){
-        var accounts = EthAccounts.find({}, {sort: {balance: -1}}).fetch();
+        var accounts = HaloAccounts.find({}, {sort: {balance: -1}}).fetch();
         accounts.sort(Helpers.sortByBalance);
         return accounts;
     },
@@ -81,7 +81,7 @@ Template['views_account_create'].helpers({
     */
     'defaultOwner': function() {
         // Load the accounts owned by user and sort by balance
-        var accounts = EthAccounts.find({}, {sort: {balance: -1}}).fetch();
+        var accounts = HaloAccounts.find({}, {sort: {balance: -1}}).fetch();
         accounts.sort(Helpers.sortByBalance);        
 
         if (FlowRouter.getQueryParam('owners')) {

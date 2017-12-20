@@ -299,7 +299,7 @@ Template['views_account'].events({
             Wallets.update(this._id, {$set: {
                 name: text
             }});
-            EthAccounts.update(this._id, {$set: {
+            HaloAccounts.update(this._id, {$set: {
                 name: text
             }});
             CustomContracts.update(this._id, {$set: {

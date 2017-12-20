@@ -449,7 +449,7 @@ var setupContractFilters = function(newDocument, checkFromCreationBlock){
 
 
                             // PREVENT SHOWING pending confirmations, of WATCH ONLY WALLETS
-                            if(!(from = Wallets.findOne({address: log.address})) || !EthAccounts.findOne({address: {$in: from.owners}}))
+                            if(!(from = Wallets.findOne({address: log.address})) || !HaloAccounts.findOne({address: {$in: from.owners}}))
                                 return;
 
                             // add pending confirmation,
@@ -779,7 +779,7 @@ observeWallets = function(){
 
             // delete the all tx and pending conf
             _.each(Transactions.find({from: newDocument.address}).fetch(), function(tx){
-                if(!Wallets.findOne({transactions: tx._id}) && !EthAccounts.findOne({transactions: tx._id}))
+                if(!Wallets.findOne({transactions: tx._id}) && !HaloAccounts.findOne({transactions: tx._id}))
                     Transactions.remove(tx._id);
             });
             _.each(PendingConfirmations.find({from: newDocument.address}).fetch(), function(pc){

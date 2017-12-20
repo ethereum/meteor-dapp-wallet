@@ -130,9 +130,9 @@ Template['elements_transactions_row'].helpers({
     @param {String} account     The _id of the current account
     */
     'incomingTx': function(account){
-        var account = EthAccounts.findOne({_id: account}) || Wallets.findOne({_id: account});
+        var account = HaloAccounts.findOne({_id: account}) || Wallets.findOne({_id: account});
         return !!((account && this.from !== account.address) ||
-                  (!account && (EthAccounts.findOne({address: this.to}) || Wallets.findOne({address: this.to}))));
+                  (!account && (HaloAccounts.findOne({address: this.to}) || Wallets.findOne({address: this.to}))));
     },
     /**
     Returns the correct text for this transaction

@@ -115,7 +115,7 @@ Template['views_send'].onCreated(function(){
 
     // check if we are still on the correct chain
     Helpers.checkChain(function(error) {
-        if(error && (EthAccounts.find().count() > 0)) {
+        if(error && (HaloAccounts.find().count() > 0)) {
             checkForOriginalWallet();
         }
     });
@@ -204,7 +204,7 @@ Template['views_send'].onRendered(function(){
         // Ether tx estimation
         if(tokenAddress === 'ether') {
 
-            if(EthAccounts.findOne({address: address}, {reactive: false})) {
+            if(HaloAccounts.findOne({address: address}, {reactive: false})) {
                 web3.eth.estimateGas({
                     from: address,
                     to: to,
