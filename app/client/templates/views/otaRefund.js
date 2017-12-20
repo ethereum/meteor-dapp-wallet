@@ -144,8 +144,6 @@ Template['views_otaRefund'].events({
                     if (!error) {
                         var href = '/account/' + otaData.rfAddress;
 
-                        FlowRouter.go(href);
-
                         _.each(otaResult, function (ota, index) {
                             // console.log('index: ', index);
                             // console.log('txHash: ', txHash[index].hash);
@@ -153,6 +151,8 @@ Template['views_otaRefund'].events({
 
                             addTransactionAfterSend(txHash[index].hash, parseInt(ota.otaValue, 16), otaData.rfAddress, otaData.rfAddress, otaData.gasPrice, otaData.gas, '');
                         });
+
+                        FlowRouter.go(href);
 
                     } else {
                         console.log("err:", error);

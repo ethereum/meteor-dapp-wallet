@@ -13,8 +13,7 @@
                             {{#if ens}}
                                 <span>{{displayName}}</span>
                             {{else}}
-                                <em class="edit-name">{{displayName}}</em>
-                                <i class="edit-icon icon-pencil"></i>
+                                <em class="edit-name">{{displayName}}<i class="edit-icon icon-pencil"></i></em>
                             {{/if}}
                         </h1>
 
@@ -33,7 +32,6 @@
                         <div class="viwes-account-nav">
                             <p style="position: absolute;left: -100px;">
                                 {{#if hrefType}}
-                                    <!--<i class="icon-arrow-right" style="padding-right: 3px;"></i>-->
                                     <a  href="{{pathFor route='sendTo' address=(toChecksumAddress address)}}" title="{{toChecksumAddress address}}">
                                         <img class=" wanchain-transfer"/>
                                     <p style="margin: 0;margin-left: -5px;font-size: 14px;color: #929cb8;">{{i18n 'views.account.transfer'}}</p>
