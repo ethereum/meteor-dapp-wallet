@@ -20,11 +20,16 @@ Template['views_account'].onCreated(function () {
                     var otaValue = 0;
                     if (!e && result.length >0) {
                         _.each(result, function(ota){
-                            otaValue += parseInt(ota.value);
+                            otaValue += Number(ota.value);
                         });
                     }
                     TemplateVar.set(template,'otasValue',otaValue);
                     Session.set('otas', result);
+
+                    OTAs.upsert(waddress, {$set: {
+                            waddress: waddress,
+                            value: otaValue
+                    }});
                 }
             })
         }
@@ -97,13 +102,15 @@ Template['views_account'].helpers({
             // ? Helpers.formatNumberByDecimals(token.balances[this._id], token.decimals) +' '+ token.symbol
             // : false;
 
+            token.name = token.name ? token.name : "UNDEFINED";
             token.balance = false;
 
         var bal;
         if (Number(token.balances[this._id]) > 0) {
             bal = Helpers.formatNumberByDecimals(token.balances[this._id], token.decimals);
             var balType = Helpers.toFixed(bal);
-            token.balance = balType + ' ' + token.symbol;
+            token.balance = balType +
+                '<span style="display: inline-block;color: #02a8f3;font-size: 13px;">' + token.symbol + '<span/>';
         }
     });
 
@@ -139,15 +146,25 @@ Template['views_account'].helpers({
 
 });
 
-var accountStartScanEventHandler = function(e){
+var accountStartScanEventHandler = function(e, template){
 
     if (typeof mist !== 'undefined') {
-        mist.startScan(FlowRouter.getParam('address'), function(err, result){
-            if(err){
-                console.error(err);
-            }
-            console.log("startscan:", result);
-    })
+
+        if (!TemplateVar.get('sending')) {
+
+            // show loading
+            mist.popWindowEvents(function (bool) {
+                TemplateVar.set(template, 'sending', bool);
+            });
+
+            mist.startScan(FlowRouter.getParam('address'), function(err, result){
+                if(err){
+                    console.error(err);
+                }
+                console.log("startscan:", result);
+            })
+        }
+
     } else {
         console.warn("mist is undefiend")
     }

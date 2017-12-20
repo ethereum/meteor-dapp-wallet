@@ -81,7 +81,6 @@ Template['modal_selectGasPrice'].helpers({
         var route = FlowRouter.getRouteName();
 
         if (route === 'otaRefund') {
-            console.log('session: ', Session.get('otas'));
             var otaNum = Session.get('otas').length;
 
             return  ' x ' + otaNum;

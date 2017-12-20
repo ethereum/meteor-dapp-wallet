@@ -43,10 +43,10 @@ agnito:simptip
 ethereum:elements
 ethereum:web3
 ethereum:blocks
-wanchain:accounts
 ethereum:dapp-styles
 jrudio:bluebird
 tap:i18n-bundler
 numeral:numeral
 numeral:languages
 hashanp:geopattern
+wanchain:accounts

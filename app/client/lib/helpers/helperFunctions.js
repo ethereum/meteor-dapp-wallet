@@ -521,15 +521,6 @@ Helpers.transferBanlance = function (number, format, unit) {
     return balance + ' WAN';
 };
 
-Helpers.otasBalance = function (number, otaTotal, format, unit) {
-
-    var balance = EthTools.formatBalance(number, format, unit).split(' ')[0];
-
-    var amount = EthTools.formatBalance(otaTotal, format, unit);
-
-    return parseFloat(balance) + parseFloat(amount) + ' WAN';
-};
-
 
 Helpers.toFixed = function (balance) {
     var balance = balance.replace(/,/g,'');
@@ -564,4 +555,19 @@ Helpers.stampToDate = function (meta) {
     var create_time = y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
 
     return create_time;
+};
+
+Helpers.totalBalance = function (waddress, balance) {
+    var address = waddress.slice(2);
+
+    var otaValue = 0;
+
+    var ota = OTAs.findOne({waddress: address});
+    if (ota) {
+        otaValue = ota.value;
+    }
+
+    var result = Number(otaValue) + Number(balance);
+
+    return result;
 };

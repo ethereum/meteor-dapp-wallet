@@ -33,9 +33,21 @@ Meteor.startup(function() {
                                 };
                                 EthAccounts.insert(insert);
                             }
+
+                            FlowRouter.go('dashboard');
+                        } else {
+                            GlobalNotification.error({
+                                content: e,
+                                duration: 8
+                            });
                         }
                     });
 
+                });
+            } else {
+                GlobalNotification.error({
+                    content: e,
+                    duration: 8
                 });
             }
         })

@@ -8,11 +8,13 @@
         <div style="padding: 20px; padding-top: 40px;">
             {{#each selectAccount}}
                 {{> dapp_identicon identity=address class="dapp-small"}}
-                <p style="display: inline-block;margin-left: 10px;">
-                    <span style="display: block;font-weight: 600;">{{name}}</span>
-                    <span style="color:#929cb8;">{{address}}</span>
-                <div class="otaRefund-account">{{> elements_balance balance=balance changeUnit=true showAllDecimals=true}}</div>
-                </p>
+                <a href="{{pathFor route='account' address=address}}">
+                    <p style="display: inline-block;margin-left: 10px;">
+                        <span style="display: block;font-weight: 600;">{{name}}</span>
+                        <span style="color:#929cb8;">{{address}}</span>
+                    <div class="otaRefund-account">{{> elements_balance balance=balance changeUnit=true showAllDecimals=true}}</div>
+                    </p>
+                </a>
             {{/each}}
         </div>
 
@@ -48,15 +50,19 @@
             <div class="col col-12 mobile-full send-info" style="padding-left: 0; margin-top: 10px;">
                 <strong style="display: block" class="views_send_strong"><div class="triangle"></div>Total</strong>
                 <div class="dapp-select-gas-price">
-                    <span class="amount">{{otasBalance 0 otaTotal "0,0.00[0000000000000000] UNIT" }}</span>
+                    <span class="amount">{{otaTotal}}</span>
                 </div>
 
                 <div class="dapp-clear-fix"></div>
             </div>
 
             <!-- a button type="submit" will send the form -->
-            <button type="submit" class="dapp-block-button views_send_button">
-                {{i18n "views.otaRefund.send"}}
+            <button type="submit" class="dapp-block-button views_send_button" >
+                {{#if TemplateVar.get "sending"}}
+                    {{i18n 'buttons.sending'}}
+                {{else}}
+                    {{i18n "views.otaRefund.send"}}
+                {{/if}}
             </button>
 
         </form>
