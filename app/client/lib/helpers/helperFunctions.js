@@ -482,7 +482,7 @@ Helpers.getENSName = function(address, callback) {
         // get a resolver address for that name
         ens.resolver(node, function(err, resolverAddress) {
             if (err) callback(err, null, null);
-            else if (resolverAddress == 0) callback('no resolver address', null, null);
+            else if (resolverAddress == 0 || resolverAddress == '0x' || resolverAddress == '0X') callback('no resolver address', null, null);
             else {
                 // if you find one, find the name on that resolver
                 resolverContract.at(resolverAddress).name(node, function(error, name) {
