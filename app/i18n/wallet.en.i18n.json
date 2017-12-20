@@ -56,7 +56,8 @@
                 "receive": "Receive",
                 "addWallet": "Add wallet contract",
                 "addAccount": "Add account",
-                "addToken": "Watch token"
+                "addToken": "Watch token",
+                "account": "Account"
             },
             "texts": {
                 "note": "Note",

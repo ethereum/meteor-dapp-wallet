@@ -139,14 +139,13 @@ Template['layout_header'].events({
 
                 mist.requestAccount(null);
             }
-        }
 
-        if (typeof mist !== "undefined") {
-            requestAccount();
-        } else {
-            alert("create account in mist");
+            if (typeof mist !== "undefined") {
+                requestAccount();
+            } else {
+                alert("create account in mist");
+            }
         }
-
     }
 });
 

@@ -266,12 +266,11 @@ Template['elements_account'].events({
 
                 mist.changePassword(name)
             }
-        }
 
-        if (typeof mist !== "undefined") {
-            changePassword()
+            if (typeof mist !== "undefined") {
+                changePassword()
+            }
         }
-
     }
 
 });
