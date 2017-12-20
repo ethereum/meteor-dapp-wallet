@@ -619,9 +619,20 @@ Template['views_send'].events({
                     duration: 2
                 });
 
-            if(tokenAddress === 'ether') {
+            var allBalance = TemplateVar.get('total')[0].balance;
 
-                var allBalance = TemplateVar.get('total')[0].balance;
+            var total = Number(estimatedGas) * Number(gasPrice) + Number(amount);
+
+            console.log('allBalance', allBalance);
+            console.log('total', total);
+
+            if(Number(allBalance) < total)
+                return GlobalNotification.warning({
+                    content: 'i18n:wallet.send.error.notEnoughFunds',
+                    duration: 2
+                });
+
+            if(tokenAddress === 'ether') {
 
                 if((_.isEmpty(amount) || amount === '0' || !_.isFinite(amount)) && !data)
                     return GlobalNotification.warning({
@@ -630,14 +641,6 @@ Template['views_send'].events({
                     });
 
                 if(new BigNumber(amount, 10).gt(new BigNumber(selectedAccount.balance, 10)))
-                    return GlobalNotification.warning({
-                        content: 'i18n:wallet.send.error.notEnoughFunds',
-                        duration: 2
-                    });
-
-                var total = Number(estimatedGas) * Number(gasPrice) + Number(amount);
-
-                if(Number(allBalance) < total)
                     return GlobalNotification.warning({
                         content: 'i18n:wallet.send.error.notEnoughFunds',
                         duration: 2
