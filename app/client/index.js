@@ -44,9 +44,9 @@ Meteor.startup(function() {
                     });
 
                 });
-            } else {
+            } else if(e.message) {
                 GlobalNotification.error({
-                    content: e,
+                    content: e.message,
                     duration: 8
                 });
             }
