@@ -93,7 +93,7 @@ Template['elements_account'].helpers({
     'account': function(){
     	  var account = EthAccounts.findOne(this.account);
 
-    	  if ( FlowRouter.getRouteName() === 'dashboard') {
+    	  if (account && FlowRouter.getRouteName() === 'dashboard') {
             // var tokenBalance = 0;
 
             // var query = {};
