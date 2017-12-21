@@ -8,7 +8,9 @@ Template Controllers
 var sha3 = function(str, opt) {
   return '0x' + web3.sha3(str, opt).replace('0x', '');
 };
-
+function checkZeroAddress(address) {
+    return address == 0 || address == '0x' || address == '0X';
+}
 function namehash(name) {
   var node = '0x0000000000000000000000000000000000000000000000000000000000000000';
   if (name != '') {
@@ -32,7 +34,7 @@ function getAddr(name, ens, callback) {
   var node = namehash(name);
   // get a resolver address for that name
   ens.resolver(node, function(err, resolverAddress) {
-    if (!err && resolverAddress != 0) {
+    if (!err && !checkZeroAddress(resolverAddress)) {
       // if you find one, find the addr of that resolver
       resolverContract.at(resolverAddress).addr(node, function(error, result) {
         if (!err && result != 0 && callback) {
@@ -49,7 +51,7 @@ function getName(address, ens, callback) {
   var node = namehash(address.toLowerCase().replace('0x', '') + '.addr.reverse');
   // get a resolver address for that name
   ens.resolver(node, function(err, resolverAddress) {
-    if (!err && resolverAddress != 0) {
+    if (!err && !checkZeroAddress(resolverAddress)) {
       // if you find one, find the name on that resolver
       resolverContract.at(resolverAddress).name(node, function(error, result) {
         if (!err && result != 0 && callback) {

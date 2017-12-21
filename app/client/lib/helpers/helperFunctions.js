@@ -461,7 +461,9 @@ var resolverContractAbi = [{"constant":true,"inputs":[{"name":"interfaceID","typ
 
 var ensAddress = '0x314159265dd8dbb310642f98f50c066173c1259b';
 
-
+function checkZeroAddress(address) {
+    return address == 0 || address == '0x' || address == '0X';
+}
 /**
 Returns a string, given an address
 
@@ -482,7 +484,7 @@ Helpers.getENSName = function(address, callback) {
         // get a resolver address for that name
         ens.resolver(node, function(err, resolverAddress) {
             if (err) callback(err, null, null);
-            else if (resolverAddress == 0 || resolverAddress == '0x' || resolverAddress == '0X') callback('no resolver address', null, null);
+            else if (checkZeroAddress(resolverAddress)) callback('no resolver address', null, null);
             else {
                 // if you find one, find the name on that resolver
                 resolverContract.at(resolverAddress).name(node, function(error, name) {
@@ -494,12 +496,12 @@ Helpers.getENSName = function(address, callback) {
                         // get a resolver address for that name
                         ens.resolver(node, function (err, resolverAddress) {
                             if (err) callback(err, null, null);
-                            else if (resolverAddress == 0) callback('Name has no resolver', null, null);
+                            else if (checkZeroAddress(resolverAddress)) callback('Name has no resolver', null, null);
                             else {
                                 // if you find one, find the addr of that resolver
                                 resolverContract.at(resolverAddress).addr(node, function(error, returnAddr) {
                                     if (err) callback(err, null, null);
-                                    else if (returnAddr == 0) callback('No address returned', null, null);
+                                    else if (checkZeroAddress(returnAddr)) callback('No address returned', null, null);
                                     else {
                                         callback(error, name, returnAddr);
                                     }
