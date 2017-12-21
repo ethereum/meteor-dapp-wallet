@@ -17,7 +17,7 @@
 
 
     <h3 style=" margin-bottom: 5px;font-size: 12px;font-weight: 200;">{{i18n "wallet.modals.addToken.decimalPlaces"}}</h3>
-    <input type="number" min="0" step="1" name="division" value="{{decimals}}" placeholder="2" class="decimals" style=" background: #f7f8fc;border-bottom: 0;width: 100%;">
+    <input type="number" min="0" step="1" name="division" value="{{decimals}}" readonly="{{#if readonly}}readonly{{/if}}" placeholder="2" class="decimals" style=" background: #f7f8fc;border-bottom: 0;width: 100%;">
 
     <h3 style=" margin-bottom: 5px;font-size: 12px;font-weight: 200;">{{i18n "wallet.modals.addToken.preview"}}</h3>
 

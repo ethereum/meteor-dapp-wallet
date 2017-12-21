@@ -7,6 +7,8 @@ Modal to add token.
 
 
 Template['views_modals_addToken'].onRendered(function(){
+    TemplateVar.set('readonly', false);
+
     if(!this.data || !this.data.address)
         this.$('input[name="address"]').focus();
 });
@@ -30,6 +32,14 @@ Template['views_modals_addToken'].helpers({
             token.name = TemplateVar.get('name');
 
         return token;
+    },
+
+    'readonly': function () {
+
+        if(this.address)
+            TemplateVar.set('readonly', true);
+
+        return TemplateVar.get('readonly');
     }
 });
 
@@ -97,6 +107,8 @@ Template['views_modals_addToken'].events({
         tokenInstance.decimals(function(e, i){
             template.$('input.decimals').val(i).change();
         });
+
+        TemplateVar.set('readonly', true);
 
     },    
     /**
