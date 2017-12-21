@@ -44,10 +44,18 @@ Template['views_otaRefund'].helpers({
 		var otaTotal = 0;
 
 		_.each(otas, function(ota){
-            otaTotal += parseFloat(parseInt(ota.value, 16));
+            if (ota.value.slice(2) === '0x') {
+                otaTotal += parseFloat(parseInt(ota.value, 16));
+            } else {
+                otaTotal += parseFloat(Number(ota.value));
+            }
+
 		});
 
     	TemplateVar.set('otaTotal', otaTotal);
+
+    	console.log('otaTotal', otaTotal);
+        console.log('formatBalance', EthTools.formatBalance(otaTotal, '0,0.00'));
 
 		return EthTools.formatBalance(otaTotal, '0,0.00') + ' WAN';
 	},
