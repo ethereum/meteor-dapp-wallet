@@ -619,19 +619,6 @@ Template['views_send'].events({
                     duration: 2
                 });
 
-            var allBalance = TemplateVar.get('total')[0].balance;
-
-            var total = Number(estimatedGas) * Number(gasPrice) + Number(amount);
-
-            console.log('allBalance', allBalance);
-            console.log('total', total);
-
-            if(Number(allBalance) < total)
-                return GlobalNotification.warning({
-                    content: 'i18n:wallet.send.error.notEnoughFunds',
-                    duration: 2
-                });
-
             if(tokenAddress === 'ether') {
 
                 if((_.isEmpty(amount) || amount === '0' || !_.isFinite(amount)) && !data)
@@ -663,6 +650,19 @@ Template['views_send'].events({
                         duration: 2
                     });
             }
+
+            var allBalance = TemplateVar.get('total')[0].balance;
+
+            var total = Number(estimatedGas) * Number(gasPrice) + Number(amount);
+
+            console.log('allBalance', allBalance);
+            console.log('total', total);
+
+            if(Number(allBalance) < total)
+                return GlobalNotification.warning({
+                    content: 'i18n:wallet.send.error.notEnoughFunds',
+                    duration: 2
+                });
 
             // The function to send the transaction
             var sendTransaction = function(estimatedGas){

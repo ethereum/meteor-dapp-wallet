@@ -24,7 +24,7 @@ Template['views_otaRefund'].helpers({
 
     'selectAccount': function () {
 
-        var address = FlowRouter.getRouteName() === 'dashboard' ? FlowRouter.getParam('address') : FlowRouter.getParam('address').toLowerCase();
+        var address = FlowRouter.getParam('address');
         var accounts = EthAccounts.find({balance:{$ne:"0"}, address: address}, {sort: {balance: 1}}).fetch();
 
         TemplateVar.set('accounts', accounts);
@@ -97,20 +97,20 @@ Template['views_otaRefund'].events({
 
                 if (Number(accounts[0].balance) < 5400000000000000) {
                     return GlobalNotification.warning({
-                        content: "Sorry, your balance is running low.",
+                        content: 'i18n:wallet.send.error.notEnoughFunds',
                         duration: 8
                     });
                 }
 
                 if (Number(accounts[0].balance) < fee) {
                     return GlobalNotification.warning({
-                        content: "Sorry, your balance is lower than fee, pls change the fee.",
+                        content: "Your balance is lower than fee, pls change the fee or recharge the account.",
                         duration: 8
                     });
                 }
             } else {
                 return GlobalNotification.warning({
-                    content: "Sorry, your balance is running low.",
+                    content: 'i18n:wallet.send.error.notEnoughFunds',
                     duration: 8
                 });
             }
