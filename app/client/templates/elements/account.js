@@ -229,7 +229,7 @@ Template['elements_account'].events({
     'click #transfer': function (e) {
 
         return GlobalNotification.warning({
-            content: "This public address's balance is 0, can not to transfer",
+            content: "This public address's balance is 0, can not transfer",
             duration: 2
         });
     },

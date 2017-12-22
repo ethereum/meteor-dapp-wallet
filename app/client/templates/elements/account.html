@@ -22,10 +22,10 @@
 				    {{#if isVulnerable}}
 					    <span class="red">
                         <i class="icon-info"></i>
-						    {{displayName}}
+						    {{displayName.substr 0 10}}
                     </span>
 				    {{else}}
-					    {{displayName}}
+					    {{displayName.substr 0 10}}
 				    {{/if}}
 			    </h3>
                 <p class="ele-p">
