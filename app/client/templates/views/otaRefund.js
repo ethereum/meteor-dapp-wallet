@@ -157,7 +157,15 @@ Template['views_otaRefund'].events({
                             // console.log('txHash: ', txHash[index].hash);
                             // console.log('otaValue: ', parseInt(ota.otaValue, 16));
 
-                            addTransactionAfterSend(txHash[index].hash, parseInt(ota.otaValue, 16), otaData.rfAddress, otaData.rfAddress, otaData.gasPrice, otaData.gas, '');
+                            var value;
+
+                            if (ota.otaValue.slice(2) === '0x') {
+                                value = parseFloat(parseInt(ota.otaValue, 16));
+                            } else {
+                                value = parseFloat(Number(ota.otaValue));
+                            }
+
+                            addTransactionAfterSend(txHash[index].hash, value, otaData.rfAddress, otaData.rfAddress, otaData.gasPrice, otaData.gas, '');
                         });
 
                         FlowRouter.go(href);
