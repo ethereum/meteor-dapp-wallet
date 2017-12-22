@@ -236,6 +236,17 @@ Template['views_account'].events({
      Clicking the name, will make it editable
      @event click .edit-name
      */
+
+    'click .edit-icon': function (e) {
+
+        var edit = document.getElementById('edit-name');
+        $(edit).attr('contenteditable','true');
+
+        var text = edit.innerHTML;
+        edit.focus();
+        edit.value = text;
+    },
+
     'click .edit-name': function(e){
         // make it editable
         $(e.currentTarget).attr('contenteditable','true');
@@ -245,6 +256,7 @@ Template['views_account'].events({
      @event keypress .edit-name
      */
     'keypress .edit-name': function(e){
+
         if(e.keyCode === 13)
             e.preventDefault();
     },
@@ -253,8 +265,10 @@ Template['views_account'].events({
      @event blur .edit-name, keyup .edit-name
      */
     'blur .edit-name, keyup .edit-name': function(e){
+
+        var $el = $(e.currentTarget);
+
         if(!e.keyCode || e.keyCode === 13) {
-            var $el = $(e.currentTarget);
             var text = $el.text();
 
             if(_.isEmpty(text)) {
