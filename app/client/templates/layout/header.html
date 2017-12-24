@@ -1,11 +1,11 @@
 <template name="layout_header">
     <nav>
         <ul>
-            <li>
+            <li style="cursor: auto;">
                 <img class=" wanchain-log-small wanchain-logo" />
             </li>
-            
-            <li class="block-info dapp-flex-item  {{#if TemplateVar.get 'syncing'}}syncing{{/if}}" style="text-align: left">
+
+            <li class="block-info dapp-flex-item  {{#if TemplateVar.get 'syncing'}}syncing{{/if}}" style="text-align: left; cursor: auto;">
                 <div style="display: inline-block;padding: 3px 10px;border-radius: 12px;background: #f7f8fc;">
                     {{#if isWalletMode}}
 

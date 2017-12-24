@@ -13,10 +13,10 @@ $(window).on('scroll', function() {
     
     if( scrollPosition > 150 ) {
         $('.dapp-sticky-bar').addClass('sticky');
-        $('.dapp-header').addClass('dapp-small');
+        // $('.dapp-header').addClass('dapp-small');
         $('.wanchain-logo').addClass('wanchain-log-small');
     }  else if( scrollPosition > 48 ) {
-        $('.dapp-header').addClass('dapp-small');
+        // $('.dapp-header').addClass('dapp-small');
         $('.wanchain-logo').addClass('wanchain-log-small');
         $('.dapp-sticky-bar').removeClass('sticky');
     } else {
