@@ -4,7 +4,7 @@
             {{> dapp_identicon identity=address class="dapp-tiny"}} 
             {{#if name}}
                 <!--<a href="{{pathFor route='account' address=address}}">{{displayName}}</a>-->
-	              <span>{{displayName}}</span>
+	              <span>{{displayName.substr 0 26}}</span>
             {{else}}
                 {{tryENS}}
                 <!--<a href="{{pathFor route='sendTo' address=address}}" title="{{address}}">{{address}}</a>-->

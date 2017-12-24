@@ -10,7 +10,7 @@
                 {{> dapp_identicon identity=address class="dapp-small"}}
                 <a href="{{pathFor route='account' address=address}}">
                     <p style="display: inline-block;margin-left: 10px;">
-                        <span style="display: block;font-weight: 600;">{{name}}</span>
+                        <span style="display: block;font-weight: 600;">{{name.substr 0 26}}</span>
                         <span style="color:#929cb8;">{{address}}</span>
                     <div class="otaRefund-account">{{> elements_balance balance=balance changeUnit=true showAllDecimals=true}}</div>
                     </p>
@@ -22,7 +22,7 @@
         <form class="account-send-form" action="about:blank" target="dapp-form-helper-iframe" autocomplete="on">
 
             <div class="viwes-account-header">
-                <div class="triangle"></div><strong class="views_send_strong">REFUND FROM OTAS</strong>
+                <div class="triangle"></div><strong class="views_send_strong">REDEEM FROM OTAS</strong>
                 <table class="token-list dapp-zebra">
                     <tbody>
                     {{#each otaList}}

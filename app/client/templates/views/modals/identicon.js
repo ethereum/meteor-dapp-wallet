@@ -25,6 +25,7 @@ Template['dapp_waddress_identicon'].helpers({
     @method (identity)
     */
     'identity': function(identity){
+
         return (_.isString(this.identity)) ? this.identity.toLowerCase() : this.identity;
     },
     /**

@@ -15,7 +15,7 @@
 
                 <a href="{{pathFor route='account' address=address}}">
                     <p style="display: inline-block;margin-left: 10px;position: relative;top: -10px;">
-                        <span style="display: block;font-weight: 600;">{{name}}</span>
+                        <span style="display: block;font-weight: 600;">{{name.substr 0 26}}</span>
                         <span style="color:#929cb8;">{{address}}</span>
                     </p>
                 </a>
@@ -88,9 +88,9 @@
                     {{#unless deployContract}}
                         <div class="triangle"></div><strong class="views_send_strong">{{i18n 'wallet.send.to'}}</strong>
                         {{#if selectTransaction}}
-                            {{> dapp_addrInput placeholder="the recipient address which shorter one is for ordinary transaction." name="to" autofocus=true class="to"}}
+                            {{> dapp_addrInput placeholder=" Please paste public address here" name="to" autofocus=true class="to"}}
                         {{else}}
-                            {{> dapp_waddressInput placeholder="the recipient address which longer for private transaction." name="to" autofocus=true class="to"}}
+                            {{> dapp_waddressInput placeholder="Please paste private address here" name="to" autofocus=true class="to"}}
                         {{/if}}
                     {{/unless}}
                 </div>

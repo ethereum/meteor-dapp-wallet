@@ -26,7 +26,7 @@ Template.dapp_waddressInput.onRendered(function() {
 	}
 });
 
-Template.dapp_addressInput.helpers({
+Template.dapp_waddressInput.helpers({
 	/**
 	 Return the to address
 
@@ -93,6 +93,7 @@ Template.dapp_waddressInput.events({
 
 		if (regex.test(value.toLowerCase())) {
 			TemplateVar.set('isValid', true);
+            TemplateVar.set('value', value.toLowerCase());
 
 			e.currentTarget.value = value;
 		}  else {

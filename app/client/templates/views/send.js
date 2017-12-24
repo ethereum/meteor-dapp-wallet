@@ -640,6 +640,14 @@ Template['views_send'].events({
                 tokenAmount = amount;
                 amount = 0;
 
+                // console.log('tokenAmount', tokenAmount);
+
+                if(_.isEmpty(tokenAmount) || tokenAmount === '0')
+                    return GlobalNotification.warning({
+                        content: 'i18n:wallet.send.error.noAmount',
+                        duration: 2
+                    });
+
                 var token = Tokens.findOne({address: tokenAddress}),
                     tokenBalance = token.balances[selectedAccount._id] || '0';
 
@@ -706,6 +714,8 @@ Template['views_send'].events({
                         } else {
                             // EthElements.Modal.hide();
 
+                            console.log('err1: ', error.message);
+
                             GlobalNotification.error({
                                 content: error.message,
                                 duration: 8
@@ -763,6 +773,7 @@ Template['views_send'].events({
                             } else {
 
                                 // EthElements.Modal.hide();
+                                console.log('err2: ', error.message);
 
                                 GlobalNotification.error({
                                     content: error.message,
@@ -789,6 +800,7 @@ Template['views_send'].events({
                             }else {
                                 // EthElements.Modal.hide();
                                 // console.log("generateOneTimeAddress error:",error);
+                                console.log('err3: ', error.message);
                                 GlobalNotification.error({
                                     content: error.message,
                                     duration: 8

@@ -3,7 +3,7 @@
         <input type="text" name="{{name}}" placeholder="{{placeholder}}" class="{{class}} {{#unless TemplateVar.get 'isValid'}}dapp-error{{/unless}} {{#unless TemplateVar.get 'isChecksum'}} dapp-non-checksum {{/unless}}" {{additionalAttributes}} value="{{value}}" title="{{#unless TemplateVar.get 'isChecksum'}}{{i18nText}}{{/unless}}" style="background-color: #f7f8fc;border: solid 0px #f7f8fc;">
 
         {{#if TemplateVar.get 'hasName'}}
-        <span class='ens-name'>{{ensDisplay}}</span>
+            <span class='ens-name'>{{ensDisplay}}</span>
         {{/if}}
 
         {{#if TemplateVar.get "isValid"}}
