@@ -13,7 +13,7 @@
                 "title": "Balance",
                 "des": "in Public Address",
                 "ota": "in OTAs",
-                "refund": "[Refund]"
+                "refund": "[Redeem]"
             },
             "transaction": {
                 "title": "Transaction List"
@@ -23,9 +23,9 @@
             "title": "Token transfer"
         },
         "otaRefund": {
-            "title": "<strong>Refund OTAs</strong>",
+            "title": "<strong>Redeem OTAs</strong>",
             "amountTotal": "Total",
-            "send": "Refund"
+            "send": "Redeem"
         },
         "send": {
             "title": "Transfer Details",
