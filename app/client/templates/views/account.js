@@ -108,8 +108,8 @@ Template['views_account'].helpers({
         var bal;
         if (Number(token.balances[this._id]) > 0) {
             bal = Helpers.formatNumberByDecimals(token.balances[this._id], token.decimals);
-            var balType = Helpers.toFixed(bal);
-            token.balance = balType +
+
+            token.balance = bal +
                 '<span>' + token.symbol + '<span/>';
         }
     });

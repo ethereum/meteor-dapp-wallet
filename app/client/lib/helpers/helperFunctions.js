@@ -523,17 +523,14 @@ Helpers.transferBanlance = function (number, format, unit) {
     return balance + ' WAN';
 };
 
-
-Helpers.toFixed = function (balance) {
-    var balance = balance.replace(/,/g,'');
-
-    // console.log('balTypebalance', Number(balance).toFixed(2));
-
-    return Number(balance).toFixed(2);
-};
-
 Helpers.totalBalance = function (waddress, balance) {
-    var address = waddress.slice(2);
+
+    var address;
+    if (waddress.substr(0, 2)  === '0x') {
+        address = waddress.slice(2);
+    } else {
+        address = waddress;
+    }
 
     var otaValue = 0;
 

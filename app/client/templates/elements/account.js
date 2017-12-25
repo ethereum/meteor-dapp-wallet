@@ -132,13 +132,14 @@ Template['elements_account'].helpers({
     'formattedTokenBalance': function(e){
         var account = Template.parentData(2);
 
-        var balance;
         if (this.balances && Number(this.balances[account._id]) > 0) {
-            balance = Helpers.formatNumberByDecimals(this.balances[account._id], this.decimals);
+            var balance = Helpers.formatNumberByDecimals(this.balances[account._id], this.decimals);
 
-            var balType = Helpers.toFixed(balance);
+            var balType = balance.replace(/,/g,'');
 
-            return balType + '<span> ' + this.symbol + '</span>';
+            balance = Number(balType.replace(/,/g,'')).toFixed(2);
+
+            return balance + '<span> ' + this.symbol + '</span>';
         } else {
             return false;
         }
