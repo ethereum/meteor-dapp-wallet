@@ -37,7 +37,14 @@ Template['views_otaRefund'].helpers({
 	 @method (otaList)
 	 */
 	'otaList': function(){
-		return TemplateVar.get('otas');
+	    var otas = TemplateVar.get('otas');
+	    _.each(otas, function (ota) {
+            if(!ota.timeStamp) {
+	            ota.timeStamp = Number(ota.meta.created.toString().substr(0, 10));
+            }
+        });
+
+		return otas;
 	},
 	'otaTotal': function () {
 		var otas = TemplateVar.get('otas');

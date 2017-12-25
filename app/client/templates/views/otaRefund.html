@@ -27,8 +27,8 @@
                     <tbody>
                     {{#each otaList}}
                         <tr>
-                            <td>{{stampToDate meta}}</td>
-                            <td>{{waddressTransfer address}}</td>
+                            <td>{{formatTime timeStamp 'LLLL'}}</td>
+                            <td>{{address.substr 0 42}}...</td>
                             <td>{{> elements_balance balance=value showAllDecimals=true}}</td>
                         </tr>
                     {{/each}}

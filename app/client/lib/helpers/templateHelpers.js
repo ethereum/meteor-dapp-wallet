@@ -229,8 +229,5 @@ Takes a camelcase and shows it with spaces
 Template.registerHelper('toSentence', Helpers.toSentence);
 
 Template.registerHelper('transferBanlance', Helpers.transferBanlance);
-
-Template.registerHelper('waddressTransfer', Helpers.waddressTransfer);
-Template.registerHelper('stampToDate', Helpers.stampToDate);
 Template.registerHelper('totalBalance', Helpers.totalBalance);
 

@@ -532,33 +532,6 @@ Helpers.toFixed = function (balance) {
     return Number(balance).toFixed(2);
 };
 
-Helpers.waddressTransfer = function (waddress) {
-    var start = waddress;
-    if (waddress.length >42) {
-        start = waddress.substr(0, 42);
-        start = start + '...'
-    }
-
-    return start
-};
-
-Helpers.stampToDate = function (meta) {
-
-    function add0(m){return m<10?'0'+m:m }
-
-    var time = new Date(meta.created);
-    var y = time.getFullYear();
-    var m = time.getMonth()+1;
-    var d = time.getDate();
-    var h = time.getHours();
-    var mm = time.getMinutes();
-    var s = time.getSeconds();
-
-    var create_time = y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
-
-    return create_time;
-};
-
 Helpers.totalBalance = function (waddress, balance) {
     var address = waddress.slice(2);
 

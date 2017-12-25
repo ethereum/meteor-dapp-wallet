@@ -63,7 +63,7 @@
 
         <td>
         {{#if to}}
-            <span class="address dapp-shorten-text">{{waddressTransfer to}}</span>
+            <span class="address dapp-shorten-text">{{to.substr 0 42}}...</span>
         {{else}}
             {{> elements_createdContractAt contractAddress=contractAddress deployedData=deployedData}}
         {{/if}}
