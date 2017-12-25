@@ -122,7 +122,7 @@ Helpers.formatNumberByDecimals = function(number, decimals){
     var numberFormat = '0,0.';
 
     for(i=0; i < Number(decimals); i++){
-        numberFormat += "0";
+        numberFormat += "00[0000000000000000] UNIT";
     }
 
     return EthTools.formatNumber(new BigNumber(number, 10).dividedBy(Math.pow(10, decimals)), numberFormat);
