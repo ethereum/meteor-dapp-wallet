@@ -54,6 +54,7 @@ body{
 .dapp-content {
     padding: @defaultPaddingVertical @defaultPaddingHorizontal*2.5 @defaultPaddingVertical*2;
     max-width: none;
+    margin-top: 60px;
 
     .dapp-container {
         max-width: none;
@@ -76,72 +77,73 @@ body {
         background: @colorWinBackgroundBlur;
     }
 }
-.app-blur {
-    .dapp-header {
-        background: #ffffff;
-    }
-}
-
-// WINDOWS
-.win32 {
-    .dapp-header {
-        background-color: @colorWinBackgroundFocus;
-        background-image: none;
-
-        &.dapp-small {
-            .box-shadow(none);
-            .dapp-shadow-small;
-        }
-    }
-}
-// LINUX
-.linux {
-    body {
-        background: @colorLinuxBackgroundFocus;
-
-        &.app-blur {
-            background: @colorLinuxBackgroundBlur;
-
-            .dapp-header {
-                background: @colorLinuxBackgroundBlur;
-            }
-        }
-    }
-    .dapp-header {
-        background-color: @colorLinuxBackgroundFocus;
-        .background-image(linear-gradient(to bottom,  @colorLinuxBackgroundFocus 20%, lighten(@colorLinuxBackgroundFocus, 5%) 90%));
-        color: @colorWhite;
-
-        nav a,
-        .block-info,
-        .wallet-balance h3,
-        .wallet-balance span.account-balance {
-            color: @colorWhite;
-        }
-    }
-}
-// MAC
-.darwin {
-    body {
-        background: @colorOSBackgroundBlur;
-
-        &.app-blur {
-            background: lighten(@colorOSBackgroundBlur, 10%);
-
-            .dapp-header {
-                background: @colorOSBackgroundBlur;
-            }
-        }
-    }
-    .dapp-header {
-        background-color: @colorOSBackgroundFocus;
-        .background-image(linear-gradient(to top,  @colorOSBackgroundFocus 20%, lighten(@colorOSBackgroundFocus, 10%) 90%));
-
-        nav > ul {
-            margin-left: @gridWidth;
-        }
-    }
-}
+//.app-blur {
+//    .dapp-header {
+//        background: #ffffff;
+//    }
+//}
+//
+//// WINDOWS
+//.win32 {
+//    .dapp-header {
+//        background-color: @colorWinBackgroundFocus;
+//        background-image: none;
+//
+//
+//        &.dapp-small {
+//            .box-shadow(none);
+//            .dapp-shadow-small;
+//        }
+//    }
+//}
+//// LINUX
+//.linux {
+//    body {
+//        background: @colorLinuxBackgroundFocus;
+//
+//        &.app-blur {
+//            background: @colorLinuxBackgroundBlur;
+//
+//            .dapp-header {
+//                background: @colorLinuxBackgroundBlur;
+//            }
+//        }
+//    }
+//    .dapp-header {
+//        background-color: @colorLinuxBackgroundFocus;
+//        .background-image(linear-gradient(to bottom,  @colorLinuxBackgroundFocus 20%, lighten(@colorLinuxBackgroundFocus, 5%) 90%));
+//        color: @colorWhite;
+//
+//        nav a,
+//        .block-info,
+//        .wallet-balance h3,
+//        .wallet-balance span.account-balance {
+//            color: @colorWhite;
+//        }
+//    }
+//}
+//// MAC
+//.darwin {
+//    body {
+//        background: @colorOSBackgroundBlur;
+//
+//        &.app-blur {
+//            background: lighten(@colorOSBackgroundBlur, 10%);
+//
+//            .dapp-header {
+//                background: @colorOSBackgroundBlur;
+//            }
+//        }
+//    }
+//    .dapp-header {
+//        background-color: @colorOSBackgroundFocus;
+//        .background-image(linear-gradient(to top,  @colorOSBackgroundFocus 20%, lighten(@colorOSBackgroundFocus, 10%) 90%));
+//
+//        nav > ul {
+//            margin-left: @gridWidth;
+//        }
+//    }
+//}
 
 .drag-bar {
     z-index: 31;
@@ -155,6 +157,10 @@ body {
 }
 
 .dapp-header {
+    background: #ffffff;
+    position: fixed;
+    width: 90%;
+    padding-top: 0;
     padding-right: @gridWidth * 2.5;
     padding-left: @gridWidth * 2.5;
     background: #ffffff;
@@ -880,25 +886,31 @@ body {
 }
 
 .dapp-header nav{
-    padding-bottom: 10px;
+    padding-bottom: 16px;
 }
 
 .dapp-header nav > ul > li.active a, .dapp-header nav > ul > li.active button, .dapp-header nav > ul > li button.active, .dapp-header nav > ul > li a.active {
     color: #4b90f7;
     border-bottom: 5px solid white;
-}
-
-.dapp-header nav >ul >li:hover {
     cursor: pointer;
 }
 
 
 .dapp-header nav > ul a, .dapp-header nav > ul a:visited, .dapp-header nav > ul button {
     color: #b7a6a6;
+    padding: 5px;
 }
 
 .dapp-header nav > ul a:focus, .dapp-header nav > ul a:visited:focus, .dapp-header nav > ul button:focus {
     border-color: white;
+}
+
+.dapp-header-div{
+    padding: 3px 10px;
+    border-radius: 12px;
+    background: #f7f8fc;
+    float: left;
+    margin-bottom: -5px;
 }
 
 /* #### Small wallet #### */
@@ -921,5 +933,4 @@ body {
         font-size: 75%;
     }
 }
-
 

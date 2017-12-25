@@ -7,8 +7,8 @@
                 </a>
             </li>
 
-            <li class="block-info dapp-flex-item  {{#if TemplateVar.get 'syncing'}}syncing{{/if}}">
-                <div style="display: inline-block;padding: 3px 10px;border-radius: 12px;background: #f7f8fc;">
+            <li class="block-info dapp-flex-item  {{#if TemplateVar.get 'syncing'}}syncing{{/if}}" style="cursor: auto;">
+                <div class="dapp-header-div">
                     {{#if isWalletMode}}
 
                         {{#if $eq ($.Session.get "network") "test"}}
@@ -49,7 +49,7 @@
                 </a>
             </li>
 
-            <li>
+            <li style="cursor: pointer;">
                 <a class="header-account" style="padding: 2.5px 17px; margin-bottom: 7px;"> <span>{{i18n 'wallet.app.buttons.account'}}</span> </a>
             </li>
 
