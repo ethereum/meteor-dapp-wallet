@@ -1,5 +1,5 @@
 <template name="views_dashboard">
-    <div class="dapp-container" style="padding-top: 0">
+    <div class="dapp-container">
 
         <h1 class="account-h1"><div class="circle"></div><strong>{{{i18n "wallet.accounts.title"}}}</strong></h1>
 
@@ -11,7 +11,7 @@
         {{/if}}
 
         {{#if hasAccounts}}
-            <div style="margin-top: 60px;">
+            <div>
                 {{#each accounts}}
                     {{> elements_account account=_id}}
                 {{/each}}

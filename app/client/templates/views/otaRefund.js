@@ -47,14 +47,14 @@ Template['views_otaRefund'].helpers({
             if (ota.value.slice(2) === '0x') {
                 otaTotal += parseFloat(parseInt(ota.value, 16));
             } else {
-                otaTotal += parseFloat(Number(ota.value));
+                otaTotal += parseFloat(ota.value);
             }
 
 		});
 
     	TemplateVar.set('otaTotal', otaTotal);
 
-    	console.log('otaTotal', otaTotal);
+    	// console.log('otaTotal', otaTotal);
         console.log('formatBalance', EthTools.formatBalance(otaTotal, '0,0.00'));
 
 		return EthTools.formatBalance(otaTotal, '0,0.00') + ' WAN';
@@ -162,7 +162,7 @@ Template['views_otaRefund'].events({
                             if (ota.otaValue.slice(2) === '0x') {
                                 value = parseFloat(parseInt(ota.otaValue, 16));
                             } else {
-                                value = parseFloat(Number(ota.otaValue));
+                                value = parseFloat(ota.otaValue);
                             }
 
                             addTransactionAfterSend(txHash[index].hash, value, otaData.rfAddress, otaData.rfAddress, otaData.gasPrice, otaData.gas, '');
