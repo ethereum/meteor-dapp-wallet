@@ -191,8 +191,6 @@ input[type="checkbox"]::before, input[type="radio"]::before{
     display: inline-block;
     background-color: #4b90f7;
     border: solid 2px #c9e5f9;
-    //margin-bottom: 5px;
-    margin-right: 5px;
 }
 
 .viwes-account-line{
@@ -210,15 +208,19 @@ input[type="checkbox"]::before, input[type="radio"]::before{
 }
 
 .views_account_token {
-    background-image: linear-gradient(0deg, #1a90fc 0%, #00d2ff 100%);
-    box-shadow: 0px 6px 10px 0px rgba(15, 104, 170, 0.12);
-    border-radius: 20px;
-    color: #fff;
-    font-weight: 600;
-    text-align: center;
-    margin-bottom: 10px;
-    padding-bottom: 5px;
-    font-size: 12px;
+    font-family: MicrosoftYaHei;
+    color: #929cb8;
+    display: block;
+
+    //background-image: linear-gradient(0deg, #1a90fc 0%, #00d2ff 100%);
+    //box-shadow: 0px 6px 10px 0px rgba(15, 104, 170, 0.12);
+    //border-radius: 20px;
+    //color: #fff;
+    //font-weight: 600;
+    //text-align: center;
+    //margin-bottom: 10px;
+    //padding-bottom: 5px;
+    //font-size: 12px;
 }
 #views_account_token_balance{
     display: inline-block;
@@ -227,6 +229,13 @@ input[type="checkbox"]::before, input[type="radio"]::before{
     font-stretch: normal;
     letter-spacing: 1px;
     color: #3f454c;
+
+    span{
+        display: inline-block;
+        color: #02a8f3;
+        font-size: 13px;
+        margin-left: 5px;
+    }
 }
 
 .views_send_strong {
@@ -377,8 +386,8 @@ span.address {
   //}
 
   .viwes-account-balance-left{
-    float: left;
-    padding: 0.5em 1em;
+    //float: left;
+    padding: 0px 30px;
 
     img {
         background-image: url(/images/wanchain.png);
@@ -392,44 +401,37 @@ span.address {
     }
 
     p{
-      padding-left: 1em;
-      float: right;
-      line-height: 0;
-      span{
-        display: block;
-      }
-      .balance-span{
-          font-family: MicrosoftYaHei;
-          color: #929cb8;
-          line-height: 30px;
-      }
+        padding-left: 1em;
+        display: inline-block;
+        line-height: 0;
+
+        span{
+            display: block;
+        }
+
+        .balance-span{
+            font-family: MicrosoftYaHei;
+            color: #929cb8;
+            line-height: 30px;
+        }
     }
   }
 
   .viwes-account-balance-hr{
-      height: 5em;
+      height: 15px;
       background-color: #eff1f7;
-      margin: 0;
-      margin-left: 20px;
-      padding: 1px;
-      position: relative;
-      top: -0.5em;
+      margin: 0px 0px 10px 0px;
+      padding: 0.6px;
+      display: inline-block;
+      border: 0px solid #ffffff;
   }
 
   .viwes-account-balance-right{
-    float: left;
-    padding: 10px;
-
-    p{
-      padding-left: 0.5em;
-      position: relative;
-      top:-0.5em;
-      font-size: 20px;
-      span{
-        display: block;
-        max-width: 300px;
-      }
-    }
+      padding: 15px 20px 20px 10px;
+      display: inline-block;
+      background: #f7f8fc;
+      margin: 0 30px;
+      border-radius: 5px;
   }
 }
 

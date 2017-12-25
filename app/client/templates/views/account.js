@@ -110,7 +110,7 @@ Template['views_account'].helpers({
             bal = Helpers.formatNumberByDecimals(token.balances[this._id], token.decimals);
             var balType = Helpers.toFixed(bal);
             token.balance = balType +
-                '<span style="display: inline-block;color: #02a8f3;font-size: 13px;">' + token.symbol + '<span/>';
+                '<span>' + token.symbol + '<span/>';
         }
     });
 
