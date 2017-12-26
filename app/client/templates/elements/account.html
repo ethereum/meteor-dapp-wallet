@@ -29,13 +29,15 @@
 				    {{/if}}
 			    </h3>
                 <p class="ele-p">
+                    <span class="dapp-ele-address">public address:&nbsp;</span>
                     <span class="copyable-address{{address}} accountLink-span account-id {{#if creating}}creating{{/if}}"
                           style="padding-top: 5px;color: #929cb8;font-size: 14px;">{{toChecksumAddress address}}</span>
                     <img class="copy-to-clipboard-button copy-address" name={{address}} />
                     <img class="qrcode-button qrcode-address" name={{address}} />
                 </p>
                 <p style="margin-top: 5px;margin-bottom: 0;width: 55%;">
-                <span class="copyable-address{{waddress}} accountLink-span account-id {{#if creating}}creating{{/if}}"
+                    <span class="dapp-ele-address">privacy address:&nbsp;</span>
+                    <span class="copyable-address{{waddress}} accountLink-span account-id {{#if creating}}creating{{/if}}"
                       style="color: #929cb8;font-size: 14px;">{{waddress}}</span>
                     <img class="copy-to-clipboard-button copy-address" name={{waddress}} />
                     <img class="qrcode-button qrcode-address" name={{waddress}} />
