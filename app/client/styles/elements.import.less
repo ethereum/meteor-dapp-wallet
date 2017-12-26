@@ -3,6 +3,27 @@
     margin-top: 30px;margin-bottom: 0;width: 52%;
 }
 
+.dapp-header-map{
+    float: right;
+    font-size: 12px;
+    font-weight: normal;
+    font-stretch: normal;
+    line-height: 12px;
+    letter-spacing: 0px;
+    color: #4b90f7;
+    top: 25px;
+    z-index: 100;
+    position: relative;
+
+    a{
+        color: #4b90f7;
+    }
+}
+
+#header-account{
+    margin: -1px 5px 5px 0px;
+}
+
 .token-address{
     width: 32px;
     height: 32px;
@@ -28,6 +49,7 @@
 .dapp-identicon.dapp-small{
     width: 50px;
     height: 50px;
+    box-shadow: inset #ffffff 0 0 0, inset #ffffff 0 0 0;
 }
 
 .transfer-list-tbody{
@@ -55,20 +77,78 @@ input[type="checkbox"]::before, input[type="radio"]::before{
     background: #f7f8fc;
 }
 
+.wanchain-map{
+    background-image: url(/images/map.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    padding: 7px 5px;
+}
+
+.wanchain-send{
+    background-image: url(/images/send.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    padding: 10px;
+    margin: 0 0 -4px 5px;
+}
+
+.wanchain-edit{
+    background-image: url(/images/edit.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    padding: 7px;
+}
+
+.wanchain-edit:hover{
+    background-image: url(/images/edited.png);
+}
+
+.wanchain-block{
+    background-image: url(/images/block.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    padding: 6px;
+}
+
+.wanchain-clock{
+    background-image: url(/images/clock.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    padding: 6px;
+    margin-left: 8px;
+}
+
+.wanchain-peer{
+    background-image: url(/images/peer.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    padding: 6px;
+}
+
+
 .wanchain-logo{
     background-image: url(/images/wanchain-logo.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100%;
-    padding: 24px;
-    margin-bottom: -20px;
+    padding: 26px;
+    margin-bottom: -26px;
+    width: 60px;
+    height: 54px;
+    margin-left: 20px;
 }
 
 .copy-address{
     background-image: url(/images/copy.png);
     background-repeat: no-repeat;
     background-position: center;
-    padding: 8px;
+    padding: 10px;
     cursor: pointer;
 
     &:hover {
@@ -81,7 +161,7 @@ input[type="checkbox"]::before, input[type="radio"]::before{
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100%;
-    padding: 8px;
+    padding: 9px;
     margin-left: 5px;
     cursor: pointer;
 
@@ -95,9 +175,10 @@ input[type="checkbox"]::before, input[type="radio"]::before{
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100%;
-    padding: 9px;
+    padding: 8px;
     margin-left: 5px;
     cursor: pointer;
+    height: 20px;
 
     &:hover {
         background-image: url(/images/passwd1.png);
@@ -133,11 +214,29 @@ input[type="checkbox"]::before, input[type="radio"]::before{
 }
 
 .header-account {
-    background-image: linear-gradient(80deg, #1a90fc 0%, #00aeff 100%);
-    border-radius: 30px;
+    border: solid 2px #e0e5f0;
+
+    border-radius: 30px !important;
+    padding: 2.5px 15px !important;
+    margin-bottom: 7px !important;
+    text-align: center;
+    width: 100px !important;
+    height: 30px !important;
+
+    span{
+        color: #c6cbd7;
+        font-size: 14px;
+        margin: -1px -4px;
+    };
+}
+
+.header-account:hover{
+    background-image: linear-gradient(50deg, #1a90fc 0%, #00d2ff 100%) !important;
+    border: 0;
 
     span{
         color: #ffffff;
+        margin: 0 -2px;
     };
 }
 
@@ -157,6 +256,7 @@ input[type="checkbox"]::before, input[type="radio"]::before{
 
 .account-h1 {
     margin-bottom: 0;
+    margin-top: 25px;
     strong {
         font-family: MicrosoftYaHei-Bold, arial;
         font-size: 16px;
@@ -169,17 +269,11 @@ input[type="checkbox"]::before, input[type="radio"]::before{
 }
 
 .copyable-address {
-    font-family: MicrosoftYaHei;
-    font-weight: normal;
-    font-stretch: normal;
     line-height: 25px;
     color: #929cb8;
 }
 
 .copyable-waddress {
-    font-family: MicrosoftYaHei;
-    font-weight: normal;
-    font-stretch: normal;
     line-height: 25px;
     color: #929cb8;
 }
@@ -191,6 +285,16 @@ input[type="checkbox"]::before, input[type="radio"]::before{
     display: inline-block;
     background-color: #4b90f7;
     border: solid 2px #c9e5f9;
+    margin-right: 5px;
+}
+
+.circle-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50px;
+    display: inline-block;
+    background-color: #4b90f7;
+    margin-bottom: 4px;
 }
 
 .viwes-account-line{
@@ -208,9 +312,10 @@ input[type="checkbox"]::before, input[type="radio"]::before{
 }
 
 .views_account_token {
-    font-family: MicrosoftYaHei;
     color: #929cb8;
     display: block;
+    font-size: 12px;
+    padding-left: 10px;
 
     //background-image: linear-gradient(0deg, #1a90fc 0%, #00d2ff 100%);
     //box-shadow: 0px 6px 10px 0px rgba(15, 104, 170, 0.12);
@@ -250,8 +355,11 @@ input[type="checkbox"]::before, input[type="radio"]::before{
 
 .views_send_button {
     background-image: linear-gradient(50deg, #1a90fc 0%, #00d2ff 100%);
-    box-shadow: 0px 6px 10px 0px rgba(15, 104, 170, 0.12);
-    border-radius: 50px;
+    box-shadow: 0px 3px 5px 0px rgba(15, 104, 170, 0.12);
+    border-radius: 35px;
+    height: 35px;
+    min-width: 100px;
+    border: 0;
 }
 
 .orange {
@@ -320,14 +428,18 @@ span.address {
   //width: 60em;
   height: 11em;
   background-color: #ffffff;
-  box-shadow: 0px 3px 9px 0px rgba(15, 104, 170, 0.1);
-  border-radius: 8px;
+  box-shadow: 0px 1.5px 4px 0px rgba(15, 104, 170, 0.06);
+  border-radius: 4px;
 
   a {
     padding-top: 0.5em;
     margin-bottom: 0;
       padding-left: 25px;
   }
+}
+
+.dashboard-box-list:hover {
+    box-shadow: 0px 3px 9px 0px rgba(15, 104, 170, 0.1);
 }
 
 
@@ -349,7 +461,7 @@ span.address {
 }
 
 .viwes-account-header{
-  margin: 1em 0;
+  margin: 10px 0;
   background-color: #ffffff;
   box-shadow: 0px 3px 9px 0px rgba(15, 104, 170, 0.1);
   border-radius: 8px;
@@ -360,6 +472,7 @@ span.address {
           height: 50px;
           border: solid 2px #f7f8fc;
           float: left;
+          box-shadow: inset #ffffff 0 0 0, inset #ffffff 0 0 0;
       }
   }
 
@@ -393,11 +506,8 @@ span.address {
         background-image: url(/images/wanchain.png);
         background-repeat: no-repeat;
         background-position: center;
-        width: 40px;
-        height: 40px;
-        box-shadow: 0px 6px 18px 0px rgba(15, 104, 170, 0.1);
-        border-radius: 100%;
-        padding: 5px;
+        padding: 20px;
+        background-size: 100%;
     }
 
     p{
@@ -410,9 +520,10 @@ span.address {
         }
 
         .balance-span{
-            font-family: MicrosoftYaHei;
             color: #929cb8;
-            line-height: 30px;
+            line-height: 20px;
+            font-size: 12px;
+            padding-left: 10px;
         }
     }
   }
@@ -493,9 +604,9 @@ span.address {
         margin-right: 0;
     }
 
-    &:hover {
-        background-color: lighten(@colorBackgroundHeader, 12%);
-    }
+    //&:hover {
+    //    background-color: lighten(@colorBackgroundHeader, 12%);
+    //}
 
     &.wallets {
         .background-image(linear-gradient(to right,  lighten(@colorBackgroundHeader, 12%) 0%, rgba(255,255,255, 0.1) 100%));
@@ -997,5 +1108,9 @@ table {
 
 
 .dapp-header nav > ul > li {
-    margin: 0 15px;
+    margin: 0 20px 0 0;
+}
+
+.dapp-selector span:first-of-type, .dapp-select-gas-price span:first-of-type {
+    font-size: 16px !important;
 }

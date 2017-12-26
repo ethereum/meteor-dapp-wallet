@@ -1,6 +1,19 @@
 <template name="views_otaRefund">
 
-    <h1 class="account-h1" style="margin-bottom: 0"><div class="circle"></div>{{{i18n "views.otaRefund.title"}}}</h1>
+    {{#each selectAccount}}
+        <h1 class="account-h1">
+            <div class="circle"></div><strong>{{{i18n "views.otaRefund.title"}}}</strong>
+            <div class="dapp-header-map">
+                <img class="wanchain-map"/>
+                <a href="{{pathFor route='dashboard'}}">WALLETS</a>
+                &nbsp;&nbsp;>&nbsp;
+                <a href="{{pathFor route='account' address=address}}">
+                    {{name.substr 0 26}}
+                </a>
+                &nbsp;&nbsp;>&nbsp;&nbsp;redeem
+            </div>
+        </h1>
+    {{/each}}
 
     <div class="viwes-account-header">
 
@@ -21,9 +34,9 @@
         <!-- we use a form, which posts into the "dapp-form-helper-iframe" iframe, so that the browser stores inout fields for native autocpmplete -->
         <form class="account-send-form" action="about:blank" target="dapp-form-helper-iframe" autocomplete="on">
 
-            <div class="viwes-account-header">
+            <div class="row col-12">
                 <div class="triangle"></div><strong class="views_send_strong">REDEEM FROM OTAS</strong>
-                <table class="token-list dapp-zebra">
+                <table class="col-8 token-list dapp-zebra" style="font-size: 12px;">
                     <tbody>
                     {{#each otaList}}
                         <tr>
@@ -61,7 +74,7 @@
                 {{#if TemplateVar.get "sending"}}
                     {{i18n 'buttons.sending'}}
                 {{else}}
-                    {{i18n "views.otaRefund.send"}}
+                    {{i18n "views.otaRefund.send"}}<img class="wanchain-send">
                 {{/if}}
             </button>
 

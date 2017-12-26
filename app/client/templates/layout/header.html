@@ -2,7 +2,7 @@
     <nav>
         <ul>
             <li>
-                <a href="{{pathFor route='dashboard'}}" class="{{isActiveRoute regex='dashboard'}}">
+                <a href="{{pathFor route='dashboard'}}" >
                     <img class=" wanchain-log-small wanchain-logo" />
                 </a>
             </li>
@@ -20,37 +20,38 @@
 
                         {{#with TemplateVar.get "syncing"}}
                             <span class="text">
-                            <i class="icon-feed"></i> {{$.Session.get "peerCount"}} <span class="hide-on-small">{{i18n 'wallet.app.texts.peers'}}</span>
+                            <i class="icon-feed"></i>{{$.Session.get "peerCount"}} <span class="hide-on-small">{{i18n 'wallet.app.texts.peers'}}</span>
                             &nbsp;&nbsp;|&nbsp;&nbsp;
-                            <i class="icon-layers"></i> {{i18n "wallet.app.texts.nodeSyncing" blockDiff=blockDiff}}
+                            <i class="icon-layers"></i>{{i18n "wallet.app.texts.nodeSyncing" blockDiff=blockDiff}}
                                 &nbsp;&nbsp;|&nbsp;&nbsp;
                             <i class="icon-cloud-download"></i> {{progress}}%
                             <br>
                         </span>
                             <progress max="100" value="{{progress}}"></progress>
                         {{else}}
-                            <i class="icon-feed"></i> {{$.Session.get "peerCount"}} <span class="hide-on-small">{{i18n 'wallet.app.texts.peers'}}</span>
+                            <!--<i class="icon-feed"></i>-->
+                            <img class="wanchain-peer" />
+                            {{$.Session.get "peerCount"}} <span class="hide-on-small">{{i18n 'wallet.app.texts.peers'}}</span>
                             &nbsp;&nbsp;|&nbsp;&nbsp;
-                            <i class="icon-layers"></i> {{formattedBlockNumber}} <i class="icon-clock" style="margin-left: 10px;"></i> {{{timeSinceBlock}}} <span class="hide-on-small">{{{timeSinceBlockText}}}</span>
+                            <!--<i class="icon-layers"></i> -->
+                            <img class="wanchain-block" />
+                            {{formattedBlockNumber}}
+                            <!--<i class="icon-clock" style="margin-left: 10px;"></i> -->
+                            <img class="wanchain-clock" />
+                            {{{timeSinceBlock}}} <span class="hide-on-small">{{{timeSinceBlockText}}}</span>
                         {{/with}}
                     {{/if}}
                 </div>
             </li>
 
-            <li>
-                <a href="{{pathFor route='dashboard'}}" class="{{isActiveRoute regex='dashboard'}}">
-                    <span>{{i18n 'wallet.app.buttons.wallet'}}</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="{{pathFor route='contracts'}}" class="{{isActiveRoute regex='contracts'}}">
+            <li class="header-account">
+                <a href="{{pathFor route='contracts'}}">
                     <span>{{i18n 'wallet.app.buttons.contracts'}}</span>
                 </a>
             </li>
 
-            <li style="cursor: pointer;">
-                <a class="header-account" style="padding: 2.5px 17px; margin-bottom: 7px;"> <span>{{i18n 'wallet.app.buttons.account'}}</span> </a>
+            <li class="header-account" style="cursor: pointer;">
+                <a  id="header-account"> <span>{{i18n 'wallet.app.buttons.account'}}</span> </a>
             </li>
 
             </ul>

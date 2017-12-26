@@ -1,6 +1,14 @@
 <template name="views_contracts">
 
-    <h1 style="margin-bottom: 0" class="account-h1"><div class="circle"></div><strong>{{i18n "wallet.contracts.tokenTitle"}}</strong></h1>
+    <h1 class="account-h1">
+        <div class="circle"></div><strong>{{i18n "wallet.contracts.tokenTitle"}}</strong>
+        <div class="dapp-header-map">
+            <img class="wanchain-map"/>
+            <a href="{{pathFor route='dashboard'}}">WALLETS</a>
+            &nbsp;&nbsp;>&nbsp;&nbsp;tokens
+        </div>
+    </h1>
+
     <div class="viwes-account-header">
         <div class="dapp-container">
             <h1 class="account-h1"><div class="viwes-account-line"></div><strong>{{{i18n "wallet.tokens.title"}}}</strong></h1>

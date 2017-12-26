@@ -125,7 +125,7 @@ Template['layout_header'].events({
 
      @event click .create.account
      */
-    'click .header-account': function(e, template){
+    'click #header-account': function(e, template){
         e.preventDefault();
 
         if (!TemplateVar.get('sending')) {

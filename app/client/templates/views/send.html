@@ -1,10 +1,19 @@
 <template name="views_send">
 
-    {{#if deployContract}}
-        <h1 class="account-h1"><div class="circle"></div><strong>{{{i18n 'wallet.contracts.deployContract'}}}</strong></h1>
-    {{else}}
-        <h1 class="account-h1"><div class="circle"></div><strong>{{{i18n 'views.send.title'}}}</strong></h1>
-    {{/if}}
+    {{#each selectAccount}}
+        <h1 class="account-h1">
+            <div class="circle"></div><strong>{{{i18n 'views.send.title'}}}</strong>
+            <div class="dapp-header-map">
+                <img class="wanchain-map"/>
+                <a href="{{pathFor route='dashboard'}}">WALLETS</a>
+                &nbsp;&nbsp;>&nbsp;&nbsp;
+                <a href="{{pathFor route='account' address=address}}">
+                    {{name.substr 0 26}}
+                </a>
+                &nbsp;&nbsp;>&nbsp;&nbsp;transfer
+            </div>
+        </h1>
+    {{/each}}
 
     <div class="viwes-account-header">
 
@@ -192,7 +201,7 @@
                     {{#if deployContract}}
                         {{i18n 'wallet.app.buttons.deploy'}}
                     {{else}}
-                        {{i18n 'buttons.send'}}
+                        {{i18n 'buttons.send'}}<img class="wanchain-send">
                     {{/if}}
                 {{/if}}
             </button>
