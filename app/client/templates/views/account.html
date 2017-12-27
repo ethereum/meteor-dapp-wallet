@@ -5,7 +5,7 @@
             <div class="dapp-header-map">
                 <img class="wanchain-map"/>
                 <a href="{{pathFor route='dashboard'}}">WALLETS</a>
-                &nbsp;&nbsp;>&nbsp;&nbsp;detail
+                &nbsp;>&nbsp;DETAIL
             </div>
         </h1>
         <div class="dapp-container accounts-page">
@@ -28,13 +28,13 @@
                         </h1>
 
                         <p style=" width: 55%; margin: 0 0 4px 0;">
-                            <span class="dapp-ele-address">public address:&nbsp;</span>
+                            <span class="dapp-ele-address">public:&nbsp;</span>
                             <span id="address" class="copyable-address">{{toChecksumAddress address}}</span>
                             <img class=" copy-to-clipboard-button copy-address" name="address" />
                             <img class=" qrcode-button qrcode-address" name="address" />
                         </p>
-                        <p style=" width: 55%;margin: 0;">
-                            <span class="dapp-ele-address">public address:&nbsp;</span>
+                        <p style=" width: 56%;margin: 0;">
+                            <span class="dapp-ele-address">privacy:&nbsp;</span>
                             <span class="accountLink-span copyable-waddress" id="waddress" style="line-height: 1.2;">{{waddress}}</span>
                             <img class=" copy-to-clipboard-wbutton copy-address" name="waddress" />
                             <img class=" qrcode-button qrcode-address" name={{waddress}} />

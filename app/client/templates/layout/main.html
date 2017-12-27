@@ -1,8 +1,9 @@
 <template name="layout_main">
 
-	<!-- <div class="dapp-grid"></div> -->
-    <div class="main-header"></div>
-	<header class="dapp-header">
+	{{#if isMac}}
+        <div class="main-header"></div>
+	{{/if}}
+	<header class="dapp-header" style="{{#unless isMac}}padding-top: 0;{{/unless}}">
 		{{> Template.dynamic template=header}}
 	</header>
 
