@@ -21,20 +21,19 @@
                                 <span>{{displayName.substr 0 26}}</span>
                             {{else}}
                                 <p style="min-height: 49px;"><em class="edit-name" id="edit-name">{{displayName.substr 0 26}}</em>
-                                    <!--<i class="edit-icon icon-pencil"></i>-->
                                     <img class="wanchain-edit edit-icon"/>
                                 </p>
                             {{/if}}
                         </h1>
 
                         <p style=" width: 55%; margin: 0 0 4px 0;">
-                            <span class="dapp-ele-address">public:&nbsp;</span>
+                            <span class="dapp-ele-address" style="font-size: 16px;">public:&nbsp;</span>
                             <span id="address" class="copyable-address">{{toChecksumAddress address}}</span>
                             <img class=" copy-to-clipboard-button copy-address" name="address" />
-                            <img class=" qrcode-button qrcode-address" name="address" />
+                            <img class=" qrcode-button qrcode-address" name={{address}} />
                         </p>
                         <p style=" width: 56%;margin: 0;">
-                            <span class="dapp-ele-address">privacy:&nbsp;</span>
+                            <span class="dapp-ele-address" style="font-size: 16px;">privacy:&nbsp;</span>
                             <span class="accountLink-span copyable-waddress" id="waddress" style="line-height: 1.2;">{{waddress}}</span>
                             <img class=" copy-to-clipboard-wbutton copy-address" name="waddress" />
                             <img class=" qrcode-button qrcode-address" name={{waddress}} />

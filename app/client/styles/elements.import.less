@@ -880,10 +880,19 @@ table {
     }
     td {
         text-align: left;
-        vertical-align: middle;
+        vertical-align: center;
     }
 
     &.transactions {
+        thead {
+            background-color: #ffffff !important;
+            color: #3f454c !important;
+            text-transform: capitalize !important;
+
+            tr{
+                cursor: auto !important;
+            }
+        }
         tr {
             &:not(.pending) {
                 cursor: pointer;
@@ -938,7 +947,7 @@ table {
             &.time {
                 text-align: center;
                 //padding-left: @defaultMargin;
-                cursor: help;
+                //cursor: help;
                 padding: 2px 10px;
 
                 p {

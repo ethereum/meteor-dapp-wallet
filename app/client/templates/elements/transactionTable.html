@@ -3,7 +3,7 @@
         <!--<input type="text" class="filter-transactions" placeholder="{{i18n 'wallet.transactions.filter'}}">-->
     <!--{{/unless}}-->
     <table class="dapp-zebra transactions">
-        <thead style="background-color: #ffffff;color: #3f454c;text-transform: capitalize;">
+        <thead >
         <tr>
             <th>Time</th>
             <th>From</th>
@@ -63,7 +63,7 @@
 
         <td>
         {{#if to}}
-            <span class="address dapp-shorten-text">{{to.substr 0 42}}...</span>
+            <span class="address dapp-shorten-text">{{addressDisplay to}}</span>
         {{else}}
             {{> elements_createdContractAt contractAddress=contractAddress deployedData=deployedData}}
         {{/if}}

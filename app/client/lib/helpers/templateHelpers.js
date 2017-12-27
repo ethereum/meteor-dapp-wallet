@@ -230,4 +230,5 @@ Template.registerHelper('toSentence', Helpers.toSentence);
 
 Template.registerHelper('transferBanlance', Helpers.transferBanlance);
 Template.registerHelper('totalBalance', Helpers.totalBalance);
+Template.registerHelper('addressDisplay', Helpers.addressDisplay);
 

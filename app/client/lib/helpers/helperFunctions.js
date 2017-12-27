@@ -543,3 +543,12 @@ Helpers.totalBalance = function (waddress, balance) {
 
     return result;
 };
+
+Helpers.addressDisplay = function (address) {
+    if (address.length > 42) {
+        return address.substr(0, 40) + '...'
+    } else {
+        return address
+    }
+};
+
