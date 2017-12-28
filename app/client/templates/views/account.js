@@ -97,6 +97,8 @@ Template['views_account'].helpers({
 
         var tokens = Tokens.find(query, {sort: {name: 1}}).fetch();
 
+        TemplateVar.set('tokenLength',tokens.length);
+
         _.each(tokens, (token) => {
             // token.balance =(Number(token.balances[this._id]) > 0)
             // ? Helpers.formatNumberByDecimals(token.balances[this._id], token.decimals) +' '+ token.symbol
@@ -117,6 +119,10 @@ Template['views_account'].helpers({
         // tokens = [tokens[0], tokens[0],tokens[0]];
 
         return tokens;
+    },
+
+    'tokenLength': function () {
+      return TemplateVar.get('tokenLength');
     },
 
     /**

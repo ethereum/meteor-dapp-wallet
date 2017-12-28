@@ -71,33 +71,32 @@
 		              <div>
                           <div class="viwes-account-balance-left">
                               <img/>
-                              <p><div class="circle-dot"></div>
-                              <strong style="display: inline-block;">{{> elements_balance balance=balance changeUnit=true showAllDecimals=true}}</strong>
-                              <span class="balance-span">{{i18n 'views.account.balacne.des'}}</span>
-                              </p>
 
-                              <hr class="viwes-account-balance-hr viwes-account-balance-left"/>
+                              <div class="account-balance-wan col-4">
+                                  <strong>{{> elements_balance balance=balance changeUnit=true showAllDecimals=true}}</strong>
+                                  <span class="balance-span">{{i18n 'views.account.balacne.des'}}</span>
+                              </div>
 
-                              <p><div class="circle-dot"></div>
-                              <strong style="display: inline-block;">{{> elements_balance balance=otasValue changeUnit=true}}</strong>
-                              <span class="balance-span">{{i18n 'views.account.balacne.ota'}}
-                                  {{#if otasValue}}
-                                      <a href="{{pathFor route='otaRefund' address=theAddress}}">{{i18n 'views.account.balacne.refund'}}</a>
-                                  {{/if}}
-                              </span>
-                              </p>
+                              <div class="account-balance-wan">
+                                  <strong>{{> elements_balance balance=otasValue changeUnit=true}}</strong>
+                                  <span class="balance-span">{{i18n 'views.account.balacne.ota'}}
+                                      {{#if otasValue}}
+                                          <a href="{{pathFor route='otaRefund' address=theAddress}}">{{i18n 'views.account.balacne.refund'}}</a>
+                                      {{/if}}
+                                      </span>
+                              </div>
                           </div>
                       </div>
 
-                      <div class="row col-12" style="margin-bottom: 20px;">
-
+                      <div class="row col-12" style="margin: 0 0 20px;">
+                          {{#if tokenLength}}<hr class="viwes-account-balance-hr"/>{{/if}}
                           {{#each tokens}}
                               <div class="viwes-account-balance-right col-3">
-                                  <div class="circle-dot"></div>
-                                  <span id="views_account_token_balance">{{{balance}}}</span>
+                                  <div class="circle-dot"></div><span id="views_account_token_balance">{{{balance}}}</span>
                                   <span class="views_account_token">{{name}}</span>
                               </div>
                           {{/each}}
+                          {{#if tokenLength}}<hr class="viwes-account-balance-hr"/>{{/if}}
                       </div>
 	              </div>
             </div>

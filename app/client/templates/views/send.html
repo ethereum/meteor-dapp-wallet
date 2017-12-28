@@ -162,7 +162,7 @@
             <div class="row clear" style="padding-top: 0;margin-top: 10px;">
                 <div class="col col-12 mobile-full">
                     <strong style="display: block" class="views_send_strong"><div class="triangle"></div>{{i18n 'wallet.send.fee'}}</strong>
-                    {{> modal_selectGasPrice gas=(TemplateVar.get "estimatedGas") gasPrice=latestBlock.gasPrice}}
+                    {{> modal_selectGasPrice gas=(TemplateVar.get "estimatedGas") gasPrice=latestBlock.gasPrice option=(TemplateVar.get "sending")}}
                 </div>
             </div>
 

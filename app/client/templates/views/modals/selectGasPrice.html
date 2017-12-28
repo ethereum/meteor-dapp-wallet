@@ -1,8 +1,11 @@
 
 <template name="modal_selectGasPrice">
     <div class="dapp-select-gas-price">
-        <span>{{fee}} <span>{{unit}}</span>{{feeNum}} </span><a class="options" style="cursor: pointer">[Advanced options]</a>
-        <br>
+        <span>{{fee}} <span>{{unit}}</span>{{feeNum}} </span>
+        {{#unless option}}
+            <a class="options" style="cursor: pointer">[Advanced options]</a>
+        {{/unless}}
+        <!--<br>-->
         {{#if TemplateVar.get "options"}}
             <input type="range" name="fee" min="-1" max="5" step="1" value="{{TemplateVar.get 'feeMultiplicator'}}">
             <span style="left: 10px;margin-top: 10px;">{{i18nText 'low'}}</span>
