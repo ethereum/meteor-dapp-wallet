@@ -52,7 +52,7 @@
             <hr style="margin: 0 0 32px 0;"/>
 
             <!-- fee -->
-            <div class="row clear" style="padding-top: 0;margin-top: 10px;">
+            <div class="row clear" style="padding-top: 0;">
                 <div class="col col-12 mobile-full" style=" padding-left: 0;">
                     <strong style="display: block" class="views_send_strong"><div class="triangle"></div>{{i18n 'wallet.send.fee'}}</strong>
                     {{> modal_selectGasPrice gas=(TemplateVar.get "estimatedGas") gasPrice=latestBlock.gasPrice option=(TemplateVar.get "sending")}}
