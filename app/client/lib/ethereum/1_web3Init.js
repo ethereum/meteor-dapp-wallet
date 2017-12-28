@@ -21,6 +21,8 @@ web3._extend({
         insertMethod('getOTABalance', 'eth_getOTABalance', 1, [null], web3._extend.formatters.outputBigNumberFormatter),
         insertMethod('getWanAddress', 'eth_getWanAddress', 1, [web3._extend.formatters.inputAddressFormatter], web3._extend.formatters.formatOutputString),
 
+        // getSupportWanCoinOTABalances
+        // getSupportStampOTABalances
         insertMethod('getPermiWanCoinOTABalances', 'wan_getPermiWanCoinOTABalances', 0, null, web3._extend.formatters.formatOutputString),
         insertMethod('getPermiStampOTABalances', 'wan_getPermiStampOTABalances', 0, null, web3._extend.formatters.formatOutputString)
     ],

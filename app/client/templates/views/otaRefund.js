@@ -48,21 +48,16 @@ Template['views_otaRefund'].helpers({
 	},
 	'otaTotal': function () {
 		var otas = TemplateVar.get('otas');
-		var otaTotal = 0;
+		var otaTotal = new BigNumber(10);
 
 		_.each(otas, function(ota){
-            if (ota.value.slice(2) === '0x') {
-                otaTotal += parseFloat(parseInt(ota.value, 16));
-            } else {
-                otaTotal += parseFloat(ota.value);
-            }
-
+            otaTotal = otaTotal.add(new BigNumber(ota.value));
 		});
 
     	TemplateVar.set('otaTotal', otaTotal);
 
     	// console.log('otaTotal', otaTotal);
-        console.log('formatBalance', EthTools.formatBalance(otaTotal, '0,0.00'));
+        // console.log('formatBalance', EthTools.formatBalance(otaTotal, '0,0.00'));
 
 		return EthTools.formatBalance(otaTotal, '0,0.00') + ' WAN';
 	},
@@ -160,9 +155,6 @@ Template['views_otaRefund'].events({
                         var href = '/account/' + otaData.rfAddress;
 
                         _.each(otaResult, function (ota, index) {
-                            // console.log('index: ', index);
-                            // console.log('txHash: ', txHash[index].hash);
-                            // console.log('otaValue: ', parseInt(ota.otaValue, 16));
 
                             var value;
 

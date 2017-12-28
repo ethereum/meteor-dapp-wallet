@@ -57,17 +57,7 @@ Template['views_account'].helpers({
     'account': function() {
         var account = Helpers.getAccountByAddress(FlowRouter.getParam('address'));
 
-        var query = {};
-        query['balances.'+ account._id] = {$exists: true};
-
-        var tokens = Tokens.find(query, {sort: {name: 1}}).fetch();
-
-        var tokenBalance = 0;
-        _.each(tokens, (token) => {
-            tokenBalance += parseInt(token.balances[account._id]);
-    });
-
-        if (account.balance === "0" && tokenBalance === 0) {
+        if (account.balance === "0") {
             account.hrefType = false;
         }  else {
             account.hrefType = true;

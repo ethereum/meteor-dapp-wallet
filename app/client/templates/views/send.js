@@ -110,7 +110,7 @@ Template['views_send'].onCreated(function(){
     web3.wan.getPermiWanCoinOTABalances(function (error, result) {
         var wanBalance = [];
         _.each(result, function (type) {
-            wanBalance.push({'name': (type/10**18).toFixed(), 'balance': type.toLocaleString()})
+            wanBalance.push({'name': (new BigNumber(type)/10**18).toFixed(), 'balance': type.toLocaleString()})
         });
 
         TemplateVar.set(template, 'wanBalance', wanBalance);

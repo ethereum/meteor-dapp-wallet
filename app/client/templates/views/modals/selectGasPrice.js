@@ -116,7 +116,6 @@ Template['modal_selectGasPrice'].helpers({
     },
 
     'option': function () {
-        console.log('option', this.option);
         return this.option
     }
 });
