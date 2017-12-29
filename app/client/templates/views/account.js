@@ -57,10 +57,10 @@ Template['views_account'].helpers({
     'account': function() {
         var account = Helpers.getAccountByAddress(FlowRouter.getParam('address'));
 
+        account.hrefType = true;
+
         if (account.balance === "0") {
             account.hrefType = false;
-        }  else {
-            account.hrefType = true;
         }
 
         return account;
@@ -95,33 +95,16 @@ Template['views_account'].helpers({
             // : false;
 
             token.name = token.name ? token.name : "UNDEFINED";
-            token.balance = false;
 
-        var bal;
-        if (Number(token.balances[this._id]) > 0) {
-            bal = Helpers.formatNumberByDecimals(token.balances[this._id], token.decimals);
+            var tokenBalance = 0.00;
+            if (Number(token.balances[this._id]) > 0) {
+                tokenBalance = Helpers.formatNumberByDecimals(token.balances[this._id], token.decimals);
+            }
 
-            token.balance = bal +
-                '<span>' + token.symbol + '<span/>';
-        }
-    });
-
-        // tokens = [tokens[0], tokens[0],tokens[0]];
+            token.balance = tokenBalance + '<span>' + token.symbol + '<span/>';
+        });
 
         return tokens;
-    },
-
-    'tokenLength': function () {
-      return TemplateVar.get('tokenLength');
-    },
-
-    /**
-     Get all OTAs
-     @method (ota)
-     */
-    'otasValue': function () {
-        // console.log('otasValue', TemplateVar.get('otasValue'));
-        return TemplateVar.get('otasValue');
     },
 
     /**
@@ -314,7 +297,7 @@ Template['views_account'].events({
         e.preventDefault();
 
         var name = e.target.name;
-        console.log('name: ', name);
+        // console.log('name: ', name);
 
         // Open a modal showing the QR Code
         EthElements.Modal.show({

@@ -78,9 +78,9 @@
                               </div>
 
                               <div class="account-balance-wan">
-                                  <strong>{{> elements_balance balance=otasValue changeUnit=true}}</strong>
+                                  <strong>{{> elements_balance balance=(TemplateVar.get "otasValue") changeUnit=true}}</strong>
                                   <span class="balance-span">{{i18n 'views.account.balacne.ota'}}
-                                      {{#if otasValue}}
+                                      {{#if TemplateVar.get "otasValue"}}
                                           <a href="{{pathFor route='otaRefund' address=theAddress}}">{{i18n 'views.account.balacne.refund'}}</a>
                                       {{/if}}
                                       </span>
@@ -89,14 +89,14 @@
                       </div>
 
                       <div class="row col-12" style="margin: 0 0 20px;">
-                          {{#if tokenLength}}<hr class="viwes-account-balance-hr"/>{{/if}}
+                          {{#if TemplateVar.get "tokenLength"}}<hr class="viwes-account-balance-hr"/>{{/if}}
                           {{#each tokens}}
                               <div class="viwes-account-balance-right col-3">
                                   <div class="circle-dot"></div><span id="views_account_token_balance">{{{balance}}}</span>
                                   <span class="views_account_token">{{name}}</span>
                               </div>
                           {{/each}}
-                          {{#if tokenLength}}<hr class="viwes-account-balance-hr"/>{{/if}}
+                          {{#if TemplateVar.get "tokenLength"}}<hr class="viwes-account-balance-hr"/>{{/if}}
                       </div>
 	              </div>
             </div>

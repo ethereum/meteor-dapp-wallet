@@ -105,10 +105,10 @@ Template['elements_account'].helpers({
             //     tokenBalance += parseInt(token.balances[account._id]);
             // });
 
+            account.hrefType = true;
+
             if (account.balance === "0") {
                 account.hrefType = false;
-            }  else {
-                account.hrefType = true;
             }
         }
 
@@ -135,11 +135,16 @@ Template['elements_account'].helpers({
         if (this.balances && Number(this.balances[account._id]) > 0) {
             var balance = Helpers.formatNumberByDecimals(this.balances[account._id], this.decimals);
 
-            var balType = balance.replace(/,/g,'');
-
-            balance = Number(balType.replace(/,/g,'')).toFixed(2);
+            if (balance.indexOf('.') > 0 && balance.indexOf(',') > 0) {
+                balance = Number(balance.replace(/,/g,'')).toFixed(2);
+            } else if (balance.indexOf('.') < 0 && balance.indexOf(',') > 0) {
+                balance = Number(balance.replace(/,/g,'.')).toFixed(2);
+            } else {
+                balance = Number(balance).toFixed(2);
+            }
 
             return balance + '<span> ' + this.symbol + '</span>';
+
         } else {
             return false;
         }

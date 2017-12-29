@@ -23,9 +23,7 @@ Template['views_otaRefund'].onCreated(function(){
 Template['views_otaRefund'].helpers({
 
     'selectAccount': function () {
-
-        var address = FlowRouter.getParam('address');
-        var accounts = EthAccounts.find({balance:{$ne:"0"}, address: address}, {sort: {balance: 1}}).fetch();
+        var accounts = EthAccounts.find({balance:{$ne:"0"}, address: FlowRouter.getParam('address')}, {sort: {balance: 1}}).fetch();
 
         TemplateVar.set('accounts', accounts);
 
@@ -57,9 +55,9 @@ Template['views_otaRefund'].helpers({
     	TemplateVar.set('otaTotal', otaTotal);
 
     	// console.log('otaTotal', otaTotal);
-        // console.log('formatBalance', EthTools.formatBalance(otaTotal, '0,0.00'));
+        // console.log('formatBalance', Helpers.transferBanlance(otaTotal, "0,0.00[0000000000000000] UNIT", "wan"));
 
-		return EthTools.formatBalance(otaTotal, '0,0.00') + ' WAN';
+		return Helpers.transferBanlance(otaTotal, "0,0.00 UNIT", "wan");
 	},
 
 	/**

@@ -517,38 +517,33 @@ Helpers.getENSName = function(address, callback) {
 
 Helpers.transferBanlance = function (number, format, unit) {
     //replace dapp_formatBalance
-
-    var balance = EthTools.formatBalance(number, format, unit).split(' ')[0];
-
-    return balance + ' WAN';
+    return EthTools.formatBalance(number, format, 'ether').replace(/ETHER|ether/g, unit);
 };
 
 Helpers.totalBalance = function (waddress, balance) {
 
-    var address;
-    if (waddress.substr(0, 2)  === '0x') {
-        address = waddress.slice(2);
-    } else {
-        address = waddress;
+    var address = waddress;
+    if (address.substr(0, 2)  === '0x') {
+        address = address.slice(2);
     }
 
-    var otaValue = 0;
+    var otaValue = new BigNumber(0);
 
     var ota = OTAs.findOne({waddress: address});
     if (ota) {
-        otaValue = ota.value;
+        otaValue = new BigNumber(ota.value);
     }
 
-    var result = Number(otaValue) + Number(balance);
-
-    return result;
+    return otaValue.add(new BigNumber(balance));
 };
 
 Helpers.addressDisplay = function (address) {
-    if (address.length > 42) {
-        return address.substr(0, 40) + '...'
-    } else {
-        return address
+
+    var result = address;
+    if (result.length > 42) {
+        result = result.substr(0, 40) + '...'
     }
+
+    return result;
 };
 
