@@ -531,10 +531,10 @@ Helpers.totalBalance = function (waddress, balance) {
 
     var ota = OTAs.findOne({waddress: address});
     if (ota) {
-        otaValue = new BigNumber(ota.value);
+        otaValue = new BigNumber(Number(ota.value));
     }
 
-    return otaValue.add(new BigNumber(balance));
+    return otaValue.add(new BigNumber(Number(balance)));
 };
 
 Helpers.addressDisplay = function (address) {
