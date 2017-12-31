@@ -49,7 +49,7 @@ Template['views_otaRefund'].helpers({
 		var otaTotal = new BigNumber(10);
 
 		_.each(otas, function(ota){
-            otaTotal = otaTotal.add(new BigNumber(Number(ota.value)));
+            otaTotal = otaTotal.add(new BigNumber(ota.value));
 		});
 
     	TemplateVar.set('otaTotal', otaTotal);
