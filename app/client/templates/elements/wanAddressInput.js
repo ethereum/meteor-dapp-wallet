@@ -1,25 +1,90 @@
 
 /**
-Template Controllers
+ * Makes a checksum address
+ *
+ * @method toChecksumAddress
+ * @param {String} address the given HEX adress
+ * @return {String}
+ */
+var toChecksumAddress = function (address) {
+    if (typeof address === 'undefined') return '';
 
-@module Templates
-*/
+    address = address.toLowerCase().replace('0x','');
+    var addressHash = sha3(address);
+    var checksumAddress = '0x';
+
+    for (var i = 0; i < address.length; i++ ) {
+        // If ith character is 9 to f then make it uppercase
+        if (parseInt(addressHash[i], 16) < 8) {
+            checksumAddress += address[i].toUpperCase();
+        } else {
+            checksumAddress += address[i];
+        }
+    }
+    return checksumAddress;
+};
+
+
+var isAddress = function (address) {
+    if (!/^(0x)?[0-9a-f]{40}$/i.test(address)) {
+        // check if it has the basic requirements of an address
+        return false;
+    } else if (/^(0x)?[0-9a-f]{40}$/.test(address) || /^(0x)?[0-9A-F]{40}$/.test(address)) {
+        // If it's all small caps or all all caps, return true
+        return true;
+    } else {
+        // Otherwise check each case
+        return isChecksumAddress(address);
+    }
+};
+
+/**
+ * Checks if the given string is a checksummed address
+ *
+ * @method isChecksumAddress
+ * @param {String} address the given HEX adress
+ * @return {Boolean}
+ */
+var isChecksumAddress = function (address) {
+    // Check each case
+    address = address.replace('0x','');
+    var addressHash = sha3(address.toLowerCase());
+
+    for (var i = 0; i < 40; i++ ) {
+        // the nth letter should be uppercase if the nth digit of casemap is 1
+        if ((parseInt(addressHash[i], 16) <=7 && address[i].toUpperCase() !== address[i]) || (parseInt(addressHash[i], 16) >7 && address[i].toLowerCase() !== address[i])) {
+            return false;
+        }
+    }
+    return true;
+};
+
+Web3.prototype.isAddress = isAddress;
+Web3.prototype.isChecksumAddress = isChecksumAddress;
+Web3.prototype.toChecksumAddress = toChecksumAddress;
+
+/**
+ Template Controllers
+
+ @module Templates
+ */
 
 var sha3 = function(str, opt) {
-  return '0x' + web3.sha3(str, opt).replace('0x', '');
+    // return '0x' + web3.sha3(str, opt).replace('0x', '');
+    return web3.sha3(str, opt).replace('0x', '');
 };
 function checkZeroAddress(address) {
     return address == 0 || address == '0x' || address == '0X';
 }
 function namehash(name) {
-  var node = '0x0000000000000000000000000000000000000000000000000000000000000000';
-  if (name != '') {
-    var labels = name.split('.');
-    for (var i = labels.length - 1; i >= 0; i--) {
-      node = sha3(node + sha3(labels[i]).slice(2), {encoding: 'hex'});
+    var node = '0x0000000000000000000000000000000000000000000000000000000000000000';
+    if (name != '') {
+        var labels = name.split('.');
+        for (var i = labels.length - 1; i >= 0; i--) {
+            node = sha3(node + sha3(labels[i]).slice(2), {encoding: 'hex'});
+        }
     }
-  }
-  return node.toString();
+    return node.toString();
 }
 
 var ensContractAbi = [{'constant': true, 'inputs': [{'name': 'node', 'type': 'bytes32'}], 'name': 'resolver', 'outputs': [{'name': '', 'type': 'address'}], 'payable': false, 'type': 'function'}, {'constant': true, 'inputs': [{'name': 'node', 'type': 'bytes32'}], 'name': 'owner', 'outputs': [{'name': '', 'type': 'address'}], 'payable': false, 'type': 'function'}, {'constant': false, 'inputs': [{'name': 'node', 'type': 'bytes32'}, {'name': 'label', 'type': 'bytes32'}, {'name': 'owner', 'type': 'address'}], 'name': 'setSubnodeOwner', 'outputs': [], 'payable': false, 'type': 'function'}, {'constant': false, 'inputs': [{'name': 'node', 'type': 'bytes32'}, {'name': 'ttl', 'type': 'uint64'}], 'name': 'setTTL', 'outputs': [], 'payable': false, 'type': 'function'}, {'constant': true, 'inputs': [{'name': 'node', 'type': 'bytes32'}], 'name': 'ttl', 'outputs': [{'name': '', 'type': 'uint64'}], 'payable': false, 'type': 'function'}, {'constant': false, 'inputs': [{'name': 'node', 'type': 'bytes32'}, {'name': 'resolver', 'type': 'address'}], 'name': 'setResolver', 'outputs': [], 'payable': false, 'type': 'function'}, {'constant': false, 'inputs': [{'name': 'node', 'type': 'bytes32'}, {'name': 'owner', 'type': 'address'}], 'name': 'setOwner', 'outputs': [], 'payable': false, 'type': 'function'}, {'anonymous': false, 'inputs': [{'indexed': true, 'name': 'node', 'type': 'bytes32'}, {'indexed': false, 'name': 'owner', 'type': 'address'}], 'name': 'Transfer', 'type': 'event'}, {'anonymous': false, 'inputs': [{'indexed': true, 'name': 'node', 'type': 'bytes32'}, {'indexed': true, 'name': 'label', 'type': 'bytes32'}, {'indexed': false, 'name': 'owner', 'type': 'address'}], 'name': 'NewOwner', 'type': 'event'}, {'anonymous': false, 'inputs': [{'indexed': true, 'name': 'node', 'type': 'bytes32'}, {'indexed': false, 'name': 'resolver', 'type': 'address'}], 'name': 'NewResolver', 'type': 'event'}, {'anonymous': false, 'inputs': [{'indexed': true, 'name': 'node', 'type': 'bytes32'}, {'indexed': false, 'name': 'ttl', 'type': 'uint64'}], 'name': 'NewTTL', 'type': 'event'}];
@@ -65,11 +130,11 @@ function getName(address, ens, callback) {
 /**
 The address input template, containg the identicon.
 
-@class [template] dapp_addrInput
+@class [template] wan_addrInput
 @constructor
 */
 
-Template.dapp_addrInput.onCreated(function() {
+Template.wan_addrInput.onCreated(function() {
   var template = this;
 
   // default set to true, to show no error
@@ -100,13 +165,13 @@ Template.dapp_addrInput.onCreated(function() {
   });
 });
 
-Template.dapp_addrInput.onRendered(function() {
+Template.wan_addrInput.onRendered(function() {
   if (this.data) {
     this.$('input').trigger('change');
   }
 });
 
-Template.dapp_addrInput.helpers({
+Template.wan_addrInput.helpers({
   /**
     Return the to address
 
@@ -118,7 +183,7 @@ Template.dapp_addrInput.helpers({
     // if(Template.instance().view.isRendered && Template.instance().find('input').value !== address)
     // Template.instance().$('input').trigger('change');
 
-    return (_.isString(address) && web3.isAddress(address)) ? '0x' + address.replace('0x', '') : false;
+    return (_.isString(address) && isAddress(address)) ? '0x' + address.replace('0x', '') : false;
   },
   /**
     Return the autofocus or disabled attribute.
@@ -150,7 +215,7 @@ Template.dapp_addrInput.helpers({
 });
 
 
-Template.dapp_addrInput.events({
+Template.wan_addrInput.events({
   /**
     Set the address while typing
 
@@ -169,7 +234,7 @@ Template.dapp_addrInput.events({
       value = '0x' + value;
     }
 
-    if (web3.isAddress(value) || _.isEmpty(value)) {
+    if (isAddress(value) || _.isEmpty(value)) {
       TemplateVar.set('isValid', true);
 
       if (!_.isEmpty(value)) {
@@ -187,8 +252,8 @@ Template.dapp_addrInput.events({
               TemplateVar.set(template, 'ensName', name);
               TemplateVar.set(template, 'isValid', true);
               TemplateVar.set(template, 'isChecksum', true);
-              TemplateVar.set(template, 'value', web3.toChecksumAddress(addr));
-              e.currentTarget.value = web3.toChecksumAddress(addr);
+              TemplateVar.set(template, 'value', toChecksumAddress(addr));
+              e.currentTarget.value = toChecksumAddress(addr);
             });
           });
         }
@@ -201,23 +266,23 @@ Template.dapp_addrInput.events({
     } else if (TemplateVar.get('ensAvailable')) {
       if (value.slice(-4) !== '.eth') value = value + '.eth';
 
-      TemplateVar.set('hasName', false);
-      TemplateVar.set('isValid', false);
-      TemplateVar.set('value', undefined);
-      var ens = TemplateVar.get('ensContract');
+        TemplateVar.set('hasName', false);
+        TemplateVar.set('isValid', false);
+        TemplateVar.set('value', undefined);
+        var ens = TemplateVar.get('ensContract');
 
-      getAddr(value, ens, function(addr) {
-        TemplateVar.set(template, 'hasName', true);
-        TemplateVar.set(template, 'isValid', true);
-        TemplateVar.set(template, 'isChecksum', true);
-        TemplateVar.set(template, 'value', web3.toChecksumAddress(addr));
-        TemplateVar.set(template, 'ensName', value);
-        // e.currentTarget.value = web3.toChecksumAddress(addr);
-        // check name
-        getName(addr, ens, function(name) {
-          TemplateVar.set(template, 'ensName', name);
+        getAddr(value, ens, function(addr) {
+          TemplateVar.set(template, 'hasName', true);
+          TemplateVar.set(template, 'isValid', true);
+          TemplateVar.set(template, 'isChecksum', true);
+          TemplateVar.set(template, 'value', toChecksumAddress(addr));
+          TemplateVar.set(template, 'ensName', value);
+          // e.currentTarget.value = web3.toChecksumAddress(addr);
+          // check name
+          getName(addr, ens, function(name) {
+            TemplateVar.set(template, 'ensName', name);
+          });
         });
-      });
     }
   },
   /**

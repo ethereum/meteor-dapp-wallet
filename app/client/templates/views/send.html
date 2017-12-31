@@ -96,7 +96,7 @@
                     {{#unless deployContract}}
                         <div class="triangle"></div><strong class="views_send_strong">{{i18n 'wallet.send.to'}}</strong>
                         {{#if selectTransaction}}
-                            {{> dapp_addrInput placeholder=" Please paste public address here" name="to" autofocus=true class="to"}}
+                            {{> wan_addrInput placeholder=" Please paste public address here" name="to" autofocus=true class="to"}}
                         {{else}}
                             {{> dapp_waddressInput placeholder="Please paste private address here" name="to" autofocus=true class="to"}}
                         {{/if}}

@@ -60,25 +60,29 @@ var checkOverDailyLimit = function(address, wei, template){
  @method getDataField
  */
 var getDataField = function(){
-    // make reactive to the show/hide of the textarea
-    TemplateVar.getFrom('.compile-contract','byteTextareaShown');
 
+    try {
+        // make reactive to the show/hide of the textarea
+        TemplateVar.getFrom('.compile-contract','byteTextareaShown');
 
+        // send tokens
+        var selectedToken = TemplateVar.get('selectedToken');
 
-    // send tokens
-    var selectedToken = TemplateVar.get('selectedToken');
+        if(selectedToken && selectedToken !== 'ether') {
+            var mainRecipient = TemplateVar.getFrom('div.dapp-address-input input.to', 'value');
+            var amount = TemplateVar.get('amount') || '0';
+            var token = Tokens.findOne({address: selectedToken});
+            var tokenInstance = TokenContract.at(selectedToken);
+            var txData = tokenInstance.transfer.getData( mainRecipient, amount,  {});
 
-    if(selectedToken && selectedToken !== 'ether') {
-        var mainRecipient = TemplateVar.getFrom('div.dapp-address-input input.to', 'value');
-        var amount = TemplateVar.get('amount') || '0';
-        var token = Tokens.findOne({address: selectedToken});
-        var tokenInstance = TokenContract.at(selectedToken);
-        var txData = tokenInstance.transfer.getData( mainRecipient, amount,  {});
+            return txData;
+        }
 
-        return txData;
+        return TemplateVar.getFrom('.compile-contract', 'txData');
+    } catch (e) {
+        console.log('getDataField is undefined');
     }
 
-    return TemplateVar.getFrom('.compile-contract', 'txData');
 };
 
 
@@ -251,11 +255,14 @@ Template['views_send'].onRendered(function(){
 
             // Custom coin estimation
         } else {
-
-            TokenContract.at(tokenAddress).transfer.estimateGas(to, amount, {
-                from: address,
-                gas: defaultEstimateGas
-            }, estimationCallback.bind(template));
+            try {
+                TokenContract.at(tokenAddress).transfer.estimateGas(to, amount, {
+                    from: address,
+                    gas: defaultEstimateGas
+                }, estimationCallback.bind(template));
+            } catch (e) {
+                console.log('TokenContract is undefined');
+            }
         }
     });
 });
@@ -701,7 +708,7 @@ Template['views_send'].events({
                                 ? {contract: contract, data: data}
                                 : data;
 
-                            console.log('amount1aaaa', amount);
+                            // console.log('amount1aaaa', amount);
 
                             addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
 
@@ -714,7 +721,7 @@ Template['views_send'].events({
                         } else {
                             // EthElements.Modal.hide();
 
-                            console.log('err1: ', error.message);
+                            console.log('err: ', error.message);
 
                             GlobalNotification.error({
                                 content: error.message,
@@ -747,7 +754,7 @@ Template['views_send'].events({
 
                             // console.log(error, txHash);
                             if (!error) {
-                                console.log('SEND simple');
+                                // console.log('SEND simple');
 
                                 data = (!to && contract)
                                     ? {contract: contract, data: data}
@@ -773,7 +780,7 @@ Template['views_send'].events({
                             } else {
 
                                 // EthElements.Modal.hide();
-                                console.log('err2: ', error.message);
+                                console.log('err: ', error.message);
 
                                 GlobalNotification.error({
                                     content: error.message,
@@ -800,7 +807,7 @@ Template['views_send'].events({
                             }else {
                                 // EthElements.Modal.hide();
                                 // console.log("generateOneTimeAddress error:",error);
-                                console.log('err3: ', error.message);
+                                console.log('err: ', error.message);
                                 GlobalNotification.error({
                                     content: error.message,
                                     duration: 8
