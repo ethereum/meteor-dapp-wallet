@@ -3,7 +3,10 @@ Template['layout_main'].onCreated(function(){
 
     console.log('_pf', _pf);
 
-    var isMac = (_pf === "Mac68K") || (_pf === "MacPPC") || (_pf === "Macintosh") || (_pf === "MacIntel");
+    var isMac =  false;
+
+    if (_pf.match(/mac/i))
+        isMac = true;
 
     TemplateVar.set('isMac', isMac);
 });

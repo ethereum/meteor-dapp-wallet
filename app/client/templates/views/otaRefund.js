@@ -1,11 +1,5 @@
-/**
- The default gas to provide for estimates. This is set manually,
- so that invalid data etsimates this value and we can later set it down and show a warning,
- when the user actually wants to send the dummy data.
- @property defaultEstimateGas
- */
-var defaultEstimateGas = 50000000;
 
+var defaultMinFee = 5400000000000000;
 
 // Set basic variables
 Template['views_otaRefund'].onCreated(function(){
@@ -90,27 +84,23 @@ Template['views_otaRefund'].events({
         if(!TemplateVar.get('sending')) {
 
             var gasPrice = TemplateVar.getFrom('.dapp-select-gas-price', 'gasPrice'),
-                estimatedGas = TemplateVar.get('estimatedGas'),
-                sendAll = TemplateVar.get('sendAll');
-
-            // set gas down to 21 000, if its invalid data, to prevent high gas usage.
-            if(estimatedGas === defaultEstimateGas || estimatedGas === 0)
-                estimatedGas = 300000;
+                estimatedGas = TemplateVar.get('estimatedGas');
 
             var accounts = TemplateVar.get('accounts');
 
             if (accounts.length > 0) {
 
-                var fee = Number(gasPrice) * estimatedGas;
+                var fee = new BigNumber(gasPrice).mul(new BigNumber(estimatedGas)),
+                    balance = new BigNumber(accounts[0].balance);
 
-                if (Number(accounts[0].balance) < 5400000000000000) {
+                if (balance.lt(new BigNumber(defaultMinFee))) {
                     return GlobalNotification.warning({
                         content: 'i18n:wallet.send.error.notEnoughFunds',
                         duration: 8
                     });
                 }
 
-                if (Number(accounts[0].balance) < fee) {
+                if (balance.lt(fee)) {
                     return GlobalNotification.warning({
                         content: "Your balance is lower than fee, pls change the fee or recharge the account.",
                         duration: 8
@@ -138,9 +128,11 @@ Template['views_otaRefund'].events({
             otaData.otaNumber = 8;
             otaData.rfAddress =  FlowRouter.getParam('address');
             otaData.gas = estimatedGas;
-            otaData.gasPrice = Number(gasPrice);
+            otaData.gasPrice = '0x' + new BigNumber(gasPrice).toString(16);
 
             var otaRefund = function () {
+
+                console.log('Finally otaRefund choose gas', estimatedGas);
 
                 // show loading
                 mist.popWindowEvents(function (bool) {
@@ -162,7 +154,7 @@ Template['views_otaRefund'].events({
                                 value = parseFloat(ota.otaValue);
                             }
 
-                            addTransactionAfterSend(txHash[index].hash, value, otaData.rfAddress, otaData.rfAddress, otaData.gasPrice, otaData.gas, '');
+                            addTransactionAfterSend(txHash[index].hash, value, otaData.rfAddress, otaData.rfAddress, otaData.gasPrice.toString(10), otaData.gas, '');
                         });
 
                         FlowRouter.go(href);

@@ -128,7 +128,7 @@ Template['views_send'].onCreated(function(){
 
     // SET THE DEFAULT VARIABLES
     TemplateVar.set('amount', '0');
-    TemplateVar.set('estimatedGas', 300000);
+    TemplateVar.set('estimatedGas', 30000);
     TemplateVar.set('sendAll', false);
 
     // Deploy contract
@@ -579,7 +579,7 @@ Template['views_send'].events({
             tokenAddress = TemplateVar.get('selectedToken'),
             to = TemplateVar.get('transaction') ? TemplateVar.getFrom('.dapp-address-input .to', 'value') : checkWaddress(document.getElementById("waddress-input").value),
             gasPrice = TemplateVar.getFrom('.dapp-select-gas-price', 'gasPrice'),
-            estimatedGas = TemplateVar.get('estimatedGas'),
+            estimatedGas = TemplateVar.get('selectType') === '0' ? TemplateVar.get('estimatedGas') : 100000,
             // selectedAccount = Helpers.getAccountByAddress(template.find('select[name="dapp-select-account"].send-from').value),
             selectedAccount = Helpers.getAccountByAddress(TemplateVar.get('fromAddress')),
             selectedAction = TemplateVar.get("selectedAction"),
@@ -664,14 +664,15 @@ Template['views_send'].events({
                     });
             }
 
-            var allBalance = TemplateVar.get('total')[0].balance;
+            var allBalance = new BigNumber(TemplateVar.get('total')[0].balance);
 
-            var total = Number(estimatedGas) * Number(gasPrice) + Number(amount);
+            var total = new BigNumber(estimatedGas).mul(new BigNumber(gasPrice)).add(new BigNumber(amount));
 
-            console.log('allBalance', allBalance);
-            console.log('total', total);
+            // BigNumber
+            // console.log('allBalance', allBalance);
+            // console.log('total', total);
 
-            if(Number(allBalance) < total)
+            if(allBalance.lt(total))
                 return GlobalNotification.warning({
                     content: 'i18n:wallet.send.error.notEnoughFunds',
                     duration: 2
@@ -685,7 +686,7 @@ Template['views_send'].events({
 
                 // use gas set in the input field
                 estimatedGas = estimatedGas || Number($('.send-transaction-info input.gas').val());
-                console.log('Finally choosen gas', estimatedGas);
+                console.log('Finally send choose gas', estimatedGas);
 
                 // CONTRACT TX
                 if(contracts['ct_'+ selectedAccount._id]) {

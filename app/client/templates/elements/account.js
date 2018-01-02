@@ -20,13 +20,7 @@ Block required until a transaction is confirmed.
 var blocksForConfirmation = 12;
 
 var accountClipboardEventHandler = function(e){
-    if (Session.get('tmpAllowCopy') === true) {
-        Session.set('tmpAllowCopy', false);
-        return true;
-    }
-    else {
-        e.preventDefault();
-    }
+    e.preventDefault();
 
     function copyAddress(){
 
@@ -57,22 +51,7 @@ var accountClipboardEventHandler = function(e){
         selection.removeAllRanges();
     }
 
-    if (Helpers.isOnMainNetwork()) {
-        Session.set('tmpAllowCopy', true);
-        copyAddress();
-    }
-    else {
-        EthElements.Modal.question({
-            text: new Spacebars.SafeString(TAPi18n.__('wallet.accounts.modal.copyAddressWarning')),
-            ok: function(){
-                Session.set('tmpAllowCopy', true);
-                copyAddress();
-            },
-            cancel: true,
-            modalQuestionOkButtonText: TAPi18n.__('wallet.accounts.modal.buttonOk'),
-            modalQuestionCancelButtonText: TAPi18n.__('wallet.accounts.modal.buttonCancel')
-        });
-    }
+    copyAddress();
 };
 
 

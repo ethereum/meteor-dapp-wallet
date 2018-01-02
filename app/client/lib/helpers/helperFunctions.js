@@ -527,6 +527,7 @@ Helpers.totalBalance = function (waddress, balance) {
 
     var otaValue = new BigNumber(0);
 
+    // why findOne
     var ota = OTAs.findOne({waddress: address});
     if (ota) {
         otaValue = new BigNumber(ota.value);
