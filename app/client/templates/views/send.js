@@ -762,8 +762,8 @@ Template['views_send'].events({
 
                                 value = amount === 0 ? tokenAmount : amount;
 
-                                console.log('tokenId', tokenId);
-                                console.log('amount1bbb', amount);
+                                // console.log('tokenId', tokenId);
+                                // console.log('amount1bbb', amount);
 
                                 if (tokenId) {
                                     addTransactionAfterSend(txHash, value, selectedAccount.address, to, gasPrice, estimatedGas, data, tokenId);

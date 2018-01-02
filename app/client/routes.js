@@ -125,21 +125,6 @@ FlowRouter.route('/send-from/:from/:token', {
 });
 
 /**
-The send route.
-
-@method send
-*/
-FlowRouter.route('/send-token/:token', {
-    name: 'sendToken',
-    action: function(params, queryParams) {
-        BlazeLayout.render('layout_main', {
-            header: 'layout_header',
-            main: 'views_deployContract'
-        });
-    }
-});
-
-/**
  The send route.
 
  @method otaRefund
@@ -173,21 +158,6 @@ FlowRouter.route('/deploy-contract', {
     }
 });
 
-
-/**
-The create account route.
-
-@method send
-*/
-FlowRouter.route('/account/new', {
-    name: 'createAccount',
-    action: function(params, queryParams) {
-        BlazeLayout.render('layout_main', {
-            header: 'layout_header',
-            main: 'views_account_create'
-        });
-    }
-});
 
 
 

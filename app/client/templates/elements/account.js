@@ -238,6 +238,12 @@ Template['elements_account'].events({
     'click .wanchain-passwd': function (e, template) {
         e.preventDefault();
 
+        // <a class="wallet-box {{#if creating}}creating{{/if}} {{#if disabled}}disabled{{/if}} {{#if ../wallets}}wallets{{/if}} {{#if new}}new{{/if}}"
+        //   style="min-height: 10px; margin: 0;" name={{address}} >
+        //    <img class=" wanchain-passwd" name={{address}} />
+        //    <p style="margin: 0;font-size: 14px;color: #929cb8; margin-left: -15px;">Password</p>
+        //</a>
+
         var name = e.target.name;
 
         if (!TemplateVar.get('sending')) {
