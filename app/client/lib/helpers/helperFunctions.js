@@ -201,8 +201,7 @@ Helpers.getAccountByAddress = function(address, reactive) {
     var options = (reactive === false) ? {reactive: false} : {};
     if(_.isString(address))
         address = address.toLowerCase();
-    var account = EthAccounts.findOne({address: address}, options) || Wallets.findOne({address: address}, options) || CustomContracts.findOne({address: address}, options);
-    return account;
+    return EthAccounts.findOne({address: address}, options) || Wallets.findOne({address: address}, options) || CustomContracts.findOne({address: address}, options);
 };
 
 /**
@@ -319,8 +318,7 @@ Helpers.formatTransactionBalance = function(value, exchangeRates, unit) {
         var price = new BigNumber(String(web3.fromWei(value, 'ether')), 10).times(exchangeRates[unit].price);
         return EthTools.formatNumber(price, format) + ' '+ unit.toUpperCase();
     } else {
-        // console.log('bal: ', EthTools.formatBalance(value, format + '[0000000000000000] UNIT').split(' ')[0] + ' wan');
-        return EthTools.formatBalance(value, format + '[0000000000000000] UNIT').split(' ')[0] + ' WAN';
+        return EthTools.formatBalance(value, format + '[0000000000000000] UNIT').replace(/ETHER|ether/g, 'WAN');
     }
 };
 

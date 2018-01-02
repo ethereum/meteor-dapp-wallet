@@ -21,10 +21,22 @@ var toPowerFactor = 1.1;
  @return {Number}
  */
 var calculateGasInWei = function(template, gas, gasPrice, returnGasPrice){
-    // Only defaults to 20 shannon if there's no default set
+    // Only defaults to 20 shannon if there's no default set => 2.0e+10 = 20gWei
+    gasPrice = new BigNumber(gasPrice || 2.0e+12);
 
-    // gasPrice = gasPrice || 20000000000;
-    gasPrice = 20000000000;
+    var minGasPrice = new BigNumber(1.8 * 10**gasPrice.e),
+        maxGasPrice = new BigNumber(3.0 * 10**gasPrice.e);
+    //
+    // console.log('defaultGasPrice', gasPrice);
+    // console.log('minGasPrice', minGasPrice);
+    // console.log('maxGasPrice', maxGasPrice);
+
+    if (gasPrice < minGasPrice) {
+        gasPrice = minGasPrice;
+    } else if (gasPrice > maxGasPrice) {
+        gasPrice = maxGasPrice;
+    }
+
 
     if(!_.isObject(gasPrice))
         gasPrice = new BigNumber(String(gasPrice), 10);
@@ -45,7 +57,7 @@ var calculateGasInWei = function(template, gas, gasPrice, returnGasPrice){
     return (returnGasPrice)
         ? gasPrice
         : gasPrice.times(gas);
-}
+};
 
 Template['modal_selectGasPrice'].onCreated(function(){
     TemplateVar.set('gasInWei', '0');
@@ -64,6 +76,8 @@ Template['modal_selectGasPrice'].helpers({
 
         if(_.isFinite(TemplateVar.get('feeMultiplicator')) && _.isFinite(this.gas)) {
             var template = Template.instance();
+
+            // console.log('this.gasPrice', this.gasPrice);
 
             // set the value
             TemplateVar.set('gasInWei', calculateGasInWei(template, this.gas, this.gasPrice).floor().toString(10));
