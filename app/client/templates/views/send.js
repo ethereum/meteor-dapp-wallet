@@ -114,7 +114,7 @@ Template['views_send'].onCreated(function(){
     web3.wan.getPermiWanCoinOTABalances(function (error, result) {
         var wanBalance = [];
         _.each(result, function (type) {
-            wanBalance.push({'name': (new BigNumber(type)/10**18).toFixed(), 'balance': type.toLocaleString()})
+            wanBalance.push({'name': (new BigNumber(type)/10**18).toFixed(), 'balance': type})
         });
 
         TemplateVar.set(template, 'wanBalance', wanBalance);
@@ -488,9 +488,7 @@ Template['views_send'].events({
 
     'change .sendota-selectValue': function(event){
         event.preventDefault();
-        var selectValue = event.target.value;
-
-        TemplateVar.set('amount', selectValue.replace(/,/g, ''));
+        TemplateVar.set('amount', new BigNumber(event.target.value));
     },
 
     'click #selectType': function () {
