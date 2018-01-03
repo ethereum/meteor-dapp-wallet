@@ -21,13 +21,11 @@
         <div style="padding: 40px 20px 0 20px;">
             {{#each selectAccount}}
                 {{> dapp_identicon identity=address class="dapp-small"}}
-                <a href="{{pathFor route='account' address=address}}">
-                    <p style="display: inline-block;margin-left: 10px;">
-                        <span style="display: block;font-weight: 600;">{{name.substr 0 26}}</span>
-                        <span style="color:#929cb8;">{{address}}</span>
-                    <div class="otaRefund-account">{{> elements_balance balance=balance changeUnit=true showAllDecimals=true}}</div>
-                    </p>
-                </a>
+                <p style="display: inline-block;margin-left: 10px;">
+                    <span style="display: block;font-weight: 600;">{{name.substr 0 26}}</span>
+                    <span style="color:#929cb8;">{{toChecksumAddress address}}</span>
+                <div class="otaRefund-account">{{> elements_balance balance=balance changeUnit=true showAllDecimals=true}}</div>
+                </p>
             {{/each}}
         </div>
 
