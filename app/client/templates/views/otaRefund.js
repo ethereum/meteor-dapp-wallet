@@ -171,7 +171,6 @@ Template['views_otaRefund'].events({
                 });
             };
 
-            // sendTransaction(sendAll ? estimatedGas : estimatedGas + 100000);
             if (typeof mist !== "undefined") {
                 otaRefund();
             }

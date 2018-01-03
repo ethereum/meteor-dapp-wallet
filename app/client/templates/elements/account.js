@@ -115,11 +115,11 @@ Template['elements_account'].helpers({
             var balance = Helpers.formatNumberByDecimals(this.balances[account._id], this.decimals);
 
             if (balance.indexOf('.') > 0 && balance.indexOf(',') > 0) {
-                balance = Number(balance.replace(/,/g,'')).toFixed(2);
+                balance = new BigNumber(balance.replace(/,/g,'')).toFixed(2);
             } else if (balance.indexOf('.') < 0 && balance.indexOf(',') > 0) {
-                balance = Number(balance.replace(/,/g,'.')).toFixed(2);
+                balance = new BigNumber(balance.replace(/,/g,'.')).toFixed(2);
             } else {
-                balance = Number(balance).toFixed(2);
+                balance = new BigNumber(balance).toFixed(2);
             }
 
             return balance + '<span> ' + this.symbol + '</span>';

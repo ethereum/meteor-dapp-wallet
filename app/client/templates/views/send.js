@@ -114,7 +114,7 @@ Template['views_send'].onCreated(function(){
     web3.wan.getPermiWanCoinOTABalances(function (error, result) {
         var wanBalance = [];
         _.each(result, function (type) {
-            wanBalance.push({'name': (new BigNumber(type)/10**18).toFixed(), 'balance': type})
+            wanBalance.push({'name': new BigNumber(type).div(new BigNumber(1.0e+18)), 'balance': type})
         });
 
         TemplateVar.set(template, 'wanBalance', wanBalance);
@@ -270,9 +270,7 @@ Template['views_send'].onRendered(function(){
 
 Template['views_send'].helpers({
     'wanBalance': function () {
-        var wanResult = TemplateVar.get('wanBalance');
-
-        return wanResult;
+        return TemplateVar.get('wanBalance');
     },
 
     'selectTransaction': function () {
@@ -280,8 +278,7 @@ Template['views_send'].helpers({
     },
 
     'selecteType': function () {
-        var desc =  TemplateVar.get('selectType') === '0' ? '[Switch to private]' : '[Switch to ordinary]';
-        return desc;
+        return TemplateVar.get('selectType') === '0' ? '[Switch to private]' : '[Switch to ordinary]';
     },
 
     'switchStype': function () {
@@ -495,8 +492,10 @@ Template['views_send'].events({
         TemplateVar.get('selectType') === '0' ? TemplateVar.set('selectType', '1') : TemplateVar.set('selectType', '0');
 
         if (TemplateVar.get('selectType') === '0') {
+            TemplateVar.set('estimatedGas', 30000);
             TemplateVar.set('transaction', true);
         } else {
+            TemplateVar.set('estimatedGas', 300000);
             TemplateVar.set('transaction', false);
         }
     },
@@ -535,9 +534,12 @@ Template['views_send'].events({
             TemplateVar.setTo('.dapp-data-textarea', 'value', '');
             TemplateVar.set('switchStype', true);
             TemplateVar.set('tokenId', false);
+            TemplateVar.set('estimatedGas', 30000);
 
         } else {
             TemplateVar.set('switchStype', false);
+            TemplateVar.set('selectType', '0');
+            TemplateVar.set('estimatedGas', 300000);
         }
 
         // trigger amount box change
@@ -579,7 +581,7 @@ Template['views_send'].events({
             tokenAddress = TemplateVar.get('selectedToken'),
             to = TemplateVar.get('transaction') ? TemplateVar.getFrom('.dapp-address-input .to', 'value') : checkWaddress(document.getElementById("waddress-input").value),
             gasPrice = TemplateVar.getFrom('.dapp-select-gas-price', 'gasPrice'),
-            estimatedGas = TemplateVar.get('selectType') === '0' ? TemplateVar.get('estimatedGas') : 100000,
+            estimatedGas = TemplateVar.get('estimatedGas'),
             // selectedAccount = Helpers.getAccountByAddress(template.find('select[name="dapp-select-account"].send-from').value),
             selectedAccount = Helpers.getAccountByAddress(TemplateVar.get('fromAddress')),
             selectedAction = TemplateVar.get("selectedAction"),

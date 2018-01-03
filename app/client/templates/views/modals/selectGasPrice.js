@@ -20,23 +20,18 @@ var toPowerFactor = 1.1;
  @method calculateGasInWei
  @return {Number}
  */
-var calculateGasInWei = function(template, gas, gasPrice, returnGasPrice){
+var calculateGasInWei = function(template, gas, defaultGasPrice, returnGasPrice){
     // Only defaults to 20 shannon if there's no default set => 2.0e+10 = 20gWei
-    gasPrice = new BigNumber(gasPrice || 2.0e+12);
+    var gasPrice = new BigNumber(defaultGasPrice || 2.0e+12);
 
-    var minGasPrice = new BigNumber(1.8 * 10**gasPrice.e),
-        maxGasPrice = new BigNumber(3.0 * 10**gasPrice.e);
-    //
-    // console.log('defaultGasPrice', gasPrice);
-    // console.log('minGasPrice', minGasPrice);
-    // console.log('maxGasPrice', maxGasPrice);
+    var minGasPrice = new BigNumber(2.0e+12),
+        maxGasPrice = new BigNumber(3.0e+12);
 
     if (gasPrice < minGasPrice) {
         gasPrice = minGasPrice;
     } else if (gasPrice > maxGasPrice) {
         gasPrice = maxGasPrice;
     }
-
 
     if(!_.isObject(gasPrice))
         gasPrice = new BigNumber(String(gasPrice), 10);
@@ -76,8 +71,7 @@ Template['modal_selectGasPrice'].helpers({
 
         if(_.isFinite(TemplateVar.get('feeMultiplicator')) && _.isFinite(this.gas)) {
             var template = Template.instance();
-
-            // console.log('this.gasPrice', this.gasPrice);
+            // console.log('send gasPrice', this.gasPrice);
 
             // set the value
             TemplateVar.set('gasInWei', calculateGasInWei(template, this.gas, this.gasPrice).floor().toString(10));
@@ -86,6 +80,7 @@ Template['modal_selectGasPrice'].helpers({
             // return the fee
             var fee = EthTools.formatBalance(calculateGasInWei(template, this.gas, this.gasPrice).toString(10), '0,0.[000000000000000000]', this.unit);
 
+            // console.log('fee', fee);
             return fee;
 
         }

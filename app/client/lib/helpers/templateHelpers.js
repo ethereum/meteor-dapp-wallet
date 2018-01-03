@@ -210,7 +210,7 @@ Formats address to a CaseChecksum
 @return {String} checksumAddress    The returned, checksummed address
 **/
 Template.registerHelper('toChecksumAddress', function(address){
-    return _.isString(address) ? web3.toChecksumAddress(address).toLowerCase() : '';
+    return _.isString(address) ? web3.toChecksumAddress(address) : '';
 });
 
 Template.registerHelper('intBalance', function(balance){
