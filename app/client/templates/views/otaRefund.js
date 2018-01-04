@@ -154,7 +154,9 @@ Template['views_otaRefund'].events({
                                 value = parseFloat(ota.otaValue);
                             }
 
-                            addTransactionAfterSend(txHash[index].hash, value, otaData.rfAddress, otaData.rfAddress, otaData.gasPrice.toString(10), otaData.gas, '');
+                            if (!txHash[index].used) {
+                                addTransactionAfterSend(txHash[index].hash, value, otaData.rfAddress, otaData.rfAddress, otaData.gasPrice.toString(10), otaData.gas, '');
+                            }
                         });
 
                         FlowRouter.go(href);
