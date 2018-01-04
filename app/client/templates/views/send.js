@@ -287,7 +287,10 @@ Template['views_send'].helpers({
 
     'selectAccount': function () {
 
-        var address = FlowRouter.getRouteName() === 'dashboard' ? FlowRouter.getParam('address') : FlowRouter.getParam('address').toLowerCase();
+        var address;
+        if (FlowRouter.getParam('address'))
+            address = FlowRouter.getParam('address').toLowerCase();
+
         var accounts = EthAccounts.find({balance:{$ne:"0"}, address: address}, {sort: {balance: 1}}).fetch();
 
         TemplateVar.set('total', accounts);
@@ -558,7 +561,7 @@ Template['views_send'].events({
 
             checkOverDailyLimit(template.find('select[name="dapp-select-account"].send-from').value, wei, template);
 
-            // token
+        // token
         } else {
 
             var token = Tokens.findOne({address: TemplateVar.get('selectedToken')}),
@@ -717,7 +720,7 @@ Template['views_send'].events({
                             localStorage.setItem('compiledContracts', null);
                             localStorage.setItem('selectedContract', null);
 
-                            FlowRouter.go('dashboard');
+                            FlowRouter.go('/account/' + selectedAccount.address);
 
                         } else {
                             // EthElements.Modal.hide();
@@ -777,7 +780,7 @@ Template['views_send'].events({
                                 localStorage.setItem('compiledContracts', null);
                                 localStorage.setItem('selectedContract', null);
 
-                                FlowRouter.go('dashboard');
+                                FlowRouter.go('/account/' + selectedAccount.address);
                             } else {
 
                                 // EthElements.Modal.hide();

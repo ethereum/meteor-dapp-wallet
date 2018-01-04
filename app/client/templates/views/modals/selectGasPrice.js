@@ -22,14 +22,16 @@ var toPowerFactor = 1.1;
  */
 var calculateGasInWei = function(template, gas, defaultGasPrice, returnGasPrice){
     // Only defaults to 20 shannon if there's no default set => 2.0e+10 = 20gWei
-    var gasPrice = new BigNumber(defaultGasPrice || 2.0e+12);
+    // 10 times
 
-    var minGasPrice = new BigNumber(2.0e+12),
-        maxGasPrice = new BigNumber(3.0e+12);
+    var gasPrice = new BigNumber(defaultGasPrice || 2.0e+11);
 
-    if (gasPrice < minGasPrice) {
+    var minGasPrice = new BigNumber(2.0e+11),
+        maxGasPrice = new BigNumber(3.0e+11);
+
+    if (gasPrice.lt(minGasPrice)) {
         gasPrice = minGasPrice;
-    } else if (gasPrice > maxGasPrice) {
+    } else if (gasPrice.gt(minGasPrice)) {
         gasPrice = maxGasPrice;
     }
 
