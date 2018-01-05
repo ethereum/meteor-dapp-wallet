@@ -11,24 +11,25 @@ Template['views_account'].onCreated(function () {
         var waddress = Helpers.getAccountByAddress(FlowRouter.getParam('address')).waddress.slice(2);
 
         if (typeof mist !== 'undefined') {
-            // state ==0 means only fetch unrefund ota.
             mist.requestOTACollection(waddress,0, function (e, result) {
-                //console.log("mist.requestOTACollection result:", e, result);
                 var oldOtas = TemplateVar.get(template,'otaValue');
                 if(!oldOtas || oldOtas.length !== result.length)
                 {
-                    var otaValue = 0;
+                    var otaValue = new BigNumber(0);
                     if (!e && result.length >0) {
                         _.each(result, function(ota){
-                            otaValue += Number(ota.value);
+                            otaValue=otaValue.add(new BigNumber(ota.value));
                         });
                     }
-                    TemplateVar.set(template,'otasValue',otaValue);
+
+                    if (otaValue.cmp(new BigNumber(0)))
+                        TemplateVar.set(template,'otasValue',otaValue);
+
                     Session.set('otas', result);
 
                     OTAs.upsert(waddress, {$set: {
                             waddress: waddress,
-                            value: otaValue
+                            value: otaValue.toString(10)
                     }});
                 }
             })
