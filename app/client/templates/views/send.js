@@ -128,7 +128,6 @@ Template['views_send'].onCreated(function(){
 
     // SET THE DEFAULT VARIABLES
     TemplateVar.set('amount', '0');
-    TemplateVar.set('estimatedGas', 30000);
     TemplateVar.set('sendAll', false);
 
     // Deploy contract
@@ -221,48 +220,57 @@ Template['views_send'].onRendered(function(){
 
     // ->> GAS PRICE ESTIMATION
     template.autorun(function(c){
-        var address = TemplateVar.getFrom('.dapp-select-account.send-from', 'value'),
-            to = TemplateVar.getFrom('.dapp-address-input .to', 'value'),
+
+        var account = TemplateVar.getFrom('.dapp-select-account.send-from', 'value'),
             amount = TemplateVar.get('amount') || '0',
             data = getDataField(),
             tokenAddress = TemplateVar.get('selectedToken');
 
+        var address = account.address;
+
         if(_.isString(address))
             address = address.toLowerCase();
 
+        var to;
+        if (TemplateVar.get('transaction')){
+            to = TemplateVar.getFrom('.dapp-address-input .to', 'value');
 
-        // Ether tx estimation
-        if(tokenAddress === 'ether') {
+            // Ether tx estimation
+            if(tokenAddress === 'ether') {
+                if(EthAccounts.findOne({address: address}, {reactive: false})) {
 
-            if(EthAccounts.findOne({address: address}, {reactive: false})) {
-                web3.eth.estimateGas({
-                    from: address,
-                    to: to,
-                    value: amount,
-                    data: data,
-                    gas: defaultEstimateGas
-                }, estimationCallback.bind(template));
-
-                // Wallet tx estimation
-            } else if(wallet = Wallets.findOne({address: address}, {reactive: false})) {
-
-                if(contracts['ct_'+ wallet._id])
-                    contracts['ct_'+ wallet._id].execute.estimateGas(to || '', amount || '', data || '',{
-                        from: wallet.owners[0],
+                    web3.eth.estimateGas({
+                        from: address,
+                        to: to,
+                        value: amount,
+                        data: data,
                         gas: defaultEstimateGas
                     }, estimationCallback.bind(template));
+
+                    // Wallet tx estimation
+                } else if(wallet = Wallets.findOne({address: address}, {reactive: false})) {
+
+                    if(contracts['ct_'+ wallet._id])
+                        contracts['ct_'+ wallet._id].execute.estimateGas(to || '', amount || '', data || '',{
+                            from: wallet.owners[0],
+                            gas: defaultEstimateGas
+                        }, estimationCallback.bind(template));
+                }
+
+                // Custom coin estimation
+            } else {
+                try {
+                    TokenContract.at(tokenAddress).transfer.estimateGas(to, amount, {
+                        from: address,
+                        gas: defaultEstimateGas
+                    }, estimationCallback.bind(template));
+                } catch (e) {
+                    console.log('TokenContract is undefined');
+                }
             }
 
-            // Custom coin estimation
         } else {
-            try {
-                TokenContract.at(tokenAddress).transfer.estimateGas(to, amount, {
-                    from: address,
-                    gas: defaultEstimateGas
-                }, estimationCallback.bind(template));
-            } catch (e) {
-                console.log('TokenContract is undefined');
-            }
+            TemplateVar.set('estimatedGas', 300000);
         }
     });
 });
@@ -495,10 +503,8 @@ Template['views_send'].events({
         TemplateVar.get('selectType') === '0' ? TemplateVar.set('selectType', '1') : TemplateVar.set('selectType', '0');
 
         if (TemplateVar.get('selectType') === '0') {
-            TemplateVar.set('estimatedGas', 30000);
             TemplateVar.set('transaction', true);
         } else {
-            TemplateVar.set('estimatedGas', 300000);
             TemplateVar.set('transaction', false);
         }
     },
@@ -537,12 +543,9 @@ Template['views_send'].events({
             TemplateVar.setTo('.dapp-data-textarea', 'value', '');
             TemplateVar.set('switchStype', true);
             TemplateVar.set('tokenId', false);
-            TemplateVar.set('estimatedGas', 30000);
-
         } else {
             TemplateVar.set('switchStype', false);
             TemplateVar.set('selectType', '0');
-            TemplateVar.set('estimatedGas', 300000);
         }
 
         // trigger amount box change
@@ -599,12 +602,11 @@ Template['views_send'].events({
             });
         }
 
-
         if(selectedAccount && !TemplateVar.get('sending')) {
 
             // set gas down to 21 000, if its invalid data, to prevent high gas usage.
             if(estimatedGas === defaultEstimateGas || estimatedGas === 0)
-                estimatedGas = 50000;
+                estimatedGas = 100000;
 
             // if its a wallet contract and tokens, don't need to remove the gas addition on send-all, as the owner pays
             if(sendAll && (selectedAccount.owners || tokenAddress !== 'ether'))
