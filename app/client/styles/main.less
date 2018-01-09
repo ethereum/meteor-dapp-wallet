@@ -15,74 +15,50 @@
 @colorWhite: #E8F1F2;
 @colorBlack: #050C14;
 @colorBlue: #3196C8;
-@colorOrange: #FDBF61;
+@colorOrange: #ff9900;
 // @colorYellow: #ffc107;
 @colorGreen: #4ECDC4;
 @colorError: #FF6B6B;
 @colorDark: #303030;
+@colorPrimary: #375A7F;
 
-@colorLink: @colorWhite;
-@colorTextSecondary: #375A7F;
-@colorTextPrimary: #E8F1F2;
+@colorLink: @colorBlack;
+@colorTextSecondary: @colorBlack;
+@colorTextPrimary: @colorBlack;
 
 @heightHeader: @gridWidth * 2.5;
 
 
 // Platform specifics
 // Mac OSX
-@colorOSBackgroundFocus: @colorBlue;
-@colorOSBackgroundBlur: @colorBlue;
+@colorOSBackgroundFocus: @colorPrimary;
+@colorOSBackgroundBlur: @colorPrimary;
 
-@colorWinBackgroundFocus: @colorBlue;
-@colorWinBackgroundBlur: @colorBlue;
+@colorWinBackgroundFocus: @colorPrimary;
+@colorWinBackgroundBlur: @colorPrimary;
 
-@colorLinuxBackgroundFocus: @colorBlue;
-@colorLinuxBackgroundBlur: @colorBlue;
+@colorLinuxBackgroundFocus: @colorPrimary;
+@colorLinuxBackgroundBlur: @colorPrimary;
 
-
-.dapp-actionbar {
-    background: @colorBlack;
-}
 
 .account-pattern {
-    background-color: @colorBlue !important;
+    background-color: @colorPrimary !important;
 }
 
-.account-balance {
-    color: @colorWhite !important;
+.dapp-header {
+    .account-balance, .block-info, .active {
+        color: @colorWhite !important;
+    }
 }
 
 .account-id {
-    color: @colorOrange !important;
-}
-
-.dapp-header .block-info {
-    color: @colorWhite !important;
-}
-
-a.active {
-    color: @colorTextSecondary !important;
+    color: @colorError !important;
 }
 
 .dapp-segmented-control label {
     color: @colorTextSecondary;
 }
 
-input, select, textarea {
-    color: @colorTextSecondary;
-}
-
-.dapp-block-button {
-    color: @colorTextSecondary;
-}
-
-.dapp-modal-container {
-    background-color: @colorDark;
-}
-
-code {
-    color: @colorTextSecondary;
-}
 
 .global-notifications {
     position: fixed;
@@ -106,7 +82,7 @@ code {
 .dapp-content {
     padding: @defaultPaddingVertical @defaultPaddingHorizontal*2.5 @defaultPaddingVertical*2;
     max-width: none;
-    background: #050C14;
+    background: @colorWhite;
 
     .dapp-container {
         max-width: none; 
