@@ -48,7 +48,7 @@
                                     <p style="margin: 0;margin-left: -5px;font-size: 14px;color: #929cb8;">{{i18n 'views.account.transfer'}}</p>
                                     </a>
                                 {{else}}
-                                    <a style="cursor: pointer" title="{{toChecksumAddress address}}" id="transfer">
+                                    <a style="cursor: pointer" title="{{toChecksumAddress address}}" class="transfer">
                                         <img class=" wanchain-transfer"/>
                                         <p style="margin: 0;margin-left: -8px;font-size: 14px;color: #929cb8;">{{i18n 'views.account.transfer'}}</p>
                                     </a>
@@ -81,7 +81,12 @@
                                   <strong>{{> elements_balance balance=(TemplateVar.get "otasValue") changeUnit=true}}</strong>
                                   <span class="balance-span">{{i18n 'views.account.balacne.ota'}}
                                       {{#if TemplateVar.get "otasValue"}}
-                                          <a href="{{pathFor route='otaRefund' address=theAddress}}">{{i18n 'views.account.balacne.refund'}}</a>
+                                          {{#if hrefType}}
+                                              <a href="{{pathFor route='otaRefund' address=theAddress}}">{{i18n 'views.account.balacne.refund'}}</a>
+                                              {{else}}
+                                              <a class="transfer" style="cursor: pointer;">{{i18n 'views.account.balacne.refund'}}</a>
+                                          {{/if}}
+
                                       {{/if}}
                                       </span>
                               </div>

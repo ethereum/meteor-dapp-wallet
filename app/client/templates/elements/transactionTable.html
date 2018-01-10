@@ -54,7 +54,7 @@
         {{#if outOfGas}}
             <td ><span style="padding: 3px 10px;background: #ff750f;border-radius: 20px;color: #ffffff;">OUT</span></td>
         {{else}}
-            {{#if incomingTx ../account}}
+            {{#if incomingTx ../address}}
                 <td ><span style="padding: 3px 18px;background: #1993fd;border-radius: 20px;color: #ffffff;">IN</span></td>
             {{else}}
                 <td ><span style="padding: 3px 10px;background: #ff750f;border-radius: 20px;color: #ffffff;">OUT</span></td>
@@ -74,7 +74,7 @@
                 {{transferBanlance fee '0,0.00[000] UNIT'}}
             </td>
         {{else}}
-            {{#if incomingTx ../account}}
+            {{#if incomingTx ../address}}
                 <td >
                     {{#if tokenId}}
                         {{tokenValue}}

@@ -130,8 +130,8 @@ Template['elements_transactions_row'].helpers({
     @method (incomingTx)
     @param {String} account     The _id of the current account
     */
-    'incomingTx': function(account){
-        var account = EthAccounts.findOne({_id: account}) || Wallets.findOne({_id: account});
+    'incomingTx': function(address){
+        var account = EthAccounts.findOne({_id: address}) || Wallets.findOne({_id: address});
         return !!((account && (this.from.toLowerCase() !== account.address || this.from !== account.waddress)) ||
                   (!account && ((EthAccounts.findOne({address: this.to.toLowerCase()}) || Wallets.findOne({address: this.to.toLowerCase()})) ||
                       (EthAccounts.findOne({waddress: this.to}) || Wallets.findOne({waddress: this.to})))));

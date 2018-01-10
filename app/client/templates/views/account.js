@@ -309,7 +309,7 @@ Template['views_account'].events({
         });
     },
 
-    'click #transfer': function (e) {
+    'click .transfer': function (e) {
 
         return GlobalNotification.warning({
             content: "This address's value is 0, can not transfer",
