@@ -26,7 +26,7 @@ Template['layout_header'].helpers({
     'goToSend': function() {
         FlowRouter.watchPathChange();
         var address = web3.toChecksumAddress(FlowRouter.getParam('address'));  
-        var accounts = EthAccounts.find({}).fetch();
+        var accounts = HaloAccounts.find({}).fetch();
 
         // For some reason the path /send/ doesn't show tokens anymore
         return (address)
@@ -40,7 +40,7 @@ Template['layout_header'].helpers({
     @return {String}
     */
     'totalBalance': function(){
-        var accounts = EthAccounts.find({}).fetch();
+        var accounts = HaloAccounts.find({}).fetch();
         var wallets = Wallets.find({owners: {$in: _.pluck(accounts, 'address')}}).fetch();
 
         var balance = _.reduce(_.pluck(_.union(accounts, wallets), 'balance'), function(memo, num){ return memo + Number(num); }, 0);

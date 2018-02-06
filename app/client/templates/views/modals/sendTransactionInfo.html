@@ -3,10 +3,10 @@
         {{i18n "wallet.send.sendInfoTitle"}}
         <br>
         {{dapp_formatBalance amount "0,0.00[000000] UNIT"}}
-        {{#if $neq unit 'ether'}}
+        {{#if $neq unit 'halo'}}
             <br>
             <small>
-                ({{dapp_formatBalance amount "0,0.00[000000] unit" "ether"}})
+                ({{dapp_formatBalance amount "0,0.00[000000] unit" "halo"}})
             </small>
         {{/if}}
     </h1>

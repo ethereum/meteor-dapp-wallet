@@ -31,12 +31,12 @@ addTransactionAfterSend = function(txHash, amount, from, to, gasPrice, estimated
     }});
 
     // add from Account
-    EthAccounts.update({address: from}, {$addToSet: {
+    HaloAccounts.update({address: from}, {$addToSet: {
         transactions: txId
     }});
 
     // add to Account
-    EthAccounts.update({address: to}, {$addToSet: {
+    HaloAccounts.update({address: to}, {$addToSet: {
         transactions: txId
     }});
 };
@@ -226,7 +226,7 @@ var updateTransaction = function(newDocument, transaction, receipt){
     if(newDocument.outOfGas) {
         var warningText = TAPi18n.__('wallet.transactions.error.outOfGas', {from: Helpers.getAccountNameByAddress(newDocument.from), to: Helpers.getAccountNameByAddress(newDocument.to)});
 
-        if(EthAccounts.findOne({address: newDocument.from})) {
+        if(HaloAccounts.findOne({address: newDocument.from})) {
             web3.eth.getBalance(newDocument.from, newDocument.blockNumber, function(e, now){
                 if(!e) {
                     web3.eth.getBalance(newDocument.from, newDocument.blockNumber-1, function(e, then){
@@ -290,7 +290,7 @@ observeTransactions = function(){
                     }
 
 
-                    if(confirmations < ethereumConfig.requiredConfirmations && confirmations >= 0) {
+                    if(confirmations < haloConfig.requiredConfirmations && confirmations >= 0) {
                         Helpers.eventLogs('Checking transaction '+ tx.transactionHash +'. Current confirmations: '+ confirmations);
 
 
@@ -320,7 +320,7 @@ observeTransactions = function(){
 
                     }
 
-                    if(confirmations > ethereumConfig.requiredConfirmations || confCount > ethereumConfig.requiredConfirmations*2) {
+                    if(confirmations > haloConfig.requiredConfirmations || confCount > haloConfig.requiredConfirmations*2) {
 
                         // confirm after a last check
                         web3.eth.getTransaction(tx.transactionHash, function(e, transaction){
@@ -423,7 +423,7 @@ observeTransactions = function(){
                !newDocument.exchangeRates.eur ||
                !newDocument.exchangeRates.gbp ||
                !newDocument.exchangeRates.brl)) {
-                var url = 'https://min-api.cryptocompare.com/data/pricehistorical?fsym=ETH&tsyms=BTC,USD,EUR,GBP,BRL&ts='+ newDocument.timestamp;
+                var url = 'https://min-api.cryptocompare.com/data/pricehistorical?fsym=HALO&tsyms=BTC,USD,EUR,GBP,BRL&ts='+ newDocument.timestamp;
 
                 if(typeof mist !== 'undefined')
                     url += '&extraParams=Mist-'+ mist.version;
@@ -484,10 +484,10 @@ observeTransactions = function(){
             Wallets.update({address: document.to}, {$pull: {
                 transactions: document._id
             }});
-            EthAccounts.update({address: document.from}, {$pull: {
+            HaloAccounts.update({address: document.from}, {$pull: {
                 transactions: document._id
             }});
-            EthAccounts.update({address: document.to}, {$pull: {
+            HaloAccounts.update({address: document.to}, {$pull: {
                 transactions: document._id
             }});
         }

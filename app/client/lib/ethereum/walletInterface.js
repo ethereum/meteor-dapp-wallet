@@ -158,7 +158,7 @@ checkForOriginalWallet = function() {
     return;
 
     var enoughBalance = false;
-    _.each(_.pluck(EthAccounts.find({}).fetch(), 'balance'), function(bal){
+    _.each(_.pluck(HaloAccounts.find({}).fetch(), 'balance'), function(bal){
         if(new BigNumber(bal, '10').gt(1000000000000000000)) enoughBalance = true;
     });
 

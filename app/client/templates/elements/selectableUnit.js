@@ -17,8 +17,8 @@ The available units
 @property selectableUnits
 */
 selectableUnits = [{
-    text: 'ETHER',
-    value: 'ether'
+    text: 'HALO',
+    value: 'halo'
 },
 {
     text: 'FINNEY', //(µΞ)
@@ -75,7 +75,7 @@ Template['elements_selectableUnit'].helpers({
     */
     'selectedUnit': function(){
         var unit = _.find(selectableUnits, function(unit){
-            return unit.value === EthTools.getUnit();
+            return unit.value === HaloTools.getUnit();
         });
 
         if(unit)
@@ -106,6 +106,6 @@ Template['elements_selectableUnit'].events({
     @event change .inline-form
     */
     'change .inline-form': function(e, template, value){
-        EthTools.setUnit(value);
+        HaloTools.setUnit(value);
     }
 });

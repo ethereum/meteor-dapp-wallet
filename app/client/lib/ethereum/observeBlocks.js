@@ -71,7 +71,7 @@ updateBalances = function() {
     });
 
     // UPDATE ENS
-    var allAccounts = EthAccounts.find().fetch().concat(walletsAndContracts);
+    var allAccounts = HaloAccounts.find().fetch().concat(walletsAndContracts);
     _.each(allAccounts, function(account){
 
         // Only check ENS names every N minutes
@@ -80,11 +80,11 @@ updateBalances = function() {
             Helpers.getENSName(account.address, function(err, name, returnedAddr) {
 
                 if (!err && account.address.toLowerCase() == returnedAddr){
-                    EthAccounts.update({address: account.address}, {$set:{ name: name, ens: true, ensCheck: now}});
+                    HaloAccounts.update({address: account.address}, {$set:{ name: name, ens: true, ensCheck: now}});
                     CustomContracts.update({address: account.address}, {$set:{ name: name, ens: true, ensCheck: now}});
                     Wallets.update({address: account.address}, {$set:{ name: name, ens: true, ensCheck: now}});
                 } else {
-                    EthAccounts.update({address: account.address}, {$set:{ens: false, ensCheck: now}});
+                    HaloAccounts.update({address: account.address}, {$set:{ens: false, ensCheck: now}});
                     CustomContracts.update({address: account.address}, {$set:{ens: false, ensCheck: now}});
                     Wallets.update({address: account.address}, {$set:{ens: false, ensCheck: now}});
 
@@ -95,7 +95,7 @@ updateBalances = function() {
 
 
     // UPDATE TOKEN BALANCES
-    var walletsContractsAndAccounts = EthAccounts.find().fetch().concat(Wallets.find().fetch());
+    var walletsContractsAndAccounts = HaloAccounts.find().fetch().concat(Wallets.find().fetch());
 
     _.each(Tokens.find().fetch(), function(token){
         if(!token.address)

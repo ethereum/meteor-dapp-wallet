@@ -3,27 +3,27 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-standard-minifiers
-meteor-base
-mobile-experience
-mongo
+standard-minifiers@1.1.0
+meteor-base@1.2.0
+mobile-experience@1.0.5
+mongo@1.3.1
 blaze-html-templates
-session
-jquery
-tracker
-logging
-reload
-random
-ejson
+session@1.1.7
+jquery@1.11.10
+tracker@1.1.3
+logging@1.1.19
+reload@1.1.11
+random@1.0.10
+ejson@1.1.0
 spacebars
-check
-http
+check@1.2.5
+http@1.3.0
 
 fastclick
 kadira:flow-router
 kadira:blaze-layout
 arillo:flow-router-helpers
-less
+less@2.7.11
 chuangbo:cookie
 jeeeyul:moment-with-langs
 tap:i18n
@@ -33,7 +33,7 @@ frozeman:template-var
 frozeman:persistent-minimongo2
 frozeman:reactive-timer
 frozeman:storage
-markdown
+markdown@1.0.12
 frozeman:inline-form
 mrt:qrcodesvg
 sacha:spin
@@ -42,10 +42,13 @@ agnito:simptip
 ethereum:elements
 ethereum:web3
 ethereum:blocks
-ethereum:accounts
 ethereum:dapp-styles
 jrudio:bluebird
 tap:i18n-bundler
 numeral:numeral
 numeral:languages
 hashanp:geopattern
+shell-server
+dynamic-import
+haloplatform:tools
+haloplatform:accounts

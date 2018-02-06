@@ -238,7 +238,7 @@ Creates filters for a wallet contract, to watch for deposits, pending confirmati
 @param {Boolean} checkFromCreationBlock
 */
 var setupContractFilters = function(newDocument, checkFromCreationBlock){
-    var blockToCheckBack = (newDocument.checkpointBlock || 0) - ethereumConfig.rollBackBy;
+    var blockToCheckBack = (newDocument.checkpointBlock || 0) - haloConfig.rollBackBy;
     
     if(checkFromCreationBlock || blockToCheckBack < 0)
         blockToCheckBack = newDocument.creationBlock;
@@ -357,7 +357,7 @@ var setupContractFilters = function(newDocument, checkFromCreationBlock){
             if(!error) {
                 // update last checkpoint block
                 Wallets.update({_id: newDocument._id}, {$set: {
-                    checkpointBlock: (currentBlock || EthBlocks.latest.number) - ethereumConfig.rollBackBy
+                    checkpointBlock: (currentBlock || EthBlocks.latest.number) - haloConfig.rollBackBy
                 }});
             }
         });
@@ -390,7 +390,7 @@ var setupContractFilters = function(newDocument, checkFromCreationBlock){
                         Helpers.showNotification('wallet.transactions.notifications.incomingTransaction', {
                             to: Helpers.getAccountNameByAddress(newDocument.address),
                             from: Helpers.getAccountNameByAddress(log.args.from),
-                            amount: EthTools.formatBalance(log.args.value, '0,0.00[000000] unit', 'ether')
+                            amount: HaloTools.formatBalance(log.args.value, '0,0.00[000000] unit', 'halo')
                         }, function() {
 
                             // on click show tx info
@@ -422,7 +422,7 @@ var setupContractFilters = function(newDocument, checkFromCreationBlock){
                         Helpers.showNotification('wallet.transactions.notifications.outgoingTransaction', {
                             to: Helpers.getAccountNameByAddress(log.args.to),
                             from: Helpers.getAccountNameByAddress(newDocument.address),
-                            amount: EthTools.formatBalance(log.args.value, '0,0.00[000000] unit', 'ether')
+                            amount: HaloTools.formatBalance(log.args.value, '0,0.00[000000] unit', 'halo')
                         }, function() {
 
                             // on click show tx info
@@ -449,7 +449,7 @@ var setupContractFilters = function(newDocument, checkFromCreationBlock){
 
 
                             // PREVENT SHOWING pending confirmations, of WATCH ONLY WALLETS
-                            if(!(from = Wallets.findOne({address: log.address})) || !EthAccounts.findOne({address: {$in: from.owners}}))
+                            if(!(from = Wallets.findOne({address: log.address})) || !HaloAccounts.findOne({address: {$in: from.owners}}))
                                 return;
 
                             // add pending confirmation,
@@ -474,7 +474,7 @@ var setupContractFilters = function(newDocument, checkFromCreationBlock){
                                     initiator: Helpers.getAccountNameByAddress(log.args.initiator),
                                     to: Helpers.getAccountNameByAddress(log.args.to),
                                     from: Helpers.getAccountNameByAddress(newDocument.address),
-                                    amount: EthTools.formatBalance(log.args.value, '0,0.00[000000] unit', 'ether')
+                                    amount: HaloTools.formatBalance(log.args.value, '0,0.00[000000] unit', 'halo')
                                 }, function() {
                                     FlowRouter.go('/account/'+ newDocument.address);
                                 });
@@ -542,13 +542,13 @@ observeWallets = function(){
     var checkWalletConfirmations = function(newDocument, oldDocument){
         var confirmations = EthBlocks.latest.number - newDocument.creationBlock;
 
-        if(newDocument.address && (!oldDocument || (oldDocument && !oldDocument.address)) && confirmations < ethereumConfig.requiredConfirmations) {
+        if(newDocument.address && (!oldDocument || (oldDocument && !oldDocument.address)) && confirmations < haloConfig.requiredConfirmations) {
             var filter = web3.eth.filter('latest');
             filter.watch(function(e, blockHash){
                 if(!e) {
                     var confirmations = EthBlocks.latest.number - newDocument.creationBlock;
 
-                    if(confirmations < ethereumConfig.requiredConfirmations && confirmations > 0) {
+                    if(confirmations < haloConfig.requiredConfirmations && confirmations > 0) {
                         Helpers.eventLogs('Checking wallet address '+ newDocument.address +' for code. Current confirmations: '+ confirmations);
 
                         // TODO make smarter?
@@ -566,7 +566,7 @@ observeWallets = function(){
                                 }
                             }
                         });
-                    } else if(confirmations > ethereumConfig.requiredConfirmations) {
+                    } else if(confirmations > haloConfig.requiredConfirmations) {
                         filter.stopWatching();
                     }
                 }
@@ -634,7 +634,7 @@ observeWallets = function(){
 
                         console.log('Deploying Wallet with following options', newDocument);
 
-                        WalletContract.new(newDocument.owners, newDocument.requiredSignatures, (newDocument.dailyLimit || ethereumConfig.dailyLimitDefault), {
+                        WalletContract.new(newDocument.owners, newDocument.requiredSignatures, (newDocument.dailyLimit || haloConfig.dailyLimitDefault), {
                             from: newDocument.deployFrom,
                             data: newDocument.code,
                             gas: 3000000,
@@ -779,7 +779,7 @@ observeWallets = function(){
 
             // delete the all tx and pending conf
             _.each(Transactions.find({from: newDocument.address}).fetch(), function(tx){
-                if(!Wallets.findOne({transactions: tx._id}) && !EthAccounts.findOne({transactions: tx._id}))
+                if(!Wallets.findOne({transactions: tx._id}) && !HaloAccounts.findOne({transactions: tx._id}))
                     Transactions.remove(tx._id);
             });
             _.each(PendingConfirmations.find({from: newDocument.address}).fetch(), function(pc){

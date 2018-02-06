@@ -40,7 +40,7 @@
             <div class="col col-6 mobile-full amount">
                 <h3>{{i18n 'wallet.send.amount'}}</h3>
                 {{#if TemplateVar.get "sendAll"}}
-                    {{#if $eq (TemplateVar.get "selectedToken") "ether"}}
+                    {{#if $eq (TemplateVar.get "selectedToken") "halo"}}
                         <input type="text" name="amount" class="dapp-large" value="{{clearAmountFromChars (dapp_formatBalance sendAllAmount '0,0.[000000000000000000]')}}" disabled>
                     {{else}}
                         <input type="text" name="amount" class="dapp-large" value="{{clearAmountFromChars (formatNumberByDecimals sendAllAmount tokenDecimals)}}" disabled>
@@ -56,11 +56,11 @@
                 </label>
 
                 <p class="send-info">
-                    {{#if $eq (TemplateVar.get "selectedToken") "ether"}}
+                    {{#if $eq (TemplateVar.get "selectedToken") "halo"}}
                         {{#if isEtherUnit}}
-                            {{{i18n 'wallet.send.texts.sendAmount' amount=(dapp_formatBalance (TemplateVar.get "amount") "0,0.[000000000000000000] UNIT" "ether")}}}
+                            {{{i18n 'wallet.send.texts.sendAmount' amount=(dapp_formatBalance (TemplateVar.get "amount") "0,0.[000000000000000000] UNIT" "halo")}}}
                         {{else}}
-                            {{{i18n 'wallet.send.texts.sendAmountEquivalent' amount=(dapp_formatBalance (TemplateVar.get "amount") "0,0.[000000] UNIT") etherAmount=(dapp_formatBalance (TemplateVar.get "amount") "0,0.[000000000000000000] UNIT" "ether")}}}
+                            {{{i18n 'wallet.send.texts.sendAmountEquivalent' amount=(dapp_formatBalance (TemplateVar.get "amount") "0,0.[000000] UNIT") etherAmount=(dapp_formatBalance (TemplateVar.get "amount") "0,0.[000000000000000000] UNIT" "halo")}}}
                         {{/if}}
                         {{TemplateVar.get "dailyLimitText"}}
                     {{else}}
@@ -76,15 +76,15 @@
                 {{#if hasTokens}}
                     <ul class="select-token">
                         <li>
-                            <input type="radio" id="ether" value="ether" name="choose-token" {{tokenSelectedAttr 'ether'}}>
-                            <label for="ether">
-                                <span class="ether-symbol">Ξ</span>
-                                <span class="token-name">ETHER</span>
+                            <input type="radio" id="halo" value="halo" name="choose-token" {{tokenSelectedAttr 'halo'}}>
+                            <label for="halo">
+                                <span class="ether-symbol">H</span>
+                                <span class="token-name">HALO</span>
                                 <span class="balance">
-                                    {{#if $neq unit 'ether'}}
-                                        {{dapp_formatBalance selectedAccount.balance "0,0.00 UNIT"}} ({{dapp_formatBalance selectedAccount.balance "0,0.00[0000000000000000] UNIT" "ether"}})
+                                    {{#if $neq unit 'halo'}}
+                                        {{dapp_formatBalance selectedAccount.balance "0,0.00 UNIT"}} ({{dapp_formatBalance selectedAccount.balance "0,0.00[0000000000000000] UNIT" "halo"}})
                                     {{else}}
-                                        {{dapp_formatBalance selectedAccount.balance "0,0.00[0000000000000000] UNIT" "ether"}}
+                                        {{dapp_formatBalance selectedAccount.balance "0,0.00[0000000000000000] UNIT" "halo"}}
                                     {{/if}}
                                 </span>
                             </label>
@@ -104,13 +104,13 @@
                     </ul>
                 {{else}}
                     <div class="token-ether">
-                        <span class="ether-symbol">Ξ</span>
-                        <span class="token-name">ETHER</span>
+                        <span class="ether-symbol">H</span>
+                        <span class="token-name">HALO</span>
                         <span class="balance">
-                            {{#if $neq unit 'ether'}}
-                                {{dapp_formatBalance selectedAccount.balance "0,0.00 UNIT"}} ({{dapp_formatBalance selectedAccount.balance "0,0.00[0000000000000000] UNIT" "ether"}})
+                            {{#if $neq unit 'halo'}}
+                                {{dapp_formatBalance selectedAccount.balance "0,0.00 UNIT"}} ({{dapp_formatBalance selectedAccount.balance "0,0.00[0000000000000000] UNIT" "halo"}})
                             {{else}}
-                                {{dapp_formatBalance selectedAccount.balance "0,0.00[0000000000000000] UNIT" "ether"}}
+                                {{dapp_formatBalance selectedAccount.balance "0,0.00[0000000000000000] UNIT" "halo"}}
                             {{/if}}
                         </span>
                     </div>
@@ -121,7 +121,7 @@
             <div class="dapp-clear-fix"></div>
         </div>
 
-        {{#if $eq (TemplateVar.get "selectedToken") "ether"}}
+        {{#if $eq (TemplateVar.get "selectedToken") "halo"}}
             {{> elements_compileContract onlyByteCode=showOnlyByteTextarea codeNotExecutable=(TemplateVar.get "codeNotExecutable")}}
         {{/if}}
 
@@ -152,21 +152,21 @@
         <div class="row clear total">
             <div class="col col-12 mobile-full">
                 <h3>{{i18n "commonWords.total"}}</h3>
-                {{#if $eq (TemplateVar.get "selectedToken") "ether"}}
+                {{#if $eq (TemplateVar.get "selectedToken") "halo"}}
                     <span class="amount">{{dapp_formatBalance total "0,0.00[0000000000000000] UNIT"}}</span>
-                    {{#if $neq unit 'ether'}}
+                    {{#if $neq unit 'halo'}}
                         <br>
-                        ({{dapp_formatBalance total "0,0.00[0000000000000000] UNIT" "ether"}})
+                        ({{dapp_formatBalance total "0,0.00[0000000000000000] UNIT" "halo"}})
                     {{/if}}
                 {{else}}
                     <span class="amount">{{tokenTotal}}</span> {{selectedToken.symbol}}
                     <br>
-                    {{i18n "wallet.send.estimatedFee"}}: {{dapp_formatBalance total "0,0.00[000000] UNIT" "ether"}}
+                    {{i18n "wallet.send.estimatedFee"}}: {{dapp_formatBalance total "0,0.00[000000] UNIT" "halo"}}
                 {{/if}}
 
                 {{#if selectedAccountIsWalletContract}}
                     <br>
-                    {{i18n "wallet.send.texts.ownerPaysGas"}} ({{dapp_formatBalance (TemplateVar.getFrom ".dapp-select-gas-price" "gasInWei") "0,0.00[0000000000000000] UNIT" "ether"}})
+                    {{i18n "wallet.send.texts.ownerPaysGas"}} ({{dapp_formatBalance (TemplateVar.getFrom ".dapp-select-gas-price" "gasInWei") "0,0.00[0000000000000000] UNIT" "halo"}})
                 {{/if}}
             </div>
 
