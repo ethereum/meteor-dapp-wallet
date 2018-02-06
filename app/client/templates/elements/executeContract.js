@@ -224,10 +224,10 @@ Template['elements_executeContract_function'].onCreated(function(){
 
     // change the amount when the currency unit is changed
     template.autorun(function(c){
-        var unit = EthTools.getUnit();
+        var unit = HaloTools.getUnit();
 
         if(!c.firstRun) {
-            TemplateVar.set('amount', EthTools.toWei(template.find('input[name="amount"]').value.replace(',','.'), unit));
+            TemplateVar.set('amount', HaloTools.toWei(template.find('input[name="amount"]').value.replace(',','.'), unit));
         }
     });
 });
@@ -254,7 +254,7 @@ Template['elements_executeContract_function'].events({
     @event keyup input[name="amount"], change input[name="amount"], input input[name="amount"]
     */
     'keyup input[name="amount"], change input[name="amount"], input input[name="amount"]': function(e, template){
-        var wei = EthTools.toWei(e.currentTarget.value.replace(',','.'));
+        var wei = HaloTools.toWei(e.currentTarget.value.replace(',','.'));
         TemplateVar.set('amount', wei || '0');
     },
     /**

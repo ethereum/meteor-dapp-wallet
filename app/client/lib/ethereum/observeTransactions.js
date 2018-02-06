@@ -290,7 +290,7 @@ observeTransactions = function(){
                     }
 
 
-                    if(confirmations < ethereumConfig.requiredConfirmations && confirmations >= 0) {
+                    if(confirmations < haloConfig.requiredConfirmations && confirmations >= 0) {
                         Helpers.eventLogs('Checking transaction '+ tx.transactionHash +'. Current confirmations: '+ confirmations);
 
 
@@ -320,7 +320,7 @@ observeTransactions = function(){
 
                     }
 
-                    if(confirmations > ethereumConfig.requiredConfirmations || confCount > ethereumConfig.requiredConfirmations*2) {
+                    if(confirmations > haloConfig.requiredConfirmations || confCount > haloConfig.requiredConfirmations*2) {
 
                         // confirm after a last check
                         web3.eth.getTransaction(tx.transactionHash, function(e, transaction){
@@ -423,7 +423,7 @@ observeTransactions = function(){
                !newDocument.exchangeRates.eur ||
                !newDocument.exchangeRates.gbp ||
                !newDocument.exchangeRates.brl)) {
-                var url = 'https://min-api.cryptocompare.com/data/pricehistorical?fsym=ETH&tsyms=BTC,USD,EUR,GBP,BRL&ts='+ newDocument.timestamp;
+                var url = 'https://min-api.cryptocompare.com/data/pricehistorical?fsym=HALO&tsyms=BTC,USD,EUR,GBP,BRL&ts='+ newDocument.timestamp;
 
                 if(typeof mist !== 'undefined')
                     url += '&extraParams=Mist-'+ mist.version;

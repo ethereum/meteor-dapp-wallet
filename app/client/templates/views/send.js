@@ -31,14 +31,14 @@ var checkOverDailyLimit = function(address, wei, template){
     // check if under or over dailyLimit
     account = Helpers.getAccountByAddress(address);
 
-    if(account && account.requiredSignatures > 1 && !_.isUndefined(account.dailyLimit) && account.dailyLimit !== ethereumConfig.dailyLimitDefault && Number(wei) !== 0) {
+    if(account && account.requiredSignatures > 1 && !_.isUndefined(account.dailyLimit) && account.dailyLimit !== haloConfig.dailyLimitDefault && Number(wei) !== 0) {
         // check whats left
         var restDailyLimit = new BigNumber(account.dailyLimit || '0', 10).minus(new BigNumber(account.dailyLimitSpent || '0', 10));
 
         if(restDailyLimit.lt(new BigNumber(wei, 10)))
-            TemplateVar.set('dailyLimitText', new Spacebars.SafeString(TAPi18n.__('wallet.send.texts.overDailyLimit', {limit: EthTools.formatBalance(restDailyLimit.toString(10)), total: EthTools.formatBalance(account.dailyLimit), count: account.requiredSignatures - 1})));
+            TemplateVar.set('dailyLimitText', new Spacebars.SafeString(TAPi18n.__('wallet.send.texts.overDailyLimit', {limit: HaloTools.formatBalance(restDailyLimit.toString(10)), total: HaloTools.formatBalance(account.dailyLimit), count: account.requiredSignatures - 1})));
         else
-            TemplateVar.set('dailyLimitText', new Spacebars.SafeString(TAPi18n.__('wallet.send.texts.underDailyLimit', {limit: EthTools.formatBalance(restDailyLimit.toString(10)), total: EthTools.formatBalance(account.dailyLimit)})));
+            TemplateVar.set('dailyLimitText', new Spacebars.SafeString(TAPi18n.__('wallet.send.texts.underDailyLimit', {limit: HaloTools.formatBalance(restDailyLimit.toString(10)), total: HaloTools.formatBalance(account.dailyLimit)})));
     } else
         TemplateVar.set('dailyLimitText', false);
 };
@@ -105,12 +105,12 @@ Template['views_send'].onCreated(function(){
     // Deploy contract
     if(FlowRouter.getRouteName() === 'deployContract') {
         TemplateVar.set('selectedAction', 'deploy-contract');
-        TemplateVar.set('selectedToken', 'ether');
+        TemplateVar.set('selectedToken', 'halo');
 
     // Send funds
     } else {
         TemplateVar.set('selectedAction', 'send-funds');
-        TemplateVar.set('selectedToken', FlowRouter.getParam('token') || 'ether');
+        TemplateVar.set('selectedToken', FlowRouter.getParam('token') || 'halo');
     }
 
     // check if we are still on the correct chain
@@ -133,10 +133,10 @@ Template['views_send'].onCreated(function(){
 
     // change the amount when the currency unit is changed
     template.autorun(function(c){
-        var unit = EthTools.getUnit();
+        var unit = HaloTools.getUnit();
 
-        if(!c.firstRun && TemplateVar.get('selectedToken') === 'ether') {
-            TemplateVar.set('amount', EthTools.toWei(template.find('input[name="amount"]').value.replace(',','.'), unit));
+        if(!c.firstRun && TemplateVar.get('selectedToken') === 'halo') {
+            TemplateVar.set('amount', HaloTools.toWei(template.find('input[name="amount"]').value.replace(',','.'), unit));
         }
     });
 
@@ -183,7 +183,7 @@ Template['views_send'].onRendered(function(){
 
 
         if (selectedAddress !== address) {
-            TemplateVar.set('selectedToken', 'ether');
+            TemplateVar.set('selectedToken', 'halo');
         }
 
         selectedAddress = address;
@@ -202,7 +202,7 @@ Template['views_send'].onRendered(function(){
 
 
         // Ether tx estimation
-        if(tokenAddress === 'ether') {
+        if(tokenAddress === 'halo') {
 
             if(HaloAccounts.findOne({address: address}, {reactive: false})) {
                 web3.eth.estimateGas({
@@ -307,10 +307,10 @@ Template['views_send'].helpers({
         if(!_.isFinite(amount))
             return '0';
 
-        // ether
+        // halo
         var gasInWei = TemplateVar.getFrom('.dapp-select-gas-price', 'gasInWei') || '0';
 
-        if (TemplateVar.get('selectedToken') === 'ether') {
+        if (TemplateVar.get('selectedToken') === 'halo') {
             amount = (selectedAccount && selectedAccount.owners)
                 ? amount
                 : new BigNumber(amount, 10).plus(new BigNumber(gasInWei, 10));
@@ -342,7 +342,7 @@ Template['views_send'].helpers({
         var selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account.send-from', 'value'));
         var amount = 0;
 
-        if (TemplateVar.get('selectedToken') === 'ether') {
+        if (TemplateVar.get('selectedToken') === 'halo') {
             var gasInWei = TemplateVar.getFrom('.dapp-select-gas-price', 'gasInWei') || '0';
 
             // deduct fee if account, for contracts use full amount
@@ -452,7 +452,7 @@ Template['views_send'].events({
     @event click .token-ether
     */
     'click .token-ether': function(e, template){
-        TemplateVar.set('selectedToken', 'ether');
+        TemplateVar.set('selectedToken', 'halo');
 
         // trigger amount box change
         template.$('input[name="amount"]').trigger('change');
@@ -478,9 +478,9 @@ Template['views_send'].events({
     @event keyup input[name="amount"], change input[name="amount"], input input[name="amount"]
     */
     'keyup input[name="amount"], change input[name="amount"], input input[name="amount"]': function(e, template){
-        // ether
-        if(TemplateVar.get('selectedToken') === 'ether') {
-            var wei = EthTools.toWei(e.currentTarget.value.replace(',','.'));
+        // halo
+        if(TemplateVar.get('selectedToken') === 'halo') {
+            var wei = HaloTools.toWei(e.currentTarget.value.replace(',','.'));
 
             TemplateVar.set('amount', wei || '0');
 
@@ -523,7 +523,7 @@ Template['views_send'].events({
                 estimatedGas = 22000;
 
             // if its a wallet contract and tokens, don't need to remove the gas addition on send-all, as the owner pays
-            if(sendAll && (selectedAccount.owners || tokenAddress !== 'ether'))
+            if(sendAll && (selectedAccount.owners || tokenAddress !== 'halo'))
                 sendAll = false;
 
 
@@ -547,7 +547,7 @@ Template['views_send'].events({
                     duration: 2
                 });
 
-            if(tokenAddress === 'ether') {
+            if(tokenAddress === 'halo') {
 
                 if((_.isEmpty(amount) || amount === '0' || !_.isFinite(amount)) && !data)
                     return GlobalNotification.warning({

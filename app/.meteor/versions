@@ -50,7 +50,8 @@ frozeman:simple-modal@0.0.7
 frozeman:storage@0.1.9
 frozeman:template-var@1.3.0
 geojson-utils@1.0.10
-haloplatform:accounts@0.4.0
+haloplatform:accounts@0.4.2
+haloplatform:tools@0.7.3
 hashanp:geopattern@0.0.1
 hot-code-push@1.0.4
 html-tools@1.0.11

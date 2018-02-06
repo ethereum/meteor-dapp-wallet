@@ -7,7 +7,7 @@ updateMistBadge = function(){
 
         var balance = _.reduce(_.pluck(_.union(accounts, wallets), 'balance'), function(memo, num){ return memo + Number(num); }, 0);
 
-        mist.menu.setBadge(EthTools.formatBalance(balance, '0.0 a','ether') + ' ETH');
+        mist.menu.setBadge(HaloTools.formatBalance(balance, '0.0 a','halo') + ' ETH');
     }
 };
 
@@ -45,7 +45,7 @@ updateMistMenu = function(){
             mist.menu.add(account._id,{
                 position: 3 + index,
                 name: account.name,
-                badge: EthTools.formatBalance(account.balance, "0 a", 'ether')+ ' ETH',
+                badge: HaloTools.formatBalance(account.balance, "0 a", 'halo')+ ' ETH',
                 selected: (location.pathname === '/account/'+ account.address)
             }, function(){
                 FlowRouter.go('/account/'+ account.address);

@@ -48,6 +48,7 @@ tap:i18n-bundler
 numeral:numeral
 numeral:languages
 hashanp:geopattern
-haloplatform:accounts
 shell-server
 dynamic-import
+haloplatform:tools
+haloplatform:accounts

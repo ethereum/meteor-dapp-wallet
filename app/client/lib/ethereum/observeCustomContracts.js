@@ -2,7 +2,7 @@
 
 
 //     var contractInstance = web3.eth.contract(newDocument.jsonInterface).at(newDocument.address);
-//     var blockToCheckBack = (newDocument.checkpointBlock || 0) - ethereumConfig.rollBackBy;
+//     var blockToCheckBack = (newDocument.checkpointBlock || 0) - haloConfig.rollBackBy;
     
 //     if(blockToCheckBack < 0)
 //         blockToCheckBack = 0;
@@ -23,7 +23,7 @@
 //         if(!error) {
 //             // update last checkpoint block
 //             CustomContracts.update({_id: newDocument._id}, {$set: {
-//                 checkpointBlock: (currentBlock || EthBlocks.latest.number) - ethereumConfig.rollBackBy
+//                 checkpointBlock: (currentBlock || EthBlocks.latest.number) - haloConfig.rollBackBy
 //             }});
 //         }
 //     });

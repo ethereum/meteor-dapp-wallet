@@ -46,7 +46,7 @@ Check if currenct unit is an ether unit
 @method (isEtherUnit)
 **/
 Template.registerHelper('isEtherUnit', function(){
-    var unit = EthTools.getUnit();
+    var unit = HaloTools.getUnit();
     return !(unit === 'usd' || unit === 'eur' || unit === 'btc');
 });
 
@@ -95,7 +95,7 @@ Return the current unit
 @method (unit)
 **/
 Template.registerHelper('unit', function(){
-    return EthTools.getUnit();
+    return HaloTools.getUnit();
 });
 
 /**

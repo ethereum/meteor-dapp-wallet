@@ -18,7 +18,7 @@ Block required until a transaction is confirmed.
 @property blocksForConfirmation
 @type Number
 */
-var blocksForConfirmation = ethereumConfig.requiredConfirmations;
+var blocksForConfirmation = haloConfig.requiredConfirmations;
 
 /**
 The default limit, of none is given.
@@ -66,7 +66,7 @@ Template['elements_transactions_table'].helpers({
                     return item;
 
                 // search value
-                if(pattern.test(EthTools.formatBalance(item.value, '0,0.00[000000] unit')))
+                if(pattern.test(HaloTools.formatBalance(item.value, '0,0.00[000000] unit')))
                     return item;
 
                 // search date
