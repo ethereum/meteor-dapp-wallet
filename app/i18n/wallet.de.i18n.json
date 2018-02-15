@@ -248,7 +248,8 @@
                 "emptyWallet": "Das Konto, von dem Sie senden möchten, ist leer.",
                 "notEnoughFunds": "Der Betrag auf Ihrem Konto reicht nicht aus.",
                 "noReceiver": "Sie haben keinen Empfänger angegeben.",
-                "noAmount": "Sie haben keinen Betrag angegeben."
+                "noAmount": "Sie haben keinen Betrag angegeben.",
+                "rejectedByMetamask": "Sie haben die Transaktion über MetaMask abgebrochen."
             },
             "texts": {
                 "ownerPaysGas": "Gas wird vom Besitzer des Wallet-Vertrags bezahlt",

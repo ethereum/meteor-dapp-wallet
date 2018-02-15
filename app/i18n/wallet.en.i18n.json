@@ -257,7 +257,8 @@
                 "emptyWallet": "The account you want to send from is empty.",
                 "notEnoughFunds": "You don't have enough funds in the account.",
                 "noReceiver": "You didn't specify a receiver.",
-                "noAmount": "You didn't specify an amount to send."
+                "noAmount": "You didn't specify an amount to send.",
+                "rejectedInMetamask": "You have rejected the transaction in MetaMask."
             },
             "texts": {
                 "ownerPaysGas": "Gas is paid by the owner of the wallet contract",
