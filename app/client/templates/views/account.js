@@ -325,24 +325,6 @@ Template['views_account'].events({
     'copy .copyable-address': accountClipboardEventHandler,
 
     /**
-    Click to launch Coinbase widget
-
-    @event click deposit-using-coinbase
-    */
-    'click .deposit-using-changelly': function(e){
-        e.preventDefault();
-
-        // Open a modal showing the QR Code
-        EthElements.Modal.show({
-            template: 'views_modals_iframe',
-            class: 'large-modal',
-            data: {
-                address: 'https://changelly.com/widget/v1?auth=email&from=USD&to=ETH&merchant_id=47f87f7cddda&address='+this.address+'&amount=1&ref_id=e25c5a2e8719&color=02a8f3'
-            }
-        });
-    },
-
-    /**
     Click to reveal QR Code
 
     @event click a.create.account
