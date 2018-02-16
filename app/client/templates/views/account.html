@@ -128,12 +128,15 @@
                         </li>
 
                         {{#if $eq ($.Session.get "network") "main"}}
+
+                          {{#if ownedAccount}}
                           <li>
                               <a href="https://changelly.com/widget/v1?auth=email&from=USD&to=ETH&merchant_id=47f87f7cddda&address={{address}}&amount=1&ref_id=e25c5a2e8719&color=02a8f3" target="_blank">
                                   <i class="icon-bitcoin"></i>
                                   {{i18n "wallet.accounts.buttons.buyEther"}}
                               </a>
                           </li>
+                          {{/if}}
 
                         <li>
                             <a href="https://etherscan.io/address/{{address}}" target="_blank">

@@ -168,6 +168,14 @@ Template['views_account'].helpers({
             : false;
     },
     /**
+    Checks if this is Owned
+
+    @method (ownedAccount)
+    */
+    'ownedAccount': function(){
+        return EthAccounts.find({address: this.address.toLowerCase()}).count() > 0 ;
+    },
+    /**
     Gets the contract events if available
 
     @method (customContract)
@@ -339,10 +347,7 @@ Template['views_account'].events({
                 address: this.address
             }
         });
-
-
     },
-
 
     /**
     Click to reveal the jsonInterface

@@ -94,7 +94,7 @@
             "accountsDescription": "Accounts are password protected keys that can hold Ether and Ethereum-based tokens.  They can control contracts, but can't display incoming transactions.",
             "buttons": {
                 "deposit": "Transfer Ether & Tokens",
-                "buyEther": "Buy Ether",
+                "buyEther": "Buy ether",
                 "viewOnExplorer": "View on Etherscan",
                 "copyAddress": "Copy address",
                 "scanQRCode": "Show QR-Code",
