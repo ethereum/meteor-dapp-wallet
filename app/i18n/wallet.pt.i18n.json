@@ -30,7 +30,7 @@
                 "blockReceived": "Novo bloco recebido",
                 "timeSinceBlock": "desde último bloco",
                 "peers": "conexões",
-                "waitingForBlocks": "Aguardando blocos..",                
+                "waitingForBlocks": "Aguardando blocos..",
                 "testnetExplain": "Você está na rede de teste, NÃO ENVIE ethers de verdade para essas contas",
                 "noAccounts": {
                     "title": "Você ainda não tem contas",
@@ -46,7 +46,7 @@
                 "txOriginVulnerabilityAccount": "Essa conta administra uma carteira vulnerável e utiliza-la com contratos maliciosos pode pôr em perigo os seus fundos. Atualize sua carteira antes de fazer quaisquer transações com esta conta.",
                 "txOriginVulnerabilityPopup": "Encontramos carteiras vulneráveis! Certifique-se de implantar novas carteiras e mover os fundos!",
                 "checkThisNow": "Mostre-me agora",
-                "checkThisLater": "Eu vejo depois",                
+                "checkThisLater": "Eu vejo depois",
                 "learnMore": "Saiba mais sobre esta vulnerabilidade"
             }
         },
@@ -94,7 +94,7 @@
             "accountsDescription": "Contas são chaves privadas protegidas por uma senha, que podem armazenar ether, outras moedas baseadas no ethereum e controlar contratos. Contas não exibem transações recebidas.",
             "buttons": {
                 "deposit": "Depositar Ether",
-                "depositBitcoin": "Depositar com Bitcoin",
+                "buyEther": "Comprar Ether",
                 "viewOnExplorer": "Ver no Etherscan",
                 "copyAddress": "Copiar endereço",
                 "scanQRCode": "Mostrar código QR",
