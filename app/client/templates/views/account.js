@@ -10,7 +10,7 @@ Watches custom events
 @param {Object} newDocument  the account object with .jsonInterface
 */
 var addLogWatching = function(newDocument){
-    var contractInstance = web3.eth.contract(newDocument.jsonInterface).at(newDocument.address);
+    var contractInstance = new web3.eth.Contract(newDocument.jsonInterface, newDocument.address);
     var blockToCheckBack = (newDocument.checkpointBlock || 0) - ethereumConfig.rollBackBy;
     
     if(blockToCheckBack < 0)
@@ -24,20 +24,21 @@ var addLogWatching = function(newDocument){
             Events.remove({_id: log._id});
     });
 
-    var filter = contractInstance.allEvents({fromBlock: blockToCheckBack, toBlock: 'latest'});
+    var filter = contractInstance.events.allEvents({fromBlock: blockToCheckBack, toBlock: 'latest'});
     
     // get past logs, to set the new blockNumber
     var currentBlock = EthBlocks.latest.number;
-    filter.get(function(error, logs) {
-        if(!error) {
-            // update last checkpoint block
-            CustomContracts.update({_id: newDocument._id}, {$set: {
-                checkpointBlock: (currentBlock || EthBlocks.latest.number) - ethereumConfig.rollBackBy
-            }});
-        }
-    });
+    // TODO Ryan: undefined contractInstance.getPastEvents
+    // contractInstance.getPastEvents('allEvents', function(error, logs) {
+    //     if(!error) {
+    //         // update last checkpoint block
+    //         CustomContracts.update({_id: newDocument._id}, {$set: {
+    //             checkpointBlock: (currentBlock || EthBlocks.latest.number) - ethereumConfig.rollBackBy
+    //         }});
+    //     }
+    // });
 
-    filter.watch(function(error, log){
+    filter.on('data', function(error, log){
         if(!error) {
             var id = Helpers.makeId('log', web3.sha3(log.logIndex + 'x' + log.transactionHash + 'x' + log.blockHash));
 
@@ -78,7 +79,7 @@ Template['views_account'].onRendered(function(){
 Template['views_account'].onDestroyed(function(){
     // stop watching custom events, on destroy
     if(this.customEventFilter) {
-        this.customEventFilter.stopWatching();
+        this.customEventFilter.unsubscribe();
         this.customEventFilter = null;
         TemplateVar.set('watchEvents', false);
     }
@@ -390,7 +391,7 @@ Template['views_account'].events({
         e.preventDefault();
 
         if(template.customEventFilter) {
-            template.customEventFilter.stopWatching();
+            template.customEventFilter.unsubscribe();
             template.customEventFilter = null;
             TemplateVar.set('watchEvents', false);
         } else {

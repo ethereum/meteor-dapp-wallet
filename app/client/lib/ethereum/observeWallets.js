@@ -110,24 +110,22 @@ updateContractData = function(newDocument){
     if(!contractInstance)
         return;
 
-    contractInstance.m_dailyLimit(function(e, result){
-        if(!e)
-            Wallets.update(newDocument._id, {$set: {
-                dailyLimit: result.toString(10)
-            }});
+    contractInstance.methods.m_dailyLimit().call().then(function(result){
+        Wallets.update(newDocument._id, {$set: {
+            dailyLimit: result.toString(10)
+        }});
     });
-    contractInstance.m_required(function(e, result){
-        if(!e)
-            Wallets.update(newDocument._id, {$set: {
-                requiredSignatures: result.toString(10)
-            }});
+    contractInstance.methods.m_required().call().then(function(result){
+        Wallets.update(newDocument._id, {$set: {
+            requiredSignatures: result.toString(10)
+        }});
     });
 
     // UPDATE THE DAILYLIMITSPENT
     if(newDocument.version >= 1) {
-        contractInstance.m_spentToday(function(e, spent) {
-            contractInstance.m_lastDay(function(e, lastDay) {
-                if(!e && spent && _.isFinite(spent.toString(10))) {
+        contractInstance.methods.m_spentToday().call().then(function(spent) {
+            contractInstance.methods.m_lastDay().call().then(function(lastDay) {
+                if(spent && _.isFinite(spent.toString(10))) {
 
                     var now = new Date();
                     var fullDaysSinceEpoch = Math.floor(now/8.64e7);
@@ -147,7 +145,7 @@ updateContractData = function(newDocument){
 
     // check for version
     if(_.isUndefined(newDocument.version) && newDocument.address) {
-        contractInstance.version(function(e, version){
+        contractInstance.methods.version().call().then(function(e, version){
             if(!e && version.toString(10)) {
                 // var sha3 = web3.sha3(code, true);
 
@@ -177,7 +175,7 @@ Update the owner list
 */
 checkOwner = function(newDocument){
     // check if the owners have changed
-    if(web3.isAddress(newDocument.address)) {
+    if(web3.utils.isAddress(newDocument.address)) {
         checkWalletOwners(newDocument.address).then(function(wallet){
             Wallets.update(newDocument._id, {$set: {owners: wallet.owners}});
         }, function(){
@@ -254,7 +252,7 @@ var setupContractFilters = function(newDocument, checkFromCreationBlock){
 
     // stop all running events
     _.each(contractInstance.walletEvents, function(event){
-        event.stopWatching();
+        event.unsubscribe();
         contractInstance.walletEvents.shift();
     });
 
@@ -312,7 +310,8 @@ var setupContractFilters = function(newDocument, checkFromCreationBlock){
                         newDocument = Wallets.findOne(newDocument._id);
 
                         // set address to the contract instance
-                        contracts['ct_'+ newDocument._id] = WalletContract.at(receipt.contractAddress);
+                        WalletContract.options.address = receipt.contractAddress;
+                        contracts['ct_'+ newDocument._id] = WalletContract;
 
                         // add contract filters
                         setupContractFilters(newDocument);
@@ -334,7 +333,7 @@ var setupContractFilters = function(newDocument, checkFromCreationBlock){
     } else {
 
         // SETUP FILTERS
-        Helpers.eventLogs('Checking Deposits and ConfirmationNeeded for '+ contractInstance.address +' (_id: '+ newDocument._id +') from block #', blockToCheckBack);
+        Helpers.eventLogs('Checking Deposits and ConfirmationNeeded for '+ contractInstance.options.address +' (_id: '+ newDocument._id +') from block #', blockToCheckBack);
 
 
         // delete the last tx and pc until block -500
@@ -348,12 +347,12 @@ var setupContractFilters = function(newDocument, checkFromCreationBlock){
         });
 
 
-        var filter = contractInstance.allEvents({fromBlock: blockToCheckBack, toBlock: 'latest'});
+        var filter = contractInstance.events.allEvents({fromBlock: blockToCheckBack, toBlock: 'latest'});
         events.push(filter);
         
         // get past logs, to set the new blockNumber
         var currentBlock = EthBlocks.latest.number;
-        filter.get(function(error, logs) {
+        contractInstance.getPastEvents(function(error, logs) {
             if(!error) {
                 // update last checkpoint block
                 Wallets.update({_id: newDocument._id}, {$set: {
@@ -362,7 +361,7 @@ var setupContractFilters = function(newDocument, checkFromCreationBlock){
             }
         });
 
-        filter.watch(function(error, log){
+        filter.on('data', function(error, log){
             if(!error) {
                 Helpers.eventLogs(log);
 
@@ -587,13 +586,12 @@ observeWallets = function(){
         @method added
         */
         added: function(newDocument) {
-
             // DEPLOYED NEW CONTRACT
             if(!newDocument.address) {
 
                 // tx hash already exisits, so just get the receipt and don't re-deploy
                 if(newDocument.transactionHash) {
-                    contracts['ct_'+ newDocument._id] = WalletContract.at();
+                    contracts['ct_'+ newDocument._id] = WalletContract;
 
                     // remove account, if something is searching since more than 30 blocks
                     if(newDocument.creationBlock + 50 <= EthBlocks.latest.number)
@@ -634,31 +632,43 @@ observeWallets = function(){
 
                         console.log('Deploying Wallet with following options', newDocument);
 
-                        WalletContract.new(newDocument.owners, newDocument.requiredSignatures, (newDocument.dailyLimit || ethereumConfig.dailyLimitDefault), {
-                            from: newDocument.deployFrom,
+                        WalletContract.deploy({
                             data: newDocument.code,
-                            gas: 3000000,
+                            arguments: [
+                                newDocument.owners,
+                                newDocument.requiredSignatures || 1,  // TODO Ryan: 1? default of undefined was throwing error
+                                (newDocument.dailyLimit || ethereumConfig.dailyLimitDefault)
+                            ]
+                        }).send({from: newDocument.deployFrom, gas: 3000000}, function(error, transactionHash){
+                            if (error) {
+                                console.log('Error while deploying wallet', error);
 
-                        }, function(error, contract){
-                            if(!error) {
+                                GlobalNotification.error({
+                                    content: error.message,
+                                    duration: 8
+                                });
 
-                                // TX HASH arrived
-                                if(!contract.address) {
+                                // remove account, if something failed
+                                Wallets.remove(newDocument._id);
+                            } else {
+                                // add transactionHash to account
+                                newDocument.transactionHash = transactionHash;
+                                console.log('Contract transaction hash: ', transactionHash);
 
-                                    // add transactionHash to account
-                                    newDocument.transactionHash = contract.transactionHash;
-                                    console.log('Contract transaction hash: ', contract.transactionHash);
+                                Wallets.update(newDocument._id, {$set: {
+                                    transactionHash: transactionHash
+                                }});
+                            }
+                        }).on('receipt', function(receipt) {
+                            console.log('Contract receipt: ', receipt);
+                        }).then(function(contract) {
+                            // in upgrading to web3.js 1.0, the address resides in contract.options.address instead of contract.address
+                            // we'll set contract.address so the code remains functionining properly.
+                            contract.address = contract.options.address;
 
-                                    Wallets.update(newDocument._id, {$set: {
-                                        transactionHash: contract.transactionHash
-                                    }});
+                            console.log('Contract Address: ', contract.options.address);
 
-                                // CONTRACT DEPLOYED
-                                } else {
-
-                                    console.log('Contract Address: ', contract.address);
-
-                                    contracts['ct_'+ newDocument._id] = contract;
+                            contracts['ct_'+ newDocument._id] = contract;
 
                                     // add address to account
                                     Wallets.update(newDocument._id, {$set: {
@@ -668,7 +678,7 @@ observeWallets = function(){
                                     }, $unset: {
                                         code: ''
                                     }});
-                                    newDocument.address = contract.address;
+                                    newDocument.address = contract.options.address;
                                     delete newDocument.code;
 
 
@@ -680,26 +690,13 @@ observeWallets = function(){
                                     EthElements.Modal.question({
                                         template: 'views_modals_backupContractAddress',
                                         data: {
-                                            address: contract.address
+                                            address: contract.options.address
                                         },
                                         ok: true
                                     },{
                                         closeable: false
                                     });
-                                }
-                                
-                            } else {
-                                console.log('Error while deploying wallet', error);
-                                
-                                GlobalNotification.error({
-                                    content: error.message,
-                                    duration: 8
-                                });
-
-                                // remove account, if something failed
-                                Wallets.remove(newDocument._id);
-                            }
-                        });
+                            });
                     }
                 });
 
@@ -707,7 +704,8 @@ observeWallets = function(){
 
             // USE DEPLOYED CONTRACT
             } else {
-                contracts['ct_'+ newDocument._id] = WalletContract.at(newDocument.address);
+                WalletContract.options.address = newDocument.address;
+                contracts['ct_'+ newDocument._id] = WalletContract;
 
                 // update balance on start
                 web3.eth.getBalance(newDocument.address, function(err, res){
@@ -771,7 +769,7 @@ observeWallets = function(){
 
             // stop all running events
             _.each(contractInstance.walletEvents, function(event){
-                event.stopWatching();
+                event.unsubscribe();
                 contractInstance.walletEvents.shift();
             });
 

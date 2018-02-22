@@ -25,7 +25,7 @@ Template['layout_header'].helpers({
     */
     'goToSend': function() {
         FlowRouter.watchPathChange();
-        var address = web3.toChecksumAddress(FlowRouter.getParam('address'));  
+        var address = web3.utils.toChecksumAddress(FlowRouter.getParam('address'));  
         var accounts = EthAccounts.find({}).fetch();
 
         // For some reason the path /send/ doesn't show tokens anymore

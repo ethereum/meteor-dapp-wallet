@@ -38,7 +38,7 @@ var addCustomContract = function(e) {
         return false;
     }
 
-    if(web3.isAddress(address)) {
+    if(web3.utils.isAddress(address)) {
         // chech if contract already exists as wallet contract
         if(Wallets.findOne({address: address})) {
             GlobalNotification.warning({
@@ -92,7 +92,7 @@ var addToken = function(e) {
         TAPi18n.__('wallet.tokens.editedToken', {token: name}) : 
         TAPi18n.__('wallet.tokens.addedToken', {token: name}) ;
 
-    if(web3.isAddress(address)) {
+    if(web3.utils.isAddress(address)) {
         Tokens.upsert(tokenId, {$set: {
             address: address,
             name: name,

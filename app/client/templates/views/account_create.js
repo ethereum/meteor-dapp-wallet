@@ -306,7 +306,7 @@ Template['views_account_create'].events({
             var formValues = InlineForm('.inline-form');
 
             var owners = _.uniq(_.compact(_.map(template.findAll('input.owners'), function(item){
-                if(web3.isAddress(item.value))
+                if(web3.utils.isAddress(item.value))
                     return '0x'+ item.value.replace('0x','').toLowerCase();
             })));
 
@@ -334,7 +334,7 @@ Template['views_account_create'].events({
         if(type === 'import') {
 
             var owners = _.uniq(_.compact(_.map(TemplateVar.get('importWalletOwners'), function(item){
-                if(web3.isAddress(item))
+                if(web3.utils.isAddress(item))
                     return item.toLowerCase();
             })));
 

@@ -199,8 +199,6 @@ Gets the docuement matching the given addess from the EthAccounts or Wallets col
 */
 Helpers.getAccountByAddress = function(address, reactive) {
     var options = (reactive === false) ? {reactive: false} : {};
-    if(_.isString(address))
-        address = address.toLowerCase();
     return EthAccounts.findOne({address: address}, options) || Wallets.findOne({address: address}, options) || CustomContracts.findOne({address: address}, options);
 };
 
@@ -438,7 +436,7 @@ Helpers.isOnMainNetwork = function () {
 ENS Functions
 **/
 var sha3 = function(str, opt) {
-  return '0x' + web3.sha3(str, opt).replace('0x','');
+  return '0x' + web3.utils.sha3(str, opt).replace('0x','');
 };
 
 function namehash(name) {
@@ -472,41 +470,40 @@ Helpers.getENSName = function(address, callback) {
         return;
     }
     var node = namehash(address.toLowerCase().replace('0x','')+'.addr.reverse');
-    var ensContract = web3.eth.contract(ensContractAbi);
-    var resolverContract = web3.eth.contract(resolverContractAbi);
+    var ensContract = new web3.eth.Contract(ensContractAbi, ensAddress);
+    var resolverContract = new web3.eth.Contract(resolverContractAbi);
 
-    // instantiate ens
-    ensContract.at(ensAddress, function(err, ens) {
-        // get a resolver address for that name
-        ens.resolver(node, function(err, resolverAddress) {
-            if (err) callback(err, null, null);
-            else if (resolverAddress == 0) callback('no resolver address', null, null);
-            else {
-                // if you find one, find the name on that resolver
-                resolverContract.at(resolverAddress).name(node, function(error, name) {
-                    if (err) callback(err, null, null);
-                    else if (name == 0) callback('Found resolver but no name', null, null);
-                    else {
-                        // any address can claim any name, we need to check the name now
-                        var node = namehash(name);
-                        // get a resolver address for that name
-                        ens.resolver(node, function (err, resolverAddress) {
-                            if (err) callback(err, null, null);
-                            else if (resolverAddress == 0) callback('Name has no resolver', null, null);
-                            else {
-                                // if you find one, find the addr of that resolver
-                                resolverContract.at(resolverAddress).addr(node, function(error, returnAddr) {
-                                    if (err) callback(err, null, null);
-                                    else if (returnAddr == 0) callback('No address returned', null, null);
-                                    else {
-                                        callback(error, name, returnAddr);
-                                    }
-                                })
-                            }
-                        })
-                    }
-                })
-            }
-        })
-    });
+    // get a resolver address for that name
+    ensContract.methods.resolver(node).call(function(err, resolverAddress) {
+        if (err) callback(err, null, null);
+        else if (resolverAddress == 0) callback('no resolver address', null, null);
+        else {
+            // if you fied one, find the name on that resolver
+            resolverContract.options.address = resolverAddress;
+            resolverContract.methods.name(node, function(error, name) {
+                if (err) callback(err, null, null);
+                else if (name == 0) callback('Found resolver but no name', null, null);
+                else {
+                    // any address can claim any name, we need to check the name now
+                    var node = namehash(name);
+                    // get a resolver address for that name
+                    ensContract.methods.resolver(node, function (err, resolverAddress) {
+                        if (err) callback(err, null, null);
+                        else if (resolverAddress == 0) callback('Name has no resolver', null, null);
+                        else {
+                            // if you find one, find the addr of that resolver
+                            resolverContract.options.address = resolverAddress;
+                            resolverContract.methods.addr(node, function(error, returnAddr) {
+                                if (err) callback(err, null, null);
+                                else if (returnAddr == 0) callback('No address returned', null, null);
+                                else {
+                                    callback(error, name, returnAddr);
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+        }
+    })
 }

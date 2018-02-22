@@ -37,7 +37,7 @@ Template['elements_executeContract'].helpers({
     @method (reactiveContext)
     */
     'reactiveContext': function() {
-        var contractInstance = web3.eth.contract(this.jsonInterface).at(this.address);
+        var contractInstance = new web3.eth.Contract(this.jsonInterface, this.address);
 
         var contractFunctions = [];
         var contractConstants = [];
@@ -140,9 +140,11 @@ Template['elements_executeContract_constant'].onCreated(function(){
         // make reactive to the latest block
         EthBlocks.latest;
 
-        // get args for the constant function and add callback
-        var args = TemplateVar.get('inputs').concat(function(e, r) {
-            if(!e) {
+        // get args for the constant function
+        var args = TemplateVar.get('inputs');
+
+        var callback = function(e, r) {
+            if (!e) {
                 var outputs = [];
                 // single return value
                 if(template.data.outputs.length === 1) {
@@ -158,11 +160,14 @@ Template['elements_executeContract_constant'].onCreated(function(){
                 }
 
                 TemplateVar.set(template, 'outputs', outputs);
-            } 
-        });
+            }
+        };
 
-        template.data.contractInstance[template.data.name].apply(null, args);
-
+        try {
+            template.data.contractInstance.methods[template.data.name].apply(null, args).call(callback);
+        } catch (error) {
+            console.log('Error executing contract method ' + template.data.name + ': ', error);
+        }
     });
 });
 
@@ -240,7 +245,7 @@ Template['elements_executeContract_function'].onRendered(function(){
 Template['elements_executeContract_function'].helpers({
     'reactiveDataContext': function(){
         if(this.inputs.length === 0)
-            TemplateVar.set('executeData', this.contractInstance[this.name].getData());
+            TemplateVar.set('executeData', this.contractInstance.methods[this.name].encodeABI());
     }, 
     'payable': function(){
         return this && this.payable;
@@ -265,7 +270,7 @@ Template['elements_executeContract_function'].events({
     'change .abi-input, input .abi-input, blur .abi-input': function(e, template) {
         var inputs = Helpers.addInputValue(template.data.inputs, this, e.currentTarget);
     
-        TemplateVar.set('executeData', template.data.contractInstance[template.data.name].getData.apply(null, inputs));
+        TemplateVar.set('executeData', template.data.contractInstance.methods[template.data.name].apply(null, inputs).encodeABI());
     },
     /**
     Executes a transaction on contract
@@ -273,7 +278,7 @@ Template['elements_executeContract_function'].events({
     @event click .execute
     */
     'click .execute': function(e, template){
-        var to = template.data.contractInstance.address,
+        var to = template.data.contractInstance.options.address,
             gasPrice = 50000000000,
             estimatedGas = undefined, /* (typeof mist == 'undefined')not working */
             amount = TemplateVar.get('amount') || 0,

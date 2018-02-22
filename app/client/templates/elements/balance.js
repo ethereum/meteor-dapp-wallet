@@ -30,13 +30,13 @@ Template['elements_balance'].helpers({
 
         if(balance){
             if(EthTools.getUnit() === 'usd' || EthTools.getUnit() === 'eur' || EthTools.getUnit() === 'gbp' || EthTools.getUnit() === 'brl')
-                return EthTools.formatBalance(TemplateVar.get('balance'), '0,0.00');
+                return EthTools.formatBalance(balance, '0,0.00');
             else if(EthTools.getUnit() === 'ether')
-                return EthTools.formatBalance(TemplateVar.get('balance'), (this.showAllDecimals? '0,0.00[0000000000000000]' : '0,0.00') );
+                return EthTools.formatBalance(balance, (this.showAllDecimals? '0,0.00[0000000000000000]' : '0,0.00') );
             else if(EthTools.getUnit() === 'finney')
-                return EthTools.formatBalance(TemplateVar.get('balance'), (this.showAllDecimals? '0,0.00[00000000000000]' : '0,0.00'));
+                return EthTools.formatBalance(balance, (this.showAllDecimals? '0,0.00[00000000000000]' : '0,0.00'));
             else
-                return EthTools.formatBalance(TemplateVar.get('balance'), '0,0.00[000000]');
+                return EthTools.formatBalance(balance, '0,0.00[000000]');
         }
     },
     /**

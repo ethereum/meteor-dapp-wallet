@@ -10,7 +10,8 @@ Creates filters for a wallet contract, to watch for deposits, pending confirmati
 @param {Boolean} checkFromCreationBlock
 */
 var setupContractFilters = function(newDocument){
-    var contractInstance = tokenContracts['ct_'+ newDocument._id] = TokenContract.at(newDocument.address);
+    var contractInstance = tokenContracts['ct_'+ newDocument._id] = Object.assign({}, TokenContract);
+    contractInstance.options.address = newDocument.address;
 
     if(!contractInstance)
         return;
@@ -36,21 +37,22 @@ var setupContractFilters = function(newDocument){
     // Helpers.eventLogs('Checking Token Transfers for '+ contractInstance.address +' (_id: '+ newDocument._id +') from block #', blockToCheckBack);
 
 
-    var filter = contractInstance.allEvents({fromBlock: blockToCheckBack, toBlock: 'latest'});
+    var filter = contractInstance.events.allEvents({fromBlock: blockToCheckBack, toBlock: 'latest'});
     events.push(filter);
 
     // get past logs, to set the new blockNumber
     var currentBlock = EthBlocks.latest.number;
-    filter.get(function(error, logs) {
-        if(!error) {
-            // update last checkpoint block
-            Tokens.update({_id: newDocument._id}, {$set: {
-                checkpointBlock: (currentBlock || EthBlocks.latest.number) - ethereumConfig.rollBackBy
-            }});
-        }
-    });
+    // TODO Ryan: undefined contractInstance.getPastEvents
+    // contractInstance.getPastEvents('allEvents', function(error, logs) {
+    //     if(!error) {
+    //         // update last checkpoint block
+    //         Tokens.update({_id: newDocument._id}, {$set: {
+    //             checkpointBlock: (currentBlock || EthBlocks.latest.number) - ethereumConfig.rollBackBy
+    //         }});
+    //     }
+    // });
 
-    filter.watch(function(error, log){
+    filter.on('data', function(error, log){
         if(!error) {
             // Helpers.eventLogs(log);
 
@@ -155,7 +157,7 @@ observeTokens = function(){
 
             // stop all running events
             _.each(contractInstance.tokenEvents, function(event){
-                event.stopWatching();
+                event.unsubscribe();
                 contractInstance.tokenEvents.shift();
             });
         }

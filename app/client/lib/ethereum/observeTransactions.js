@@ -205,7 +205,7 @@ var updateTransaction = function(newDocument, transaction, receipt){
         newDocument.gasUsed = receipt.gasUsed;
         newDocument.gasLimit = transaction.gas;
         newDocument.outOfGas = receipt.gasUsed === transaction.gas;
-        newDocument.fee = transaction.gasPrice.times(new BigNumber(receipt.gasUsed)).toString(10);
+        newDocument.fee = new BigNumber(transaction.gasPrice).times(new BigNumber(receipt.gasUsed)).toString(10);
     }
 
     if(oldTx) {
@@ -285,7 +285,7 @@ observeTransactions = function(){
 
                     // stop if tx was removed
                     if(!tx) {
-                        filter.stopWatching();
+                        filter.unsubscribe();
                         return;
                     }
 
@@ -337,7 +337,7 @@ observeTransactions = function(){
                                         });
 
                                         Transactions.remove(tx._id);
-                                        filter.stopWatching();
+                                        filter.unsubscribe();
 
                                     } else if(transaction.blockNumber) {
 
@@ -362,7 +362,7 @@ observeTransactions = function(){
                                                     Transactions.remove(tx._id);
                                                 }
 
-                                                filter.stopWatching();
+                                                filter.unsubscribe();
                                             }
                                         });
 
@@ -374,8 +374,8 @@ observeTransactions = function(){
                 }
             };
 
-            var filter = web3.eth.filter('latest').watch(function(e, blockHash) {
-                updateTransactions(e, blockHash);
+            var filter = web3.eth.subscribe('newBlockHeaders', function(error, result) {
+                updateTransactions(error, result ? result.hash : null);
             });
         }
     };

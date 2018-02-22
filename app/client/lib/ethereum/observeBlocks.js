@@ -6,7 +6,7 @@ Update the peercount
 @method getPeerCount
 */
 var getPeerCount = function() {
-    web3.net.getPeerCount(function(e, res) {
+    web3.eth.net.getPeerCount(function(e, res) {
         if(!e)
             Session.set('peerCount', res);
     });
@@ -60,7 +60,7 @@ updateBalances = function() {
 
     _.each(creatingWallets, function(wallet){
       // Fetches transactionReceipt looking for contractAddress
-      web3.eth.getTransactionReceipt(wallet.transactionHash, function(error, receipt) {
+      web3.eth.getTransactionReceipt(wallet.transactionHash).then(function(receipt) {
         if (receipt && receipt.contractAddress !== null) {
           // Updates the wallet
           var r = Wallets.update(wallet._id, {$set: {
@@ -101,10 +101,11 @@ updateBalances = function() {
         if(!token.address)
             return;
 
-        var tokenInstance = TokenContract.at(token.address);
+        var tokenInstance = Object.assign({}, TokenContract);
+        tokenInstance.options.address = token.address;
 
         _.each(walletsContractsAndAccounts, function(account){
-            tokenInstance.balanceOf(account.address, function(e, balance){
+            tokenInstance.methods.balanceOf(account.address).call(function(e, balance){
                 var currentBalance = (token && token.balances) ? token.balances[account._id] : 0;
 
                 if(!e && balance.toString(10) !== currentBalance){
@@ -134,7 +135,7 @@ observeLatestBlocks = function(){
     updateBalances();
 
     // GET the latest blockchain information
-    web3.eth.filter('latest').watch(function(e, res){
+    web3.eth.subscribe('newBlockHeaders', function(e, res){
         if(!e) {
             updateBalances();
         }

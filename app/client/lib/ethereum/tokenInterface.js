@@ -160,4 +160,4 @@ var tokenInterface = [
 ];
 
 
-TokenContract = web3.eth.contract(tokenInterface);
+TokenContract = new web3.eth.Contract(tokenInterface);
