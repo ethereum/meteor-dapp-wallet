@@ -218,7 +218,7 @@ Template['views_account_create'].helpers({
     */
     'defaultDailyLimit': function() {
         var dailyLimit = FlowRouter.getQueryParam('dailyLimit');
-        return typeof dailyLimit != 'undefined' ? web3.fromWei(dailyLimit,'ether') :  10;
+        return typeof dailyLimit != 'undefined' ? web3.utils.fromWei(dailyLimit.toString(), 'ether') : 10;
     },
     /**
     Default Name
@@ -321,7 +321,7 @@ Template['views_account_create'].events({
                 owners: owners,
                 name: template.find('input[name="accountName"]').value || TAPi18n.__('wallet.accounts.defaultName'),
                 balance: '0',
-                dailyLimit: web3.toWei(formValues.dailyLimitAmount, 'ether'),
+                dailyLimit: web3.utils.toWei(formValues.dailyLimitAmount.toString(), 'ether'),
                 requiredSignatures: formValues.multisigSignatures,
                 creationBlock: EthBlocks.latest.number,
                 code: code

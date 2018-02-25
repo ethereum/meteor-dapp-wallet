@@ -601,39 +601,36 @@ Template['views_send'].events({
                         from: Helpers.getOwnedAccountFrom(selectedAccount.owners),
                         gasPrice: gasPrice,
                         gas: estimatedGas
-                    }, function(error, txHash){
-
+                    }, function(error, txHash) {
                         TemplateVar.set(template, 'sending', false);
 
-                        console.log(error, txHash);
-                        if(!error) {
-                            console.log('SEND from contract', amount);
-
-                            data = (!to && contract)
-                                ? {contract: contract, data: data}
-                                : data;
-
-                            addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
-
-                            localStorage.setItem('contractSource', Helpers.getDefaultContractExample());
-                            localStorage.setItem('compiledContracts', null);
-                            localStorage.setItem('selectedContract', null);
-
-                            FlowRouter.go('dashboard');
-
-                        } else {
+                        if (error) {
+                            console.log('Error from contract sendTransaction: ', error, txHash);
                             // EthElements.Modal.hide();
-
                             GlobalNotification.error({
                                 content: error.message,
                                 duration: 8
                             });
+                            return;
                         }
+
+                        console.log('SEND from contract', amount);
+
+                        data = (!to && contract)
+                            ? {contract: contract, data: data}
+                            : data;
+
+                        addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
+
+                        localStorage.setItem('contractSource', Helpers.getDefaultContractExample());
+                        localStorage.setItem('compiledContracts', null);
+                        localStorage.setItem('selectedContract', null);
+
+                        FlowRouter.go('dashboard');
                     });
 
                 // SIMPLE TX
                 } else {
-
                     console.log('Gas Price: '+ gasPrice);
                     console.log('Amount:', amount);
 
@@ -644,34 +641,32 @@ Template['views_send'].events({
                         value: amount,
                         gasPrice: gasPrice,
                         gas: estimatedGas
-                    }, function(error, txHash){
-
+                    }, function(error, txHash) {
                         TemplateVar.set(template, 'sending', false);
 
-                        console.log(error, txHash);
-                        if(!error) {
-                            console.log('SEND simple');
-
-                            data = (!to && contract)
-                                ? {contract: contract, data: data}
-                                : data;
-
-                            addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
-
-                            localStorage.setItem('contractSource', Helpers.getDefaultContractExample());
-                            localStorage.setItem('compiledContracts', null);
-                            localStorage.setItem('selectedContract', null);
-
-                            FlowRouter.go('dashboard');
-                        } else {
-
+                        if (error) {
+                            console.log('Error from simple sendTransaction: ', error, txHash);
                             // EthElements.Modal.hide();
-
                             GlobalNotification.error({
                                 content: error.message,
                                 duration: 8
                             });
+                            return;
                         }
+
+                        console.log('SEND simple');
+
+                        data = (!to && contract)
+                        ? {contract: contract, data: data}
+                        : data;
+
+                        addTransactionAfterSend(txHash, amount, selectedAccount.address, to, gasPrice, estimatedGas, data);
+
+                        localStorage.setItem('contractSource', Helpers.getDefaultContractExample());
+                        localStorage.setItem('compiledContracts', null);
+                        localStorage.setItem('selectedContract', null);
+
+                        FlowRouter.go('dashboard');
                     });
                 }
             };

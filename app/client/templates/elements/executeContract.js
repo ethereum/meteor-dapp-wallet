@@ -322,7 +322,7 @@ Template['elements_executeContract_function'].events({
                         from: fromAccount.address,
                         gasPrice: gasPrice,
                         gas: estimatedGas
-                    }, function(error, txHash){
+                    }, function(error, txHash) {
 
                         TemplateVar.set(template, 'sending', false);
 
@@ -354,7 +354,7 @@ Template['elements_executeContract_function'].events({
                         value: amount,
                         gasPrice: gasPrice,
                         gas: estimatedGas
-                    }, function(error, txHash){
+                    }, function(error, txHash) {
 
                         TemplateVar.set(template, 'sending', false);
 

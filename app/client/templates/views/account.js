@@ -28,42 +28,40 @@ var addLogWatching = function(newDocument){
     
     // get past logs, to set the new blockNumber
     var currentBlock = EthBlocks.latest.number;
-    // TODO Ryan: undefined contractInstance.getPastEvents
-    // contractInstance.getPastEvents('allEvents', function(error, logs) {
-    //     if(!error) {
-    //         // update last checkpoint block
-    //         CustomContracts.update({_id: newDocument._id}, {$set: {
-    //             checkpointBlock: (currentBlock || EthBlocks.latest.number) - ethereumConfig.rollBackBy
-    //         }});
-    //     }
-    // });
-
-    filter.on('data', function(error, log){
+    
+    contractInstance.getPastEvents('allEvents', function(error, logs) {
         if(!error) {
-            var id = Helpers.makeId('log', web3.sha3(log.logIndex + 'x' + log.transactionHash + 'x' + log.blockHash));
+            // update last checkpoint block
+            CustomContracts.update({_id: newDocument._id}, {$set: {
+                checkpointBlock: (currentBlock || EthBlocks.latest.number) - ethereumConfig.rollBackBy
+            }});
+        }
+    });
 
-            if(log.removed) {
-                Events.remove(id);
-            } else {
+    filter.on('data', function(log) {
+        var id = Helpers.makeId('log', web3.utils.sha3(log.logIndex + 'x' + log.transactionHash + 'x' + log.blockHash));
 
-                _.each(log.args, function(value, key){
-                    // if bignumber
-                    if((_.isObject(value) || value instanceof BigNumber) && value.toFormat) {
-                        value = value.toString(10);
-                        log.args[key] = value;
-                    }
-                });
+        if(log.removed) {
+            Events.remove(id);
+        } else {
 
-                // store right now, so it could be removed later on, if removed: true
-                Events.upsert(id, log);
+            _.each(log.returnValues, function(value, key){
+                // if bignumber
+                if((_.isObject(value) || value instanceof BigNumber) && value.toFormat) {
+                    value = value.toString(10);
+                    log.returnValues[key] = value;
+                }
+            });
 
-                // update events timestamp
-                web3.eth.getBlock(log.blockHash, function(err, block){
-                    if(!err) {
-                        Events.update(id, {$set: {timestamp: block.timestamp}});
-                    }
-                });
-            }
+            // store right now, so it could be removed later on, if removed: true
+            Events.upsert(id, log);
+
+            // update events timestamp
+            web3.eth.getBlock(log.blockHash, function(err, block){
+                if(!err) {
+                    Events.update(id, {$set: {timestamp: block.timestamp}});
+                }
+            });
         }
     });
 

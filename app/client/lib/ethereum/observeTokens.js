@@ -42,7 +42,7 @@ var setupContractFilters = function(newDocument){
 
     // get past logs, to set the new blockNumber
     var currentBlock = EthBlocks.latest.number;
-    // TODO Ryan: undefined contractInstance.getPastEvents
+    // TODO Ryan: contractInstance.getPastEvents is undefined
     // contractInstance.getPastEvents('allEvents', function(error, logs) {
     //     if(!error) {
     //         // update last checkpoint block
@@ -52,52 +52,48 @@ var setupContractFilters = function(newDocument){
     //     }
     // });
 
-    filter.on('data', function(error, log){
-        if(!error) {
-            // Helpers.eventLogs(log);
+    filter.on('data', function(log) {
+        // Helpers.eventLogs(log);
 
-            if(EthBlocks.latest.number && log.blockNumber > EthBlocks.latest.number) {
-                // update last checkpoint block
-                Tokens.update({_id: newDocument._id}, {$set: {
-                    checkpointBlock: log.blockNumber
-                }});
-            }
+        if(EthBlocks.latest.number && log.blockNumber > EthBlocks.latest.number) {
+            // update last checkpoint block
+            Tokens.update({_id: newDocument._id}, {$set: {
+                checkpointBlock: log.blockNumber
+            }});
+        }
 
-            if(log.event === 'Transfer' &&
-               (Helpers.getAccountByAddress(log.args.from) || Helpers.getAccountByAddress(log.args.to))) {
-                
-                Helpers.eventLogs('Transfer for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber());
+        if(log.event === 'Transfer' &&
+           (Helpers.getAccountByAddress(log.returnValues.from) || Helpers.getAccountByAddress(log.returnValues.to))) {
+            
+            Helpers.eventLogs('Transfer for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.returnValues.value.toNumber());
 
-                // add tokenID
-                log.tokenId = newDocument._id;
+            // add tokenID
+            log.tokenId = newDocument._id;
 
-                var txExists = addTransaction(log, log.args.from, log.args.to, log.args.value.toString(10));
+            var txExists = addTransaction(log, log.returnValues.from, log.returnValues.to, log.returnValues.value.toString(10));
 
-                // NOTIFICATION
-                if(!txExists || !txExists.blockNumber) {
-                    var txId = Helpers.makeId('tx', log.transactionHash);
+            // NOTIFICATION
+            if(!txExists || !txExists.blockNumber) {
+                var txId = Helpers.makeId('tx', log.transactionHash);
 
-                    Helpers.showNotification('wallet.transactions.notifications.tokenTransfer', {
-                        token: newDocument.name,
-                        to: Helpers.getAccountNameByAddress(log.args.to),
-                        from: Helpers.getAccountNameByAddress(log.args.from),
-                        amount: Helpers.formatNumberByDecimals(log.args.value, newDocument.decimals)
-                    }, function() {
+                Helpers.showNotification('wallet.transactions.notifications.tokenTransfer', {
+                    token: newDocument.name,
+                    to: Helpers.getAccountNameByAddress(log.returnValues.to),
+                    from: Helpers.getAccountNameByAddress(log.returnValues.from),
+                    amount: Helpers.formatNumberByDecimals(log.returnValues.value, newDocument.decimals)
+                }, function() {
 
-                        // on click show tx info
-                        EthElements.Modal.show({
-                            template: 'views_modals_transactionInfo',
-                            data: {
-                                _id: txId
-                            }
-                        },{
-                            class: 'transaction-info'
-                        });
+                    // on click show tx info
+                    EthElements.Modal.show({
+                        template: 'views_modals_transactionInfo',
+                        data: {
+                            _id: txId
+                        }
+                    },{
+                        class: 'transaction-info'
                     });
-                }
+                });
             }
-        } else {
-            console.error('Logs of Token '+ newDocument.name + ' couldn\'t be received', error);
         }
     });
 };
