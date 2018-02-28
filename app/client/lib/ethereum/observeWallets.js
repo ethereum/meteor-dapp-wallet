@@ -647,7 +647,7 @@ observeWallets = function(){
                     }).send({
                         from: newDocument.deployFrom,
                         gas: 3000000
-                    }, function(error, transactionHash){
+                    }, function(error, transactionHash) {
                         if (error) {
                             console.log('Error while deploying wallet', error);
 

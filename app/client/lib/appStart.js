@@ -46,8 +46,9 @@ var checkSync = function() {
 
                 // clear observers
                 _.each(collectionObservers, function(observer) {
-                    if(observer)
+                    if (observer) {
                         observer.stop();
+                    }
                 });
                 collectionObservers = [];
 
