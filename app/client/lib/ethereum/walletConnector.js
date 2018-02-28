@@ -83,6 +83,13 @@ connectToNode = function(){
     //     });
     // });
 
+    // Reset collection observers
+    _.each(collectionObservers, function(observer) {
+        if (observer) {
+            observer.stop();
+        }
+    });
+    collectionObservers = [];
 
     observeLatestBlocks();
 
