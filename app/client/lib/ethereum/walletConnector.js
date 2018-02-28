@@ -138,7 +138,8 @@ resetWallet = function function_name (argument) {
         }});
     });
 
-    web3.reset();
+    web3.eth.clearSubscriptions();
+
     console.log('The wallet will re-fetch log information in 6 seconds...');
 
     setTimeout(function() {
