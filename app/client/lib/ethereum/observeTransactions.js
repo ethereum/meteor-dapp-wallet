@@ -285,7 +285,7 @@ observeTransactions = function(){
 
                     // stop if tx was removed
                     if(!tx) {
-                        filter.unsubscribe();
+                        subscription.unsubscribe();
                         return;
                     }
 
@@ -337,10 +337,9 @@ observeTransactions = function(){
                                         });
 
                                         Transactions.remove(tx._id);
-                                        filter.unsubscribe();
+                                        subscription.unsubscribe();
 
                                     } else if(transaction.blockNumber) {
-
 
                                         // check if parent block changed
                                         // TODO remove if later tx.blockNumber can be null again
@@ -362,7 +361,7 @@ observeTransactions = function(){
                                                     Transactions.remove(tx._id);
                                                 }
 
-                                                filter.unsubscribe();
+                                                subscription.unsubscribe();
                                             }
                                         });
 
@@ -374,7 +373,7 @@ observeTransactions = function(){
                 }
             };
 
-            var filter = web3.eth.subscribe('newBlockHeaders', function(error, result) {
+            var subscription = web3.eth.subscribe('newBlockHeaders', function(error, result) {
                 updateTransactions(error, result ? result.hash : null);
             });
         }

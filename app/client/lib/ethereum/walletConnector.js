@@ -50,7 +50,7 @@ ethereumConfig = {
 
 
 /**
-Connects to a node and setup all the filters for the accounts.
+Connects to a node and setup all the subscriptions for the accounts.
 
 @method connectToNode
 */
@@ -79,7 +79,7 @@ connectToNode = function(){
     //         if(wallet.creationBlock + ethereumConfig.requiredConfirmations >= block.number)
     //             delete wallet.address;
 
-    //         setupContractFilters(wallet);
+    //         setupContractSubscription(wallet);
     //     });
     // });
 

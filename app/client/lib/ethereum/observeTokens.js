@@ -3,13 +3,13 @@ var tokenContracts = {};
 
 
 /**
-Creates filters for a wallet contract, to watch for deposits, pending confirmations, or contract creation events.
+Creates subscription for a wallet contract, to watch for deposits, pending confirmations, or contract creation events.
 
-@method setupContractFilters
+@method setupContractSubscription
 @param {Object} newDocument
 @param {Boolean} checkFromCreationBlock
 */
-var setupContractFilters = function(newDocument){
+var setupContractSubscription = function(newDocument){
     var contractInstance = tokenContracts['ct_'+ newDocument._id] = Object.assign({}, TokenContract);
     contractInstance.options.address = newDocument.address;
 
@@ -34,11 +34,10 @@ var setupContractFilters = function(newDocument){
     });
 
     // SETUP FILTERS
-    // Helpers.eventLogs('Checking Token Transfers for '+ contractInstance.address +' (_id: '+ newDocument._id +') from block #', blockToCheckBack);
+    Helpers.eventLogs('Checking Token Transfers for '+ contractInstance.address +' (_id: '+ newDocument._id +') from block #', blockToCheckBack);
 
-
-    var filter = contractInstance.events.allEvents({fromBlock: blockToCheckBack, toBlock: 'latest'});
-    events.push(filter);
+    var subscription = contractInstance.events.allEvents({fromBlock: blockToCheckBack, toBlock: 'latest'});
+    events.push(subscription);
 
     // get past logs, to set the new blockNumber
     var currentBlock = EthBlocks.latest.number;
@@ -53,6 +52,7 @@ var setupContractFilters = function(newDocument){
     // });
 
     filter.on('data', function(log) {
+    subscription.on('data', function(log) {
         // Helpers.eventLogs(log);
 
         if(EthBlocks.latest.number && log.blockNumber > EthBlocks.latest.number) {
@@ -127,7 +127,7 @@ observeTokens = function(){
                             disabled: ''
                         }});
 
-                        setupContractFilters(newDocument);
+                        setupContractSubscription(newDocument);
 
                     } else {
                         Tokens.update(newDocument._id, {$set: {

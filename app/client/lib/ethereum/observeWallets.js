@@ -229,13 +229,13 @@ confirmOrRevoke = function(contract, log){
 };
 
 /**
-Creates filters for a wallet contract, to watch for deposits, pending confirmations, or contract creation events.
+Creates subscription for a wallet contract, to watch for deposits, pending confirmations, or contract creation events.
 
-@method setupContractFilters
+@method setupContractSubscription
 @param {Object} newDocument
 @param {Boolean} checkFromCreationBlock
 */
-var setupContractFilters = function(newDocument, checkFromCreationBlock){
+var setupContractSubscription = function(newDocument, checkFromCreationBlock){
     var blockToCheckBack = (newDocument.checkpointBlock || 0) - ethereumConfig.rollBackBy;
     
     if(checkFromCreationBlock || blockToCheckBack < 0)
@@ -285,8 +285,8 @@ var setupContractFilters = function(newDocument, checkFromCreationBlock){
                 // update dailyLimit and requiredSignatures
                 updateContractData(newDocument);
 
-                // add contract filters
-                setupContractFilters(newDocument, true);
+                // add contract subscriptions
+                setupContractSubscription(newDocument, true);
             }
         });
 
@@ -320,8 +320,8 @@ var setupContractFilters = function(newDocument, checkFromCreationBlock){
                         WalletContract.options.address = receipt.contractAddress;
                         contracts['ct_'+ newDocument._id] = WalletContract;
 
-                        // add contract filters
-                        setupContractFilters(newDocument);
+                        // add contract subscription
+                        setupContractSubscription(newDocument);
 
                         // check for vulnerability
                         checkForVulnerableWallet(newDocument);
@@ -336,12 +336,11 @@ var setupContractFilters = function(newDocument, checkFromCreationBlock){
             }
         });
 
-    // ADD FILTERS
+    // ADD SUBSCRIPTION
     } else {
 
-        // SETUP FILTERS
+        // SETUP SUBSCRIPTION
         Helpers.eventLogs('Checking Deposits and ConfirmationNeeded for '+ contractInstance.options.address +' (_id: '+ newDocument._id +') from block #', blockToCheckBack);
-
 
         // delete the last tx and pc until block -500
         _.each(Transactions.find({_id: {$in: newDocument.transactions || []}, blockNumber: {$exists: true, $gt: blockToCheckBack}}).fetch(), function(tx){
@@ -353,9 +352,8 @@ var setupContractFilters = function(newDocument, checkFromCreationBlock){
                 PendingConfirmations.remove({_id: pc._id});
         });
 
-
-        var filter = contractInstance.events.allEvents({fromBlock: blockToCheckBack, toBlock: 'latest'});
-        events.push(filter);
+        var subscription = contractInstance.events.allEvents({fromBlock: blockToCheckBack, toBlock: 'latest'});
+        events.push(subscription);
         
         // get past logs, to set the new blockNumber
         var currentBlock = EthBlocks.latest.number;
@@ -368,7 +366,7 @@ var setupContractFilters = function(newDocument, checkFromCreationBlock){
             }
         });
 
-        filter.on('data', function(error, log){
+        subscription.on('data', function(error, log){
             if(!error) {
                 Helpers.eventLogs(log);
 
@@ -530,7 +528,7 @@ var setupContractFilters = function(newDocument, checkFromCreationBlock){
 
 
 /**
-Observe accounts and setup filters
+Observe accounts and setup subscriptions
 
 @method observeWallets
 */
@@ -549,7 +547,7 @@ observeWallets = function(){
         var confirmations = EthBlocks.latest.number - newDocument.creationBlock;
 
         if(newDocument.address && (!oldDocument || (oldDocument && !oldDocument.address)) && confirmations < ethereumConfig.requiredConfirmations) {
-            var filter = web3.eth.subscribe('newBlockHeaders').on('data', function(blockHeader) {
+            var subscription = web3.eth.subscribe('newBlockHeaders').on('data', function(blockHeader) {
                 var confirmations = EthBlocks.latest.number - newDocument.creationBlock;
 
                 if(confirmations < ethereumConfig.requiredConfirmations && confirmations > 0) {
@@ -566,12 +564,12 @@ observeWallets = function(){
                             // check for wallet data
                             } else {
                                 Wallets.remove(newDocument._id);
-                                filter.unsubscribe();
+                                subscription.unsubscribe();
                             }
                         }
                     });
                 } else if(confirmations > ethereumConfig.requiredConfirmations) {
-                    filter.unsubscribe();
+                    subscription.unsubscribe();
                 }
             });
         }
@@ -600,7 +598,7 @@ observeWallets = function(){
                     if(newDocument.creationBlock + 50 <= EthBlocks.latest.number) {
                         Wallets.remove(newDocument._id);
                     } else {
-                        setupContractFilters(newDocument);
+                        setupContractSubscription(newDocument);
                     }
 
                     return;
@@ -693,7 +691,7 @@ observeWallets = function(){
 
                         updateContractData(newDocument);
 
-                        setupContractFilters(newDocument);
+                        setupContractSubscription(newDocument);
 
                         // Show backup note
                         EthElements.Modal.question({
@@ -731,7 +729,7 @@ observeWallets = function(){
 
                             // init wallet events, only if existing wallet
                             updateContractData(newDocument);
-                            setupContractFilters(newDocument);
+                            setupContractSubscription(newDocument);
                             checkWalletConfirmations(newDocument, {});
 
                         } else {
@@ -760,7 +758,7 @@ observeWallets = function(){
                 updateContractData(newDocument);
         },
         /**
-        Stop filters, when accounts are removed
+        Stop subscriptions, when accounts are removed
 
         @method removed
         */
