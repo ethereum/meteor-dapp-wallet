@@ -107,7 +107,7 @@ Update the contract data, like dailyLimit and required signatures.
 updateContractData = function(newDocument){
     var contractInstance = contracts['ct_'+ newDocument._id];
 
-    if(!contractInstance)
+    if(!contractInstance || !contractInstance.options.address)
         return;
 
     contractInstance.methods.m_dailyLimit().call().then(function(result){
@@ -145,8 +145,8 @@ updateContractData = function(newDocument){
 
     // check for version
     if(_.isUndefined(newDocument.version) && newDocument.address) {
-        contractInstance.methods.version().call().then(function(e, version){
-            if(!e && version.toString(10)) {
+        contractInstance.methods.version().call().then(function(version){
+            if(version.toString(10)) {
                 // var sha3 = web3.sha3(code, true);
 
                 // // find version
@@ -639,7 +639,7 @@ observeWallets = function(){
                         data: newDocument.code,
                         arguments: [
                             newDocument.owners,
-                            newDocument.requiredSignatures || 1,  // TODO Ryan: 1? default of undefined was throwing error
+                            newDocument.requiredSignatures || 1,
                             (newDocument.dailyLimit || ethereumConfig.dailyLimitDefault)
                         ]
                     }).send({
@@ -682,7 +682,7 @@ observeWallets = function(){
                         Wallets.update(newDocument._id, {$set: {
                             creationBlock: EthBlocks.latest.number - 1,
                             checkpointBlock: EthBlocks.latest.number - 1,
-                            address: contract.address
+                            address: contract.options.address
                         }, $unset: {
                             code: ''
                         }});
