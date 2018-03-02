@@ -199,6 +199,8 @@ Gets the docuement matching the given addess from the EthAccounts or Wallets col
 */
 Helpers.getAccountByAddress = function(address, reactive) {
     var options = (reactive === false) ? {reactive: false} : {};
+    // if(_.isString(address))
+    //     address = address.toLowerCase();
     return EthAccounts.findOne({address: address}, options) || Wallets.findOne({address: address}, options) || CustomContracts.findOne({address: address}, options);
 };
 

@@ -158,7 +158,7 @@ Template['views_send'].onRendered(function(){
     // set the from
     var from = FlowRouter.getParam('from');
     if(from)
-        TemplateVar.setTo('select[name="dapp-select-account"].send-from', 'value', FlowRouter.getParam('from').toLowerCase());
+        TemplateVar.setTo('select[name="dapp-select-account"].send-from', 'value', FlowRouter.getParam('from'));
 
 
     // initialize send view correctly when directly switching from deploy view
@@ -197,8 +197,8 @@ Template['views_send'].onRendered(function(){
             data = getDataField(),
             tokenAddress = TemplateVar.get('selectedToken');
 
-        if(_.isString(address))
-            address = address.toLowerCase();
+        // if(_.isString(address))
+        //     address = address.toLowerCase();
 
 
         // Ether tx estimation
