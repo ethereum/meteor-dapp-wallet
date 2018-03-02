@@ -84,18 +84,19 @@ Template['views_modals_addToken'].events({
         $('.example.wallet-box.tokens').css('background-image', pattern.toDataUrl());
         
         // check if the token has information about itself asynchrounously
-        var tokenInstance = TokenContract.at(tokenAddress);
+        var tokenInstance = TokenContract;
+        tokenInstance.options.address = tokenAddress;
 
-        tokenInstance.symbol(function(e, i){
-            template.$('input.symbol').val(i).change();
+        tokenInstance.methods.symbol().call().then(function(symbol) {
+            template.$('input.symbol').val(symbol).change();
         });
 
-        tokenInstance.name(function(e, i){
-            template.$('input.name').val(i).change();
+        tokenInstance.methods.name().call().then(function(name) {
+            template.$('input.name').val(name).change();
         });
         
-        tokenInstance.decimals(function(e, i){
-            template.$('input.decimals').val(i).change();
+        tokenInstance.methods.decimals().call().then(function(decimals) {
+            template.$('input.decimals').val(decimals).change();
         });
 
     },    
