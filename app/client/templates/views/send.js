@@ -52,8 +52,6 @@ var getDataField = function(){
     // make reactive to the show/hide of the textarea
     TemplateVar.getFrom('.compile-contract','byteTextareaShown');
 
-
-
     // send tokens
     var selectedToken = TemplateVar.get('selectedToken');
 
@@ -141,7 +139,6 @@ Template['views_send'].onCreated(function(){
     });
 
 });
-
 
 
 Template['views_send'].onRendered(function(){
@@ -524,7 +521,6 @@ Template['views_send'].events({
             // if its a wallet contract and tokens, don't need to remove the gas addition on send-all, as the owner pays
             if(sendAll && (selectedAccount.owners || tokenAddress !== 'ether'))
                 sendAll = false;
-
 
             console.log('Providing gas: ', estimatedGas , sendAll ? '' : ' + 100000');
 
