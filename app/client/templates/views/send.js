@@ -59,8 +59,9 @@ var getDataField = function(){
         var mainRecipient = TemplateVar.getFrom('div.dapp-address-input input.to', 'value');
         var amount = TemplateVar.get('amount') || '0';
         var token = Tokens.findOne({address: selectedToken});
-        var tokenInstance = TokenContract.at(selectedToken);
-        var txData = tokenInstance.transfer.getData( mainRecipient, amount,  {});
+        var tokenInstance = TokenContract;
+        tokenInstance.options.address = selectedToken;
+        var txData = tokenInstance.methods.transfer(mainRecipient, amount).encodeABI();
 
         return txData;
     }
@@ -222,8 +223,8 @@ Template['views_send'].onRendered(function(){
 
         // Custom coin estimation
         } else {
-
-            TokenContract.at(tokenAddress).transfer.estimateGas(to, amount, {
+            TokenContract.options.address = tokenAddress;
+            TokenContract.methods.transfer().estimateGas(to, amount, {
                 from: address,
                 gas: defaultEstimateGas
             }, estimationCallback.bind(template));
