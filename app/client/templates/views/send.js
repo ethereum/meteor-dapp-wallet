@@ -626,6 +626,8 @@ Template['views_send'].events({
                         localStorage.setItem('selectedContract', null);
 
                         FlowRouter.go('dashboard');
+                    }).on('receipt', function(receipt) {
+                        console.log('Transaction receipt: ', receipt);
                     });
 
                 // SIMPLE TX
@@ -666,6 +668,8 @@ Template['views_send'].events({
                         localStorage.setItem('selectedContract', null);
 
                         FlowRouter.go('dashboard');
+                    }).on('receipt', function(receipt) {
+                        console.log('Transaction receipt: ', receipt);
                     });
                 }
             };
