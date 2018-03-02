@@ -465,10 +465,15 @@ Returns a string, given an address
 **/
 Helpers.getENSName = function(address, callback) {
 
+    if (!address) {
+        return;
+    }
+
     if (Session.get('network') !== 'main' ) {
         callback('Cannot retrieve ENS addresses unless fully synced on main chain', null, null);
         return;
     }
+
     var node = namehash(address.toLowerCase().replace('0x','')+'.addr.reverse');
     var ensContract = new web3.eth.Contract(ensContractAbi, ensAddress);
     var resolverContract = new web3.eth.Contract(resolverContractAbi);

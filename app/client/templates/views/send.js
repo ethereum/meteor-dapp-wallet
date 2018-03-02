@@ -280,7 +280,6 @@ Template['views_send'].helpers({
         var selectedAccount = Helpers.getAccountByAddress(TemplateVar.getFrom('.dapp-select-account.send-from', 'value')),
             query = {};
 
-
         if(!selectedAccount)
             return;
 

@@ -105,10 +105,10 @@ updateBalances = function() {
         tokenInstance.options.address = token.address;
 
         _.each(walletsContractsAndAccounts, function(account){
-            tokenInstance.methods.balanceOf(account.address).call(function(e, balance){
+            tokenInstance.methods.balanceOf(account.address).call().then(function(balance) {
                 var currentBalance = (token && token.balances) ? token.balances[account._id] : 0;
 
-                if(!e && balance.toString(10) !== currentBalance){
+                if(balance.toString(10) !== currentBalance){
                     var set = {};
                     if (balance > 0) {
                         set['balances.'+ account._id] = balance.toString(10);
