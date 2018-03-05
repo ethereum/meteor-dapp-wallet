@@ -1,7 +1,7 @@
 // var addLogWatching = function(newDocument){
 
 
-//     var contractInstance = web3.eth.contract(newDocument.jsonInterface).at(newDocument.address);
+//     var contractInstance = new web3.eth.Contract(newDocument.jsonInterface, newDocument.address);
 //     var blockToCheckBack = (newDocument.checkpointBlock || 0) - ethereumConfig.rollBackBy;
     
 //     if(blockToCheckBack < 0)
