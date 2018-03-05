@@ -107,8 +107,18 @@ Update the contract data, like dailyLimit and required signatures.
 updateContractData = function(newDocument){
     var contractInstance = contracts['ct_'+ newDocument._id];
 
-    if(!contractInstance || !contractInstance.options.address)
+    if (!contractInstance) {
         return;
+    }
+
+    if (!contractInstance.options.address) {
+        if (contractInstance.address) {
+            contractInstance.options.address = contractInstance.address;
+        } else {
+            console.error('No contract address for contract', contractInstnace);
+            return;
+        }
+    }
 
     contractInstance.methods.m_dailyLimit().call().then(function(result){
         Wallets.update(newDocument._id, {$set: {
@@ -318,6 +328,7 @@ var setupContractSubscription = function(newDocument, checkFromCreationBlock){
 
                         // set address to the contract instance
                         WalletContract.options.address = receipt.contractAddress;
+                        WalletContract.address = receipt.contractAddress; // maintaining legacy value for code elsewhere
                         contracts['ct_'+ newDocument._id] = WalletContract;
 
                         // add contract subscription
