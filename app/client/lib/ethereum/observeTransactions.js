@@ -173,28 +173,29 @@ var updateTransaction = function(newDocument, transaction, receipt){
 
 
                             // check if the token has information about itself asynchrounously
-                            var tokenInstance = TokenContract.at(receipt.contractAddress);
+                            var tokenInstance = TokenContract;
+                            tokenInstance.options.address = receipt.contractAddress;
 
-                            tokenInstance.name(function(e, i){
+                            tokenInstance.methods.name().call().then(function(name) {
                                 Tokens.upsert(tokenId, {$set: {
-                                    name: i
+                                    name: name
                                 }});
                                 CustomContracts.upsert({address: receipt.contractAddress}, {$set: {
-                                    name: TAPi18n.__('wallet.tokens.admin', { name: i } )
+                                    name: TAPi18n.__('wallet.tokens.admin', { name: name } )
                                 }});
                             });
 
-                            tokenInstance.decimals(function(e, i){
+                            tokenInstance.methods.decimals().call().then(function(decimals) {
                                 Tokens.upsert(tokenId, {$set: {
-                                    decimals: Number(i)
-                                }});
-                            });
-                            tokenInstance.symbol(function(e, i){
-                                Tokens.upsert(tokenId, {$set: {
-                                    symbol: i
+                                    decimals: Number(decimals)
                                 }});
                             });
 
+                            tokenInstance.methods.symbol().call().then(function(symbol) {
+                                Tokens.upsert(tokenId, {$set: {
+                                    symbol: symbol
+                                }});
+                            });
                         }
                     }
                 }
