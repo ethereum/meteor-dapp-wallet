@@ -65,7 +65,7 @@ var setupContractSubscription = function(newDocument){
         if(log.event === 'Transfer' &&
            (Helpers.getAccountByAddress(log.returnValues.from) || Helpers.getAccountByAddress(log.returnValues.to))) {
             
-            Helpers.eventLogs('Transfer for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.returnValues.value.toNumber());
+            Helpers.eventLogs('Transfer for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, Number(log.returnValues.value));
 
             // add tokenID
             log.tokenId = newDocument._id;

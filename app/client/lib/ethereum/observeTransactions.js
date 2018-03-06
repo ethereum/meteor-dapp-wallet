@@ -81,8 +81,8 @@ addTransaction = function(log, from, to, value){
                         if(log.tokenId)
                             tx.tokenId = log.tokenId;
 
-                        if(log.args.operation)
-                            tx.operation = log.args.operation;
+                        if(log.returnValues && log.returnValues.operation)
+                            tx.operation = log.returnValues.operation;
 
                         if(!err) {
                             updateTransaction(tx, transaction, receipt);

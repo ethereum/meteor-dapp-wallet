@@ -204,31 +204,31 @@ It will check first if the incoming log is newer than the already stored data.
 @param {Object} log
 */
 confirmOrRevoke = function(contract, log){
-    var confirmationId = Helpers.makeId('pc', log.args.operation);
+    var confirmationId = Helpers.makeId('pc', log.returnValues.operation);
 
     if(!confirmationId)
         return;
 
-    contract.hasConfirmed(log.args.operation, log.args.owner, function(e, res){
+    contract.hasConfirmed(log.returnValues.operation, log.returnValues.owner, function(e, res){
         var pendingConf = PendingConfirmations.findOne(confirmationId),
             setDocument = {$set:{
                 from: log.address
             }};
 
         // remove the sending property
-        if(pendingConf && pendingConf.sending === log.args.owner)
+        if(pendingConf && pendingConf.sending === log.returnValues.owner)
             setDocument['$unset'] = {sending: ''};
 
-        Helpers.eventLogs('CHECK OPERATION: '+ log.args.operation +' owner: '+ log.args.owner, res);
+        Helpers.eventLogs('CHECK OPERATION: '+ log.returnValues.operation +' owner: '+ log.returnValues.owner, res);
 
         if(res){
             if(pendingConf)
-                setDocument['$addToSet'] = {confirmedOwners: log.args.owner};
+                setDocument['$addToSet'] = {confirmedOwners: log.returnValues.owner};
             else
-                setDocument['$set'].confirmedOwners = [log.args.owner];
+                setDocument['$set'].confirmedOwners = [log.returnValues.owner];
         } else {
             if(pendingConf)
-                setDocument['$pull'] = {confirmedOwners: log.args.owner};
+                setDocument['$pull'] = {confirmedOwners: log.returnValues.owner};
             else
                 setDocument['$set'].confirmedOwners = [];
         }
@@ -377,159 +377,159 @@ var setupContractSubscription = function(newDocument, checkFromCreationBlock){
             }
         });
 
-        subscription.on('data', function(error, log){
-            if(!error) {
-                Helpers.eventLogs(log);
+        subscription.on('error', function(error) { 
+            console.error('Logs of Wallet '+ newDocument.name + ' couldn\'t be received', error);
+        });
 
-                if(EthBlocks.latest.number && log.blockNumber > EthBlocks.latest.number) {
-                    // update last checkpoint block
-                    Wallets.update({_id: newDocument._id}, {$set: {
-                        checkpointBlock: log.blockNumber
-                    }});
+        subscription.on('data', function(log) {
+            Helpers.eventLogs(log);
+
+            if(EthBlocks.latest.number && log.blockNumber > EthBlocks.latest.number) {
+                // update last checkpoint block
+                Wallets.update({_id: newDocument._id}, {$set: {
+                    checkpointBlock: log.blockNumber
+                }});
+            }
+
+            if(log.event === 'Deposit') {
+                if(log.removed) {
+                    Transactions.remove({_id: Helpers.makeId('tx', log.transactionHash)});
+                    return;
                 }
 
-                if(log.event === 'Deposit') {
-                    if(log.removed) {
-                        Transactions.remove({_id: Helpers.makeId('tx', log.transactionHash)});
-                        return;
-                    }
+                Helpers.eventLogs('Deposit for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, Number(log.returnValues.value));
 
-                    Helpers.eventLogs('Deposit for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber());
+                var txExists = addTransaction(log, log.returnValues.from, newDocument.address, log.returnValues.value.toString(10));
 
-                    var txExists = addTransaction(log, log.args.from, newDocument.address, log.args.value.toString(10));
+                // NOTIFICATION
+                if(!txExists || !txExists.tokenId) {
+                    var txId = Helpers.makeId('tx', log.transactionHash);
 
-                    // NOTIFICATION
-                    if(!txExists || !txExists.tokenId) {
-                        var txId = Helpers.makeId('tx', log.transactionHash);
+                    Helpers.showNotification('wallet.transactions.notifications.incomingTransaction', {
+                        to: Helpers.getAccountNameByAddress(newDocument.address),
+                        from: Helpers.getAccountNameByAddress(log.returnValues.from),
+                        amount: EthTools.formatBalance(log.returnValues.value, '0,0.00[000000] unit', 'ether')
+                    }, function() {
 
-                        Helpers.showNotification('wallet.transactions.notifications.incomingTransaction', {
-                            to: Helpers.getAccountNameByAddress(newDocument.address),
-                            from: Helpers.getAccountNameByAddress(log.args.from),
-                            amount: EthTools.formatBalance(log.args.value, '0,0.00[000000] unit', 'ether')
-                        }, function() {
-
-                            // on click show tx info
-                            EthElements.Modal.show({
-                                template: 'views_modals_transactionInfo',
-                                data: {
-                                    _id: txId
-                                }
-                            },{
-                                class: 'transaction-info'
-                            });
-                        });
-                    }
-                }
-                if(log.event === 'SingleTransact' || log.event === 'MultiTransact') {
-                    if(log.removed) {
-                        Transactions.remove({_id: Helpers.makeId('tx', log.transactionHash)});
-                        return;
-                    }
-                    
-                    Helpers.eventLogs(log.event +' for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber());
-
-                    var txExists = addTransaction(log, newDocument.address, log.args.to, log.args.value.toString(10));
-
-                    // NOTIFICATION
-                    if(!txExists || !txExists.tokenId) {
-                        var txId = Helpers.makeId('tx', log.transactionHash);
-
-                        Helpers.showNotification('wallet.transactions.notifications.outgoingTransaction', {
-                            to: Helpers.getAccountNameByAddress(log.args.to),
-                            from: Helpers.getAccountNameByAddress(newDocument.address),
-                            amount: EthTools.formatBalance(log.args.value, '0,0.00[000000] unit', 'ether')
-                        }, function() {
-
-                            // on click show tx info
-                            EthElements.Modal.show({
-                                template: 'views_modals_transactionInfo',
-                                data: {
-                                    _id: txId
-                                }
-                            },{
-                                class: 'transaction-info'
-                            });
-                        });
-                    }
-                }
-                if(log.event === 'ConfirmationNeeded') {
-                    Helpers.eventLogs('ConfirmationNeeded for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args.value.toNumber() +', Operation '+ log.args.operation);
-
-                    web3.eth.getBlock(log.blockNumber, true, function(err, block){
-
-                        if(!err && block) {
-                            var confirmationId = Helpers.makeId('pc', log.args.operation),
-                                accounts = Wallets.find({$or: [{address: log.address}, {address: log.args.to}]}).fetch(),
-                                pendingConf = PendingConfirmations.findOne(confirmationId);
-
-
-                            // PREVENT SHOWING pending confirmations, of WATCH ONLY WALLETS
-                            if(!(from = Wallets.findOne({address: log.address})) || !EthAccounts.findOne({address: {$in: from.owners}}))
-                                return;
-
-                            // add pending confirmation,
-                            PendingConfirmations.upsert(confirmationId, {$set: {
-                                confirmedOwners: pendingConf ? pendingConf.confirmedOwners : [],
-                                initiator: log.args.initiator,
-                                operation: log.args.operation,
-                                value: log.args.value.toString(10),
-                                to: log.args.to,
-                                from: newDocument.address,
-                                timestamp: block.timestamp,
-                                blockNumber: log.blockNumber,
-                                blockHash: log.blockHash,
-                                transactionHash: log.transactionHash,
-                                transactionIndex: log.transactionIndex,
-                            }});
-
-
-                            // NOTIFICATION
-                            if(pendingConf && !pendingConf.operation) {
-                                Helpers.showNotification('wallet.transactions.notifications.pendingConfirmation', {
-                                    initiator: Helpers.getAccountNameByAddress(log.args.initiator),
-                                    to: Helpers.getAccountNameByAddress(log.args.to),
-                                    from: Helpers.getAccountNameByAddress(newDocument.address),
-                                    amount: EthTools.formatBalance(log.args.value, '0,0.00[000000] unit', 'ether')
-                                }, function() {
-                                    FlowRouter.go('/account/'+ newDocument.address);
-                                });
+                        // on click show tx info
+                        EthElements.Modal.show({
+                            template: 'views_modals_transactionInfo',
+                            data: {
+                                _id: txId
                             }
-
-
-                            // remove pending transactions, as they now have to be approved
-                            var extistingTxId = Helpers.makeId('tx', log.transactionHash);
-                            Meteor.setTimeout(function() {
-                                Transactions.remove(extistingTxId);
-                            }, 500);
-                        }
-                        
+                        },{
+                            class: 'transaction-info'
+                        });
                     });
                 }
-                if(log.event === 'OwnerAdded') {
-                    Helpers.eventLogs('OwnerAdded for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
+            }
+            if(log.event === 'SingleTransact' || log.event === 'MultiTransact') {
+                if(log.removed) {
+                    Transactions.remove({_id: Helpers.makeId('tx', log.transactionHash)});
+                    return;
+                }
+                
+                Helpers.eventLogs(log.event +' for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.returnValues.value.toNumber());
 
-                    checkOwner(newDocument);
-                }
-                if(log.event === 'OwnerRemoved') {
-                    Helpers.eventLogs('OwnerRemoved for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
+                var txExists = addTransaction(log, newDocument.address, log.returnValues.to, log.returnValues.value.toString(10));
 
-                    checkOwner(newDocument);
-                }
-                if(log.event === 'RequirementChanged') {
-                    Helpers.eventLogs('RequirementChanged for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
-                }
-                if(log.event === 'Confirmation') {
-                    Helpers.eventLogs('Operation confirmation for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
+                // NOTIFICATION
+                if(!txExists || !txExists.tokenId) {
+                    var txId = Helpers.makeId('tx', log.transactionHash);
 
-                    confirmOrRevoke(contractInstance, log);
-                }
-                if(log.event === 'Revoke') {
-                    Helpers.eventLogs('Operation revokation for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.args);
+                    Helpers.showNotification('wallet.transactions.notifications.outgoingTransaction', {
+                        to: Helpers.getAccountNameByAddress(log.returnValues.to),
+                        from: Helpers.getAccountNameByAddress(newDocument.address),
+                        amount: EthTools.formatBalance(log.returnValues.value, '0,0.00[000000] unit', 'ether')
+                    }, function() {
 
-                    confirmOrRevoke(contractInstance, log);
+                        // on click show tx info
+                        EthElements.Modal.show({
+                            template: 'views_modals_transactionInfo',
+                            data: {
+                                _id: txId
+                            }
+                        },{
+                            class: 'transaction-info'
+                        });
+                    });
                 }
-            } else {
-                console.error('Logs of Wallet '+ newDocument.name + ' couldn\'t be received', error);
+            }
+            if(log.event === 'ConfirmationNeeded') {
+                Helpers.eventLogs('ConfirmationNeeded for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.returnValues.value.toNumber() +', Operation '+ log.returnValues.operation);
+
+                web3.eth.getBlock(log.blockNumber, true, function(err, block){
+
+                    if(!err && block) {
+                        var confirmationId = Helpers.makeId('pc', log.returnValues.operation),
+                            accounts = Wallets.find({$or: [{address: log.address}, {address: log.returnValues.to}]}).fetch(),
+                            pendingConf = PendingConfirmations.findOne(confirmationId);
+
+
+                        // PREVENT SHOWING pending confirmations, of WATCH ONLY WALLETS
+                        if(!(from = Wallets.findOne({address: log.address})) || !EthAccounts.findOne({address: {$in: from.owners}}))
+                            return;
+
+                        // add pending confirmation,
+                        PendingConfirmations.upsert(confirmationId, {$set: {
+                            confirmedOwners: pendingConf ? pendingConf.confirmedOwners : [],
+                            initiator: log.returnValues.initiator,
+                            operation: log.returnValues.operation,
+                            value: log.returnValues.value.toString(10),
+                            to: log.returnValues.to,
+                            from: newDocument.address,
+                            timestamp: block.timestamp,
+                            blockNumber: log.blockNumber,
+                            blockHash: log.blockHash,
+                            transactionHash: log.transactionHash,
+                            transactionIndex: log.transactionIndex,
+                        }});
+
+
+                        // NOTIFICATION
+                        if(pendingConf && !pendingConf.operation) {
+                            Helpers.showNotification('wallet.transactions.notifications.pendingConfirmation', {
+                                initiator: Helpers.getAccountNameByAddress(log.returnValues.initiator),
+                                to: Helpers.getAccountNameByAddress(log.returnValues.to),
+                                from: Helpers.getAccountNameByAddress(newDocument.address),
+                                amount: EthTools.formatBalance(log.returnValues.value, '0,0.00[000000] unit', 'ether')
+                            }, function() {
+                                FlowRouter.go('/account/'+ newDocument.address);
+                            });
+                        }
+
+
+                        // remove pending transactions, as they now have to be approved
+                        var extistingTxId = Helpers.makeId('tx', log.transactionHash);
+                        Meteor.setTimeout(function() {
+                            Transactions.remove(extistingTxId);
+                        }, 500);
+                    }
+                    
+                });
+            }
+            if(log.event === 'OwnerAdded') {
+                Helpers.eventLogs('OwnerAdded for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.returnValues);
+
+                checkOwner(newDocument);
+            }
+            if(log.event === 'OwnerRemoved') {
+                Helpers.eventLogs('OwnerRemoved for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.returnValues);
+
+                checkOwner(newDocument);
+            }
+            if(log.event === 'RequirementChanged') {
+                Helpers.eventLogs('RequirementChanged for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.returnValues);
+            }
+            if(log.event === 'Confirmation') {
+                Helpers.eventLogs('Operation confirmation for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.returnValues);
+
+                confirmOrRevoke(contractInstance, log);
+            }
+            if(log.event === 'Revoke') {
+                Helpers.eventLogs('Operation revokation for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.returnValues);
+
+                confirmOrRevoke(contractInstance, log);
             }
         });
 
