@@ -429,7 +429,7 @@ var setupContractSubscription = function(newDocument, checkFromCreationBlock){
                     return;
                 }
                 
-                Helpers.eventLogs(log.event +' for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, log.returnValues.value.toNumber());
+                Helpers.eventLogs(log.event +' for '+ newDocument.address +' arrived in block: #'+ log.blockNumber, Number(log.returnValues.value));
 
                 var txExists = addTransaction(log, newDocument.address, log.returnValues.to, log.returnValues.value.toString(10));
 
