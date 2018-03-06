@@ -303,6 +303,11 @@ Template['views_send'].helpers({
 
         TemplateVar.set('total', accounts);
 
+        if (accounts.length === 0) {
+            FlowRouter.go('/');
+            return;
+        }
+
         return accounts;
     },
 

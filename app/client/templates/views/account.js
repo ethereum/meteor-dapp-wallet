@@ -57,14 +57,17 @@ Template['views_account'].helpers({
      */
     'account': function() {
         var account = Helpers.getAccountByAddress(FlowRouter.getParam('address'));
+        if (account) {
+            account.hrefType = true;
 
-        account.hrefType = true;
+            if (account.balance === "0") {
+                account.hrefType = false;
+            }
 
-        if (account.balance === "0") {
-            account.hrefType = false;
+            return account;
+        } else{
+            FlowRouter.go('/');
         }
-
-        return account;
     },
     /**
      Get all transactions
