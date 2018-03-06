@@ -75,7 +75,7 @@ Helpers.getOwnedAccountFrom = function(accountList){
 
     // Looks for them among the wallet account owner
     var fromAccount = _.find(accounts, function(acc){
-       return (accountList.indexOf(acc.address)>=0);
+       return (accountList.indexOf(acc.address.toLowerCase())>=0);
     })
 
     return fromAccount ? fromAccount.address : '';

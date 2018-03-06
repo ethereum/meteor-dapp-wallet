@@ -114,9 +114,19 @@ Returns a list of accounts and wallets sorted by balance
 **/
 Template.registerHelper('selectAccounts', function(hideWallets){
     var accounts = EthAccounts.find({balance:{$ne:"0"}}, {sort: {balance: 1}}).fetch();
-    
+
     if(hideWallets !== true)
-        accounts = _.union(Wallets.find({owners: {$in: _.pluck(EthAccounts.find().fetch(), 'address')}, address: {$exists: true}}, {sort: {name: 1}}).fetch(), accounts);
+        accounts = _.union(
+            Wallets.find({
+                owners: {
+                    $in: _.map(EthAccounts.find().fetch(), function(account) { return account.address.toLowerCase(); })
+                },
+                address: {
+                    $exists: true
+                }
+            }, {
+                sort: {name: 1}
+            }).fetch(), accounts);
 
     return accounts;
 });
