@@ -66,14 +66,16 @@ Template['elements_compileContract'].onCreated(function() {
         var txData = '';
 
         if(selectedType && selectedType === 'source-code' && selectedContract){  
-            // add the default web3 sendTransaction arguments
-            constructorInputs.push({
-                data: selectedContract.bytecode
-            });
-    
             // generate new contract code
-            // TemplateVar.set('txData', );
-            txData = web3.eth.contract(selectedContract.jsonInterface).new.getData.apply(null, constructorInputs);
+            try {
+                txData = new web3.eth.Contract(selectedContract.jsonInterface).deploy({
+                    data: selectedContract.bytecode,
+                    arguments: constructorInputs
+                }).encodeABI();
+            } catch (error) {
+                console.log('Error setting txData: ', error);
+            }
+            
             TemplateVar.set('contract', selectedContract);
     
             // Save data to localstorage
@@ -89,7 +91,7 @@ Template['elements_compileContract'].onCreated(function() {
             }
         }
         
-        TemplateVar.set("txData", txData);   
+        TemplateVar.set('txData', txData);   
     });
 });
 
@@ -126,8 +128,6 @@ Template['elements_compileContract'].onRendered(function() {
 
         Meteor.setTimeout(function(argument) {
             web3.eth.compile.solidity(sourceCode, function(error, compiledContracts){
-                
-
                 // read the fields again
                 Tracker.afterFlush(function() {
                     TemplateVar.set(template, 'compiling', false);
@@ -140,7 +140,6 @@ Template['elements_compileContract'].onRendered(function() {
                 })
 
                 if(!error) {
-
                     compiledContracts = _.map(compiledContracts, function(contract, name){
                         var jsonInterface = JSON.parse(contract.interface);
                         
@@ -172,11 +171,9 @@ Template['elements_compileContract'].onRendered(function() {
                     TemplateVar.set(template, 'compiledContracts', compiledContracts);
                     localStorage.setItem('compiledContracts', JSON.stringify(compiledContracts));
 
-
                 } else {
-                    
                     // Converts error into multiple bits
-                    var errorLine = error.toString().split(':');
+                    var errorLine = error.toString().replace('Error:', '').split(':');
 
                     if (errorLine.length < 4) {
                         // If it can't break the error then return all
