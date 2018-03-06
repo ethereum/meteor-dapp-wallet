@@ -215,7 +215,7 @@ Template['views_send'].onRendered(function(){
             } else if(wallet = Wallets.findOne({address: address}, {reactive: false})) {
 
                 if(contracts['ct_'+ wallet._id])
-                    contracts['ct_'+ wallet._id].execute.estimateGas(to || '', amount || '', data || '',{
+                    contracts['ct_'+ wallet._id].methods.execute(to || '', amount || '', data || '0x00').estimateGas({
                         from: wallet.owners[0],
                         gas: defaultEstimateGas
                     }, estimationCallback.bind(template));
@@ -224,7 +224,7 @@ Template['views_send'].onRendered(function(){
         // Custom coin estimation
         } else {
             TokenContract.options.address = tokenAddress;
-            TokenContract.methods.transfer().estimateGas(to, amount, {
+            TokenContract.methods.transfer(to, amount).estimateGas({
                 from: address,
                 gas: defaultEstimateGas
             }, estimationCallback.bind(template));
@@ -593,7 +593,7 @@ Template['views_send'].events({
                 // CONTRACT TX
                 if(contracts['ct_'+ selectedAccount._id]) {
 
-                    contracts['ct_'+ selectedAccount._id].execute.sendTransaction(to || '', amount || '', data || '', {
+                    contracts['ct_'+ selectedAccount._id].methods.execute(to || '', amount || '', data || '0x00').send({
                         from: Helpers.getOwnedAccountFrom(selectedAccount.owners),
                         gasPrice: gasPrice,
                         gas: estimatedGas
