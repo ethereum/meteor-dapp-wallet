@@ -142,7 +142,7 @@ updateContractData = function(newDocument){
 
                     // update the daily limit, when its still the same day
                     Wallets.update(newDocument._id, {$set: {
-                        dailyLimitSpent: (fullDaysSinceEpoch === lastDay.toNumber()) ? spent.toString(10) : '0'
+                        dailyLimitSpent: (fullDaysSinceEpoch === Number(lastDay)) ? spent.toString(10) : '0'
                     }});
                 }
 
@@ -170,9 +170,9 @@ updateContractData = function(newDocument){
                 // });
 
                 Wallets.update(newDocument._id, {$set: {
-                    version: version.toNumber()
+                    version: Number(version)
                 }});
-                newDocument.version = version.toNumber();
+                newDocument.version = Number(version)
             }
         });
     }
