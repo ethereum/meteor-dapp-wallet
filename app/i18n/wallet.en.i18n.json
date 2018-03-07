@@ -94,8 +94,7 @@
             "accountsDescription": "Accounts are password protected keys that can hold Ether and Ethereum-based tokens.  They can control contracts, but can't display incoming transactions.",
             "buttons": {
                 "deposit": "Transfer Ether & Tokens",
-                "depositBitcoin": "Fund with Bitcoin",
-                "depositUsingCreditCard": "Fund with a Credit Card (U.S. only)",
+                "buyEther": "Buy ether",
                 "viewOnExplorer": "View on Etherscan",
                 "copyAddress": "Copy address",
                 "scanQRCode": "Show QR-Code",
@@ -136,7 +135,7 @@
             "amount": "Amount",
             "gasPrice": "Gas price",
             "perMillionGas": " PER MILLION GAS",
-            "gasUsed": "Gas used", 
+            "gasUsed": "Gas used",
             "feePaid": "Fee paid",
             "data": "Send data",
             "deployedData": "Deployed data",
@@ -155,7 +154,7 @@
             },
             "error": {
                 "noDataDeployed": "No data is deployed on the contract address!",
-                "outOfGas": "The transaction from __from__ to __to__ couldn't be successfully executed."  
+                "outOfGas": "The transaction from __from__ to __to__ couldn't be successfully executed."
             },
             "types": {
                 "executeContract": "Contract execution",
@@ -178,7 +177,7 @@
                 },
                 "outgoingTransaction": {
                     "title": "Payment sent",
-                    "text": "You sent __amount__ from __from__ to __to__."    
+                    "text": "You sent __amount__ from __from__ to __to__."
                 },
                 "pendingConfirmation": {
                     "title": "Confirmation needed",
@@ -257,7 +256,8 @@
                 "emptyWallet": "The account you want to send from is empty.",
                 "notEnoughFunds": "You don't have enough funds in the account.",
                 "noReceiver": "You didn't specify a receiver.",
-                "noAmount": "You didn't specify an amount to send."
+                "noAmount": "You didn't specify an amount to send.",
+                "rejectedInMetamask": "You have rejected the transaction in MetaMask."
             },
             "texts": {
                 "ownerPaysGas": "Gas is paid by the owner of the wallet contract",

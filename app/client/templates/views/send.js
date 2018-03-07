@@ -91,6 +91,23 @@ var estimationCallback = function(e, res){
     }
 };
 
+/**
+Translate an external error message into the user's language if possible. Otherwise return
+the old error message.
+
+@method translateExternalErrorMessage
+*/
+var translateExternalErrorMessage = function(message) {
+    // 'setTxStatusRejected' occurs in the stack trace of the error message triggered when
+    // the user has rejects a transaction in MetaMask. Show a localised error message
+    // instead of the stack trace.
+    if (message.indexOf('setTxStatusRejected') !== -1) {
+        return TAPi18n.__('wallet.send.error.rejectedInMetamask');
+    } else {
+        return message;
+    }
+};
+
 
 // Set basic variables
 Template['views_send'].onCreated(function(){
@@ -604,7 +621,7 @@ Template['views_send'].events({
                             console.log('Error from contract sendTransaction: ', error, txHash);
                             // EthElements.Modal.hide();
                             GlobalNotification.error({
-                                content: error.message,
+                                content: translateExternalErrorMessage(error.message),
                                 duration: 8
                             });
                             return;
@@ -646,7 +663,7 @@ Template['views_send'].events({
                             console.log('Error from simple sendTransaction: ', error, txHash);
                             // EthElements.Modal.hide();
                             GlobalNotification.error({
-                                content: error.message,
+                                content: translateExternalErrorMessage(error.message),
                                 duration: 8
                             });
                             return;

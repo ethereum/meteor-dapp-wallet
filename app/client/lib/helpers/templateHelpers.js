@@ -28,26 +28,26 @@ Check if in mist
 @method (isMist)
 **/
 Template.registerHelper('isMist', function(){
-    return (typeof mist !== 'undefined');
+    return (typeof window.mistMode === 'undefined');
 });
 
 /**
 Check if in mist and in mist mode
 
-@method (isMistMode)
+@method (isWalletMode)
 **/
 Template.registerHelper('isWalletMode', function(){
     return window.mistMode === 'wallet' || typeof mist === 'undefined'; // also show network info in normal browsers
 });
 
 /**
-Check if currenct unit is an ether unit
+Check if currency unit is an ether unit
 
 @method (isEtherUnit)
 **/
 Template.registerHelper('isEtherUnit', function(){
     var unit = EthTools.getUnit();
-    return !(unit === 'usd' || unit === 'eur' || unit === 'btc');
+    return !(unit === 'usd' || unit === 'eur' || unit === 'btc' || unit === 'gbp' || unit === 'brl');
 });
 
 
@@ -85,7 +85,7 @@ Template.registerHelper('isVulnerable', function(address){
         // add vulnerabilities to account
         account.vulnerabilities = wallet.vulnerabilities;
         return account;
-    } else 
+    } else
         return false;
 });
 
@@ -212,7 +212,7 @@ Formats a given transactions balance
 Template.registerHelper('formatTransactionBalance', Helpers.formatTransactionBalance);
 
 
-/** 
+/**
 Formats address to a CaseChecksum
 
 @method toChecksumAddress
@@ -225,7 +225,7 @@ Template.registerHelper('toChecksumAddress', function(address){
 
 
 
-/** 
+/**
 Takes a camelcase and shows it with spaces
 
 @method toSentence
@@ -233,4 +233,3 @@ Takes a camelcase and shows it with spaces
 @return {string} sentence    The same name with spaces
 **/
 Template.registerHelper('toSentence', Helpers.toSentence);
-
