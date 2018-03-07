@@ -85,11 +85,11 @@
             "requiredSignatures": "Semnaturi necesare",
             "owners": "Detinatori",
             "walletsDescription": "Acestea sunt contracte ce stocheaza si securizeaza ether. Ele pot avea mai multi detinatori si pot pastra intregul jurnal al tranzactiilor.",
-            "walletsDescriptionNotEnoughFunds": "Ai nevoie de cel putin 1 ether pentru a implementa contracte mai sofisticate. Portofelele sunt la baza niste contracte inteligente, ce pot fi controlate de mai multi detinatori si chiar se pot seta limite de retragere pentru o mai buna securitate.  Pentru a implementa un contract personalizat, mergi la sectiunea <em> Contracts </em>.",        
+            "walletsDescriptionNotEnoughFunds": "Ai nevoie de cel putin 1 ether pentru a implementa contracte mai sofisticate. Portofelele sunt la baza niste contracte inteligente, ce pot fi controlate de mai multi detinatori si chiar se pot seta limite de retragere pentru o mai buna securitate.  Pentru a implementa un contract personalizat, mergi la sectiunea <em> Contracts </em>.",
             "accountsDescription": "Conturile sunt chei securizate prin parola ce pot controla contractele. Conturile pot stoca ether dar nu pot lista jurnalul tranzactiilor.",
             "buttons": {
                 "deposit": "Depunere",
-                "depositBitcoin": "Depunere Bitcoin",
+                "buyEther": "Depunere Bitcoin",
                 "viewOnExplorer": "View on Etherscan",
                 "copyAddress": "Copiaza adresa",
                 "scanQRCode": "Arata QR-Code",
@@ -169,7 +169,7 @@
                 },
                 "outgoingTransaction": {
                     "title": "Plata trimisa",
-                    "text": "Ai trimis __amount__ de la __from__ catre __to__."    
+                    "text": "Ai trimis __amount__ de la __from__ catre __to__."
                 },
                 "pendingConfirmation": {
                     "title": "Confirmari necesare",
