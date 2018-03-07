@@ -39,7 +39,6 @@ mrt:qrcodesvg
 sacha:spin
 frozeman:global-notifications
 agnito:simptip
-ethereum:web3@1.0.0-beta.30
 ethereum:dapp-styles
 jrudio:bluebird
 tap:i18n-bundler
@@ -48,8 +47,9 @@ numeral:languages
 hashanp:geopattern
 shell-server
 dynamic-import
-ethereum:blocks
-ethereum:accounts
-ethereum:tools
-ethereum:elements
+ethereum:blocks@1.0.0
+ethereum:accounts@1.0.0
+ethereum:tools@1.0.0
+ethereum:elements@1.0.0
+ethereum:web3@1.0.0-beta.30
 3stack:bignumber
