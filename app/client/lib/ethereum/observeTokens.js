@@ -18,9 +18,9 @@ var setupContractSubscription = function(newDocument){
 
     var blockToCheckBack = (newDocument.checkpointBlock || 0) - ethereumConfig.rollBackBy;
 
-    // TODO change to 0, when new geth is out!!!!!
-    if(blockToCheckBack < 400000)
-        blockToCheckBack = 400000;
+    if(blockToCheckBack < 0) {
+        blockToCheckBack = 0;
+    }
 
     if(!contractInstance.tokenEvents)
         contractInstance.tokenEvents = [];
@@ -41,17 +41,23 @@ var setupContractSubscription = function(newDocument){
 
     // get past logs, to set the new blockNumber
     var currentBlock = EthBlocks.latest.number;
-    // TODO Ryan: contractInstance.getPastEvents is undefined
-    // contractInstance.getPastEvents('allEvents', function(error, logs) {
-    //     if(!error) {
-    //         // update last checkpoint block
-    //         Tokens.update({_id: newDocument._id}, {$set: {
-    //             checkpointBlock: (currentBlock || EthBlocks.latest.number) - ethereumConfig.rollBackBy
-    //         }});
-    //     }
-    // });
 
-    filter.on('data', function(log) {
+    // For some reason, sometimes this contractInstance doesn't
+    // have a getPastEvents property so we'll reinit the contract
+    var thisContractInstance = contractInstance;
+    if (!thisContractInstance.getPastEvents) {
+        thisContractInstance = new web3.eth.Contract(contractInstance.options.jsonInterface, contractInstance.options.address);
+    }
+
+    thisContractInstance.getPastEvents('allEvents', {fromBlock: blockToCheckBack}, function(error, logs) {
+        if(!error) {
+            // update last checkpoint block
+            Tokens.update({_id: newDocument._id}, {$set: {
+                checkpointBlock: (currentBlock || EthBlocks.latest.number) - ethereumConfig.rollBackBy
+            }});
+        }
+    });
+
     subscription.on('data', function(log) {
         // Helpers.eventLogs(log);
 
