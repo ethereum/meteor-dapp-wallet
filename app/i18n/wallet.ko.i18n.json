@@ -91,7 +91,7 @@
             "accountsDescription": "계정은 암호로 보호된 키인데 이더, 이더리움을 기반으로 한 토큰 또는 코인들을 보관하고 컨트랙트를 통제합니다. 계정은 개별 입금 트랙잭션은 보여주지 못합니다.",
             "buttons": {
                 "deposit": "이더 입금",
-                "depositBitcoin": "비트코인을 사용한 입금",
+                "buyEther": "비트코인을 사용한 입금",
                 "viewOnExplorer": "View on Etherscan",
                 "copyAddress": "주소 복사",
                 "scanQRCode": "QR 코드 보기",
@@ -132,7 +132,7 @@
             "amount": "금액",
             "gasPrice": "개스 가격",
             "perMillionGas": " 백만 개스당",
-            "gasUsed": "개스 사용", 
+            "gasUsed": "개스 사용",
             "feePaid": "지급 수수료",
             "data": "송신 데이터",
             "deployedData": "설치한 데이터",
@@ -151,7 +151,7 @@
             },
             "error": {
                 "noDataDeployed": "컨트랙트 주소에 데이터가 설치되지 않았습니다!",
-                "outOfGas": "__from__ 로부터 __to__ 로 가는 트랜잭션이 성공적으로 수행되지 않았습니다."  
+                "outOfGas": "__from__ 로부터 __to__ 로 가는 트랜잭션이 성공적으로 수행되지 않았습니다."
             },
             "types": {
                 "executeContract": "컨트랙트 실행",
@@ -174,7 +174,7 @@
                 },
                 "outgoingTransaction": {
                     "title": "송금액",
-                    "text": " __amount__를 __from__로부터  __to__로 보냄"    
+                    "text": " __amount__를 __from__로부터  __to__로 보냄"
                 },
                 "pendingConfirmation": {
                     "title": "확인 필요",
