@@ -32,7 +32,8 @@
                             <img class=" copy-to-clipboard-button copy-address" name="address" />
                             <img class=" qrcode-button qrcode-address" name={{address}} />
                         </p>
-                        <p style=" width: 55%;margin: 0;">
+
+                        <p style=" width: 55%;margin: 0; {{#unless isWaddress}}opacity: 0;{{/unless}}">
                             <span class="dapp-ele-address" style="font-size: 16px;">Private Address:&nbsp;</span>
                             <span class="accountLink-span copyable-waddress" id="waddress" style="line-height: 1.2;">{{waddress}}</span>
                             <img class=" copy-to-clipboard-wbutton copy-address" name="waddress" />
@@ -55,12 +56,15 @@
                                 {{/if}}
                             </p>
 
-                            <p>
-                                <a class="start-to-scan-block-button">
-                                    <img class=" wanchain-detail"/>
+                            {{#if isWaddress}}
+                                <p style="{{#unless isWaddress}}opacity: 0;{{/unless}}">
+                                    <a class="start-to-scan-block-button">
+                                        <img class=" wanchain-detail"/>
                                 <p style="margin: 0;margin-left: -10px;font-size: 14px;color: #929cb8;;">{{i18n 'views.account.OTAs'}}</p>
                                 </a>
-                            </p>
+                                </p>
+                            {{/if}}
+
                         </div>
                     </header>
                 </div>
@@ -77,19 +81,22 @@
                                   <span class="balance-span">{{i18n 'views.account.balacne.des'}}</span>
                               </div>
 
-                              <div class="account-balance-wan">
-                                  <strong>{{> elements_balance balance=(TemplateVar.get "otasValue") changeUnit=true}}</strong>
-                                  <span class="balance-span">{{i18n 'views.account.balacne.ota'}}
-                                      {{#if TemplateVar.get "otasValue"}}
-                                          {{#if hrefType}}
-                                              <a href="{{pathFor route='otaRefund' address=theAddress}}">{{i18n 'views.account.balacne.refund'}}</a>
+                              {{#if isWaddress}}
+                                  <div class="account-balance-wan">
+                                      <strong>{{> elements_balance balance=(TemplateVar.get "otasValue") changeUnit=true}}</strong>
+                                      <span class="balance-span">{{i18n 'views.account.balacne.ota'}}
+                                          {{#if TemplateVar.get "otasValue"}}
+                                              {{#if hrefType}}
+                                                  <a href="{{pathFor route='otaRefund' address=theAddress}}">{{i18n 'views.account.balacne.refund'}}</a>
                                               {{else}}
-                                              <a class="transfer" style="cursor: pointer;">{{i18n 'views.account.balacne.refund'}}</a>
-                                          {{/if}}
+                                                  <a class="transfer" style="cursor: pointer;">{{i18n 'views.account.balacne.refund'}}</a>
+                                              {{/if}}
 
-                                      {{/if}}
+                                          {{/if}}
                                       </span>
-                              </div>
+                                  </div>
+                              {{/if}}
+
                           </div>
                       </div>
 

@@ -301,12 +301,21 @@ Template['views_send'].helpers({
 
         var accounts = EthAccounts.find({balance:{$ne:"0"}, address: address}, {sort: {balance: 1}}).fetch();
 
-        TemplateVar.set('total', accounts);
+        if (TemplateVar.get('fromAddress')) {
+            var hasAccount = EthAccounts.findOne({address: TemplateVar.get('fromAddress').toLowerCase()});
 
-        if (accounts.length === 0) {
-            FlowRouter.go('/');
-            return;
+            if (!hasAccount) {
+                FlowRouter.go('/');
+                return;
+            }
+
+            if (parseInt(hasAccount.waddress, 16) === 0) {
+                TemplateVar.set('switchStype', false);
+            }
+
         }
+
+        TemplateVar.set('total', accounts);
 
         return accounts;
     },

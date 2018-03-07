@@ -89,6 +89,11 @@ Template['elements_account'].helpers({
             if (account.balance === "0") {
                 account.hrefType = false;
             }
+
+            account.isWaddress = true;
+            if (parseInt(account.waddress, 16) === 0) {
+                account.isWaddress = false;
+            }
         }
 
         return account;
@@ -205,7 +210,7 @@ Template['elements_account'].helpers({
 Template['elements_account'].events({
     /**
     Field test the speed wallet is rendered
-    
+
     @event click button.show-data
     */
     'click .wallet-box': function(e){

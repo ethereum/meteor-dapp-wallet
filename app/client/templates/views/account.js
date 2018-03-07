@@ -64,6 +64,11 @@ Template['views_account'].helpers({
                 account.hrefType = false;
             }
 
+            account.isWaddress = true;
+            if (parseInt(account.waddress, 16) === 0) {
+                account.isWaddress = false;
+            }
+
             return account;
         } else{
             FlowRouter.go('/');
