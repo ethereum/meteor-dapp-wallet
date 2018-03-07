@@ -28,13 +28,13 @@ Check if in mist
 @method (isMist)
 **/
 Template.registerHelper('isMist', function(){
-    return (typeof mist !== 'undefined');
+    return window.mistMode === 'mist';
 });
 
 /**
 Check if in mist and in mist mode
 
-@method (isMistMode)
+@method (isWalletMode)
 **/
 Template.registerHelper('isWalletMode', function(){
     return window.mistMode === 'wallet' || typeof mist === 'undefined'; // also show network info in normal browsers
