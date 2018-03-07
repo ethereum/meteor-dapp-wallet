@@ -45,7 +45,7 @@
                 "txOriginVulnerabilityAccount": "Dieses Konto ist ein Besitzer eines gefährdeten wallet Vertrag und mit diesem Konto auf böswillige Verträge können Ihre Mappen Mittel gefährden. Rüsten Sie Ihren Geldbeutel, bevor Sie Geschäfte mit diesem Konto zu tun.",
                 "txOriginVulnerabilityPopup": "Wir fanden verwundbar Portemonnaies! Achten Sie darauf, neue Geldbörsen zu implementieren und die Mittel zu bewegen!",
                 "checkThisNow": "Zeigen Sie verwundbar",
-                "checkThisLater": "Später",                
+                "checkThisLater": "Später",
                 "learnMore": "Erfahren Sie mehr zu dieser Sicherheitsanfälligkeit"
             }
         },
@@ -92,7 +92,7 @@
             "accountsDescription": "Konten können Ether, Ethereum-basierte Token oder Coins enthalten. Darüber hinaus können Konten Verträge kontrollieren. Im Gegensatz zu Wallets können Konten keine einkommenden Transaktionen anzeigen.",
             "buttons": {
                 "deposit": "Ether hinterlegen",
-                "depositBitcoin": "Ether mit Bitcoin hinterlegen",
+                "buyEther": "Kaufe Ether",
                 "viewOnExplorer": "View on Etherscan",
                 "copyAddress": "Adresse kopieren",
                 "scanQRCode": "QR-Code anzeigen",
@@ -149,7 +149,7 @@
             },
             "error": {
                 "noDataDeployed": "Auf der Vertragsadresse wurden keine Daten veröffentlicht",
-                "outOfGas": "Die Transaktion von __from__ nach __to__ konnte nicht ausgeführt werden."  
+                "outOfGas": "Die Transaktion von __from__ nach __to__ konnte nicht ausgeführt werden."
             },
             "types": {
                 "executeContract": "Vertrag anwenden",
@@ -243,7 +243,7 @@
             "estimatedFee": "Gebühr bestimmen",
             "createContract": "Vertrag erstellen",
             "provideGas": "Gas zur Verfügung stellen",
-            "transactionSent": "Transaktion gesendet",            
+            "transactionSent": "Transaktion gesendet",
             "error": {
                 "emptyWallet": "Das Konto, von dem Sie senden möchten, ist leer.",
                 "notEnoughFunds": "Der Betrag auf Ihrem Konto reicht nicht aus.",
