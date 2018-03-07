@@ -89,7 +89,7 @@
             "accountsDescription": "アカウントはetherを保有できる、パスワードで保護されたキーです、イーサリアムベースのトークンかコインを保全しコントラクトを管理します。アカウントは入ってくる取引を表示できません。",
             "buttons": {
                 "deposit": "Etherをデポジット",
-                "depositBitcoin": "Bitcoinを使ってデポジット",
+                "buyEther": "Bitcoinを使ってデポジット",
                 "viewOnExplorer": "View on Etherscan",
                 "copyAddress": "アドレスをコピー",
                 "scanQRCode": "QRコードを表示",
@@ -127,7 +127,7 @@
             "amount": "量",
             "gasPrice": "ガスの値段",
             "perMillionGas": " PER MILLION GAS",
-            "gasUsed": "ガス使用量", 
+            "gasUsed": "ガス使用量",
             "feePaid": "支払い金額",
             "data": "データ送信",
             "deployedData": "配備されたデータ",
@@ -146,7 +146,7 @@
             },
             "error": {
                 "noDataDeployed": "アドレス内にデータがありません。",
-                "outOfGas": "トランザクションfrom __from__ to __to__ 正常に実行できませんでした"  
+                "outOfGas": "トランザクションfrom __from__ to __to__ 正常に実行できませんでした"
             },
             "types": {
                 "executeContract": "コントラクト実行",
@@ -169,7 +169,7 @@
                 },
                 "outgoingTransaction": {
                     "title": "支払い送信",
-                    "text": "You send __amount__ from __from__ to __to__."    
+                    "text": "You send __amount__ from __from__ to __to__."
                 },
                 "pendingConfirmation": {
                     "title": "確認して下さい",

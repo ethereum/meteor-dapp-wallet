@@ -89,7 +89,7 @@
             "accountsDescription": "Les comptes sont des clés protégées par mot de passe qui peuvent détenir de l'ether, sécuriser des jetons basés sur Ethereum, et contrôler des contrats. Les comptes ne peuvent pas afficher les transactions entrantes.",
             "buttons": {
                 "deposit": "Déposer de l'ether",
-                "depositBitcoin": "Déposer via du Bitcoin",
+                "buyEther": "Acheter Ether",
                 "viewOnExplorer": "View on Etherscan",
                 "copyAddress": "Copier l'adresse",
                 "scanQRCode": "Afficher le QR Code",
