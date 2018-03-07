@@ -94,8 +94,7 @@
             "accountsDescription": "Llogaritë janë çelësa të ruajtur me fjalëkalim që mund të mbajnë Ether dhe valuta të tjera të bazuara mbi Ether. Ato mund të kontrollojnë kontrata, por nuk mund të shfaqin transaksione ardhëse.",
             "buttons": {
                 "deposit": "Transfer Ether & Tokens",
-                "depositBitcoin": "Fund with Bitcoin",
-                "depositUsingCreditCard": "Fund with a Credit Card (U.S. only)",
+                "buyEther": "Fund with Bitcoin",
                 "viewOnExplorer": "View on Etherscan",
                 "copyAddress": "Copy address",
                 "scanQRCode": "Show QR-Code",

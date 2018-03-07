@@ -94,7 +94,7 @@
             "accountsDescription": "Accounts are password protected keys that can hold ether, secure ethereum-based tokens or coins and control contracts. Accounts can't display incoming transactions.",
             "buttons": {
                 "deposit": "存入以太币",
-                "depositBitcoin": "使用比特币做存款",
+                "buyEther": "使用比特币做存款",
                 "viewOnExplorer": "View on Etherscan",
                 "copyAddress": "复制地址",
                 "scanQRCode": "显示二维码",
