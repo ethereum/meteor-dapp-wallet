@@ -368,7 +368,7 @@ var setupContractSubscription = function(newDocument, checkFromCreationBlock){
         
         // get past logs, to set the new blockNumber
         var currentBlock = EthBlocks.latest.number;
-        contractInstance.getPastEvents(function(error, logs) {
+        contractInstance.getPastEvents('allEvents', {fromBlock: blockToCheckBack}, function(error, logs) {
             if(!error) {
                 // update last checkpoint block
                 Wallets.update({_id: newDocument._id}, {$set: {
