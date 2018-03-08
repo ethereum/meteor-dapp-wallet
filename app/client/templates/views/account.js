@@ -320,7 +320,15 @@ Template['views_account'].events({
     'click .transfer': function (e) {
 
         return GlobalNotification.warning({
-            content: "This address's value is 0, can not transfer",
+            content: "This address's balance is 0, can not transfer",
+            duration: 2
+        });
+    },
+
+    'click .refund': function (e) {
+
+        return GlobalNotification.warning({
+            content: "Please add WANs to Public Address to pay for Gas.",
             duration: 2
         });
     }

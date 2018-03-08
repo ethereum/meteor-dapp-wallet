@@ -227,6 +227,7 @@ var updateTransaction = function(newDocument, transaction, receipt){
         var warningText = TAPi18n.__('wallet.transactions.error.outOfGas', {from: Helpers.getAccountNameByAddress(newDocument.from), to: Helpers.getAccountNameByAddress(newDocument.to)});
 
         console.log('newDocument.from: ', newDocument.from);
+
         if(newDocument.from) {
             // EthAccounts.findOne({address: newDocument.from})
             web3.eth.getBalance(newDocument.from, newDocument.blockNumber, function(e, now){
@@ -244,10 +245,12 @@ var updateTransaction = function(newDocument, transaction, receipt){
                     });
                 }
             });
-        } else {
+        } else if (!newDocument.from && newDocument.tokenId) {
+            Transactions.update({_id: id}, {$set: {outOfGas: false}});
+        }  else {
             GlobalNotification.warning({
-               content: warningText,
-               duration: 10
+                content: warningText,
+                duration: 10
             });
         }
     }

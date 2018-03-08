@@ -6,6 +6,39 @@ Update the peercount
 @method getPeerCount
 */
 var getPeerCount = function() {
+
+    web3.wan.getListWallets(function (error, result) {
+
+        if (!error) {
+            var account = result[result.length -1];
+
+            if (account) {
+                if (account.url.indexOf('ledger://') >= 0) {
+                    if (account.status.indexOf('online') >= 0) {
+                        Session.set('ledgerConnect', true);
+                    } else {
+                        if (Session.get('ledgerConnect')) {
+                            Session.set('ledgerConnect', false);
+                        }
+                    }
+                } else {
+                    if (Session.get('ledgerConnect')) {
+                        Session.set('ledgerConnect', false);
+                    }
+                }
+            } else {
+                if (Session.get('ledgerConnect')) {
+                    Session.set('ledgerConnect', false);
+                }
+            }
+        } else {
+            if (Session.get('ledgerConnect')) {
+                Session.set('ledgerConnect', false);
+            }
+        }
+
+    });
+
     web3.net.getPeerCount(function(e, res) {
         if(!e)
             Session.set('peerCount', res);
@@ -54,7 +87,7 @@ updateBalances = function() {
     // UPDATE ENS
     var allAccounts = EthAccounts.find().fetch().concat(walletsAndContracts);
     _.each(allAccounts, function(account){
-        
+
         // Only check ENS names every N minutes
         var now = Date.now();
         if (!account.ensCheck || (account.ensCheck && now - account.ensCheck > 10*60*1000)) {
@@ -125,6 +158,7 @@ observeLatestBlocks = function(){
 
     // check peer count
     Session.setDefault('peerCount', 0);
+    Session.setDefault('ledgerConnect', false);
     getPeerCount();
 
     clearInterval(peerCountIntervalId);

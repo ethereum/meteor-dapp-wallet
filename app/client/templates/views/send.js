@@ -130,6 +130,8 @@ Template['views_send'].onCreated(function(){
     TemplateVar.set('amount', '0');
     TemplateVar.set('sendAll', false);
 
+    TemplateVar.set('isWaddress', '0x01');
+
     // Deploy contract
     if(FlowRouter.getRouteName() === 'deployContract') {
         TemplateVar.set('selectedAction', 'deploy-contract');
@@ -309,8 +311,12 @@ Template['views_send'].helpers({
                 return;
             }
 
+            // if (parseInt(hasAccount.waddress, 16) === 0) {
+            //     TemplateVar.set('switchStype', false);
+            // }
+
             if (parseInt(hasAccount.waddress, 16) === 0) {
-                TemplateVar.set('switchStype', false);
+                TemplateVar.set('isWaddress', '0x00');
             }
 
         }
@@ -715,7 +721,8 @@ Template['views_send'].events({
                     contracts['ct_'+ selectedAccount._id].execute.sendTransaction(to || '', amount || '', data || '', {
                         from: Helpers.getOwnedAccountFrom(selectedAccount.owners),
                         gasPrice: gasPrice,
-                        gas: estimatedGas
+                        gas: estimatedGas,
+                        isWaddress: TemplateVar.get(template, 'isWaddress')
                     }, function(error, txHash){
 
                         TemplateVar.set(template, 'sending', false);
@@ -754,14 +761,14 @@ Template['views_send'].events({
                 } else {
 
                     // console.log('Gas Price: '+ gasPrice);
-                    // console.log('Amount:', amount);
                     var txArgs = {
                         from: selectedAccount.address,
                         to: to,
                         data: data,
                         value: amount,
                         gasPrice: gasPrice,
-                        gas: estimatedGas
+                        gas: estimatedGas,
+                        isWaddress: TemplateVar.get(template, 'isWaddress')
                     };
 
                     var wanSendTransaction = function(args) {
@@ -821,7 +828,8 @@ Template['views_send'].events({
                                     data: txBuyData,
                                     value: txArgs.value,
                                     gasPrice: txArgs.gasPrice,
-                                    gas: txArgs.gas
+                                    gas: txArgs.gas,
+                                    isWaddress: TemplateVar.get(template, 'isWaddress')
                                 };
                                 wanSendTransaction(privTxArgs);
                             }else {

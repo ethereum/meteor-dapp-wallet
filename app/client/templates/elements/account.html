@@ -1,90 +1,100 @@
 <template name="elements_account" xmlns="http://www.w3.org/1999/html">
-    <div class="dashboard-box-list" style="position: relative">
-	    {{#with account}}
-		    <div class="wallet-box {{#if creating}}creating{{/if}} {{#if disabled}}disabled{{/if}} {{#if ../wallets}}wallets{{/if}} {{#if new}}new{{/if}}" id="elements_account_div">
-			    {{#with unConfirmed}}
-				    <div class="dapp-progress">
-					    <div class="dapp-bar" style="width: {{percent}}%;"></div>
-				    </div>
-			    {{/with}}
+{{#with account}}
+    <div class="dashboard-box-list" style="position: relative; {{#unless isWaddress}}height: 9em;{{/unless}}">
+        <div class="wallet-box {{#if creating}}creating{{/if}} {{#if disabled}}disabled{{/if}} {{#if ../wallets}}wallets{{/if}} {{#if new}}new{{/if}}" id="elements_account_div">
+            {{#with unConfirmed}}
+                <div class="dapp-progress">
+                    <div class="dapp-bar" style="width: {{percent}}%;"></div>
+                </div>
+            {{/with}}
 
-			    {{#unless ../main}}
-				    {{#if address}}
-					    {{> dapp_identicon identity=address class="dapp-small"}}
-				    {{else}}
-					    <span class="dapp-identicon dapp-small dapp-icon-loading"></span>
-				    {{/if}}
-			    {{else}}
+            {{#unless ../main}}
+                {{#if address}}
+                    {{> dapp_identicon identity=address class="dapp-small"}}
+                {{else}}
+                    <span class="dapp-identicon dapp-small dapp-icon-loading"></span>
+                {{/if}}
+            {{else}}
 
-			    {{/unless}}
+            {{/unless}}
 
-			    <h3 class="{{ensClass}}">
-				    {{#if isVulnerable}}
-					    <span class="red">
+            <h3 class="{{ensClass}}">
+                {{#if isVulnerable}}
+                    <span class="red">
                         <i class="icon-info"></i>
-						    {{displayName.substr 0 26}}
+                        {{displayName.substr 0 26}}
                     </span>
-				    {{else}}
-					    {{displayName.substr 0 26}}
-				    {{/if}}
-			    </h3>
-                <p class="ele-p">
-                    <span class="dapp-ele-address">Public Address:&nbsp;</span>
-                    <span class="copyable-address{{address}} accountLink-span account-id {{#if creating}}creating{{/if}}"
-                          style="padding-top: 5px;color: #929cb8;font-size: 14px;">{{toChecksumAddress address}}</span>
-                    <img class="copy-to-clipboard-button copy-address" name={{address}} />
-                    <img class="qrcode-button qrcode-address" name={{address}} />
-                </p>
+                {{else}}
+                    {{displayName.substr 0 26}}
+                {{/if}}
+            </h3>
 
-                <p style="margin-top: 5px;margin-bottom: 0;width: 55%; {{#unless isWaddress}}opacity: 0;{{/unless}}">
+            {{#unless isWaddress}}
+                <div class="ledger-account">
+                    <img/>
+                    <span>Wanchain - Ledger Account</span>
+                </div>
+            {{/unless}}
+
+            <p class="ele-p" style="{{#unless isWaddress}} width: 100%; margin-top: 40px;{{/unless}}">
+                <span class="dapp-ele-address">Public Address:&nbsp;</span>
+                <span class="copyable-address{{address}} accountLink-span account-id {{#if creating}}creating{{/if}}"
+                      style="padding-top: 5px;color: #929cb8;font-size: 14px;">{{toChecksumAddress address}}</span>
+                <img class="copy-to-clipboard-button copy-address" name={{address}} />
+                <img class="qrcode-button qrcode-address" name={{address}} />
+            </p>
+
+            {{#if isWaddress}}
+                <p style="margin-top: 5px;margin-bottom: 0;width: 55%;">
                     <span class="dapp-ele-address">Private Address:&nbsp;</span>
                     <span class="copyable-address{{waddress}} accountLink-span account-id {{#if creating}}creating{{/if}}"
                           style="color: #929cb8;font-size: 14px;">{{waddress}}</span>
                     <img class="copy-to-clipboard-button copy-address" name={{waddress}} />
                     <img class="qrcode-button qrcode-address" name={{waddress}} />
                 </p>
+            {{/if}}
 
-			    {{#unless creating}}
+            {{#unless creating}}
 
-                    <p>
-                        {{> elements_balance balance=(totalBalance waddress balance) }}
+                <p>
+                    {{> elements_balance balance=(totalBalance waddress balance) }}
 
-                        {{#with tokens}}
-                            {{#each this}}
-                                <span class="account-balance">{{{formattedTokenBalance}}}</span>
-                            {{/each}}
-                        {{/with}}
-                    </p>
-			    {{else}}
-				    {{#if imported}}
-					    <span class="account-balance">{{i18n "wallet.accounts.importing"}} <span>...</span></span>
-				    {{else}}
-					    <span class="account-balance">{{i18n "wallet.accounts.creating"}} <span>...</span></span>
-				    {{/if}}
-			    {{/unless}}
-		    </div>
+                    {{#with tokens}}
+                        {{#each this}}
+                            <span class="account-balance">{{{formattedTokenBalance}}}</span>
+                        {{/each}}
+                    {{/with}}
+                </p>
+            {{else}}
+                {{#if imported}}
+                    <span class="account-balance">{{i18n "wallet.accounts.importing"}} <span>...</span></span>
+                {{else}}
+                    <span class="account-balance">{{i18n "wallet.accounts.creating"}} <span>...</span></span>
+                {{/if}}
+            {{/unless}}
+        </div>
 
-            <div style="position: absolute;top: 60px; right: 120px;">
+        <div style="position: absolute;top: 60px; right: 120px;">
 
-                {{#if hrefType}}
-                    <!--<i class="icon-arrow-right" style="padding-right: 3px;"></i>-->
+            {{#if hrefType}}
+                <!--<i class="icon-arrow-right" style="padding-right: 3px;"></i>-->
                 <a  href="{{pathFor route='sendTo' address=(toChecksumAddress address)}}"
-                   class="wallet-box {{#if creating}}creating{{/if}} {{#if disabled}}disabled{{/if}} {{#if ../wallets}}wallets{{/if}} {{#if new}}new{{/if}}">
+                    class="wallet-box {{#if creating}}creating{{/if}} {{#if disabled}}disabled{{/if}} {{#if ../wallets}}wallets{{/if}} {{#if new}}new{{/if}}">
                     <img class=" wanchain-transfer"/>
                     <p style="margin: 0;font-size: 14px;color: #929cb8;margin-left: -4px;">Transfer</p>
                 </a>
-                {{else}}
-                    <a  href= "" class="wallet-box {{#if creating}}creating{{/if}} {{#if disabled}}disabled{{/if}} {{#if ../wallets}}wallets{{/if}} {{#if new}}new{{/if}}"
-                        id="transfer" name={{balance}}><img class=" wanchain-transfer"/>
-                        <p style="margin: 0;font-size: 14px;color: #929cb8; margin-left: -4px;">Transfer</p>
-                    </a>
-                {{/if}}
-
-                <a href="{{pathFor route='account' address=address}}" class="wallet-box {{#if creating}}creating{{/if}} {{#if disabled}}disabled{{/if}} {{#if ../wallets}}wallets{{/if}} {{#if new}}new{{/if}}"
-                   style="min-height: 10px; margin: 0;" id={{address}}><img class=" wanchain-detail"/>
-                    <p style="margin: 0;font-size: 14px;color: #929cb8;">Detail</p>
+            {{else}}
+                <a  href= "" class="wallet-box {{#if creating}}creating{{/if}} {{#if disabled}}disabled{{/if}} {{#if ../wallets}}wallets{{/if}} {{#if new}}new{{/if}}"
+                    id="transfer" name={{balance}}><img class=" wanchain-transfer"/>
+                    <p style="margin: 0;font-size: 14px;color: #929cb8; margin-left: -4px;">Transfer</p>
                 </a>
-            </div>
-	    {{/with}}
+            {{/if}}
+
+            <a href="{{pathFor route='account' address=address}}" class="wallet-box {{#if creating}}creating{{/if}} {{#if disabled}}disabled{{/if}} {{#if ../wallets}}wallets{{/if}} {{#if new}}new{{/if}}"
+               style="min-height: 10px; margin: 0;" id={{address}}><img class=" wanchain-detail"/>
+                <p style="margin: 0;font-size: 14px;color: #929cb8;">Detail</p>
+            </a>
+        </div>
     </div>
+{{/with}}
 </template>
