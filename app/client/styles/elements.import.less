@@ -12,18 +12,57 @@
 
 .dapp-header-map{
     float: right;
-    font-size: 12px;
+    font-size: 16px;
     font-weight: normal;
     font-stretch: normal;
     line-height: 12px;
     letter-spacing: 0px;
-    color: #4b90f7;
-    top: 25px;
-    z-index: 100;
+    color: #929cb8;
+    margin-right: 150px;
     position: relative;
+    top: 3px;
 
     a{
-        color: #4b90f7;
+        color: #929cb8;
+        &:hover {
+            color: #4b90f7;
+        }
+    }
+
+    span{
+        color: #929cb8;
+        position: relative;
+        top: 2px;
+
+        &:hover {
+            color: #4b90f7;
+        }
+    }
+
+    .home-link{
+        display: inline-block;
+        position: relative;
+        top: 12px;
+
+        img{
+            background-image: url(/images/home.png);
+            background-repeat: no-repeat;
+            background-position: center;
+            padding: 14px 36px;
+            cursor: pointer;
+            background-size: 28%;
+            border: 1px solid #4b90f7;
+            border-radius: 30px;
+        }
+
+
+        &:hover {
+            background-image: linear-gradient(50deg, #1a90fc 0%, #00d2ff 100%) !important;
+            border-radius: 30px;
+            img {
+                background-image: url(/images/home2.png);
+            }
+        }
     }
 }
 

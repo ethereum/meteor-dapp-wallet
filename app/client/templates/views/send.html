@@ -3,14 +3,19 @@
     {{#each selectAccount}}
         <h1 class="account-h1">
             <div class="circle"></div><strong>{{{i18n 'views.send.title'}}}</strong>
+
             <div class="dapp-header-map">
-                <img class="wanchain-map"/>
-                <a href="{{pathFor route='dashboard'}}">WALLETS</a>
-                &nbsp;>&nbsp;TRANSFER&nbsp;>&nbsp;
+                <div class="home-link">
+                    <a href="{{pathFor route='dashboard'}}"><img/></a>
+                </div>
+                &nbsp;>&nbsp;
                 <a href="{{pathFor route='account' address=address}}">
                     {{name.substr 0 26}}
                 </a>
+                &nbsp;>&nbsp;
+                <span>TRANSFER</span>
             </div>
+
         </h1>
     {{/each}}
 

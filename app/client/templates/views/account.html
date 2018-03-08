@@ -3,9 +3,11 @@
         <h1 class="account-h1">
             <div class="circle"></div><strong>{{i18n 'views.account.title'}}</strong>
             <div class="dapp-header-map">
-                <img class="wanchain-map"/>
-                <a href="{{pathFor route='dashboard'}}">WALLETS</a>
-                &nbsp;>&nbsp;DETAIL
+                <div class="home-link">
+                    <a href="{{pathFor route='dashboard'}}"><img/></a>
+                </div>
+                &nbsp;>&nbsp;
+                <span>DETAIL</span>
             </div>
         </h1>
         <div class="dapp-container accounts-page">
@@ -87,9 +89,9 @@
                                       <span class="balance-span">{{i18n 'views.account.balacne.ota'}}
                                           {{#if TemplateVar.get "otasValue"}}
                                               {{#if hrefType}}
-                                                  <a href="{{pathFor route='otaRefund' address=theAddress}}">{{i18n 'views.account.balacne.refund'}}</a>
+                                                  <a href="{{pathFor route='otaRefund' address=theAddress}}" style="font-weight: 400;">{{i18n 'views.account.balacne.refund'}}</a>
                                               {{else}}
-                                                  <a class="refund" style="cursor: pointer;">{{i18n 'views.account.balacne.refund'}}</a>
+                                                  <a class="refund" style="cursor: pointer;font-weight: 400;">{{i18n 'views.account.balacne.refund'}}</a>
                                               {{/if}}
 
                                           {{/if}}
