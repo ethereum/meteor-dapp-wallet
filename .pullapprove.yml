@@ -1,0 +1,13 @@
+version: 2
+groups:
+  code-review:
+    required: 2
+    reset_on_push:
+      enabled: true
+    users:
+    - alexvandesande
+    - evertonfraga
+    - frozeman
+    - marcgarreau
+    - ryanio
+    - philipplgh
