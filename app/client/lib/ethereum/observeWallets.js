@@ -115,7 +115,7 @@ updateContractData = function(newDocument){
         if (contractInstance.address) {
             contractInstance.options.address = contractInstance.address;
         } else {
-            console.error('No contract address for contract', contractInstnace);
+            console.error('No contract address for contract', contractInstance);
             return;
         }
     }
