@@ -124,11 +124,14 @@ updateContractData = function(newDocument){
         Wallets.update(newDocument._id, {$set: {
             dailyLimit: result.toString(10)
         }});
+        return null;
     });
+    
     contractInstance.methods.m_required().call().then(function(result){
         Wallets.update(newDocument._id, {$set: {
             requiredSignatures: result.toString(10)
         }});
+        return null;
     });
 
     // UPDATE THE DAILYLIMITSPENT
@@ -147,6 +150,7 @@ updateContractData = function(newDocument){
                 }
 
             });
+            return null;
         });
     }
 
@@ -174,6 +178,7 @@ updateContractData = function(newDocument){
                 }});
                 newDocument.version = Number(version)
             }
+            return null;
         });
     }
 };
@@ -188,9 +193,8 @@ checkOwner = function(newDocument){
     if(web3.utils.isAddress(newDocument.address)) {
         checkWalletOwners(newDocument.address).then(function(wallet){
             Wallets.update(newDocument._id, {$set: {owners: wallet.owners}});
-        }, function(){
-
-        });
+            return null;
+        }, function() {});
     }
 };
 
@@ -714,6 +718,8 @@ observeWallets = function(){
                         },{
                             closeable: false
                         });
+
+                        return null;
                     });
                 });
             // USE DEPLOYED CONTRACT

@@ -67,6 +67,7 @@ updateBalances = function() {
             address: receipt.contractAddress
           }});
         }
+        return null;
       });
     });
 
@@ -118,6 +119,7 @@ updateBalances = function() {
                         Tokens.update(token._id, {$unset: set});
                     }
                 }
+                return null;
             });
         });
     });

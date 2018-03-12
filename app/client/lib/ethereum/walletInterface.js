@@ -257,6 +257,7 @@ checkWalletOwners = function(address) {
                             }
 
                             resolve(returnValue);
+                            return null;
                         }, function(){
                             reject();
                         });

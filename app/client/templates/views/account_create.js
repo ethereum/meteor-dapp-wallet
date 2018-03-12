@@ -240,9 +240,8 @@ Template['views_account_create'].events({
         checkWalletOwners(e.currentTarget.value).then(function(wallet){
             TemplateVar.set(template, 'importWalletOwners', wallet.owners);
             TemplateVar.set(template, 'importWalletInfo', wallet.info);
-        }, function(){
-
-        });
+            return null;
+        }, function() {});
     },
     /**
     Check the owner that its not a contract wallet

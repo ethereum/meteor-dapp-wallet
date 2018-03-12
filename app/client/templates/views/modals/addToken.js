@@ -89,14 +89,17 @@ Template['views_modals_addToken'].events({
 
         tokenInstance.methods.symbol().call().then(function(symbol) {
             template.$('input.symbol').val(symbol).change();
+            return null;
         });
 
         tokenInstance.methods.name().call().then(function(name) {
             template.$('input.name').val(name).change();
+            return null;
         });
         
         tokenInstance.methods.decimals().call().then(function(decimals) {
             template.$('input.decimals').val(decimals).change();
+            return null;
         });
 
     },    

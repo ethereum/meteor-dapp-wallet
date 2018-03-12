@@ -183,18 +183,21 @@ var updateTransaction = function(newDocument, transaction, receipt){
                                 CustomContracts.upsert({address: receipt.contractAddress}, {$set: {
                                     name: TAPi18n.__('wallet.tokens.admin', { name: name } )
                                 }});
+                                return null;
                             });
 
                             tokenInstance.methods.decimals().call().then(function(decimals) {
                                 Tokens.upsert(tokenId, {$set: {
                                     decimals: Number(decimals)
                                 }});
+                                return null;
                             });
 
                             tokenInstance.methods.symbol().call().then(function(symbol) {
                                 Tokens.upsert(tokenId, {$set: {
                                     symbol: symbol
                                 }});
+                                return null;
                             });
                         }
                     }
