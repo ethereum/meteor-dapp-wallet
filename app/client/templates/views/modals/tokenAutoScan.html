@@ -1,0 +1,27 @@
+<template name="views_modals_tokenAutoScan">
+    <h1>{{i18n "wallet.modals.tokenAutoScan.title"}}</h1>
+
+    <h4>{{i18n "wallet.modals.tokenAutoScan.description"}}</h4>
+
+    <button class="scan-button dapp-block-button" {{scanButtonIsDisabled}}>
+        {{#if TemplateVar.get "scanStatus"}}
+            {{TemplateVar.get "scanStatus"}}
+        {{else}}
+            {{i18n "wallet.modals.tokenAutoScan.scanButton"}}
+        {{/if}}
+    </button>
+
+    {{#if TemplateVar.get "scanStatus"}}
+        <div class="token-auto-scan-spinner-container">
+            {{> spinner}}
+        </div>
+    {{/if}}
+
+    <div class="token-list">
+        {{#each tokens}}
+            {{> elements_tokenBox}}
+        {{/each}}
+    </div>
+
+    <input type="hidden" class="tokensToAddJSON" />
+</template>

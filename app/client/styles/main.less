@@ -875,3 +875,51 @@ body {
     }
 }
 
+/* Custom icon size for auto-scan button on contracts.html */
+.account-pattern .icon-target {
+    font-size: 0.5em;
+}
+
+.modals-token-auto-scan {
+    .scan-button {
+        margin-top: 20px;
+        text-transform: none;
+    }
+    .token-auto-scan-spinner-container {
+        position: absolute;
+        left: 50%;
+        margin-top: -28px;
+        opacity: 0.15;
+    }
+    .token-list {
+        margin-top: 30px;
+
+        .wallet-box {
+            margin: 0;
+
+            .account-balance {
+                display: none;
+            }
+            .delete-token {
+                display: none;
+            }
+            &:hover {
+                cursor: default;
+
+                .dapp-identicon {
+                    transform: none;
+
+                    .identicon-pixel {
+                        cursor: default;
+                    }
+                }
+            }
+            &:active {
+                transform: none;
+            }
+            &:focus {
+                border: 0;
+            }
+        }
+    }
+}

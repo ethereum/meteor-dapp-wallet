@@ -233,3 +233,12 @@ Takes a camelcase and shows it with spaces
 @return {string} sentence    The same name with spaces
 **/
 Template.registerHelper('toSentence', Helpers.toSentence);
+
+/**
+Check if on main network
+
+@method (isMainNetwork)
+**/
+Template.registerHelper('isMainNetwork', function() {
+    return Session.get('network') === 'main';
+});

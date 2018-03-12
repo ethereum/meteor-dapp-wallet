@@ -101,7 +101,7 @@ Template['views_modals_addToken'].events({
 
     },    
     /**
-    Prevent the example from beeing clicked
+    Prevent the example from being clicked
 
     @event click .example.wallet-box.tokens
     */

@@ -53,5 +53,13 @@
             <h3>{{i18n "wallet.app.buttons.addToken"}}</h3>
         </button>    
 
+        {{#if isMainNetwork}}
+        <button class="wallet-box create token-auto-scan">
+            <div class="account-pattern">
+                <div class="icon icon-target"></div>
+            </div>
+            <h3>{{i18n "wallet.app.buttons.tokenAutoScan"}}</h3>
+        </button>    
+        {{/if}}
     </div>
 </template>

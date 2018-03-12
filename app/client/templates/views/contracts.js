@@ -114,7 +114,6 @@ var addToken = function(e) {
            duration: 2
         }); 
     }
-    
 }
 
 
@@ -158,7 +157,7 @@ Template['views_contracts'].events({
     /**
     Click Add Token
     
-    @event click a.create.account
+    @event click a.create.add-token
     */
     'click .add-token': function(e){
         e.preventDefault();
@@ -170,6 +169,40 @@ Template['views_contracts'].events({
             cancel: true
         },{
             class: 'modals-add-token'
+        });
+    },
+    /**
+    Click Token Auto Scan
+    
+    @event click a.create.token-auto-scan
+    */
+    'click .token-auto-scan': function(e){
+        e.preventDefault();
+
+        // Open a modal 
+        EthElements.Modal.question({
+            template: 'views_modals_tokenAutoScan',
+            ok: function() {
+                var tokens = JSON.parse($('.modals-token-auto-scan input.tokensToAddJSON').val());
+                _.each(tokens, function(token) {
+                    tokenId = Helpers.makeId('token', token.address);
+                    Tokens.upsert(tokenId, {$set: {
+                        address: token.address,
+                        name: token.name,
+                        symbol: token.symbol,
+                        balances: {},
+                        decimals: Number(token.decimals || 0)
+                    }});
+                });
+                updateBalances();
+                GlobalNotification.success({
+                    content: TAPi18n.__('wallet.tokens.addedToken', {token: tokens.length + ' tokens'}),
+                    duration: 2
+                });
+            },
+            cancel: true
+        },{
+            class: 'modals-token-auto-scan'
         });
     },
     /**

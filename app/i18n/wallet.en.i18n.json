@@ -18,7 +18,8 @@
                 "receive": "Receive",
                 "addWallet": "Add wallet contract",
                 "addAccount": "Add account",
-                "addToken": "Watch token"
+                "addToken": "Add token",
+                "tokenAutoScan": "Auto-Scan"
             },
             "texts": {
                 "note": "Note",
@@ -66,6 +67,16 @@
                 "tokenSymbol": "Token symbol",
                 "decimalPlaces": "Decimals places of smallest unit",
                 "preview": "Preview"
+            },
+            "tokenAutoScan": {
+                "title": "Token Auto-Scan",
+                "description": "Automatically scan for balances of popular tokens on your accounts.",
+                "scanButton": "Start Auto-Scan",
+                "status": {
+                    "downloadingList": "Downloading token list...",
+                    "checkingBalances": "Checking __number__ token balances..."
+
+                }
             },
             "interface": {
                 "title": "Contract JSON Interface",
