@@ -39,13 +39,8 @@ ethereum:blocks@1.0.0
 ethereum:dapp-styles@0.5.8
 ethereum:elements@1.0.0
 ethereum:tools@1.0.0
-ethereum:web3@1.0.0-beta.30
+ethereum:web3@1.0.0-beta.31
 fastclick@1.0.13
-diff-sequence@1.0.5
-ecmascript@0.4.3
-ecmascript-runtime@0.2.10
-ejson@1.0.11
-fastclick@1.0.11
 frozeman:animation-helper@0.2.6
 frozeman:global-notifications@0.2.1
 frozeman:inline-form@0.1.0
