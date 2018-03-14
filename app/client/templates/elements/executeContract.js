@@ -143,6 +143,9 @@ Template['elements_executeContract_constant'].onCreated(function(){
         // get args for the constant function
         var args = TemplateVar.get('inputs');
 
+        // format blank args to hex for web3.js
+        args = _.map(args, function(arg) { return arg === '' ? '0x00' : arg });
+
         var callback = function(e, r) {
             if (!e) {
                 var outputs = [];
