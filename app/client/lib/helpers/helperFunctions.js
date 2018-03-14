@@ -485,9 +485,9 @@ Helpers.getENSName = function(address, callback) {
         if (err) callback(err, null, null);
         else if (resolverAddress == 0) callback('no resolver address', null, null);
         else {
-            // if you fied one, find the name on that resolver
+            // if you find one, find the name on that resolver
             resolverContract.options.address = resolverAddress;
-            resolverContract.methods.name(node, function(error, name) {
+            resolverContract.methods.name(node).call(function(error, name) {
                 if (err) callback(err, null, null);
                 else if (name == 0) callback('Found resolver but no name', null, null);
                 else {
