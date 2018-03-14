@@ -12,6 +12,7 @@ Creates subscription for a wallet contract, to watch for deposits, pending confi
 var setupContractSubscription = function(newDocument){
     var contractInstance = tokenContracts['ct_'+ newDocument._id] = Object.assign({}, TokenContract);
     contractInstance.options.address = newDocument.address;
+    contractInstance.address = newDocument.address;
 
     if(!contractInstance)
         return;
@@ -34,7 +35,7 @@ var setupContractSubscription = function(newDocument){
     });
 
     // SETUP FILTERS
-    Helpers.eventLogs('Checking Token Transfers for '+ contractInstance.address +' (_id: '+ newDocument._id +') from block #', blockToCheckBack);
+    Helpers.eventLogs('Checking Token Transfers for '+ newDocument.address +' (_id: '+ newDocument._id +') from block #', blockToCheckBack);
 
     var subscription = contractInstance.events.allEvents({fromBlock: blockToCheckBack, toBlock: 'latest'});
     events.push(subscription);
