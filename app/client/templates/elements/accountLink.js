@@ -43,7 +43,7 @@ Template['elements_account_link'].helpers({
         Helpers.getENSName(this.address, function(err, name, returnedAddr) {
             if (err) {
                 console.log(err)
-            } else if (this.address.toLowerCase() == returnedAddr ){
+            } else if (this.address && this.address.toLowerCase() == returnedAddr ){
                 console.log('ens', name, _this, template);
                 // _this.name = name;
                 // TemplateVar.set(template, 'ensName', name)
