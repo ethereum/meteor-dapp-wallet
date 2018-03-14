@@ -494,13 +494,13 @@ Helpers.getENSName = function(address, callback) {
                     // any address can claim any name, we need to check the name now
                     var node = namehash(name);
                     // get a resolver address for that name
-                    ensContract.methods.resolver(node, function (err, resolverAddress) {
+                    ensContract.methods.resolver(node).call(function (err, resolverAddress) {
                         if (err) callback(err, null, null);
                         else if (resolverAddress == 0) callback('Name has no resolver', null, null);
                         else {
                             // if you find one, find the addr of that resolver
                             resolverContract.options.address = resolverAddress;
-                            resolverContract.methods.addr(node, function(error, returnAddr) {
+                            resolverContract.methods.addr(node).call(function(error, returnAddr) {
                                 if (err) callback(err, null, null);
                                 else if (returnAddr == 0) callback('No address returned', null, null);
                                 else {
