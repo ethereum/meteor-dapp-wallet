@@ -11,7 +11,7 @@ can contain severe bugs!
 
 Start an `geth` node and the app using meteor and open http://localhost:3000 in your browser:
 
-    $ geth --rpccorsdomain "http://localhost:3000" --rpc --unlock <your account>
+    $ geth --rpc --ws --wsorigins "http://localhost:3000" --unlock <your account>
 
 Starting the wallet dapp using [Meteor](https://meteor.com/install)
 

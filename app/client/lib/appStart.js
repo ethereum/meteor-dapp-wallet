@@ -90,7 +90,7 @@ var connect = function() {
       // if in mist, tell to start geth, otherwise start with RPC
       var gethRPC = web3.admin
         ? "geth"
-        : 'geth --rpc --rpccorsdomain "' +
+        : "geth --rpc --ws --wsorigins " +
           window.location.protocol +
           "//" +
           window.location.host +
