@@ -1,6 +1,6 @@
 <template name="elements_account" xmlns="http://www.w3.org/1999/html">
 {{#with account}}
-    <div class="dashboard-box-list" style="position: relative; {{#unless isWaddress}}height: 9em;{{/unless}}">
+    <div class="dashboard-box-list" style="position: relative; {{#unless isWaddress}}height: auto;{{/unless}}">
         <div class="wallet-box {{#if creating}}creating{{/if}} {{#if disabled}}disabled{{/if}} {{#if ../wallets}}wallets{{/if}} {{#if new}}new{{/if}}" id="elements_account_div">
             {{#with unConfirmed}}
                 <div class="dapp-progress">
@@ -32,7 +32,7 @@
             {{#unless isWaddress}}
                 <div class="ledger-account">
                     <img/>
-                    <span>Wanchain - Ledger Account</span>
+                    <span>Ledger Account</span>
                 </div>
             {{/unless}}
 
@@ -57,11 +57,13 @@
             {{#unless creating}}
 
                 <p>
-                    {{> elements_balance balance=(totalBalance waddress balance) }}
+                    <span style="font-weight: 600;">Balance: </span>{{> elements_balance balance=(balance) }}
+
+                    <span style="font-weight: 600;">OTA: </span>{{> elements_balance balance=(otaBalance waddress) }}
 
                     {{#with tokens}}
                         {{#each this}}
-                            <span class="account-balance">{{{formattedTokenBalance}}}</span>
+                            <span class="account-balance">Token: {{{formattedTokenBalance}}}</span>
                         {{/each}}
                     {{/with}}
                 </p>
@@ -74,7 +76,7 @@
             {{/unless}}
         </div>
 
-        <div style="position: absolute;top: 60px; right: 120px;">
+        <div style="position: absolute; right: 120px;{{#unless isWaddress}}top: 40px;{{else}}top: 60px;{{/unless}}">
 
             {{#if hrefType}}
                 <!--<i class="icon-arrow-right" style="padding-right: 3px;"></i>-->

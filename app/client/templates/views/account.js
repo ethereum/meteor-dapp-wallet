@@ -320,7 +320,7 @@ Template['views_account'].events({
     'click .transfer': function (e) {
 
         return GlobalNotification.warning({
-            content: "This address's balance is 0, can not transfer",
+            content: "Please make sure you have sufficient balance",
             duration: 2
         });
     },

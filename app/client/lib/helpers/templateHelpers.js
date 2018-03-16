@@ -85,7 +85,7 @@ Template.registerHelper('isVulnerable', function(address){
         // add vulnerabilities to account
         account.vulnerabilities = wallet.vulnerabilities;
         return account;
-    } else 
+    } else
         return false;
 });
 
@@ -114,7 +114,7 @@ Returns a list of accounts and wallets sorted by balance
 **/
 Template.registerHelper('selectAccounts', function(hideWallets){
     var accounts = EthAccounts.find({balance:{$ne:"0"}}, {sort: {balance: 1}}).fetch();
-    
+
     if(hideWallets !== true)
         accounts = _.union(Wallets.find({owners: {$in: _.pluck(EthAccounts.find().fetch(), 'address')}, address: {$exists: true}}, {sort: {name: 1}}).fetch(), accounts);
 
@@ -202,7 +202,7 @@ Formats a given transactions balance
 Template.registerHelper('formatTransactionBalance', Helpers.formatTransactionBalance);
 
 
-/** 
+/**
 Formats address to a CaseChecksum
 
 @method toChecksumAddress
@@ -219,7 +219,7 @@ Template.registerHelper('intBalance', function(balance){
 
 
 
-/** 
+/**
 Takes a camelcase and shows it with spaces
 
 @method toSentence
@@ -230,5 +230,6 @@ Template.registerHelper('toSentence', Helpers.toSentence);
 
 Template.registerHelper('transferBanlance', Helpers.transferBanlance);
 Template.registerHelper('totalBalance', Helpers.totalBalance);
+Template.registerHelper('otaBalance', Helpers.otaBalance);
 Template.registerHelper('addressDisplay', Helpers.addressDisplay);
 

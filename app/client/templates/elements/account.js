@@ -73,16 +73,6 @@ Template['elements_account'].helpers({
     	  var account = EthAccounts.findOne(this.account);
 
     	  if (account && FlowRouter.getRouteName() === 'dashboard') {
-            // var tokenBalance = 0;
-
-            // var query = {};
-            // query['balances.'+ account._id] = {$exists: true};
-
-            // var tokens = Tokens.find(query, {sort: {name: 1}}).fetch();
-            //
-            // _.each(tokens, (token) => {
-            //     tokenBalance += parseInt(token.balances[account._id]);
-            // });
 
             account.hrefType = true;
 
@@ -106,7 +96,10 @@ Template['elements_account'].helpers({
     'tokens': function(){
         var query = {};
         query['balances.'+ this._id] = {$exists: true};
-        return Tokens.find(query, {limit: 5, sort: {name: 1}});
+
+        var tokens = Tokens.find(query, {limit: 5, sort: {name: 1}});
+
+        return tokens;
     },
     /**
     Get the tokens balance
@@ -219,7 +212,7 @@ Template['elements_account'].events({
     'click #transfer': function (e) {
 
         return GlobalNotification.warning({
-            content: "This public address's balance is 0, can not transfer",
+            content: "Please make sure you have sufficient balance",
             duration: 2
         });
     },

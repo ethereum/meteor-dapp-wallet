@@ -536,6 +536,24 @@ Helpers.totalBalance = function (waddress, balance) {
     return otaValue.add(new BigNumber(balance));
 };
 
+Helpers.otaBalance = function (waddress) {
+
+    var address = waddress;
+    if (address.substr(0, 2)  === '0x') {
+        address = address.slice(2);
+    }
+
+    var otaValue = new BigNumber(0);
+
+    // why findOne
+    var ota = OTAs.findOne({waddress: address});
+    if (ota) {
+        otaValue = new BigNumber(ota.value);
+    }
+
+    return otaValue;
+};
+
 Helpers.addressDisplay = function (address) {
 
     var result = address;
@@ -545,4 +563,3 @@ Helpers.addressDisplay = function (address) {
 
     return result;
 };
-

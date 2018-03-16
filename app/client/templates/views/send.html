@@ -8,12 +8,15 @@
                 <div class="home-link">
                     <a href="{{pathFor route='dashboard'}}"><img/></a>
                 </div>
-                &nbsp;>&nbsp;
-                <a href="{{pathFor route='account' address=address}}">
-                    {{name.substr 0 26}}
-                </a>
-                &nbsp;>&nbsp;
-                <span>TRANSFER</span>
+
+                <div style="position: relative;top: -10px;left: 68px;">
+                    &nbsp;>&nbsp;
+                    <a href="{{pathFor route='account' address=address}}">
+                        {{name.substr 0 26}}
+                    </a>
+                    &nbsp;>&nbsp;
+                    <span>TRANSFER</span>
+                </div>
             </div>
 
         </h1>
@@ -27,9 +30,21 @@
                 {{> dapp_identicon identity=address class="dapp-small"}}
 
                 <p style="display: inline-block;margin-left: 10px;position: relative;top: -10px;">
-                    <span style="display: block;font-weight: 600;">{{name.substr 0 26}}</span>
+                    <span style="display: block;font-weight: 600;">
+                        {{name.substr 0 26}}
+
+                        {{#unless isWaddress}}
+                            <div class="ledger-account" style="top: -15px">
+                            <img/>
+                            <span>Ledger Account</span>
+                        </div>
+                        {{/unless}}
+
+                    </span>
+
                     <span style="color:#929cb8;">{{toChecksumAddress address}}</span>
                 </p>
+
             {{/each}}
         </div>
 

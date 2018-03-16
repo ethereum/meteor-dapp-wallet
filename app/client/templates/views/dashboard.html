@@ -1,7 +1,15 @@
 <template name="views_dashboard">
     <div class="dapp-container">
 
-        <h1 class="account-h1"><div class="circle"></div><strong>{{{i18n "wallet.accounts.title"}}}</strong></h1>
+        <h1 class="account-h1">
+            <div class="circle"></div>
+            <strong>{{{i18n "wallet.accounts.title"}}}</strong>
+
+            <div style="float: right;">
+                <input type="checkbox" name="sex" id="male" class="chooseBtn" />
+                <label for="male" class="choose-label"></label>
+            </div>
+        </h1>
 
         {{#if pendingConfirmations}}
             <h2>{{i18n 'wallet.transactions.pendingConfirmations'}}</h2>

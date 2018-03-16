@@ -306,17 +306,21 @@ Template['views_send'].helpers({
         if (TemplateVar.get('fromAddress')) {
             var hasAccount = EthAccounts.findOne({address: TemplateVar.get('fromAddress').toLowerCase()});
 
-            if (!hasAccount) {
-                FlowRouter.go('/');
-                return;
-            }
-
             // if (parseInt(hasAccount.waddress, 16) === 0) {
             //     TemplateVar.set('switchStype', false);
             // }
 
-            if (parseInt(hasAccount.waddress, 16) === 0) {
-                TemplateVar.set('isWaddress', '0x00');
+            if (accounts[0]) {
+                accounts[0].isWaddress = true;
+                if (parseInt(hasAccount.waddress, 16) === 0) {
+                    TemplateVar.set('isWaddress', '0x00');
+                    accounts[0].isWaddress = false;
+                }
+
+                if (!accounts[0].isWaddress && !Session.get('ledgerConnect')) {
+                    FlowRouter.go('/');
+                    return;
+                }
             }
 
         }

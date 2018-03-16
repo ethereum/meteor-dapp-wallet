@@ -1,7 +1,7 @@
 {
     "views": {
         "account": {
-            "title": "Account Detail",
+            "title": "Account Details",
             "transfer": "Transfer",
             "OTAs": "Get OTAs",
             "copyAddress": "copy address",
@@ -16,7 +16,7 @@
                 "refund": "[Redeem]"
             },
             "transaction": {
-                "title": "Transaction List"
+                "title": "Transaction History"
             }
         },
         "deployContract": {
@@ -175,7 +175,7 @@
             "amount": "Amount",
             "gasPrice": "Gas price",
             "perMillionGas": " PER MILLION GAS",
-            "gasUsed": "Gas used", 
+            "gasUsed": "Gas used",
             "feePaid": "Fee paid",
             "data": "Send data",
             "deployedData": "Deployed data",
@@ -194,7 +194,7 @@
             },
             "error": {
                 "noDataDeployed": "No data is deployed on the contract address!",
-                "outOfGas": "The transaction from __from__ to __to__ couldn't be successfully executed."  
+                "outOfGas": "The transaction from __from__ to __to__ couldn't be successfully executed."
             },
             "types": {
                 "executeContract": "Contract execution",
@@ -217,7 +217,7 @@
                 },
                 "outgoingTransaction": {
                     "title": "Payment sent",
-                    "text": "You sent __amount__ from __from__ to __to__."    
+                    "text": "You sent __amount__ from __from__ to __to__."
                 },
                 "pendingConfirmation": {
                     "title": "Confirmation needed",

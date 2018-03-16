@@ -6,8 +6,7 @@
                 <div class="home-link">
                     <a href="{{pathFor route='dashboard'}}"><img/></a>
                 </div>
-                &nbsp;>&nbsp;
-                <span>DETAIL</span>
+                <span>&nbsp;>&nbsp;DETAIL</span>
             </div>
         </h1>
         <div class="dapp-container accounts-page">
@@ -24,6 +23,14 @@
                             {{else}}
                                 <p style="min-height: 49px;"><em class="edit-name" id="edit-name">{{displayName.substr 0 26}}</em>
                                     <img class="wanchain-edit edit-icon"/>
+
+                                    {{#unless isWaddress}}
+                                        <div class="ledger-account" style="top: 60px;margin-left: 26px;">
+                                            <img/>
+                                            <span style="top: -10px;">Ledger Account</span>
+                                        </div>
+                                    {{/unless}}
+
                                 </p>
                             {{/if}}
                         </h1>
