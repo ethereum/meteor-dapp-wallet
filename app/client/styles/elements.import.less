@@ -33,7 +33,7 @@
 }
 
 .chooseBtn:checked + label.choose-label {
-    background-color: #51ccee;
+    background-image: linear-gradient(50deg, #1a90fc 0%, #00d2ff 100%);
 }
 
 
@@ -63,6 +63,7 @@
 
     a{
         color: #929cb8;
+        font-weight: bold;
         &:hover {
             color: #4b90f7;
         }
@@ -71,8 +72,9 @@
     span{
         color: #929cb8;
         position: relative;
-        top: 2px;
+        top: 0;
         font-size: 14px;
+        font-weight: bold;
 
         //&:hover {
         //    color: #4b90f7;
@@ -101,6 +103,7 @@
             border-radius: 30px;
             img {
                 background-image: url(/images/home2.png);
+              border: 1px solid #f0f0f0;
             }
         }
     }
@@ -276,8 +279,8 @@ input[type="checkbox"]::before, input[type="radio"]::before{
     padding: 2.5px 15px !important;
     margin-bottom: 7px !important;
     text-align: center;
-    width: 160px !important;
-    height: 30px !important;
+    width: 133px !important;
+    height: 26px !important;
     display: inline-block;
     margin-left: 15px;
     position: absolute;
@@ -285,19 +288,20 @@ input[type="checkbox"]::before, input[type="radio"]::before{
         background-image: url(/images/ledger-account.png);
         background-repeat: no-repeat;
         background-position: center;
-        background-size: 20%;
+        background-size: 19%;
         padding: 35px;
         position: relative;
-        top: -23px;
-        left: -63px;
+        top: -26px;
+        left: -48px;
     }
     span{
         position: absolute;
-        top: 6px;
-        left: 30px;
-        font-size: 15px;
-        font-weight: 400;
+        top: 0;
+        left: 29px;
+        font-size: 12px;
+        font-weight: bold;
         color: #ffffff;
+        line-height: 23px;
     }
 }
 
@@ -516,11 +520,13 @@ input[type="checkbox"]::before, input[type="radio"]::before{
 .views_send_strong {
     font-family: MicrosoftYaHei-Bold, arial;
     font-size: 16px;
-    font-weight: normal;
+    font-weight: bold;
     font-stretch: normal;
     line-height: 25px;
     letter-spacing: 1px;
     color: #4b90f7;
+    margin-right: 5px;
+    text-transform: uppercase;
 }
 
 .views_send_button {
@@ -596,7 +602,7 @@ span.address {
 
 .dashboard-box-list{
   margin: 1em 0;
-  height: 12em;
+  height: auto;
   background-color: #ffffff;
   box-shadow: 0px 1.5px 4px 0px rgba(15, 104, 170, 0.06);
   border-radius: 4px;
@@ -635,6 +641,8 @@ span.address {
   background-color: #ffffff;
   box-shadow: 0px 3px 9px 0px rgba(15, 104, 170, 0.1);
   border-radius: 4px;
+    display: inline-block;
+    width: 100%;
 
   .header-span {
       span{
@@ -726,7 +734,7 @@ span.address {
     position: relative;
     display: inline-block;
     //width: @gridWidth * 6.5;
-    min-height: @gridHeight*4;
+    //min-height: @gridHeight*4;
     //padding-left: @gridWidth + @defaultPaddingHorizontal;
     padding-left: 85px;
     padding-right: @defaultPaddingHorizontal/2;
@@ -1282,6 +1290,7 @@ table {
     .dapp-address-input {
         display: inline-block;
         width: @gridWidth * 13;
+        margin-top: 3px;
     }
 }
 
@@ -1292,4 +1301,165 @@ table {
 
 .dapp-selector span:first-of-type, .dapp-select-gas-price span:first-of-type {
     font-size: 16px !important;
+}
+.contBox{
+    width: 100%;
+    display: inline-block!important;
+    margin-bottom: 26px!important;
+}
+.tagLeft{
+  float: left;
+  width: 400px;
+}
+
+.tagRight{
+  float: left;
+  width: 589px;
+}
+.tagP{
+    width: 1100px;
+    line-height: 25px;
+    position: relative;
+    max-height: 29px;
+    overflow: hidden;
+}
+.tagAll{
+    width: 1100px;
+    line-height: 25px;
+    position: relative;
+    height: auto;
+    overflow: auto;
+}
+.tagAllBtn{
+    float: right;
+    font-weight: bold;
+    padding: 0px 6px;
+    border-radius: 50px;
+    background: #4b90f7;
+    color: #fff;
+    font-size: 14px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor:pointer;
+}
+
+//swith
+
+.toggle{
+    position: absolute;
+    border-radius: 20px;
+    -webkit-transition: border-color .6s  ease-out;
+    transition: border-color .6s  ease-out;
+    box-sizing: border-box;
+    top: 17px;
+    right: 40px;
+    width: 60px;
+    height: 21px;
+    z-index: 999;
+    background-color: #bdbdbd;
+}
+
+.toggle.toggle-on{
+    border-color: rgba(137, 194, 217, .4);
+    -webkit-transition: all .5s .15s ease-out;
+    transition: all .5s .15s ease-out;
+}
+
+.toggle-button{
+    position: absolute;
+    top:1px;
+    width: 20px;
+    height: 19px;
+    bottom: 0;
+    left: 1px;
+    background-color: #ffffff;
+    border-radius: 19px;
+    cursor: pointer;
+    -webkit-transition: all .3s .1s, width .1s, top .1s, bottom .1s;
+    transition: all .3s .1s, width .1s, top .1s, bottom .1s;
+}
+
+.toggle-on .toggle-button{
+    height: 21px;
+    top: 0;
+    width: 60px;
+    bottom: 3px;
+    right: 3px;
+    border-radius: 23px;
+    background-image: linear-gradient(50deg, #1a90fc 0%, #00d2ff 100%) !important;
+    box-shadow: 0 0 16px #ffffff;
+    -webkit-transition: all .2s .1s, right .1s;
+    transition: all .2s .1s, right .1s;
+}
+
+
+.toggle-text-on{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    line-height: 23px;
+    text-align: center;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    cursor: pointer;
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+
+
+    color: rgba(0,0,0,0);
+}
+
+.toggle-on .toggle-text-on{
+    color: #ffffff;
+    -webkit-transition: color .3s .15s ;
+    transition: color .3s .15s ;
+}
+
+.toggle-text-off{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 6px;
+    line-height: 36px;
+    text-align: center;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+
+    cursor: pointer;
+
+    color: #444249;
+}
+
+.toggle-on .toggle-text-off{
+    color: rgba(0,0,0,0);
+}
+
+/* used for streak effect */
+.glow-comp{
+    position: absolute;
+    opacity: 0;
+    top: 10px;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    border-radius: 6px;
+    background-color: rgba(75, 122, 141, .1);
+    box-shadow: 0 0 12px rgba(75, 122, 141, .2);
+    -webkit-transition: opacity 4.5s 1s;
+    transition: opacity 4.5s 1s;
+}
+
+.toggle-on .glow-comp{
+    opacity: 1;
+    -webkit-transition: opacity 1s;
+    transition: opacity 1s;
 }

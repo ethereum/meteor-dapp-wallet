@@ -25,7 +25,7 @@ Template['layout_header'].helpers({
     */
     'goToSend': function() {
         FlowRouter.watchPathChange();
-        var address = web3.toChecksumAddress(FlowRouter.getParam('address'));  
+        var address = web3.toChecksumAddress(FlowRouter.getParam('address'));
         var accounts = EthAccounts.find({}).fetch();
 
         // For some reason the path /send/ doesn't show tokens anymore
@@ -64,9 +64,9 @@ Template['layout_header'].helpers({
     @method (timeSinceBlock)
     */
     'timeSinceBlock': function () {
-        
-        if (EthBlocks.latest.timestamp == 0 
-            || typeof EthBlocks.latest.timestamp == 'undefined')   
+
+        if (EthBlocks.latest.timestamp == 0
+            || typeof EthBlocks.latest.timestamp == 'undefined')
             return false;
 
         var timeSince = moment(EthBlocks.latest.timestamp, "X");
@@ -93,9 +93,9 @@ Template['layout_header'].helpers({
     @method (timeSinceBlockText)
     */
     'timeSinceBlockText': function () {
-        
-        if (EthBlocks.latest.timestamp == 0 
-            || typeof EthBlocks.latest.timestamp == 'undefined')   
+
+        if (EthBlocks.latest.timestamp == 0
+            || typeof EthBlocks.latest.timestamp == 'undefined')
             return TAPi18n.__('wallet.app.texts.waitingForBlocks');
 
         var timeSince = moment(EthBlocks.latest.timestamp, "X");
@@ -138,7 +138,7 @@ Template['layout_header'].events({
                 });
 
                 mist.requestAccount(null);
-            }
+            };
 
             if (typeof mist !== "undefined") {
                 requestAccount();

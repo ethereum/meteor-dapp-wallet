@@ -99,8 +99,13 @@ Template['elements_account'].helpers({
 
         var tokens = Tokens.find(query, {limit: 5, sort: {name: 1}});
 
+        if (tokens.fetch().length >2 && !TemplateVar.get('hasToken')) {
+            TemplateVar.set('hasToken', true);
+        }
+
         return tokens;
     },
+
     /**
     Get the tokens balance
 
@@ -197,6 +202,10 @@ Template['elements_account'].helpers({
     */
     'ensClass': function(){
         return this.ens ?  'ens-name' : 'not-ens-name';
+    },
+
+    'tagAllBtn': function() {
+        return TemplateVar.get('isSendAll')
     }
 });
 
@@ -260,6 +269,10 @@ Template['elements_account'].events({
                 changePassword()
             }
         }
+    },
+
+    'click .tagAllBtn': function(e, template) {
+        TemplateVar.set(template, 'isSendAll', !TemplateVar.get(template, 'isSendAll'));
     }
 
 });

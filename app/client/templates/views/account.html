@@ -6,13 +6,13 @@
                 <div class="home-link">
                     <a href="{{pathFor route='dashboard'}}"><img/></a>
                 </div>
-                <span>&nbsp;>&nbsp;DETAIL</span>
+                <span style="top: 4px;">&nbsp;>&nbsp;DETAIL</span>
             </div>
         </h1>
         <div class="dapp-container accounts-page">
             <div class="accounts-page-summary">
 	              <!--account detail-->
-                <div class="viwes-account-header" style="padding: 0 20px; max-height: 185px;">
+                <div class="viwes-account-header" style="padding: 0 20px;">
                     <div class="header-span" style="position: relative;top: 40px;">
                         {{> dapp_identicon identity=address}}
                     </div>
@@ -25,9 +25,9 @@
                                     <img class="wanchain-edit edit-icon"/>
 
                                     {{#unless isWaddress}}
-                                        <div class="ledger-account" style="top: 60px;margin-left: 26px;">
+                                        <div class="ledger-account" style="top: 67px;margin-left: 26px;">
                                             <img/>
-                                            <span style="top: -10px;">Ledger Account</span>
+                                            <span style="top: 0px;">Ledger Account</span>
                                         </div>
                                     {{/unless}}
 

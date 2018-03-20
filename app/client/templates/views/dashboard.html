@@ -1,13 +1,14 @@
 <template name="views_dashboard">
     <div class="dapp-container">
 
-        <h1 class="account-h1">
+        <h1 class="account-h1" style="position: relative;">
             <div class="circle"></div>
             <strong>{{{i18n "wallet.accounts.title"}}}</strong>
 
-            <div style="float: right;">
-                <input type="checkbox" name="sex" id="male" class="chooseBtn" />
-                <label for="male" class="choose-label"></label>
+            <div class="toggle" id="male">
+                <div class="glow-comp"></div>
+                <div class="toggle-button"></div>
+                <div class="toggle-text-on">Pin it</div>
             </div>
         </h1>
 
@@ -33,4 +34,10 @@
         {{/if}}
 
     </div>
+    <script>
+        $('.toggle').click(function(e){
+            e.preventDefault(); // The flicker is a codepen thing
+            $(this).toggleClass('toggle-on');
+        });
+    </script>
 </template>
