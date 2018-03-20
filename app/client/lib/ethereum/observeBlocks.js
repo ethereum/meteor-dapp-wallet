@@ -7,7 +7,7 @@ Update the peercount
 */
 var getPeerCount = function() {
   web3.eth.net.getPeerCount(function(e, res) {
-    if (!e) Session.set("peerCount", res);
+    if (!e) Session.set('peerCount', res);
   });
 };
 
@@ -142,10 +142,10 @@ updateBalances = function() {
           if (balance.toString(10) !== currentBalance) {
             var set = {};
             if (balance > 0) {
-              set["balances." + account._id] = balance.toString(10);
+              set['balances.' + account._id] = balance.toString(10);
               Tokens.update(token._id, { $set: set });
             } else if (currentBalance) {
-              set["balances." + account._id] = "";
+              set['balances.' + account._id] = '';
               Tokens.update(token._id, { $unset: set });
             }
           }
@@ -165,14 +165,14 @@ observeLatestBlocks = function() {
   updateBalances();
 
   // GET the latest blockchain information
-  web3.eth.subscribe("newBlockHeaders", function(e, res) {
+  web3.eth.subscribe('newBlockHeaders', function(e, res) {
     if (!e) {
       updateBalances();
     }
   });
 
   // check peer count
-  Session.setDefault("peerCount", 0);
+  Session.setDefault('peerCount', 0);
   getPeerCount();
 
   clearInterval(peerCountIntervalId);

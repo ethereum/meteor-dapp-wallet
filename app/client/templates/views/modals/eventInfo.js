@@ -11,7 +11,7 @@ The event info template
 @constructor
 */
 
-Template["views_modals_eventInfo"].helpers({
+Template['views_modals_eventInfo'].helpers({
   /**
     Returns the current event
 

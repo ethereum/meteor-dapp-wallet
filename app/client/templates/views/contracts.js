@@ -18,23 +18,23 @@ Function to add a new custom contract
 */
 var addCustomContract = function(e) {
   var address = $('.modals-add-custom-contract input[name="address"]').hasClass(
-      "dapp-error"
+      'dapp-error'
     )
-      ? ""
+      ? ''
       : $('.modals-add-custom-contract input[name="address"]').val(),
     name =
-      $(".modals-add-custom-contract input.name").val() ||
-      TAPi18n.__("wallet.accounts.defaultName");
+      $('.modals-add-custom-contract input.name').val() ||
+      TAPi18n.__('wallet.accounts.defaultName');
 
   address = address.toLowerCase();
 
   try {
     jsonInterface = JSON.parse(
-      $(".modals-add-custom-contract textarea.jsonInterface").val()
+      $('.modals-add-custom-contract textarea.jsonInterface').val()
     );
   } catch (e) {
     GlobalNotification.warning({
-      content: TAPi18n.__("wallet.contracts.error.jsonInterfaceParseError"),
+      content: TAPi18n.__('wallet.contracts.error.jsonInterfaceParseError'),
       duration: 2
     });
 
@@ -45,7 +45,7 @@ var addCustomContract = function(e) {
     // chech if contract already exists as wallet contract
     if (Wallets.findOne({ address: address })) {
       GlobalNotification.warning({
-        content: TAPi18n.__("wallet.newWallet.error.alreadyExists"),
+        content: TAPi18n.__('wallet.newWallet.error.alreadyExists'),
         duration: 2
       });
 
@@ -67,12 +67,12 @@ var addCustomContract = function(e) {
     updateBalances();
 
     GlobalNotification.success({
-      content: TAPi18n.__("wallet.contracts.addedContract"),
+      content: TAPi18n.__('wallet.contracts.addedContract'),
       duration: 2
     });
   } else {
     GlobalNotification.warning({
-      content: TAPi18n.__("wallet.contracts.error.invalidAddress"),
+      content: TAPi18n.__('wallet.contracts.error.invalidAddress'),
       duration: 2
     });
   }
@@ -85,22 +85,22 @@ Function to add tokens
 */
 var addToken = function(e) {
   var address = $('.modals-add-token input[name="address"]').hasClass(
-      "dapp-error"
+      'dapp-error'
     )
-      ? ""
+      ? ''
       : $('.modals-add-token input[name="address"]').val(),
-    name = $(".modals-add-token input.name").val(),
-    symbol = $(".modals-add-token input.symbol").val(),
-    decimals = $(".modals-add-token input.decimals").val();
+    name = $('.modals-add-token input.name').val(),
+    symbol = $('.modals-add-token input.symbol').val(),
+    decimals = $('.modals-add-token input.decimals').val();
 
   address = address.toLowerCase().trim();
 
-  tokenId = Helpers.makeId("token", address);
+  tokenId = Helpers.makeId('token', address);
 
   var msg =
     Tokens.findOne(tokenId) != undefined
-      ? TAPi18n.__("wallet.tokens.editedToken", { token: name })
-      : TAPi18n.__("wallet.tokens.addedToken", { token: name });
+      ? TAPi18n.__('wallet.tokens.editedToken', { token: name })
+      : TAPi18n.__('wallet.tokens.addedToken', { token: name });
 
   if (web3.utils.isAddress(address)) {
     Tokens.upsert(tokenId, {
@@ -122,13 +122,13 @@ var addToken = function(e) {
     });
   } else {
     GlobalNotification.warning({
-      content: TAPi18n.__("wallet.tokens.error.invalidAddress"),
+      content: TAPi18n.__('wallet.tokens.error.invalidAddress'),
       duration: 2
     });
   }
 };
 
-Template["views_contracts"].helpers({
+Template['views_contracts'].helpers({
   /**
     Get all custom contracts
 
@@ -147,22 +147,22 @@ Template["views_contracts"].helpers({
   }
 });
 
-Template["views_contracts"].events({
+Template['views_contracts'].events({
   /**
     Add custom contract
     
     @event click .add-contract
     */
-  "click .add-contract": function() {
+  'click .add-contract': function() {
     // Open a modal
     EthElements.Modal.question(
       {
-        template: "views_modals_addCustomContract",
+        template: 'views_modals_addCustomContract',
         ok: addCustomContract,
         cancel: true
       },
       {
-        class: "modals-add-custom-contract"
+        class: 'modals-add-custom-contract'
       }
     );
   },
@@ -171,18 +171,18 @@ Template["views_contracts"].events({
     
     @event click a.create.account
     */
-  "click .add-token": function(e) {
+  'click .add-token': function(e) {
     e.preventDefault();
 
     // Open a modal
     EthElements.Modal.question(
       {
-        template: "views_modals_addToken",
+        template: 'views_modals_addToken',
         ok: addToken,
         cancel: true
       },
       {
-        class: "modals-add-token"
+        class: 'modals-add-token'
       }
     );
   },
@@ -191,19 +191,19 @@ Template["views_contracts"].events({
     
     @event click .wallet-box.tokens
     */
-  "click .wallet-box.tokens": function(e) {
+  'click .wallet-box.tokens': function(e) {
     e.preventDefault();
 
     // Open a modal
     EthElements.Modal.question(
       {
-        template: "views_modals_addToken",
+        template: 'views_modals_addToken',
         data: this,
         ok: addToken.bind(this),
         cancel: true
       },
       {
-        class: "modals-add-token"
+        class: 'modals-add-token'
       }
     );
   }

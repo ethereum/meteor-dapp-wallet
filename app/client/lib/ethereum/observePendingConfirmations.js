@@ -15,7 +15,7 @@ checkConfirmation = function(confirmationId) {
     wallet.requiredSignatures > conf.confirmedOwners.length
   ) {
     var removed = false;
-    var contract = contracts["ct_" + wallet._id];
+    var contract = contracts['ct_' + wallet._id];
 
     setTimeout(function() {
       _.each(wallet.owners, function(owner) {
@@ -73,12 +73,12 @@ observePendingConfirmations = function() {
       checkConfirmation(document._id);
 
       if (
-        typeof mist !== "undefined" &&
+        typeof mist !== 'undefined' &&
         document.confirmedOwners &&
         document.confirmedOwners.length
       ) {
         mist.menu.setBadge(
-          TAPi18n.__("wallet.app.texts.pendingConfirmationsBadge")
+          TAPi18n.__('wallet.app.texts.pendingConfirmationsBadge')
         );
       }
     },
@@ -97,12 +97,12 @@ observePendingConfirmations = function() {
         */
     changed: function(id, fields) {
       if (
-        typeof mist !== "undefined" &&
+        typeof mist !== 'undefined' &&
         document.confirmedOwners &&
         document.confirmedOwners.length
       ) {
         mist.menu.setBadge(
-          TAPi18n.__("wallet.app.texts.pendingConfirmationsBadge")
+          TAPi18n.__('wallet.app.texts.pendingConfirmationsBadge')
         );
       }
     }

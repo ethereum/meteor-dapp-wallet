@@ -5,7 +5,7 @@ The template show the token in the .wallet-box
 @constructor
 */
 
-Template["elements_tokenBox"].helpers({
+Template['elements_tokenBox'].helpers({
   /**
     Formats the total balance
 
@@ -36,25 +36,25 @@ Template["elements_tokenBox"].helpers({
     @method (geoPattern)
     */
   geoPattern: function() {
-    var pattern = GeoPattern.generate(this.address, { color: "#CCC6C6" });
+    var pattern = GeoPattern.generate(this.address, { color: '#CCC6C6' });
     return pattern.toDataUrl();
   }
 });
 
-Template["elements_tokenBox"].events({
+Template['elements_tokenBox'].events({
   /**
     Click Delete Token
     
     @event click a.create.account
     */
-  "click .delete-token": function(e) {
+  'click .delete-token': function(e) {
     var token = this;
     e.preventDefault();
     e.stopImmediatePropagation();
 
     EthElements.Modal.question({
       text: new Spacebars.SafeString(
-        TAPi18n.__("wallet.tokens.deleteToken", { token: token.name })
+        TAPi18n.__('wallet.tokens.deleteToken', { token: token.name })
       ), // could be vulnerable as token name is not HTML purified
       ok: function() {
         Tokens.remove(token._id);

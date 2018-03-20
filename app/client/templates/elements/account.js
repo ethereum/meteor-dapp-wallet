@@ -19,13 +19,13 @@ Block required until a transaction is confirmed.
 */
 var blocksForConfirmation = 12;
 
-Template["elements_account"].rendered = function() {
+Template['elements_account'].rendered = function() {
   // initiate the geo pattern
   var pattern = GeoPattern.generate(this.data.address);
-  this.$(".account-pattern").css("background-image", pattern.toDataUrl());
+  this.$('.account-pattern').css('background-image', pattern.toDataUrl());
 };
 
-Template["elements_account"].helpers({
+Template['elements_account'].helpers({
   /**
     Get the current account
 
@@ -45,7 +45,7 @@ Template["elements_account"].helpers({
     */
   tokens: function() {
     var query = {};
-    query["balances." + this._id] = { $exists: true };
+    query['balances.' + this._id] = { $exists: true };
     return Tokens.find(query, { limit: 5, sort: { name: 1 } });
   },
   /**
@@ -61,7 +61,7 @@ Template["elements_account"].helpers({
           this.balances[account._id],
           this.decimals
         ) +
-          " " +
+          ' ' +
           this.symbol
       : false;
   },
@@ -71,7 +71,7 @@ Template["elements_account"].helpers({
     @method (name)
     */
   name: function() {
-    return this.name || TAPi18n.__("wallet.accounts.defaultName");
+    return this.name || TAPi18n.__('wallet.accounts.defaultName');
   },
   /**
     Account was just added. Return true and remove the "new" field.
@@ -83,9 +83,9 @@ Template["elements_account"].helpers({
       // remove the "new" field
       var id = this._id;
       Meteor.setTimeout(function() {
-        EthAccounts.update(id, { $unset: { new: "" } });
-        Wallets.update(id, { $unset: { new: "" } });
-        CustomContracts.update(id, { $unset: { new: "" } });
+        EthAccounts.update(id, { $unset: { new: '' } });
+        Wallets.update(id, { $unset: { new: '' } });
+        CustomContracts.update(id, { $unset: { new: '' } });
       }, 1000);
 
       return true;
@@ -138,10 +138,10 @@ Template["elements_account"].helpers({
   displayName: function() {
     return this.ens
       ? this.name
-          .split(".")
+          .split('.')
           .slice(0, -1)
           .reverse()
-          .join(" ▸ ")
+          .join(' ▸ ')
       : this.name;
   },
   /**
@@ -149,17 +149,17 @@ Template["elements_account"].helpers({
     @method (ensClass)
     */
   ensClass: function() {
-    return this.ens ? "ens-name" : "not-ens-name";
+    return this.ens ? 'ens-name' : 'not-ens-name';
   }
 });
 
-Template["elements_account"].events({
+Template['elements_account'].events({
   /**
     Field test the speed wallet is rendered
 
     @event click button.show-data
     */
-  "click .wallet-box": function(e) {
-    console.time("renderAccountPage");
+  'click .wallet-box': function(e) {
+    console.time('renderAccountPage');
   }
 });

@@ -11,11 +11,11 @@ The header template
 @constructor
 */
 
-Template["layout_header"].onCreated(function() {
+Template['layout_header'].onCreated(function() {
   var template = this;
 });
 
-Template["layout_header"].helpers({
+Template['layout_header'].helpers({
   /**
     Returns the correct url for the send to route
 
@@ -24,13 +24,13 @@ Template["layout_header"].helpers({
     */
   goToSend: function() {
     FlowRouter.watchPathChange();
-    var address = web3.utils.toChecksumAddress(FlowRouter.getParam("address"));
+    var address = web3.utils.toChecksumAddress(FlowRouter.getParam('address'));
     var accounts = EthAccounts.find({}).fetch();
 
     // For some reason the path /send/ doesn't show tokens anymore
     return address
-      ? FlowRouter.path("sendFrom", { from: address })
-      : FlowRouter.path("sendFrom", {
+      ? FlowRouter.path('sendFrom', { from: address })
+      : FlowRouter.path('sendFrom', {
           from: accounts[0] ? accounts[0].address : null
         });
   },
@@ -43,11 +43,11 @@ Template["layout_header"].helpers({
   totalBalance: function() {
     var accounts = EthAccounts.find({}).fetch();
     var wallets = Wallets.find({
-      owners: { $in: _.pluck(accounts, "address") }
+      owners: { $in: _.pluck(accounts, 'address') }
     }).fetch();
 
     var balance = _.reduce(
-      _.pluck(_.union(accounts, wallets), "balance"),
+      _.pluck(_.union(accounts, wallets), 'balance'),
       function(memo, num) {
         return memo + Number(num);
       },
@@ -65,7 +65,7 @@ Template["layout_header"].helpers({
     @return {String}
     */
   formattedBlockNumber: function() {
-    return numeral(EthBlocks.latest.number).format("0,0");
+    return numeral(EthBlocks.latest.number).format('0,0');
   },
   /**
     Gets the time since the last block
@@ -75,26 +75,26 @@ Template["layout_header"].helpers({
   timeSinceBlock: function() {
     if (
       EthBlocks.latest.timestamp == 0 ||
-      typeof EthBlocks.latest.timestamp == "undefined"
+      typeof EthBlocks.latest.timestamp == 'undefined'
     )
       return false;
 
-    var timeSince = moment(EthBlocks.latest.timestamp, "X");
+    var timeSince = moment(EthBlocks.latest.timestamp, 'X');
     var now = moment();
-    var diff = now.diff(timeSince, "seconds");
+    var diff = now.diff(timeSince, 'seconds');
 
     if (diff > 60 * 5) {
-      Helpers.rerun["10s"].tick();
-      return '<span class="red">' + timeSince.fromNow(true) + "</span>";
+      Helpers.rerun['10s'].tick();
+      return '<span class="red">' + timeSince.fromNow(true) + '</span>';
     } else if (diff > 60) {
-      Helpers.rerun["10s"].tick();
+      Helpers.rerun['10s'].tick();
       return timeSince.fromNow(true);
     } else if (diff < 2) {
-      Helpers.rerun["1s"].tick();
-      return "";
+      Helpers.rerun['1s'].tick();
+      return '';
     } else {
-      Helpers.rerun["1s"].tick();
-      return diff + "s ";
+      Helpers.rerun['1s'].tick();
+      return diff + 's ';
     }
   },
   /**
@@ -105,34 +105,34 @@ Template["layout_header"].helpers({
   timeSinceBlockText: function() {
     if (
       EthBlocks.latest.timestamp == 0 ||
-      typeof EthBlocks.latest.timestamp == "undefined"
+      typeof EthBlocks.latest.timestamp == 'undefined'
     )
-      return TAPi18n.__("wallet.app.texts.waitingForBlocks");
+      return TAPi18n.__('wallet.app.texts.waitingForBlocks');
 
-    var timeSince = moment(EthBlocks.latest.timestamp, "X");
+    var timeSince = moment(EthBlocks.latest.timestamp, 'X');
     var now = moment();
-    var diff = now.diff(timeSince, "seconds");
+    var diff = now.diff(timeSince, 'seconds');
 
     if (diff > 60 * 5) {
-      Helpers.rerun["10s"].tick();
+      Helpers.rerun['10s'].tick();
       return (
         '<span class="red">' +
-        TAPi18n.__("wallet.app.texts.timeSinceBlock") +
-        "</span>"
+        TAPi18n.__('wallet.app.texts.timeSinceBlock') +
+        '</span>'
       );
     } else if (diff > 60) {
-      Helpers.rerun["10s"].tick();
-      return TAPi18n.__("wallet.app.texts.timeSinceBlock");
+      Helpers.rerun['10s'].tick();
+      return TAPi18n.__('wallet.app.texts.timeSinceBlock');
     } else if (diff < 2) {
-      Helpers.rerun["1s"].tick();
+      Helpers.rerun['1s'].tick();
       return (
         '<span class="blue">' +
-        TAPi18n.__("wallet.app.texts.blockReceived") +
-        "</span>"
+        TAPi18n.__('wallet.app.texts.blockReceived') +
+        '</span>'
       );
     } else {
-      Helpers.rerun["1s"].tick();
-      return TAPi18n.__("wallet.app.texts.timeSinceBlock");
+      Helpers.rerun['1s'].tick();
+      return TAPi18n.__('wallet.app.texts.timeSinceBlock');
     }
   }
 });

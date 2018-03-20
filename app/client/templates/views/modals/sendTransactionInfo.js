@@ -12,7 +12,7 @@ The send transaction info template
 */
 
 // Set basic variables
-Template["views_modals_sendTransactionInfo"].helpers({
+Template['views_modals_sendTransactionInfo'].helpers({
   /**
     Calculates the fee used for this transaction in ether
 
@@ -24,8 +24,8 @@ Template["views_modals_sendTransactionInfo"].helpers({
         new BigNumber(this.estimatedGas, 10).times(
           new BigNumber(this.gasPrice, 10)
         ),
-        "0,0.0[0000000] unit",
-        "ether"
+        '0,0.0[0000000] unit',
+        'ether'
       );
   }
 });

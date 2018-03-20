@@ -5,7 +5,7 @@ The account link template
 @constructor
 */
 
-Template["elements_account_link"].helpers({
+Template['elements_account_link'].helpers({
   /**
     Get the account and return the account or address of "from" or "to" property
 
@@ -24,7 +24,7 @@ Template["elements_account_link"].helpers({
     @method (ensClass)
     */
   ensClass: function() {
-    return this.ens ? "ens-name" : "not-ens-name";
+    return this.ens ? 'ens-name' : 'not-ens-name';
   },
   /**
     Displays ENS names with triangles
@@ -34,10 +34,10 @@ Template["elements_account_link"].helpers({
   displayName: function() {
     return this.ens
       ? this.name
-          .split(".")
+          .split('.')
           .slice(0, -1)
           .reverse()
-          .join(" ▸ ")
+          .join(' ▸ ')
       : this.name;
   },
   /**
@@ -57,7 +57,7 @@ Template["elements_account_link"].helpers({
 
       if (this.address && returnedAddr) {
         if (this.address.toLowerCase() === returnedAddr.toLowerCase()) {
-          console.log("ens", name, _this, template);
+          console.log('ens', name, _this, template);
           // _this.name = name;
           // TemplateVar.set(template, 'ensName', name)
         }

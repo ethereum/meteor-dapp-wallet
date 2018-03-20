@@ -15,10 +15,10 @@ addTransactionAfterSend = function(
 ) {
   var jsonInterface = undefined,
     contractName = undefined,
-    txId = Helpers.makeId("tx", txHash);
+    txId = Helpers.makeId('tx', txHash);
 
   if (_.isObject(data)) {
-    contractName = data.contract.name.replace(/([A-Z])/g, " $1");
+    contractName = data.contract.name.replace(/([A-Z])/g, ' $1');
     jsonInterface = data.contract.jsonInterface;
     data = data.data;
   }
@@ -72,7 +72,7 @@ Add new in/outgoing transaction
 @return {Boolean} TRUE if a transaction already existed
 */
 addTransaction = function(log, from, to, value) {
-  var txId = Helpers.makeId("tx", log.transactionHash);
+  var txId = Helpers.makeId('tx', log.transactionHash);
 
   // add the tx already here
   Transactions.upsert(txId, {
@@ -127,7 +127,7 @@ var updateTransaction = function(newDocument, transaction, receipt) {
   var id =
     newDocument._id ||
     Helpers.makeId(
-      "tx",
+      'tx',
       transaction.transactionHash || newDocument.transactionHash
     );
 
@@ -149,7 +149,7 @@ var updateTransaction = function(newDocument, transaction, receipt) {
       newDocument.transactionHash = transaction.transactionHash;
 
     newDocument.data = transaction.input || transaction.data || null;
-    if (_.isString(newDocument.data) && newDocument.data === "0x")
+    if (_.isString(newDocument.data) && newDocument.data === '0x')
       newDocument.data = null;
 
     newDocument.gasPrice = transaction.gasPrice.toString(10);
@@ -177,8 +177,8 @@ var updateTransaction = function(newDocument, transaction, receipt) {
                 $set: {
                   address: receipt.contractAddress,
                   name:
-                    (oldTx.contractName || "New Contract") +
-                    " " +
+                    (oldTx.contractName || 'New Contract') +
+                    ' ' +
                     receipt.contractAddress.substr(2, 4),
                   jsonInterface: oldTx.jsonInterface
                 }
@@ -186,20 +186,20 @@ var updateTransaction = function(newDocument, transaction, receipt) {
             );
 
             //If it looks like a token, add it to the list
-            var functionNames = _.pluck(oldTx.jsonInterface, "name");
+            var functionNames = _.pluck(oldTx.jsonInterface, 'name');
             var isToken =
-              _.contains(functionNames, "transfer") &&
-              _.contains(functionNames, "Transfer") &&
-              _.contains(functionNames, "balanceOf");
-            console.log("isToken: ", isToken);
+              _.contains(functionNames, 'transfer') &&
+              _.contains(functionNames, 'Transfer') &&
+              _.contains(functionNames, 'balanceOf');
+            console.log('isToken: ', isToken);
 
             if (isToken) {
-              tokenId = Helpers.makeId("token", receipt.contractAddress);
+              tokenId = Helpers.makeId('token', receipt.contractAddress);
 
               Tokens.upsert(tokenId, {
                 $set: {
                   address: receipt.contractAddress,
-                  name: oldTx.name + " " + receipt.contractAddress.substr(2, 4),
+                  name: oldTx.name + ' ' + receipt.contractAddress.substr(2, 4),
                   symbol: oldTx.name + receipt.contractAddress.substr(2, 4),
                   balances: {},
                   decimals: 0
@@ -223,7 +223,7 @@ var updateTransaction = function(newDocument, transaction, receipt) {
                     { address: receipt.contractAddress },
                     {
                       $set: {
-                        name: TAPi18n.__("wallet.tokens.admin", { name: name })
+                        name: TAPi18n.__('wallet.tokens.admin', { name: name })
                       }
                     }
                   );
@@ -283,7 +283,7 @@ var updateTransaction = function(newDocument, transaction, receipt) {
 
   // check previous balance, vs current balance, if different remove the out of gas
   if (newDocument.outOfGas) {
-    var warningText = TAPi18n.__("wallet.transactions.error.outOfGas", {
+    var warningText = TAPi18n.__('wallet.transactions.error.outOfGas', {
       from: Helpers.getAccountNameByAddress(newDocument.from),
       to: Helpers.getAccountNameByAddress(newDocument.to)
     });
@@ -301,7 +301,7 @@ var updateTransaction = function(newDocument, transaction, receipt) {
               if (!e && now.toString(10) !== then.toString(10)) {
                 console.log(
                   newDocument.transactionHash,
-                  "Removed out of gas, as balance changed"
+                  'Removed out of gas, as balance changed'
                 );
                 Transactions.update({ _id: id }, { $set: { outOfGas: false } });
               } else {
@@ -342,7 +342,7 @@ observeTransactions = function() {
     // check for confirmations
     if (!tx.confirmed && tx.transactionHash) {
       var updateTransactions = function(e, blockHash) {
-        console.log("updateTransactions", e, blockHash);
+        console.log('updateTransactions', e, blockHash);
 
         if (!e) {
           var confirmations =
@@ -365,9 +365,9 @@ observeTransactions = function() {
             confirmations >= 0
           ) {
             Helpers.eventLogs(
-              "Checking transaction " +
+              'Checking transaction ' +
                 tx.transactionHash +
-                ". Current confirmations: " +
+                '. Current confirmations: ' +
                 confirmations
             );
 
@@ -389,7 +389,7 @@ observeTransactions = function() {
                   // enable transaction, if it was disabled
                   Transactions.update(tx._id, {
                     $unset: {
-                      disabled: ""
+                      disabled: ''
                     }
                   });
                 else if (!transaction.blockNumber) {
@@ -421,7 +421,7 @@ observeTransactions = function() {
                   // if still not mined, remove tx
                   if (!transaction || !transaction.blockNumber) {
                     var warningText = TAPi18n.__(
-                      "wallet.transactions.error.outOfGas",
+                      'wallet.transactions.error.outOfGas',
                       {
                         from: Helpers.getAccountNameByAddress(tx.from),
                         to: Helpers.getAccountNameByAddress(tx.to)
@@ -451,7 +451,7 @@ observeTransactions = function() {
                           if (tx.disabled)
                             Transactions.update(tx._id, {
                               $unset: {
-                                disabled: ""
+                                disabled: ''
                               }
                             });
 
@@ -471,7 +471,7 @@ observeTransactions = function() {
         }
       };
 
-      var subscription = web3.eth.subscribe("newBlockHeaders", function(
+      var subscription = web3.eth.subscribe('newBlockHeaders', function(
         error,
         result
       ) {
@@ -517,7 +517,7 @@ observeTransactions = function() {
 
       // remove pending confirmations, if present
       if (newDocument.operation) {
-        checkConfirmation(Helpers.makeId("pc", newDocument.operation));
+        checkConfirmation(Helpers.makeId('pc', newDocument.operation));
       }
 
       // check first if the transaction was already mined
@@ -527,7 +527,7 @@ observeTransactions = function() {
 
       // If on main net, add price data
       if (
-        Session.get("network") == "main" &&
+        Session.get('network') == 'main' &&
         newDocument.timestamp &&
         (!newDocument.exchangeRates ||
           !newDocument.exchangeRates.btc ||
@@ -537,22 +537,22 @@ observeTransactions = function() {
           !newDocument.exchangeRates.brl)
       ) {
         var url =
-          "https://min-api.cryptocompare.com/data/pricehistorical?fsym=ETH&tsyms=BTC,USD,EUR,GBP,BRL&ts=" +
+          'https://min-api.cryptocompare.com/data/pricehistorical?fsym=ETH&tsyms=BTC,USD,EUR,GBP,BRL&ts=' +
           newDocument.timestamp;
 
-        if (typeof mist !== "undefined")
-          url += "&extraParams=Mist-" + mist.version;
+        if (typeof mist !== 'undefined')
+          url += '&extraParams=Mist-' + mist.version;
 
         HTTP.get(url, function(e, res) {
           if (!e && res && res.statusCode === 200) {
             var content = JSON.parse(res.content);
 
-            if (content && content.Response !== "Error") {
+            if (content && content.Response !== 'Error') {
               _.each(content, function(price, key) {
                 if (price && _.isFinite(price)) {
                   var name = key.toLowerCase();
                   var set = {};
-                  set["exchangeRates." + name] = {
+                  set['exchangeRates.' + name] = {
                     price: String(price),
                     timestamp: null
                   };
@@ -563,7 +563,7 @@ observeTransactions = function() {
             }
           } else {
             console.warn(
-              "Can not connect to https://min-api.cryptocompare.com/ to get price ticker data, please check your internet connection."
+              'Can not connect to https://min-api.cryptocompare.com/ to get price ticker data, please check your internet connection.'
             );
           }
         });
@@ -595,7 +595,7 @@ observeTransactions = function() {
 
       // remove pending confirmations, if present
       if (newDocument.operation) {
-        checkConfirmation(Helpers.makeId("pc", newDocument.operation));
+        checkConfirmation(Helpers.makeId('pc', newDocument.operation));
       }
     },
     /**

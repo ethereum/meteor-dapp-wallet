@@ -11,22 +11,22 @@ The account create template
 @constructor
 */
 
-Template["views_account_create"].onCreated(function() {
+Template['views_account_create'].onCreated(function() {
   TemplateVar.set(
-    "selectedSection",
-    Number(FlowRouter.getQueryParam("ownersNum")) > 0 ? "multisig" : "simple"
+    'selectedSection',
+    Number(FlowRouter.getQueryParam('ownersNum')) > 0 ? 'multisig' : 'simple'
   );
 
   // number of owners of the account
-  var walletId = FlowRouter.getQueryParam("walletId");
-  var maxOwners = FlowRouter.getQueryParam("ownersNum");
+  var walletId = FlowRouter.getQueryParam('walletId');
+  var maxOwners = FlowRouter.getQueryParam('ownersNum');
   if (maxOwners && Helpers.isWatchOnly(walletId)) maxOwners++;
-  TemplateVar.set("multisigSignees", maxOwners || 3);
+  TemplateVar.set('multisigSignees', maxOwners || 3);
 
   // number of required signatures
   TemplateVar.set(
-    "multisigSignatures",
-    Number(FlowRouter.getQueryParam("requiredSignatures")) || 2
+    'multisigSignatures',
+    Number(FlowRouter.getQueryParam('requiredSignatures')) || 2
   );
 
   // check if we are still on the correct chain
@@ -37,12 +37,12 @@ Template["views_account_create"].onCreated(function() {
   });
 });
 
-Template["views_account_create"].onRendered(function() {
+Template['views_account_create'].onRendered(function() {
   // focus the input
   this.$('input[name="accountName"]').focus();
 });
 
-Template["views_account_create"].helpers({
+Template['views_account_create'].helpers({
   /**
     Get all accounts, which can become owners.
 
@@ -59,7 +59,7 @@ Template["views_account_create"].helpers({
     @method (selectedOwner)
     */
   selectedOwner: function() {
-    return TemplateVar.getFrom(".dapp-select-account", "value");
+    return TemplateVar.getFrom('.dapp-select-account', 'value');
   },
   /**
     Return TRUE, if the current section is selected
@@ -68,10 +68,10 @@ Template["views_account_create"].helpers({
     */
   showSection: function(section) {
     // reset import wallet
-    TemplateVar.set("importWalletOwners", false);
-    TemplateVar.set("importWalletInfo", "");
+    TemplateVar.set('importWalletOwners', false);
+    TemplateVar.set('importWalletInfo', '');
 
-    return TemplateVar.get("selectedSection") === section;
+    return TemplateVar.get('selectedSection') === section;
   },
   /**
     Pick a default owner for the wallet
@@ -83,8 +83,8 @@ Template["views_account_create"].helpers({
     var accounts = EthAccounts.find({}, { sort: { balance: -1 } }).fetch();
     accounts.sort(Helpers.sortByBalance);
 
-    if (FlowRouter.getQueryParam("owners")) {
-      var owners = FlowRouter.getQueryParam("owners").split(",");
+    if (FlowRouter.getQueryParam('owners')) {
+      var owners = FlowRouter.getQueryParam('owners').split(',');
 
       // Looks for them among the wallet account owner
       var defaultAccount = _.find(accounts, function(acc) {
@@ -105,24 +105,24 @@ Template["views_account_create"].helpers({
   signees: function() {
     var owners = [];
 
-    if (FlowRouter.getQueryParam("owners")) {
-      owners = FlowRouter.getQueryParam("owners")
-        .split(",")
-        .slice(0, TemplateVar.get("multisigSignees"));
+    if (FlowRouter.getQueryParam('owners')) {
+      owners = FlowRouter.getQueryParam('owners')
+        .split(',')
+        .slice(0, TemplateVar.get('multisigSignees'));
       owners = _.without(
         owners,
-        TemplateVar.getFrom(".dapp-select-account", "value")
+        TemplateVar.getFrom('.dapp-select-account', 'value')
       );
     }
 
     owners = owners.concat(
-      _.range(TemplateVar.get("multisigSignees") - 1 - owners.length)
+      _.range(TemplateVar.get('multisigSignees') - 1 - owners.length)
     );
 
     if (
-      TemplateVar.get("multisigSignatures") > TemplateVar.get("multisigSignees")
+      TemplateVar.get('multisigSignatures') > TemplateVar.get('multisigSignees')
     ) {
-      TemplateVar.set("multisigSignatures", TemplateVar.get("multisigSignees"));
+      TemplateVar.set('multisigSignatures', TemplateVar.get('multisigSignees'));
     }
 
     return owners;
@@ -133,7 +133,7 @@ Template["views_account_create"].helpers({
     @method (i18nOwnerAddress)
     */
   i18nOwnerAddress: function() {
-    return TAPi18n.__("wallet.newWallet.accountType.multisig.ownerAddress");
+    return TAPi18n.__('wallet.newWallet.accountType.multisig.ownerAddress');
   },
   /**
     Translates to 'wallet address'
@@ -141,7 +141,7 @@ Template["views_account_create"].helpers({
     @method (i18nWalletAddress)
     */
   i18nWalletAddress: function() {
-    return TAPi18n.__("wallet.newWallet.accountType.import.walletAddress");
+    return TAPi18n.__('wallet.newWallet.accountType.import.walletAddress');
   },
   /**
     Returns the import info text.
@@ -149,11 +149,11 @@ Template["views_account_create"].helpers({
     @method (importInfo)
     */
   importInfo: function() {
-    var text = TemplateVar.get("importWalletInfo"),
-      owners = TemplateVar.get("importWalletOwners");
+    var text = TemplateVar.get('importWalletInfo'),
+      owners = TemplateVar.get('importWalletOwners');
 
     if (!text) {
-      return "";
+      return '';
     } else {
       if (owners) return '<i class="icon-check"></i> ' + text;
       else return '<i class="icon-close"></i> ' + text;
@@ -165,7 +165,7 @@ Template["views_account_create"].helpers({
     @method (importValidClass)
     */
   importValidClass: function() {
-    return TemplateVar.get("importWalletOwners") ? "valid" : "invalid";
+    return TemplateVar.get('importWalletOwners') ? 'valid' : 'invalid';
   },
   /**
     Get the number of required multisignees (account owners)
@@ -173,8 +173,8 @@ Template["views_account_create"].helpers({
     @method (multisigSignees)
     */
   multisigSignees: function() {
-    var id = FlowRouter.getQueryParam("walletId");
-    var maxOwners = FlowRouter.getQueryParam("ownersNum");
+    var id = FlowRouter.getQueryParam('walletId');
+    var maxOwners = FlowRouter.getQueryParam('ownersNum');
     if (maxOwners && Helpers.isWatchOnly(id)) maxOwners++;
     maxOwners = Math.max(maxOwners || 7, 7);
 
@@ -190,7 +190,7 @@ Template["views_account_create"].helpers({
     @method (multisigSignatures)
     */
   multisigSignatures: function() {
-    var signees = TemplateVar.get("multisigSignees");
+    var signees = TemplateVar.get('multisigSignees');
     var returnArray = [];
 
     for (i = 2; i <= signees; i++) {
@@ -205,7 +205,7 @@ Template["views_account_create"].helpers({
     @method (simpleCheck)
     */
   simpleCheck: function() {
-    return TemplateVar.get("selectedSection") === "simple" ? "checked" : "";
+    return TemplateVar.get('selectedSection') === 'simple' ? 'checked' : '';
   },
   /**
     Is multisig checked
@@ -213,7 +213,7 @@ Template["views_account_create"].helpers({
     @method (multisigCheck)
     */
   multisigCheck: function() {
-    return TemplateVar.get("selectedSection") === "multisig" ? "checked" : "";
+    return TemplateVar.get('selectedSection') === 'multisig' ? 'checked' : '';
   },
   /**
     Default dailyLimit
@@ -221,9 +221,9 @@ Template["views_account_create"].helpers({
     @method (defaultDailyLimit)
     */
   defaultDailyLimit: function() {
-    var dailyLimit = FlowRouter.getQueryParam("dailyLimit");
-    return typeof dailyLimit != "undefined"
-      ? web3.utils.fromWei(dailyLimit.toString(), "ether")
+    var dailyLimit = FlowRouter.getQueryParam('dailyLimit');
+    return typeof dailyLimit != 'undefined'
+      ? web3.utils.fromWei(dailyLimit.toString(), 'ether')
       : 10;
   },
   /**
@@ -232,21 +232,21 @@ Template["views_account_create"].helpers({
     @method (name)
     */
   name: function() {
-    return FlowRouter.getQueryParam("name");
+    return FlowRouter.getQueryParam('name');
   }
 });
 
-Template["views_account_create"].events({
+Template['views_account_create'].events({
   /**
     Check the owner of the imported wallet.
     
     @event change input.import, input input.import
     */
-  "change input.import, input input.import": function(e, template) {
+  'change input.import, input input.import': function(e, template) {
     checkWalletOwners(e.currentTarget.value).then(
       function(wallet) {
-        TemplateVar.set(template, "importWalletOwners", wallet.owners);
-        TemplateVar.set(template, "importWalletInfo", wallet.info);
+        TemplateVar.set(template, 'importWalletOwners', wallet.owners);
+        TemplateVar.set(template, 'importWalletInfo', wallet.info);
         return null;
       },
       function() {}
@@ -257,8 +257,8 @@ Template["views_account_create"].events({
     
     @event change input.owners, input input.owners
     */
-  "change input.owners, input input.owners": function(e, template) {
-    var address = TemplateVar.getFrom(e.currentTarget, "value");
+  'change input.owners, input input.owners': function(e, template) {
+    var address = TemplateVar.getFrom(e.currentTarget, 'value');
   },
   /**
     Select the current section, based on the radio inputs value.
@@ -266,7 +266,7 @@ Template["views_account_create"].events({
     @event change input[type="radio"]
     */
   'change input[type="radio"]': function(e) {
-    TemplateVar.set("selectedSection", e.currentTarget.value);
+    TemplateVar.set('selectedSection', e.currentTarget.value);
   },
   /**
     Change the number of signatures
@@ -274,7 +274,7 @@ Template["views_account_create"].events({
     @event click span[name="multisigSignatures"] .simple-modal button
     */
   'click span[name="multisigSignatures"] .simple-modal button': function(e) {
-    TemplateVar.set("multisigSignatures", $(e.currentTarget).data("value"));
+    TemplateVar.set('multisigSignatures', $(e.currentTarget).data('value'));
   },
   /**
     Change the number of signees
@@ -282,7 +282,7 @@ Template["views_account_create"].events({
     @event click span[name="multisigSignees"] .simple-modal button
     */
   'click span[name="multisigSignees"] .simple-modal button': function(e) {
-    TemplateVar.set("multisigSignees", $(e.currentTarget).data("value"));
+    TemplateVar.set('multisigSignees', $(e.currentTarget).data('value'));
   },
 
   /**
@@ -292,43 +292,43 @@ Template["views_account_create"].events({
     */
   submit: function(e, template) {
     var code = walletStubABI; // walletStubABI 184 280 walletABI ~1 842 800
-    var type = TemplateVar.get("selectedSection");
+    var type = TemplateVar.get('selectedSection');
     var deployFrom = template
       .find('select[name="dapp-select-account"]')
       .value.toLowerCase();
 
     // SIMPLE
-    if (type === "simple") {
+    if (type === 'simple') {
       Wallets.insert({
         deployFrom: deployFrom,
         owners: [deployFrom],
         name:
           template.find('input[name="accountName"]').value ||
-          TAPi18n.__("wallet.accounts.defaultName"),
-        balance: "0",
+          TAPi18n.__('wallet.accounts.defaultName'),
+        balance: '0',
         creationBlock: EthBlocks.latest.number,
         code: code
       });
 
-      FlowRouter.go("dashboard");
+      FlowRouter.go('dashboard');
     }
 
     // MULTISIG
-    if (type === "multisig") {
-      var formValues = InlineForm(".inline-form");
+    if (type === 'multisig') {
+      var formValues = InlineForm('.inline-form');
 
       var owners = _.uniq(
         _.compact(
-          _.map(template.findAll("input.owners"), function(item) {
+          _.map(template.findAll('input.owners'), function(item) {
             if (web3.utils.isAddress(item.value))
-              return "0x" + item.value.replace("0x", "").toLowerCase();
+              return '0x' + item.value.replace('0x', '').toLowerCase();
           })
         )
       );
 
       if (owners.length != formValues.multisigSignees)
         return GlobalNotification.warning({
-          content: "i18n:wallet.newWallet.error.emptySignees",
+          content: 'i18n:wallet.newWallet.error.emptySignees',
           duration: 2
         });
 
@@ -337,25 +337,25 @@ Template["views_account_create"].events({
         owners: owners,
         name:
           template.find('input[name="accountName"]').value ||
-          TAPi18n.__("wallet.accounts.defaultName"),
-        balance: "0",
+          TAPi18n.__('wallet.accounts.defaultName'),
+        balance: '0',
         dailyLimit: web3.utils.toWei(
           formValues.dailyLimitAmount.toString(),
-          "ether"
+          'ether'
         ),
         requiredSignatures: formValues.multisigSignatures,
         creationBlock: EthBlocks.latest.number,
         code: code
       });
 
-      FlowRouter.go("dashboard");
+      FlowRouter.go('dashboard');
     }
 
     // IMPORT
-    if (type === "import") {
+    if (type === 'import') {
       var owners = _.uniq(
         _.compact(
-          _.map(TemplateVar.get("importWalletOwners"), function(item) {
+          _.map(TemplateVar.get('importWalletOwners'), function(item) {
             if (web3.utils.isAddress(item)) return item.toLowerCase();
           })
         )
@@ -363,11 +363,11 @@ Template["views_account_create"].events({
 
       if (owners.length === 0) return;
 
-      var address = template.find("input.import").value;
-      address = "0x" + address.replace("0x", "").toLowerCase();
+      var address = template.find('input.import').value;
+      address = '0x' + address.replace('0x', '').toLowerCase();
       if (Wallets.findOne({ address: address }))
         return GlobalNotification.warning({
-          content: "i18n:wallet.newWallet.error.alreadyExists",
+          content: 'i18n:wallet.newWallet.error.alreadyExists',
           duration: 2
         });
 
@@ -382,15 +382,15 @@ Template["views_account_create"].events({
         owners: owners,
         name:
           template.find('input[name="accountName"]').value ||
-          TAPi18n.__("wallet.accounts.defaultName"),
+          TAPi18n.__('wallet.accounts.defaultName'),
         address: address,
-        balance: "0",
+        balance: '0',
         // TODO set to 0
         creationBlock: 300000,
         imported: true
       });
 
-      FlowRouter.go("dashboard");
+      FlowRouter.go('dashboard');
     }
   }
 });

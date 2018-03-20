@@ -42,7 +42,7 @@ ethereumConfig = {
 
     @property ethereumConfig.dailyLimitDefault
     */
-  dailyLimitDefault: "100000000000000000000000000"
+  dailyLimitDefault: '100000000000000000000000000'
 };
 
 /**
@@ -51,14 +51,14 @@ Connects to a node and setup all the subscriptions for the accounts.
 @method connectToNode
 */
 connectToNode = function() {
-  console.time("startNode");
-  console.log("Connect to node...");
+  console.time('startNode');
+  console.log('Connect to node...');
 
   EthAccounts.init();
   EthBlocks.init();
   EthTools.ticker.start({
-    extraParams: typeof mist !== "undefined" ? "Mist-" + mist.version : "",
-    currencies: ["BTC", "USD", "EUR", "BRL", "GBP"]
+    extraParams: typeof mist !== 'undefined' ? 'Mist-' + mist.version : '',
+    currencies: ['BTC', 'USD', 'EUR', 'BRL', 'GBP']
   });
 
   if (EthAccounts.find().count() > 0) {
@@ -100,7 +100,7 @@ connectToNode = function() {
 
   observeCustomContracts();
 
-  console.timeEnd("startNode");
+  console.timeEnd('startNode');
 };
 
 /**
@@ -137,10 +137,10 @@ resetWallet = function function_name(argument) {
 
   web3.eth.clearSubscriptions();
 
-  console.log("The wallet will re-fetch log information in 6 seconds...");
+  console.log('The wallet will re-fetch log information in 6 seconds...');
 
   setTimeout(function() {
-    console.log("Fetching logs...");
+    console.log('Fetching logs...');
     connectToNode();
   }, 1000 * 6);
 };

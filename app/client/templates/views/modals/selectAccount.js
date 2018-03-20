@@ -11,7 +11,7 @@ The select account modal template
 @constructor
 */
 
-Template["views_modals_selectAccount"].helpers({
+Template['views_modals_selectAccount'].helpers({
   /**
     Return the accounts
 
@@ -24,13 +24,13 @@ Template["views_modals_selectAccount"].helpers({
   }
 });
 
-Template["views_modals_selectAccount"].events({
+Template['views_modals_selectAccount'].events({
   /**
     Select an account
 
     @event click .dapp-account-list button
     */
-  "click .dapp-account-list button": function(e, template) {
+  'click .dapp-account-list button': function(e, template) {
     template.data.callback(this.address);
     EthElements.Modal.hide();
   }

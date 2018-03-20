@@ -4,20 +4,20 @@ Template Controllers
 @module Templates
 */
 
-Template["elements_vulnerabilities_txorigin"].helpers({
+Template['elements_vulnerabilities_txorigin'].helpers({
   /**
     Upgrade parameters for the wallet
 
     @method (upgradeParams)
     */
   upgradeParams: function() {
-    var params = "walletId=" + this._id + "&name=" + this.name;
-    if (this.dailyLimit) params += "&dailyLimit=" + this.dailyLimit;
+    var params = 'walletId=' + this._id + '&name=' + this.name;
+    if (this.dailyLimit) params += '&dailyLimit=' + this.dailyLimit;
     if (this.requiredSignatures)
-      params += "&requiredSignatures=" + this.requiredSignatures;
+      params += '&requiredSignatures=' + this.requiredSignatures;
     if (this.owners) {
-      params += "&ownersNum=" + this.owners.length;
-      params += "&owners=" + this.owners.join(",");
+      params += '&ownersNum=' + this.owners.length;
+      params += '&owners=' + this.owners.join(',');
     }
 
     return params;
@@ -44,6 +44,6 @@ Template["elements_vulnerabilities_txorigin"].helpers({
       return _.contains(wal.owners, account.address);
     });
 
-    return wallet ? wallet.address : "";
+    return wallet ? wallet.address : '';
   }
 });

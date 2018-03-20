@@ -11,7 +11,7 @@ The dashboard template
 @constructor
 */
 
-Template["views_dashboard"].helpers({
+Template['views_dashboard'].helpers({
   /**
     Get all current wallets
 
@@ -59,8 +59,8 @@ Template["views_dashboard"].helpers({
     */
   hasMinimumBalance: function() {
     var enoughBalance = false;
-    _.each(_.pluck(EthAccounts.find({}).fetch(), "balance"), function(bal) {
-      if (new BigNumber(bal, "10").gt(1000000000000000)) enoughBalance = true;
+    _.each(_.pluck(EthAccounts.find({}).fetch(), 'balance'), function(bal) {
+      if (new BigNumber(bal, '10').gt(1000000000000000)) enoughBalance = true;
     });
 
     return enoughBalance;
@@ -85,18 +85,18 @@ Template["views_dashboard"].helpers({
         operation: { $exists: true },
         confirmedOwners: { $ne: [] }
       }).fetch(),
-      "_id"
+      '_id'
     );
   }
 });
 
-Template["views_dashboard"].events({
+Template['views_dashboard'].events({
   /**
     Request to create an account in mist
 
     @event click .create.account
     */
-  "click .create.account": function(e) {
+  'click .create.account': function(e) {
     e.preventDefault();
 
     mist.requestAccount(function(e, accounts) {

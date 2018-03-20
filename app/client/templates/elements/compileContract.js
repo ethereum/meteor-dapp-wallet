@@ -14,34 +14,34 @@ Example usage
 @class [template] elements_compileContract
 @constructor
 */
-Template["elements_compileContract"].onCreated(function() {
+Template['elements_compileContract'].onCreated(function() {
   var template = this;
 
   // set the defaults
-  TemplateVar.set("txData", "");
-  TemplateVar.set("constructorInputs", []);
+  TemplateVar.set('txData', '');
+  TemplateVar.set('constructorInputs', []);
   TemplateVar.set(
-    "selectedType",
-    this.data.onlyByteCode ? "byte-code" : "source-code"
+    'selectedType',
+    this.data.onlyByteCode ? 'byte-code' : 'source-code'
   );
   TemplateVar.set(
-    "compiledContracts",
-    JSON.parse(localStorage["compiledContracts"] || null)
+    'compiledContracts',
+    JSON.parse(localStorage['compiledContracts'] || null)
   );
   TemplateVar.set(
-    "selectedContract",
-    JSON.parse(localStorage["selectedContract"] || null)
+    'selectedContract',
+    JSON.parse(localStorage['selectedContract'] || null)
   );
 
   // focus the editors
   this.autorun(function(c) {
     // react in the selectedType
-    var value = TemplateVar.get("selectedType");
+    var value = TemplateVar.get('selectedType');
 
     // focus the editors
     if (!c.firstRun) {
       Tracker.afterFlush(function() {
-        if (value === "byte-code") template.$(".dapp-data-textarea").focus();
+        if (value === 'byte-code') template.$('.dapp-data-textarea').focus();
         else template.aceEditor.focus();
       });
     }
@@ -60,14 +60,14 @@ Template["elements_compileContract"].onCreated(function() {
     if (runDelayed) runDelayed.depend();
 
     // selected contract
-    var selectedContract = TemplateVar.get("selectedContract");
-    var constructorInputs = _.clone(TemplateVar.get("constructorInputs"));
-    var selectedToken = TemplateVar.getFrom(".select-token", "selectedToken");
-    var selectedType = TemplateVar.get("selectedType");
-    var textareaData = TemplateVar.getFrom(".dapp-data-textarea", "value");
-    var txData = "";
+    var selectedContract = TemplateVar.get('selectedContract');
+    var constructorInputs = _.clone(TemplateVar.get('constructorInputs'));
+    var selectedToken = TemplateVar.getFrom('.select-token', 'selectedToken');
+    var selectedType = TemplateVar.get('selectedType');
+    var textareaData = TemplateVar.getFrom('.dapp-data-textarea', 'value');
+    var txData = '';
 
-    if (selectedType && selectedType === "source-code" && selectedContract) {
+    if (selectedType && selectedType === 'source-code' && selectedContract) {
       // generate new contract code
       try {
         txData = new web3.eth.Contract(selectedContract.jsonInterface)
@@ -77,46 +77,46 @@ Template["elements_compileContract"].onCreated(function() {
           })
           .encodeABI();
       } catch (error) {
-        console.log("Error setting txData: ", error);
+        console.log('Error setting txData: ', error);
       }
 
-      TemplateVar.set("contract", selectedContract);
+      TemplateVar.set('contract', selectedContract);
 
       // Save data to localstorage
       localStorage.setItem(
-        "selectedContract",
+        'selectedContract',
         JSON.stringify(selectedContract)
       );
     } else {
       // Bytecode Data
-      if (!selectedToken || selectedToken === "ether") {
+      if (!selectedToken || selectedToken === 'ether') {
         // send ether
-        txData = TemplateVar.get("show") ? textareaData : "";
+        txData = TemplateVar.get('show') ? textareaData : '';
       }
     }
 
-    TemplateVar.set("txData", txData);
+    TemplateVar.set('txData', txData);
   });
 });
 
 editor = {};
-Template["elements_compileContract"].onRendered(function() {
+Template['elements_compileContract'].onRendered(function() {
   var template = this;
 
-  this.aceEditor = ace.edit("contract-source-editor");
+  this.aceEditor = ace.edit('contract-source-editor');
   this.aceEditor.setOptions({
     useWorker: false,
     minLines: 10,
     maxLines: 30,
     highlightActiveLine: false
   });
-  this.aceEditor.setTheme("ace/theme/tomorrow");
-  this.aceEditor.getSession().setMode("ace/mode/typescript");
+  this.aceEditor.setTheme('ace/theme/tomorrow');
+  this.aceEditor.getSession().setMode('ace/mode/typescript');
   this.aceEditor.$blockScrolling = Infinity;
   this.aceEditor.focus();
 
   var defaultCode =
-    localStorage["contractSource"] || Helpers.getDefaultContractExample();
+    localStorage['contractSource'] || Helpers.getDefaultContractExample();
   this.aceEditor.setValue(defaultCode);
   this.aceEditor.selection.selectTo(0);
 
@@ -124,14 +124,14 @@ Template["elements_compileContract"].onRendered(function() {
 
   // WATCH FOR CHANGES
   this.aceEditor.getSession().on(
-    "change",
+    'change',
     _.debounce(function(e) {
       var sourceCode = template.aceEditor.getValue();
 
-      localStorage.setItem("contractSource", sourceCode);
+      localStorage.setItem('contractSource', sourceCode);
 
-      TemplateVar.set(template, "compiling", true);
-      TemplateVar.set(template, "compileError", false);
+      TemplateVar.set(template, 'compiling', true);
+      TemplateVar.set(template, 'compileError', false);
 
       Meteor.setTimeout(function(argument) {
         web3.eth.compile.solidity(sourceCode, function(
@@ -140,8 +140,8 @@ Template["elements_compileContract"].onRendered(function() {
         ) {
           // read the fields again
           Tracker.afterFlush(function() {
-            TemplateVar.set(template, "compiling", false);
-            template.$(".abi-input").trigger("input");
+            TemplateVar.set(template, 'compiling', false);
+            template.$('.abi-input').trigger('input');
           });
 
           // clean all error markers
@@ -158,7 +158,7 @@ Template["elements_compileContract"].onRendered(function() {
 
               // find the constructor function
               var constructor = _.find(jsonInterface, function(func) {
-                return func.type == "constructor";
+                return func.type == 'constructor';
               });
 
               // substring the type so that string32 and string16 wont need different templates
@@ -175,38 +175,38 @@ Template["elements_compileContract"].onRendered(function() {
 
               return {
                 name: name,
-                bytecode: "0x" + contract.bytecode.replace(/^0x/, ""),
+                bytecode: '0x' + contract.bytecode.replace(/^0x/, ''),
                 jsonInterface: jsonInterface,
                 constructorInputs: constructor.inputs
               };
             });
 
-            TemplateVar.set(template, "selectedContract", null);
-            TemplateVar.set(template, "compiledContracts", compiledContracts);
+            TemplateVar.set(template, 'selectedContract', null);
+            TemplateVar.set(template, 'compiledContracts', compiledContracts);
             localStorage.setItem(
-              "compiledContracts",
+              'compiledContracts',
               JSON.stringify(compiledContracts)
             );
           } else {
             // Converts error into multiple bits
             var errorLine = error
               .toString()
-              .replace("Error:", "")
-              .split(":");
+              .replace('Error:', '')
+              .split(':');
 
             if (errorLine.length < 4) {
               // If it can't break the error then return all
-              TemplateVar.set(template, "compileError", error);
+              TemplateVar.set(template, 'compileError', error);
             } else {
               // Finds a ^____^ pattern
               var foundPattern = errorLine[5].match(/(\^-*\^)/g);
               var errorLength = foundPattern ? foundPattern[0].length : 0;
 
               // Hightlights the error
-              var Range = ace.require("ace/range").Range;
+              var Range = ace.require('ace/range').Range;
               editor.session.addMarker(
                 new Range(errorLine[2] - 1, 0, errorLine[2] - 1, 200),
-                "errorMarker"
+                'errorMarker'
               );
               editor.session.addMarker(
                 new Range(
@@ -215,15 +215,15 @@ Template["elements_compileContract"].onRendered(function() {
                   errorLine[2] - 1,
                   Number(errorLine[3]) + errorLength
                 ),
-                "errorMarker"
+                'errorMarker'
               );
 
               // Doesnt compile in solidity either, throw error
-              TemplateVar.set(template, "compileError", errorLine[5]);
+              TemplateVar.set(template, 'compileError', errorLine[5]);
             }
 
-            TemplateVar.set(template, "compiledContracts", false);
-            TemplateVar.set(template, "selectedContract", false);
+            TemplateVar.set(template, 'compiledContracts', false);
+            TemplateVar.set(template, 'selectedContract', false);
           }
         });
       }, 100);
@@ -231,11 +231,11 @@ Template["elements_compileContract"].onRendered(function() {
   );
 });
 
-Template["elements_compileContract"].onDestroyed(function() {
+Template['elements_compileContract'].onDestroyed(function() {
   if (this.aceEditor) this.aceEditor.destroy();
 });
 
-Template["elements_compileContract"].helpers({
+Template['elements_compileContract'].helpers({
   /**
     This helper will react to changes of the data context
 
@@ -243,15 +243,15 @@ Template["elements_compileContract"].helpers({
     */
   reactiveContext: function() {
     if (this.onlyByteCode) {
-      TemplateVar.set("selectedType", "byte-code");
+      TemplateVar.set('selectedType', 'byte-code');
 
       Tracker.nonreactive(function() {
-        if (_.isEmpty(TemplateVar.getFrom(".dapp-data-textarea", "value"))) {
-          TemplateVar.set("show", false);
+        if (_.isEmpty(TemplateVar.getFrom('.dapp-data-textarea', 'value'))) {
+          TemplateVar.set('show', false);
         }
       });
     } else {
-      TemplateVar.set("show", true);
+      TemplateVar.set('show', true);
     }
   },
   /**
@@ -260,31 +260,31 @@ Template["elements_compileContract"].helpers({
     @method (selectedContractInputs)
     */
   selectedContractInputs: function() {
-    selectedContract = TemplateVar.get("selectedContract");
+    selectedContract = TemplateVar.get('selectedContract');
     return selectedContract ? selectedContract.constructorInputs : [];
   }
 });
 
-Template["elements_compileContract"].events({
+Template['elements_compileContract'].events({
   /**
     Show the extra data field
     
     @event click button.show-data
     */
-  "click button.show-data": function(e) {
+  'click button.show-data': function(e) {
     e.preventDefault();
-    TemplateVar.set("show", true);
+    TemplateVar.set('show', true);
   },
   /**
     Show the extra data field
     
     @event click button.hide-data
     */
-  "click button.hide-data": function(e, template) {
+  'click button.hide-data': function(e, template) {
     e.preventDefault();
-    TemplateVar.setTo(".dapp-data-textarea", "value", "");
+    TemplateVar.setTo('.dapp-data-textarea', 'value', '');
     Tracker.afterFlush(function() {
-      TemplateVar.set(template, "show", false);
+      TemplateVar.set(template, 'show', false);
     });
   },
   /**
@@ -292,17 +292,17 @@ Template["elements_compileContract"].events({
     
     @event click .dapp-segmented-control input
     */
-  "click .dapp-segmented-control input": function(e, template) {
-    TemplateVar.set("selectedType", e.currentTarget.value);
+  'click .dapp-segmented-control input': function(e, template) {
+    TemplateVar.set('selectedType', e.currentTarget.value);
   },
   /**
     Selected a contract function
     
     @event 'change .contract-functions
     */
-  "change .compiled-contracts": function(e, template) {
+  'change .compiled-contracts': function(e, template) {
     // set a contract as selected
-    var compiledContracts = TemplateVar.get("compiledContracts");
+    var compiledContracts = TemplateVar.get('compiledContracts');
 
     _.each(compiledContracts, function(contract) {
       contract.selected = contract.name == e.currentTarget.value;
@@ -314,16 +314,16 @@ Template["elements_compileContract"].events({
     });
 
     // change the inputs and data field
-    TemplateVar.set("selectedContract", selectedContract);
-    TemplateVar.set("compiledContracts", compiledContracts);
+    TemplateVar.set('selectedContract', selectedContract);
+    TemplateVar.set('compiledContracts', compiledContracts);
     localStorage.setItem(
-      "compiledContracts",
+      'compiledContracts',
       JSON.stringify(compiledContracts)
     );
 
     Tracker.afterFlush(function() {
       // Run all inputs through formatter to catch bools
-      template.$(".abi-input").trigger("change");
+      template.$('.abi-input').trigger('change');
     });
   },
   /**
@@ -331,23 +331,23 @@ Template["elements_compileContract"].events({
     
     @event change abi-input, input .abi-input
     */
-  "change .abi-input, input .abi-input": function(e, template) {
-    var selectedContract = TemplateVar.get("selectedContract");
+  'change .abi-input, input .abi-input': function(e, template) {
+    var selectedContract = TemplateVar.get('selectedContract');
     var inputs = Helpers.addInputValue(
       selectedContract.constructorInputs,
       this,
       e.currentTarget
     );
 
-    TemplateVar.set("constructorInputs", inputs);
+    TemplateVar.set('constructorInputs', inputs);
   },
   /**
     Change the data
 
     @event change textarea.dapp-data-textarea
     */
-  "change textarea.dapp-data-textarea": function(e) {
+  'change textarea.dapp-data-textarea': function(e) {
     var value = e.currentTarget.value;
-    TemplateVar.set("txData", value);
+    TemplateVar.set('txData', value);
   }
 });

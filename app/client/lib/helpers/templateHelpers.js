@@ -16,7 +16,7 @@ A simple template helper to log objects in the console.
 
 @method (debug)
 **/
-Template.registerHelper("debug", function(object) {
+Template.registerHelper('debug', function(object) {
   console.log(object);
 });
 
@@ -25,8 +25,8 @@ Check if in mist
 
 @method (isMist)
 **/
-Template.registerHelper("isMist", function() {
-  return typeof window.mist !== "undefined";
+Template.registerHelper('isMist', function() {
+  return typeof window.mist !== 'undefined';
 });
 
 /**
@@ -34,8 +34,8 @@ Check if in mist and in mist mode
 
 @method (isWalletMode)
 **/
-Template.registerHelper("isWalletMode", function() {
-  return window.mistMode === "wallet" || typeof mist === "undefined"; // also show network info in normal browsers
+Template.registerHelper('isWalletMode', function() {
+  return window.mistMode === 'wallet' || typeof mist === 'undefined'; // also show network info in normal browsers
 });
 
 /**
@@ -43,14 +43,14 @@ Check if currency unit is an ether unit
 
 @method (isEtherUnit)
 **/
-Template.registerHelper("isEtherUnit", function() {
+Template.registerHelper('isEtherUnit', function() {
   var unit = EthTools.getUnit();
   return !(
-    unit === "usd" ||
-    unit === "eur" ||
-    unit === "btc" ||
-    unit === "gbp" ||
-    unit === "brl"
+    unit === 'usd' ||
+    unit === 'eur' ||
+    unit === 'btc' ||
+    unit === 'gbp' ||
+    unit === 'brl'
   );
 });
 
@@ -60,7 +60,7 @@ Check if wallet has vulnerabilities
 @method (isVulnerable)
 @param {String} address and address of a wallet/account
 **/
-Template.registerHelper("isVulnerable", function(address) {
+Template.registerHelper('isVulnerable', function(address) {
   var account = _.isString(address)
     ? Helpers.getAccountByAddress(address)
     : this;
@@ -103,7 +103,7 @@ Return the current unit
 
 @method (unit)
 **/
-Template.registerHelper("unit", function() {
+Template.registerHelper('unit', function() {
   return EthTools.getUnit();
 });
 
@@ -112,7 +112,7 @@ Return the latest block
 
 @method (latestBlock)
 **/
-Template.registerHelper("latestBlock", function() {
+Template.registerHelper('latestBlock', function() {
   return EthBlocks.latest;
 });
 
@@ -121,9 +121,9 @@ Returns a list of accounts and wallets sorted by balance
 
 @method (latestBlock)
 **/
-Template.registerHelper("selectAccounts", function(hideWallets) {
+Template.registerHelper('selectAccounts', function(hideWallets) {
   var accounts = EthAccounts.find(
-    { balance: { $ne: "0" } },
+    { balance: { $ne: '0' } },
     { sort: { balance: 1 } }
   ).fetch();
 
@@ -156,15 +156,15 @@ Check if the given wallet is a watch only wallet, by checking if we are one of o
 @method (isWatchOnly)
 @param {String} id the id of the wallet to check
 **/
-Template.registerHelper("isWatchOnly", Helpers.isWatchOnly);
+Template.registerHelper('isWatchOnly', Helpers.isWatchOnly);
 
 /**
 Return the right wallet icon
 
 @method (walletIcon)
 **/
-Template.registerHelper("walletIcon", function() {
-  var icon = "";
+Template.registerHelper('walletIcon', function() {
+  var icon = '';
 
   if (!_.isUndefined(this.owners)) {
     if (Helpers.isWatchOnly(this._id))
@@ -181,7 +181,7 @@ Get the account name or display the address
 @method (accountNameOrAddress)
 @param {String} address
 */
-Template.registerHelper("accountNameOrAddress", function(address) {
+Template.registerHelper('accountNameOrAddress', function(address) {
   if ((account = Helpers.getAccountByAddress(address))) return account.name;
   else return address;
 });
@@ -196,7 +196,7 @@ Format a number based on decimal numbers
 @param {Number} decimals
 */
 Template.registerHelper(
-  "formatNumberByDecimals",
+  'formatNumberByDecimals',
   Helpers.formatNumberByDecimals
 );
 
@@ -211,7 +211,7 @@ Formats a timestamp to any format given.
 //@param {Boolean} realTime    Whether or not this helper should re-run every 10s
 @return {String} The formated time
 **/
-Template.registerHelper("formatTime", Helpers.formatTime);
+Template.registerHelper('formatTime', Helpers.formatTime);
 
 /**
 Formats a given transactions balance
@@ -225,7 +225,7 @@ Formats a given transactions balance
 @return {String} The formated value
 **/
 Template.registerHelper(
-  "formatTransactionBalance",
+  'formatTransactionBalance',
   Helpers.formatTransactionBalance
 );
 
@@ -236,8 +236,8 @@ Formats address to a CaseChecksum
 @param {String} address             The address
 @return {String} checksumAddress    The returned, checksummed address
 **/
-Template.registerHelper("toChecksumAddress", function(address) {
-  return _.isString(address) ? web3.utils.toChecksumAddress(address) : "";
+Template.registerHelper('toChecksumAddress', function(address) {
+  return _.isString(address) ? web3.utils.toChecksumAddress(address) : '';
 });
 
 /**
@@ -247,4 +247,4 @@ Takes a camelcase and shows it with spaces
 @param {string} camelCase    A name in CamelCase or snake_case format
 @return {string} sentence    The same name with spaces
 **/
-Template.registerHelper("toSentence", Helpers.toSentence);
+Template.registerHelper('toSentence', Helpers.toSentence);

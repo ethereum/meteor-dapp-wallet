@@ -5,11 +5,11 @@ Modal to add watch contracts.
 @constructor
 */
 
-Template["views_modals_addCustomContract"].onRendered(function() {
+Template['views_modals_addCustomContract'].onRendered(function() {
   this.$('input[name="address"]').focus();
 });
 
-Template["views_modals_addCustomContract"].events({
+Template['views_modals_addCustomContract'].events({
   /**
      Change Address
  
@@ -21,8 +21,8 @@ Template["views_modals_addCustomContract"].events({
     Helpers.getENSName(address, function(err, name, returnedAddr) {
       if (address.toLowerCase() == returnedAddr)
         template
-          .$("input.name")
-          .attr("disabled", "true")
+          .$('input.name')
+          .attr('disabled', 'true')
           .val(name)
           .change();
     });

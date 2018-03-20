@@ -1,14 +1,14 @@
 updateMistBadge = function() {
   var conf = PendingConfirmations.findOne({ operation: { $exists: true } });
   // set total balance in Mist menu, of no pending confirmation is Present
-  if (typeof mist !== "undefined" && (!conf || !conf.confirmedOwners.length)) {
+  if (typeof mist !== 'undefined' && (!conf || !conf.confirmedOwners.length)) {
     var accounts = EthAccounts.find({}).fetch();
     var wallets = Wallets.find({
-      owners: { $in: _.pluck(accounts, "address") }
+      owners: { $in: _.pluck(accounts, 'address') }
     }).fetch();
 
     var balance = _.reduce(
-      _.pluck(_.union(accounts, wallets), "balance"),
+      _.pluck(_.union(accounts, wallets), 'balance'),
       function(memo, num) {
         return memo + Number(num);
       },
@@ -16,14 +16,14 @@ updateMistBadge = function() {
     );
 
     mist.menu.setBadge(
-      EthTools.formatBalance(balance, "0.0 a", "ether") + " ETH"
+      EthTools.formatBalance(balance, '0.0 a', 'ether') + ' ETH'
     );
   }
 };
 
 // ADD MIST MENU
 updateMistMenu = function() {
-  if (typeof mist === "undefined") return;
+  if (typeof mist === 'undefined') return;
 
   var accounts = _.union(
     Wallets.find({}, { sort: { name: 1 } }).fetch(),
@@ -39,25 +39,25 @@ updateMistMenu = function() {
     // add/update mist menu
     mist.menu.clear();
     mist.menu.add(
-      "wallets",
+      'wallets',
       {
         position: 1,
-        name: TAPi18n.__("wallet.app.buttons.wallet"),
-        selected: routeName === "dashboard"
+        name: TAPi18n.__('wallet.app.buttons.wallet'),
+        selected: routeName === 'dashboard'
       },
       function() {
-        FlowRouter.go("/");
+        FlowRouter.go('/');
       }
     );
     mist.menu.add(
-      "send",
+      'send',
       {
         position: 2,
-        name: TAPi18n.__("wallet.app.buttons.send"),
-        selected: routeName === "send" || routeName === "sendTo"
+        name: TAPi18n.__('wallet.app.buttons.send'),
+        selected: routeName === 'send' || routeName === 'sendTo'
       },
       function() {
-        FlowRouter.go("/send");
+        FlowRouter.go('/send');
       }
     );
 
@@ -68,11 +68,11 @@ updateMistMenu = function() {
           position: 3 + index,
           name: account.name,
           badge:
-            EthTools.formatBalance(account.balance, "0 a", "ether") + " ETH",
-          selected: location.pathname === "/account/" + account.address
+            EthTools.formatBalance(account.balance, '0 a', 'ether') + ' ETH',
+          selected: location.pathname === '/account/' + account.address
         },
         function() {
-          FlowRouter.go("/account/" + account.address);
+          FlowRouter.go('/account/' + account.address);
         }
       );
     });

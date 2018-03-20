@@ -11,7 +11,7 @@ The transaction info template
 @constructor
 */
 
-Template["views_modals_transactionInfo"].helpers({
+Template['views_modals_transactionInfo'].helpers({
   /**
     Returns the current transaction
 
@@ -42,7 +42,7 @@ Template["views_modals_transactionInfo"].helpers({
 
     return token
       ? Helpers.formatNumberByDecimals(this.value, token.decimals) +
-          " " +
+          ' ' +
           token.symbol
       : this.value;
   },

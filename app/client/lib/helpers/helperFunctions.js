@@ -19,7 +19,7 @@ Get the default contract example
 **/
 Helpers.getDefaultContractExample = function(withoutPragma) {
   var source =
-    "contract MyContract {\n    /* Constructor */\n    function MyContract() public {\n\n    }\n}";
+    'contract MyContract {\n    /* Constructor */\n    function MyContract() public {\n\n    }\n}';
 
   if (withoutPragma) {
     return source;
@@ -28,12 +28,12 @@ Helpers.getDefaultContractExample = function(withoutPragma) {
 
     // Keep this for now as the Mist-API object will only be availabe from Mist version >= 0.8.9
     // so that older versions that will query code from wallet.ethereum.org won't use broken example code.
-    if (typeof mist !== "undefined" && mist.solidity && mist.solidity.version) {
+    if (typeof mist !== 'undefined' && mist.solidity && mist.solidity.version) {
       solcVersion = mist.solidity.version;
     } else {
-      solcVersion = "0.4.6";
+      solcVersion = '0.4.6';
     }
-    return "pragma solidity ^" + solcVersion + ";\n\n" + source;
+    return 'pragma solidity ^' + solcVersion + ';\n\n' + source;
   }
 };
 
@@ -46,8 +46,8 @@ Reruns functions reactively, based on an interval. Use it like so:
 @method rerun
 **/
 Helpers.rerun = {
-  "10s": new ReactiveTimer(10),
-  "1s": new ReactiveTimer(1)
+  '10s': new ReactiveTimer(10),
+  '1s': new ReactiveTimer(1)
 };
 
 /**
@@ -79,7 +79,7 @@ Helpers.getOwnedAccountFrom = function(accountList) {
     return accountList.indexOf(acc.address.toLowerCase()) >= 0;
   });
 
-  return fromAccount ? fromAccount.address : "";
+  return fromAccount ? fromAccount.address : '';
 };
 
 /**
@@ -107,7 +107,7 @@ Make a ID out of a given hash and prefix.
 */
 Helpers.makeId = function(prefix, hash) {
   return _.isString(hash)
-    ? prefix + "_" + hash.replace("0x", "").substr(0, 10)
+    ? prefix + '_' + hash.replace('0x', '').substr(0, 10)
     : null;
 };
 
@@ -119,10 +119,10 @@ Format a number based on decimal numbers
 @param {Number} decimals
 */
 Helpers.formatNumberByDecimals = function(number, decimals) {
-  var numberFormat = "0,0.";
+  var numberFormat = '0,0.';
 
   for (i = 0; i < Number(decimals); i++) {
-    numberFormat += "0";
+    numberFormat += '0';
   }
 
   return EthTools.formatNumber(
@@ -137,7 +137,7 @@ Display logs in the console for events.
 @method eventLogs
 */
 Helpers.eventLogs = function() {
-  console.log("EVENT LOG: ", arguments);
+  console.log('EVENT LOG: ', arguments);
 };
 
 /**
@@ -152,7 +152,7 @@ Helpers.checkChain = function(callback) {
 
   web3.eth.getCode(originalContractAddress, function(e, code) {
     if (code && code.length <= 2) {
-      if (_.isFunction(callback)) callback("Wrong chain!");
+      if (_.isFunction(callback)) callback('Wrong chain!');
     } else if (_.isFunction(callback)) callback(null);
   });
 };
@@ -166,7 +166,7 @@ Check if the given wallet is a watch only wallet, by checking if we are one of o
 Helpers.isWatchOnly = function(id) {
   return !Wallets.findOne({
     _id: id,
-    owners: { $in: _.pluck(EthAccounts.find({}).fetch(), "address") }
+    owners: { $in: _.pluck(EthAccounts.find({}).fetch(), 'address') }
   });
 };
 
@@ -178,18 +178,18 @@ Shows a notification and plays a sound
 @param {Object} the i18n values passed to the i18n text
 */
 Helpers.showNotification = function(i18nText, values, callback) {
-  if (Notification.permission === "granted") {
+  if (Notification.permission === 'granted') {
     var notification = new Notification(
-      TAPi18n.__(i18nText + ".title", values),
+      TAPi18n.__(i18nText + '.title', values),
       {
         // icon: 'http://cdn.sstatic.net/stackexchange/img/logos/so/so-icon.png',
-        body: TAPi18n.__(i18nText + ".text", values)
+        body: TAPi18n.__(i18nText + '.text', values)
       }
     );
 
     if (_.isFunction(callback)) notification.onclick = callback;
   }
-  if (typeof mist !== "undefined") mist.sounds.bip();
+  if (typeof mist !== 'undefined') mist.sounds.bip();
 };
 
 /**
@@ -232,7 +232,7 @@ Gets the docuement matching the given addess from the EthAccounts or Wallets col
 @param {String} name or address
 */
 Helpers.getAccountNameByAddress = function(address) {
-  if (typeof address != "undefined")
+  if (typeof address != 'undefined')
     var doc = Helpers.getAccountByAddress(address.toLowerCase());
 
   return doc ? doc.name : address;
@@ -271,17 +271,17 @@ Helpers.formatTime = function(time, format) {
 
   if (time) {
     if (_.isString(format) && !_.isEmpty(format)) {
-      if (format.toLowerCase() === "iso")
+      if (format.toLowerCase() === 'iso')
         time = Helpers.moment(time).toISOString();
-      else if (format.toLowerCase() === "fromnow") {
+      else if (format.toLowerCase() === 'fromnow') {
         // make reactive updating
-        Helpers.rerun["10s"].tick();
+        Helpers.rerun['10s'].tick();
         time = Helpers.moment(time).fromNow();
       } else time = Helpers.moment(time).format(format);
     }
 
     return time;
-  } else return "";
+  } else return '';
 };
 
 /**
@@ -300,22 +300,22 @@ Helpers.formatTransactionBalance = function(value, exchangeRates, unit) {
   if (unit instanceof Spacebars.kw) unit = null;
 
   var unit = unit || EthTools.getUnit(),
-    format = "0,0.00";
+    format = '0,0.00';
 
   if (
-    (unit === "usd" || unit === "eur" || unit === "btc") &&
+    (unit === 'usd' || unit === 'eur' || unit === 'btc') &&
     exchangeRates &&
     exchangeRates[unit]
   ) {
-    if (unit === "btc") format += "[000000]";
-    else format += "[0]";
+    if (unit === 'btc') format += '[000000]';
+    else format += '[0]';
 
-    var price = new BigNumber(String(web3.fromWei(value, "ether")), 10).times(
+    var price = new BigNumber(String(web3.fromWei(value, 'ether')), 10).times(
       exchangeRates[unit].price
     );
-    return EthTools.formatNumber(price, format) + " " + unit.toUpperCase();
+    return EthTools.formatNumber(price, format) + ' ' + unit.toUpperCase();
   } else {
-    return EthTools.formatBalance(value, format + "[0000000000000000] UNIT");
+    return EthTools.formatBalance(value, format + '[0000000000000000] UNIT');
   }
 };
 
@@ -334,26 +334,26 @@ Helpers.createTemplateDataFromInput = function(input, key) {
   input.index = key;
   input.typeShort = input.type.match(/[a-z]+/i);
   input.typeShort = input.typeShort[0];
-  input.bits = input.type.replace(input.typeShort, "");
+  input.bits = input.type.replace(input.typeShort, '');
   input.displayName = input.name
-    .replace(/([A-Z])/g, " $1")
+    .replace(/([A-Z])/g, ' $1')
     .replace(
       /([\-\_])/g,
       '&thinsp;<span class="punctuation">$1</span>&thinsp;'
     );
 
   if (
-    input.type.indexOf("[") === -1 &&
-    (input.typeShort === "string" ||
-      input.typeShort === "uint" ||
-      input.typeShort == "int" ||
-      input.typeShort == "address" ||
-      input.typeShort == "bool" ||
-      input.typeShort == "bytes")
+    input.type.indexOf('[') === -1 &&
+    (input.typeShort === 'string' ||
+      input.typeShort === 'uint' ||
+      input.typeShort == 'int' ||
+      input.typeShort == 'address' ||
+      input.typeShort == 'bool' ||
+      input.typeShort == 'bytes')
   ) {
-    input.template = "elements_input_" + input.typeShort;
+    input.template = 'elements_input_' + input.typeShort;
   } else {
-    input.template = "elements_input_json";
+    input.template = 'elements_input_json';
   }
 
   return input;
@@ -370,14 +370,14 @@ Adds the input value from a form field to the inputs array
 Helpers.addInputValue = function(inputs, currentInput, formField) {
   return (
     _.map(inputs, function(input) {
-      var value = _.isUndefined(input.value) ? "" : input.value;
+      var value = _.isUndefined(input.value) ? '' : input.value;
 
       if (
         currentInput.name === input.name &&
         currentInput.type === input.type &&
         currentInput.index === input.index
       ) {
-        if (input.type.indexOf("[") !== -1) {
+        if (input.type.indexOf('[') !== -1) {
           try {
             value = JSON.parse(formField.value);
           } catch (e) {
@@ -387,18 +387,18 @@ Helpers.addInputValue = function(inputs, currentInput, formField) {
           // force 0x at the start
         } else if (
           !_.isEmpty(formField.value) &&
-          (input.typeShort === "bytes" || input.typeShort === "address")
+          (input.typeShort === 'bytes' || input.typeShort === 'address')
         ) {
           // If it looks like hex, then add 0x before
-          value = /^[0-9a-f]+$/i.test(formField.value.replace("0x", ""))
-            ? "0x" + formField.value.replace("0x", "")
+          value = /^[0-9a-f]+$/i.test(formField.value.replace('0x', ''))
+            ? '0x' + formField.value.replace('0x', '')
             : null;
 
           // bool
-        } else if (input.typeShort === "bool") {
+        } else if (input.typeShort === 'bool') {
           value = !!formField.checked;
         } else {
-          value = formField.value || "";
+          value = formField.value || '';
         }
 
         input.value = value;
@@ -417,16 +417,16 @@ Takes a camelcase and shows it with spaces
 @return {string} sentence    The same name, sanitized, with spaces
 **/
 Helpers.toSentence = function(inputString, noHTML) {
-  if (typeof inputString == "undefined") {
+  if (typeof inputString == 'undefined') {
     return false;
   } else {
-    inputString = inputString.replace(/[^a-z0-9_]/gi, "");
+    inputString = inputString.replace(/[^a-z0-9_]/gi, '');
     if (noHTML === true)
       // only consider explicit true
-      return inputString.replace(/([A-Z]+|[0-9]+)/g, " $1").trim();
+      return inputString.replace(/([A-Z]+|[0-9]+)/g, ' $1').trim();
     else
       return inputString
-        .replace(/([A-Z]+|[0-9]+)/g, " $1")
+        .replace(/([A-Z]+|[0-9]+)/g, ' $1')
         .trim()
         .replace(/([\_])/g, '<span class="dapp-punctuation">$1</span>');
   }
@@ -439,23 +439,23 @@ Returns true if Main is the current network.
 @return {Bool}
 **/
 Helpers.isOnMainNetwork = function() {
-  return Session.get("network") == "main";
+  return Session.get('network') == 'main';
 };
 
 /**
 ENS Functions
 **/
 var sha3 = function(str, opt) {
-  return "0x" + web3.utils.sha3(str, opt).replace("0x", "");
+  return '0x' + web3.utils.sha3(str, opt).replace('0x', '');
 };
 
 function namehash(name) {
   var node =
-    "0x0000000000000000000000000000000000000000000000000000000000000000";
-  if (name != "") {
-    var labels = name.split(".");
+    '0x0000000000000000000000000000000000000000000000000000000000000000';
+  if (name != '') {
+    var labels = name.split('.');
     for (var i = labels.length - 1; i >= 0; i--) {
-      node = sha3(node + sha3(labels[i]).slice(2), { encoding: "hex" });
+      node = sha3(node + sha3(labels[i]).slice(2), { encoding: 'hex' });
     }
   }
   return node.toString();
@@ -464,278 +464,278 @@ function namehash(name) {
 var ensContractAbi = [
   {
     constant: true,
-    inputs: [{ name: "node", type: "bytes32" }],
-    name: "resolver",
-    outputs: [{ name: "", type: "address" }],
+    inputs: [{ name: 'node', type: 'bytes32' }],
+    name: 'resolver',
+    outputs: [{ name: '', type: 'address' }],
     payable: false,
-    type: "function"
+    type: 'function'
   },
   {
     constant: true,
-    inputs: [{ name: "node", type: "bytes32" }],
-    name: "owner",
-    outputs: [{ name: "", type: "address" }],
+    inputs: [{ name: 'node', type: 'bytes32' }],
+    name: 'owner',
+    outputs: [{ name: '', type: 'address' }],
     payable: false,
-    type: "function"
+    type: 'function'
   },
   {
     constant: false,
     inputs: [
-      { name: "node", type: "bytes32" },
-      { name: "label", type: "bytes32" },
-      { name: "owner", type: "address" }
+      { name: 'node', type: 'bytes32' },
+      { name: 'label', type: 'bytes32' },
+      { name: 'owner', type: 'address' }
     ],
-    name: "setSubnodeOwner",
+    name: 'setSubnodeOwner',
     outputs: [],
     payable: false,
-    type: "function"
+    type: 'function'
   },
   {
     constant: false,
     inputs: [
-      { name: "node", type: "bytes32" },
-      { name: "ttl", type: "uint64" }
+      { name: 'node', type: 'bytes32' },
+      { name: 'ttl', type: 'uint64' }
     ],
-    name: "setTTL",
+    name: 'setTTL',
     outputs: [],
     payable: false,
-    type: "function"
+    type: 'function'
   },
   {
     constant: true,
-    inputs: [{ name: "node", type: "bytes32" }],
-    name: "ttl",
-    outputs: [{ name: "", type: "uint64" }],
+    inputs: [{ name: 'node', type: 'bytes32' }],
+    name: 'ttl',
+    outputs: [{ name: '', type: 'uint64' }],
     payable: false,
-    type: "function"
+    type: 'function'
   },
   {
     constant: false,
     inputs: [
-      { name: "node", type: "bytes32" },
-      { name: "resolver", type: "address" }
+      { name: 'node', type: 'bytes32' },
+      { name: 'resolver', type: 'address' }
     ],
-    name: "setResolver",
+    name: 'setResolver',
     outputs: [],
     payable: false,
-    type: "function"
+    type: 'function'
   },
   {
     constant: false,
     inputs: [
-      { name: "node", type: "bytes32" },
-      { name: "owner", type: "address" }
+      { name: 'node', type: 'bytes32' },
+      { name: 'owner', type: 'address' }
     ],
-    name: "setOwner",
+    name: 'setOwner',
     outputs: [],
     payable: false,
-    type: "function"
+    type: 'function'
   },
   {
     anonymous: false,
     inputs: [
-      { indexed: true, name: "node", type: "bytes32" },
-      { indexed: false, name: "owner", type: "address" }
+      { indexed: true, name: 'node', type: 'bytes32' },
+      { indexed: false, name: 'owner', type: 'address' }
     ],
-    name: "Transfer",
-    type: "event"
+    name: 'Transfer',
+    type: 'event'
   },
   {
     anonymous: false,
     inputs: [
-      { indexed: true, name: "node", type: "bytes32" },
-      { indexed: true, name: "label", type: "bytes32" },
-      { indexed: false, name: "owner", type: "address" }
+      { indexed: true, name: 'node', type: 'bytes32' },
+      { indexed: true, name: 'label', type: 'bytes32' },
+      { indexed: false, name: 'owner', type: 'address' }
     ],
-    name: "NewOwner",
-    type: "event"
+    name: 'NewOwner',
+    type: 'event'
   },
   {
     anonymous: false,
     inputs: [
-      { indexed: true, name: "node", type: "bytes32" },
-      { indexed: false, name: "resolver", type: "address" }
+      { indexed: true, name: 'node', type: 'bytes32' },
+      { indexed: false, name: 'resolver', type: 'address' }
     ],
-    name: "NewResolver",
-    type: "event"
+    name: 'NewResolver',
+    type: 'event'
   },
   {
     anonymous: false,
     inputs: [
-      { indexed: true, name: "node", type: "bytes32" },
-      { indexed: false, name: "ttl", type: "uint64" }
+      { indexed: true, name: 'node', type: 'bytes32' },
+      { indexed: false, name: 'ttl', type: 'uint64' }
     ],
-    name: "NewTTL",
-    type: "event"
+    name: 'NewTTL',
+    type: 'event'
   }
 ];
 
 var resolverContractAbi = [
   {
     constant: true,
-    inputs: [{ name: "interfaceID", type: "bytes4" }],
-    name: "supportsInterface",
-    outputs: [{ name: "", type: "bool" }],
+    inputs: [{ name: 'interfaceID', type: 'bytes4' }],
+    name: 'supportsInterface',
+    outputs: [{ name: '', type: 'bool' }],
     payable: false,
-    type: "function"
+    type: 'function'
   },
   {
     constant: true,
     inputs: [
-      { name: "node", type: "bytes32" },
-      { name: "contentTypes", type: "uint256" }
+      { name: 'node', type: 'bytes32' },
+      { name: 'contentTypes', type: 'uint256' }
     ],
-    name: "ABI",
+    name: 'ABI',
     outputs: [
-      { name: "contentType", type: "uint256" },
-      { name: "data", type: "bytes" }
+      { name: 'contentType', type: 'uint256' },
+      { name: 'data', type: 'bytes' }
     ],
     payable: false,
-    type: "function"
+    type: 'function'
   },
   {
     constant: false,
     inputs: [
-      { name: "node", type: "bytes32" },
-      { name: "x", type: "bytes32" },
-      { name: "y", type: "bytes32" }
+      { name: 'node', type: 'bytes32' },
+      { name: 'x', type: 'bytes32' },
+      { name: 'y', type: 'bytes32' }
     ],
-    name: "setPubkey",
+    name: 'setPubkey',
     outputs: [],
     payable: false,
-    type: "function"
+    type: 'function'
   },
   {
     constant: true,
-    inputs: [{ name: "node", type: "bytes32" }],
-    name: "content",
-    outputs: [{ name: "ret", type: "bytes32" }],
+    inputs: [{ name: 'node', type: 'bytes32' }],
+    name: 'content',
+    outputs: [{ name: 'ret', type: 'bytes32' }],
     payable: false,
-    type: "function"
+    type: 'function'
   },
   {
     constant: true,
-    inputs: [{ name: "node", type: "bytes32" }],
-    name: "addr",
-    outputs: [{ name: "ret", type: "address" }],
+    inputs: [{ name: 'node', type: 'bytes32' }],
+    name: 'addr',
+    outputs: [{ name: 'ret', type: 'address' }],
     payable: false,
-    type: "function"
+    type: 'function'
   },
   {
     constant: false,
     inputs: [
-      { name: "node", type: "bytes32" },
-      { name: "contentType", type: "uint256" },
-      { name: "data", type: "bytes" }
+      { name: 'node', type: 'bytes32' },
+      { name: 'contentType', type: 'uint256' },
+      { name: 'data', type: 'bytes' }
     ],
-    name: "setABI",
+    name: 'setABI',
     outputs: [],
     payable: false,
-    type: "function"
+    type: 'function'
   },
   {
     constant: true,
-    inputs: [{ name: "node", type: "bytes32" }],
-    name: "name",
-    outputs: [{ name: "ret", type: "string" }],
+    inputs: [{ name: 'node', type: 'bytes32' }],
+    name: 'name',
+    outputs: [{ name: 'ret', type: 'string' }],
     payable: false,
-    type: "function"
+    type: 'function'
   },
   {
     constant: false,
     inputs: [
-      { name: "node", type: "bytes32" },
-      { name: "name", type: "string" }
+      { name: 'node', type: 'bytes32' },
+      { name: 'name', type: 'string' }
     ],
-    name: "setName",
+    name: 'setName',
     outputs: [],
     payable: false,
-    type: "function"
+    type: 'function'
   },
   {
     constant: false,
     inputs: [
-      { name: "node", type: "bytes32" },
-      { name: "hash", type: "bytes32" }
+      { name: 'node', type: 'bytes32' },
+      { name: 'hash', type: 'bytes32' }
     ],
-    name: "setContent",
+    name: 'setContent',
     outputs: [],
     payable: false,
-    type: "function"
+    type: 'function'
   },
   {
     constant: true,
-    inputs: [{ name: "node", type: "bytes32" }],
-    name: "pubkey",
-    outputs: [{ name: "x", type: "bytes32" }, { name: "y", type: "bytes32" }],
+    inputs: [{ name: 'node', type: 'bytes32' }],
+    name: 'pubkey',
+    outputs: [{ name: 'x', type: 'bytes32' }, { name: 'y', type: 'bytes32' }],
     payable: false,
-    type: "function"
+    type: 'function'
   },
   {
     constant: false,
     inputs: [
-      { name: "node", type: "bytes32" },
-      { name: "addr", type: "address" }
+      { name: 'node', type: 'bytes32' },
+      { name: 'addr', type: 'address' }
     ],
-    name: "setAddr",
+    name: 'setAddr',
     outputs: [],
     payable: false,
-    type: "function"
+    type: 'function'
   },
   {
-    inputs: [{ name: "ensAddr", type: "address" }],
+    inputs: [{ name: 'ensAddr', type: 'address' }],
     payable: false,
-    type: "constructor"
+    type: 'constructor'
   },
   {
     anonymous: false,
     inputs: [
-      { indexed: true, name: "node", type: "bytes32" },
-      { indexed: false, name: "a", type: "address" }
+      { indexed: true, name: 'node', type: 'bytes32' },
+      { indexed: false, name: 'a', type: 'address' }
     ],
-    name: "AddrChanged",
-    type: "event"
+    name: 'AddrChanged',
+    type: 'event'
   },
   {
     anonymous: false,
     inputs: [
-      { indexed: true, name: "node", type: "bytes32" },
-      { indexed: false, name: "hash", type: "bytes32" }
+      { indexed: true, name: 'node', type: 'bytes32' },
+      { indexed: false, name: 'hash', type: 'bytes32' }
     ],
-    name: "ContentChanged",
-    type: "event"
+    name: 'ContentChanged',
+    type: 'event'
   },
   {
     anonymous: false,
     inputs: [
-      { indexed: true, name: "node", type: "bytes32" },
-      { indexed: false, name: "name", type: "string" }
+      { indexed: true, name: 'node', type: 'bytes32' },
+      { indexed: false, name: 'name', type: 'string' }
     ],
-    name: "NameChanged",
-    type: "event"
+    name: 'NameChanged',
+    type: 'event'
   },
   {
     anonymous: false,
     inputs: [
-      { indexed: true, name: "node", type: "bytes32" },
-      { indexed: true, name: "contentType", type: "uint256" }
+      { indexed: true, name: 'node', type: 'bytes32' },
+      { indexed: true, name: 'contentType', type: 'uint256' }
     ],
-    name: "ABIChanged",
-    type: "event"
+    name: 'ABIChanged',
+    type: 'event'
   },
   {
     anonymous: false,
     inputs: [
-      { indexed: true, name: "node", type: "bytes32" },
-      { indexed: false, name: "x", type: "bytes32" },
-      { indexed: false, name: "y", type: "bytes32" }
+      { indexed: true, name: 'node', type: 'bytes32' },
+      { indexed: false, name: 'x', type: 'bytes32' },
+      { indexed: false, name: 'y', type: 'bytes32' }
     ],
-    name: "PubkeyChanged",
-    type: "event"
+    name: 'PubkeyChanged',
+    type: 'event'
   }
 ];
 
-var ensAddress = "0x314159265dd8dbb310642f98f50c066173c1259b";
+var ensAddress = '0x314159265dd8dbb310642f98f50c066173c1259b';
 
 /**
 Returns a string, given an address
@@ -747,9 +747,9 @@ Helpers.getENSName = function(address, callback) {
     return;
   }
 
-  if (Session.get("network") !== "main") {
+  if (Session.get('network') !== 'main') {
     callback(
-      "Cannot retrieve ENS addresses unless fully synced on main chain",
+      'Cannot retrieve ENS addresses unless fully synced on main chain',
       null,
       null
     );
@@ -757,7 +757,7 @@ Helpers.getENSName = function(address, callback) {
   }
 
   var node = namehash(
-    address.toLowerCase().replace("0x", "") + ".addr.reverse"
+    address.toLowerCase().replace('0x', '') + '.addr.reverse'
   );
   var ensContract = new web3.eth.Contract(ensContractAbi, ensAddress);
   var resolverContract = new web3.eth.Contract(resolverContractAbi);
@@ -765,13 +765,13 @@ Helpers.getENSName = function(address, callback) {
   // get a resolver address for that name
   ensContract.methods.resolver(node).call(function(err, resolverAddress) {
     if (err) callback(err, null, null);
-    else if (resolverAddress == 0) callback("no resolver address", null, null);
+    else if (resolverAddress == 0) callback('no resolver address', null, null);
     else {
       // if you find one, find the name on that resolver
       resolverContract.options.address = resolverAddress;
       resolverContract.methods.name(node).call(function(error, name) {
         if (err) callback(err, null, null);
-        else if (name == 0) callback("Found resolver but no name", null, null);
+        else if (name == 0) callback('Found resolver but no name', null, null);
         else {
           // any address can claim any name, we need to check the name now
           var node = namehash(name);
@@ -781,7 +781,7 @@ Helpers.getENSName = function(address, callback) {
             .call(function(err, resolverAddress) {
               if (err) callback(err, null, null);
               else if (resolverAddress == 0)
-                callback("Name has no resolver", null, null);
+                callback('Name has no resolver', null, null);
               else {
                 // if you find one, find the addr of that resolver
                 resolverContract.options.address = resolverAddress;
@@ -790,7 +790,7 @@ Helpers.getENSName = function(address, callback) {
                   .call(function(error, returnAddr) {
                     if (err) callback(err, null, null);
                     else if (returnAddr == 0)
-                      callback("No address returned", null, null);
+                      callback('No address returned', null, null);
                     else {
                       callback(error, name, returnAddr);
                     }

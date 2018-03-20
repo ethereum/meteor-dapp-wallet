@@ -5,11 +5,11 @@ Modal to add token.
 @constructor
 */
 
-Template["views_modals_addToken"].onRendered(function() {
+Template['views_modals_addToken'].onRendered(function() {
   if (!this.data || !this.data.address) this.$('input[name="address"]').focus();
 });
 
-Template["views_modals_addToken"].helpers({
+Template['views_modals_addToken'].helpers({
   /**
     Returns the token for the preview token box
 
@@ -18,40 +18,40 @@ Template["views_modals_addToken"].helpers({
   previewToken: function() {
     var token = _.clone(this || {});
 
-    if (TemplateVar.get("address")) token.address = TemplateVar.get("address");
-    if (TemplateVar.get("decimals"))
-      token.decimals = TemplateVar.get("decimals");
-    if (TemplateVar.get("symbol")) token.symbol = TemplateVar.get("symbol");
-    if (TemplateVar.get("name")) token.name = TemplateVar.get("name");
+    if (TemplateVar.get('address')) token.address = TemplateVar.get('address');
+    if (TemplateVar.get('decimals'))
+      token.decimals = TemplateVar.get('decimals');
+    if (TemplateVar.get('symbol')) token.symbol = TemplateVar.get('symbol');
+    if (TemplateVar.get('name')) token.name = TemplateVar.get('name');
 
     return token;
   }
 });
 
-Template["views_modals_addToken"].events({
+Template['views_modals_addToken'].events({
   /**
     Change Decimals
 
     @event change .decimals, input .decimals
     */
-  "change .decimals, input .decimals": function(e, template) {
-    TemplateVar.set("decimals", e.target.value);
+  'change .decimals, input .decimals': function(e, template) {
+    TemplateVar.set('decimals', e.target.value);
   },
   /**
     Change Symbol
 
     @event change input.symbol, input input.symbol
     */
-  "change input.symbol, input input.symbol": function(e, template) {
-    TemplateVar.set("symbol", e.target.value);
+  'change input.symbol, input input.symbol': function(e, template) {
+    TemplateVar.set('symbol', e.target.value);
   },
   /**
     Change Name
 
     @event change input.name, input input.name
     */
-  "change input.name, input input.name": function(e, template) {
-    TemplateVar.set("name", e.target.value);
+  'change input.name, input input.name': function(e, template) {
+    TemplateVar.set('name', e.target.value);
   },
   /**
     Change Address
@@ -62,11 +62,11 @@ Template["views_modals_addToken"].events({
     e,
     template
   ) {
-    var tokenAddress = TemplateVar.getFrom(".token-address", "value");
+    var tokenAddress = TemplateVar.getFrom('.token-address', 'value');
 
     var l = e.currentTarget.value.length;
     if (!tokenAddress && l > 2 && l < 6) {
-      e.currentTarget.value += ".thetoken.eth";
+      e.currentTarget.value += '.thetoken.eth';
       e.currentTarget.setSelectionRange(l, l + 13);
     }
 
@@ -78,12 +78,12 @@ Template["views_modals_addToken"].events({
     )
       return;
 
-    TemplateVar.set("address", tokenAddress);
+    TemplateVar.set('address', tokenAddress);
 
     // initiate the geo pattern
-    var pattern = GeoPattern.generate(tokenAddress, { color: "#CCC6C6" });
-    $(".example.wallet-box.tokens").css(
-      "background-image",
+    var pattern = GeoPattern.generate(tokenAddress, { color: '#CCC6C6' });
+    $('.example.wallet-box.tokens').css(
+      'background-image',
       pattern.toDataUrl()
     );
 
@@ -96,7 +96,7 @@ Template["views_modals_addToken"].events({
       .call()
       .then(function(symbol) {
         template
-          .$("input.symbol")
+          .$('input.symbol')
           .val(symbol)
           .change();
         return null;
@@ -107,7 +107,7 @@ Template["views_modals_addToken"].events({
       .call()
       .then(function(name) {
         template
-          .$("input.name")
+          .$('input.name')
           .val(name)
           .change();
         return null;
@@ -118,7 +118,7 @@ Template["views_modals_addToken"].events({
       .call()
       .then(function(decimals) {
         template
-          .$("input.decimals")
+          .$('input.decimals')
           .val(decimals)
           .change();
         return null;
@@ -129,7 +129,7 @@ Template["views_modals_addToken"].events({
 
     @event click .example.wallet-box.tokens
     */
-  "click .example.wallet-box.tokens": function(e) {
+  'click .example.wallet-box.tokens': function(e) {
     e.preventDefault();
   }
 });

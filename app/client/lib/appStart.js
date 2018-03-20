@@ -1,18 +1,18 @@
 // disconnect any meteor server
-if (location.hostname !== "localhost" && location.hostname !== "127.0.0.1")
+if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1')
   Meteor.disconnect();
 
 // Make sure the example contract code is up to date
-var contractSource = localStorage.getItem("contractSource");
+var contractSource = localStorage.getItem('contractSource');
 
 if (
   contractSource && // repopulate placeholder contract if:
-  (contractSource === "" || // source is empty or
+  (contractSource === '' || // source is empty or
     (contractSource.indexOf(Helpers.getDefaultContractExample(true)) !== -1 && // default 'MyContract' exists and
-      contractSource.split("contract ").length - 1 === 1))
+      contractSource.split('contract ').length - 1 === 1))
 ) {
   // 'MyContract' is the only contract
-  localStorage.setItem("contractSource", Helpers.getDefaultContractExample());
+  localStorage.setItem('contractSource', Helpers.getDefaultContractExample());
 }
 
 Meteor.Spinner.options = {
@@ -23,15 +23,15 @@ Meteor.Spinner.options = {
   corners: 1, // Corner roundness (0..1)
   rotate: 0, // The rotation offset
   direction: 1, // 1: clockwise, -1: counterclockwise
-  color: "#000", // #rgb or #rrggbb or array of colors
+  color: '#000', // #rgb or #rrggbb or array of colors
   speed: 1.7, // Rounds per second
   trail: 49, // Afterglow percentage
   shadow: false, // Whether to render a shadow
   hwaccel: false, // Whether to use hardware acceleration
-  className: "spinner", // The CSS class to assign to the spinner
+  className: 'spinner', // The CSS class to assign to the spinner
   zIndex: 10, // The z-index (defaults to 2000000000)
-  top: "50%", // Top position relative to parent
-  left: "50%" // Left position relative to parent
+  top: '50%', // Top position relative to parent
+  left: '50%' // Left position relative to parent
 };
 
 var checkSync = function() {
@@ -39,8 +39,8 @@ var checkSync = function() {
   web3.eth.isSyncing(function(error, syncing) {
     if (!error) {
       if (syncing === true) {
-        console.time("nodeRestarted");
-        console.log("Node started syncing, stopping app operation");
+        console.time('nodeRestarted');
+        console.log('Node started syncing, stopping app operation');
         web3.reset(true);
 
         // clear observers
@@ -58,14 +58,14 @@ var checkSync = function() {
         );
         syncing.blockDiff = numeral(
           syncing.highestBlock - syncing.currentBlock
-        ).format("0,0");
+        ).format('0,0');
 
-        TemplateVar.setTo("header nav", "syncing", syncing);
+        TemplateVar.setTo('header nav', 'syncing', syncing);
       } else {
-        console.timeEnd("nodeRestarted");
-        console.log("Restart app operation again");
+        console.timeEnd('nodeRestarted');
+        console.log('Restart app operation again');
 
-        TemplateVar.setTo("header nav", "syncing", false);
+        TemplateVar.setTo('header nav', 'syncing', false);
 
         // re-gain app operation
         connectToNode();
@@ -89,10 +89,10 @@ var connect = function() {
     Meteor.setTimeout(function() {
       // if in mist, tell to start geth, otherwise start with RPC
       var gethRPC = web3.admin
-        ? "geth"
-        : "geth --rpc --ws --wsorigins " +
+        ? 'geth'
+        : 'geth --rpc --ws --wsorigins ' +
           window.location.protocol +
-          "//" +
+          '//' +
           window.location.host +
           '"';
 
@@ -100,8 +100,8 @@ var connect = function() {
         {
           text: new Spacebars.SafeString(
             TAPi18n.__(
-              "wallet.app.texts.connectionError" +
-                (web3.admin ? "Mist" : "Browser"),
+              'wallet.app.texts.connectionError' +
+                (web3.admin ? 'Mist' : 'Browser'),
               { node: gethRPC }
             )
           ),

@@ -11,25 +11,25 @@ The execute contract template
 @constructor
 */
 
-Template["elements_executeContract"].onCreated(function() {
+Template['elements_executeContract'].onCreated(function() {
   var template = this;
 
   // Set Defaults
-  TemplateVar.set("sending", false);
+  TemplateVar.set('sending', false);
 
   // show execute part if its a custom contract
   if (CustomContracts.findOne({ address: template.data.address }))
-    TemplateVar.set("executionVisible", true);
+    TemplateVar.set('executionVisible', true);
 
   // check address for code
   web3.eth.getCode(template.data.address, function(e, code) {
     if (!e && code.length > 2) {
-      TemplateVar.set(template, "hasCode", true);
+      TemplateVar.set(template, 'hasCode', true);
     }
   });
 });
 
-Template["elements_executeContract"].helpers({
+Template['elements_executeContract'].helpers({
   /**
     Reruns when the data context changes
 
@@ -48,7 +48,7 @@ Template["elements_executeContract"].helpers({
       func = _.clone(func);
 
       // Walk throught the jsonInterface and extract functions and constants
-      if (func.type == "function") {
+      if (func.type == 'function') {
         func.contractInstance = contractInstance;
         func.inputs = _.map(func.inputs, Helpers.createTemplateDataFromInput);
 
@@ -62,30 +62,30 @@ Template["elements_executeContract"].helpers({
       }
     });
 
-    TemplateVar.set("contractConstants", contractConstants);
-    TemplateVar.set("contractFunctions", contractFunctions);
+    TemplateVar.set('contractConstants', contractConstants);
+    TemplateVar.set('contractFunctions', contractFunctions);
   }
 });
 
-Template["elements_executeContract"].events({
+Template['elements_executeContract'].events({
   /**
     Select a contract function
     
     @event 'change .select-contract-function
     */
-  "change .select-contract-function": function(e, template) {
-    TemplateVar.set("executeData", null);
+  'change .select-contract-function': function(e, template) {
+    TemplateVar.set('executeData', null);
 
     // change the inputs and data field
     TemplateVar.set(
-      "selectedFunction",
-      _.find(TemplateVar.get("contractFunctions"), function(contract) {
+      'selectedFunction',
+      _.find(TemplateVar.get('contractFunctions'), function(contract) {
         return contract.name === e.currentTarget.value;
       })
     );
 
     Tracker.afterFlush(function() {
-      $(".abi-input").trigger("change");
+      $('.abi-input').trigger('change');
     });
   },
   /**
@@ -93,8 +93,8 @@ Template["elements_executeContract"].events({
 
     @event click .toggle-visibility
     */
-  "click .toggle-visibility": function() {
-    TemplateVar.set("executionVisible", !TemplateVar.get("executionVisible"));
+  'click .toggle-visibility': function() {
+    TemplateVar.set('executionVisible', !TemplateVar.get('executionVisible'));
   }
 });
 
@@ -114,7 +114,7 @@ var formatOutput = function(val) {
   if (_.isArray(val)) return _.map(val, formatOutput);
   else {
     // stringify boolean
-    if (_.isBoolean(val)) val = val ? "YES" : "NO";
+    if (_.isBoolean(val)) val = val ? 'YES' : 'NO';
 
     // convert bignumber objects
     val = _.isObject(val) && val.toString ? val.toString(10) : val;
@@ -123,12 +123,12 @@ var formatOutput = function(val) {
   }
 };
 
-Template["elements_executeContract_constant"].onCreated(function() {
+Template['elements_executeContract_constant'].onCreated(function() {
   var template = this;
 
   // initialize our input data prior to the first call
   TemplateVar.set(
-    "inputs",
+    'inputs',
     _.map(template.data.inputs, function(input) {
       return Helpers.addInputValue([input], input, {})[0];
     })
@@ -140,11 +140,11 @@ Template["elements_executeContract_constant"].onCreated(function() {
     EthBlocks.latest;
 
     // get args for the constant function
-    var args = TemplateVar.get("inputs");
+    var args = TemplateVar.get('inputs');
 
     // format blank args to hex for web3.js
     args = _.map(args, function(arg) {
-      return arg === "" ? "0x00" : arg;
+      return arg === '' ? '0x00' : arg;
     });
 
     var callback = function(e, r) {
@@ -163,7 +163,7 @@ Template["elements_executeContract_constant"].onCreated(function() {
           });
         }
 
-        TemplateVar.set(template, "outputs", outputs);
+        TemplateVar.set(template, 'outputs', outputs);
       }
     };
 
@@ -173,14 +173,14 @@ Template["elements_executeContract_constant"].onCreated(function() {
         .call(callback);
     } catch (error) {
       console.log(
-        "Error executing contract method " + template.data.name + ": ",
+        'Error executing contract method ' + template.data.name + ': ',
         error
       );
     }
   });
 });
 
-Template["elements_executeContract_constant"].helpers({
+Template['elements_executeContract_constant'].helpers({
   /**
     Formats the value if its a big number or array
 
@@ -204,25 +204,25 @@ Template["elements_executeContract_constant"].helpers({
       data < 1800000000 &&
       Math.floor(data / 1000) != data / 1000
     ) {
-      return "(" + moment(data * 1000).fromNow() + ")";
+      return '(' + moment(data * 1000).fromNow() + ')';
     }
 
-    if (data == "YES") {
+    if (data == 'YES') {
       return '<span class="icon icon-check"></span>';
-    } else if (data == "NO") {
+    } else if (data == 'NO') {
       return '<span class="icon icon-ban"></span>';
     }
     return;
   }
 });
 
-Template["elements_executeContract_constant"].events({
+Template['elements_executeContract_constant'].events({
   /**
     React on user input on the constant functions
 
     @event change .abi-input, input .abi-input
     */
-  "change .abi-input, input .abi-input, blur .abi-input": function(
+  'change .abi-input, input .abi-input, blur .abi-input': function(
     e,
     template
   ) {
@@ -231,7 +231,7 @@ Template["elements_executeContract_constant"].events({
       this,
       e.currentTarget
     );
-    TemplateVar.set("inputs", inputs);
+    TemplateVar.set('inputs', inputs);
   }
 });
 
@@ -242,7 +242,7 @@ The contract function template
 @constructor
 */
 
-Template["elements_executeContract_function"].onCreated(function() {
+Template['elements_executeContract_function'].onCreated(function() {
   var template = this;
 
   // change the amount when the currency unit is changed
@@ -251,9 +251,9 @@ Template["elements_executeContract_function"].onCreated(function() {
 
     if (!c.firstRun) {
       TemplateVar.set(
-        "amount",
+        'amount',
         EthTools.toWei(
-          template.find('input[name="amount"]').value.replace(",", "."),
+          template.find('input[name="amount"]').value.replace(',', '.'),
           unit
         )
       );
@@ -261,16 +261,16 @@ Template["elements_executeContract_function"].onCreated(function() {
   });
 });
 
-Template["elements_executeContract_function"].onRendered(function() {
+Template['elements_executeContract_function'].onRendered(function() {
   // Run all inputs through formatter to catch bools
-  this.$(".abi-input").trigger("change");
+  this.$('.abi-input').trigger('change');
 });
 
-Template["elements_executeContract_function"].helpers({
+Template['elements_executeContract_function'].helpers({
   reactiveDataContext: function() {
     if (this.inputs.length === 0)
       TemplateVar.set(
-        "executeData",
+        'executeData',
         this.contractInstance.methods[this.name].encodeABI()
       );
   },
@@ -279,7 +279,7 @@ Template["elements_executeContract_function"].helpers({
   }
 });
 
-Template["elements_executeContract_function"].events({
+Template['elements_executeContract_function'].events({
   /**
     Set the amount while typing
     
@@ -289,15 +289,15 @@ Template["elements_executeContract_function"].events({
     e,
     template
   ) {
-    var wei = EthTools.toWei(e.currentTarget.value.replace(",", "."));
-    TemplateVar.set("amount", wei || "0");
+    var wei = EthTools.toWei(e.currentTarget.value.replace(',', '.'));
+    TemplateVar.set('amount', wei || '0');
   },
   /**
     React on user input on the execute functions
 
     @event change .abi-input, input .abi-input
     */
-  "change .abi-input, input .abi-input, blur .abi-input": function(
+  'change .abi-input, input .abi-input, blur .abi-input': function(
     e,
     template
   ) {
@@ -308,7 +308,7 @@ Template["elements_executeContract_function"].events({
     );
 
     TemplateVar.set(
-      "executeData",
+      'executeData',
       template.data.contractInstance.methods[template.data.name]
         .apply(null, inputs)
         .encodeABI()
@@ -319,18 +319,18 @@ Template["elements_executeContract_function"].events({
 
     @event click .execute
     */
-  "click .execute": function(e, template) {
+  'click .execute': function(e, template) {
     var to = template.data.contractInstance.options.address,
       gasPrice = 50000000000,
       estimatedGas = undefined /* (typeof mist == 'undefined')not working */,
-      amount = TemplateVar.get("amount") || 0,
+      amount = TemplateVar.get('amount') || 0,
       selectedAccount = Helpers.getAccountByAddress(
         TemplateVar.getFrom(
           '.execute-contract select[name="dapp-select-account"]',
-          "value"
+          'value'
         )
       ),
-      data = TemplateVar.get("executeData");
+      data = TemplateVar.get('executeData');
 
     var latestTransaction = Transactions.findOne(
       {},
@@ -340,20 +340,20 @@ Template["elements_executeContract_function"].events({
       gasPrice = latestTransaction.gasPrice;
 
     if (selectedAccount) {
-      console.log("Providing gas: ", estimatedGas, " + 100000");
+      console.log('Providing gas: ', estimatedGas, ' + 100000');
 
-      if (selectedAccount.balance === "0")
+      if (selectedAccount.balance === '0')
         return GlobalNotification.warning({
-          content: "i18n:wallet.send.error.emptyWallet",
+          content: 'i18n:wallet.send.error.emptyWallet',
           duration: 2
         });
 
       // The function to send the transaction
       var sendTransaction = function(estimatedGas) {
-        TemplateVar.set("sending", true);
+        TemplateVar.set('sending', true);
 
         // CONTRACT TX
-        if (contracts["ct_" + selectedAccount._id]) {
+        if (contracts['ct_' + selectedAccount._id]) {
           // Load the accounts owned by user and sort by balance
           var accounts = EthAccounts.find(
             { name: { $exists: true } },
@@ -366,21 +366,21 @@ Template["elements_executeContract_function"].events({
             return selectedAccount.owners.indexOf(acc.address) >= 0;
           });
 
-          contracts["ct_" + selectedAccount._id].execute.sendTransaction(
-            to || "",
-            amount || "",
-            data || "",
+          contracts['ct_' + selectedAccount._id].execute.sendTransaction(
+            to || '',
+            amount || '',
+            data || '',
             {
               from: fromAccount.address,
               gasPrice: gasPrice,
               gas: estimatedGas
             },
             function(error, txHash) {
-              TemplateVar.set(template, "sending", false);
+              TemplateVar.set(template, 'sending', false);
 
               console.log(error, txHash);
               if (!error) {
-                console.log("SEND from contract", amount);
+                console.log('SEND from contract', amount);
 
                 addTransactionAfterSend(
                   txHash,
@@ -392,7 +392,7 @@ Template["elements_executeContract_function"].events({
                   data
                 );
 
-                FlowRouter.go("dashboard");
+                FlowRouter.go('dashboard');
               } else {
                 // EthElements.Modal.hide();
 
@@ -416,11 +416,11 @@ Template["elements_executeContract_function"].events({
               gas: estimatedGas
             },
             function(error, txHash) {
-              TemplateVar.set(template, "sending", false);
+              TemplateVar.set(template, 'sending', false);
 
               console.log(error, txHash);
               if (!error) {
-                console.log("SEND simple");
+                console.log('SEND simple');
 
                 addTransactionAfterSend(
                   txHash,
@@ -434,7 +434,7 @@ Template["elements_executeContract_function"].events({
 
                 // FlowRouter.go('dashboard');
                 GlobalNotification.success({
-                  content: "i18n:wallet.send.transactionSent",
+                  content: 'i18n:wallet.send.transactionSent',
                   duration: 2
                 });
               } else {

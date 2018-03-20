@@ -11,7 +11,7 @@ The address input template
 @constructor
 */
 
-Template["elements_input_address"].helpers({
+Template['elements_input_address'].helpers({
   /**
     Add the attributes and merge the current context
 
@@ -20,8 +20,8 @@ Template["elements_input_address"].helpers({
     */
   attributes: function() {
     var attr = _.clone(this);
-    attr.class = this.class ? this.class + " abi-input" : "abi-input";
-    attr.placeholder = this.placeholder || "0x123456...";
+    attr.class = this.class ? this.class + ' abi-input' : 'abi-input';
+    attr.placeholder = this.placeholder || '0x123456...';
     attr.value = this.value;
     return attr;
   }

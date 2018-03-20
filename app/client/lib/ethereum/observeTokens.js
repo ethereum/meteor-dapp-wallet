@@ -9,7 +9,7 @@ Creates subscription for a wallet contract, to watch for deposits, pending confi
 */
 var setupContractSubscription = function(newDocument) {
   var contractInstance = (tokenContracts[
-    "ct_" + newDocument._id
+    'ct_' + newDocument._id
   ] = Object.assign({}, TokenContract));
   contractInstance.options.address = newDocument.address;
   contractInstance.address = newDocument.address;
@@ -40,17 +40,17 @@ var setupContractSubscription = function(newDocument) {
 
   // SETUP FILTERS
   Helpers.eventLogs(
-    "Checking Token Transfers for " +
+    'Checking Token Transfers for ' +
       newDocument.address +
-      " (_id: " +
+      ' (_id: ' +
       newDocument._id +
-      ") from block #",
+      ') from block #',
     blockToCheckBack
   );
 
   var subscription = contractInstance.events.allEvents({
     fromBlock: blockToCheckBack,
-    toBlock: "latest"
+    toBlock: 'latest'
   });
   events.push(subscription);
 
@@ -68,7 +68,7 @@ var setupContractSubscription = function(newDocument) {
   }
 
   thisContractInstance.getPastEvents(
-    "allEvents",
+    'allEvents',
     { fromBlock: blockToCheckBack },
     function(error, logs) {
       if (!error) {
@@ -87,7 +87,7 @@ var setupContractSubscription = function(newDocument) {
     }
   );
 
-  subscription.on("data", function(log) {
+  subscription.on('data', function(log) {
     // Helpers.eventLogs(log);
 
     if (EthBlocks.latest.number && log.blockNumber > EthBlocks.latest.number) {
@@ -103,14 +103,14 @@ var setupContractSubscription = function(newDocument) {
     }
 
     if (
-      log.event === "Transfer" &&
+      log.event === 'Transfer' &&
       (Helpers.getAccountByAddress(log.returnValues.from) ||
         Helpers.getAccountByAddress(log.returnValues.to))
     ) {
       Helpers.eventLogs(
-        "Transfer for " +
+        'Transfer for ' +
           newDocument.address +
-          " arrived in block: #" +
+          ' arrived in block: #' +
           log.blockNumber,
         Number(log.returnValues.value)
       );
@@ -127,10 +127,10 @@ var setupContractSubscription = function(newDocument) {
 
       // NOTIFICATION
       if (!txExists || !txExists.blockNumber) {
-        var txId = Helpers.makeId("tx", log.transactionHash);
+        var txId = Helpers.makeId('tx', log.transactionHash);
 
         Helpers.showNotification(
-          "wallet.transactions.notifications.tokenTransfer",
+          'wallet.transactions.notifications.tokenTransfer',
           {
             token: newDocument.name,
             to: Helpers.getAccountNameByAddress(log.returnValues.to),
@@ -144,13 +144,13 @@ var setupContractSubscription = function(newDocument) {
             // on click show tx info
             EthElements.Modal.show(
               {
-                template: "views_modals_transactionInfo",
+                template: 'views_modals_transactionInfo',
                 data: {
                   _id: txId
                 }
               },
               {
-                class: "transaction-info"
+                class: 'transaction-info'
               }
             );
           }
@@ -185,7 +185,7 @@ observeTokens = function() {
           if (code && code.length > 2) {
             Tokens.update(newDocument._id, {
               $unset: {
-                disabled: ""
+                disabled: ''
               }
             });
 
@@ -208,7 +208,7 @@ observeTokens = function() {
         @method removed
         */
     removed: function(document) {
-      var contractInstance = tokenContracts["ct_" + document._id];
+      var contractInstance = tokenContracts['ct_' + document._id];
 
       if (!contractInstance) return;
 

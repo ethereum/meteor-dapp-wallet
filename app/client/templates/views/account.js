@@ -20,11 +20,11 @@ var addLogWatching = function(newDocument) {
   if (blockToCheckBack < 0) blockToCheckBack = 0;
 
   console.log(
-    "EVENT LOG:  Checking Custom Contract Events for " +
+    'EVENT LOG:  Checking Custom Contract Events for ' +
       newDocument.address +
-      " (_id: " +
+      ' (_id: ' +
       newDocument._id +
-      ") from block # " +
+      ') from block # ' +
       blockToCheckBack
   );
 
@@ -41,12 +41,12 @@ var addLogWatching = function(newDocument) {
 
   var subscription = contractInstance.events.allEvents({
     fromBlock: blockToCheckBack,
-    toBlock: "latest"
+    toBlock: 'latest'
   });
   // get past logs, to set the new blockNumber
   var currentBlock = EthBlocks.latest.number;
 
-  contractInstance.getPastEvents("allEvents", function(error, logs) {
+  contractInstance.getPastEvents('allEvents', function(error, logs) {
     if (!error) {
       // update last checkpoint block
       CustomContracts.update(
@@ -62,11 +62,11 @@ var addLogWatching = function(newDocument) {
     }
   });
 
-  subscription.on("data", function(log) {
+  subscription.on('data', function(log) {
     var id = Helpers.makeId(
-      "log",
+      'log',
       web3.utils.sha3(
-        log.logIndex + "x" + log.transactionHash + "x" + log.blockHash
+        log.logIndex + 'x' + log.transactionHash + 'x' + log.blockHash
       )
     );
 
@@ -99,27 +99,27 @@ var addLogWatching = function(newDocument) {
   return subscription;
 };
 
-Template["views_account"].onRendered(function() {
-  console.timeEnd("renderAccountPage");
+Template['views_account'].onRendered(function() {
+  console.timeEnd('renderAccountPage');
 });
 
-Template["views_account"].onDestroyed(function() {
+Template['views_account'].onDestroyed(function() {
   // stop watching custom events, on destroy
   if (this.customEventSubscription) {
     this.customEventSubscription.unsubscribe();
     this.customEventSubscription = null;
-    TemplateVar.set("watchEvents", false);
+    TemplateVar.set('watchEvents', false);
   }
 });
 
-Template["views_account"].helpers({
+Template['views_account'].helpers({
   /**
     Get the current selected account
 
     @method (account)
     */
   account: function() {
-    return Helpers.getAccountByAddress(FlowRouter.getParam("address"));
+    return Helpers.getAccountByAddress(FlowRouter.getParam('address'));
   },
   /**
     Get the current jsonInterface, or use the wallet jsonInterface
@@ -141,7 +141,7 @@ Template["views_account"].helpers({
         confirmedOwners: { $ne: [] },
         from: this.address
       }).fetch(),
-      "_id"
+      '_id'
     );
   },
   /**
@@ -150,8 +150,8 @@ Template["views_account"].helpers({
     @method (availableToday)
     */
   availableToday: function() {
-    return new BigNumber(this.dailyLimit || "0", 10)
-      .minus(new BigNumber(this.dailyLimitSpent || "0", "10"))
+    return new BigNumber(this.dailyLimit || '0', 10)
+      .minus(new BigNumber(this.dailyLimitSpent || '0', '10'))
       .toString(10);
   },
   /**
@@ -180,8 +180,8 @@ Template["views_account"].helpers({
   ownerLink: function() {
     var owner = String(this);
     if (Helpers.getAccountByAddress(owner))
-      return FlowRouter.path("account", { address: owner });
-    else return FlowRouter.path("sendTo", { address: owner });
+      return FlowRouter.path('account', { address: owner });
+    else return FlowRouter.path('sendTo', { address: owner });
   },
   /**
     Get all tokens
@@ -190,7 +190,7 @@ Template["views_account"].helpers({
     */
   tokens: function() {
     var query = {};
-    query["balances." + this._id] = { $exists: true };
+    query['balances.' + this._id] = { $exists: true };
     return Tokens.find(query, { sort: { name: 1 } });
   },
   /**
@@ -206,7 +206,7 @@ Template["views_account"].helpers({
           this.balances[account._id],
           this.decimals
         ) +
-          " " +
+          ' ' +
           this.symbol
       : false;
   },
@@ -236,24 +236,24 @@ Template["views_account"].helpers({
   displayName: function() {
     return this.ens
       ? this.name
-          .split(".")
+          .split('.')
           .slice(0, -1)
           .reverse()
-          .join(" ▸ ")
+          .join(' ▸ ')
       : this.name;
   }
 });
 
 var accountClipboardEventHandler = function(e) {
-  if (Session.get("tmpAllowCopy") === true) {
-    Session.set("tmpAllowCopy", false);
+  if (Session.get('tmpAllowCopy') === true) {
+    Session.set('tmpAllowCopy', false);
     return true;
   } else {
     e.preventDefault();
   }
 
   function copyAddress() {
-    var copyTextarea = document.querySelector(".copyable-address span");
+    var copyTextarea = document.querySelector('.copyable-address span');
     var selection = window.getSelection();
     var range = document.createRange();
     range.selectNodeContents(copyTextarea);
@@ -261,15 +261,15 @@ var accountClipboardEventHandler = function(e) {
     selection.addRange(range);
 
     try {
-      document.execCommand("copy");
+      document.execCommand('copy');
 
       GlobalNotification.info({
-        content: "i18n:wallet.accounts.addressCopiedToClipboard",
+        content: 'i18n:wallet.accounts.addressCopiedToClipboard',
         duration: 3
       });
     } catch (err) {
       GlobalNotification.error({
-        content: "i18n:wallet.accounts.addressNotCopiedToClipboard",
+        content: 'i18n:wallet.accounts.addressNotCopiedToClipboard',
         closeable: false,
         duration: 3
       });
@@ -278,46 +278,46 @@ var accountClipboardEventHandler = function(e) {
   }
 
   if (Helpers.isOnMainNetwork()) {
-    Session.set("tmpAllowCopy", true);
+    Session.set('tmpAllowCopy', true);
     copyAddress();
   } else {
     EthElements.Modal.question({
       text: new Spacebars.SafeString(
-        TAPi18n.__("wallet.accounts.modal.copyAddressWarning")
+        TAPi18n.__('wallet.accounts.modal.copyAddressWarning')
       ),
       ok: function() {
-        Session.set("tmpAllowCopy", true);
+        Session.set('tmpAllowCopy', true);
         copyAddress();
       },
       cancel: true,
-      modalQuestionOkButtonText: TAPi18n.__("wallet.accounts.modal.buttonOk"),
+      modalQuestionOkButtonText: TAPi18n.__('wallet.accounts.modal.buttonOk'),
       modalQuestionCancelButtonText: TAPi18n.__(
-        "wallet.accounts.modal.buttonCancel"
+        'wallet.accounts.modal.buttonCancel'
       )
     });
   }
 };
 
-Template["views_account"].events({
+Template['views_account'].events({
   /**
     Clicking the delete button will show delete modal
 
     @event click button.delete
     */
-  "click button.delete": function(e, template) {
+  'click button.delete': function(e, template) {
     var data = this;
 
     EthElements.Modal.question({
       text: new Spacebars.SafeString(
-        TAPi18n.__("wallet.accounts.modal.deleteText") +
+        TAPi18n.__('wallet.accounts.modal.deleteText') +
           '<br><input type="text" class="deletionConfirmation" autofocus="true">'
       ),
       ok: function() {
-        if ($("input.deletionConfirmation").val() === "delete") {
+        if ($('input.deletionConfirmation').val() === 'delete') {
           Wallets.remove(data._id);
           CustomContracts.remove(data._id);
 
-          FlowRouter.go("dashboard");
+          FlowRouter.go('dashboard');
           return true;
         }
       },
@@ -329,16 +329,16 @@ Template["views_account"].events({
 
     @event click .edit-name
     */
-  "click .edit-name": function(e) {
+  'click .edit-name': function(e) {
     // make it editable
-    $(e.currentTarget).attr("contenteditable", "true");
+    $(e.currentTarget).attr('contenteditable', 'true');
   },
   /**
     Prevent enter
 
     @event keypress .edit-name
     */
-  "keypress .edit-name": function(e) {
+  'keypress .edit-name': function(e) {
     if (e.keyCode === 13) e.preventDefault();
   },
   /**
@@ -346,13 +346,13 @@ Template["views_account"].events({
 
     @event blur .edit-name, keyup .edit-name
     */
-  "blur .edit-name, keyup .edit-name": function(e) {
+  'blur .edit-name, keyup .edit-name': function(e) {
     if (!e.keyCode || e.keyCode === 13) {
       var $el = $(e.currentTarget);
       var text = $el.text();
 
       if (_.isEmpty(text)) {
-        text = TAPi18n.__("wallet.accounts.defaultName");
+        text = TAPi18n.__('wallet.accounts.defaultName');
       }
 
       // Save new name
@@ -373,7 +373,7 @@ Template["views_account"].events({
       });
 
       // make it non-editable
-      $el.attr("contenteditable", null);
+      $el.attr('contenteditable', null);
     }
   },
   /**
@@ -381,26 +381,26 @@ Template["views_account"].events({
 
     @event click a.create.account
     */
-  "click .copy-to-clipboard-button": accountClipboardEventHandler,
+  'click .copy-to-clipboard-button': accountClipboardEventHandler,
 
   /**
     Tries to copy account token.
 
     @event copy .copyable-address span
     */
-  "copy .copyable-address": accountClipboardEventHandler,
+  'copy .copyable-address': accountClipboardEventHandler,
 
   /**
     Click to reveal QR Code
 
     @event click a.create.account
     */
-  "click .qrcode-button": function(e) {
+  'click .qrcode-button': function(e) {
     e.preventDefault();
 
     // Open a modal showing the QR Code
     EthElements.Modal.show({
-      template: "views_modals_qrCode",
+      template: 'views_modals_qrCode',
       data: {
         address: this.address
       }
@@ -412,7 +412,7 @@ Template["views_account"].events({
 
     @event click .interface-button
     */
-  "click .interface-button": function(e) {
+  'click .interface-button': function(e) {
     e.preventDefault();
     var jsonInterface = this.owners
       ? _.clone(walletInterface)
@@ -420,12 +420,12 @@ Template["views_account"].events({
 
     //clean ABI from circular references
     var cleanJsonInterface = _.map(jsonInterface, function(e, i) {
-      return _.omit(e, "contractInstance");
+      return _.omit(e, 'contractInstance');
     });
 
     // Open a modal showing the QR Code
     EthElements.Modal.show({
-      template: "views_modals_interface",
+      template: 'views_modals_interface',
       data: {
         jsonInterface: cleanJsonInterface
       }
@@ -436,16 +436,16 @@ Template["views_account"].events({
 
     @event change button.toggle-watch-events
     */
-  "change .toggle-watch-events": function(e, template) {
+  'change .toggle-watch-events': function(e, template) {
     e.preventDefault();
 
     if (template.customEventSubscription) {
       template.customEventSubscription.unsubscribe();
       template.customEventSubscription = null;
-      TemplateVar.set("watchEvents", false);
+      TemplateVar.set('watchEvents', false);
     } else {
       template.customEventSubscription = addLogWatching(this);
-      TemplateVar.set("watchEvents", true);
+      TemplateVar.set('watchEvents', true);
     }
   }
 });

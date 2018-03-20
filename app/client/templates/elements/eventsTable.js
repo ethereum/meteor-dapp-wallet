@@ -27,15 +27,15 @@ The default limit, of none is given.
 */
 var defaultLimit = 10;
 
-Template["elements_event_table"].onCreated(function() {
+Template['elements_event_table'].onCreated(function() {
   this._properties = {
     cursor: {}
   };
 
-  TemplateVar.set("limit", this.data.limit || defaultLimit);
+  TemplateVar.set('limit', this.data.limit || defaultLimit);
 });
 
-Template["elements_event_table"].helpers({
+Template['elements_event_table'].helpers({
   /**
     Changes the limit of the given cursor
 
@@ -46,8 +46,8 @@ Template["elements_event_table"].helpers({
     var template = Template.instance(),
       items = [],
       ids = this.ids || [],
-      searchQuery = TemplateVar.get("search"),
-      limit = TemplateVar.get("limit"),
+      searchQuery = TemplateVar.get('search'),
+      limit = TemplateVar.get('limit'),
       collection = Events,
       selector = { _id: { $in: ids.slice(Number((limit + 50) * -1)) } };
     // slice(limit) prevents loading too many objects at once and slowing the machine
@@ -55,8 +55,8 @@ Template["elements_event_table"].helpers({
     // if search
     if (searchQuery) {
       var pattern = new RegExp(
-        "^.*" + searchQuery.replace(/ +/g, ".*") + ".*$",
-        "i"
+        '^.*' + searchQuery.replace(/ +/g, '.*') + '.*$',
+        'i'
       );
       template._properties.cursor = collection.find(selector, {
         sort: { timestamp: -1, blockNumber: -1 }
@@ -100,21 +100,21 @@ Template["elements_event_table"].helpers({
 
     template._properties.cursor.limit = null;
     return (
-      !TemplateVar.get("search") &&
-      template._properties.cursor.count() >= TemplateVar.get("limit")
+      !TemplateVar.get('search') &&
+      template._properties.cursor.count() >= TemplateVar.get('limit')
     );
   }
 });
 
-Template["elements_event_table"].events({
-  "click button.show-more": function(e, template) {
-    var limit = TemplateVar.get("limit");
-    TemplateVar.set("limit", limit + (template.data.limit || defaultLimit));
+Template['elements_event_table'].events({
+  'click button.show-more': function(e, template) {
+    var limit = TemplateVar.get('limit');
+    TemplateVar.set('limit', limit + (template.data.limit || defaultLimit));
   },
-  "keyup input.filter-transactions": _.debounce(function(e, template) {
-    if (e.keyCode === 27) e.currentTarget.value = "";
+  'keyup input.filter-transactions': _.debounce(function(e, template) {
+    if (e.keyCode === 27) e.currentTarget.value = '';
 
-    TemplateVar.set(template, "search", e.currentTarget.value);
+    TemplateVar.set(template, 'search', e.currentTarget.value);
   }, 200)
 });
 
@@ -125,7 +125,7 @@ The events row template
 @constructor
 */
 
-Template["elements_events_row"].helpers({
+Template['elements_events_row'].helpers({
   /**
     Returns the from now time, if less than 23 hours
 
@@ -133,10 +133,10 @@ Template["elements_events_row"].helpers({
     @return {String}
     */
   fromNowTime: function() {
-    Helpers.rerun["10s"].tick();
+    Helpers.rerun['10s'].tick();
 
-    var diff = moment().diff(moment.unix(this.timestamp), "hours");
-    return diff < 23 ? " " + moment.unix(this.timestamp).fromNow() : "";
+    var diff = moment().diff(moment.unix(this.timestamp), 'hours');
+    return diff < 23 ? ' ' + moment.unix(this.timestamp).fromNow() : '';
   },
   /**
     Returns the confirmations
@@ -190,24 +190,24 @@ Template["elements_events_row"].helpers({
   }
 });
 
-Template["elements_events_row"].events({
+Template['elements_events_row'].events({
   /**
     Open transaction details on click of the <tr>
 
     @event click tr
     */
-  "click tr:not(.pending)": function(e) {
+  'click tr:not(.pending)': function(e) {
     var $element = $(e.target);
-    if (!$element.is("button") && !$element.is("a")) {
+    if (!$element.is('button') && !$element.is('a')) {
       EthElements.Modal.show(
         {
-          template: "views_modals_eventInfo",
+          template: 'views_modals_eventInfo',
           data: {
             _id: this._id
           }
         },
         {
-          class: "transaction-info"
+          class: 'transaction-info'
         }
       );
     }
