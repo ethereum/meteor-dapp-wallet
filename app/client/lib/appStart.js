@@ -90,7 +90,7 @@ var connect = function() {
       // if in mist, tell to start geth, otherwise start with RPC
       var gethRPC = window.mist
         ? 'geth'
-        : 'geth --rpc --ws --wsorigins ' +
+        : 'geth --rpc --ws --wsorigins "' +
           window.location.protocol +
           '//' +
           window.location.host +
