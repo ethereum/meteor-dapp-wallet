@@ -50,8 +50,12 @@ Template['views_dashboard'].helpers({
 
 Template['views_dashboard'].events({
 
-    'click #male': function(e){
-        TemplateVar.set('isSort', !TemplateVar.get('isSort'));
-    }
+    'click #sortByName': function(e){
+        TemplateVar.set('isSort', false);
+    },
+
+    'click #sortByAmount': function(e){
+        TemplateVar.set('isSort', true);
+    },
 
 });

@@ -57,7 +57,7 @@
                 "addWallet": "Add wallet contract",
                 "addAccount": "Add account",
                 "addToken": "Watch token",
-                "account": "Account"
+                "account": "CREATE Account"
             },
             "texts": {
                 "note": "Note",

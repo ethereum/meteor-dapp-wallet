@@ -39,7 +39,7 @@
 
 
 .ele-p {
-    margin-top: 30px;margin-bottom: 0;width: 52%;
+    margin-top: 30px;margin-bottom: 0;width: 65%;
 }
 
 .dapp-ele-address{
@@ -57,7 +57,7 @@
     line-height: 12px;
     letter-spacing: 0px;
     color: #929cb8;
-    margin-right: 150px;
+    margin-right: 0px;
     position: relative;
     top: 3px;
 
@@ -261,7 +261,7 @@ input[type="checkbox"]::before, input[type="radio"]::before{
         background-image: url(/images/ledger-connected.png);
         background-repeat: no-repeat;
         background-position: center;
-        background-size: 40%;
+        background-size: 30%;
         padding: 27px;
         margin-bottom: -20px;
     }
@@ -323,6 +323,7 @@ input[type="checkbox"]::before, input[type="radio"]::before{
     background-position: center;
     padding: 10px;
     cursor: pointer;
+    background-size: 90%;
 
     &:hover {
         background-image: url(/images/copy1.png);
@@ -333,7 +334,7 @@ input[type="checkbox"]::before, input[type="radio"]::before{
     background-image: url(/images/code.png);
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 100%;
+    background-size: 90%;
     padding: 9px;
     margin-left: 5px;
     cursor: pointer;
@@ -444,6 +445,7 @@ input[type="checkbox"]::before, input[type="radio"]::before{
 .copyable-address {
     line-height: 25px;
     color: #929cb8;
+    font-size: 12px;
 }
 
 .copyable-waddress {
@@ -518,9 +520,9 @@ input[type="checkbox"]::before, input[type="radio"]::before{
 }
 
 .views_send_strong {
-    font-family: MicrosoftYaHei-Bold, arial;
+    //font-family: MicrosoftYaHei-Bold, arial;
     font-size: 16px;
-    font-weight: bold;
+    font-weight: normal;
     font-stretch: normal;
     line-height: 25px;
     letter-spacing: 1px;
@@ -556,7 +558,8 @@ input[type="checkbox"]::before, input[type="radio"]::before{
 
 .accountLink-span {
     word-wrap: break-word;word-break: break-all;white-space: pre-wrap !important;
-    font-size: 14px;
+    font-size: 12px!important;
+    margin-right: 10px;
 }
 
 span.address {
@@ -1300,7 +1303,7 @@ table {
 }
 
 .dapp-selector span:first-of-type, .dapp-select-gas-price span:first-of-type {
-    font-size: 16px !important;
+    font-size: 14px !important;
 }
 .contBox{
     width: 100%;
@@ -1317,7 +1320,7 @@ table {
   width: 589px;
 }
 .tagP{
-    width: 1100px;
+    width: 100%;
     line-height: 25px;
     position: relative;
     max-height: 29px;
@@ -1353,8 +1356,8 @@ table {
     transition: border-color .6s  ease-out;
     box-sizing: border-box;
     top: 17px;
-    right: 40px;
-    width: 60px;
+    right: 0px;
+    width: 45px;
     height: 21px;
     z-index: 999;
     background-color: #bdbdbd;
@@ -1383,7 +1386,7 @@ table {
 .toggle-on .toggle-button{
     height: 21px;
     top: 0;
-    width: 60px;
+    width: 45px;
     bottom: 3px;
     right: 3px;
     border-radius: 23px;
@@ -1463,3 +1466,133 @@ table {
     -webkit-transition: opacity 1s;
     transition: opacity 1s;
 }
+
+.pinIt{
+    float: right;
+    margin: 10px 0 0;
+    padding:0;
+    .pinTime{
+        width: 30px;
+        height: 30px;
+        display: inline-block;
+        background-image: url(/images/time.png);
+        background-repeat: no-repeat;
+        cursor: pointer;
+        background-size: 100%;
+    }
+    .pinTime:hover{
+        background-image: url(/images/timeL.png);
+    }
+    .pinBalance{
+        width: 30px;
+        height: 30px;
+        display: inline-block;
+        background-image: url(/images/balance.png);
+        background-repeat: no-repeat;
+        cursor: pointer;
+        background-size: 100%;
+    }
+    .pinBalance:hover{
+        background-image: url(/images/balanceL.png);
+    }
+}
+//sort
+.sortBox:hover .sortShow{
+    display: block;
+}
+.sortBox{
+    float: right;
+    div{
+        position: relative;
+        h1{
+            width: 80px;
+            background-color: #eef0f5;
+            border-radius: 4px;
+            line-height: 30px;
+            cursor: pointer;
+            float: right;
+            font-size: 12px;
+            color: #929cb8;
+            text-transform: uppercase;
+            text-align: center;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            //span{
+            //    font-size: 12px;
+            //    color: #929cb8;
+            //    text-transform: uppercase;
+            //    text-align: center;
+            //    font-weight: 500;
+            //}
+
+            em{
+                width: 0;
+                height: 0;
+                border-top: 5px solid #3f454c;
+                border-right: 5px solid transparent;
+                border-left: 5px solid transparent;
+                display: inline-block;
+                border-radius: 2px;
+                margin: 0px 0 0 8px;
+                vertical-align: middle;
+            }
+        }
+        .sortShow{
+            display: none;
+            width: 290px;
+            height: 100px;
+            background-color: #ffffff;
+            box-shadow: 0px 4px 10px 0px
+            rgba(15, 104, 170, 0.2);
+            border-radius: 8px;z-index: 9;
+            position: absolute;
+            top: 20px;
+            right: 0;
+            padding-left: 0!important;
+            li{
+                width: 290px;
+                line-height: 50px;
+                text-align: left;
+                list-style: none;
+                color: #3f454c;
+                font-size: 12px;
+                padding-left: 30px!important;
+                cursor: pointer;
+                span{
+                    width: 4px;
+                    height: 4px;
+                    background-color: #1a91fc;
+                    display: inline-block;
+                    border-radius: 20px;
+                    vertical-align: middle;
+                    margin-right: 10px;
+                }
+            }
+            li:nth-child(1){
+                border-bottom: solid 1px #f0f2f6;
+            }
+            li:hover{
+                color: #1a91fc!important;
+                background-color: #f7f8fc;
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

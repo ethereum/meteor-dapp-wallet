@@ -62,8 +62,9 @@ body{
 .dapp-content {
     //padding: @defaultPaddingVertical @defaultPaddingHorizontal*2.5 @defaultPaddingVertical*2;
     padding: @defaultPaddingVertical @defaultPaddingVertical*2;
-    max-width: none;
+    max-width: 100%;
     margin-top: 60px;
+    //width: 100%;
 
     .dapp-container {
         max-width: none;
@@ -206,6 +207,7 @@ body {
 }
 
 .dapp-header.dapp-small + .dapp-flex-content > .dapp-content {
+    width: 100%!important;
     padding-top: @gridHeight * 3 - 3px;
 }
 
@@ -472,6 +474,7 @@ body {
             position: relative;
             margin-bottom: 0;
             padding-bottom: 0;
+            font-size: 14px;
 
             > div {
                 position: relative;
@@ -882,3 +885,6 @@ body {
     }
 }
 
+//{
+//    width: 100%;
+//}

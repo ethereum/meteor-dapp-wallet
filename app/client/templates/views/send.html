@@ -4,7 +4,7 @@
         <h1 class="account-h1">
             <div class="circle"></div><strong>{{{i18n 'views.send.title'}}}</strong>
 
-            <div class="dapp-header-map">
+            <div class="dapp-header-map" style="margin-right: 68px!important;">
                 <div class="home-link">
                     <a href="{{pathFor route='dashboard'}}"><img/></a>
                 </div>
@@ -42,7 +42,7 @@
 
                     </span>
 
-                    <span style="color:#929cb8;margin-top: 8px;display: inline-block;">{{toChecksumAddress address}}</span>
+                    <span style="color:#929cb8;margin-top: 8px;display: inline-block;font-size: 12px;">{{toChecksumAddress address}}</span>
                 </p>
 
             {{/each}}
@@ -91,7 +91,7 @@
 
                 <!--from-->
                 {{#if hasTokens}}
-                    <div class="col col-12 mobile-full contBox from" style="display: none">
+                    <div class="col col-12 mobile-full contBox from" style="display: none !important;">
                         <div class="triangle"></div><strong class="views_send_strong">From</strong>
                         {{#if switchStype}}
                             <a id="selectType" style="cursor: pointer;">{{selecteType}}</a>
@@ -137,12 +137,12 @@
                         <div class="triangle"></div><strong class="views_send_strong">{{i18n 'wallet.send.amount'}}</strong>
                         {{#if TemplateVar.get "sendAll"}}
                             {{#if $eq (TemplateVar.get "selectedToken") "ether"}}
-                                <input type="text" name="amount" class="dapp-large" value="{{clearAmountFromChars (transferBanlance sendAllAmount '0,0.[000000000000000000]')}}" disabled style="margin-top: 5px; background-color: #f7f8fc;border: solid 0px #f7f8fc;">
+                                <input type="text" name="amount" class="dapp-large" value="{{clearAmountFromChars (transferBanlance sendAllAmount '0,0.[000000000000000000]')}}" disabled style="height: 40px; line-height: 40px; margin-top: 5px; background-color: #f7f8fc;border: solid 0px #f7f8fc;font-size: 14px;">
                             {{else}}
                                 <input type="text" name="amount" class="dapp-large" value="{{clearAmountFromChars (formatNumberByDecimals sendAllAmount tokenDecimals)}}" disabled style="margin-top: 5px; background-color: #f7f8fc;border: solid 0px #f7f8fc;">
                             {{/if}}
                         {{else}}
-                            <input type="text" min="0" step="any" name="amount" placeholder="0.0" class="dapp-large" pattern="[0-9\.,]*" style="margin-top: 5px; background-color: #f7f8fc;border: solid 0px" >
+                            <input type="text" min="0" step="any" name="amount" placeholder="0.0" class="dapp-large" pattern="[0-9\.,]*" style="height: 40px; line-height: 40px; font-size: 14px;  margin-top: 5px; background-color: #f7f8fc;border: solid 0px;" >
                         {{/if}}
 
                         <br>
@@ -209,18 +209,19 @@
 
 
             <!-- a button type="submit" will send the form -->
-            <button type="submit" class="dapp-block-button views_send_button" >
-                {{#if TemplateVar.get "sending"}}
-                    {{i18n 'buttons.sending'}}
-                {{else}}
-                    {{#if deployContract}}
-                        {{i18n 'wallet.app.buttons.deploy'}}
+            <div style="width: 100%; display: inline-block; clear: both;">
+                <button type="submit" class="dapp-block-button views_send_button" >
+                    {{#if TemplateVar.get "sending"}}
+                        {{i18n 'buttons.sending'}}
                     {{else}}
-                        {{i18n 'buttons.send'}}<img class="wanchain-send">
+                        {{#if deployContract}}
+                            {{i18n 'wallet.app.buttons.deploy'}}
+                        {{else}}
+                            {{i18n 'buttons.send'}}<img class="wanchain-send">
+                        {{/if}}
                     {{/if}}
-                {{/if}}
-            </button>
-
+                </button>
+        </div>
         </form>
     </div>
 

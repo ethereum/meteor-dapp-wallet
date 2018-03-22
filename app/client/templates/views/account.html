@@ -35,14 +35,14 @@
                             {{/if}}
                         </h1>
 
-                        <p style=" width: 55%; margin: 0 0 4px 0;">
+                        <p style=" width: 65%; margin: 0 0 4px 0;">
                             <span class="dapp-ele-address" style="font-size: 16px;">Public Address:&nbsp;</span>
                             <span id="address" class="copyable-address">{{toChecksumAddress address}}</span>
                             <img class=" copy-to-clipboard-button copy-address" name="address" />
                             <img class=" qrcode-button qrcode-address" name={{address}} />
                         </p>
 
-                        <p style=" width: 55%;margin: 0; {{#unless isWaddress}}opacity: 0;{{/unless}}">
+                        <p style=" width: 65%;margin: 0; {{#unless isWaddress}}opacity: 0;{{/unless}}">
                             <span class="dapp-ele-address" style="font-size: 16px;">Private Address:&nbsp;</span>
                             <span class="accountLink-span copyable-waddress" id="waddress" style="line-height: 1.2;">{{waddress}}</span>
                             <img class=" copy-to-clipboard-wbutton copy-address" name="waddress" />

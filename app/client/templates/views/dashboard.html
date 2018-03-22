@@ -5,11 +5,27 @@
             <div class="circle"></div>
             <strong>{{{i18n "wallet.accounts.title"}}}</strong>
 
-            <div class="toggle" id="male">
-                <div class="glow-comp"></div>
-                <div class="toggle-button"></div>
-                <div class="toggle-text-on">Pin it</div>
+            <div class="sortBox">
+                <div>
+                    <h1>sort<em></em></h1>
+                    <ul class="sortShow">
+                        <li id="sortByName"><span></span>Displayed in account created name order</li>
+                        <li id="sortByAmount"><span></span>Displayed in balance amount order</li>
+                    </ul>
+                </div>
+
             </div>
+
+            <!--<p class="pinIt">-->
+                <!--<em class="pinTime" title="Displayed in chronological order (account created time)"></em>-->
+                <!--<em class="pinBalance" title="Displayed in balance amount order"></em>-->
+            <!--</p>-->
+
+            <!--<div class="toggle" id="male">-->
+                <!--<div class="glow-comp"></div>-->
+                <!--<div class="toggle-button"></div>-->
+                <!--<div class="toggle-text-on">Pin it</div>-->
+            <!--</div>-->
         </h1>
 
         {{#if pendingConfirmations}}

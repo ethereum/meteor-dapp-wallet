@@ -306,9 +306,10 @@ Template['views_send'].helpers({
         if (TemplateVar.get('fromAddress')) {
             var hasAccount = EthAccounts.findOne({address: TemplateVar.get('fromAddress').toLowerCase()});
 
-            // if (parseInt(hasAccount.waddress, 16) === 0) {
-            //     TemplateVar.set('switchStype', false);
-            // }
+            // ledger wallet close private ordinary
+            if (parseInt(hasAccount.waddress, 16) === 0) {
+                TemplateVar.set('switchStype', false);
+            }
 
             if (accounts[0]) {
                 accounts[0].isWaddress = true;
