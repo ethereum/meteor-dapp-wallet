@@ -34,12 +34,12 @@ ecmascript-runtime-client@0.6.2
 ecmascript-runtime-server@0.5.0
 ejson@1.1.0
 es5-shim@4.7.3
-ethereum:accounts@1.0.0
-ethereum:blocks@1.0.0
+ethereum:accounts@1.1.0
+ethereum:blocks@1.1.0
 ethereum:dapp-styles@0.5.8
-ethereum:elements@1.0.0
-ethereum:tools@1.0.0
-ethereum:web3@1.0.0-beta.31
+ethereum:elements@1.1.0
+ethereum:tools@1.1.0
+ethereum:web3@1.0.0-beta.33
 fastclick@1.0.13
 frozeman:animation-helper@0.2.6
 frozeman:global-notifications@0.2.1
