@@ -295,7 +295,7 @@
             "transactionSent": "Transaction sent",
             "error": {
                 "emptyWallet": "The account you want to send from is empty.",
-                "notEnoughFunds": "You don't have enough funds in the account.",
+                "notEnoughFunds": "please make sure you have sufficient balance from your Public Account.",
                 "noReceiver": "You didn't specify a receiver.",
                 "noAmount": "You didn't specify an amount to send."
             },
