@@ -18,7 +18,7 @@ Meteor.startup(function() {
                             if(doc)
                             {
                                 EthAccounts.updateAll(doc._id, {
-                                    $set: {name: account.name}
+                                    $set: {name: account.name, reminder: account.reminder}
                                 });
                                 console.log("modify account name!");
                             }
@@ -29,7 +29,8 @@ Meteor.startup(function() {
                                     address: addr,
                                     waddress: wAddress,
                                     balance: 0,
-                                    name: account.name
+                                    name: account.name,
+                                    reminder: account.reminder
                                 };
                                 EthAccounts.insert(insert);
                             }
