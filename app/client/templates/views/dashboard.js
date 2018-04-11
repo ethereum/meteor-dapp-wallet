@@ -21,7 +21,7 @@ Template['views_dashboard'].helpers({
         // balance need to be present, to show only full inserted accounts (not ones added by mist.requestAccount)
         var accounts = EthAccounts.find({name: {$exists: true}}, {sort: {name: 1}}).fetch();
 
-        if (TemplateVar.get('isSort')) {
+        if (Session.get('isSort')) {
             accounts.sort(Helpers.sortByBalance);
         }
 
@@ -51,11 +51,11 @@ Template['views_dashboard'].helpers({
 Template['views_dashboard'].events({
 
     'click #sortByName': function(e){
-        TemplateVar.set('isSort', false);
+        Session.set('isSort', false);
     },
 
     'click #sortByAmount': function(e){
-        TemplateVar.set('isSort', true);
+        Session.set('isSort', true);
     },
 
 });

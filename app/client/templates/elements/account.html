@@ -15,7 +15,7 @@
                     <span class="dapp-identicon dapp-small dapp-icon-loading"></span>
                 {{/if}}
             {{else}}
-
+f
             {{/unless}}
 
             <h3 class="{{ensClass}}">
@@ -60,7 +60,10 @@
                     <div class="tagLeft">
                         <span style="font-weight: 600;">Balance: </span>{{> elements_balance balance=(balance) }}
 
-                        <span style="font-weight: 600;">OTA: </span>{{> elements_balance balance=(otaBalance waddress) }}
+                        {{#if isWaddress}}
+                            <span style="font-weight: 600;">OTA: </span>{{> elements_balance balance=(otaBalance waddress) }}
+                        {{/if}}
+
                     </div>
                     <div class="tagRight">
                         {{#with tokens}}

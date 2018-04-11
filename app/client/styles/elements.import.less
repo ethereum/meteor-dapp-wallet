@@ -254,21 +254,19 @@ input[type="checkbox"]::before, input[type="radio"]::before{
 }
 
 .ledgerConnect {
-    position: absolute;
-    top: 40px;
-    left: 46%;
-    img {
+    em {
         background-image: url(/images/ledger-connected.png);
         background-repeat: no-repeat;
-        background-position: center;
-        background-size: 30%;
-        padding: 27px;
-        margin-bottom: -20px;
+        background-size: contain;
+        vertical-align: top;
+        display: inline-block;
+        width: 24px;
+        height: 24px;
     }
     span {
-        margin: -10px;
         color: #1ec89a;
         font-weight: 400;
+        vertical-align: top;
     }
 }
 
@@ -279,27 +277,28 @@ input[type="checkbox"]::before, input[type="radio"]::before{
     padding: 2.5px 15px !important;
     margin-bottom: 7px !important;
     text-align: center;
-    width: 133px !important;
-    height: 26px !important;
+    width: 116px !important;
+    height: 18px !important;
     display: inline-block;
     margin-left: 15px;
     position: absolute;
+    margin-top: 4px;
     img{
         background-image: url(/images/ledger-account.png);
         background-repeat: no-repeat;
         background-position: center;
         background-size: 19%;
-        padding: 35px;
+        padding: 29px;
         position: relative;
-        top: -26px;
-        left: -48px;
+        top: -24px;
+        left: -43px;
     }
     span{
         position: absolute;
-        top: 0;
-        left: 29px;
-        font-size: 12px;
-        font-weight: bold;
+        top: -4px!important;
+        left: 26px;
+        font-size: 11px;
+        font-weight: normal;
         color: #ffffff;
         line-height: 23px;
     }

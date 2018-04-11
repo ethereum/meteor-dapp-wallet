@@ -65,8 +65,8 @@ Template['layout_header'].helpers({
     */
     'timeSinceBlock': function () {
 
-        if (EthBlocks.latest.timestamp == 0
-            || typeof EthBlocks.latest.timestamp == 'undefined')
+        if (EthBlocks.latest.timestamp === 0
+            || typeof EthBlocks.latest.timestamp === 'undefined')
             return false;
 
         var timeSince = moment(EthBlocks.latest.timestamp, "X");
@@ -94,8 +94,8 @@ Template['layout_header'].helpers({
     */
     'timeSinceBlockText': function () {
 
-        if (EthBlocks.latest.timestamp == 0
-            || typeof EthBlocks.latest.timestamp == 'undefined')
+        if (EthBlocks.latest.timestamp === 0
+            || typeof EthBlocks.latest.timestamp === 'undefined')
             return TAPi18n.__('wallet.app.texts.waitingForBlocks');
 
         var timeSince = moment(EthBlocks.latest.timestamp, "X");
