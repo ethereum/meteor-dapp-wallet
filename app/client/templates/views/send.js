@@ -665,7 +665,6 @@ Template['views_send'].events({
           });
       } else {
         // Token transfer
-
         if (!to) {
           return GlobalNotification.warning({
             content: 'i18n:wallet.send.error.noReceiver',

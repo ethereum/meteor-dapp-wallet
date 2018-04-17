@@ -490,10 +490,12 @@ observeTransactions = function() {
     {}
   ).observe({
     /**
-        This will observe the transactions creation and create watchers for outgoing transactions, to see when they are mined.
+      This will observe the transactions creation and
+      create watchers for outgoing transactions,
+      to see when they are mined.
 
-        @method added
-        */
+      @method added
+    */
     added: function(newDocument) {
       var confirmations = EthBlocks.latest.number - newDocument.blockNumber;
 
@@ -563,17 +565,17 @@ observeTransactions = function() {
             }
           } else {
             console.warn(
-              'Can not connect to https://min-api.cryptocompare.com/ to get price ticker data, please check your internet connection.'
+              'Cannot connect to https://min-api.cryptocompare.com/ to get price ticker data, please check your internet connection.'
             );
           }
         });
       }
     },
     /**
-        Will check if the transaction is confirmed
+      Will check if the transaction is confirmed
 
-        @method changed
-        */
+      @method changed
+    */
     changed: function(newDocument) {
       // add to accounts
       Wallets.update(
@@ -599,10 +601,10 @@ observeTransactions = function() {
       }
     },
     /**
-        Remove transactions confirmations from the accounts
+      Remove transactions confirmations from the accounts
 
-        @method removed
-        */
+      @method removed
+    */
     removed: function(document) {
       Wallets.update(
         { address: document.from },
