@@ -89,7 +89,7 @@ observeCustomContracts = function() {
         } else if (!e) {
           // if there's no code, check the contract has a balance
           web3.eth.getBalance(newDocument.address, function(e, balance) {
-            if (!e && balance.gt(0)) {
+            if (!e && web3.utils.toBN(balance).gt(0)) {
               CustomContracts.update(newDocument._id, {
                 $unset: {
                   disabled: false

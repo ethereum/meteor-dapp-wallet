@@ -413,18 +413,20 @@ Template['views_send'].helpers({
       // deduct fee if account, for contracts use full amount
       amount = selectedAccount.owners
         ? selectedAccount.balance
-        : BigNumber.max(
-            0,
-            new BigNumber(selectedAccount.balance, 10).minus(
-              new BigNumber(gasInWei, 10)
+        : web3.utils.BN.max(
+            new web3.utils.BN(0),
+            new web3.utils.BN(selectedAccount.balance).sub(
+              new web3.utils.BN(gasInWei)
             )
           ).toString(10);
     } else {
       var token = Tokens.findOne({ address: TemplateVar.get('selectedToken') });
 
-      if (!token || !token.balances || !token.balances[selectedAccount._id])
+      if (!token || !token.balances || !token.balances[selectedAccount._id]) {
         amount = '0';
-      else amount = token.balances[selectedAccount._id];
+      } else {
+        amount = token.balances[selectedAccount._id];
+      }
     }
 
     TemplateVar.set('amount', amount);
