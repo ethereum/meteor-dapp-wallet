@@ -87,6 +87,11 @@ class crossChainOperators{
         this.invokeOperator(new crossOperator('subscribe',[address,topics],this.getOriginChainType(),callBack));
     }
 
+    getAddressList(chainType,callBack){
+        this.invokeOperator(new crossOperator('getAddressList',{},chainType,callBack));
+    }
+
+
     getOriginChainType(){
         return this.direction == directionEnum[0] ? chainType[0] : chainType[1];
     }
