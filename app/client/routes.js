@@ -93,6 +93,16 @@ FlowRouter.route('/contracts', {
 });
 
 
+FlowRouter.route('/crosschain', {
+    name: 'crosschain',
+    action: function(params, queryParams) {
+        BlazeLayout.render('layout_main', {
+            header: 'layout_header',
+            main: 'views_crosschain_main'
+        });
+    }
+});
+
 
 /**
 The send route.

@@ -1,0 +1,61 @@
+<template name="views_crosschain_main">
+
+    <h1 class="account-h1">
+        <div class="circle"></div>
+        <strong>Crosschain</strong>
+
+        <div class="dapp-header-map">
+            <div class="home-link">
+                <a href="{{pathFor route='dashboard'}}"><img/></a>
+            </div>
+            <span style="top: 4px;">&nbsp;>&nbsp;DETAIL</span>
+        </div>
+    </h1>
+
+    <nav class="crosschain-nav">
+        <ul style="float: left;">
+
+            <li>
+                <a class="history">
+                    <span >Transaction history</span>
+                </a>
+            </li>
+
+            <li>
+                <a class="toWeth">
+                    <span>ETH >> WETH</span>
+                </a>
+            </li>
+
+            <li>
+                <a class="toWan">
+                    <span>WETH >> WAN</span>
+                </a>
+            </li>
+
+            <li>
+                <a class="toNormal">
+                    <span>Normal transaction</span>
+                </a>
+            </li>
+
+        </ul>
+    </nav>
+
+    {{#if $eq (TemplateVar.get "clickButton") 1}}
+        {{> views_crosschain}}
+    {{/if}}
+
+    {{#if $eq (TemplateVar.get "clickButton") 2}}
+        {{> views_ethToweth}}
+    {{/if}}
+
+    {{#if $eq (TemplateVar.get "clickButton") 3}}
+        {{> views_wethTowan}}
+    {{/if}}
+
+    {{#if $eq (TemplateVar.get "clickButton") 4}}
+        {{> views_ethsend}}
+    {{/if}}
+
+</template>

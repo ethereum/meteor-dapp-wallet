@@ -1,0 +1,29 @@
+<template name="views_crosschain">
+
+    <!--ETH Accounts Overview list-->
+    <div class="viwes-account-header">
+        <h1 class="account-h1" style="margin-top: 0"><div class="viwes-account-line"></div><strong>ETH Accounts Overview</strong></h1>
+        {{#if allTransactions}}
+            {{> elements_transactions_table limit=5 address=theAddress}}
+        {{else}}
+            <div class="wanchain-notransaction" style="">
+                <img />
+                <p>NO ETH ACCOUNT</p>
+            </div>
+        {{/if}}
+    </div>
+
+    <!--transaction list-->
+    <div class="viwes-account-header">
+        <h1 class="account-h1" style="margin-top: 0"><div class="viwes-account-line"></div><strong>{{i18n 'views.account.transaction.title'}}</strong></h1>
+        {{#if allTransactions}}
+            {{> elements_transactions_table limit=5 address=theAddress}}
+        {{else}}
+            <div class="wanchain-notransaction" style="">
+                <img />
+                <p>NO TRANSACTION RECORD</p>
+            </div>
+        {{/if}}
+    </div>
+
+</template>
