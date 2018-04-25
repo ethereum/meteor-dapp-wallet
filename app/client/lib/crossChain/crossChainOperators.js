@@ -80,6 +80,9 @@ class crossChainOperators{
     getBlockNumber(callBack){
         this.invokeOperator(new crossOperator('getBlockNumber',[],this.getOriginChainType(),callBack));
     }
+    getGasPrice(callBack){
+        this.invokeOperator(new crossOperator('getGasPrice',[],this.getOriginChainType(),callBack));
+    }
     getScEvent(address,topics,callBack){
         this.invokeOperator(new crossOperator('getScEvent',[address,topics],this.getOriginChainType(),callBack));
     }
