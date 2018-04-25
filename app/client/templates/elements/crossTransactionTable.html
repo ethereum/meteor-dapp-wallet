@@ -1,0 +1,31 @@
+<template name="elements_cross_transactions_table">
+    <table class="dapp-zebra transactions">
+        <thead >
+        <tr class="full-width">
+            <th colspan="5">Operation</th>
+            <th colspan="5">HTLC</th>
+            <th colspan="5">Time</th>
+            <th colspan="5">From</th>
+            <th colspan="5">Storeman</th>
+            <th colspan="5">To</th>
+            <th colspan="5">Status</th>
+            <th colspan="5">Value</th>
+        </tr>
+        </thead>
+        <tbody class="transfer-list-tbody">
+        {{#each crosschainList}}
+            <tr class="full-width">
+                <td colspan="5"  class="crosschain-list" id="{{address}}">{{operation}}</td>
+                <td colspan="5" >{{htlc}}</td>
+                <td colspan="5" >{{address}}</td>
+                <td colspan="5" >{{storeman}}</td>
+                <td colspan="5" >{{to}}</td>
+                <td colspan="5" >{{status}}</td>
+                <td colspan="5" >{{balance}}</td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</template>
+
+

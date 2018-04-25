@@ -3,8 +3,8 @@
     <!--ETH Accounts Overview list-->
     <div class="viwes-account-header">
         <h1 class="account-h1" style="margin-top: 0"><div class="viwes-account-line"></div><strong>ETH Accounts Overview</strong></h1>
-        {{#if allTransactions}}
-            {{> elements_transactions_table limit=5 address=theAddress}}
+        {{#if ethAccounts}}
+            {{> elements_account_table ethAccounts=ethAccounts}}
         {{else}}
             <div class="wanchain-notransaction" style="">
                 <img />
@@ -15,9 +15,9 @@
 
     <!--transaction list-->
     <div class="viwes-account-header">
-        <h1 class="account-h1" style="margin-top: 0"><div class="viwes-account-line"></div><strong>{{i18n 'views.account.transaction.title'}}</strong></h1>
-        {{#if allTransactions}}
-            {{> elements_transactions_table limit=5 address=theAddress}}
+        <h1 class="account-h1" style="margin-top: 0"><div class="viwes-account-line"></div><strong>History for ETH and Crosschain Transaction</strong></h1>
+        {{#if crosschainList}}
+            {{> elements_cross_transactions_table crosschainList=crosschainList}}
         {{else}}
             <div class="wanchain-notransaction" style="">
                 <img />

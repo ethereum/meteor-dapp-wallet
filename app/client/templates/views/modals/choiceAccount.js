@@ -10,7 +10,7 @@
  */
 
 Template['dapp_choiceAccount'].onCreated(function(){
-	if(this.data ) {
+	if(this.data) {
 		if(this.data.value) {
 			TemplateVar.set('value', this.data.value);
 		} else if(this.data.accounts && this.data.accounts[0]) {

@@ -1,0 +1,23 @@
+<template name="views_modals_sendcrosschainTransactionInfo">
+    <h1>
+        {{i18n "wallet.send.sendInfoTitle"}}
+        <br>
+        {{amount}}
+    </h1>
+    <p>{{from}}</p>
+    <i class="icon-arrow-down"></i>
+    <p>{{to}}</p>
+    <hr>
+
+    <p class="tx-info">
+        <small>+ {{i18n "wallet.send.estimatedFee"}}</small> {{fee}}
+        <br>
+        <small class="gas-price">
+            {{i18n "wallet.transactions.gasPrice"}} {{gasPrice}}
+            <br>
+            {{i18n "wallet.send.texts.estimatedGas"}} {{estimatedGas}}
+        </small>
+    </p>
+
+    <input type="password" id="crosschain-psd" placeholder="{{i18n 'mist.popupWindows.sendTransactionConfirmation.enterPassword'}}" style="width: 100%;"/>
+</template>

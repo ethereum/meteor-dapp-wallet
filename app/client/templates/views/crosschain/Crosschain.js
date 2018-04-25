@@ -4,7 +4,22 @@
  */
 
 Template['views_crosschain'].onCreated(function () {
-    var template = this;
+    let template = this;
+
+    mist.ETH2WETH().getAddressList('ETH',function (err,data) {
+        // console.log(err);
+        // console.log(data);
+
+        if (err) {
+            TemplateVar.set(template,'ethAccounts', {});
+        } else {
+            mist.ETH2WETH().getMultiBalances(data, (err, data) => {
+               // console.log(data);
+                TemplateVar.set(template,'ethAccounts',data);
+            });
+        }
+    });
+
 });
 
 Template['views_crosschain'].onDestroyed(function () {
@@ -21,9 +36,38 @@ Template['views_crosschain'].helpers({
      Get all transactions
      @method (allTransactions)
      */
-    'allTransactions': function(){
-        // var allTransactions = Transactions.find({from: FlowRouter.getParam('address').toLowerCase()}, {sort: {timestamp: -1}}).count();
-        return [];
+    'ethAccounts': function(){
+
+        const ethAccounts = TemplateVar.get('ethAccounts');
+        // console.log('ethAccounts', ethAccounts);
+
+        let result = [];
+        if (ethAccounts) {
+
+            _.each(ethAccounts, function (value, index) {
+                const balance =  web3.fromWei(value, 'ether');
+                const name = index.slice(2, 6) + index.slice(38);
+                result.push({name: name, address: index, balance: balance})
+            });
+        }
+
+        Session.set('ethList', result);
+
+        return result;
+    },
+
+    'crosschainList': function(){
+        //  console.log('TemplateVar.get(\'ethAccounts\')', TemplateVar.get('ethAccounts'));
+        // return TemplateVar.get('ethAccounts');
+
+        var test_list = [
+            {operation: 'Release X', htlc: '12 Nov',address: '0x71Bc7e3d4c6ea831F2F07934022eDbaA8CDCcCaa', storeman: '0x71Bc7e3d4c6ea831F2F07934022eDbaA8CDCcCaa', to: '0x71Bc7e3d4c6ea831F2F07934022eDbaA8CDCcCaa', status: 'Done', balance: 0},
+            {operation: 'Refund', htlc: '12 Nov',address: '0x71Bc7e3d4c6ea831F2F07934022eDbaA8CDCcCab',storeman: '0x71Bc7e3d4c6ea831F2F07934022eDbaA8CDCcCaa',to: '0x71Bc7e3d4c6ea831F2F07934022eDbaA8CDCcCaa', status: 'Done', balance: 0},
+            {operation: 'Release X', htlc: '12 Nov',address: '0x71Bc7e3d4c6ea831F2F07934022eDbaA8CDCcCac',storeman: '0x71Bc7e3d4c6ea831F2F07934022eDbaA8CDCcCaa',to: '0x71Bc7e3d4c6ea831F2F07934022eDbaA8CDCcCaa', status: 'Done', balance: 0},
+            {operation: 'Refund', htlc: '12 Nov',address: '0x71Bc7e3d4c6ea831F2F07934022eDbaA8CDCcCad',storeman: '0x71Bc7e3d4c6ea831F2F07934022eDbaA8CDCcCaa',to: '0x71Bc7e3d4c6ea831F2F07934022eDbaA8CDCcCaa', status: 'Done', balance: 0}
+        ];
+
+        return test_list;
     },
 
 });
