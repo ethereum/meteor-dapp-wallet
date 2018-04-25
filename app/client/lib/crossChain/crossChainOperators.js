@@ -47,6 +47,10 @@ class crossChainOperators{
         let operator = new crossOperator('signLockTrans',{tx:trans,password:password},this.getOriginChainType(),callback);
         this.invokeOperator(operator);
     }
+    getLockTransData(trans,callback){
+        let operator = new crossOperator('getLockTransData',{tx:trans},this.getOriginChainType(),callback);
+        this.invokeOperator(operator);
+    }
     signUnLockTrans(trans,password,callback){
         let operator = new crossOperator('signUnLockTrans',{tx:trans,password:password},this.getCrossChainType(),callback);
         this.invokeOperator(operator);
