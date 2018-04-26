@@ -27,8 +27,8 @@ class crossChainOperators{
     postMessage(crossOperator) {
         window.postMessage({type : messageType+this.crossType ,message:crossOperator.message}, (!location.origin || location.origin === "null" ) ? '*' : location.origin);
     };
-    invokecallback(data){
-        console.log('invokecallback : ',data);
+    invokeCallback(data){
+        console.log('invokeCallback : ',data);
         if(this.OperatorDict[data.index]){
             if(this.OperatorDict[data.index].callback){
                 this.OperatorDict[data.index].callback(data.error,data.value);
@@ -57,7 +57,7 @@ class crossChainOperators{
     getRevokeTransData(trans,callback){
         let operator = new crossOperator('getRevokeTransData',{tx:trans},this.getOriginChainType(),callback);
         this.invokeOperator(operator);
-    }    
+    }
 
     signLockTrans(trans,password,secretX, callback){
         let operator = new crossOperator('signLockTrans',{tx:trans,secretX:secretX, password:password},this.getOriginChainType(),callback);
@@ -124,10 +124,10 @@ class crossChainOperators{
 
 
     getOriginChainType(){
-        return this.direction == directionEnum[0] ? chainType[0] : chainType[1];
+        return this.direction === directionEnum[0] ? chainType[0] : chainType[1];
     }
     getCrossChainType(){
-        return this.direction == directionEnum[0] ? chainType[1] : chainType[0];
+        return this.direction === directionEnum[0] ? chainType[1] : chainType[0];
     }
 }
 
