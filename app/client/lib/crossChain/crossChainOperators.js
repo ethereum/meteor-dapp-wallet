@@ -70,7 +70,19 @@ class crossChainOperators{
         this.invokeOperator(operator);
     }
 
+    sendLockTrans(trans,password,secretX, callback){
+        let operator = new crossOperator('sendLockTrans',{tx:trans,secretX:secretX, password:password},this.getOriginChainType(),callback);
+        this.invokeOperator(operator);
+    }
 
+    sendRefundTrans(trans,password,secretX,callback){
+        let operator = new crossOperator('sendRefundTrans',{tx:trans,secretX:secretX, password:password},this.getCrossChainType(),callback);
+        this.invokeOperator(operator);
+    }
+    sendRevokeTrans(trans,password,secretX,callback){
+        let operator = new crossOperator('sendRevokeTrans',{tx:trans,secretX:secretX, password:password},this.getOriginChainType(),callback);
+        this.invokeOperator(operator);
+    }
     getCrossEthScAddress(callBack){
         this.invokeOperator(new crossOperator('getCrossEthScAddress',[],this.getOriginChainType(),callBack));
     }
