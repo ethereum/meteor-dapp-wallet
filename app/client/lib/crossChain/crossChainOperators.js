@@ -43,21 +43,30 @@ class crossChainOperators{
         let operator = new crossOperator('sendRawTrans',{tx:trans},chainType,callback);
         this.invokeOperator(operator);
     }
-    signLockTrans(trans,password,callback){
-        let operator = new crossOperator('signLockTrans',{tx:trans,password:password},this.getOriginChainType(),callback);
-        this.invokeOperator(operator);
-    }
     getLockTransData(trans,callback){
         let operator = new crossOperator('getLockTransData',{tx:trans},this.getOriginChainType(),callback);
         this.invokeOperator(operator);
     }
-    signUnLockTrans(trans,password,callback){
-        let operator = new crossOperator('signUnLockTrans',{tx:trans,password:password},this.getCrossChainType(),callback);
+    getRefundTransData(trans,password,callback){
+        let operator = new crossOperator('getRefundTransData',{tx:trans},this.getCrossChainType(),callback);
         this.invokeOperator(operator);
-        this.sendRawTrans(trans,password,callback,this.getCrossChainType());
     }
-    signRefundTrans(trans,password,callback){
-        let operator = new crossOperator('signRefundTrans',{tx:trans,password:password},this.getOriginChainType(),callback);
+    getRevokeTransData(trans,callback){
+        let operator = new crossOperator('getRevokeTransData',{tx:trans},this.getOriginChainType(),callback);
+        this.invokeOperator(operator);
+    }    
+
+    signLockTrans(trans,password,secretX, callback){
+        let operator = new crossOperator('signLockTrans',{tx:trans,secretX:secretX, password:password},this.getOriginChainType(),callback);
+        this.invokeOperator(operator);
+    }
+
+    signRefundTrans(trans,password,secretX,callback){
+        let operator = new crossOperator('signUnLockTrans',{tx:trans,secretX:secretX, password:password},this.getCrossChainType(),callback);
+        this.invokeOperator(operator);
+    }
+    signRevokeTrans(trans,password,secretX,callback){
+        let operator = new crossOperator('signRevokeTrans',{tx:trans,secretX:secretX, password:password},this.getOriginChainType(),callback);
         this.invokeOperator(operator);
     }
 
@@ -66,7 +75,7 @@ class crossChainOperators{
         this.invokeOperator(new crossOperator('getCrossEthScAddress',[],this.getOriginChainType(),callBack));
     }
     getStoremanGroups(callBack){
-        this.invokeOperator(new crossOperator('getStoremanGroups',[],this.getOriginChainType(),callBack));
+        this.invokeOperator(new crossOperator('syncStoremanGroups',[],this.getOriginChainType(),callBack));
     }
     getBalance(address,callBack){
         this.invokeOperator(new crossOperator('getBalance',[address],this.getOriginChainType(),callBack));
