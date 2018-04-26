@@ -4,7 +4,7 @@
  */
 
 Template['views_crosschain_main'].onRendered(function(){
-    TemplateVar.set('clickButton', 1);
+    Session.set('clickButton', 1);
 });
 
 Template['views_crosschain_main'].events({
@@ -16,22 +16,26 @@ Template['views_crosschain_main'].events({
 
     'click .history': function (e) {
 
-        TemplateVar.set('clickButton', 1);
+        // TemplateVar.set('clickButton', 1);
+        Session.set('clickButton', 1);
     },
 
     'click .toWeth': function (e) {
 
-        TemplateVar.set('clickButton', 2);
+        // TemplateVar.set('clickButton', 2);
+        Session.set('clickButton', 2);
     },
 
     'click .toWan': function (e) {
 
-        TemplateVar.set('clickButton', 3);
+        // TemplateVar.set('clickButton', 3);
+        Session.set('clickButton', 3);
     },
 
     'click .toNormal': function (e) {
 
-        TemplateVar.set('clickButton', 4);
+        // TemplateVar.set('clickButton', 4);
+        Session.set('clickButton', 4);
     }
 });
 

@@ -518,6 +518,20 @@ Helpers.transferBanlance = function (number, format, unit) {
     return EthTools.formatBalance(number, format, 'ether').replace(/ETHER|ether/g, unit);
 };
 
+Helpers.promisefy = function (func, paras=[], obj=null){
+    return new Promise(function(success, fail){
+        function _cb(err, result){
+            if(err){
+                fail(err);
+            } else {
+                success(result);
+            }
+        }
+        paras.push(_cb);
+        func.apply(obj, paras);
+    });
+};
+
 Helpers.totalBalance = function (waddress, balance) {
 
     var address = waddress;

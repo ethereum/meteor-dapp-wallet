@@ -21,7 +21,7 @@
                             {{#each ethAccounts}}
                                 <option value="{{address}}">
                                     {{name}}
-                                    - {{transferBanlance balance "0,0.00[0000000000000000] UNIT" "eth"}}
+                                    - {{balance}} eth
                                 </option>
                             {{/each}}
                         </select>
@@ -35,14 +35,20 @@
                 <div class="col col-12 mobile-full contBox" style="margin-bottom: 0">
                     <div class="triangle"></div><strong class="views_send_strong">Locked Account</strong>
                     <div class="dapp-select-account send-from">
-                        <select class="send-from" id="toweth-to" style="background-color: #f7f8fc;border: solid 0px #f7f8fc; padding-left: 10px;">
-                            {{#each storeman}}
+                        <select class="send-from" id="toweth-storeman" style="background-color: #f7f8fc;border: solid 0px #f7f8fc; padding-left: 10px;">
+                            {{#each TemplateVar.get 'storemanGroup'}}
                                 <option value="{{ethAddress}}">
                                     {{ethAddress}}
                                 </option>
                             {{/each}}
                         </select>
                     </div>
+                </div>
+
+                <!--to-->
+                <div class="col col-12 mobile-full contBox" style="margin-bottom: 0">
+                    <div class="triangle"></div><strong class="views_send_strong">{{i18n 'wallet.send.to'}}</strong>
+                    {{> wan_addrInput placeholder=" Please paste public address here" name="to" autofocus=true class="to toweth-to"}}
                 </div>
 
             </div>
@@ -58,7 +64,7 @@
             <!-- Deposit -->
             <div class="row clear" style="padding-top: 0;">
                 <div class="col col-12 mobile-full contBox">
-                    {{#each deposit}}
+                    {{#each Deposit}}
                         <div class="dapp-select-gas-price">
                             <span>Deposit: <span>{{deposit}}</span> WAN</span>
                             <input type="range" disabled="true" name="deposit" min="0" max="{{quota}}" step="1" value={{done}}>
@@ -75,7 +81,6 @@
             <div class="row clear" style="padding-top: 0;">
                 <div class="col col-12 mobile-full contBox">
                     <strong style="display: block" class="views_send_strong"><div class="triangle"></div>{{i18n 'wallet.send.fee'}}</strong>
-                    <!--{{> modal_selectPeposit gas=(TemplateVar.get "estimatedGas") gasPrice=(TemplateVar.get "gasPrice") option=(TemplateVar.get "sending") unit="eth"}}-->
 
                     <div class="dapp-select-gas-price">
                         <span>{{TemplateVar.get 'fee'}} <span>eth</span></span>
@@ -98,7 +103,7 @@
             <div class="col col-12 mobile-full contBox send-info" style="padding-left: 0;">
                 <strong style="display: block" class="views_send_strong"><div class="triangle"></div>Total</strong>
                 <div class="dapp-select-gas-price">
-                    <span class="amount">{{total}}<span> eth</span></span>
+                    <span class="amount">{{TemplateVar.get "total"}}<span> eth</span></span>
                 </div>
             </div>
 

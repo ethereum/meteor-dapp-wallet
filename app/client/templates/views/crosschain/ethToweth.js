@@ -10,32 +10,6 @@
  */
 
 
-/**
- The default gas to provide for estimates. This is set manually,
- so that invalid data etsimates this value and we can later set it down and show a warning,
- when the user actually wants to send the dummy data.
- @property defaultEstimateGas
- */
-var defaultEstimateGas = 50000000;
-
-var checkWaddress = function (waddress) {
-    var value = waddress.replace(/[\s\*\(\)\!\?\#\$\%]+/g, '');
-
-    // add 0x
-    if (value.length === 132 && value.indexOf('0x') === -1 && /^[0-9a-f]+$/.test(value.toLowerCase())) {
-        value = '0x' + value;
-    }
-
-    var regex = /^(0x)?[0-9a-fA-F]{132}$/;
-
-    if (regex.test(value.toLowerCase())) {
-        return value
-    }
-
-    return;
-};
-
-
 // Set basic variables
 Template['views_ethToweth'].onCreated(function(){
     var template = this;
@@ -50,7 +24,7 @@ Template['views_ethToweth'].onCreated(function(){
             TemplateVar.set(template,'storemanGroup', []);
         } else {
             // console.log(data);
-            TemplateVar.set(template,'to',data[0].ethAddress);
+            TemplateVar.set(template,'storeman',data[0].ethAddress);
             TemplateVar.set(template,'storemanGroup',data);
         }
     });
@@ -65,9 +39,13 @@ Template['views_ethToweth'].onCreated(function(){
             TemplateVar.set(template,'estimatedGas', data.LockGas);
             TemplateVar.set(template,'gasPrice', data.gasPrice);
 
-            TemplateVar.set(template, 'fee', data.LockGas * web3.fromWei(data.gasPrice, 'ether'));
+            // console.log('fee', data.LockGas * web3.fromWei(data.gasPrice, 'ether'));
+            var number = new BigNumber(data.LockGas * data.gasPrice);
+            // console.log('formatBalance', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
 
-            TemplateVar.set(template, 'total', TemplateVar.get(template, 'amount') + TemplateVar.get(template, 'fee'));
+            TemplateVar.set(template, 'fee', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
+
+            TemplateVar.set(template, 'total', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
         }
     });
 
@@ -76,16 +54,10 @@ Template['views_ethToweth'].onCreated(function(){
 
 Template['views_ethToweth'].helpers({
     'ethAccounts': function(){
-        // console.log('Session.get(\'ethList\')', Session.get('ethList'));
         return Session.get('ethList');
     },
 
-    'storeman': function () {
-        console.log('TemplateVar.get(\'storemanGroup\')', TemplateVar.get('storemanGroup'));
-        return TemplateVar.get('storemanGroup');
-    },
-
-    'deposit': function () {
+    'Deposit': function () {
 
         let result = [];
         _.each(TemplateVar.get('storemanGroup'), function (value, index) {
@@ -98,10 +70,6 @@ Template['views_ethToweth'].helpers({
         });
 
         return result;
-    },
-
-    'total': function () {
-      return TemplateVar.get('total');
     },
 
     'i18nText': function(key){
@@ -122,8 +90,14 @@ Template['views_ethToweth'].events({
 
     'change .input-amount': function(event){
         event.preventDefault();
-        TemplateVar.set('amount', new BigNumber(event.target.value));
-        TemplateVar.set('total', TemplateVar.get('amount') + TemplateVar.get('fee'));
+
+        var amount = new BigNumber(0);
+        if (event.target.value) {
+            amount = new BigNumber(event.target.value)
+        }
+
+        TemplateVar.set('amount', amount);
+        TemplateVar.set('total', amount.add(new BigNumber(TemplateVar.get('fee'))));
     },
 
     'change #toweth-from': function (event) {
@@ -131,7 +105,12 @@ Template['views_ethToweth'].events({
         TemplateVar.set('from', event.target.value);
     },
 
-    'change #toweth-to': function (event) {
+    'change #toweth-storeman': function (event) {
+        event.preventDefault();
+        TemplateVar.set('storeman', event.target.value);
+    },
+
+    'change .toweth-to': function (event) {
         event.preventDefault();
         TemplateVar.set('to', event.target.value);
     },
@@ -142,10 +121,10 @@ Template['views_ethToweth'].events({
 
     'change input[name="fee"], input input[name="fee"]': function(e){
         let feeRate = Number(e.currentTarget.value);
-        let gasPrice = web3.fromWei(TemplateVar.get('gasPrice'), 'ether');
 
         // return the fee
-        var fee = (TemplateVar.get('estimatedGas') * gasPrice) * (1 + feeRate/10);
+        var number = (TemplateVar.get('estimatedGas') * TemplateVar.get('gasPrice')) * (1 + feeRate/10);
+        var fee = EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether');
 
         TemplateVar.set('feeMultiplicator', feeRate);
         TemplateVar.set('fee', fee);
@@ -155,13 +134,24 @@ Template['views_ethToweth'].events({
      Submit the form and send the transaction!
      @event submit form
      */
-    'submit form': function(e, template){
+    'submit form': async function(e, template){
         let from = TemplateVar.get('from'),
+            storeman = TemplateVar.get('storeman'),
             to = TemplateVar.get('to'),
+            fee = TemplateVar.get('fee'),
             amount = TemplateVar.get('amount');
 
-        var gasPrice = web3.fromWei(TemplateVar.get('gasPrice'), 'ether'),
-            estimatedGas = TemplateVar.get('estimatedGas');
+        var gasPrice = TemplateVar.get('gasPrice').toString(),
+            estimatedGas = TemplateVar.get('estimatedGas').toString();
+
+        // wan address
+        // console.log('to', to);
+        if(!to) {
+            return GlobalNotification.warning({
+                content: 'i18n:wallet.send.error.noReceiver',
+                duration: 2
+            });
+        }
 
         if(amount === 0) {
             return GlobalNotification.warning({
@@ -170,34 +160,80 @@ Template['views_ethToweth'].events({
             });
         }
 
-        let sendTransaction = function () {
-            let password = document.getElementById('crosschain-psd').value;
-
-            if(!password) {
-                return GlobalNotification.warning({
-                    content: 'the password empty',
-                    duration: 2
-                });
-            }
-
-            console.log('password: ', password);
+        var trans = {
+          from: from, amount: amount.toString(10), storemanGroup: storeman,
+            cross: to, gas: estimatedGas, gasPrice: gasPrice
         };
 
+        // console.log('trans: ', trans);
+        try {
+            let getLockTransData = await Helpers.promisefy(mist.ETH2WETH().getLockTransData, [trans], mist.ETH2WETH());
 
-        EthElements.Modal.question({
-            template: 'views_modals_sendcrosschainTransactionInfo',
-            data: {
-                from: from,
-                to: to,
-                amount: amount,
-                gasPrice: gasPrice,
-                estimatedGas: estimatedGas,
-                fee: TemplateVar.get('fee')
-            },
-            ok: sendTransaction,
-            cancel: true
-        },{
-            class: 'send-transaction-info'
-        });
+            // console.log('getLockTransData: ', getLockTransData.lockTransData);
+
+            let sendTransaction = async function () {
+                let password_input = document.getElementById('crosschain-psd').value;
+
+                // console.log('password: ', password_input);
+
+                if(!password_input) {
+                    return GlobalNotification.warning({
+                        content: 'the password empty',
+                        duration: 2
+                    });
+                }
+
+                try {
+                    let sendLockTransData = await Helpers.promisefy(
+                        mist.ETH2WETH().sendLockTrans,
+                        [trans, password_input, getLockTransData.secretX],
+                        mist.ETH2WETH()
+                    );
+
+                    console.log('sendLockTransData result', sendLockTransData);
+                    Session.set('clickButton', 1);
+
+                } catch (error) {
+                    // console.log('sendLockTransData error', error);
+
+                    if (error && error.error) {
+                        return GlobalNotification.warning({
+                            content: error.error,
+                            duration: 2
+                        });
+                    } else {
+                        return GlobalNotification.warning({
+                            content: error,
+                            duration: 2
+                        });
+                    }
+
+                }
+            };
+
+
+            EthElements.Modal.question({
+                template: 'views_modals_sendcrosschainTransactionInfo',
+                data: {
+                    from: from,
+                    to: to,
+                    amount: amount,
+                    gasPrice: gasPrice,
+                    estimatedGas: estimatedGas,
+                    fee: fee,
+                    data: getLockTransData.lockTransData
+                },
+                ok: sendTransaction,
+                cancel: true
+            },{
+                class: 'send-transaction-info'
+            });
+
+        } catch (error) {
+            return GlobalNotification.warning({
+                content: 'get data error',
+                duration: 2
+            });
+        }
     }
 });

@@ -42,19 +42,19 @@
         </ul>
     </nav>
 
-    {{#if $eq (TemplateVar.get "clickButton") 1}}
+    {{#if $eq ($.Session.get "clickButton") 1}}
         {{> views_crosschain}}
     {{/if}}
 
-    {{#if $eq (TemplateVar.get "clickButton") 2}}
+    {{#if $eq ($.Session.get "clickButton") 2}}
         {{> views_ethToweth}}
     {{/if}}
 
-    {{#if $eq (TemplateVar.get "clickButton") 3}}
+    {{#if $eq ($.Session.get "clickButton") 3}}
         {{> views_wethTowan}}
     {{/if}}
 
-    {{#if $eq (TemplateVar.get "clickButton") 4}}
+    {{#if $eq ($.Session.get "clickButton") 4}}
         {{> views_ethsend}}
     {{/if}}
 

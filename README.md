@@ -22,10 +22,14 @@ Starting the wallet dapp using [Meteor](https://meteor.com/install)
 Go to http://localhost:3000
 
 
+
+=======>>>>>>>>    meteor --port 3050
+
+
 ## Deployment
 
 To create a build version of your app run:
-    
+
     // install meteor-build-client
     $ npm install -g meteor-build-client
 
@@ -47,7 +51,7 @@ To deploy them to the **wallet.ethereum.org** site, execute these commands (from
     git merge develop
     cd app
     meteor-build-client ../build --path "/"
-          
+
 And push (or PR) your changes to the gh-pages branch.
 
 

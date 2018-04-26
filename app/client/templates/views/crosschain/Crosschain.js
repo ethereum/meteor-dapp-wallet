@@ -11,11 +11,11 @@ Template['views_crosschain'].onCreated(function () {
         // console.log(data);
 
         if (err) {
-            TemplateVar.set(template,'ethAccounts', {});
+            TemplateVar.set(template,'ethAccounts', []);
         } else {
-            mist.ETH2WETH().getMultiBalances(data, (err, data) => {
-               // console.log(data);
-                TemplateVar.set(template,'ethAccounts',data);
+            mist.ETH2WETH().getMultiBalances(data, (err, result) => {
+               // console.log(result);
+                TemplateVar.set(template,'ethAccounts',result);
             });
         }
     });
@@ -27,7 +27,7 @@ Template['views_crosschain'].onDestroyed(function () {
 });
 
 Template['views_crosschain'].onRendered(function(){
-    console.timeEnd('renderAccountPage');
+    // console.timeEnd('renderAccountPage');
 });
 
 Template['views_crosschain'].helpers({
@@ -52,13 +52,10 @@ Template['views_crosschain'].helpers({
         }
 
         Session.set('ethList', result);
-
         return result;
     },
 
     'crosschainList': function(){
-        //  console.log('TemplateVar.get(\'ethAccounts\')', TemplateVar.get('ethAccounts'));
-        // return TemplateVar.get('ethAccounts');
 
         var test_list = [
             {operation: 'Release X', htlc: '12 Nov',address: '0x71Bc7e3d4c6ea831F2F07934022eDbaA8CDCcCaa', storeman: '0x71Bc7e3d4c6ea831F2F07934022eDbaA8CDCcCaa', to: '0x71Bc7e3d4c6ea831F2F07934022eDbaA8CDCcCaa', status: 'Done', balance: 0},
@@ -190,7 +187,7 @@ Template['views_crosschain'].events({
 
     'click .history': function (e) {
         var wanSendTransaction = function() {
-            console.log('aaaa');
+            // console.log('aaaa');
         };
 
         EthElements.Modal.question({
