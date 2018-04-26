@@ -3,7 +3,7 @@ let chainType = ['ETH','WAN'];
 let index = 0;
 let messageType = 'CrossChain_';
 class crossOperator{
-    constructor(action,parameters,chainType,callBack){
+    constructor(action,parameters,chainType,callback){
         this.message = {
             index : index,
             action : action,
@@ -11,7 +11,7 @@ class crossOperator{
             chainType : chainType
         };
         index++;
-        this.callBack = callBack;
+        this.callback = callback;
     }
 }
 class crossChainOperators{
@@ -27,11 +27,11 @@ class crossChainOperators{
     postMessage(crossOperator) {
         window.postMessage({type : messageType+this.crossType ,message:crossOperator.message}, (!location.origin || location.origin === "null" ) ? '*' : location.origin);
     };
-    invokeCallback(data){
-        console.log('invokeCallback : ',data);
+    invokecallback(data){
+        console.log('invokecallback : ',data);
         if(this.OperatorDict[data.index]){
-            if(this.OperatorDict[data.index].callBack){
-                this.OperatorDict[data.index].callBack(data.error,data.value);
+            if(this.OperatorDict[data.index].callback){
+                this.OperatorDict[data.index].callback(data.error,data.value);
             }
             return true;
         }
@@ -42,6 +42,9 @@ class crossChainOperators{
     sendRawTrans(trans,chainType,callback){
         let operator = new crossOperator('sendRawTrans',{tx:trans},chainType,callback);
         this.invokeOperator(operator);
+    }
+    listHistory(addrList, callback){
+        this.invokeOperator(new crossOperator('listHistory',{addrList:addrList},this.getOriginChainType(),callback));
     }
     getLockTransData(trans,callback){
         let operator = new crossOperator('getLockTransData',{tx:trans},this.getOriginChainType(),callback);
@@ -83,40 +86,40 @@ class crossChainOperators{
         let operator = new crossOperator('sendRevokeTrans',{tx:trans,secretX:secretX, password:password},this.getOriginChainType(),callback);
         this.invokeOperator(operator);
     }
-    getCrossEthScAddress(callBack){
-        this.invokeOperator(new crossOperator('getCrossEthScAddress',[],this.getOriginChainType(),callBack));
+    getCrossEthScAddress(callback){
+        this.invokeOperator(new crossOperator('getCrossEthScAddress',[],this.getOriginChainType(),callback));
     }
-    getStoremanGroups(callBack){
-        this.invokeOperator(new crossOperator('syncStoremanGroups',[],this.getOriginChainType(),callBack));
+    getStoremanGroups(callback){
+        this.invokeOperator(new crossOperator('syncStoremanGroups',[],this.getOriginChainType(),callback));
     }
-    getBalance(address,callBack){
-        this.invokeOperator(new crossOperator('getBalance',[address],this.getOriginChainType(),callBack));
+    getBalance(address,callback){
+        this.invokeOperator(new crossOperator('getBalance',[address],this.getOriginChainType(),callback));
     }
-    getMultiBalances(address,callBack){
-        this.invokeOperator(new crossOperator('getMultiBalances',[address],this.getOriginChainType(),callBack));
+    getMultiBalances(address,callback){
+        this.invokeOperator(new crossOperator('getMultiBalances',[address],this.getOriginChainType(),callback));
     }
-    getMultiTokenBalance(address,callBack){
-        this.invokeOperator(new crossOperator('getMultiTokenBalance',[address],this.getOriginChainType(),callBack));
-    }
-
-    getNonce(address,callBack){
-        this.invokeOperator(new crossOperator('getNonce',[address],this.getOriginChainType(),callBack));
-    }
-    getBlockNumber(callBack){
-        this.invokeOperator(new crossOperator('getBlockNumber',[],this.getOriginChainType(),callBack));
-    }
-    getGasPrice(callBack){
-        this.invokeOperator(new crossOperator('getGasPrice',[],this.getOriginChainType(),callBack));
-    }
-    getScEvent(address,topics,callBack){
-        this.invokeOperator(new crossOperator('getScEvent',[address,topics],this.getOriginChainType(),callBack));
-    }
-    subscribe(address,topics,callBack){
-        this.invokeOperator(new crossOperator('subscribe',[address,topics],this.getOriginChainType(),callBack));
+    getMultiTokenBalance(address,callback){
+        this.invokeOperator(new crossOperator('getMultiTokenBalance',[address],this.getOriginChainType(),callback));
     }
 
-    getAddressList(chainType,callBack){
-        this.invokeOperator(new crossOperator('getAddressList',{},chainType,callBack));
+    getNonce(address,callback){
+        this.invokeOperator(new crossOperator('getNonce',[address],this.getOriginChainType(),callback));
+    }
+    getBlockNumber(callback){
+        this.invokeOperator(new crossOperator('getBlockNumber',[],this.getOriginChainType(),callback));
+    }
+    getGasPrice(callback){
+        this.invokeOperator(new crossOperator('getGasPrice',[],this.getOriginChainType(),callback));
+    }
+    getScEvent(address,topics,callback){
+        this.invokeOperator(new crossOperator('getScEvent',[address,topics],this.getOriginChainType(),callback));
+    }
+    subscribe(address,topics,callback){
+        this.invokeOperator(new crossOperator('subscribe',[address,topics],this.getOriginChainType(),callback));
+    }
+
+    getAddressList(chainType,callback){
+        this.invokeOperator(new crossOperator('getAddressList',{},chainType,callback));
     }
 
 
