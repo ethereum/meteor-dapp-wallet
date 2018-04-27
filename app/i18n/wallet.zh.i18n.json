@@ -23,8 +23,8 @@
             "texts": {
                 "note": "备注",
                 "balance": "余额",
-                "connectionErrorMist": "无法连线。请用下列指令启动 geth:<br><br><small><code>__node__</code><br><br>当使用不同<code>datadir</code>时，请确认将 IPC 路径设到默认值的，也就是：<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/geth.ipc</code><br>or<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/geth.ipc</code>. <br><br>或加上：<code>--unlock &lt;yourAccount&gt;.</code></small>",
-                "connectionErrorBrowser": "无法连线，请使用下列方式启动 geth 。<br><br><small><code>__node__</code><br><br>或加上：<code>--unlock &lt;yourAccount&gt;.</code></small>",
+                "connectionErrorMist": "无法连线。请用下列指令启动 __geth__:<br><br><small><code>__node__</code><br><br>当使用不同<code>datadir</code>时，请确认将 IPC 路径设到默认值的，也就是：<br><code>__geth__ --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/__Ethereum__/__gethIpc__</code><br>or<br><code>__geth__ --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.__ethereum__/__gethIpc__</code>. <br><br>或加上：<code>--unlock &lt;yourAccount&gt;.</code></small>",
+                "connectionErrorBrowser": "无法连线，请使用下列方式启动 __geth__ 。<br><br><small><code>__node__</code><br><br>或加上：<code>--unlock &lt;yourAccount&gt;.</code></small>",
                 "pendingConfirmationsBadge": "确认等待中！",
                 "nodeSyncing": "剩下 __blockDiff__ 块",
                 "blockReceived": "收到新的区块",
@@ -91,7 +91,7 @@
             "walletsDescription": "把這些合约存储在区块链中，可以保存和保障以太坊的契約。他们可以被多个账户的所有者使用，而且所有的交易记录也会被保存起来。",
             "walletsDescriptionNotEnoughFunds": "只要你的以太币多于1个，你就可以创建更加成熟的合约。钱包只是一种基本的智能合约，让您的资金被多个账户所操控，而且想要的话可以设定每日的提现额度，以此来增加安全性。要创建自己的定制化合约到<em> 合约 </em> 分页。",
             "accountsDescription": "账户由密码保护，可以存储以太币，保障基于以太坊的代币或货币，也能够控制合约。账户无法显示进账中的交易。",
-            "accountsDescription": "Accounts are password protected keys that can hold ether, secure ethereum-based tokens or coins and control contracts. Accounts can't display incoming transactions.",
+            "accountsDescription": "Accounts are password protected keys that can hold __ether__, secure __ethereum__-based tokens or coins and control contracts. Accounts can't display incoming transactions.",
             "buttons": {
                 "deposit": "存入以太币",
                 "buyEther": "使用比特币做存款",
@@ -255,7 +255,7 @@
             "texts": {
                 "ownerPaysGas": "瓦斯由钱包合约所有人支付、。",
                 "sendAmount": "您将发送 <strong>__amount__</strong>.",
-                "sendAmountEquivalent": "您将发送 <strong>__amount__</strong> 等值的 以太币,汇率参照 <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a>.<br>目前等值于 <strong>__etherAmount__</strong>.",
+                "sendAmountEquivalent": "您将发送 <strong>__amount__</strong> 等值的 以太币,汇率参照 <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a>.<br>目前等值于 <strong>__etherAmount__</strong> __ether__.",
                 "sendToken": "您将发送 <strong>__amount__ __symbol__</strong> 的 <strong> __name__</strong>.",
                 "overDailyLimit": "<p class=\"over-daily\">发送数量将超过今日剩余限额 __limit__ (每日限额总计 __total__)，您需要 __count__ 个其他账户确认。</p>",
                 "overDailyLimit_plural": "<p class=\"over-daily\">发送数量将超过今日剩余限额 __limit__ (每日限额总计 __total__ )，您需要 __count__ 个其他账户确认。</p>",
@@ -280,7 +280,7 @@
             "title": "定制化 <strong>token</strong>",
             "subTitle": "新增 代币",
             "admin": "__name__ (管理页面)",
-            "description": "代币 是货币或者是其他基于以太坊平台的货币等价物。您需要添加代币地址到此列表，以便查看和发送代币 。您可以修改 <a href=\"https://ethereum.org/token#the-code\" target=\"_blank\">定制化代币的合约规范</a> 以创建定制化的代币，或者查看 <a href=\"https://www.ethereum.org/token\" target=\"_blank\">Ethereum Tokens</a> 进行深入学习。",
+            "description": "代币 是货币或者是其他基于以太坊平台的货币等价物。您需要添加代币地址到此列表，以便查看和发送代币 。您可以修改 <a href=\"https://ethereum.org/token#the-code\" target=\"_blank\">定制化代币的合约规范</a> 以创建定制化的代币，或者查看 <a href=\"https://www.ethereum.org/token\" target=\"_blank\">__Ethereum__ Tokens</a> 进行深入学习。",
              "deleteToken": "您確定要从列表中移除 代币么 <strong>__token__</strong> ？",
             "addedToken": "添加 __token__ 至您的查看列表",
             "editedToken": "编辑 代币 __token__",

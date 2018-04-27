@@ -9,6 +9,12 @@ Template['mist_alert'].helpers({
   },
   bubbleViewState: function() {
     return !TemplateVar.get('hidden') ? 'is-hidden' : '';
+  },
+  downloadUrl: function() {
+    if (publicSettings && publicSettings.downloadUrl) {
+      return publicSettings.downloadUrl;
+    }
+    return 'https://github.com/ethereum/mist/releases';
   }
 });
 

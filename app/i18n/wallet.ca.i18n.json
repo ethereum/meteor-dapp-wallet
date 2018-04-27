@@ -23,22 +23,22 @@
             "texts": {
                 "note": "Nota",
                 "balance": "Balanç",
-                "connectionErrorMist": "No s'ha pogut connectar. Si us plau inicia geth utilitzant:<br><br><small><code>__node__</code><br><br>Assegura't que la ruta al teu IPC és per defecte, quan utilitzis un <code>datadir</code> diferent, ex.<br><code>geth --datadir ... --ipcpath /Users/&lt;elTeuUsuari&gt;/Library/Ethereum/geth.ipc</code><br>o<br><code>geth --datadir ... --ipcpath /Users/&lt;elTeuUsuari&gt;/.ethereum/geth.ipc</code>. <br><br>Afegeix opcionalment: <code>--unlock &lt;elTeuCompte&gt;.</code></small>",
-                "connectionErrorBrowser": "No s'ha pogut connectar. Si us plau inicia geth amb les següents opcions:<br><br><small><code>__node__</code><br><br>Opcionalment afegeix: <code>--unlock &lt;elTeuCompte&gt;.</code></small>",
+                "connectionErrorMist": "No s'ha pogut connectar. Si us plau inicia __geth__ utilitzant:<br><br><small><code>__node__</code><br><br>Assegura't que la ruta al teu IPC és per defecte, quan utilitzis un <code>datadir</code> diferent, ex.<br><code>__geth__ --datadir ... --ipcpath /Users/&lt;elTeuUsuari&gt;/Library/__Ethereum__/__gethIpc__</code><br>o<br><code>__geth__ --datadir ... --ipcpath /Users/&lt;elTeuUsuari&gt;/.__ethereum__/__gethIpc__</code>. <br><br>Afegeix opcionalment: <code>--unlock &lt;elTeuCompte&gt;.</code></small>",
+                "connectionErrorBrowser": "No s'ha pogut connectar. Si us plau inicia __geth__ amb les següents opcions:<br><br><small><code>__node__</code><br><br>Opcionalment afegeix: <code>--unlock &lt;elTeuCompte&gt;.</code></small>",
                 "pendingConfirmationsBadge": "Confirmació Pendent!",
                 "nodeSyncing": "__blockDiff__ blocs restants",
                 "blockReceived": "Nou bloc rebut",
                 "timeSinceBlock": "des de l'últim bloc",
                 "peers": "peers",
                 "waitingForBlocks": "Esperant blocs..",
-                "testnetExplain": "Ets a la testnet. NO ENVIÏS cap Ether real a aquestes adreces",
+                "testnetExplain": "Ets a la testnet. NO ENVIÏS cap __ethereum__ real a aquestes adreces",
                 "noAccounts": {
                     "title": "Encara no tens cap compte",
                     "text": "Necessites crear com a mínim un compte amb una contrasenya segura."
                 }
             },
             "error": {
-                "wrongChain": "Sembla que estàs en una cadena diferent. Si us plau reinicia l'aplicació Ethereum!"
+                "wrongChain": "Sembla que estàs en una cadena diferent. Si us plau reinicia l'aplicació __ethereum__!"
             },
             "warnings": {
                 "txOriginVulnerabilityWallet": "Aquest smart contract conté codi obsolet que pot ser subjecte a atacs de phishing. ",
@@ -55,7 +55,7 @@
                 "title": "Selecciona un compte"
             },
             "testnetWallet": {
-                "walletNeedsDeployment": "Sembla que estàs a la testnet.<br><br>No s'ha trobat cap wallet de contracte original.  Necessitem desplegar-ne un, que pot ser utilitzat com a contracte 'stub', des de la teva adreça: <br><br><small><code>__account__</code></small><br><br><em>Si us plau assegurat que aquesta adreça té al menys 1 Ether!</em>",
+                "walletNeedsDeployment": "Sembla que estàs a la testnet.<br><br>No s'ha trobat cap wallet de contracte original.  Necessitem desplegar-ne un, que pot ser utilitzat com a contracte 'stub', des de la teva adreça: <br><br><small><code>__account__</code></small><br><br><em>Si us plau assegurat que aquesta adreça té al menys 1 __ether__!</em>",
                 "testnetWalletDeployed": "S'ha desplegat el wallet de contracte original!<br>Un wallet de contracte original s'ha desplegat a l'adreça:<br><br><small><code>__address__</code></small>."
             },
             "addToken": {
@@ -79,9 +79,9 @@
             "defaultName": "Sense nom",
             "creating": "Creant",
             "importing": "Important",
-            "accountNote": "Els comptes no poden mostrar transaccions entrant, però poden rebre, mantenir i enviar Ether. Per veure les transaccions entrant <a href=\"/account/new\">crea un wallet de contracte</a> per poder desar Ether.",
+            "accountNote": "Els comptes no poden mostrar transaccions entrant, però poden rebre, mantenir i enviar __ether__. Per veure les transaccions entrant <a href=\"/account/new\">crea un wallet de contracte</a> per poder desar __ether__.",
             "outOfSyncNote": "Si el teu balanç no sembla actualitzat, assegura't que estàs sincronitzat amb la xarxa.",
-            "walletNote": "La majoria dels intercanvis no suporten rebre Ether d'un wallet de contracte encara. Assegura't que mous el teu balanç a un compte primer!",
+            "walletNote": "La majoria dels intercanvis no suporten rebre __ether__ d'un wallet de contracte encara. Assegura't que mous el teu balanç a un compte primer!",
             "addressCopiedToClipboard": "Copiat al portapapers",
             "addressNotCopiedToClipboard": "Error copiant l'adreça al portapapers. Si us plau torna-ho a intentar.",
             "qrCodeLabel": "Escaneja aquest codi amb una app mòbil compatible",
@@ -89,14 +89,14 @@
             "dailyLimitRemaining": "restant avui",
             "requiredSignatures": "Signatures necessàries",
             "owners": "Propietaris",
-            "walletsDescription": "Aquests contractes s'allotgen a la blockchain i mantenen i asseguren Ether. Poden tenir diversos comptes com a propietaris i mantenir un registre complet de totes les transaccions.",
-            "walletsDescriptionNotEnoughFunds": "Una vegada que tingueu més d'1 Ether, podeu crear contractes més sofisticats. Els Wallets són contractes intel·ligents que permeten controlar els vostres fons mitjançant diversos comptes. Poden tenir un límit diari opcional sobre retirades per augmentar la seguretat. Creeu els vostres propis contractes personalitzats a la pestanya <em>Contractes</em>.",
-            "accountsDescription": "Els comptes estan protegits per contrasenyes i poden contenir Ether i tokens basats en Ethereum.  Poden controlar contractes, però no poden mostrar transaccions entrants.",
+            "walletsDescription": "Aquests contractes s'allotgen a la blockchain i mantenen i asseguren __ether__. Poden tenir diversos comptes com a propietaris i mantenir un registre complet de totes les transaccions.",
+            "walletsDescriptionNotEnoughFunds": "Una vegada que tingueu més d'1 __ether__, podeu crear contractes més sofisticats. Els Wallets són contractes intel·ligents que permeten controlar els vostres fons mitjançant diversos comptes. Poden tenir un límit diari opcional sobre retirades per augmentar la seguretat. Creeu els vostres propis contractes personalitzats a la pestanya <em>Contractes</em>.",
+            "accountsDescription": "Els comptes estan protegits per contrasenyes i poden contenir __ether__ i tokens basats en __ethereum__.  Poden controlar contractes, però no poden mostrar transaccions entrants.",
             "buttons": {
-                "deposit": "Transfereix Ether & Tokens",
+                "deposit": "Transfereix __ether__ & Tokens",
                 "depositBitcoin": "Finança amb Bitcoin",
                 "depositUsingCreditCard": "Finança amb targeta de crèdit (només U.S.)",
-                "viewOnExplorer": "Veure a Etherscan",
+                "viewOnExplorer": "Veure a Block Explorer",
                 "copyAddress": "Copiar adreça",
                 "scanQRCode": "Mostrar codi QR",
                 "showInterface": "Mostrar interfície"
@@ -206,7 +206,7 @@
                     "description": "Un contracte controlat per múltiples comptes",
                     "text1": "Això és un compte conjunt controlat per",
                     "text2": "propietaris. Pots enviar fins a",
-                    "text3": "Ether per dia.",
+                    "text3": "__ether__ per dia.",
                     "text4": "Qualsevol transacció per sobre d'aquest límit diari necessita la confirmació de",
                     "text5": "propietaris.",
                     "accountOwnersTitle": "Propietaris del compte",
@@ -262,7 +262,7 @@
             "texts": {
                 "ownerPaysGas": "El gas el paga el propietari del wallet de contracte",
                 "sendAmount": "Vols enviar <strong>__amount__</strong>.",
-                "sendAmountEquivalent": "Vols enviar <strong>__amount__</strong> Ethers, utilitzant l'intercanvi de <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a>.<br>Que és actualment equivalent a <strong>__etherAmount__</strong>.",
+                "sendAmountEquivalent": "Vols enviar <strong>__amount__</strong> __ether__, utilitzant l'intercanvi de <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a>.<br>Que és actualment equivalent a <strong>__etherAmount__</strong> __ether__.",
                 "sendToken": "Vols enviar <strong>__amount__ __symbol__</strong> de <strong> __name__</strong>.",
                 "overDailyLimit": "<p class=\"over-daily\">Aquesta quantitat supera el restant del límit diari de __limit__ (de __total__ al dia), necessites que __count__ comptes ho confirmin</p>",
                 "overDailyLimit_plural": "<p class=\"over-daily\">Aquesta quantitat és per sobre del restant del límit diari de __limit__ (de __total__ al dia), necessites que __count__ comptes ho confirmin</p>",
@@ -271,7 +271,7 @@
                 "noCodeInRecipient": "El compte destinatari no és un contracte, no pots executar res. <strong> Escriure una adreça d'un contracte al camp 'A'. </strong>",
                 "addData": "Pots afegir dades extres per enviar amb les teves transaccions. Si no saps que és això, <strong>no ho toquis o poden passar coses dolentes</strong>.",
                 "dataNotExecutable": "Les dades semblen no executables, això vol dir que la transacció utilitzarà tot el gas que proporciones.",
-                "cantEstimateGas": "No podem preveure degudament l'ús de gas, necessites com a mínim 1 Ether al teu compte.",
+                "cantEstimateGas": "No podem preveure degudament l'ús de gas, necessites com a mínim 1 __ether__ al teu compte.",
                 "estimatedGas": "Gas previst requerit",
                 "timeTexts": {
                     "0": "en pocs minuts o més",
@@ -287,7 +287,7 @@
             "title": "<strong>Tokens</strong> personalitzats",
             "subTitle": "Tokens agegits",
             "admin": "__name__ (pàgina d'administració)",
-            "description": "Els tokens són monedes i altres fungibles construïts sobre la platforma d'Ethereum. Per tal que tots els comptes puguin veure i enviar els tokens, necessites afegir la seva adreça a aquesta llista. Pots crear el teu propi token simplement modificant <a href=\"https://ethereum.org/token#the-code\" target=\"_blank\">aquest exemple d'un contracte de token personalitzat</a> o aprenent-ne més sobre <a href=\"https://www.ethereum.org/token\" target=\"_blank\">tokens d'Ethereum</a>.",
+            "description": "Els tokens són monedes i altres fungibles construïts sobre la platforma d'__ethereum__. Per tal que tots els comptes puguin veure i enviar els tokens, necessites afegir la seva adreça a aquesta llista. Pots crear el teu propi token simplement modificant <a href=\"https://ethereum.org/token#the-code\" target=\"_blank\">aquest exemple d'un contracte de token personalitzat</a> o aprenent-ne més sobre <a href=\"https://www.ethereum.org/token\" target=\"_blank\">tokens d'__ethereum__</a>.",
             "deleteToken": "Vols eliminar aquest token <strong>__token__</strong> de la teva llista?",
             "addedToken": "__token__ afegit a la teva llista de visualització",
             "editedToken": "Token __token__ editat",

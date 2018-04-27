@@ -23,21 +23,21 @@
             "texts": {
                 "note": "Note",
                 "balance": "Solde",
-                "connectionErrorMist": "Impossible de se connecter. Veuillez lancer gexp en utilisant : <br><br><small><code>__node__</code><br><br>Assurez-vous d'avoir bien renseigné le chemin IPC par défaut lorsque vous utilisez un <code>datadir</code> différent, ex : <br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/geth.ipc</code><br>ou<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.Ethereum/geth.ipc</code>. <br><br>Ajout facultatif : <code>--unlock &lt;votreCompte&gt;.</code></small>",
+                "connectionErrorMist": "Impossible de se connecter. Veuillez lancer gexp en utilisant : <br><br><small><code>__node__</code><br><br>Assurez-vous d'avoir bien renseigné le chemin IPC par défaut lorsque vous utilisez un <code>datadir</code> différent, ex : <br><code>__geth__ --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/__Ethereum__/__gethIpc__</code><br>ou<br><code>__geth__ --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.__ethereum__/__gethIpc__</code>. <br><br>Ajout facultatif : <code>--unlock &lt;votreCompte&gt;.</code></small>",
                 "connectionErrorBrowser": "Impossible de se connecter. Veuillez lancer gexp en utilisant les options suivantes : <br><br><small><code>__node__</code><br><br>Ajout facultatif : <code>--unlock &lt;votreCompte&gt;.</code></small>",
                 "pendingConfirmationsBadge": "Confirmation en cours !",
                 "nodeSyncing": "__blockDiff__ blocs restants",
                 "blockReceived": "Nouveau bloc reçu",
                 "timeSinceBlock": "depuis le dernier bloc",
                 "peers": "pairs",
-                "testnetExplain": "Vous êtes sur un réseau Testnet, N'ENVOYEZ AUCUN vrai ether à ces adresses",
+                "testnetExplain": "Vous êtes sur un réseau Testnet, N'ENVOYEZ AUCUN vrai __ether__ à ces adresses",
                 "noAccounts": {
                     "title": "Vous n'avez aucun compte pour l'instant",
                     "text": "Vous devez créer au moins un compte avec un mot de passe robuste."
                 }
             },
             "error": {
-                "wrongChain": "Vous semblez être sur une chaine différente, veuillez redémarrer Ethereum Wallet App !"
+                "wrongChain": "Vous semblez être sur une chaine différente, veuillez redémarrer __Ethereum__ Wallet App !"
             },
             "warnings": {
                 "txOriginVulnerabilityWallet": "Ce portefeuille de contrat à puce a le code obsolète et est soumis à des attaques de phishing. ",
@@ -52,7 +52,7 @@
                 "title": "Sélectionner un compte"
             },
             "testnetWallet": {
-                "walletNeedsDeployment": "Vous semblez être sur un réseau Testnet.<br><br>Aucun code de portefeuille n'a été trouvé, nous devons en déployer un qui pourra être utilisé par un 'wallet contract stub contracts' depuis votre adresse : <br><br><small><code>__account__</code></small><br><br><em>Veuillez vous assurer que cette adresse détienne au moins 1 ether en dépôt !</em>",
+                "walletNeedsDeployment": "Vous semblez être sur un réseau Testnet.<br><br>Aucun code de portefeuille n'a été trouvé, nous devons en déployer un qui pourra être utilisé par un 'wallet contract stub contracts' depuis votre adresse : <br><br><small><code>__account__</code></small><br><br><em>Veuillez vous assurer que cette adresse détienne au moins 1 __ether__ en dépôt !</em>",
                 "testnetWalletDeployed": "Le portefeuille initial est déployé !<br>Un portefeuille initial a été déployé à cette adresse :<br><br><small><code>__address__</code></small>."
             },
             "addToken": {
@@ -76,20 +76,20 @@
             "defaultName": "Sans nom",
             "creating": "Création",
             "importing": "Importation",
-            "accountNote": "Les comptes ne permettent pas l'affichage des transactions entrantes, mais détiennent et envoient de l'ether. Pour voir les transactions entrantes <a href=\"/account/new\">créez un portefeuille</a> pour stocker de l'ether.",
-            "walletNote": "La plupart des plateformes de change ne permettent pas encore de recevoir de l'ether depuis un portefeuille. Assurez-vous d'abord de transférer vos fonds sur une adresse de compte personnel !",
+            "accountNote": "Les comptes ne permettent pas l'affichage des transactions entrantes, mais détiennent et envoient de l'__ether__. Pour voir les transactions entrantes <a href=\"/account/new\">créez un portefeuille</a> pour stocker de l'__ether__.",
+            "walletNote": "La plupart des plateformes de change ne permettent pas encore de recevoir de l'__ether__ depuis un portefeuille. Assurez-vous d'abord de transférer vos fonds sur une adresse de compte personnel !",
             "addressCopiedToClipboard": "Copié dans le presse-papier",
             "qrCodeLabel": "Pointer une app mobile compatible vers ce code",
             "dailyLimit": "Limite quotidienne",
             "dailyLimitRemaining": "restants aujourd'hui",
             "requiredSignatures": "signatures requises",
             "owners": "Propriétaires",
-            "walletsDescription": "Les portefeuilles sont des contrats qui sont stockés sur la blockchain et peuvent détenir et sécuriser de l'ether. Plusieurs comptes peuvent en être propriétaires et ils conservent un registre complet de toutes les transactions.",
-            "walletsDescriptionNotEnoughFunds": "Dès que vous avez plus de 1 ether, vous pouvez créer des contrats plus sophistiqués. Les portefeuilles sont des types de contrats intelligents qui permettent à vos fonds d'être contrôlés par plusieurs comptes et qui ont une option de limite de retrait quotidien permettant d'accroître la sécurité. Pour créer vos propres contrats personnalisés, allez sur l'onglet <em>Contrats </em>.",
-            "accountsDescription": "Les comptes sont des clés protégées par mot de passe qui peuvent détenir de l'ether, sécuriser des jetons basés sur Ethereum, et contrôler des contrats. Les comptes ne peuvent pas afficher les transactions entrantes.",
+            "walletsDescription": "Les portefeuilles sont des contrats qui sont stockés sur la blockchain et peuvent détenir et sécuriser de l'__ether__. Plusieurs comptes peuvent en être propriétaires et ils conservent un registre complet de toutes les transactions.",
+            "walletsDescriptionNotEnoughFunds": "Dès que vous avez plus de 1 __ether__, vous pouvez créer des contrats plus sophistiqués. Les portefeuilles sont des types de contrats intelligents qui permettent à vos fonds d'être contrôlés par plusieurs comptes et qui ont une option de limite de retrait quotidien permettant d'accroître la sécurité. Pour créer vos propres contrats personnalisés, allez sur l'onglet <em>Contrats </em>.",
+            "accountsDescription": "Les comptes sont des clés protégées par mot de passe qui peuvent détenir de l'__ether__, sécuriser des jetons basés sur __Ethereum__, et contrôler des contrats. Les comptes ne peuvent pas afficher les transactions entrantes.",
             "buttons": {
-                "deposit": "Déposer de l'ether",
-                "buyEther": "Acheter Ether",
+                "deposit": "Déposer de l'__ether__",
+                "buyEther": "Acheter __ether__",
                 "viewOnExplorer": "View on Etherscan",
                 "copyAddress": "Copier l'adresse",
                 "scanQRCode": "Afficher le QR Code",
@@ -197,7 +197,7 @@
                     "description": "Un contrat contrôlé par plusieurs comptes.",
                     "text1": "Ceci est un compte joint contrôlé par",
                     "text2": "propriétaires. Vous pouvez envoyer jusqu'à",
-                    "text3": "ether par jour.",
+                    "text3": "__ether__ par jour.",
                     "text4": "Toute transaction au delà de cette limite quotidienne nécessite la confirmation de",
                     "text5": "propriétaires.",
                     "accountOwnersTitle": "Propriétaires du compte",
@@ -250,7 +250,7 @@
             "texts": {
                 "ownerPaysGas": "Le gaz est payé par le propriétaire du portefeuille",
                 "sendAmount": "Vous voulez envoyer <strong>__amount__</strong>.",
-                "sendAmountEquivalent": "Vous voulez envoyer <strong>__amount__</strong> en ether, en utilisant le taux de change depuis <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a>.<br>Pour une valeur actuelle de <strong>__etherAmount__</strong>.",
+                "sendAmountEquivalent": "Vous voulez envoyer <strong>__amount__</strong> en __ether__, en utilisant le taux de change depuis <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a>.<br>Pour une valeur actuelle de <strong>__etherAmount__</strong> __ether__.",
                 "sendToken": "Vous voulez envoyer <strong>__amount__ __symbol__</strong> de <strong> __name__</strong>.",
                 "overDailyLimit": "<p class=\"over-daily\">Ce montant est supérieur à la limite quotidienne restante __limit__ (de __total__ par jour), vous avez donc besoin de la confirmation de __count__ autres comptes.</p>",
                 "overDailyLimit_plural": "<p class=\"over-daily\">Ce montant est supérieur à la limite quotidienne restante de __limit__ (de __total__ par jour), vous avez donc besoin de la confirmation de __count__ autres comptes.</p>",
@@ -259,7 +259,7 @@
                 "noCodeInRecipient": "Le compte destinataire n'est pas un contrat, vous ne pouvez donc rien exécuter. <strong>Placer une adresse de contrat dans le champ 'À'. </strong>",
                 "addData": "Vous pouvez ajouter des données supplémentaires à joindre à votre transaction. Si vous laissez le champ \"À\" vide, un contrat essayera de se déployer à partir de vos propres données.",
                 "dataNotExecutable": "Les données ne semblent pas être exécutables, cela signifie que la transaction utilisera tout le gaz fourni.",
-                "cantEstimateGas": "Nous ne pouvons pas estimer correctement votre consommation de gaz car vous avez besoin d'au moins 1 ether sur votre compte.",
+                "cantEstimateGas": "Nous ne pouvons pas estimer correctement votre consommation de gaz car vous avez besoin d'au moins 1 __ether__ sur votre compte.",
                 "estimatedGas": "Gaz nécessaire estimé",
                 "timeTexts": {
                     "0": "en quelques minutes ou plus",
@@ -275,7 +275,7 @@
             "title": "<strong>Jetons</strong> que vous suivez",
             "subTitle": "Jetons ajoutés",
             "admin": "__name__ (page d'administration)",
-            "description": "Les jetons sont des devises et autres fongibles construits sur la plateforme Ethereum. Pour que les comptes puissent voir et envoyer des jetons, vous devez ajouter l'adresse de leur contrat à cette liste. Vous pouvez créer votre propre jeton simplement en modifiant <a href=\"https://ethereum.org/token#the-code\" target=\"_blank\">cet exemple d'un contrat de jeton</a> ou en en apprenant plus sur <a href=\"https://www.Ethereum.org/token\" target=\"_blank\">les jetons dans Ethereum</a>.",
+            "description": "Les jetons sont des devises et autres fongibles construits sur la plateforme Ethereum. Pour que les comptes puissent voir et envoyer des jetons, vous devez ajouter l'adresse de leur contrat à cette liste. Vous pouvez créer votre propre jeton simplement en modifiant <a href=\"https://ethereum.org/token#the-code\" target=\"_blank\">cet exemple d'un contrat de jeton</a> ou en en apprenant plus sur <a href=\"https://www.ethereum.org/token\" target=\"_blank\">les jetons dans __Ethereum__</a>.",
             "deleteToken": "Voulez-vous supprimer le jeton <strong>__token__</strong> de votre liste ?",
             "addedToken": "__token__ ajouté à votre liste",
             "editedToken": "Jeton __token__ modifié",
@@ -303,7 +303,7 @@
             "writeToContract": "Ecrire au contrat",
             "pickContract": "Choisir un contrat",
             "pickFunction": "Choisir une fonction",
-            "noContract": "<p>Placez la source du contrat désiré ici. Vous trouverez de nombreux exemples de contrats sur <a href=\"http://Ethereum.org\" target=\"_blank\">Ethereum.org</a> : </p> <ul><li><a href=\"http://Ethereum.org/token#the-code\" target=\"_blank\">Créer un jeton</a></li><li><a href=\"http://Ethereum.org/crowdsale#the-code\" target=\"_blank\">Démarrer une crowdsale</a></li><li><a href=\"http://Ethereum.org/dao#the-code\" target=\"_blank\">Créer une organisation sur la blockchain</a></li></ul>",
+            "noContract": "<p>Placez la source du contrat désiré ici. Vous trouverez de nombreux exemples de contrats sur <a href=\"http://ethereum.org\" target=\"_blank\">ethereum.org</a> : </p> <ul><li><a href=\"http://ethereum.org/token#the-code\" target=\"_blank\">Créer un jeton</a></li><li><a href=\"http://ethereum.org/crowdsale#the-code\" target=\"_blank\">Démarrer une crowdsale</a></li><li><a href=\"http://ethereum.org/dao#the-code\" target=\"_blank\">Créer une organisation sur la blockchain</a></li></ul>",
             "buttons": {
                 "showContractInfo": "Afficher les infos du contrat",
                 "hideContractInfo": "Masquer les infos du contrat",

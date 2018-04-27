@@ -23,21 +23,21 @@
             "texts": {
                 "note": "ノート",
                 "balance": "残高",
-                "connectionErrorMist": "接続不可。 geth を使用して下さい。:<br><br><small><code>__node__</code><br><br>IPC pathがデフォルトのものかを確認して下さい、違うものを使用している場合は <code>datadir</code>, e.g.<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/geth.ipc</code><br>or<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/geth.ipc</code>. <br><br>Optional add: <code>--unlock &lt;yourAccount&gt;.</code></small>",
-                "connectionErrorBrowser": "接続不可。以下のオプションから geth を開始して下さい:<br><br><small><code>__node__</code><br><br>Optional add: <code>--unlock &lt;yourAccount&gt;.</code></small>",
+                "connectionErrorMist": "接続不可。 __geth__ を使用して下さい。:<br><br><small><code>__node__</code><br><br>IPC pathがデフォルトのものかを確認して下さい、違うものを使用している場合は <code>datadir</code>, e.g.<br><code>__geth__ --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/__Ethereum__/__gethIpc__</code><br>or<br><code>__geth__ --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.__ethereum__/__gethIpc__</code>. <br><br>Optional add: <code>--unlock &lt;yourAccount&gt;.</code></small>",
+                "connectionErrorBrowser": "接続不可。以下のオプションから __geth__ を開始して下さい:<br><br><small><code>__node__</code><br><br>Optional add: <code>--unlock &lt;yourAccount&gt;.</code></small>",
                 "pendingConfirmationsBadge": "確認中!",
                 "nodeSyncing": "__blockDiff__ blocks left",
                 "blockReceived": "新ブロック受信",
                 "timeSinceBlock": "最後のブロックを受信してから",
                 "peers": "ピアーズ",
-                "testnetExplain": "これはテストネットです。これらのアドレスにetherを絶対に送らないでください。",
+                "testnetExplain": "これはテストネットです。これらのアドレスに__ether__を絶対に送らないでください。",
                 "noAccounts": {
                     "title": "アカウント未登録",
                     "text": "パスワード付きのアカウントを作成してください。"
                 }
             },
             "error": {
-                "wrongChain": "間違ったチェーン上にいます。Ethereum Wallet App を再起動して下さい。"
+                "wrongChain": "間違ったチェーン上にいます。__Ethereum__ Wallet App を再起動して下さい。"
             },
             "warnings": {
                 "txOriginVulnerabilityWallet": "このスマート契約財布は、古いコードを持っており、フィッシング攻撃の対象となります。",
@@ -52,7 +52,7 @@
                 "title": "アカウントを選択"
             },
             "testnetWallet": {
-                "walletNeedsDeployment": "テストネット上にいます。<br><br>オリジナルウォレットの契約コードが見つかりません、ウォレットコントラクトのスタブコントラクトが使用可能なものをあなたのアドレスから作らなければなりません。: <br><br><small><code>__account__</code></small><br><br><em>最低でも1ether以上アドレスに入っていなければなりません！</em>",
+                "walletNeedsDeployment": "テストネット上にいます。<br><br>オリジナルウォレットの契約コードが見つかりません、ウォレットコントラクトのスタブコントラクトが使用可能なものをあなたのアドレスから作らなければなりません。: <br><br><small><code>__account__</code></small><br><br><em>最低でも1__ether__以上アドレスに入っていなければなりません！</em>",
                 "testnetWalletDeployed": "オリジナルのウォレットコントラクトが配置されました！<br>オリジナルのウォレットコントラクトがアドレス上に配置されました。:<br><br><small><code>__address__</code></small>."
             },
             "addToken": {
@@ -76,21 +76,21 @@
             "defaultName": "無名",
             "creating": "作成中",
             "importing": "インポート中",
-            "accountNote": "アカウントは預入のトランザクションの表示を出来ませんが、etherを送って下さい。預入のトランザクションを見るには <a href=\"/account/new\">ウォレットコントラクトを作って下さい</a> etherを入れるために。",
-            "walletNote": "ほとんどの取引はetherをコントラクトウォレットから受け取ることにまだ対応していません。必ず先にアカウントアドレスにお金を移行して下さい！",
+            "accountNote": "アカウントは預入のトランザクションの表示を出来ませんが、__ether__を送って下さい。預入のトランザクションを見るには <a href=\"/account/new\">ウォレットコントラクトを作って下さい</a> __ether__を入れるために。",
+            "walletNote": "ほとんどの取引は__ether__をコントラクトウォレットから受け取ることにまだ対応していません。必ず先にアカウントアドレスにお金を移行して下さい！",
             "addressCopiedToClipboard": "クリップボードにコピーされました",
             "qrCodeLabel": "互換性のあるアプリでQRコードを読み取って下さい",
             "dailyLimit": "１日の制限金額",
             "dailyLimitRemaining": "残高",
             "requiredSignatures": "サインをして下さい",
             "owners": "持ち主",
-            "walletsDescription": "これらの契約はブロックチェーン上に保管され、etherを安全に保管できます。オーナーとしてマルチプルアカウントを保有することができ、全てのトランザクションのログを見ることができます。",
-            "walletsDescriptionNotEnoughFunds": "１ether以上保有しているとより高度な契約ができる様になります。Once you have more than 1 ether you can create a more sophisticated contracts. ウォレットはベーシックなスマートコントラクトの一種で、資金をマルチプルアカウントで管理し、セキュリティー増強のためにオプションで１日当たりの引き出し制限することもできます。 カスタムコントラクトを作るには <em> コントラクト </em> タブ",
-            "accountsDescription": "アカウントはetherを保有できる、パスワードで保護されたキーです、イーサリアムベースのトークンかコインを保全しコントラクトを管理します。アカウントは入ってくる取引を表示できません。",
+            "walletsDescription": "これらの契約はブロックチェーン上に保管され、__ether__を安全に保管できます。オーナーとしてマルチプルアカウントを保有することができ、全てのトランザクションのログを見ることができます。",
+            "walletsDescriptionNotEnoughFunds": "１__ether__以上保有しているとより高度な契約ができる様になります。Once you have more than 1 __ether__ you can create a more sophisticated contracts. ウォレットはベーシックなスマートコントラクトの一種で、資金をマルチプルアカウントで管理し、セキュリティー増強のためにオプションで１日当たりの引き出し制限することもできます。 カスタムコントラクトを作るには <em> コントラクト </em> タブ",
+            "accountsDescription": "アカウントは__ether__を保有できる、パスワードで保護されたキーです、イーサリアムベースのトークンかコインを保全しコントラクトを管理します。アカウントは入ってくる取引を表示できません。",
             "buttons": {
-                "deposit": "Etherをデポジット",
+                "deposit": "__Ether__をデポジット",
                 "buyEther": "Bitcoinを使ってデポジット",
-                "viewOnExplorer": "View on Etherscan",
+                "viewOnExplorer": "View on Block Explorer",
                 "copyAddress": "アドレスをコピー",
                 "scanQRCode": "QRコードを表示",
                 "showInterface": "インターフェイスを表示"
@@ -197,7 +197,7 @@
                     "description": "マルチプルアカウントによって管理されたコントラクト",
                     "text1": "これは接続アカウントです、管理しているのは",
                     "text2": "オーナーです。送信の上限は",
-                    "text3": "ether／１日",
+                    "text3": "__ether__／１日",
                     "text4": "１日の上限を超えるトランザクションは承認が必要です",
                     "text5": "オーナーの",
                     "accountOwnersTitle": "アカウントオーナー",
@@ -249,9 +249,9 @@
             },
             "texts": {
                 "ownerPaysGas": "ガスはウォレットコントラクトのオーナーによって支払われます",
-                "sendAmount": "送りたい <strong>__量__</strong>.",
-                "sendAmountEquivalent": "送りたい<strong>__量__</strong>ether、交換レートは<a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a>.<br>現在の価値に換算すると<strong>__etherAmount__</strong>.",
-                "sendToken": "送りたい<strong>__量__ __symbol__</strong> の <strong> __名前__</strong>.",
+                "sendAmount": "送りたい <strong>__amount__</strong>.",
+                "sendAmountEquivalent": "送りたい<strong>__amount__</strong>__ether__、交換レートは<a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a>.<br>現在の価値に換算すると<strong>__etherAmount__</strong> __ether__.",
+                "sendToken": "送りたい<strong>__amount__ __symbol__</strong> の <strong> __name__</strong>.",
                 "overDailyLimit": "<p class=\"over-daily\">この量は１日の上限を超えています__limit__ (of __total__ per day),  __count__ 了承するための他のアカウント。</p>",
                 "overDailyLimit_plural": "<p class=\"over-daily\">この量は１日の上限を超えています __limit__ (of __total__ per day), so you need __count__ other accounts to confirm.</p>",
                 "underDailyLimit": "<p class=\"under-daily\">この量は１日の上限以下です __limit__ (of __total__ per day), 即座に送信されます。</p>",
@@ -259,7 +259,7 @@
                 "noCodeInRecipient": "受領者アカウントはコントラクトではありません、何も実行することはできません。 <strong> コントラクトアドレスを'TO' に入れてください。 </strong>",
                 "addData": "トランザクションにデータを付与することができます。もし\"to\" の項目を空欄にするとデータを元にコントラクトを配置しようとします。",
                 "dataNotExecutable": "実行可能なデータではないようです、 that means this transaction will use all the gas you provide.",
-                "cantEstimateGas": "We can't estimate your gas usage properly, as you need at least 1 ether in your account.",
+                "cantEstimateGas": "We can't estimate your gas usage properly, as you need at least 1 __ether__ in your account.",
                 "estimatedGas": "必要とされるガスの推定",
                 "timeTexts": {
                     "0": "数分以内かそれ以上",
@@ -275,7 +275,7 @@
             "title": "カスタム <strong>トークン</strong>",
             "subTitle": "トークンを足す",
             "admin": "__名前__ (admin page)",
-            "description": "トークンはイーサリアムのプラットホーム上に構築された通貨であり、他の代替可能なものです。アカウントがトークンを送るためには、それらのアドレスをリストに追加しなければなりません。次のものを修正することによって簡単に自分のトークンを作ることができます、 <a href=\"https://ethereum.org/token#the-code\" target=\"_blank\">カスタムトークンコントラクトの例トークン</a> もしくはこちらをもっと学ぶ <a href=\"https://www.ethereum.org/token\" target=\"_blank\">Ethereum Tokens</a>.",
+            "description": "トークンはイーサリアムのプラットホーム上に構築された通貨であり、他の代替可能なものです。アカウントがトークンを送るためには、それらのアドレスをリストに追加しなければなりません。次のものを修正することによって簡単に自分のトークンを作ることができます、 <a href=\"https://ethereum.org/token#the-code\" target=\"_blank\">カスタムトークンコントラクトの例トークン</a> もしくはこちらをもっと学ぶ <a href=\"https://www.ethereum.org/token\" target=\"_blank\">__Ethereum__ Tokens</a>.",
             "deleteToken": "トークンを削除しますか<strong>__token__</strong> あなたのリストから",
             "addedToken": "Added __token__ to your watch list",
             "editedToken": "Edited token __token__",

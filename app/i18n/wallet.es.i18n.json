@@ -23,21 +23,21 @@
             "texts": {
                 "note": "Nota",
                 "balance": "Saldo",
-                "connectionErrorMist": "No se pudo conectar. Por favor, inicie geth con:<br><br><small><code>__node__</code><br><br>Asegúrese de establecer la ruta de IPC a la por defecto, cuando usa un <code>datadir</code> distinto, por ej.<br><code>geth --datadir ... --ipcpath /Users/&lt;suUsuario&gt;/Library/Ethereum/geth.ipc</code><br>o<br><code>geth --datadir ... --ipcpath /Users/&lt;suUsuario&gt;/.ethereum/geth.ipc</code>. <br><br>Opcionalmente: <code>--unlock &lt;suCuenta&gt;.</code></small>",
-                "connectionErrorBrowser": "No se pudo conectar. Por favor inicie geth con las siguientes opciones:<br><br><small><code>__node__</code><br><br>Opcionalmente agregue: <code>--unlock &lt;suCuenta&gt;.</code></small>",
+                "connectionErrorMist": "No se pudo conectar. Por favor, inicie __geth__ con:<br><br><small><code>__node__</code><br><br>Asegúrese de establecer la ruta de IPC a la por defecto, cuando usa un <code>datadir</code> distinto, por ej.<br><code>__geth__ --datadir ... --ipcpath /Users/&lt;suUsuario&gt;/Library/__Ethereum__/__gethIpc__</code><br>o<br><code>__geth__ --datadir ... --ipcpath /Users/&lt;suUsuario&gt;/.__ethereum__/__gethIpc__</code>. <br><br>Opcionalmente: <code>--unlock &lt;suCuenta&gt;.</code></small>",
+                "connectionErrorBrowser": "No se pudo conectar. Por favor inicie __geth__ con las siguientes opciones:<br><br><small><code>__node__</code><br><br>Opcionalmente agregue: <code>--unlock &lt;suCuenta&gt;.</code></small>",
                 "pendingConfirmationsBadge": "Confirmación Pendiente!",
                 "nodeSyncing": "__blockDiff__ blocks left",
                 "blockReceived": "New Block Received",
                 "timeSinceBlock": "since last block",
                 "peers": "peers",
-                "testnetExplain": "You are on a testnet, DO NOT SEND any real ether to these addresses",
+                "testnetExplain": "You are on a testnet, DO NOT SEND any real __ether__ to these addresses",
                 "noAccounts": {
                     "title": "You have no accounts yet",
                     "text": "You need to create at least one account with a strong password."
                 }
             },
             "error": {
-                "wrongChain": "You seem on a different chain, please restart the Ethereum Wallet App!"
+                "wrongChain": "You seem on a different chain, please restart the __Ethereum__ Wallet App!"
             },
             "warnings": {
                 "txOriginVulnerabilityWallet": "Esta cartera tiene contrato inteligente código obsoleto y está sujeto a ataques de phishing. ",
@@ -52,7 +52,7 @@
                 "title": "Select an account"
             },
             "testnetWallet": {
-                "walletNeedsDeployment": "You seem to be on a testnet.<br><br>There is no original wallet contract code found, we need to deploy one, which can be used by the wallet contract stub contracts, from your address: <br><br><small><code>__account__</code></small><br><br><em>Please make sure this address has at least 1 ether!</em>",
+                "walletNeedsDeployment": "You seem to be on a testnet.<br><br>There is no original wallet contract code found, we need to deploy one, which can be used by the wallet contract stub contracts, from your address: <br><br><small><code>__account__</code></small><br><br><em>Please make sure this address has at least 1 __ether__!</em>",
                 "testnetWalletDeployed": "Original wallet contract deployed!<br>An original wallet contract was deployed on the address:<br><br><small><code>__address__</code></small>."
             },
             "addToken": {
@@ -76,21 +76,21 @@
             "defaultName": "Unnamed",
             "creating": "Creating",
             "importing": "Importing",
-            "accountNote": "Accounts can't display incoming transactions, but can receive, hold and send ether. To see incoming transactions <a href=\"/account/new\">create a wallet contract</a> to store ether.",
-            "walletNote": "Most exchanges don't support receiving ether from a contract wallet yet. Be sure to move the money to an account address first!",
+            "accountNote": "Accounts can't display incoming transactions, but can receive, hold and send __ether__. To see incoming transactions <a href=\"/account/new\">create a wallet contract</a> to store __ether__.",
+            "walletNote": "Most exchanges don't support receiving __ether__ from a contract wallet yet. Be sure to move the money to an account address first!",
             "addressCopiedToClipboard": "Copied to clipboard",
             "qrCodeLabel": "Point a compatible mobile app to this code",
             "dailyLimit": "Daily limit",
             "dailyLimitRemaining": "remaining today",
             "requiredSignatures": "Required signatures",
             "owners": "Owners",
-            "walletsDescription": "These are contracts that are stored on the blockchain and can hold and secure ether. They can have multiple accounts as owners and keep a full log of all transactions.",
-            "walletsDescriptionNotEnoughFunds": "Once you have more than 1 ether you can create a more sophisticated contracts. Wallets are one type of basic smart contract, that allows your funds to be controlled by multiple accounts and have an optional daily limit on withdrawals, to increase security.  To create your own custom contracts go to the <em> Contracts </em> tab.",
-            "accountsDescription": "Accounts are password protected keys that can hold ether, secure ethereum-based tokens or coins and control contracts. Accounts can't display incoming transactions.",
+            "walletsDescription": "These are contracts that are stored on the blockchain and can hold and secure __ether__. They can have multiple accounts as owners and keep a full log of all transactions.",
+            "walletsDescriptionNotEnoughFunds": "Once you have more than 1 __ether__ you can create a more sophisticated contracts. Wallets are one type of basic smart contract, that allows your funds to be controlled by multiple accounts and have an optional daily limit on withdrawals, to increase security.  To create your own custom contracts go to the <em> Contracts </em> tab.",
+            "accountsDescription": "Accounts are password protected keys that can hold __ether__, secure __Ethereum__-based tokens or coins and control contracts. Accounts can't display incoming transactions.",
             "buttons": {
-                "deposit": "Deposit Ether",
-                "buyEther": "Comprar Ether",
-                "viewOnExplorer": "View on Etherscan",
+                "deposit": "Deposit __ether__",
+                "buyEther": "Comprar __ether__",
+                "viewOnExplorer": "View on Block Explorer",
                 "copyAddress": "Copy address",
                 "scanQRCode": "Show QR-Code",
                 "showInterface": "Show Interface"
@@ -197,7 +197,7 @@
                     "description": "A contract controlled by multiple accounts",
                     "text1": "This is a joint account controlled by",
                     "text2": "owners. You can send up to",
-                    "text3": "ether per day.",
+                    "text3": "__Ether__ per day.",
                     "text4": "Any transaction over that daily limit requires the confirmation of",
                     "text5": "owners.",
                     "accountOwnersTitle": "Account owners",
@@ -250,7 +250,7 @@
             "texts": {
                 "ownerPaysGas": "Gas is paid by the owner of the wallet contract",
                 "sendAmount": "You want to send <strong>__amount__</strong>.",
-                "sendAmountEquivalent": "You want to send <strong>__amount__</strong> in ether, using exchange rates from <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a>.<br>Which is currently an equivalent of <strong>__etherAmount__</strong>.",
+                "sendAmountEquivalent": "You want to send <strong>__amount__</strong> in __ether__, using exchange rates from <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a>.<br>Which is currently an equivalent of <strong>__etherAmount__</strong> __ether__.",
                 "sendToken": "You want to send <strong>__amount__ __symbol__</strong> of <strong> __name__</strong>.",
                 "overDailyLimit": "<p class=\"over-daily\">This amount is over the remaining daily limit of __limit__ (of __total__ per day), so you need __count__ other account to confirm.</p>",
                 "overDailyLimit_plural": "<p class=\"over-daily\">This amount is over the remaining daily limit of __limit__ (of __total__ per day), so you need __count__ other accounts to confirm.</p>",
@@ -259,7 +259,7 @@
                 "noCodeInRecipient": "The recipient account is not a contract, so you can't execute anything. <strong> Put a contract address on the 'TO' field. </strong>",
                 "addData": "You can add extra data to send along with your transaction. If you leave the \"to\" field empty it will try to deploy a contract from your data.",
                 "dataNotExecutable": "We aren't able to execute this data.  This means this transaction will use all the gas you provide.",
-                "cantEstimateGas": "We can't estimate your gas usage properly, as you need at least 1 ether in your account.",
+                "cantEstimateGas": "We can't estimate your gas usage properly, as you need at least 1 __ether__ in your account.",
                 "estimatedGas": "Estimated required gas",
                 "timeTexts": {
                     "0": "in a few minutes or more",
@@ -275,7 +275,7 @@
             "title": "Custom <strong>Tokens</strong>",
             "subTitle": "Added tokens",
             "admin": "__name__ (admin page)",
-            "description": "Tokens are currencies and other fungibles built on the Ethereum platform. In order for accounts to watch for tokens and send them, you have to add their address to this list. You can create your own token by simply modifiying <a href=\"https://ethereum.org/token#the-code\" target=\"_blank\">this example of a custom token contract</a> or learning more about <a href=\"https://www.ethereum.org/token\" target=\"_blank\">Ethereum Tokens</a>.",
+            "description": "Tokens are currencies and other fungibles built on the Ethereum platform. In order for accounts to watch for tokens and send them, you have to add their address to this list. You can create your own token by simply modifiying <a href=\"https://ethereum.org/token#the-code\" target=\"_blank\">this example of a custom token contract</a> or learning more about <a href=\"https://www.ethereum.org/token\" target=\"_blank\">__Ethereum__ Tokens</a>.",
             "deleteToken": "Do you want to remove the token <strong>__token__</strong> from your list?",
             "addedToken": "Added __token__ to your watch list",
             "editedToken": "Edited token __token__",

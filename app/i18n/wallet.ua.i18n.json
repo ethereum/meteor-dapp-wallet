@@ -23,8 +23,8 @@
             "texts": {
                 "note": "Примітка",
                 "balance": "Баланс",
-                "connectionErrorMist": "Не можу з'єднатися. Будь ласка запустить geth використовуючи:<br><br><small><code>__node__</code><br><br>Переконайтеся, що ви встановили IPC шлях за замовчанням, коли використовували інший <code>datadir</code>, наприклад<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/geth.ipc</code><br>або<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/geth.ipc</code>. <br><br>Можна додати: <code>--unlock &lt;yourAccount&gt;.</code></small>",
-                "connectionErrorBrowser": "Не можу з'єднатися. Будьласка запустить geth з такими параметрами:<br><br><small><code>__node__</code><br><br>Можна додати: <code>--unlock &lt;yourAccount&gt;.</code></small>",
+                "connectionErrorMist": "Не можу з'єднатися. Будь ласка запустить __geth__ використовуючи:<br><br><small><code>__node__</code><br><br>Переконайтеся, що ви встановили IPC шлях за замовчанням, коли використовували інший <code>datadir</code>, наприклад<br><code>__geth__ --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/__Ethereum__/__gethIpc__</code><br>або<br><code>__geth__ --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.__ethereum__/__gethIpc__</code>. <br><br>Можна додати: <code>--unlock &lt;yourAccount&gt;.</code></small>",
+                "connectionErrorBrowser": "Не можу з'єднатися. Будьласка запустить __geth__ з такими параметрами:<br><br><small><code>__node__</code><br><br>Можна додати: <code>--unlock &lt;yourAccount&gt;.</code></small>",
                 "pendingConfirmationsBadge": "Потрібні підтвердження!",
                 "nodeSyncing": "залишилось __blockDiff__ блоків",
                 "blockReceived": "Новий Блок отримано",
@@ -243,7 +243,7 @@
             "texts": {
                 "ownerPaysGas": "Газ оплачується власником контракту гаманця",
                 "sendAmount": "Ви бажаєте відправити <strong>__amount__</strong>.",
-                "sendAmountEquivalent": "Ви бажаєте відправити <strong>__amount__</strong> в ефір, по курсу <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a>.<br>Зараз це еквівалентно <strong>__etherAmount__</strong>.",
+                "sendAmountEquivalent": "Ви бажаєте відправити <strong>__amount__</strong> в ефір, по курсу <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a>.<br>Зараз це еквівалентно <strong>__etherAmount__</strong> __ether__.",
                 "sendToken": "Ви бажаєте відправити <strong>__amount__ __symbol__</strong>  <strong> __name__</strong>.",
                 "overDailyLimit": "<p class=\"over-daily\">Цей платіж перевищує денний ліміт на __limit__ ( __total__ на день), вам потрібне підтвердження __count__ аккаунтів.</p>",
                 "overDailyLimit_plural": "<p class=\"over-daily\">Цей платіж перевищує денний ліміт на __limit__ ( __total__ на день), вам потрібне підтвердження __count__ аккаунтів.</p>",

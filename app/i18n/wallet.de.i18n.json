@@ -23,21 +23,21 @@
             "texts": {
                 "note": "Notiz",
                 "balance": "Kontostand",
-                "connectionErrorMist": "Verbindung konnte nicht hergestellt werden. Bitte starten Sie Geth mit folgendem Kommando:<br><br><small><code>__node__</code><br><br>Stellen Sie sicher, dass Sie Ihren IPC Pfad zum einen Standardpfad festgelegt haben, wenn Sie einen anderen <code>datadir</code> verwenden, z.B. <br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/geth.ipc</code><br>oder<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/geth.ipc</code>. <br><br>Alternative Option: <code>--unlock &lt;yourAccount&gt;.</code></small>",
-                "connectionErrorBrowser": "Verbindung konnte nicht hergestellt werden. Bitte starten Sie Geth mit den folgenden Optionen:<br><br><small><code>__node__</code><br><br>Alternative Optionen: <code>--unlock &lt;yourAccount&gt;.</code></small>",
+                "connectionErrorMist": "Verbindung konnte nicht hergestellt werden. Bitte starten Sie __geth__ mit folgendem Kommando:<br><br><small><code>__node__</code><br><br>Stellen Sie sicher, dass Sie Ihren IPC Pfad zum einen Standardpfad festgelegt haben, wenn Sie einen anderen <code>datadir</code> verwenden, z.B. <br><code>__geth__ --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/__Ethereum__/__gethIpc__</code><br>oder<br><code>__geth__ --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.__ethereum__/__gethIpc__</code>. <br><br>Alternative Option: <code>--unlock &lt;yourAccount&gt;.</code></small>",
+                "connectionErrorBrowser": "Verbindung konnte nicht hergestellt werden. Bitte starten Sie __geth__ mit den folgenden Optionen:<br><br><small><code>__node__</code><br><br>Alternative Optionen: <code>--unlock &lt;yourAccount&gt;.</code></small>",
                 "pendingConfirmationsBadge": "Ausstehende Bestätigung!",
                 "nodeSyncing": "__blockDiff__ ausstehende Blöcke",
                 "blockReceived": "Neuen Block empfangen",
                 "timeSinceBlock": "seit dem letzten Block",
                 "peers": "Peers",
-                "testnetExplain": "Sie sind mit dem Testnetz verbunden, SENDEN SIE KEINE echten Ether an diese Adressen",
+                "testnetExplain": "Sie sind mit dem Testnetz verbunden, SENDEN SIE KEINE echten __ether__ an diese Adressen",
                 "noAccounts": {
                     "title": "Sie haben noch keine Konten",
                     "text": "Sie müssen mindestens ein Konto mit einem starken Passwort erstellen."
                 }
             },
             "error": {
-                "wrongChain": "Sie folgen nicht der Hauptblockchain, bitte starten Sie die Ethereum Wallet App neu!"
+                "wrongChain": "Sie folgen nicht der Hauptblockchain, bitte starten Sie die __ethereum__ Wallet App neu!"
             },
             "warnings": {
                 "txOriginVulnerabilityWallet": "Diese intelligente Vertrag Geldbörse hat veraltete Code und unterliegt Phishing-Attacken. ",
@@ -54,7 +54,7 @@
                 "title": "Wählen Sie ein Konto"
             },
             "testnetWallet": {
-                "walletNeedsDeployment": "Sie sind mit dem Testnetz verbunden.<br><br>Es wurde kein Wallet-Vertrag gefunden. Daher muss ein neuer Vertrag mit Ihrer Adresse:<br><br><small><code>__account__</code></small><br><br><em>erzeugt werden. Bitte stellen Sie sicher, dass diese Adresse über einen Kontostand von mindestens 1 Ether verfügt!</em>",
+                "walletNeedsDeployment": "Sie sind mit dem Testnetz verbunden.<br><br>Es wurde kein Wallet-Vertrag gefunden. Daher muss ein neuer Vertrag mit Ihrer Adresse:<br><br><small><code>__account__</code></small><br><br><em>erzeugt werden. Bitte stellen Sie sicher, dass diese Adresse über einen Kontostand von mindestens 1 __ether__ verfügt!</em>",
                 "testnetWalletDeployed": "Der Original-Wallet-Vertrag wurde auf Ihrer Adresse:<br><br><small><code>__address__</code></small> erzeugt."
             },
             "addToken": {
@@ -78,22 +78,22 @@
             "defaultName": "Unbenannt",
             "creating": "Erstellen",
             "importing": "Importieren",
-            "accountNote": "Konten können keine eingehende Transaktionen anzeigen. Trotzdem können Sie mit Konten Ether empfangen und versenden. Um eingehende Transaktionen zu sehen, <a href=\"/account/new\">erstellen Sie einen Wallet-Vertrag</a>.",
+            "accountNote": "Konten können keine eingehende Transaktionen anzeigen. Trotzdem können Sie mit Konten __ether__ empfangen und versenden. Um eingehende Transaktionen zu sehen, <a href=\"/account/new\">erstellen Sie einen Wallet-Vertrag</a>.",
             "outOfSyncNote": "Wenn dein Kontostand nicht korrekt erscheint, überprüfe ob dein Netzwerk sychronisiert ist.",
-            "walletNote": "Die meisten Börsen akzeptieren bisher keine Transaktionen von einem Wallet-Vertrag. Transferieren Sie daher Ether zunächst auf ein Konto, um es von dort weiter an eine Börse zu überweisen!",
+            "walletNote": "Die meisten Börsen akzeptieren bisher keine Transaktionen von einem Wallet-Vertrag. Transferieren Sie daher __ether__ zunächst auf ein Konto, um es von dort weiter an eine Börse zu überweisen!",
             "addressCopiedToClipboard": "In die Zwischenablage kopiert",
             "qrCodeLabel": "Scannen Sie diesen Code mit einer kompatiblen Smartphone App",
             "dailyLimit": "Tägliches Limit",
             "dailyLimitRemaining": "Heute verbleibend",
             "requiredSignatures": "Erforderliche Signaturen",
             "owners": "Eigentümer",
-            "walletsDescription": "Verträge werden auf der Blockchain gespeichert und dienen der Verwaltung von Ether. Ein Vertrag kann mehrere Konten als Eigentümer haben. Verträge zeigen im Gegensatz zu Konten immer eine vollständige Transaktionshistorie.",
-            "walletsDescriptionNotEnoughFunds": "Es wird mindestens 1 Ether benötigt, um komplexe Verträge zu erstellen.",
-            "accountsDescription": "Konten können Ether, Ethereum-basierte Token oder Coins enthalten. Darüber hinaus können Konten Verträge kontrollieren. Im Gegensatz zu Wallets können Konten keine einkommenden Transaktionen anzeigen.",
+            "walletsDescription": "Verträge werden auf der Blockchain gespeichert und dienen der Verwaltung von __ether__. Ein Vertrag kann mehrere Konten als Eigentümer haben. Verträge zeigen im Gegensatz zu Konten immer eine vollständige Transaktionshistorie.",
+            "walletsDescriptionNotEnoughFunds": "Es wird mindestens 1 __ether__ benötigt, um komplexe Verträge zu erstellen.",
+            "accountsDescription": "Konten können __ether__, __ethereum__-basierte Token oder Coins enthalten. Darüber hinaus können Konten Verträge kontrollieren. Im Gegensatz zu Wallets können Konten keine einkommenden Transaktionen anzeigen.",
             "buttons": {
-                "deposit": "Ether hinterlegen",
-                "buyEther": "Kaufe Ether",
-                "viewOnExplorer": "View on Etherscan",
+                "deposit": "__ether__ hinterlegen",
+                "buyEther": "Kaufe __ether__",
+                "viewOnExplorer": "View on Block Explorer",
                 "copyAddress": "Adresse kopieren",
                 "scanQRCode": "QR-Code anzeigen",
                 "showInterface": "Interface anzeigen"
@@ -200,7 +200,7 @@
                     "description": "Ein Vertrag, der von mehreren Konten kontrolliert wird",
                     "text1": "Dies ist ein gemeinsames Konto von den Eigentümer",
                     "text2": "Sie können bis zu",
-                    "text3": "Ether pro Tag versenden.",
+                    "text3": "__ether__ pro Tag versenden.",
                     "text4": "Jede Transaktion die über das tägliche Limit hinaus geht muss durch",
                     "text5": "betätigt werden.",
                     "accountOwnersTitle": "Kontoinhaber",
@@ -254,7 +254,7 @@
             "texts": {
                 "ownerPaysGas": "Gas wird vom Besitzer des Wallet-Vertrags bezahlt",
                 "sendAmount": "Sie möchten <strong>__amount__</strong> versenden.",
-                "sendAmountEquivalent": "Sie möchten <strong>__amount__</strong> in Ether versenden, zu einem Wechselkurs von <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a>.<br>Was zur Zeit einem Betrag von <strong>__etherAmount__</strong> Ether entspricht.",
+                "sendAmountEquivalent": "Sie möchten <strong>__amount__</strong> in __ether__ versenden, zu einem Wechselkurs von <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a>.<br>Was zur Zeit einem Betrag von <strong>__etherAmount__</strong> __ether__ entspricht.",
                 "sendToken": "Sie möchten <strong>__amount__ __symbol__</strong> von <strong> __name__</strong> versenden.",
                 "overDailyLimit": "<p class=\"over-daily\">Der Betrag überschreitet das Tageslimit von __limit__ (of __total__ per day), Sie benötigen __count__ weiteres Konto zum Bestätigen.</p>",
                 "overDailyLimit_plural": "<p class=\"over-daily\">Der Betrag überschreitet das Tageslimit von  __limit__ (of __total__ per day), Sie benötigen __count__ weitere Konten zum Bestätigen.</p>",
@@ -263,7 +263,7 @@
                 "noCodeInRecipient": "Das Empfängerkonto ist kein Vertrag, daher kann nichts ausgeführt werden. <strong> Schreiben Sie eine Vertragsadresse in das 'AN' Feld. </strong>",
                 "addData": "Sie können einer Transaktion zusätzliche Daten übergeben. Wenn sie das \"an\" Feld leer lassen, wird versucht, ein Vertrag mit Hilfe der Daten zu erstellen.",
                 "dataNotExecutable": "Die Daten scheinen nicht ausführbar zu sein, das bedeutet, dass die Transaktion das komplette Gas aufbrauchen wird.",
-                "cantEstimateGas": "Der Gasverbrauch konnte nicht berechnet werden, da Ihr Konto mindestens einen Betrag von 1 Ether aufweisen muss.",
+                "cantEstimateGas": "Der Gasverbrauch konnte nicht berechnet werden, da Ihr Konto mindestens einen Betrag von 1 __ether__ aufweisen muss.",
                 "estimatedGas": "Voraussichtlich verbrauchtes Gas",
                 "timeTexts": {
                     "0": "in ein paar Minuten",
@@ -279,7 +279,7 @@
             "title": "Eigene <strong>Token</strong>",
             "subTitle": "Hinzugefügte Token",
             "admin": "__name__ (Admin Seite)",
-            "description": "Token sind Währungen oder Tauschgegenstände, die auf der Ethereum-Plattform aufsetzen. Damit ein Konto ein Token beobachten oder versenden kann, müssen Sie die Kontoadressen in die folgende Liste einfügen. Sie können Ihren eigenen Token erzeugen, in dem Sie z.B. folgendes <a href=\"https://ethereum.org/token#the-code\" target=\"_blank\">Beispiel eines Token Vertrags</a> anpassen, oder mehr über <a href=\"https://www.ethereum.org/token\" target=\"_blank\">Ethereum Token</a> lernen.",
+            "description": "Token sind Währungen oder Tauschgegenstände, die auf der Ethereum-Plattform aufsetzen. Damit ein Konto ein Token beobachten oder versenden kann, müssen Sie die Kontoadressen in die folgende Liste einfügen. Sie können Ihren eigenen Token erzeugen, in dem Sie z.B. folgendes <a href=\"https://ethereum.org/token#the-code\" target=\"_blank\">Beispiel eines Token Vertrags</a> anpassen, oder mehr über <a href=\"https://www.ethereum.org/token\" target=\"_blank\">__ethereum__ Token</a> lernen.",
             "deleteToken": "Möchten Sie den Token <strong>__token__</strong> von Ihrer Liste entfernen?",
             "addedToken": "__token__ wurde Ihrer Beobachtungsliste hinzugefügt",
             "editedToken": "Token __token__ wurde bearbeitet",

@@ -291,7 +291,8 @@ var deployTestnetWallet = function() {
     {
       text: new Spacebars.SafeString(
         TAPi18n.__('wallet.modals.testnetWallet.walletNeedsDeployment', {
-          account: account
+          account: account,
+          ether: publicSettings.ether
         })
       ),
       cancel: true,

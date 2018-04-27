@@ -36,7 +36,7 @@
             </label>
             {{#if showSection "multisig"}}
                 <div class="indented-box">
-                    <p>{{i18n 'wallet.newWallet.accountType.multisig.text1'}} {{> InlineForm name="multisigSignees" items=multisigSignees value=(TemplateVar.get "multisigSignees")}} {{i18n 'wallet.newWallet.accountType.multisig.text2'}} {{> InlineForm name="dailyLimitAmount" value=defaultDailyLimit}} {{i18n 'wallet.newWallet.accountType.multisig.text3'}}</p>
+                    <p>{{i18n 'wallet.newWallet.accountType.multisig.text1'}} {{> InlineForm name="multisigSignees" items=multisigSignees value=(TemplateVar.get "multisigSignees")}} {{i18n 'wallet.newWallet.accountType.multisig.text2'}} {{> InlineForm name="dailyLimitAmount" value=defaultDailyLimit}} {{i18n 'wallet.newWallet.accountType.multisig.text3' ether=unit Ether=Ether}}</p>
                     <p>{{i18n 'wallet.newWallet.accountType.multisig.text4'}} {{> InlineForm name="multisigSignatures" items=multisigSignatures value=(TemplateVar.get "multisigSignatures")}} {{i18n 'wallet.newWallet.accountType.multisig.text5'}}</p>
 
                     <h4>{{i18n 'wallet.newWallet.accountType.multisig.accountOwnersTitle'}}</h4>

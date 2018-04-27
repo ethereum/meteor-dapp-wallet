@@ -114,7 +114,59 @@ Return the current unit
 @method (unit)
 **/
 Template.registerHelper('unit', function() {
-  return EthTools.getUnit();
+  var unit = EthTools.getUnit();
+  if (unit == 'ether') return EthTools.getAlias();
+  return unit;
+});
+
+/**
+Return ether
+
+@method (ether)
+**/
+Template.registerHelper('ether', function() {
+  if (publicSettings && publicSettings.ether) {
+    return publicSettings.ether;
+  }
+  return 'ether';
+});
+
+/**
+Return 'Ether'
+
+@method (Ether)
+**/
+Template.registerHelper('Ether', function() {
+  if (publicSettings) {
+    if (publicSettings.Ether) {
+      return publicSettings.Ether;
+    }
+  }
+  return 'Ether';
+});
+
+/**
+Return 'ethereum'
+
+@method (ethereum)
+**/
+Template.registerHelper('ethereum', function() {
+  if (publicSettings && publicSettings.ethereum) {
+    return publicSettings.ethereum;
+  }
+  return 'ethereum';
+});
+
+/**
+Return 'Ethereum'
+
+@method (Ethereum)
+**/
+Template.registerHelper('Ethereum', function() {
+  if (publicSettings && publicSettings.Ethereum) {
+    return publicSettings.Ethereum;
+  }
+  return 'Ethereum';
 });
 
 /**
@@ -183,6 +235,58 @@ Template.registerHelper('walletIcon', function() {
   } else icon = '<i class="icon-key" title="Account"></i>';
 
   return new Spacebars.SafeString(icon);
+});
+
+/**
+Return publicSettings variables
+
+@method (publicSettings)
+**/
+Template.registerHelper('publicSettings', function() {
+  if (publicSettings) {
+    return publicSettings;
+  }
+
+  return {};
+});
+
+/**
+Return the wallet name
+
+@method (walletName)
+**/
+Template.registerHelper('walletName', function() {
+  if (publicSettings && publicSettings.walletName) {
+    return publicSettings.walletName;
+  }
+
+  return 'Ethereum Wallet';
+});
+
+/**
+Return the wallet description
+
+@method (walletDescription)
+**/
+Template.registerHelper('walletDescription', function() {
+  if (publicSettings && publicSettings.walletDescription) {
+    return publicSettings.walletDescription;
+  }
+
+  return 'The Ethereum Wallet';
+});
+
+/**
+Return wallet keywords
+
+@method (walletKeywords)
+**/
+Template.registerHelper('walletKeywords', function() {
+  if (publicSettings && publicSettings.walletKeywords) {
+    return publicSettings.walletKeywords;
+  }
+
+  return 'wallet, dapp, ethereum';
 });
 
 /**

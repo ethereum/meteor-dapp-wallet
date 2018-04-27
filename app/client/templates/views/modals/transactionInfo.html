@@ -2,16 +2,20 @@
     {{#with transaction}}
         <h1>
             {{i18n "wallet.transactions.transactionInfoTitle"}}
-            {{#if $eq ($.Session.get "network") "main"}} 
+            {{#if $eq ($.Session.get "name") "ethereum"}}
                 <a href="http://etherscan.io/tx/{{transactionHash}}" target="_blank" style="font-size: 0.4em;">{{transactionHash}}</a>
             {{else}}
-                {{#if $eq ($.Session.get "network") "rinkeby"}}
+                {{#if $eq ($.Session.get "name") "rinkeby"}}
                     <a href="http://rinkeby.etherscan.io/tx/{{transactionHash}}" target="_blank" style="font-size: 0.4em;">{{transactionHash}}</a>
                 {{else}}
-                    {{#if $eq ($.Session.get "network") "ropsten"}}
+                    {{#if $eq ($.Session.get "name") "ropsten"}}
                         <a href="http://ropsten.etherscan.io/tx/{{transactionHash}}" target="_blank" style="font-size: 0.4em;">{{transactionHash}}</a>
                     {{else}}
+                        {{#if publicSettings.blockExplorerUrl}}
+                        <a href="{{publicSettings.blockExplorerUrl}}/tx/{{transactionHash}}" target="_blank" style="font-size: 0.4em;">{{transactionHash}}</a>
+                        {{else}}
                         <span style="font-size: 0.4em;">{{transactionHash}}</span>
+                        {{/if}}
                     {{/if}}
                 {{/if}}
             {{/if}}
@@ -83,7 +87,7 @@
                     <tr>
                         <td>{{i18n "wallet.transactions.block"}}</td>
                         <td>
-                           {{#if $eq ($.Session.get "network") "main"}} 
+                           {{#if $eq ($.Session.get "name") "ethereum"}}
                             <a href="http://etherscan.io/block/{{blockHash}}" title="{{blockHash}}" target="_blank" class="dapp-shorten-text">
                                 {{blockNumber}}
                                 <br>
@@ -97,9 +101,17 @@
                                     {{blockHash.substr 0 40}}...
                                 </a>
                                 {{else}}
+                                    {{#if publicSettings.blockExplorerUrl}}
+                                <a href="{{publicSettings.blockExplorerUrl}}/block/{{blockHash}}" title="{{blockHash}}" target="_blank" class="dapp-shorten-text">
                                     {{blockNumber}}
                                     <br>
                                     {{blockHash.substr 0 40}}...
+                                </a>
+                                    {{else}}
+                                    {{blockNumber}}
+                                    <br>
+                                    {{blockHash.substr 0 40}}...
+                                    {{/if}}
                                 {{/if}}
                             {{/if}}
                         </td>

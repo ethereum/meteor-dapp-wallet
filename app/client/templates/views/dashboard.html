@@ -18,7 +18,7 @@
 
             <h2>{{i18n "wallet.accounts.accountsTitle"}}</h2>
             <p>
-                {{i18n "wallet.accounts.accountsDescription"}}
+                {{i18n "wallet.accounts.accountsDescription" ether=unit Ether=unit Ethereum=Ethereum}}
             </p>
             <div class="dapp-clear-fix"></div>
 
@@ -42,11 +42,11 @@
 
             {{#if hasMinimumBalance}}
                 <p>
-                    {{i18n "wallet.accounts.walletsDescription"}}
+                    {{i18n "wallet.accounts.walletsDescription" ether=ether Ether=Ether}}
                 </p>
             {{else}}
                 <p>
-                    {{{i18n "wallet.accounts.walletsDescriptionNotEnoughFunds"}}}
+                    {{{i18n "wallet.accounts.walletsDescriptionNotEnoughFunds" ether=ether Ether=Ether}}}
                 </p>
             {{/if}}
 
