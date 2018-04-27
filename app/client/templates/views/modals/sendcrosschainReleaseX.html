@@ -1,0 +1,25 @@
+<template name="views_modals_sendcrosschainReleaseX">
+    <h1>Realease X</h1>
+    <p>from: {{from}}</p>
+    <p>to: {{to}}</p>
+    <p>storeman: {{storeman}}</p>
+    <p>crossAdress: {{crossAdress}}</p>
+    <p>amount: {{amount}}</p>
+
+    <p class="tx-info">
+        <small>+ {{i18n "wallet.send.estimatedFee"}}</small> {{fee}}
+        <br>
+        <small class="gas-price">
+            {{i18n "wallet.transactions.gasPrice"}} {{gasPrice}}
+            <br>
+            {{i18n "wallet.send.texts.estimatedGas"}} {{estimatedGas}}
+        </small>
+    </p>
+
+    <p class="tx-info">
+        <small>{{i18n "wallet.send.data"}}</small>
+    <pre>{{data}}</pre>
+    </p>
+
+    <input type="password" id="releaseX-psd" placeholder="{{i18n 'mist.popupWindows.sendTransactionConfirmation.enterPassword'}}" style="width: 100%;"/>
+</template>

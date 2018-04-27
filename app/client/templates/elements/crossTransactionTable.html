@@ -15,13 +15,14 @@
         <tbody class="transfer-list-tbody">
         {{#each crosschainList}}
             <tr class="full-width">
-                <td colspan="5"  class="crosschain-list" id="{{address}}">{{operation}}</td>
-                <td colspan="5" >{{htlc}}</td>
-                <td colspan="5" >{{address}}</td>
-                <td colspan="5" >{{storeman}}</td>
-                <td colspan="5" >{{to}}</td>
-                <td colspan="5" >{{status}}</td>
-                <td colspan="5" >{{balance}}</td>
+                <td colspan="5"  class="crosschain-list" id="{{@index}}">Release X</td>
+                <td colspan="5" >{{time}}</td>
+                <td colspan="5" >{{time}}</td>
+                <td colspan="5" >{{from.substr 0 20}}...</td>
+                <td colspan="5" >{{storeman.substr 0 20}}...</td>
+                <td colspan="5" >{{to.substr 0 20}}...</td>
+                <td colspan="5" >Status</td>
+                <td colspan="5" >{{value}} ETH</td>
             </tr>
         {{/each}}
         </tbody>

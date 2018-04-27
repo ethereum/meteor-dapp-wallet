@@ -17,6 +17,11 @@ Template['views_crosschain'].onCreated(function () {
                // console.log(result);
                 TemplateVar.set(template,'ethAccounts',result);
             });
+
+            mist.ETH2WETH().listHistory(data, (err, result) => {
+                // console.log('listHistory', result);
+                TemplateVar.set(template,'listHistory',result);
+            });
         }
     });
 
@@ -56,15 +61,7 @@ Template['views_crosschain'].helpers({
     },
 
     'crosschainList': function(){
-
-        var test_list = [
-            {operation: 'Release X', htlc: '12 Nov',address: '0x71Bc7e3d4c6ea831F2F07934022eDbaA8CDCcCaa', storeman: '0x71Bc7e3d4c6ea831F2F07934022eDbaA8CDCcCaa', to: '0x71Bc7e3d4c6ea831F2F07934022eDbaA8CDCcCaa', status: 'Done', balance: 0},
-            {operation: 'Refund', htlc: '12 Nov',address: '0x71Bc7e3d4c6ea831F2F07934022eDbaA8CDCcCab',storeman: '0x71Bc7e3d4c6ea831F2F07934022eDbaA8CDCcCaa',to: '0x71Bc7e3d4c6ea831F2F07934022eDbaA8CDCcCaa', status: 'Done', balance: 0},
-            {operation: 'Release X', htlc: '12 Nov',address: '0x71Bc7e3d4c6ea831F2F07934022eDbaA8CDCcCac',storeman: '0x71Bc7e3d4c6ea831F2F07934022eDbaA8CDCcCaa',to: '0x71Bc7e3d4c6ea831F2F07934022eDbaA8CDCcCaa', status: 'Done', balance: 0},
-            {operation: 'Refund', htlc: '12 Nov',address: '0x71Bc7e3d4c6ea831F2F07934022eDbaA8CDCcCad',storeman: '0x71Bc7e3d4c6ea831F2F07934022eDbaA8CDCcCaa',to: '0x71Bc7e3d4c6ea831F2F07934022eDbaA8CDCcCaa', status: 'Done', balance: 0}
-        ];
-
-        return test_list;
+        return TemplateVar.get('listHistory');
     },
 
 });

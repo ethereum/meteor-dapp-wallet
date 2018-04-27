@@ -15,27 +15,39 @@ Template['views_crosschain_main'].events({
      */
 
     'click .history': function (e) {
-
-        // TemplateVar.set('clickButton', 1);
         Session.set('clickButton', 1);
     },
 
     'click .toWeth': function (e) {
 
-        // TemplateVar.set('clickButton', 2);
-        Session.set('clickButton', 2);
+        var ethList = Session.get('ethList');
+        if (ethList.length) {
+            Session.set('clickButton', 2);
+        } else {
+            Session.set('clickButton', 1);
+        }
     },
 
     'click .toWan': function (e) {
 
-        // TemplateVar.set('clickButton', 3);
-        Session.set('clickButton', 3);
+        var ethList = Session.get('ethList');
+        console.log('ethList', ethList);
+        if (ethList.length) {
+            Session.set('clickButton', 3);
+        } else {
+            Session.set('clickButton', 1);
+        }
     },
 
     'click .toNormal': function (e) {
 
-        // TemplateVar.set('clickButton', 4);
-        Session.set('clickButton', 4);
+        var ethList = Session.get('ethList');
+        console.log('ethList', ethList);
+        if (ethList.length) {
+            Session.set('clickButton', 4);
+        } else {
+            Session.set('clickButton', 1);
+        }
     }
 });
 

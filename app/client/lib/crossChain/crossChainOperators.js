@@ -50,7 +50,7 @@ class crossChainOperators{
         let operator = new crossOperator('getLockTransData',{tx:trans},this.getOriginChainType(),callback);
         this.invokeOperator(operator);
     }
-    getRefundTransData(trans,password,callback){
+    getRefundTransData(trans,callback){
         let operator = new crossOperator('getRefundTransData',{tx:trans},this.getCrossChainType(),callback);
         this.invokeOperator(operator);
     }
@@ -78,8 +78,8 @@ class crossChainOperators{
         this.invokeOperator(operator);
     }
 
-    sendRefundTrans(trans,password,secretX,callback){
-        let operator = new crossOperator('sendRefundTrans',{tx:trans,secretX:secretX, password:password},this.getCrossChainType(),callback);
+    sendRefundTrans(trans,password,callback){
+        let operator = new crossOperator('sendRefundTrans',{tx:trans, password:password},this.getCrossChainType(),callback);
         this.invokeOperator(operator);
     }
     sendRevokeTrans(trans,password,secretX,callback){

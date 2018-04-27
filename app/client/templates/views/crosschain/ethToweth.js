@@ -167,6 +167,8 @@ Template['views_ethToweth'].events({
 
         // console.log('trans: ', trans);
         try {
+
+            let sendLockTransData = '';
             let getLockTransData = await Helpers.promisefy(mist.ETH2WETH().getLockTransData, [trans], mist.ETH2WETH());
 
             // console.log('getLockTransData: ', getLockTransData.lockTransData);
@@ -184,13 +186,13 @@ Template['views_ethToweth'].events({
                 }
 
                 try {
-                    let sendLockTransData = await Helpers.promisefy(
+                    sendLockTransData = await Helpers.promisefy(
                         mist.ETH2WETH().sendLockTrans,
                         [trans, password_input, getLockTransData.secretX],
                         mist.ETH2WETH()
                     );
 
-                    console.log('sendLockTransData result', sendLockTransData);
+                    // console.log('sendLockTransData result', sendLockTransData);
                     Session.set('clickButton', 1);
 
                 } catch (error) {
