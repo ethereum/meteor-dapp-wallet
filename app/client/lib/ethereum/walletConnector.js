@@ -108,6 +108,9 @@ var checkNetwork = function() {
           if (knownNetworks[network].hash == block.hash) {
             Session.set('network', knownNetworks[network].network);
             Session.set('name', network);
+            if (publicSettings.networks[network]) {
+              _.extend(publicSettings, publicSettings.networks[network]);
+            }
             found = true;
             break;
           }
