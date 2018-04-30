@@ -25,6 +25,9 @@
                     {{#if $eq ($.Session.get "network") "ropsten"}}
                         <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">TEST-NET: Ropsten</span> &nbsp;&nbsp; 
                     {{/if}}
+                    {{#if $eq ($.Session.get "network") "kovan"}}
+                        <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">TEST-NET: Kovan</span> &nbsp;&nbsp; 
+                    {{/if}}
                     {{#if $eq ($.Session.get "network") "private"}}
                         <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">PRIVATE-NET</span> &nbsp;&nbsp; 
                     {{/if}}
