@@ -40,7 +40,14 @@
                         </span>
                         <progress max="100" value="{{progress}}"></progress>
                     {{else}}
-                        <i class="icon-feed"></i> {{$.Session.get "peerCount"}} <span class="hide-on-small">{{i18n 'wallet.app.texts.peers'}}</span>
+                        {{#if $eq ($.Session.get "peerCount") 100}}
+                            {{! Infura returns 100 for net_peerCount, so we have 100 peers then show a 'Remote' label instead }}
+                            <i class="icon-feed"></i> {{i18n 'wallet.app.texts.remote'}}
+                        {{else if $gt ($.Session.get "peerCount") 0}}
+                            <i class="icon-feed"></i> {{$.Session.get "peerCount"}} <span class="hide-on-small">{{i18n 'wallet.app.texts.peers'}}</span>
+                        {{else}}
+                            <i class="icon-feed"></i> {{i18n 'wallet.app.texts.connecting'}}
+                        {{/if}}
                         &nbsp;&nbsp;|&nbsp;&nbsp;
                         <i class="icon-layers"></i> {{formattedBlockNumber}} <i class="icon-clock" style="margin-left: 10px;"></i> {{{timeSinceBlock}}} <span class="hide-on-small">{{{timeSinceBlockText}}}</span>
                     {{/with}}
