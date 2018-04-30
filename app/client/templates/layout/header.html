@@ -45,7 +45,7 @@
                     {{else}}
                         {{#if $eq ($.Session.get "peerCount") 100}}
                             {{! Infura returns 100 for net_peerCount, so we have 100 peers then show a 'Remote' label instead }}
-                            <i class="icon-feed"></i> {{i18n 'wallet.app.texts.remote'}}
+                            <i class="icon-feed"></i> <span title="{{i18n 'wallet.app.texts.remoteExplain'}}">{{i18n 'wallet.app.texts.remote'}}</span>
                         {{else if $gt ($.Session.get "peerCount") 0}}
                             <i class="icon-feed"></i> {{$.Session.get "peerCount"}} <span class="hide-on-small">{{i18n 'wallet.app.texts.peers'}}</span>
                         {{else}}

@@ -36,6 +36,8 @@
         "timeSinceBlock": "since last block",
         "peers": "peers",
         "remote": "Remote",
+        "remoteExplain":
+          "You are connected to a remote node.",
         "waitingForBlocks": "Waiting for blocks...",
         "testnetExplain":
           "You are on a testnet, DO NOT SEND any real Ether to these addresses",
