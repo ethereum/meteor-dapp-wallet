@@ -65,7 +65,9 @@ Template['layout_header'].helpers({
     @return {String}
     */
   formattedBlockNumber: function() {
-    return numeral(EthBlocks.latest.number).format('0,0');
+    return EthBlocks.latest.number > 0
+      ? numeral(EthBlocks.latest.number).format('0,0')
+      : '--';
   },
   /**
     Gets the time since the last block
