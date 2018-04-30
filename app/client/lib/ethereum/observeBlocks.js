@@ -6,8 +6,8 @@ Update the peercount
 @method getPeerCount
 */
 var getPeerCount = function() {
-  web3.eth.net.getPeerCount(function(e, res) {
-    if (!e) Session.set('peerCount', res);
+  web3.eth.net.getPeerCount().then(function(peerCount) {
+    Session.set('peerCount', peerCount);
   });
 };
 

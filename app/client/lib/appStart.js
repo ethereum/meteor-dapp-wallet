@@ -36,8 +36,9 @@ Meteor.Spinner.options = {
 
 var checkSync = function() {
   // Stop app operation, when the node is syncing
-  web3.eth.isSyncing(function(error, syncing) {
-    if (!error) {
+  web3.eth
+    .isSyncing()
+    .then(function(syncing) {
       if (syncing === true) {
         console.time('nodeRestarted');
         console.log('Node started syncing, stopping app operation');
@@ -70,54 +71,86 @@ var checkSync = function() {
         // re-gain app operation
         connectToNode();
       }
-    }
-  });
+    })
+    .catch(function(error) {
+      console.log('Error: ', error);
+      if (error.toString().toLowerCase().includes('connection not open')) {
+        showModal();
+      } else {
+        // retry
+        checkSync();
+      }
+    });
+};
+
+var showModal = function() {
+  // make sure the modal is rendered after all routes are executed
+  Meteor.setTimeout(function() {
+    // if in mist, tell to start geth, otherwise start with RPC
+    var gethRPC = window.mist
+      ? 'geth'
+      : 'geth --rpc --ws --wsorigins "' +
+        window.location.protocol +
+        '//' +
+        window.location.host +
+        '"';
+
+    EthElements.Modal.question(
+      {
+        text: new Spacebars.SafeString(
+          TAPi18n.__(
+            'wallet.app.texts.connectionError' +
+              (window.mist ? 'Mist' : 'Browser'),
+            { node: gethRPC }
+          )
+        ),
+        ok: function() {
+          Tracker.afterFlush(function() {
+            connect();
+          });
+        }
+      },
+      {
+        closeable: false
+      }
+    );
+  }, 600);
 };
 
 var connect = function() {
-  if (web3.eth.net.isListening()) {
-    // only start app operation, when the node is not syncing (or the eth_syncing property doesn't exists)
-    web3.eth.isSyncing(function(e, sync) {
-      if (e || !sync) {
-        connectToNode();
+  web3.eth.net
+    .isListening()
+    .then(function(isListening) {
+      if (isListening) {
+        // only start app operation, when the node is not syncing (or the eth_syncing property doesn't exists)
+        web3.eth
+          .isSyncing()
+          .then(function(syncing) {
+            if (!syncing) {
+              connectToNode();
+            } else {
+              EthAccounts.init();
+            }
+          })
+          .catch(function(error) {
+            console.log('Error: ', error);
+            connect(); // retry
+          });
       } else {
-        EthAccounts.init();
+        showModal();
+      }
+    })
+    .catch(function(error) {
+      console.log('Error: ', error);
+      if (error.toString().toLowerCase().includes('connection not open')) {
+        showModal();
+      } else {
+        // retry
+        connect();
       }
     });
-  } else {
-    // make sure the modal is rendered after all routes are executed
-    Meteor.setTimeout(function() {
-      // if in mist, tell to start geth, otherwise start with RPC
-      var gethRPC = window.mist
-        ? 'geth'
-        : 'geth --rpc --ws --wsorigins "' +
-          window.location.protocol +
-          '//' +
-          window.location.host +
-          '"';
-
-      EthElements.Modal.question(
-        {
-          text: new Spacebars.SafeString(
-            TAPi18n.__(
-              'wallet.app.texts.connectionError' +
-                (window.mist ? 'Mist' : 'Browser'),
-              { node: gethRPC }
-            )
-          ),
-          ok: function() {
-            Tracker.afterFlush(function() {
-              connect();
-            });
-          }
-        },
-        {
-          closeable: false
-        }
-      );
-    }, 600);
-  }
 };
+
 Meteor.startup(function() {
   // delay so we make sure the data is already loaded from the indexedDB
   // TODO improve persistent-minimongo2 ?
