@@ -16,9 +16,14 @@
             
             <li class="block-info dapp-flex-item  {{#if TemplateVar.get 'syncing'}}syncing{{/if}}">
                 {{#if isWalletMode}}
-
                     {{#if $eq ($.Session.get "network") "test"}}
                         <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">TEST-NET</span> &nbsp;&nbsp; 
+                    {{/if}}
+                    {{#if $eq ($.Session.get "network") "rinkeby"}}
+                        <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">TEST-NET: Rinkeby</span> &nbsp;&nbsp; 
+                    {{/if}}
+                    {{#if $eq ($.Session.get "network") "ropsten"}}
+                        <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">TEST-NET: Ropsten</span> &nbsp;&nbsp; 
                     {{/if}}
                     {{#if $eq ($.Session.get "network") "private"}}
                         <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">PRIVATE-NET</span> &nbsp;&nbsp; 
