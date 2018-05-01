@@ -138,10 +138,15 @@ connectToNode = function() {
   EthAccounts.init();
   EthBlocks.init();
 
-  EthTools.ticker.start({
-    extraParams: typeof mist !== 'undefined' ? 'Mist-' + mist.version : '',
-    currencies: ['BTC', 'USD', 'EUR', 'BRL', 'GBP']
-  });
+  var options = {extraParams: (typeof mist !== 'undefined') ? 'Mist-'+ mist.version : ''};
+  if (!publicSettings.noUsePrice) {
+    var currencies = ['BTC', 'USD', 'EUR', 'BRL', 'GBP'];
+    if (publicSettings.supportedCurrencies) {
+        currencies = publicSettings.supportedCurrencies;
+    }
+    options.currencies = currencies;
+  }
+  EthTools.ticker.start(options);
 
   if (EthAccounts.find().count() > 0) {
     checkForOriginalWallet();
