@@ -404,7 +404,14 @@ Helpers.addInputValue = function(inputs, currentInput, formField) {
           value = formField.value || '';
         }
 
-        input.value = value;
+        if (
+          input.typeShort === 'bytes' &&
+          value === '0x0000000000000000000000000000000000000000'
+        ) {
+          input.value = '';
+        } else {
+          input.value = value;
+        }
       }
 
       return value;
