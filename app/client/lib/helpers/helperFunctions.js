@@ -372,6 +372,10 @@ Helpers.addInputValue = function(inputs, currentInput, formField) {
     _.map(inputs, function(input) {
       var value = _.isUndefined(input.value) ? '' : input.value;
 
+      if (input.typeShort === 'bytes' && value === '') {
+        value = '0x0000000000000000000000000000000000000000';
+      }
+
       if (
         currentInput.name === input.name &&
         currentInput.type === input.type &&
@@ -383,8 +387,6 @@ Helpers.addInputValue = function(inputs, currentInput, formField) {
           } catch (e) {
             value = [];
           }
-
-          // force 0x at the start
         } else if (
           !_.isEmpty(formField.value) &&
           (input.typeShort === 'bytes' || input.typeShort === 'address')
@@ -393,10 +395,11 @@ Helpers.addInputValue = function(inputs, currentInput, formField) {
           value = /^[0-9a-f]+$/i.test(formField.value.replace('0x', ''))
             ? '0x' + formField.value.replace('0x', '')
             : null;
-
-          // bool
         } else if (input.typeShort === 'bool') {
           value = !!formField.checked;
+        } else if (input.typeShort === 'bytes') {
+          value =
+            formField.value || '0x0000000000000000000000000000000000000000';
         } else {
           value = formField.value || '';
         }
