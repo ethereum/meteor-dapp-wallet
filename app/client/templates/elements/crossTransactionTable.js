@@ -14,6 +14,7 @@ Template['elements_cross_transactions_table'].onCreated(function(){
         if (err) {
             Session.set('clickButton', 1);
         } else {
+            console.log('getGasPrice', data);
             // console.log(data.LockGas, data.RefundGas, data.RevokeGas, data.gasPrice);
             TemplateVar.set(template,'RefundGas', data.RefundGas);
             TemplateVar.set(template,'gasPrice', data.gasPrice);

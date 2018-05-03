@@ -28,7 +28,7 @@ class crossChainOperators{
         window.postMessage({type : messageType+this.crossType ,message:crossOperator.message}, (!location.origin || location.origin === "null" ) ? '*' : location.origin);
     };
     invokeCallback(data){
-        console.log('invokeCallback : ',data);
+        // console.log('invokeCallback : ',data);
         if(this.OperatorDict[data.index]){
             if(this.OperatorDict[data.index].callback){
                 this.OperatorDict[data.index].callback(data.error,data.value);

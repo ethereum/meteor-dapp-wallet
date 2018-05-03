@@ -3,32 +3,60 @@
  @module Templates
  */
 
-Template['views_crosschain'].onCreated(function () {
+Template['views_crosschain'].onCreated(async function () {
     let template = this;
 
-    mist.ETH2WETH().getAddressList('ETH',function (err,data) {
-        // console.log(err);
-        // console.log(data);
+    try {
+        let addressList = await Helpers.promisefy(
+            mist.ETH2WETH().getAddressList,
+            ['ETH'],
+            mist.ETH2WETH()
+        );
 
-        if (err) {
-            TemplateVar.set(template,'ethAccounts', []);
-        } else {
-            mist.ETH2WETH().getMultiBalances(data, (err, result) => {
-               // console.log(result);
-                TemplateVar.set(template,'ethAccounts',result);
+        // console.log('addressList: ', addressList);
+
+        mist.ETH2WETH().getMultiBalances(addressList, (err, result) => {
+            // console.log(result);
+            TemplateVar.set(template,'ethAccounts',result);
+        });
+
+        mist.ETH2WETH().listHistory(addressList, (err, result) => {
+            // console.log('listHistory', result);
+            TemplateVar.set(template,'listHistory',result);
+        });
+
+        historyID = Meteor.setInterval(function(){
+            let listHistory = TemplateVar.get(template,'listHistory');
+
+            mist.ETH2WETH().listHistory(addressList, (err, result) => {
+                if(!listHistory || listHistory.toString() !== result.toString()) {
+                    console.log('update history list');
+                    TemplateVar.set(template,'listHistory',result);
+                }
             });
 
-            mist.ETH2WETH().listHistory(data, (err, result) => {
-                // console.log('listHistory', result);
-                TemplateVar.set(template,'listHistory',result);
+        }, 2000);
+
+    } catch (error) {
+        if (error && error.error) {
+            return GlobalNotification.warning({
+                content: error.error,
+                duration: 2
+            });
+        } else {
+            return GlobalNotification.warning({
+                content: error,
+                duration: 2
             });
         }
-    });
+
+    }
 
 });
 
 Template['views_crosschain'].onDestroyed(function () {
     var template = this;
+    Meteor.clearInterval(historyID);
 });
 
 Template['views_crosschain'].onRendered(function(){
@@ -143,66 +171,5 @@ Template['views_crosschain'].events({
     // 'copy .copyable-address': accountClipboardEventHandler,
     // 'copy .copyable-waddress': accountClipboardEventHandler,
 
-
-
-    /**
-     Click to reveal QR Code
-
-     @event click a.create.account
-     */
-    'click .qrcode-button': function(e){
-        e.preventDefault();
-
-        var name = e.target.name;
-        // console.log('name: ', name);
-
-        // Open a modal showing the QR Code
-        EthElements.Modal.show({
-            template: 'views_modals_qrCode',
-            data: {
-                address: name
-            }
-        });
-    },
-
-    'click .transfer': function (e) {
-
-        return GlobalNotification.warning({
-            content: "Please make sure you have sufficient balance",
-            duration: 2
-        });
-    },
-
-    'click .refund': function (e) {
-
-        return GlobalNotification.warning({
-            content: "Please add WANs to Public Address to pay for Gas.",
-            duration: 2
-        });
-    },
-
-
-    'click .history': function (e) {
-        var wanSendTransaction = function() {
-            // console.log('aaaa');
-        };
-
-        EthElements.Modal.question({
-            template: 'views_modals_sendTransactionInfo',
-            data: {
-                from: '0x00000000',
-                to: '0x00000000',
-                amount: 1000,
-                gasPrice: 1000,
-                estimatedGas: 1000,
-                estimatedGasPlusAddition: 100000, // increase the provided gas by 100k
-                // data: data
-            },
-            ok: wanSendTransaction,
-            cancel: true
-        },{
-            class: 'send-transaction-info'
-        });
-    }
 });
 
