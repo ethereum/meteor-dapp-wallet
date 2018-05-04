@@ -8,7 +8,7 @@
             <div class="home-link">
                 <a href="{{pathFor route='dashboard'}}"><img/></a>
             </div>
-            <span style="top: 4px;">&nbsp;>&nbsp;DETAIL</span>
+            <span style="top: 4px;">&nbsp;>&nbsp;CROSSCHAIN</span>
         </div>
     </h1>
 
@@ -19,24 +19,28 @@
                 <a class="history">
                     <span >Transaction history</span>
                 </a>
+                <div class="bottomBor"></div>
             </li>
 
             <li>
                 <a class="toWeth">
                     <span>ETH >> WETH</span>
                 </a>
+                <div class="bottomBor"></div>
             </li>
 
             <li>
                 <a class="toWan">
                     <span>WETH >> ETH</span>
                 </a>
+                <div class="bottomBor"></div>
             </li>
 
             <li>
                 <a class="toNormal">
                     <span>Normal transaction</span>
                 </a>
+                <div class="bottomBor"></div>
             </li>
 
         </ul>
@@ -51,7 +55,7 @@
     {{/if}}
 
     {{#if $eq ($.Session.get "clickButton") 3}}
-        {{> views_wethTowan}}
+        {{> views_wethToeth}}
     {{/if}}
 
     {{#if $eq ($.Session.get "clickButton") 4}}

@@ -144,6 +144,7 @@
 .transfer-list-tbody{
     td {
         text-align: center;
+        padding: 0;
     }
 }
 
@@ -151,8 +152,12 @@
     background: #ffffff;
 }
 
-table.dapp-zebra tbody tr:nth-child(odd) {
-    background-color: #f7f8fc;
+table.dapp-zebra tbody tr:nth-child(even) {
+    background-color: #f7f8fc!important;
+    border-radius: 5px;
+}
+.full-width th{
+    background-color: #f7f8fc!important;
 }
 
 table.dapp-zebra thead + tbody tr:nth-child(even) {
@@ -475,17 +480,21 @@ input[type="checkbox"]::before, input[type="radio"]::before{
 .viwes-account-line{
     float: left;
     width: 2px;
-    height: 20px;
+    height: 12px;
     margin-right: 10px;
     background-color: #4b90f7;
     border-radius: 2px;
-    margin-top: 20px;
+    margin-top: 25px;
 }
 #elements_account_div{
     margin-bottom: 0;
     margin-top: 20px;
 }
-
+.send-from{ 
+    color: #3f454c!important;
+    background: #fff!important;
+    border-bottom: 1px solid #e8ebf0!important;
+}
 .views_account_token {
     color: #929cb8;
     display: block;
@@ -523,11 +532,12 @@ input[type="checkbox"]::before, input[type="radio"]::before{
     font-size: 16px;
     font-weight: normal;
     font-stretch: normal;
-    line-height: 25px;
+    // line-height: 25px;
     letter-spacing: 1px;
     color: #4b90f7;
     margin-right: 5px;
     text-transform: uppercase;
+    font-weight: bold;
 }
 
 .views_send_button {
@@ -638,13 +648,13 @@ span.address {
   }
 }
 
-.viwes-account-header{
-  margin: 10px 0;
-  background-color: #ffffff;
-  box-shadow: 0px 3px 9px 0px rgba(15, 104, 170, 0.1);
-  border-radius: 4px;
+.tempTable{
+    background-color: #ffffff;
+    box-shadow: 0px 3px 9px 0px rgba(15, 104, 170, 0.1);
+    border-radius: 4px;
     display: inline-block;
     width: 100%;
+    padding: 0 20px;
 
   .header-span {
       span{
@@ -654,6 +664,19 @@ span.address {
           float: left;
           box-shadow: inset #ffffff 0 0 0, inset #ffffff 0 0 0;
       }
+  }
+  table{
+    border-bottom: 1px solid #eff1f7;
+    text-align: left;
+    tr{
+        height: 45px;
+    }
+    tr:nth-child(even){
+        background-color: #f7f8fc;
+    }
+    a{
+        color: #1992FC;
+    }
   }
 
   a {
@@ -1044,7 +1067,7 @@ table {
             td {
                 position: relative;
                 height: @gridHeight*3;
-                text-align: center;
+                text-align: left;
             }
         }
     }
@@ -1293,12 +1316,22 @@ table {
         display: inline-block;
         width: @gridWidth * 13;
         margin-top: 3px;
-    }
+    } 
 }
 
 
 .dapp-header nav > ul > li {
     margin: 0 20px 0 0;
+}
+
+.send-info{
+    margin-left: -10px!important;
+}
+
+.comAmountInp{
+    background: #fff;
+    font-size: 14px!important;
+    margin-top: 5px;
 }
 
 .dapp-selector span:first-of-type, .dapp-select-gas-price span:first-of-type {
@@ -1307,7 +1340,13 @@ table {
 .contBox{
     width: 100%;
     display: inline-block!important;
-    margin-bottom: 26px!important;
+    margin-bottom: 30px!important;
+}
+input{
+    height: 40px;
+    margin: 5px 0 0!important;
+    padding: 0!important;
+    text-indent: 12px;
 }
 .tagLeft{
   float: left;
@@ -1583,33 +1622,86 @@ table {
 
 .crosschain-nav{
   width: 100%;
-  height: 45px;
+  height: 60px;
   background-color: #FFFFFF;
+  border-bottom:rgba(215,221,230,1);
 }
 
 .crosschain-nav ul{
   margin: 0 auto;
   width: 1000px;
+  padding-left: 0;
 }
 
 .crosschain-nav li{
   display: inline-block;
-  width: 120px;
-  height: 45px;
-  line-height: 45px;
+  height: 60px;
+  line-height: 60px;
   float: left;
+  padding: 0 25px; 
 }
 
 .crosschain-nav li a{
   text-decoration: none;
   color: #C6CBD7;
   display: block;
+  cursor: pointer;
+  font-weight: bold;
   text-align: center;
-  font-size: 15px;
+  font-size: 14px;
+  word-break: break-all;
 }
 
+.leftTextColor{
+    color: #929cb8;
+    font-size: 12px;
+}
+
+.comBg{
+    min-height: 70px;
+    padding-left: 20px!important;
+    background: #f7f8fc!important;
+    padding-bottom: 30px;
+
+    .views_send_strong{
+        margin-top: 25px;
+        font-size: 12px;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+    .dapp-select-gas-price{
+        margin: 0!important;
+        padding: 0!important;
+        span{
+            color: #3f454c;
+            font-size: 18px!important;
+        }
+    }
+}
 .crosschain-nav li a:hover{
-  background-color: #459df5;
+  color: #737B93;
+}
+
+.crosschain-nav li a:focus span{
+    color:red;
+  }
+
+  .crosschain-nav li:focus .bottomBor{
+    display: block;
+  }
+
+.crosschain-nav li:hover .bottomBor{
+    display: block;
+  }
+
+.bottomBor{
+    display: none;
+    width: 50px;
+    height: 2px;
+    margin: -2px auto 0;
+	background-color: #4b90f7;
+	box-shadow: 0px 6px 12px 0px	rgba(15, 123, 216, 0.36);
+	border-radius: 1px;
 }
 
 

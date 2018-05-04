@@ -205,7 +205,10 @@ body {
         }
     }
 }
-
+.dapp-content{ 
+    width: 100%;
+    display: inline-block;
+}
 .dapp-header.dapp-small + .dapp-flex-content > .dapp-content {
     width: 100%!important;
     padding-top: @gridHeight * 3 - 3px;
@@ -468,7 +471,7 @@ body {
     }
 
     > div {
-        margin-bottom: @defaultMargin;
+        // margin-bottom: @defaultMargin;
 
         &.from-to {
             position: relative;
@@ -489,6 +492,7 @@ body {
 
             .dapp-address-input input {
                 width: 100%;
+                border-bottom: 2px solid #e8ebf0!important
             }
 
         }
@@ -564,11 +568,14 @@ body {
                 font-size: 1.3em;
                 font-weight: 400;
                 color: @colorTextSecondary;
+                margin: 9px 0 0 10px;
+                display: inline-block;
             }
 
             input[type="text"] {
                 width: 100%;
                 margin-bottom: @defaultMargin/2;
+                border-bottom: 2px solid #e8ebf0!important;
             }
 
             input.send-all  {
@@ -604,7 +611,7 @@ body {
         }
 
         .dapp-select-gas-price {
-            width: 350px;
+            width: 490px;
             background-color: #f7f8fc;
             border-radius: 10px;
             margin: 10px;

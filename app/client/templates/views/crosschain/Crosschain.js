@@ -3,10 +3,12 @@
  @module Templates
  */
 
+
 Template['views_crosschain'].onCreated(async function () {
     let template = this;
 
     try {
+        // eth => weth
         let addressList = await Helpers.promisefy(
             mist.ETH2WETH().getAddressList,
             ['ETH'],
@@ -36,6 +38,36 @@ Template['views_crosschain'].onCreated(async function () {
             });
 
         }, 2000);
+
+
+        // weth => eth
+        let wanAddressList = await Helpers.promisefy(
+            mist.WETH2ETH().getAddressList,
+            ['WAN'],
+            mist.WETH2ETH()
+        );
+
+        mist.WETH2ETH().getMultiBalances(wanAddressList, (err, result) => {
+            // console.log('wanAddressList', result);
+            TemplateVar.set(template,'wanAccounts',result);
+        });
+
+        mist.WETH2ETH().listHistory(wanAddressList, (err, result) => {
+            console.log('wanListHistory', result);
+            TemplateVar.set(template,'wanListHistory',result);
+        });
+
+        // historyID = Meteor.setInterval(function(){
+        //     let listHistory = TemplateVar.get(template,'listHistory');
+        //
+        //     mist.ETH2WETH().listHistory(addressList, (err, result) => {
+        //         if(!listHistory || listHistory.toString() !== result.toString()) {
+        //             console.log('update history list');
+        //             TemplateVar.set(template,'listHistory',result);
+        //         }
+        //     });
+        //
+        // }, 2000);
 
     } catch (error) {
         if (error && error.error) {
@@ -71,6 +103,7 @@ Template['views_crosschain'].helpers({
      */
     'ethAccounts': function(){
 
+        //eth account list
         const ethAccounts = TemplateVar.get('ethAccounts');
         // console.log('ethAccounts', ethAccounts);
 
@@ -85,6 +118,21 @@ Template['views_crosschain'].helpers({
         }
 
         Session.set('ethList', result);
+
+        //wan account list
+        const wanAccounts = TemplateVar.get('wanAccounts');
+        let wanListResult = [];
+        if (wanAccounts) {
+
+            _.each(wanAccounts, function (value, index) {
+                const balance =  web3.fromWei(value, 'ether');
+                const name = index.slice(2, 6) + index.slice(38);
+                wanListResult.push({name: name, address: index, balance: balance})
+            });
+        }
+
+        Session.set('wanList', wanListResult);
+
         return result;
     },
 

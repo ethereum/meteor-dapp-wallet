@@ -31,7 +31,7 @@ Template['views_crosschain_main'].events({
     'click .toWan': function (e) {
 
         var ethList = Session.get('ethList');
-        console.log('ethList', ethList);
+        // console.log('ethList', ethList);
         if (ethList.length) {
             Session.set('clickButton', 3);
         } else {
@@ -42,7 +42,7 @@ Template['views_crosschain_main'].events({
     'click .toNormal': function (e) {
 
         var ethList = Session.get('ethList');
-        console.log('ethList', ethList);
+        // console.log('ethList', ethList);
         if (ethList.length) {
             Session.set('clickButton', 4);
         } else {
