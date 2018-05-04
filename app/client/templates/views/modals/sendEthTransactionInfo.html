@@ -1,0 +1,49 @@
+<template name="views_modals_sendEthTransactionInfo">
+    <h1>
+        {{i18n "wallet.send.sendInfoTitle"}}
+        <br>
+        {{transferBanlance amount "0,0.00[000000] UNIT" "ether"}}
+        {{#if $neq unit 'ether'}}
+            <br>
+            <small>
+                ({{transferBanlance amount "0,0.00[000000] unit" "ether"}})
+            </small>
+        {{/if}}
+    </h1>
+    <p>
+        {{> elements_eth_account_link address=from}}
+    </p>
+    <i class="icon-arrow-down"></i>
+    <p>
+        {{#if to}}
+            {{> elements_eth_account_link address=to}}
+        {{else}}
+            <i class="icon-docs"></i> {{i18n "wallet.send.createContract"}}
+        {{/if}}
+    </p>
+
+    <hr>
+
+    <p class="tx-info">
+        <small>+ {{i18n "wallet.send.estimatedFee"}}</small> {{estimatedFee}}
+        <br>
+        <small class="gas-price">
+            {{i18n "wallet.transactions.gasPrice"}} {{transferBanlance gasPrice "0,0.0[000000000000000000] unit" "ether"}}
+            <br>
+            {{i18n "wallet.send.texts.estimatedGas"}} {{estimatedGas}}
+        </small>
+        <br>
+        <small>
+            {{i18n "wallet.send.provideGas"}} <input type="number" min="21000" class="gas dapp-tiny" value="{{estimatedGasPlusAddition}}">
+        </small>
+    </p>
+
+    {{#if data}}
+        <hr>
+
+        <p class="tx-info">
+            <small>{{i18n "wallet.send.data"}}</small>
+            <pre>{{data}}</pre>
+        </p>
+    {{/if}}
+</template>
