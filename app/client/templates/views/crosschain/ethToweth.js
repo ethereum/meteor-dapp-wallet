@@ -60,14 +60,16 @@ Template['views_ethToweth'].helpers({
     'Deposit': function () {
 
         let result = [];
-        _.each(TemplateVar.get('storemanGroup'), function (value, index) {
-            if (value.ethAddress === TemplateVar.get('to')) {
-                let inboundQuota = web3.fromWei(value.inboundQuota, 'ether');
-                let quota = web3.fromWei(value.quota, 'ether');
-                let deposit = web3.fromWei(value.deposit, 'ether');
-                result.push({deposit: deposit, inboundQuota: inboundQuota, quota: quota, done: quota - inboundQuota})
-            }
-        });
+        if (TemplateVar.get('storemanGroup')) {
+            _.each(TemplateVar.get('storemanGroup'), function (value, index) {
+                if (value.ethAddress === TemplateVar.get('to')) {
+                    let inboundQuota = web3.fromWei(value.inboundQuota, 'ether');
+                    let quota = web3.fromWei(value.quota, 'ether');
+                    let deposit = web3.fromWei(value.deposit, 'ether');
+                    result.push({deposit: deposit, inboundQuota: inboundQuota, quota: quota, done: quota - inboundQuota})
+                }
+            });
+        }
 
         return result;
     },
