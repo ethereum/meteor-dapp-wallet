@@ -102,14 +102,14 @@ class crossChainOperators{
         this.invokeOperator(new crossOperator('getMultiTokenBalance',[address],this.getOriginChainType(),callback));
     }
 
-    getNonce(address,callback){
-        this.invokeOperator(new crossOperator('getNonce',[address],this.getOriginChainType(),callback));
+    getNonce(address,chainType, callback){
+        this.invokeOperator(new crossOperator('getNonce',[address],chainType,callback));
     }
     getBlockNumber(callback){
         this.invokeOperator(new crossOperator('getBlockNumber',[],this.getOriginChainType(),callback));
     }
-    getGasPrice(callback){
-        this.invokeOperator(new crossOperator('getGasPrice',[],this.getOriginChainType(),callback));
+    getGasPrice(chainType, callback){
+        this.invokeOperator(new crossOperator('getGasPrice',[],chainType,callback));
     }
     getScEvent(address,topics,callback){
         this.invokeOperator(new crossOperator('getScEvent',[address,topics],this.getOriginChainType(),callback));
