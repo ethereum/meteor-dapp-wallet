@@ -15,59 +15,18 @@ Template['views_crosschain'].onCreated(async function () {
             mist.ETH2WETH()
         );
 
-        // console.log('addressList: ', addressList);
-
-        mist.ETH2WETH().getMultiBalances(addressList, (err, result) => {
-            // console.log(result);
-            TemplateVar.set(template,'ethAccounts',result);
-        });
-
-        mist.ETH2WETH().listHistory(addressList, (err, result) => {
-            // console.log('listHistory', result);
-            TemplateVar.set(template,'listHistory',result);
-        });
-
-        historyID = Meteor.setInterval(function(){
-            let listHistory = TemplateVar.get(template,'listHistory');
-
-            mist.ETH2WETH().listHistory(addressList, (err, result) => {
-                if(!listHistory || listHistory.toString() !== result.toString()) {
-                    console.log('update history list');
-                    TemplateVar.set(template,'listHistory',result);
-                }
-            });
-
-        }, 2000);
+        TemplateVar.set(template,'addressList',addressList);
+        Session.set('addressList', addressList);
 
 
         // weth => eth
         let wanAddressList = await Helpers.promisefy(
-            mist.WETH2ETH().getAddressList,
+            mist.ETH2WETH().getAddressList,
             ['WAN'],
             mist.WETH2ETH()
         );
 
-        mist.WETH2ETH().getMultiBalances(wanAddressList, (err, result) => {
-            // console.log('wanAddressList', result);
-            TemplateVar.set(template,'wanAccounts',result);
-        });
-
-        mist.WETH2ETH().listHistory(wanAddressList, (err, result) => {
-            console.log('wanListHistory', result);
-            TemplateVar.set(template,'wanListHistory',result);
-        });
-
-        // historyID = Meteor.setInterval(function(){
-        //     let listHistory = TemplateVar.get(template,'listHistory');
-        //
-        //     mist.ETH2WETH().listHistory(addressList, (err, result) => {
-        //         if(!listHistory || listHistory.toString() !== result.toString()) {
-        //             console.log('update history list');
-        //             TemplateVar.set(template,'listHistory',result);
-        //         }
-        //     });
-        //
-        // }, 2000);
+        TemplateVar.set(template,'wanAddressList',wanAddressList);
 
     } catch (error) {
         if (error && error.error) {
@@ -88,11 +47,11 @@ Template['views_crosschain'].onCreated(async function () {
 
 Template['views_crosschain'].onDestroyed(function () {
     var template = this;
-    Meteor.clearInterval(historyID);
 });
 
 Template['views_crosschain'].onRendered(function(){
-    // console.timeEnd('renderAccountPage');
+    var template = this;
+
 });
 
 Template['views_crosschain'].helpers({
@@ -101,43 +60,12 @@ Template['views_crosschain'].helpers({
      Get all transactions
      @method (allTransactions)
      */
-    'ethAccounts': function(){
-
-        //eth account list
-        const ethAccounts = TemplateVar.get('ethAccounts');
-        // console.log('ethAccounts', ethAccounts);
-
-        let result = [];
-        if (ethAccounts) {
-
-            _.each(ethAccounts, function (value, index) {
-                const balance =  web3.fromWei(value, 'ether');
-                const name = index.slice(2, 6) + index.slice(38);
-                result.push({name: name, address: index, balance: balance})
-            });
-        }
-
-        Session.set('ethList', result);
-
-        //wan account list
-        const wanAccounts = TemplateVar.get('wanAccounts');
-        let wanListResult = [];
-        if (wanAccounts) {
-
-            _.each(wanAccounts, function (value, index) {
-                const balance =  web3.fromWei(value, 'ether');
-                const name = index.slice(2, 6) + index.slice(38);
-                wanListResult.push({name: name, address: index, balance: balance})
-            });
-        }
-
-        Session.set('wanList', wanListResult);
-
-        return result;
+    'addressList': function(){
+        return TemplateVar.get('addressList');
     },
 
-    'crosschainList': function(){
-        return TemplateVar.get('listHistory');
+    'wanAddressList': function(){
+        return TemplateVar.get('wanAddressList')
     },
 
 });
@@ -202,22 +130,6 @@ Template['views_crosschain'].events({
             $el.attr('contenteditable', null);
         }
     },
-    /**
-     Click to copy the code to the clipboard
-
-     @event click a.create.account
-     */
-    // 'click .start-to-scan-block-button': accountStartScanEventHandler,
-    // 'click .copy-to-clipboard-button': accountClipboardEventHandler,
-    // 'click .copy-to-clipboard-wbutton': accountClipboardEventHandler,
-
-    /**
-     Tries to copy account token.
-
-     @event copy .copyable-address span
-     */
-    // 'copy .copyable-address': accountClipboardEventHandler,
-    // 'copy .copyable-waddress': accountClipboardEventHandler,
 
 });
 

@@ -6,11 +6,5 @@
             <span class='ens-name'>{{ensDisplay}}</span>
         {{/if}}
 
-        {{#if TemplateVar.get "isValid"}}
-            {{> dapp_identicon identity=address}}
-        {{else}}
-            <i class="icon-shield"></i>
-        {{/if}}
-
     </div>
 </template>

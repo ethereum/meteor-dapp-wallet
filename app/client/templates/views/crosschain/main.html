@@ -16,31 +16,65 @@
         <ul style="float: left;">
 
             <li>
-                <a class="history">
+                <a class="history" style="
+                    {{#if $eq ($.Session.get "clickButton") 1}}
+                    color: #737B93;
+                    {{/if}}
+                        ">
                     <span >Transaction history</span>
                 </a>
-                <div class="bottomBor"></div>
+                <div class="bottomBor" style="
+                    {{#if $eq ($.Session.get "clickButton") 1}}
+                    display: block;
+                    {{/if}}
+                        "></div>
             </li>
 
             <li>
-                <a class="toWeth">
+                <a class="toWeth" style="
+                    {{#if $eq ($.Session.get "clickButton") 2}}
+                    color: #737B93;
+                    {{/if}}
+                        ">
                     <span>ETH >> WETH</span>
                 </a>
-                <div class="bottomBor"></div>
+                <div class="bottomBor" style="
+                    {{#if $eq ($.Session.get "clickButton") 2}}
+                    display: block;
+                    {{/if}}
+                        "></div>
             </li>
 
             <li>
-                <a class="toWan">
+                <a class="toWan" style="
+                    {{#if $eq ($.Session.get "clickButton") 3}}
+                    color: #737B93;
+                    {{/if}}
+                        ">
                     <span>WETH >> ETH</span>
                 </a>
-                <div class="bottomBor"></div>
+                <div class="bottomBor" style="
+                    {{#if $eq ($.Session.get "clickButton") 3}}
+                    display: block;
+                    {{/if}}
+                        "></div>
             </li>
 
             <li>
-                <a class="toNormal">
+                <a class="toNormal" style="
+                    {{#if $eq ($.Session.get "clickButton") 4}}
+                    color: #737B93;
+                    {{/if}}
+                    ">
                     <span>Normal transaction</span>
                 </a>
-                <div class="bottomBor"></div>
+                <div class="bottomBor"
+                     style="
+                         {{#if $eq ($.Session.get "clickButton") 4}}
+                         display: block;
+                         {{/if}}
+                             "
+                     ></div>
             </li>
 
         </ul>

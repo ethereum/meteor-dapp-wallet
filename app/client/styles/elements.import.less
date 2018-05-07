@@ -1,4 +1,6 @@
-
+body{
+    font-family: "MicrosoftYaHei"!important;
+}
 .chooseBtn {
     display: none !important;
 }
@@ -149,7 +151,41 @@
 }
 
 .dapp-modal-container{
+    width: 700px;
     background: #ffffff;
+}
+.send-transaction-info h1{
+    color: #3F454C;
+    font-weight: bold;
+    font-size: 20px;
+}
+.dapp-modal-buttons{
+    width: 190px;
+    margin: 0 auto;
+    button{
+        margin: 30px 0;
+    }
+}
+.cancel{
+    min-width:75px;
+    height:27px; 
+    margin-right: 30px!important;
+    color: #C6CBD7;
+    background:#fff;
+    border-radius: 27px; 
+    font-size: 12px;
+    border: 1px solid #E8EBF0;
+    font-weight: bold!important;
+}
+.ok{
+    min-width:75px;
+    height:27px;
+    color: #fff; 
+    border-radius: 27px;
+    font-size: 12px;
+    font-weight: bold!important;
+    background-image: linear-gradient(0deg,#00d2ff 0%, #1a90fc 100%);
+    box-shadow: 0px 4px 12px 0px  rgba(15, 123, 216, 0.31);
 }
 
 table.dapp-zebra tbody tr:nth-child(even) {
@@ -530,14 +566,12 @@ input[type="checkbox"]::before, input[type="radio"]::before{
 .views_send_strong {
     //font-family: MicrosoftYaHei-Bold, arial;
     font-size: 16px;
-    font-weight: normal;
     font-stretch: normal;
-    // line-height: 25px;
     letter-spacing: 1px;
-    color: #4b90f7;
+    color: #4b90f7!important;
     margin-right: 5px;
     text-transform: uppercase;
-    font-weight: bold;
+    font-weight: bold!important;
 }
 
 .views_send_button {
@@ -647,14 +681,28 @@ span.address {
     }
   }
 }
-
-.tempTable{
+.index .viwes-account-header{
+    box-shadow: 0px 3px 9px 0px rgba(255, 255, 255, 0.1)!important;
+}
+.viwes-account-header{
     background-color: #ffffff;
     box-shadow: 0px 3px 9px 0px rgba(15, 104, 170, 0.1);
     border-radius: 4px;
     display: inline-block;
     width: 100%;
     padding: 0 20px;
+    margin-bottom: 30px;
+}
+.tempTable{
+    // background-color: #ffffff;
+    // box-shadow: 0px 3px 9px 0px rgba(15, 104, 170, 0.1);
+    border-radius: 4px;
+    display: inline-block;
+    width: 100%;
+    // padding: 0 20px;
+    h1{
+        padding-left: 25px;
+    }
 
   .header-span {
       span{
@@ -1254,6 +1302,40 @@ table {
         }
     }
 }
+table.transactions tr:not(.pending):hover{
+    border-left: 2px solid rgba(204, 198, 198, 0)!important;
+    border-right: 2px solid rgba(204, 198, 198, 0)!important;
+}
+table tr.full-width td{
+    font-size: 14px;
+}
+table tr.full-width td:nth-child(1){
+    padding-left: 15px;
+}
+table tr.full-width th:nth-child(1){
+    padding-left: 15px;
+}
+.comBg{
+    min-height: 70px;
+    padding-left: 20px!important;
+    background: #f7f8fc!important;
+    padding-bottom: 30px;
+
+    .views_send_strong{
+        margin-top: 25px;
+        font-size: 12px!important;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+    .dapp-select-gas-price{
+        margin: 0!important;
+        padding: 0!important;
+        span{
+            // color: #3f454c;
+            // font-size: 12px!important;
+        }
+    }
+}
 
 .account-page-notification {
     .transition(opacity @animationSpeed * 2);
@@ -1329,7 +1411,7 @@ table {
 }
 
 .comAmountInp{
-    background: #fff;
+    background: #fff!important;
     font-size: 14px!important;
     margin-top: 5px;
 }
@@ -1339,6 +1421,7 @@ table {
 }
 .contBox{
     width: 100%;
+    border-radius: 10px;
     display: inline-block!important;
     margin-bottom: 30px!important;
 }
@@ -1347,6 +1430,37 @@ input{
     margin: 5px 0 0!important;
     padding: 0!important;
     text-indent: 12px;
+    background: #fff;
+    border-bottom: solid 1px #ccc6c6;
+}
+.realeaseTable{
+    width: 100%;
+    height: auto;
+    display: inline-block;
+    background: #F7F8FC;
+}
+.transactions thead tr{
+    height: 61px;
+    background:#F7F8FC;
+}
+.realeaseTable tr{
+    border: none;
+}
+.realeaseTable tr td{
+    height: 40px;
+    color: #3F454C;
+    text-align: left;
+}
+.realeaseTable tr:nth-child(even){
+    background: #fff!important;
+}
+.realeaseTable tr td:nth-child(1){
+    color: #3F454C;
+    font-weight: bold;
+    padding-left: 30px;
+}
+.realeaseTable tr td:nth-child(2){
+    width: 501px;
 }
 .tagLeft{
   float: left;
@@ -1657,27 +1771,6 @@ input{
     font-size: 12px;
 }
 
-.comBg{
-    min-height: 70px;
-    padding-left: 20px!important;
-    background: #f7f8fc!important;
-    padding-bottom: 30px;
-
-    .views_send_strong{
-        margin-top: 25px;
-        font-size: 12px;
-        margin-bottom: 8px;
-        font-weight: bold;
-    }
-    .dapp-select-gas-price{
-        margin: 0!important;
-        padding: 0!important;
-        span{
-            color: #3f454c;
-            font-size: 18px!important;
-        }
-    }
-}
 .crosschain-nav li a:hover{
   color: #737B93;
 }

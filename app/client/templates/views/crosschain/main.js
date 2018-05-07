@@ -20,8 +20,8 @@ Template['views_crosschain_main'].events({
 
     'click .toWeth': function (e) {
 
-        var ethList = Session.get('ethList');
-        if (ethList.length) {
+        var addressList = Session.get('addressList');
+        if (addressList.length) {
             Session.set('clickButton', 2);
         } else {
             Session.set('clickButton', 1);
@@ -30,9 +30,9 @@ Template['views_crosschain_main'].events({
 
     'click .toWan': function (e) {
 
-        var ethList = Session.get('ethList');
+        var addressList = Session.get('addressList');
         // console.log('ethList', ethList);
-        if (ethList.length) {
+        if (addressList.length) {
             Session.set('clickButton', 3);
         } else {
             Session.set('clickButton', 1);
@@ -41,9 +41,9 @@ Template['views_crosschain_main'].events({
 
     'click .toNormal': function (e) {
 
-        var ethList = Session.get('ethList');
+        var addressList = Session.get('addressList');
         // console.log('ethList', ethList);
-        if (ethList.length) {
+        if (addressList.length) {
             Session.set('clickButton', 4);
         } else {
             Session.set('clickButton', 1);

@@ -8,6 +8,10 @@ body{
     font-family: "Microsoft Yahei", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+input[type=range]::-webkit-slider-thumb {/*滑块*/
+  background: #02a8f3 !important;
+}
+
 /**********************************/
 /* START FORMATTING YOUR APP HERE */
 /**********************************/
@@ -180,6 +184,7 @@ body {
 
     }
 
+
     .wallet-balance {
         padding-bottom: @defaultPaddingVertical - 5px;
         padding-left: @defaultPaddingHorizontal;
@@ -205,7 +210,13 @@ body {
         }
     }
 }
-.dapp-content{ 
+table.dapp-zebra tbody tr:nth-child(even){
+    background: #F7F8FC;
+}
+table.dapp-zebra tbody tr:nth-child(odd){
+    background: #fff;
+}
+.dapp-content{
     width: 100%;
     display: inline-block;
 }
@@ -611,10 +622,10 @@ body {
         }
 
         .dapp-select-gas-price {
-            width: 490px;
+            // width: 490px;
             background-color: #f7f8fc;
             border-radius: 10px;
-            margin: 10px;
+            // margin-top: 25px!important;
             padding: 10px;
             margin-top: 0;
         }

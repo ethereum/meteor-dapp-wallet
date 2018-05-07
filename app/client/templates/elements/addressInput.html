@@ -1,6 +1,6 @@
 <template name="dapp_addrInput">
     <div class="dapp-address-input {{#if TemplateVar.get 'hasName'}}has-name{{/if}}">
-        <input type="text" name="{{name}}" placeholder="{{placeholder}}" class="{{class}} {{#unless TemplateVar.get 'isValid'}}dapp-error{{/unless}} {{#unless TemplateVar.get 'isChecksum'}} dapp-non-checksum {{/unless}}" {{additionalAttributes}} value="{{value}}" style="background-color: #f7f8fc;border: solid 0px #f7f8fc; cursor: auto;">
+        <input type="text" name="{{name}}" placeholder="{{placeholder}}" class="{{class}} {{#unless TemplateVar.get 'isValid'}}dapp-error{{/unless}} {{#unless TemplateVar.get 'isChecksum'}} dapp-non-checksum {{/unless}}" {{additionalAttributes}} value="{{value}}" style="width:100%; background-color: #f7f8fc;border: solid 0px #f7f8fc; cursor: auto;">
 
         {{#if TemplateVar.get 'hasName'}}
             <span class='ens-name'>{{ensDisplay}}</span>

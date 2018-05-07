@@ -1,18 +1,19 @@
 
 <template name="modal_transactionFee">
-    <div class="dapp-select-gas-price">
+    <div class="dapp-select-gas-price trContent" style="padding-top:25px!important; background: #f7f8fc!important; height: auto; display: inline-block; margin-left: -19px!important; min-height: 95px;padding-left: 20px!important;">
         {{#unless option}}
             {{name}}&nbsp;&nbsp;
             <a class="options" style="cursor: pointer">[Advanced options]</a>
 
             {{#if TemplateVar.get "options"}}
                 <input type="range" name="fee" min="-1" max="5" step="1" value="{{TemplateVar.get 'feeMultiplicator'}}">
-                <span style="left: 10px;margin-top: 10px;">{{i18nText 'low'}}</span>
-                <span style="right: 10px;margin-top: 10px;">{{i18nText 'high'}}</span>
+                <span style="left: 20px;top: 50px;padding:30px 0 10px 0px;font-size: 1em!important;">{{i18nText 'low'}}</span>
+                <span style="right: 10px;margin-top: 20px;">{{i18nText 'high'}}</span>
             {{/if}}
 
         {{/unless}}
         <br>
-        <span>{{fee}} <span>{{unit}}</span>{{feeNum}} </span>
+        <span>{{fee}} <span style="padding:10px 0 10px 0; display: inline-block;font-size: 1em;">{{unit}}</span>{{feeNum}} </span>
     </div>
 </template>
+

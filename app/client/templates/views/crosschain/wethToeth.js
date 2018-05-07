@@ -36,7 +36,7 @@ Template['views_wethToeth'].onCreated(async function(){
             TemplateVar.set(template,'gasEstimate', {});
         } else {
             // console.log(data.LockGas, data.RefundGas, data.RevokeGas, data.gasPrice);
-            Session.set('crosschainGas', data);
+            // Session.set('crosschainGas', data);
             TemplateVar.set(template,'estimatedGas', data.LockGas);
             TemplateVar.set(template,'gasPrice', data.gasPrice);
 
@@ -62,7 +62,7 @@ Template['views_wethToeth'].helpers({
 
         let result = [];
         _.each(TemplateVar.get('storemanGroup'), function (value, index) {
-            if (value.ethAddress === TemplateVar.get('to')) {
+            if (value.ethAddress === TemplateVar.get('storeman')) {
                 let inboundQuota = web3.fromWei(value.inboundQuota, 'ether');
                 let quota = web3.fromWei(value.quota, 'ether');
                 let deposit = web3.fromWei(value.deposit, 'ether');
@@ -145,6 +145,14 @@ Template['views_wethToeth'].events({
         var gasPrice = TemplateVar.get('gasPrice').toString(),
             estimatedGas = TemplateVar.get('estimatedGas').toString();
 
+        // console.log('storeman', storeman);
+        if(!storeman) {
+            return GlobalNotification.warning({
+                content: 'no storeman',
+                duration: 2
+            });
+        }
+
         // wan address
         // console.log('to', to);
         if(!to) {
@@ -188,9 +196,9 @@ Template['views_wethToeth'].events({
 
                 try {
                     sendLockTransData = await Helpers.promisefy(
-                        mist.ETH2WETH().sendLockTrans,
+                        mist.WETH2ETH().sendLockTrans,
                         [trans, password_input, getLockTransData.secretX],
-                        mist.ETH2WETH()
+                        mist.WETH2ETH()
                     );
 
                     // console.log('sendLockTransData result', sendLockTransData);

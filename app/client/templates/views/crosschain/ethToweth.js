@@ -23,19 +23,20 @@ Template['views_ethToweth'].onCreated(function(){
         if (err) {
             TemplateVar.set(template,'storemanGroup', []);
         } else {
-            // console.log(data);
-            TemplateVar.set(template,'storeman',data[0].ethAddress);
-            TemplateVar.set(template,'storemanGroup',data);
+            // console.log('storemanGroup', data);
+            if (data.length > 0) {
+                TemplateVar.set(template,'storeman',data[0].ethAddress);
+                TemplateVar.set(template,'storemanGroup',data);
+            }
         }
     });
 
-    mist.ETH2WETH().getGasPrice(function (err,data) {
+    mist.ETH2WETH().getGasPrice('ETH', function (err,data) {
         if (err) {
-
             TemplateVar.set(template,'gasEstimate', {});
         } else {
             // console.log(data.LockGas, data.RefundGas, data.RevokeGas, data.gasPrice);
-            Session.set('crosschainGas', data);
+            // Session.set('crosschainGas', data);
             TemplateVar.set(template,'estimatedGas', data.LockGas);
             TemplateVar.set(template,'gasPrice', data.gasPrice);
 
@@ -60,9 +61,10 @@ Template['views_ethToweth'].helpers({
     'Deposit': function () {
 
         let result = [];
+
         if (TemplateVar.get('storemanGroup')) {
             _.each(TemplateVar.get('storemanGroup'), function (value, index) {
-                if (value.ethAddress === TemplateVar.get('to')) {
+                if (value.ethAddress === TemplateVar.get('storeman')) {
                     let inboundQuota = web3.fromWei(value.inboundQuota, 'ether');
                     let quota = web3.fromWei(value.quota, 'ether');
                     let deposit = web3.fromWei(value.deposit, 'ether');
@@ -71,6 +73,7 @@ Template['views_ethToweth'].helpers({
             });
         }
 
+        // console.log('result: ', result);
         return result;
     },
 
@@ -90,7 +93,7 @@ Template['views_ethToweth'].helpers({
 
 Template['views_ethToweth'].events({
 
-    'change .input-amount': function(event){
+    'keyup input[name="amount"], change input[name="amount"], input input[name="amount"]': function(event){
         event.preventDefault();
 
         var amount = new BigNumber(0);
@@ -145,6 +148,20 @@ Template['views_ethToweth'].events({
 
         var gasPrice = TemplateVar.get('gasPrice').toString(),
             estimatedGas = TemplateVar.get('estimatedGas').toString();
+
+        if(new BigNumber(fee, 10).gt(new BigNumber(Session.get('ethBalance')[from], 10)))
+            return GlobalNotification.warning({
+                content: 'i18n:wallet.send.error.notEnoughFunds',
+                duration: 2
+            });
+
+        // console.log('storeman', storeman);
+        if(!storeman) {
+            return GlobalNotification.warning({
+                content: 'no storeman',
+                duration: 2
+            });
+        }
 
         // wan address
         // console.log('to', to);
