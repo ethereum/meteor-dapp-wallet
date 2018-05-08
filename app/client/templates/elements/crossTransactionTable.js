@@ -106,7 +106,7 @@ Template['elements_cross_transactions_table'].events({
         // console.log('crosschainList: ', TemplateVar.get('crosschainList')[id]);
         var show_data = TemplateVar.get('crosschainList')[id];
 
-        console.log('show_data: ', show_data.status);
+        // console.log('show_data: ', show_data.status);
 
         if (show_data.status === 'waitingX') {
             var trans = {
