@@ -46,11 +46,11 @@ Template['views_crosschain'].onCreated(async function () {
 });
 
 Template['views_crosschain'].onDestroyed(function () {
-    var template = this;
+    let template = this;
 });
 
 Template['views_crosschain'].onRendered(function(){
-    var template = this;
+    let template = this;
 
 });
 
@@ -79,10 +79,10 @@ Template['views_crosschain'].events({
 
     'click .edit-icon': function (e) {
 
-        var edit = document.getElementById('edit-name');
+        let edit = document.getElementById('edit-name');
         $(edit).attr('contenteditable','true');
 
-        var text = edit.innerHTML;
+        let text = edit.innerHTML;
         edit.focus();
         edit.value = text;
     },
@@ -106,10 +106,10 @@ Template['views_crosschain'].events({
      */
     'blur .edit-name, keyup .edit-name': function(e){
 
-        var $el = $(e.currentTarget);
+        let $el = $(e.currentTarget);
 
         if(!e.keyCode || e.keyCode === 13) {
-            var text = $el.text();
+            let text = $el.text();
 
             if(_.isEmpty(text)) {
                 text = TAPi18n.__('wallet.accounts.defaultName');

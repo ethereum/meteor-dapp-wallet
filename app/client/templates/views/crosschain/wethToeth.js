@@ -24,8 +24,8 @@ Template['views_wethToeth'].onCreated(async function(){
         if (err) {
             TemplateVar.set(template,'storemanGroup', []);
         } else {
-            // console.log(data);
-            TemplateVar.set(template,'storeman',data[0].ethAddress);
+            // console.log('WETH2ETH storeman', data);
+            TemplateVar.set(template,'storeman',data[0].wanAddress);
             TemplateVar.set(template,'storemanGroup',data);
         }
     });
@@ -36,7 +36,6 @@ Template['views_wethToeth'].onCreated(async function(){
             TemplateVar.set(template,'gasEstimate', {});
         } else {
             // console.log(data.LockGas, data.RefundGas, data.RevokeGas, data.gasPrice);
-            // Session.set('crosschainGas', data);
             TemplateVar.set(template,'estimatedGas', data.LockGas);
             TemplateVar.set(template,'gasPrice', data.gasPrice);
 
@@ -62,7 +61,7 @@ Template['views_wethToeth'].helpers({
 
         let result = [];
         _.each(TemplateVar.get('storemanGroup'), function (value, index) {
-            if (value.ethAddress === TemplateVar.get('storeman')) {
+            if (value.wanAddress === TemplateVar.get('storeman')) {
                 let inboundQuota = web3.fromWei(value.inboundQuota, 'ether');
                 let quota = web3.fromWei(value.quota, 'ether');
                 let deposit = web3.fromWei(value.deposit, 'ether');

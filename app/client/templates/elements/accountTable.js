@@ -14,7 +14,7 @@ Template['elements_account_table'].onCreated(function () {
             Session.set('ethBalance', result);
         });
 
-    }, 2000);
+    }, 10000);
 
 
 });
@@ -43,6 +43,8 @@ Template['elements_account_table'].helpers({
                 result.push({name: name, address: index, balance: balance})
             });
         }
+
+        // console.log('ethList: ', result);
 
         Session.set('ethList', result);
 

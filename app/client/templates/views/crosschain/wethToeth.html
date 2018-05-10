@@ -34,8 +34,8 @@
                         <div class="dapp-select-account send-from">
                             <select class="send-from" id="toweth-storeman" style="background-color: #f7f8fc;border: solid 0px #f7f8fc; padding-left: 10px;">
                                 {{#each TemplateVar.get 'storemanGroup'}}
-                                    <option value="{{ethAddress}}">
-                                        {{ethAddress}}
+                                    <option value="{{wanAddress}}">
+                                        {{wanAddress}}
                                     </option>
                                 {{/each}}
                             </select>
@@ -65,8 +65,8 @@
                             <div class="dapp-select-gas-price">
                                 <span>Deposit: <span>{{deposit}}</span> WAN</span>
                                 <input type="range" disabled="true" name="deposit" min="0" max="{{quota}}" step="1" value={{done}}>
-                                <span style="text-transform: capitalize;">Balance: <span>{{inboundQuota}}</span> ETH</span>
-                                <span style="text-transform: capitalize;">Cap: <span>{{quota}}</span> ETH</span>
+                                <span style="text-transform: capitalize; position: initial;">Balance: <span>{{inboundQuota}}</span> ETH</span>
+                                <span style="text-transform: capitalize; position: initial; float: right;">Cap: <span>{{quota}}</span> ETH</span>
                             </div>
                         {{/each}}
 

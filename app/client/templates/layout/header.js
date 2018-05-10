@@ -146,6 +146,9 @@ Template['layout_header'].events({
                 alert("create account in mist");
             }
         }
+    },
+    'click .Crosschain': function (e) {
+        Session.set('clickButton', 1);
     }
 });
 

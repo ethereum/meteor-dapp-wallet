@@ -283,60 +283,6 @@ Template['views_ethsend'].events({
                         duration: 2
                     });
 
-                // The function to send the transaction
-                var sendTransaction = function(estimatedGas){
-
-                    // show loading
-                    TemplateVar.set(template, 'sending', true);
-
-                    // use gas set in the input field
-                    estimatedGas = estimatedGas || Number($('.send-transaction-info input.gas').val());
-                    console.log('Finally send choose gas', estimatedGas);
-
-                    // console.log('Gas Price: '+ gasPrice);
-                    var txArgs = {
-                        from: address,
-                        to: to,
-                        data: '',
-                        value: amount,
-                        gasPrice: gasPrice,
-                        gas: estimatedGas,
-                        isWaddress: false
-                    };
-
-                    mist.ETH2WETH().sendRawTrans(txArgs,'ETH',function (err,data) {
-                        console.log("=========sendRawTrans==========");
-                        console.log(err);
-                        console.log(data);
-
-                        TemplateVar.set(template, 'sending', false);
-
-                        if (!error) {
-
-                            // data = "";
-                            // value = amount;
-                            // addTransactionAfterSend(txHash, value, address, to, gasPrice, estimatedGas, data);
-                            //
-                            // localStorage.setItem('contractSource', Helpers.getDefaultContractExample());
-                            // localStorage.setItem('compiledContracts', null);
-                            // localStorage.setItem('selectedContract', null);
-
-                            FlowRouter.go('/account/' + address);
-                        } else {
-                            // EthElements.Modal.hide();
-                            console.log('err: ', error.message);
-
-                            GlobalNotification.error({
-                                content: error.message,
-                                duration: 8
-                            });
-                        }
-
-                    });
-
-
-                };
-
                 EthElements.Modal.question({
                     template: 'views_modals_sendEthTransactionInfo',
                     data: {
@@ -346,10 +292,8 @@ Template['views_ethsend'].events({
                         gasPrice: gasPrice,
                         estimatedGas: estimatedGas,
                         estimatedGasPlusAddition: estimatedGas, // increase the provided gas by 100k
-                        data: ""
+                        data: "",
                     },
-                    ok: sendTransaction,
-                    cancel: true
                 },{
                     class: 'send-transaction-info'
                 });

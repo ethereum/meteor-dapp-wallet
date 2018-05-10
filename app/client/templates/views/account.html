@@ -21,8 +21,8 @@
                             {{#if ens}}
                                 <span>{{displayName.substr 0 26}}</span>
                             {{else}}
-                                <p style="min-height: 49px;"><em class="edit-name" id="edit-name">{{displayName.substr 0 26}}</em>
-                                    <img class="wanchain-edit edit-icon"/>
+                                <p style="margin: 0 20px;"><em class="edit-name" id="edit-name">{{displayName.substr 0 26}}</em>
+                                    <img class="wanchain-edit edit-icon" style="position: inherit;"/>
 
                                     {{#unless isWaddress}}
                                         <div class="ledger-account" style="top: 67px;margin-left: 26px;">
@@ -50,7 +50,7 @@
                         </p>
 
                         <div class="clear"></div>
-                        <div class="viwes-account-nav">
+                        <div class="viwes-account-nav" style="top: 20px;">
                             <p style="position: absolute;left: -100px;">
                                 {{#if hrefType}}
                                     <a  href="{{pathFor route='sendTo' address=(toChecksumAddress address)}}" title="{{toChecksumAddress address}}">

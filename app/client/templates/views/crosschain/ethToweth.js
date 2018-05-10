@@ -14,7 +14,10 @@
 Template['views_ethToweth'].onCreated(function(){
     var template = this;
 
-    TemplateVar.set(template,'from',Session.get('ethList')[0].address);
+    if (Session.get('ethList')[0]) {
+        TemplateVar.set(template,'from',Session.get('ethList')[0].address);
+    }
+
     TemplateVar.set(template, 'amount', 0);
     TemplateVar.set(template, 'feeMultiplicator', 0);
     TemplateVar.set(template, 'options', false);
@@ -23,8 +26,8 @@ Template['views_ethToweth'].onCreated(function(){
         if (err) {
             TemplateVar.set(template,'storemanGroup', []);
         } else {
-            // console.log('storemanGroup', data);
             if (data.length > 0) {
+                // console.log('ETH2WETH storeman', data);
                 TemplateVar.set(template,'storeman',data[0].ethAddress);
                 TemplateVar.set(template,'storemanGroup',data);
             }
@@ -36,7 +39,6 @@ Template['views_ethToweth'].onCreated(function(){
             TemplateVar.set(template,'gasEstimate', {});
         } else {
             // console.log(data.LockGas, data.RefundGas, data.RevokeGas, data.gasPrice);
-            // Session.set('crosschainGas', data);
             TemplateVar.set(template,'estimatedGas', data.LockGas);
             TemplateVar.set(template,'gasPrice', data.gasPrice);
 
@@ -97,7 +99,11 @@ Template['views_ethToweth'].events({
         event.preventDefault();
 
         var amount = new BigNumber(0);
-        if (event.target.value) {
+
+        var regPos = /^\d+(\.\d+)?$/; //非负浮点数
+        var regNeg = /^(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))$/; //负浮点数
+
+        if (event.target.value && (regPos.test(event.target.value) || regNeg.test(event.target.value)) ) {
             amount = new BigNumber(event.target.value)
         }
 
@@ -149,12 +155,6 @@ Template['views_ethToweth'].events({
         var gasPrice = TemplateVar.get('gasPrice').toString(),
             estimatedGas = TemplateVar.get('estimatedGas').toString();
 
-        if(new BigNumber(fee, 10).gt(new BigNumber(Session.get('ethBalance')[from], 10)))
-            return GlobalNotification.warning({
-                content: 'i18n:wallet.send.error.notEnoughFunds',
-                duration: 2
-            });
-
         // console.log('storeman', storeman);
         if(!storeman) {
             return GlobalNotification.warning({
@@ -179,6 +179,20 @@ Template['views_ethToweth'].events({
             });
         }
 
+
+        if (!Session.get('ethBalance'))
+            return;
+
+        let ethBalance = EthTools.formatBalance(Session.get('ethBalance')[from.toLowerCase()], '0,0.00[0000000000000000]', 'ether');
+        let total = TemplateVar.get('total');
+
+        if(total.gt(new BigNumber(ethBalance, 10)))
+            return GlobalNotification.warning({
+                content: 'i18n:wallet.send.error.notEnoughFunds',
+                duration: 2
+            });
+
+
         var trans = {
           from: from, amount: amount.toString(10), storemanGroup: storeman,
             cross: to, gas: estimatedGas, gasPrice: gasPrice
@@ -186,52 +200,8 @@ Template['views_ethToweth'].events({
 
         // console.log('trans: ', trans);
         try {
-
-            let sendLockTransData = '';
             let getLockTransData = await Helpers.promisefy(mist.ETH2WETH().getLockTransData, [trans], mist.ETH2WETH());
-
-            // console.log('getLockTransData: ', getLockTransData.lockTransData);
-
-            let sendTransaction = async function () {
-                let password_input = document.getElementById('crosschain-psd').value;
-
-                // console.log('password: ', password_input);
-
-                if(!password_input) {
-                    return GlobalNotification.warning({
-                        content: 'the password empty',
-                        duration: 2
-                    });
-                }
-
-                try {
-                    sendLockTransData = await Helpers.promisefy(
-                        mist.ETH2WETH().sendLockTrans,
-                        [trans, password_input, getLockTransData.secretX],
-                        mist.ETH2WETH()
-                    );
-
-                    // console.log('sendLockTransData result', sendLockTransData);
-                    Session.set('clickButton', 1);
-
-                } catch (error) {
-                    // console.log('sendLockTransData error', error);
-
-                    if (error && error.error) {
-                        return GlobalNotification.warning({
-                            content: error.error,
-                            duration: 2
-                        });
-                    } else {
-                        return GlobalNotification.warning({
-                            content: error,
-                            duration: 2
-                        });
-                    }
-
-                }
-            };
-
+            // console.log('getLockTransData: ', getLockTransData);
 
             EthElements.Modal.question({
                 template: 'views_modals_sendcrosschainTransactionInfo',
@@ -242,15 +212,16 @@ Template['views_ethToweth'].events({
                     gasPrice: gasPrice,
                     estimatedGas: estimatedGas,
                     fee: fee,
-                    data: getLockTransData.lockTransData
+                    data: getLockTransData.lockTransData,
+                    trans: trans,
+                    secretX: getLockTransData.secretX
                 },
-                ok: sendTransaction,
-                cancel: true
             },{
                 class: 'send-transaction-info'
             });
 
         } catch (error) {
+            console.log(error);
             return GlobalNotification.warning({
                 content: 'get data error',
                 duration: 2

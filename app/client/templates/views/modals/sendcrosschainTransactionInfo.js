@@ -1,43 +1,42 @@
-Template['views_modals_sendEthTransactionInfo'].onCreated(function(){
+Template['views_modals_sendcrosschainTransactionInfo'].onCreated(function(){
     var template = this;
     TemplateVar.set(template, 'isButton', false);
 });
 
-Template['views_modals_sendEthTransactionInfo'].events({
+
+Template['views_modals_sendcrosschainTransactionInfo'].events({
     'click .cancel-cross': function () {
         EthElements.Modal.hide();
     },
     'click .ok-cross': async function () {
+        // console.log('data trans: ', this.trans);
+        let password_input = document.getElementById('crosschain-psd').value;
 
-        // use gas set in the input field
-        estimatedGas = this.gas || Number($('.send-transaction-info input.gas').val());
-        console.log('Finally send choose gas', estimatedGas);
+        // console.log('password: ', password_input);
 
-        // console.log('Gas Price: '+ gasPrice);
-        var txArgs = {
-            from: this.from,
-            to: this.to,
-            value: this.amount,
-            gasPrice: this.gasPrice,
-            gas: estimatedGas
-        };
+        if(!password_input) {
+            EthElements.Modal.hide();
+            return GlobalNotification.warning({
+                content: 'the password empty',
+                duration: 2
+            });
+        }
 
         try {
-
             TemplateVar.set('isButton', true);
 
-            sendRawTrans = await Helpers.promisefy(
-                mist.ETH2WETH().sendRawTrans,
-                [txArgs, password_input, 'ETH'],
+            sendLockTransData = await Helpers.promisefy(
+                mist.ETH2WETH().sendLockTrans,
+                [this.trans, password_input, this.secretX],
                 mist.ETH2WETH()
             );
 
             EthElements.Modal.hide();
+
             Session.set('clickButton', 1);
 
         } catch (error) {
             // console.log('sendLockTransData error', error);
-
             EthElements.Modal.hide();
 
             if (error && error.error) {

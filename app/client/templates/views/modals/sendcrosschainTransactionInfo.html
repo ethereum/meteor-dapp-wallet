@@ -24,5 +24,15 @@
     <pre>{{data}}</pre>
     </p>
 
-    <input type="password" id="crosschain-psd" placeholder="{{i18n 'mist.popupWindows.sendTransactionConfirmation.enterPassword'}}" style="width: 100%;"/>
+    <input type="password" id="crosschain-psd"
+           disabled="{{TemplateVar.get "isButton"}}"
+           placeholder="enter password" style="width: 100%;"/>
+
+    <div class="dapp-modal-buttons">
+        <button class="cancel-cross" disabled="{{TemplateVar.get "isButton"}}">CANCEL</button>
+        <button class="ok-cross dapp-primary-button"
+                disabled="{{TemplateVar.get "isButton"}}"
+        >OK</button>
+    </div>
+
 </template>
