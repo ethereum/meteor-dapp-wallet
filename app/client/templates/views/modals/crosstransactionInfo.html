@@ -1,0 +1,90 @@
+<template name="views_modals_crosstransactionInfo">
+    {{#with transaction}}
+        <h1 style="font-size: 16px;font-weight: 600;margin-bottom: 10px;">crosschain transaction info</h1>
+
+        <table class="dapp-zebra">
+            <tbody>
+                <tr>
+                    <td>HashX</td>
+                    <td>{{HashX}}</td>
+                </tr>
+                <tr>
+                    <td>Chain</td>
+                    <td>{{chain}}</td>
+                </tr>
+                <tr>
+                    <td>crossAdress</td>
+                    <td>{{crossAdress}}</td>
+                </tr>
+                <tr>
+                    <td>From</td>
+                    <td>{{from}}</td>
+                </tr>
+                <tr>
+                    <td>lockTxHash</td>
+                    <td>{{lockTxHash}}</td>
+                </tr>
+                {{#if refundTxHash}}
+                    <tr>
+                        <td>refundTxHash</td>
+                        <td>{{refundTxHash}}</td>
+                    </tr>
+                {{/if}}
+
+                {{#if revokeTxHash}}
+                    <tr>
+                        <td>revokeTxHash</td>
+                        <td>{{revokeTxHash}}</td>
+                    </tr>
+                {{/if}}
+
+                <tr>
+                    <td>Storeman</td>
+                    <td>{{storeman}}</td>
+                </tr>
+
+                <tr>
+                    <td>Value</td>
+                    <td>{{value}} {{chain}}</td>
+                </tr>
+
+                <tr>
+                    <td>X</td>
+                    <td>{{x}}</td>
+                </tr>
+
+                <!--{{#if blockHash}}-->
+                    <!--<tr>-->
+                        <!--<td>{{i18n "wallet.transactions.block"}}</td>-->
+                        <!--<td>-->
+                           <!--{{#if $eq ($.Session.get "network") "main"}}-->
+                               <!--<a href="http://explorer.wanchain.org/block/{{blockNumber}}" title="{{blockNumber}}" target="_blank" class="dapp-shorten-text">-->
+                                   <!--{{blockNumber}}-->
+                                   <!--<br>-->
+                                   <!--{{blockHash.substr 0 40}}...-->
+                               <!--</a>-->
+                            <!--{{else}}-->
+                                <!--{{#if $eq ($.Session.get "network") "test"}}-->
+                                    <!--<a href="http://explorer.wanchain.org/block/{{blockNumber}}" title="{{blockNumber}}" target="_blank" class="dapp-shorten-text">-->
+                                        <!--{{blockNumber}}-->
+                                        <!--<br>-->
+                                        <!--{{blockHash.substr 0 40}}...-->
+                                    <!--</a>-->
+                                <!--{{else}}-->
+                                    <!--{{blockNumber}}-->
+                                    <!--<br>-->
+                                    <!--{{blockHash.substr 0 40}}...-->
+                                <!--{{/if}}-->
+                            <!--{{/if}}-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                <!--{{/if}}-->
+
+               <tr>
+                   <td>Date</td>
+                   <td>{{time}}</td>
+               </tr>
+            </tbody>
+        </table>
+    {{/with}}
+</template>

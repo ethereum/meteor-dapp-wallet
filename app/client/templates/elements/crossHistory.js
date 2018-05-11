@@ -82,6 +82,32 @@ Template['elements_cross_transactions_table'].helpers({
 });
 Template['elements_cross_transactions_table'].events({
 
+    'click .show-detail': function (e) {
+        let id = e.target.id;
+
+        let show_data = TemplateVar.get('crosschainList')[id];
+        // console.log('show_data: ', show_data);
+
+        EthElements.Modal.show({
+            template: 'views_modals_crosstransactionInfo',
+            data: {
+                HashX: show_data.HashX,
+                chain: show_data.chain,
+                crossAdress: show_data.crossAdress,
+                from: show_data.from,
+                lockTxHash: show_data.lockTxHash,
+                refundTxHash: show_data.refundTxHash,
+                revokeTxHash: show_data.revokeTxHash,
+                storeman: show_data.storeman,
+                time: show_data.time,
+                to: show_data.to,
+                value: show_data.value,
+                x: show_data.x
+            }
+        });
+
+    },
+
     'click .crosschain-list': async function (e) {
         let wanAccounts = TemplateVar.get('wanAccounts');
         let id = e.target.id;
@@ -164,7 +190,7 @@ Template['elements_cross_transactions_table'].events({
                 duration: 2
             });
 
-        console.log('transData: ', transData);
+        // console.log('transData: ', transData);
 
         EthElements.Modal.question({
             template: 'views_modals_sendcrosschainReleaseX',

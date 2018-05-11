@@ -18,13 +18,13 @@
                 <td colspan="5" class="crosschain-list" id="{{@index}}">
                     {{state}}
                 </td>
-                <td colspan="5" >{{time}}</td>
-                <td colspan="5" >{{time}}</td>
-                <td colspan="5" >{{from.substr 0 20}}...</td>
-                <td colspan="5" >{{storeman.substr 0 20}}...</td>
-                <td colspan="5" >{{crossAdress.substr 0 20}}...</td>
-                <td colspan="5" >{{status}}</td>
-                <td colspan="5" >{{value}} ETH</td>
+                <td colspan="5" class="show-detail" id="{{@index}}">{{time}}</td>
+                <td colspan="5" class="show-detail" id="{{@index}}">{{time}}</td>
+                <td colspan="5" class="show-detail" id="{{@index}}">{{from.substr 0 20}}...</td>
+                <td colspan="5" class="show-detail" id="{{@index}}">{{storeman.substr 0 20}}...</td>
+                <td colspan="5" class="show-detail" id="{{@index}}">{{crossAdress.substr 0 20}}...</td>
+                <td colspan="5" class="show-detail" id="{{@index}}">{{status}}</td>
+                <td colspan="5" class="show-detail" id="{{@index}}">{{value}} ETH</td>
             </tr>
         {{/each}}
         </tbody>
