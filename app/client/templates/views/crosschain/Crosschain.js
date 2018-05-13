@@ -26,6 +26,8 @@ Template['views_crosschain'].onCreated(async function () {
             mist.WETH2ETH()
         );
 
+        Session.set('wanAddressList', wanAddressList);
+
         TemplateVar.set(template,'wanAddressList',wanAddressList);
 
     } catch (error) {

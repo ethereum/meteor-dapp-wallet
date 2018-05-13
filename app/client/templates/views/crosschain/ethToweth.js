@@ -204,7 +204,7 @@ Template['views_ethToweth'].events({
             // console.log('getLockTransData: ', getLockTransData);
 
             EthElements.Modal.question({
-                template: 'views_modals_sendcrosschainTransactionInfo',
+                template: 'views_modals_unlockTransactionInfo',
                 data: {
                     from: from,
                     to: to,
@@ -214,7 +214,8 @@ Template['views_ethToweth'].events({
                     fee: fee,
                     data: getLockTransData.lockTransData,
                     trans: trans,
-                    secretX: getLockTransData.secretX
+                    secretX: getLockTransData.secretX,
+                    chain: 'ETH'
                 },
             },{
                 class: 'send-transaction-info'

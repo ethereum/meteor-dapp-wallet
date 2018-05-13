@@ -14,7 +14,9 @@
 Template['views_wethToeth'].onCreated(async function(){
     var template = this;
 
-    TemplateVar.set(template,'from',Session.get('wanList')[0].address);
+    if (Session.get('wanList')[0]) {
+        TemplateVar.set(template,'from',Session.get('wanList')[0].address);
+    }
 
     TemplateVar.set(template, 'amount', 0);
     TemplateVar.set(template, 'feeMultiplicator', 0);
@@ -30,11 +32,12 @@ Template['views_wethToeth'].onCreated(async function(){
         }
     });
 
-    mist.WETH2ETH().getGasPrice(function (err,data) {
+    mist.WETH2ETH().getGasPrice('WAN', function (err,data) {
         if (err) {
 
             TemplateVar.set(template,'gasEstimate', {});
         } else {
+            console.log('WAN gasPrice', data);
             // console.log(data.LockGas, data.RefundGas, data.RevokeGas, data.gasPrice);
             TemplateVar.set(template,'estimatedGas', data.LockGas);
             TemplateVar.set(template,'gasPrice', data.gasPrice);
@@ -44,8 +47,6 @@ Template['views_wethToeth'].onCreated(async function(){
             // console.log('formatBalance', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
 
             TemplateVar.set(template, 'fee', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
-
-            TemplateVar.set(template, 'total', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
         }
     });
 
@@ -88,16 +89,19 @@ Template['views_wethToeth'].helpers({
 
 Template['views_wethToeth'].events({
 
-    'change .input-amount': function(event){
+    'keyup input[name="amount"], change input[name="amount"], input input[name="amount"]': function(event){
         event.preventDefault();
 
         var amount = new BigNumber(0);
-        if (event.target.value) {
+
+        var regPos = /^\d+(\.\d+)?$/; //非负浮点数
+        var regNeg = /^(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))$/; //负浮点数
+
+        if (event.target.value && (regPos.test(event.target.value) || regNeg.test(event.target.value)) ) {
             amount = new BigNumber(event.target.value)
         }
 
         TemplateVar.set('amount', amount);
-        TemplateVar.set('total', amount.add(new BigNumber(TemplateVar.get('fee'))));
     },
 
     'change #toweth-from': function (event) {
@@ -168,6 +172,17 @@ Template['views_wethToeth'].events({
             });
         }
 
+        if (!Session.get('wanBalance'))
+            return;
+
+        let wanBalance = EthTools.formatBalance(Session.get('wanBalance')[from.toLowerCase()], '0,0.00[0000000000000000]', 'ether');
+
+        if(amount.gt(new BigNumber(wanBalance, 10)))
+            return GlobalNotification.warning({
+                content: 'i18n:wallet.send.error.notEnoughFunds',
+                duration: 2
+            });
+
         var trans = {
             from: from, amount: amount.toString(10), storemanGroup: storeman,
             cross: to, gas: estimatedGas, gasPrice: gasPrice
@@ -175,55 +190,11 @@ Template['views_wethToeth'].events({
 
         // console.log('trans: ', trans);
         try {
-
-            let sendLockTransData = '';
-            let getLockTransData = await Helpers.promisefy(mist.ETH2WETH().getLockTransData, [trans], mist.ETH2WETH());
-
-            // console.log('getLockTransData: ', getLockTransData.lockTransData);
-
-            let sendTransaction = async function () {
-                let password_input = document.getElementById('crosschain-psd').value;
-
-                // console.log('password: ', password_input);
-
-                if(!password_input) {
-                    return GlobalNotification.warning({
-                        content: 'the password empty',
-                        duration: 2
-                    });
-                }
-
-                try {
-                    sendLockTransData = await Helpers.promisefy(
-                        mist.WETH2ETH().sendLockTrans,
-                        [trans, password_input, getLockTransData.secretX],
-                        mist.WETH2ETH()
-                    );
-
-                    // console.log('sendLockTransData result', sendLockTransData);
-                    Session.set('clickButton', 1);
-
-                } catch (error) {
-                    // console.log('sendLockTransData error', error);
-
-                    if (error && error.error) {
-                        return GlobalNotification.warning({
-                            content: error.error,
-                            duration: 2
-                        });
-                    } else {
-                        return GlobalNotification.warning({
-                            content: error,
-                            duration: 2
-                        });
-                    }
-
-                }
-            };
-
+            let getLockTransData = await Helpers.promisefy(mist.WETH2ETH().getLockTransData, [trans], mist.WETH2ETH());
+            // console.log('getLockTransData: ', getLockTransData);
 
             EthElements.Modal.question({
-                template: 'views_modals_sendcrosschainTransactionInfo',
+                template: 'views_modals_unlockTransactionInfo',
                 data: {
                     from: from,
                     to: to,
@@ -231,15 +202,17 @@ Template['views_wethToeth'].events({
                     gasPrice: gasPrice,
                     estimatedGas: estimatedGas,
                     fee: fee,
-                    data: getLockTransData.lockTransData
+                    data: getLockTransData.lockTransData,
+                    trans: trans,
+                    secretX: getLockTransData.secretX,
+                    chain: 'WAN'
                 },
-                ok: sendTransaction,
-                cancel: true
             },{
                 class: 'send-transaction-info'
             });
 
         } catch (error) {
+            console.log(error);
             return GlobalNotification.warning({
                 content: 'get data error',
                 duration: 2

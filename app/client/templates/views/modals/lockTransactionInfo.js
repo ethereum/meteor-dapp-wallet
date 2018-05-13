@@ -1,10 +1,10 @@
-Template['views_modals_sendcrosschainTransactionInfo'].onCreated(function(){
+Template['views_modals_unlockTransactionInfo'].onCreated(function(){
     var template = this;
     TemplateVar.set(template, 'isButton', false);
 });
 
 
-Template['views_modals_sendcrosschainTransactionInfo'].events({
+Template['views_modals_unlockTransactionInfo'].events({
     'click .cancel-cross': function () {
         EthElements.Modal.hide();
     },
@@ -25,11 +25,21 @@ Template['views_modals_sendcrosschainTransactionInfo'].events({
         try {
             TemplateVar.set('isButton', true);
 
-            sendLockTransData = await Helpers.promisefy(
-                mist.ETH2WETH().sendLockTrans,
-                [this.trans, password_input, this.secretX],
-                mist.ETH2WETH()
-            );
+            if (this.chain === 'ETH') {
+                console.log('1 chain: ', this.chain);
+                await Helpers.promisefy(
+                    mist.ETH2WETH().sendLockTrans,
+                    [this.trans, password_input, this.secretX],
+                    mist.ETH2WETH()
+                );
+            } else {
+                console.log('2 chain: ', this.chain);
+                sendLockTransData = await Helpers.promisefy(
+                    mist.WETH2ETH().sendLockTrans,
+                    [this.trans, password_input, this.secretX],
+                    mist.WETH2ETH()
+                );
+            }
 
             EthElements.Modal.hide();
 

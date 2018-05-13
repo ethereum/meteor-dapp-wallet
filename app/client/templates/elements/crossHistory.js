@@ -13,9 +13,14 @@ Template['elements_cross_transactions_table'].onCreated(function(){
         TemplateVar.set(template, 'crosschainList', result);
     });
 
-    mist.WETH2ETH().getMultiBalances(this.data.wanAddressList, (err, result) => {
+    mist.WETH2ETH().getMultiTokenBalance(this.data.wanAddressList, (err, result) => {
         // console.log('getMultiBalances', result);
         TemplateVar.set(template, 'wanAccounts', result);
+    });
+
+    mist.WETH2ETH().getMultiBalances(this.data.wanAddressList, (err, result) => {
+        // console.log('getMultiBalances', result);
+        Session.set('wanBalance', result);
     });
 
     const self = this;
@@ -61,6 +66,13 @@ Template['elements_cross_transactions_table'].helpers({
 
             _.each(TemplateVar.get('crosschainList'), function (value, index) {
                 // console.log('this.data: ', value);
+
+                if (value.chain === 'ETH') {
+                    value.text = '(ETH=>WETH)';
+                } else if (value.chain === 'WAN') {
+                    value.text = '(WETH=>ETH)';
+                }
+
                 if (value.status === 'sentHashPending' || value.status === 'sentHashConfirming' ||
                     value.status === 'waitingCross' || value.status === 'waitingCrossConfirming') {
                     value.state = "";
