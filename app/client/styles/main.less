@@ -151,6 +151,7 @@ body {
   background-color: @colorWinBackgroundFocus;
   -webkit-app-region: drag; // necessary to drag the wallet window
   .background-image(linear-gradient(to bottom,  @colorWinBackgroundFocus 50%, #ddd9d9 90%));
+  background: #f0f0f0;
 
   &.dapp-small {
     z-index: 30;
@@ -208,13 +209,26 @@ body {
     i {
       font-size: 0.7em;
     }
+  }
+
+  .block-syncing {
+    padding-bottom: 11px;
+    flex: auto;
+    text-align: center;
+    .sync-divider {
+      color: #bbb;
+      padding: 0 2px;
+    }
+    i {
+      padding-right: 2px;
+    }
 
     .private-chain {
       color: @colorWhite;
       background-color: @colorError;
-      padding: 1px 5px 2px;
-      border-radius: 2px;
-      top: 1px;
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-size: 90%;
     }
   }
 
@@ -267,6 +281,11 @@ body {
   .display(flex);
   flex-flow: row wrap;
 
+  h1 {
+    font-style: normal;
+    font-weight: 500;
+  }
+
   .dapp-sticky-bar {
     position: fixed;
     top: floor(@gridHeight * -1);
@@ -308,6 +327,7 @@ body {
       top: 7px;
       font-size: 1.2em;
       font-weight: 400;
+      color: #696969;
       span {
         font-size: 0.75em;
         font-weight: 600;
@@ -476,6 +496,14 @@ body {
 .dapp-actionbar nav ul li a,
 .dapp-actionbar nav ul li a:visited {
   color: @colorLink;
+}
+
+.dapp-header nav > ul > li.active a,
+.dapp-header nav > ul > li.active button,
+.dapp-header nav > ul > li button.active,
+.dapp-header nav > ul > li a.active {
+  color: #003a54;
+  border-bottom: 8px solid #fff;
 }
 
 .account-send-form {
@@ -855,4 +883,73 @@ body {
   .wallet-balance {
     font-size: 75%;
   }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial,
+    'sans-serif';
+}
+
+.dapp-flex-content {
+  background: #fff;
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 32px;
+}
+
+h2 {
+  padding: 3px 7px;
+  text-transform: capitalize;
+  background: #999;
+  color: #fff;
+  font-weight: 400;
+  border-radius: 1px;
+}
+
+.wallet-box:not(.create) {
+  h3 {
+    margin-top: 5px;
+    color: #333;
+    font-style: normal;
+    span {
+      color: #696969;
+    }
+  }
+  i {
+    font-size: 90%;
+  }
+  .account-balance {
+    line-height: normal;
+  }
+}
+
+.no-txs {
+  background: none;
+  text-transform: none;
+  color: #bbb;
+  font-style: italic;
+}
+
+.no-txs::first-letter {
+  text-transform: uppercase;
+}
+
+.account-info strong {
+  color: #aaa;
+}
+
+table.dapp-zebra tr td:first-of-type {
+  font-weight: 400;
+}
+
+span.address.not-ens-name {
+  font-style: normal;
+  font-weight: 400;
 }
