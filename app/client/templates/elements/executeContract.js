@@ -70,7 +70,7 @@ Template['elements_executeContract'].helpers({
 Template['elements_executeContract'].events({
   /**
     Select a contract function
-    
+
     @event 'change .select-contract-function
     */
   'change .select-contract-function': function(e, template) {
@@ -282,7 +282,7 @@ Template['elements_executeContract_function'].helpers({
 Template['elements_executeContract_function'].events({
   /**
     Set the amount while typing
-    
+
     @event keyup input[name="amount"], change input[name="amount"], input input[name="amount"]
     */
   'keyup input[name="amount"], change input[name="amount"], input input[name="amount"]': function(
@@ -332,12 +332,8 @@ Template['elements_executeContract_function'].events({
       ),
       data = TemplateVar.get('executeData');
 
-    var latestTransaction = Transactions.findOne(
-      {},
-      { sort: { timestamp: -1 } }
-    );
-    if (latestTransaction && latestTransaction.gasPrice)
-      gasPrice = latestTransaction.gasPrice;
+    if (EthBlocks && EthBlocks.latest && EthBlocks.latest.gasPrice)
+      gasPrice = EthBlocks.latest.gasPrice;
 
     if (selectedAccount) {
       console.log('Providing gas: ', estimatedGas, ' + 100000');
