@@ -1,7 +1,8 @@
 <template name="elements_createdContractAt">
     <i class="icon-docs"></i> 
     {{#if contractAddress}}
-        {{i18n "wallet.transactions.types.createdContract.at"}} &nbsp;  
+        {{i18n "wallet.transactions.types.createdContract.at"}}
+        &nbsp;
         {{> elements_account_link address=contractAddress}}
         {{#unless deployedData}}
             <br>
@@ -10,7 +11,10 @@
             </small>
         {{/unless}}
     {{else}}
-    {{i18n "wallet.transactions.types.creatingContract"}} &nbsp; 
-    <span class="address"><span class="dapp-identicon dapp-tiny dapp-icon-loading"></span></span>
+        {{i18n "wallet.transactions.types.creatingContract"}}
+        &nbsp;
+        <span class="address">
+            <span class="dapp-identicon dapp-tiny dapp-icon-loading"></span>
+        </span>
     {{/if}}
 </template>
