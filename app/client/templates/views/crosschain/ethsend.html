@@ -13,24 +13,27 @@
                     <div class="col col-12 mobile-full contBox from">
                         <div class="triangle"></div><strong class="views_send_strong">From</strong>
 
-                        {{> dapp_choiceSimpleAccount accounts=(selectAccount) showAccountTypes=true class='send-from'}}
+                        <div class="dapp-select-account send-from">
+                            <select class="send-from" id="ethNor-from" style="background-color: #f7f8fc;border: solid 0px #f7f8fc; padding-left: 10px;">
+                                {{#each selectAccount}}
+                                    <option value="{{address}}">
+                                        {{name}}
+                                        - {{balance}} eth
+                                    </option>
+                                {{/each}}
+                            </select>
+                            <i class="no-identicon icon-{{TemplateVar.get 'value'}}"></i>
+                        </div>
+
                     </div>
 
                     <!--to-->
                     <div class="col col-12 mobile-full contBox" style="margin-bottom: 0">
-                        {{#unless deployContract}}
-                            <div class="triangle"></div><strong class="views_send_strong">{{i18n 'wallet.send.to'}}</strong>
-                            {{> wan_addrInput placeholder=" Please paste public address here" name="to" autofocus=true class="to"}}
-                        {{/unless}}
+                        <div class="triangle"></div><strong class="views_send_strong">{{i18n 'wallet.send.to'}}</strong>
+                        {{> wan_addrInput placeholder=" Please paste public address here" name="to" autofocus=true class="to toweth-to"}}
                     </div>
 
-                    <!--<div class="dapp-clear-fix"></div>-->
                 </div>
-                {{#with isVulnerable (TemplateVar.getFrom ".dapp-select-account" "value")}}
-                    {{#if vulnerabilities.txorigin}}
-                        {{> elements_vulnerabilities_txorigin}}
-                    {{/if}}
-                {{/with}}
 
                 <!-- amount -->
                 <div class="row clear" style="padding: 0; margin-bottom: 0;">
@@ -38,42 +41,45 @@
                         <div class="triangle"></div><strong class="views_send_strong">{{i18n 'wallet.send.amount'}}</strong>
                         <input type="text" min="0" step="any" name="amount" placeholder="0.0" class="comAmountInp dapp-large" pattern="[0-9\.,]*" style="height: 40px; line-height: 40px; font-size: 14px;  margin-top: 5px; background-color: #f7f8fc;border: solid 0px;" >
                     </div>
-
-                    <!--<div class="dapp-clear-fix"></div>-->
                 </div>
 
                 <!-- transaction fee -->
                 <div class="row clear" style="padding-top: 0;">
-                    <div class="col col-12 mobile-full contBox comBg" style="width:100%;">
-                        {{> modal_transactionFee gas=(TemplateVar.get "estimatedGas") gasPrice=latestBlock.gasPrice option=(TemplateVar.get "sending") name="TRANSACTION FEE" }}
+                    <div class="col col-12 mobile-full contBox">
+                        <strong style="display: block" class="views_send_strong"><div class="triangle"></div>{{i18n 'wallet.send.fee'}}</strong>
+
+                        <div class="dapp-select-gas-price">
+                            <span>{{TemplateVar.get 'fee'}} <span>eth</span></span>
+                            {{#unless TemplateVar.get "sending"}}
+                                <a class="options" style="cursor: pointer">[Advanced options]</a>
+
+                                {{#if TemplateVar.get "options"}}
+                                    <input type="range" name="fee" min="-1" max="5" step="1" value="{{TemplateVar.get 'feeMultiplicator'}}">
+                                    <span style="left: 10px;margin-top: 10px;">{{i18nText 'low'}}</span>
+                                    <span style="right: 10px;margin-top: 10px;">{{i18nText 'high'}}</span>
+                                {{/if}}
+
+                            {{/unless}}
+                        </div>
+
                     </div>
                 </div>
 
                 <!-- Total -->
-                <div class="col col-12 mobile-full contBox send-info comBg" style="padding-left: 0;border-radius: 10px;">
-                    <div class="dapp-select-gas-price" style="margin-top: 25px!important;">
-                        <span class="views_send_strong">TOTAL</span><br>
-                        <span class="amount" style="margin-top:10px;display: inline-block; color:#827a7a;">{{transferBanlance total "0,0.00[0000000000000000] UNIT" "ETHER"}}</span>
+                <!-- a button type="submit" will send the form -->
+                <div class="col col-12 mobile-full contBox send-info" style="padding-left: 0;">
+                    <strong style="display: block" class="views_send_strong"><div class="triangle"></div>Total</strong>
+                    <div class="dapp-select-gas-price">
+                        <span class="amount">{{TemplateVar.get "total"}}<span> eth</span></span>
                     </div>
-
-                    <!--<div class="dapp-clear-fix"></div>-->
                 </div>
 
-
-                <!-- a button type="submit" will send the form -->
                 <div style="width: 100%; display: inline-block; clear: both;">
                     <button type="submit" class="dapp-block-button views_send_button" >
-                        {{#if TemplateVar.get "sending"}}
-                            {{i18n 'buttons.sending'}}
-                        {{else}}
-                            {{#if deployContract}}
-                                {{i18n 'wallet.app.buttons.deploy'}}
-                            {{else}}
-                                {{i18n 'buttons.send'}}<img class="wanchain-send">
-                            {{/if}}
-                        {{/if}}
+                        {{i18n 'buttons.send'}}<img class="wanchain-send">
                     </button>
                 </div>
+
             </form>
         </div>
     </div>

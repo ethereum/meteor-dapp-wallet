@@ -207,8 +207,8 @@ Template['views_ethToweth'].events({
         if (!Session.get('ethBalance'))
             return;
 
-        let ethBalance = EthTools.formatBalance(Session.get('ethBalance')[from.toLowerCase()], '0,0.00[0000000000000000]', 'ether');
-        let total = TemplateVar.get('total');
+        let ethBalance = EthTools.toWei(Session.get('ethBalance')[from.toLowerCase()]);
+        let total = new BigNumber(EthTools.toWei(TemplateVar.get('total')));
 
         if(total.gt(new BigNumber(ethBalance, 10)))
             return GlobalNotification.warning({

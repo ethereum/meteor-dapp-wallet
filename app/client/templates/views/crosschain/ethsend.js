@@ -18,171 +18,74 @@
  */
 var defaultEstimateGas = 50000000;
 
-var checkAddress = function (waddress) {
-    if(!waddress){
-        return;
-    }
-
-    var value = waddress.replace(/[\s\*\(\)\!\?\#\$\%]+/g, '');
-
-    // add 0x
-    if (value.length === 40 && value.indexOf('0x') === -1 && /^[0-9a-f]+$/.test(value.toLowerCase())) {
-        value = '0x' + value;
-    }
-
-    var regex = /^(0x)?[0-9a-fA-F]{40}$/;
-
-    if (regex.test(value.toLowerCase())) {
-        return value
-    }
-
-    return;
-};
-
-
-/**
- Gas estimation callback
- @method estimationCallback
- */
-var estimationCallback = function(e, res){
-    var template = this;
-
-    console.log('Estimated gas: ', res, e);
-
-    if(!e && res) {
-        TemplateVar.set(template, 'estimatedGas', res);
-
-        // show note if its defaultEstimateGas, as the data is not executeable
-        if(res === defaultEstimateGas)
-            TemplateVar.set(template, 'codeNotExecutable', true);
-        else
-            TemplateVar.set(template, 'codeNotExecutable', false);
-    }
-};
-
 
 // Set basic variables
-Template['views_ethsend'].onCreated(function(){
+Template['views_ethsend'].onCreated(async function(){
     var template = this;
 
+    TemplateVar.set(template, 'amount', 0);
+    TemplateVar.set(template, 'feeMultiplicator', 0);
+    TemplateVar.set(template, 'options', false);
 
-    mist.ETH2WETH().getAddressList('ETH',function (err,data) {
-        // console.log(err);
-        // console.log(data);
+    EthElements.Modal.show('views_modals_loading', {closeable: false, class: 'crosschain-loading'});
 
-        if (err) {
-            TemplateVar.set(template,'ethAccounts', []);
-        } else {
-            mist.ETH2WETH().getMultiBalances(data, (err, result) => {
+    await mist.ETH2WETH().getMultiBalances(Session.get('addressList'),function (err,result) {
+        // console.log(result);
+        if (!err) {
+            let result_list = [];
 
-                TemplateVar.set(template,'ethAccounts',result);
-                _.each(result, function (value, index) {
-                    TemplateVar.setTo('select[name="dapp-select-account"].send-from', 'value',index.toLowerCase());
-                    return;
-                });
+            TemplateVar.set(template,'ethBalance',result);
 
+            _.each(result, function (value, index) {
+                const balance =  web3.fromWei(value, 'ether');
+                const name = index.slice(2, 6) + index.slice(38);
+                result_list.push({name: name, address: index, balance: balance})
             });
+
+            TemplateVar.set(template,'ethList',result_list);
+            TemplateVar.set(template,'from',result_list[0].address);
         }
     });
 
-});
+    // eth chain  gas price
+    await mist.ETH2WETH().getGasPrice('ETH', function (err,data) {
+        if (err) {
+            TemplateVar.set(template,'gasEstimate', {});
+        } else {
+            // console.log(data.LockGas, data.RefundGas, data.RevokeGas, data.gasPrice);
+            TemplateVar.set(template,'estimatedGas', data.LockGas);
+            TemplateVar.set(template,'gasPrice', data.gasPrice);
 
+            // console.log('fee', data.LockGas * web3.fromWei(data.gasPrice, 'ether'));
+            var number = new BigNumber(data.LockGas * data.gasPrice);
 
+            TemplateVar.set(template, 'fee', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
 
-Template['views_ethsend'].onRendered(function(){
-    var template = this;
+            TemplateVar.set(template, 'total', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
 
-    this.$('input[name="to"]').focus();
-
-    // ->> GAS PRICE ESTIMATION
-    template.autorun(function(c){
-
-        var address = TemplateVar.getFrom('.dapp-select-account.send-from', 'value'),
-            to = TemplateVar.getFrom('.dapp-address-input .to', 'value'),
-            amount = TemplateVar.get('amount') || '0';
-
-        if(_.isString(address))
-            address = address.toLowerCase();
-
-        // Ether tx estimation
-        if(EthAccounts.findOne({address: address}, {reactive: false})) {
-
-            web3.eth.estimateGas({
-                from: address,
-                to: to,
-                value: amount,
-                data: '',
-                gas: defaultEstimateGas
-            }, estimationCallback.bind(template));
-
-            // Wallet tx estimation
-        } else if(wallet = Wallets.findOne({address: address}, {reactive: false})) {
-
-            if(contracts['ct_'+ wallet._id])
-                contracts['ct_'+ wallet._id].execute.estimateGas(to || '', amount || '', data || '',{
-                    from: wallet.owners[0],
-                    gas: defaultEstimateGas
-                }, estimationCallback.bind(template));
+            EthElements.Modal.hide();
         }
-
-
     });
+
 });
 
 
 Template['views_ethsend'].helpers({
-    'wanBalance': function () {
-        return TemplateVar.get('wanBalance');
-    },
 
     'selectAccount': function () {
+        return TemplateVar.get('ethList');
+    },
 
-        const ethAccounts = TemplateVar.get('ethAccounts');
-        // console.log('ethAccounts', ethAccounts);
-
-        let result = [];
-        if (ethAccounts) {
-
-            _.each(ethAccounts, function (value, index) {
-                console.log("value:"+value+"   index:"+index);
-                //const balance =  web3.fromWei(value, 'ether');
-                const balance =  value;
-                const name = index.slice(2, 6) + index.slice(38);
-                result.push({name: name, address: index, balance: balance})
-            });
+    'i18nText': function(key){
+        if(typeof TAPi18n !== 'undefined'
+            && TAPi18n.__('elements.selectGasPrice.'+ key) !== 'elements.selectGasPrice.'+ key) {
+            return TAPi18n.__('elements.selectGasPrice.'+ key);
+        } else if (typeof this[key] !== 'undefined') {
+            return this[key];
+        } else {
+            return (key === 'high') ? '+' : '-';
         }
-
-        return result;
     },
-
-    /**
-     Return the currently selected fee + amount
-     @method (total)
-     */
-    'total': function(ether){
-        var address = TemplateVar.getFrom('.dapp-select-account.send-from', 'value');
-        var amount = TemplateVar.get('amount');
-        if(!_.isFinite(amount) || !_.isFinite(address))
-            return '0';
-
-        // ether
-        var gasInWei = TemplateVar.getFrom('.dapp-select-gas-price', 'gasInWei') || '0';
-
-        amount = new BigNumber(amount, 10).plus(new BigNumber(gasInWei, 10));
-        return amount;
-    },
-
-    /**
-     Clear amount from characters
-     @method (clearAmountFromChars)
-     */
-    'clearAmountFromChars': function(amount){
-        amount = (~amount.indexOf('.'))
-            ? amount.replace(/\,/g,'')
-            : amount;
-
-        return amount.replace(/ /g,'');
-    }
 });
 
 
@@ -192,12 +95,48 @@ Template['views_ethsend'].events({
      Set the amount while typing
      @event keyup input[name="amount"], change input[name="amount"], input input[name="amount"]
      */
-    'keyup input[name="amount"], change input[name="amount"], input input[name="amount"]': function(e, template){
+    'keyup input[name="amount"], change input[name="amount"], input input[name="amount"]': function(event){
 
-        var wei = EthTools.toWei(e.currentTarget.value.replace(',','.'));
+        event.preventDefault();
 
-        TemplateVar.set('amount', wei || '0');
+        var amount = new BigNumber(0);
 
+        var regPos = /^\d+(\.\d+)?$/; //非负浮点数
+        var regNeg = /^(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))$/; //负浮点数
+
+        if (event.target.value && (regPos.test(event.target.value) || regNeg.test(event.target.value)) ) {
+            amount = new BigNumber(event.target.value)
+        }
+
+        TemplateVar.set('amount', amount);
+        TemplateVar.set('total', amount.add(new BigNumber(TemplateVar.get('fee'))));
+
+    },
+
+    'change #ethNor-from': function (event) {
+        event.preventDefault();
+        TemplateVar.set('from', event.target.value);
+    },
+
+    'change .to': function (event) {
+        event.preventDefault();
+        TemplateVar.set('to', event.target.value);
+    },
+
+    'click .options': function () {
+        TemplateVar.set('options', !TemplateVar.get('options'));
+    },
+
+
+    'change input[name="fee"], input input[name="fee"]': function(e){
+        let feeRate = Number(e.currentTarget.value);
+
+        // return the fee
+        var number = (TemplateVar.get('estimatedGas') * TemplateVar.get('gasPrice')) * (1 + feeRate/10);
+        var fee = EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether');
+
+        TemplateVar.set('feeMultiplicator', feeRate);
+        TemplateVar.set('fee', fee);
     },
 
     /**
@@ -206,19 +145,12 @@ Template['views_ethsend'].events({
      */
     'submit form': function(e, template){
 
-        var amount = TemplateVar.get('amount') || '0',
-            address = checkAddress(TemplateVar.getFrom('.dapp-select-account.send-from', 'value')),
-            to = checkAddress(TemplateVar.getFrom('.dapp-address-input .to', 'value')),
-            gasPrice = TemplateVar.getFrom('.dapp-select-gas-price', 'gasPrice'),
-            estimatedGas = TemplateVar.get('estimatedGas'),
-            contract = TemplateVar.getFrom('.compile-contract', 'contract');
-        var balance = 0;
-
-        if(!address)
-            return GlobalNotification.warning({
-                content: 'i18n:wallet.send.error.emptyWallet',
-                duration: 2
-            });
+        let from = TemplateVar.get('from'),
+            to = TemplateVar.get('to'),
+            fee = TemplateVar.get('fee'),
+            amount = TemplateVar.get('amount'),
+            gasPrice = TemplateVar.get('gasPrice').toString(),
+            estimatedGas = TemplateVar.get('estimatedGas').toString();
 
         if(!to) {
             return GlobalNotification.warning({
@@ -227,79 +159,59 @@ Template['views_ethsend'].events({
             });
         }
 
-        mist.ETH2WETH().getBalance(address,function (err,data) {
-            // console.log(err);
-            // console.log(data);
-            if (err) {
-                console.error("getBalance() ",err);
-            } else {
-                balance = data;
-                conditional();
-            }
+        if(!amount) {
+            return GlobalNotification.warning({
+                content: 'the amount empty',
+                duration: 2
+            });
+        }
 
-        });
+        if(amount.eq(new BigNumber(0))) {
+            return GlobalNotification.warning({
+                content: 'the amount empty',
+                duration: 2
+            });
+        }
 
-        var conditional = function(){
+        let ethBalance = EthTools.toWei(TemplateVar.get('ethBalance')[from.toLowerCase()]);
+        let total = EthTools.toWei(TemplateVar.get('total'));
 
-            if(!TemplateVar.get(template, 'sending')) {
-
-                // set gas down to 21 000, if its invalid data, to prevent high gas usage.
-                if(estimatedGas === defaultEstimateGas || estimatedGas === 0)
-                    estimatedGas = 100000;
-
-                if(balance === '0' || !web3.isAddress(address))
-                    return GlobalNotification.warning({
-                        content: 'i18n:wallet.send.error.emptyWallet',
-                        duration: 2
-                    });
-
-                if(!web3.isAddress(to))
-                    return GlobalNotification.warning({
-                        content: 'i18n:wallet.send.error.noReceiver',
-                        duration: 2
-                    });
-
-                if(_.isEmpty(amount) || amount === '0' || !_.isFinite(amount))
-                    return GlobalNotification.warning({
-                        content: 'i18n:wallet.send.error.noAmount',
-                        duration: 2
-                    });
-
-                if(new BigNumber(amount, 10).gt(new BigNumber(balance, 10)))
-                    return GlobalNotification.warning({
-                        content: 'i18n:wallet.send.error.notEnoughFunds',
-                        duration: 2
-                    });
+        if(new BigNumber(total).gt(new BigNumber(ethBalance, 10)))
+            return GlobalNotification.warning({
+                content: 'i18n:wallet.send.error.notEnoughFunds',
+                duration: 2
+            });
 
 
-                var allBalance = new BigNumber(balance);
+        var trans = {
+            from: from, amount: amount.toString(10),
+            to: to, gas: estimatedGas, gasPrice: gasPrice
+        };
 
-                var total = new BigNumber(estimatedGas).mul(new BigNumber(gasPrice)).add(new BigNumber(amount));
+        // console.log('trans: ', trans);
+        try {
 
+            EthElements.Modal.question({
+                template: 'views_modals_sendEthTransactionInfo',
+                data: {
+                    from: from,
+                    to: to,
+                    amount: amount,
+                    gasPrice: gasPrice,
+                    estimatedGas: estimatedGas,
+                    fee: fee,
+                    trans: trans,
+                },
+            },{
+                class: 'send-transaction-info'
+            });
 
-                if(allBalance.lt(total))
-                    return GlobalNotification.warning({
-                        content: 'i18n:wallet.send.error.notEnoughFunds',
-                        duration: 2
-                    });
-
-                EthElements.Modal.question({
-                    template: 'views_modals_sendEthTransactionInfo',
-                    data: {
-                        from: address,
-                        to: to,
-                        amount: amount,
-                        gasPrice: gasPrice,
-                        estimatedGas: estimatedGas,
-                        estimatedGasPlusAddition: estimatedGas, // increase the provided gas by 100k
-                        data: "",
-                    },
-                },{
-                    class: 'send-transaction-info'
-                });
-
-
-            }
+        } catch (error) {
+            console.log(error);
+            return GlobalNotification.warning({
+                content: 'get data error',
+                duration: 2
+            });
         }
 
     }
