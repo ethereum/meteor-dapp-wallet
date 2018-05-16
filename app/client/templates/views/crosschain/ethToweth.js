@@ -207,7 +207,8 @@ Template['views_ethToweth'].events({
         if (!Session.get('ethBalance'))
             return;
 
-        let ethBalance = EthTools.toWei(Session.get('ethBalance')[from.toLowerCase()]);
+        // let ethBalance = EthTools.toWei(Session.get('ethBalance')[from.toLowerCase()]);
+        let ethBalance = Session.get('ethBalance')[from.toLowerCase()];
         let total = new BigNumber(EthTools.toWei(TemplateVar.get('total')));
 
         if(total.gt(new BigNumber(ethBalance, 10)))

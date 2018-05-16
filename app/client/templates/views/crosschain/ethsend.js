@@ -173,7 +173,8 @@ Template['views_ethsend'].events({
             });
         }
 
-        let ethBalance = EthTools.toWei(TemplateVar.get('ethBalance')[from.toLowerCase()]);
+        // let ethBalance = EthTools.toWei(TemplateVar.get('ethBalance')[from.toLowerCase()]);
+        let ethBalance = TemplateVar.get('ethBalance')[from.toLowerCase()];
         let total = EthTools.toWei(TemplateVar.get('total'));
 
         if(new BigNumber(total).gt(new BigNumber(ethBalance, 10)))

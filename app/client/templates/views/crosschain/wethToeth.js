@@ -204,20 +204,18 @@ Template['views_wethToeth'].events({
         }
 
 
-        // console.log('wethBalance: ', TemplateVar.get('wethBalance')[from.toLowerCase()]);
-        // console.log('amount: ', EthTools.toWei(amount));
-        //
-        // console.log('wanBalance: ', Session.get('wanBalance')[from.toLowerCase()]);
-        // console.log('fee: ', EthTools.toWei(fee));
+
+        let wethBalance = TemplateVar.get('wethBalance')[from.toLowerCase()];
+        let wanBalance = Session.get('wanBalance')[from.toLowerCase()];
 
 
-        if(new BigNumber(EthTools.toWei(amount), 10).gt(new BigNumber(TemplateVar.get('wethBalance')[from.toLowerCase()], 10)))
+        if(new BigNumber(EthTools.toWei(amount), 10).gt(new BigNumber(wethBalance, 10)))
             return GlobalNotification.warning({
                 content: 'i18n:wallet.send.error.notEnoughFunds',
                 duration: 2
             });
 
-        if(new BigNumber(EthTools.toWei(fee), 10).gt(new BigNumber(Session.get('wanBalance')[from.toLowerCase()], 10)))
+        if(new BigNumber(EthTools.toWei(fee), 10).gt(new BigNumber(wanBalance, 10)))
             return GlobalNotification.warning({
                 content: 'i18n:wallet.send.error.notEnoughFunds',
                 duration: 2

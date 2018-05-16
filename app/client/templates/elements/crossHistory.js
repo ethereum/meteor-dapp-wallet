@@ -16,12 +16,8 @@ Template['elements_cross_transactions_table'].onCreated(function(){
 
     mist.WETH2ETH().getMultiBalances(this.data.wanAddressList, (err, result) => {
         // console.log('getMultiBalances', result);
-        TemplateVar.set(template, 'wanAccounts', result);
-    });
-
-    mist.WETH2ETH().getMultiBalances(this.data.wanAddressList, (err, result) => {
-        // console.log('getMultiBalances', result);
         Session.set('wanBalance', result);
+        TemplateVar.set(template, 'wanAccounts', result);
     });
 
     const self = this;
@@ -116,13 +112,13 @@ Template['elements_cross_transactions_table'].events({
         let transData;
         let trans;
         let transType;
+        let coinBalance;
 
         // waitingX
         if (show_data.status === 'waitingX') {
             transType = 'releaseX';
             getGasPrice = await Helpers.promisefy(mist.ETH2WETH().getGasPrice, ['WAN'], mist.ETH2WETH());
-
-            console.log('releaseX getPrice', getGasPrice);
+            // console.log('releaseX getPrice', getGasPrice);
 
             getGas = getGasPrice.RefundGas;
             gasPrice = getGasPrice.gasPrice;
@@ -140,6 +136,14 @@ Template['elements_cross_transactions_table'].events({
             let getRefundTransData = await Helpers.promisefy(mist.ETH2WETH().getRefundTransData, [trans], mist.ETH2WETH());
             transData = getRefundTransData.refundTransData;
             // console.log('transData: ', transData);
+
+            if (show_data.chain === 'ETH') {
+                // release x in wan
+                coinBalance = await Helpers.promisefy(mist.WETH2ETH().getBalance, [show_data.crossAdress.toLowerCase()], mist.WETH2ETH());
+            } else {
+                // release x in eth
+                coinBalance = await Helpers.promisefy(mist.ETH2WETH().getBalance, [show_data.crossAdress.toLowerCase()], mist.ETH2WETH());
+            }
         }
 
         // waitingRevoke
@@ -165,6 +169,14 @@ Template['elements_cross_transactions_table'].events({
             let getRevokeTransData = await Helpers.promisefy(mist.ETH2WETH().getRevokeTransData, [trans], mist.ETH2WETH());
             transData = getRevokeTransData.revokeTransData;
             // console.log('getRevokeTransData: ', transData);
+
+            if (show_data.chain === 'ETH') {
+                // revoke x in eth
+                coinBalance = await Helpers.promisefy(mist.ETH2WETH().getBalance, [show_data.crossAdress.toLowerCase()], mist.ETH2WETH());
+            } else {
+                // revoke x in wan
+                coinBalance = await Helpers.promisefy(mist.WETH2ETH().getBalance, [show_data.crossAdress.toLowerCase()], mist.WETH2ETH());
+            }
         }
 
         // other status
@@ -177,13 +189,9 @@ Template['elements_cross_transactions_table'].events({
 
 
         let number = new BigNumber(getGas * gasPrice);
-        let fee = EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether');
-        let wanBalance = wanAccounts[show_data.crossAdress.toLowerCase()];
+        let fee = EthTools.toWei(number);
 
-        // console.log('fee', fee);
-        // console.log('wanBalance', wanBalance);
-
-        if(new BigNumber(fee, 10).gt(new BigNumber(wanBalance, 10)))
+        if(new BigNumber(fee, 10).gt(new BigNumber(coinBalance, 10)))
             return GlobalNotification.warning({
                 content: 'i18n:wallet.send.error.notEnoughFunds',
                 duration: 2
