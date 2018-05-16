@@ -23,6 +23,8 @@ Template['views_wethToeth'].onCreated(async function(){
     // wan accounts token balance
     await mist.WETH2ETH().getMultiTokenBalance(Session.get('wanAddressList'), (err, result) => {
 
+        TemplateVar.set(template,'wethBalance',result);
+
         if (!err) {
             let result_list = [];
 
@@ -187,6 +189,13 @@ Template['views_wethToeth'].events({
 
 
         // console.log('amount', amount);
+        if(! amount) {
+            return GlobalNotification.warning({
+                content: 'the amount empty',
+                duration: 2
+            });
+        }
+
         if(amount.eq(new BigNumber(0))) {
             return GlobalNotification.warning({
                 content: 'the amount empty',
@@ -194,16 +203,26 @@ Template['views_wethToeth'].events({
             });
         }
 
-        if (!Session.get('wanBalance'))
-            return;
 
-        let wanBalance = EthTools.formatBalance(Session.get('wanBalance')[from.toLowerCase()], '0,0.00[0000000000000000]', 'ether');
+        // console.log('wethBalance: ', TemplateVar.get('wethBalance')[from.toLowerCase()]);
+        // console.log('amount: ', EthTools.toWei(amount));
+        //
+        // console.log('wanBalance: ', Session.get('wanBalance')[from.toLowerCase()]);
+        // console.log('fee: ', EthTools.toWei(fee));
 
-        if(amount.gt(new BigNumber(wanBalance, 10)))
+
+        if(new BigNumber(EthTools.toWei(amount), 10).gt(new BigNumber(TemplateVar.get('wethBalance')[from.toLowerCase()], 10)))
             return GlobalNotification.warning({
                 content: 'i18n:wallet.send.error.notEnoughFunds',
                 duration: 2
             });
+
+        if(new BigNumber(EthTools.toWei(fee), 10).gt(new BigNumber(Session.get('wanBalance')[from.toLowerCase()], 10)))
+            return GlobalNotification.warning({
+                content: 'i18n:wallet.send.error.notEnoughFunds',
+                duration: 2
+            });
+
 
         var trans = {
             from: from, amount: amount.toString(10), storemanGroup: storeman,

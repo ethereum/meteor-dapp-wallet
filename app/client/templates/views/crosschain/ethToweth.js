@@ -60,7 +60,6 @@ Template['views_ethToweth'].onCreated(async function(){
 
             // console.log('fee', data.LockGas * web3.fromWei(data.gasPrice, 'ether'));
             var number = new BigNumber(data.LockGas * data.gasPrice);
-            // console.log('formatBalance', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
 
             TemplateVar.set(template, 'fee', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
 
@@ -186,6 +185,13 @@ Template['views_ethToweth'].events({
         if(!to) {
             return GlobalNotification.warning({
                 content: 'i18n:wallet.send.error.noReceiver',
+                duration: 2
+            });
+        }
+
+        if(! amount) {
+            return GlobalNotification.warning({
+                content: 'the amount empty',
                 duration: 2
             });
         }
