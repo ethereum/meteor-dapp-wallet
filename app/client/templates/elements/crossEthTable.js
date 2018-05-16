@@ -46,8 +46,6 @@ Template['elements_account_table'].helpers({
 
         // console.log('ethList: ', result);
 
-        Session.set('ethList', result);
-
         return result;
     },
 });

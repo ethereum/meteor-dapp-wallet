@@ -13,7 +13,7 @@ Template['elements_cross_transactions_table'].onCreated(function(){
         TemplateVar.set(template, 'crosschainList', result);
     });
 
-    mist.WETH2ETH().getMultiTokenBalance(this.data.wanAddressList, (err, result) => {
+    mist.WETH2ETH().getMultiBalances(this.data.wanAddressList, (err, result) => {
         // console.log('getMultiBalances', result);
         TemplateVar.set(template, 'wanAccounts', result);
     });
@@ -41,24 +41,6 @@ Template['elements_cross_transactions_table'].onDestroyed(function () {
 
 Template['elements_cross_transactions_table'].helpers({
     historyList: function () {
-        // console.log('historyList');
-
-        const wanAccounts = TemplateVar.get('wanAccounts');
-
-        let result = [];
-        if (wanAccounts) {
-
-            _.each(wanAccounts, function (value, index) {
-                const balance =  web3.fromWei(value, 'ether');
-                const name = index.slice(2, 6) + index.slice(38);
-                result.push({name: name, address: index, balance: balance})
-            });
-        }
-
-        // console.log('wanList: ', result);
-
-        Session.set('wanList', result);
-
 
         let crosschainList = [];
 
@@ -138,7 +120,8 @@ Template['elements_cross_transactions_table'].events({
         if (show_data.status === 'waitingX') {
             transType = 'releaseX';
             getGasPrice = await Helpers.promisefy(mist.ETH2WETH().getGasPrice, ['WAN'], mist.ETH2WETH());
-            console.log('releaseX getPrice', getGasPrice);
+
+            // console.log('releaseX getPrice', getGasPrice);
 
             getGas = getGasPrice.RefundGas;
             gasPrice = getGasPrice.gasPrice;
@@ -163,7 +146,7 @@ Template['elements_cross_transactions_table'].events({
             transType = 'revoke';
             getGasPrice = await Helpers.promisefy(mist.ETH2WETH().getGasPrice, ['ETH'], mist.ETH2WETH());
 
-            console.log('revoke getPrice', getGasPrice);
+            // console.log('revoke getPrice', getGasPrice);
 
             getGas = getGasPrice.RevokeGas;
             gasPrice = getGasPrice.gasPrice;
@@ -195,6 +178,9 @@ Template['elements_cross_transactions_table'].events({
         let number = new BigNumber(getGas * gasPrice);
         let fee = EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether');
         let wanBalance = wanAccounts[show_data.crossAdress.toLowerCase()];
+
+        // console.log('fee', fee);
+        // console.log('wanBalance', wanBalance);
 
         if(new BigNumber(fee, 10).gt(new BigNumber(wanBalance, 10)))
             return GlobalNotification.warning({

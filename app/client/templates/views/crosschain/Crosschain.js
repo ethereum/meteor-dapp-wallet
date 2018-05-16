@@ -7,6 +7,8 @@
 Template['views_crosschain'].onCreated(async function () {
     let template = this;
 
+    EthElements.Modal.show('views_modals_loading', {closeable: false, class: 'crosschain-loading'});
+
     try {
         // eth => weth
         let addressList = await Helpers.promisefy(
@@ -30,6 +32,8 @@ Template['views_crosschain'].onCreated(async function () {
 
         TemplateVar.set(template,'wanAddressList',wanAddressList);
 
+        EthElements.Modal.hide();
+
     } catch (error) {
         if (error && error.error) {
             return GlobalNotification.warning({
@@ -44,15 +48,6 @@ Template['views_crosschain'].onCreated(async function () {
         }
 
     }
-
-});
-
-Template['views_crosschain'].onDestroyed(function () {
-    let template = this;
-});
-
-Template['views_crosschain'].onRendered(function(){
-    let template = this;
 
 });
 

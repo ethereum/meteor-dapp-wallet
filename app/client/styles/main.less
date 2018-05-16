@@ -92,7 +92,48 @@ body {
     }
 }
 
+.spanTop{
+    padding-top: 30px;
+    display: inline-block;
+}
 
+.cancel{
+    min-width:75px;
+    height:27px;
+    margin-right: 30px!important;
+    color: #C6CBD7;
+    background:#fff;
+    border-radius: 27px;
+    font-size: 18px!important;
+    padding: 0 3px!important;
+    border: 1px solid #E8EBF0;
+    font-weight: bold!important;
+}
+.ok{
+    min-width:75px;
+    height:27px;
+    color: #fff;
+    border-radius: 27px;
+    font-size: 18px!important;
+    padding: 0 3px!important;
+    font-weight: bold!important;
+    background-image: linear-gradient(0deg,#00d2ff 0%, #1a90fc 100%);
+    box-shadow: 0px 4px 12px 0px  rgba(15, 123, 216, 0.31);
+}
+
+a:focus, a:visited:focus, button:focus {
+    border-bottom: none;
+}
+.clearAbsolute{
+    position: relative!important;
+    top: 0!important;
+    left: 0!important;
+}
+.clearAbsolute2{
+    position: relative!important;
+    top: 0!important;
+    float: right!important;
+}
 .drag-bar {
     z-index: 31;
     position: absolute;
@@ -628,6 +669,7 @@ table.dapp-zebra tbody tr:nth-child(odd){
             // margin-top: 25px!important;
             padding: 10px;
             margin-top: 0;
+            width: 60%;
         }
 
         &.total {

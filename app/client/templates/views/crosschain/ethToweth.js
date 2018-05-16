@@ -11,18 +11,33 @@
 
 
 // Set basic variables
-Template['views_ethToweth'].onCreated(function(){
+Template['views_ethToweth'].onCreated(async function(){
     var template = this;
-
-    if (Session.get('ethList')[0]) {
-        TemplateVar.set(template,'from',Session.get('ethList')[0].address);
-    }
 
     TemplateVar.set(template, 'amount', 0);
     TemplateVar.set(template, 'feeMultiplicator', 0);
     TemplateVar.set(template, 'options', false);
 
-    mist.ETH2WETH().getStoremanGroups(function (err,data) {
+    EthElements.Modal.show('views_modals_loading', {closeable: false, class: 'crosschain-loading'});
+
+    // eth accounts token balance
+    await mist.ETH2WETH().getMultiBalances(Session.get('addressList'), (err, result) => {
+        if (!err) {
+            let result_list = [];
+
+            _.each(result, function (value, index) {
+                const balance =  web3.fromWei(value, 'ether');
+                const name = index.slice(2, 6) + index.slice(38);
+                result_list.push({name: name, address: index, balance: balance})
+            });
+
+            TemplateVar.set(template,'ethList',result_list);
+            TemplateVar.set(template,'from',result_list[0].address);
+        }
+    });
+
+    // eth => weth storeman
+    await mist.ETH2WETH().getStoremanGroups(function (err,data) {
         if (err) {
             TemplateVar.set(template,'storemanGroup', []);
         } else {
@@ -34,7 +49,8 @@ Template['views_ethToweth'].onCreated(function(){
         }
     });
 
-    mist.ETH2WETH().getGasPrice('ETH', function (err,data) {
+    // eth chain  gas price
+    await mist.ETH2WETH().getGasPrice('ETH', function (err,data) {
         if (err) {
             TemplateVar.set(template,'gasEstimate', {});
         } else {
@@ -49,6 +65,8 @@ Template['views_ethToweth'].onCreated(function(){
             TemplateVar.set(template, 'fee', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
 
             TemplateVar.set(template, 'total', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
+
+            EthElements.Modal.hide();
         }
     });
 
@@ -57,7 +75,7 @@ Template['views_ethToweth'].onCreated(function(){
 
 Template['views_ethToweth'].helpers({
     'ethAccounts': function(){
-        return Session.get('ethList');
+        return TemplateVar.get('ethList');
     },
 
     'Deposit': function () {
@@ -172,7 +190,7 @@ Template['views_ethToweth'].events({
             });
         }
 
-        if(amount === 0) {
+        if(amount.eq(new BigNumber(0))) {
             return GlobalNotification.warning({
                 content: 'the amount empty',
                 duration: 2

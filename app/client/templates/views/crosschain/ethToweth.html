@@ -1,9 +1,5 @@
 <template name="views_ethToweth">
 
-    <h1 class="account-h1">
-        <div class="circle"></div><strong>eth to weth</strong>
-    </h1>
-
     <div class="viwes-account-header">
 
         <!-- we use a form, which posts into the "dapp-form-helper-iframe" iframe, so that the browser stores inout fields for native autocpmplete -->
@@ -35,7 +31,7 @@
                 <div class="col col-12 mobile-full contBox" style="margin-bottom: 0">
                     <div class="triangle"></div><strong class="views_send_strong">Locked Account</strong>
                     <div class="dapp-select-account send-from">
-                        <select class="send-from" id="toweth-" style="background-color: #f7f8fc;border: solid 0px #f7f8fc; padding-left: 10px;">
+                        <select class="send-from" id="toweth-storeman" style="background-color: #f7f8fc;border: solid 0px #f7f8fc; padding-left: 10px;">
                             {{#each TemplateVar.get 'storemanGroup'}}
                                 <option value="{{ethAddress}}">
                                     {{ethAddress}}
@@ -48,7 +44,7 @@
                 <!--to-->
                 <div class="col col-12 mobile-full contBox" style="margin-bottom: 0">
                     <div class="triangle"></div><strong class="views_send_strong">{{i18n 'wallet.send.to'}}</strong>
-                    {{> wan_addrInput placeholder=" Please paste public address here" name="to" autofocus=true class="to"}}
+                    {{> wan_addrInput placeholder=" Please paste public address here" name="to" autofocus=true class="to toweth-to"}}
                 </div>
 
             </div>
@@ -68,8 +64,8 @@
                         <div class="dapp-select-gas-price">
                             <span>Deposit: <span>{{deposit}}</span> WAN</span>
                             <input type="range" disabled="true" name="deposit" min="0" max="{{quota}}" step="1" value={{done}}>
-                            <span style="text-transform: capitalize;">Balance: <span>{{inboundQuota}}</span> ETH</span>
-                            <span style="text-transform: capitalize;">Cap: <span>{{quota}}</span> ETH</span>
+                            <span style="text-transform: capitalize; position: initial;">Balance: <span>{{inboundQuota}}</span> ETH</span>
+                            <span style="text-transform: capitalize; position: initial; float: right;">Cap: <span>{{quota}}</span> ETH</span>
                         </div>
                     {{/each}}
 
