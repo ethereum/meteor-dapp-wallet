@@ -13,23 +13,22 @@
                     <span>{{i18n 'wallet.app.buttons.send'}}</span>
                 </a>
             </li>            
-            
-            <li class="block-info dapp-flex-item  {{#if TemplateVar.get 'syncing'}}syncing{{/if}}">
+            <li class="block-syncing {{#if TemplateVar.get 'syncing'}}syncing{{/if}}">
                 {{#if isWalletMode}}
                     {{#if $eq ($.Session.get "network") "test"}}
-                        <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">TEST-NET</span> &nbsp;&nbsp; 
+                        <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">Test-net</span> &nbsp;&nbsp; 
                     {{/if}}
                     {{#if $eq ($.Session.get "network") "rinkeby"}}
-                        <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">TEST-NET: Rinkeby</span> &nbsp;&nbsp; 
+                        <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">Rinkeby</span> &nbsp;&nbsp; 
                     {{/if}}
                     {{#if $eq ($.Session.get "network") "ropsten"}}
-                        <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">TEST-NET: Ropsten</span> &nbsp;&nbsp; 
+                        <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">Ropsten</span> &nbsp;&nbsp; 
                     {{/if}}
                     {{#if $eq ($.Session.get "network") "kovan"}}
-                        <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">TEST-NET: Kovan</span> &nbsp;&nbsp; 
+                        <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">Kovan</span> &nbsp;&nbsp; 
                     {{/if}}
                     {{#if $eq ($.Session.get "network") "private"}}
-                        <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">PRIVATE-NET</span> &nbsp;&nbsp; 
+                        <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">Private-net</span> &nbsp;&nbsp; 
                     {{/if}}
 
                     {{#with TemplateVar.get "syncing"}}
@@ -51,7 +50,7 @@
                         {{else}}
                             <i class="icon-feed"></i> {{i18n 'wallet.app.texts.connecting'}}
                         {{/if}}
-                        &nbsp;&nbsp;|&nbsp;&nbsp;
+                        &nbsp;&nbsp;<span class="sync-divider">|</span>&nbsp;&nbsp;
                         <i class="icon-layers"></i> {{formattedBlockNumber}} <i class="icon-clock" style="margin-left: 10px;"></i> {{{timeSinceBlock}}} <span class="hide-on-small">{{{timeSinceBlockText}}}</span>
                     {{/with}}
                 {{/if}}

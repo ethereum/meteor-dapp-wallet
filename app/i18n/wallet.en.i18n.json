@@ -20,7 +20,8 @@
         "receive": "Receive",
         "addWallet": "Add wallet contract",
         "addAccount": "Add account",
-        "addToken": "Watch token"
+        "addToken": "Watch token",
+        "tokenAutoScan": "Auto-Scan"
       },
       "texts": {
         "note": "Note",
@@ -36,8 +37,7 @@
         "timeSinceBlock": "since last block",
         "peers": "peers",
         "remote": "Remote",
-        "remoteExplain":
-          "You are connected to a remote node.",
+        "remoteExplain": "You are connected to a remote node.",
         "waitingForBlocks": "Waiting for blocks...",
         "testnetExplain":
           "You are on a testnet, DO NOT SEND any real Ether to these addresses",
@@ -331,7 +331,7 @@
       }
     },
     "tokens": {
-      "title": "Custom <strong>Tokens</strong>",
+      "title": "Custom Tokens",
       "subTitle": "Added tokens",
       "admin": "__name__ (admin page)",
       "description":
@@ -342,6 +342,16 @@
       "editedToken": "Edited token __token__",
       "error": {
         "invalidAddress": "Token not added.  Invalid address."
+      },
+      "autoScan": {
+        "description":
+        "Automatically scan for balances of popular tokens on your accounts.",
+        "noTokensFound": "No tokens found",
+        "status": {
+          "downloadingList": "Downloading token list...",
+          "checkingBalances": "Checking __number__ balances...",
+          "found": "__number__ found"
+        }
       }
     },
     "contracts": {

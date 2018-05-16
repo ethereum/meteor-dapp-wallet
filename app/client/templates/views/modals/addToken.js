@@ -99,7 +99,6 @@ Template['views_modals_addToken'].events({
           .$('input.symbol')
           .val(symbol)
           .change();
-        return null;
       });
 
     tokenInstance.methods
@@ -110,7 +109,6 @@ Template['views_modals_addToken'].events({
           .$('input.name')
           .val(name)
           .change();
-        return null;
       });
 
     tokenInstance.methods
@@ -121,11 +119,10 @@ Template['views_modals_addToken'].events({
           .$('input.decimals')
           .val(decimals)
           .change();
-        return null;
       });
   },
   /**
-    Prevent the example from beeing clicked
+    Prevent the example from being clicked
 
     @event click .example.wallet-box.tokens
     */
