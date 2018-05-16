@@ -9,7 +9,8 @@ Template['elements_cross_transactions_table'].onCreated(function(){
 
     // console.log('this.data', this.data);
 
-    mist.ETH2WETH().listHistory(this.data.addressList, (err, result) => {
+    mist.ETH2WETH().listHistory(this.data.addressList.concat(this.data.wanAddressList), (err, result) => {
+        // console.log('crosschainList', result);
         TemplateVar.set(template, 'crosschainList', result);
     });
 
@@ -25,7 +26,7 @@ Template['elements_cross_transactions_table'].onCreated(function(){
 
     const self = this;
     InterID = Meteor.setInterval(function(){
-        mist.ETH2WETH().listHistory(self.data.addressList, (err, result) => {
+        mist.ETH2WETH().listHistory(self.data.addressList.concat(self.data.wanAddressList), (err, result) => {
             // console.log('crosschainList');
             TemplateVar.set(template, 'crosschainList', result);
         });
@@ -121,7 +122,7 @@ Template['elements_cross_transactions_table'].events({
             transType = 'releaseX';
             getGasPrice = await Helpers.promisefy(mist.ETH2WETH().getGasPrice, ['WAN'], mist.ETH2WETH());
 
-            // console.log('releaseX getPrice', getGasPrice);
+            console.log('releaseX getPrice', getGasPrice);
 
             getGas = getGasPrice.RefundGas;
             gasPrice = getGasPrice.gasPrice;
