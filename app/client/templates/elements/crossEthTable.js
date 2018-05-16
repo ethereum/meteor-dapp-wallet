@@ -11,7 +11,6 @@ Template['elements_account_table'].onCreated(function () {
     InterID = Meteor.setInterval(function(){
         mist.ETH2WETH().getMultiBalances(self.data.addressList, (err, result) => {
             TemplateVar.set(template,'ethAccounts',result);
-            Session.set('ethBalance', result);
         });
 
     }, 10000);

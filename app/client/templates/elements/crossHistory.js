@@ -14,12 +14,6 @@ Template['elements_cross_transactions_table'].onCreated(function(){
         TemplateVar.set(template, 'crosschainList', result);
     });
 
-    mist.WETH2ETH().getMultiBalances(this.data.wanAddressList, (err, result) => {
-        // console.log('getMultiBalances', result);
-        Session.set('wanBalance', result);
-        TemplateVar.set(template, 'wanAccounts', result);
-    });
-
     const self = this;
     InterID = Meteor.setInterval(function(){
         mist.ETH2WETH().listHistory(self.data.addressList.concat(self.data.wanAddressList), (err, result) => {
@@ -100,7 +94,6 @@ Template['elements_cross_transactions_table'].events({
     },
 
     'click .crosschain-list': async function (e) {
-        let wanAccounts = TemplateVar.get('wanAccounts');
         let id = e.target.id;
         let show_data = TemplateVar.get('crosschainList')[id];
         // console.log('show_data: ', show_data.status);

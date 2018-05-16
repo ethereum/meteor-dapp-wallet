@@ -145,7 +145,7 @@ Template['views_wethToeth'].events({
         TemplateVar.set('options', !TemplateVar.get('options'));
     },
 
-    'change input[name="fee"], input input[name="fee"]': function(e){
+    'change input[name="fee"], input input[name="fee"]': async function(e){
         let feeRate = Number(e.currentTarget.value);
 
         // return the fee
@@ -206,8 +206,7 @@ Template['views_wethToeth'].events({
 
 
         let wethBalance = TemplateVar.get('wethBalance')[from.toLowerCase()];
-        let wanBalance = Session.get('wanBalance')[from.toLowerCase()];
-
+        let wanBalance = await Helpers.promisefy(mist.WETH2ETH().getBalance, [from.toLowerCase()], mist.WETH2ETH());
 
         if(new BigNumber(EthTools.toWei(amount), 10).gt(new BigNumber(wethBalance, 10)))
             return GlobalNotification.warning({

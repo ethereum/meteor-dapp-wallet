@@ -203,13 +203,8 @@ Template['views_ethToweth'].events({
             });
         }
 
-
-        if (!Session.get('ethBalance'))
-            return;
-
-        // let ethBalance = EthTools.toWei(Session.get('ethBalance')[from.toLowerCase()]);
-        let ethBalance = Session.get('ethBalance')[from.toLowerCase()];
         let total = new BigNumber(EthTools.toWei(TemplateVar.get('total')));
+        let ethBalance = await Helpers.promisefy(mist.ETH2WETH().getBalance, [from.toLowerCase()], mist.ETH2WETH());
 
         if(total.gt(new BigNumber(ethBalance, 10)))
             return GlobalNotification.warning({
