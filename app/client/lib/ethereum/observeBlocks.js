@@ -135,13 +135,7 @@ updateBalances = function() {
         .then(function(balance) {
           var currentBalance =
             token && token.balances ? token.balances[account._id] : 0;
-          console.log(
-            'balance',
-            account.name,
-            'has',
-            balance.toString(10),
-            token.name
-          );
+
           if (balance.toString(10) !== currentBalance) {
             var set = {};
             if (balance > 0) {
