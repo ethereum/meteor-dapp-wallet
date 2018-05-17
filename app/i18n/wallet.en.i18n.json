@@ -345,11 +345,11 @@
       },
       "autoScan": {
         "description":
-        "Automatically scan for balances of popular tokens on your accounts.",
+          "Automatically scan for balances of popular tokens on your accounts.",
         "noTokensFound": "No tokens found",
         "status": {
           "downloadingList": "Downloading token list...",
-          "checkingBalances": "Checking __number__ balances...",
+          "checkingBalances": "Checking __number__ ...",
           "found": "__number__ found"
         }
       }

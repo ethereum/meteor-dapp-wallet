@@ -144,7 +144,13 @@ var autoScanGetTokens = function(template) {
     var tokenListURL =
       'https://raw.githubusercontent.com/MyEtherWallet/ethereum-lists/649a45d58f2763f1b7a1e6039370cfb4d3d3c63a/tokens/tokens-eth.json';
 
-    var accounts = _.pluck(EthAccounts.find().fetch(), 'address');
+    var accounts = _.pluck(
+      EthAccounts.find()
+        .fetch()
+        .concat(CustomContracts.find().fetch())
+        .concat(Wallets.find().fetch()),
+      'address'
+    );
     var tokensToAdd = [];
     var promises = [];
     var balancesChecked = 0;
@@ -175,11 +181,12 @@ var autoScanGetTokens = function(template) {
         _.each(tokens, function(token) {
           _.each(accounts, function(account) {
             var callData =
-              '0x70a08231000000000000000000000000' + account.substring(2); // balanceOf(address)
+              '0x70a08231000000000000000000000000' +
+              account.substring(2).replace(' ', ''); // balanceOf(address)
             try {
               var promise = web3.eth
                 .call({
-                  to: token.address,
+                  to: token.address.replace(' ', ''),
                   data: callData
                 })
                 .then(function(result) {
@@ -286,7 +293,7 @@ Template['views_contracts'].onRendered(function() {
 Template['views_contracts'].events({
   /**
     Add custom contract
-    
+
     @event click .add-contract
     */
   'click .add-contract': function() {
@@ -304,7 +311,7 @@ Template['views_contracts'].events({
   },
   /**
     Click Add Token
-    
+
     @event click a.create.add-token
     */
   'click .add-token': function(e) {
@@ -324,7 +331,7 @@ Template['views_contracts'].events({
   },
   /**
     Click Token Auto Scan
-    
+
     @event click a.create.token-auto-scan
     */
   'click .token-auto-scan': function(e, template) {
@@ -364,7 +371,7 @@ Template['views_contracts'].events({
   },
   /**
     Edit Token
-    
+
     @event click .wallet-box.tokens
     */
   'click .wallet-box.tokens': function(e) {
