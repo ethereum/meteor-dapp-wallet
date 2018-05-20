@@ -38,9 +38,13 @@ class crossChainOperators{
         return false;
     }
 
-
+    // signed
     sendRawTrans(trans,chainType,callback){
         let operator = new crossOperator('sendRawTrans',{tx:trans},chainType,callback);
+        this.invokeOperator(operator);
+    }
+    sendNormalTransaction(trans, passwd, chainType, callback){
+        let operator = new crossOperator('sendNormalTransaction',{tx:trans, passwd:passwd},chainType,callback);
         this.invokeOperator(operator);
     }
     listHistory(addrList, callback){

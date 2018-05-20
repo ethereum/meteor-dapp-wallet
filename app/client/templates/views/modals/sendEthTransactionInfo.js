@@ -15,24 +15,29 @@ Template['views_modals_sendEthTransactionInfo'].events({
             to: this.to,
             value: this.amount,
             gasPrice: this.gasPrice,
-            gas: this.gas
-        };
+            //gas: this.gas
+            gas: '21000'
+};
 
         try {
 
             TemplateVar.set('isButton', true);
-
-            // Helpers.promisefy(
-            //     mist.ETH2WETH().sendRawTrans,
+            mist.ETH2WETH().sendNormalTransaction(txArgs, "wanglu", 'ETH', function(){
+                        EthElements.Modal.hide();
+                        Session.set('clickButton', 1);
+      
+            });
+            // await Helpers.promisefy(
+            //     mist.ETH2WETH().sendNormalTransaction,
             //     [txArgs, password_input, 'ETH'],
             //     mist.ETH2WETH()
             // );
 
-            EthElements.Modal.hide();
-            Session.set('clickButton', 1);
+            // EthElements.Modal.hide();
+            // Session.set('clickButton', 1);
 
         } catch (error) {
-            // console.log('sendLockTransData error', error);
+            console.log('views_modals_sendEthTransactionInfo error', error);
 
             EthElements.Modal.hide();
 

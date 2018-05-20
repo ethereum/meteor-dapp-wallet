@@ -197,7 +197,7 @@ Template['views_ethsend'].events({
                 data: {
                     from: from,
                     to: to,
-                    amount: amount,
+                    amount: amount.toString(10),
                     gasPrice: gasPrice,
                     estimatedGas: estimatedGas,
                     fee: fee,
