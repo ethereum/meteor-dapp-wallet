@@ -27,11 +27,13 @@ Template['views_modals_sendcrosschainReleaseX'].events({
 
                 TemplateVar.set('isButton', true);
 
-                sendRefundTransData = await Helpers.promisefy(
-                    mist.ETH2WETH().sendRefundTrans,
-                    [this.trans, password_input],
-                    mist.ETH2WETH()
-                );
+                if (this.transType === 'ETH') {
+                    // release x in wan
+                    await Helpers.promisefy(mist.WETH2ETH().sendRefundTrans, [this.trans, password_input], mist.WETH2ETH());
+                } else {
+                    // release x in eth
+                    await Helpers.promisefy(mist.ETH2WETH().sendRefundTrans, [this.trans, password_input], mist.ETH2WETH());
+                }
 
                 EthElements.Modal.hide();
 
@@ -60,11 +62,13 @@ Template['views_modals_sendcrosschainReleaseX'].events({
 
                 TemplateVar.set('isButton', true);
 
-                sendRevokeTransData = await Helpers.promisefy(
-                    mist.ETH2WETH().sendRevokeTrans,
-                    [trans, password_input],
-                    mist.ETH2WETH()
-                );
+                if (show_data.chain === 'ETH') {
+                    // revoke x in eth
+                    await Helpers.promisefy(mist.ETH2WETH().sendRevokeTrans, [this.trans, password_input], mist.ETH2WETH());
+                } else {
+                    // revoke x in wan
+                    await Helpers.promisefy(mist.WETH2ETH().sendRevokeTrans, [this.trans, password_input], mist.WETH2ETH());
+                }
 
                 EthElements.Modal.hide();
 

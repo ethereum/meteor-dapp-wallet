@@ -181,8 +181,7 @@ Template['elements_cross_transactions_table'].events({
         }
 
 
-        let number = new BigNumber(getGas * gasPrice);
-        let fee = EthTools.toWei(number);
+        let fee = new BigNumber(getGas * gasPrice);
 
         if(new BigNumber(fee, 10).gt(new BigNumber(coinBalance, 10)))
             return GlobalNotification.warning({
@@ -200,7 +199,7 @@ Template['elements_cross_transactions_table'].events({
                 storeman: show_data.storeman,
                 crossAdress: show_data.crossAdress,
                 amount: show_data.value,
-                fee: fee,
+                fee: EthTools.formatBalance(fee, '0,0.00[0000000000000000]', 'ether'),
                 gasPrice: gasPrice,
                 estimatedGas: getGas,
                 data: transData,
