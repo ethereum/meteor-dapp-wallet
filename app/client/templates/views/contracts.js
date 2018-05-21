@@ -142,7 +142,7 @@ var autoScanGetTokens = function(template) {
     );
 
     var tokenListURL =
-      'https://raw.githubusercontent.com/MyEtherWallet/ethereum-lists/649a45d58f2763f1b7a1e6039370cfb4d3d3c63a/tokens/tokens-eth.json';
+      'https://raw.githubusercontent.com/MyEtherWallet/ethereum-lists/master/tokens/tokens-eth.json';
 
     var accounts = _.pluck(
       EthAccounts.find()
