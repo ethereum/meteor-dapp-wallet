@@ -26,14 +26,14 @@ Template['views_modals_unlockTransactionInfo'].events({
             TemplateVar.set('isButton', true);
 
             if (this.chain === 'ETH') {
-                console.log('1 chain: ', this.chain);
+                console.log('ETH chain: ', this.chain);
                 await Helpers.promisefy(
                     mist.ETH2WETH().sendLockTrans,
                     [this.trans, password_input, this.secretX],
                     mist.ETH2WETH()
                 );
             } else {
-                console.log('2 chain: ', this.chain);
+                console.log('WAN chain: ', this.chain);
                 sendLockTransData = await Helpers.promisefy(
                     mist.WETH2ETH().sendLockTrans,
                     [this.trans, password_input, this.secretX],

@@ -8,6 +8,16 @@ Template['views_modals_sendEthTransactionInfo'].events({
         EthElements.Modal.hide();
     },
     'click .ok-cross': async function () {
+        let password_input = document.getElementById('ethTransaction-psd').value;
+
+        if(!password_input) {
+            EthElements.Modal.hide();
+            return GlobalNotification.warning({
+                content: 'the password empty',
+                duration: 2
+            });
+        }
+
         // console.log('Gas Price: '+ gasPrice);
 
         var txArgs = {
@@ -15,26 +25,21 @@ Template['views_modals_sendEthTransactionInfo'].events({
             to: this.to,
             value: this.amount,
             gasPrice: this.gasPrice,
-            //gas: this.gas
-            gas: '21000'
-};
+            gas: this.gas
+        };
 
         try {
 
             TemplateVar.set('isButton', true);
-            mist.ETH2WETH().sendNormalTransaction(txArgs, "wanglu", 'ETH', function(){
-                        EthElements.Modal.hide();
-                        Session.set('clickButton', 1);
-      
-            });
-            // await Helpers.promisefy(
-            //     mist.ETH2WETH().sendNormalTransaction,
-            //     [txArgs, password_input, 'ETH'],
-            //     mist.ETH2WETH()
-            // );
 
-            // EthElements.Modal.hide();
-            // Session.set('clickButton', 1);
+            await Helpers.promisefy(
+                mist.ETH2WETH().sendNormalTransaction,
+                [txArgs, password_input, 'ETH'],
+                mist.ETH2WETH()
+            );
+
+            EthElements.Modal.hide();
+            Session.set('clickButton', 1);
 
         } catch (error) {
             console.log('views_modals_sendEthTransactionInfo error', error);

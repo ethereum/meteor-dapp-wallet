@@ -199,7 +199,7 @@ Template['views_ethsend'].events({
                     to: to,
                     amount: amount.toString(10),
                     gasPrice: gasPrice,
-                    estimatedGas: estimatedGas,
+                    gas: estimatedGas,
                     fee: fee,
                     trans: trans,
                 },
