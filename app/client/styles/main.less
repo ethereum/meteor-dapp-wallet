@@ -3,875 +3,984 @@
 
 @import 'elements.import.less';
 
-
-
-
 /**********************************/
 /* START FORMATTING YOUR APP HERE */
 /**********************************/
 
-
 // Change Default constants
 
-@colorLink: #02A8F3;
+@colorLink: #02a8f3;
 
 @heightHeader: @gridWidth * 2.5;
-
 
 // Platform specifics
 // Mac OSX
 @colorOSBackgroundFocus: #d9d0d0;
 @colorOSBackgroundBlur: lighten(@colorOSBackgroundFocus, 10%);
 
-@colorWinBackgroundFocus: #F0F0F0;
-@colorWinBackgroundBlur: #F0F0F0;
+@colorWinBackgroundFocus: #f0f0f0;
+@colorWinBackgroundBlur: #f0f0f0;
 
-@colorLinuxBackgroundFocus: #403F3A;
-@colorLinuxBackgroundBlur: #3C3B36;
-
+@colorLinuxBackgroundFocus: #403f3a;
+@colorLinuxBackgroundBlur: #3c3b36;
 
 .global-notifications {
-    position: fixed;
-    bottom: @defaultPaddingVertical*2;
-    right: @defaultPaddingVertical*2;
-    font-weight: 400;
+  position: fixed;
+  bottom: @defaultPaddingVertical*2;
+  right: @defaultPaddingVertical*2;
+  font-weight: 400;
 
-    .global-notification {
-        &.success {
-            background-color: @colorGreen;
-        }
+  .global-notification {
+    &.success {
+      background-color: @colorGreen;
     }
+  }
 }
 
 // MODALS
 .transaction-info {
-    width: 600px;
+  width: 600px;
 }
-
 
 .dapp-content {
-    padding: @defaultPaddingVertical @defaultPaddingHorizontal*2.5 @defaultPaddingVertical*2;
+  padding: @defaultPaddingVertical @defaultPaddingHorizontal*2.5
+    @defaultPaddingVertical*2;
+  max-width: none;
+
+  .dapp-container {
     max-width: none;
 
-    .dapp-container {
-        max-width: none; 
+    > h2 {
+      margin-bottom: @gridHeight * 1;
+    }
 
-        > h2 {
-            margin-bottom: @gridHeight * 1;
-        }
-
-        > h2 + p {
-            margin-bottom: @gridHeight * 2;
-        } 
-    }   
+    > h2 + p {
+      margin-bottom: @gridHeight * 2;
+    }
+  }
 }
-
 
 body {
-    background: @colorWinBackgroundFocus;
+  background: @colorWinBackgroundFocus;
 
-    &.app-blur {
-        background: @colorWinBackgroundBlur;
-    }
+  &.app-blur {
+    background: @colorWinBackgroundBlur;
+  }
 }
 .app-blur {
-    .dapp-header {
-        background: @colorWinBackgroundBlur;
-    }
+  .dapp-header {
+    background: @colorWinBackgroundBlur;
+  }
 }
 
 // WINDOWS
 .win32 {
-    .dapp-header {
-        background-color: @colorWinBackgroundFocus;
-        background-image: none;
+  .dapp-header {
+    background-color: @colorWinBackgroundFocus;
+    background-image: none;
 
-        &.dapp-small {
-            .box-shadow(none);
-            .dapp-shadow-small;
-        }
+    &.dapp-small {
+      .box-shadow(none);
+      .dapp-shadow-small;
     }
+  }
 }
 // LINUX
 .linux {
-    body {
-        background: @colorLinuxBackgroundFocus;
+  body {
+    background: @colorLinuxBackgroundFocus;
 
-        &.app-blur {
-            background: @colorLinuxBackgroundBlur;
+    &.app-blur {
+      background: @colorLinuxBackgroundBlur;
 
-            .dapp-header {
-                background: @colorLinuxBackgroundBlur;
-            }
-        }
+      .dapp-header {
+        background: @colorLinuxBackgroundBlur;
+      }
     }
-    .dapp-header {
-        background-color: @colorLinuxBackgroundFocus;
-        .background-image(linear-gradient(to bottom,  @colorLinuxBackgroundFocus 20%, lighten(@colorLinuxBackgroundFocus, 5%) 90%));
-        color: @colorWhite;
+  }
+  .dapp-header {
+    background-color: @colorLinuxBackgroundFocus;
+    .background-image(linear-gradient(to bottom,  @colorLinuxBackgroundFocus 20%, lighten(@colorLinuxBackgroundFocus, 5%) 90%));
+    color: @colorWhite;
 
-        nav a,
-        .block-info,
-        .wallet-balance h3,
-        .wallet-balance span.account-balance {
-            color: @colorWhite;
-        }
+    nav a,
+    .block-info,
+    .wallet-balance h3,
+    .wallet-balance span.account-balance {
+      color: @colorWhite;
     }
+  }
 }
 // MAC
 .darwin {
-    body {
+  body {
+    background: @colorOSBackgroundBlur;
+
+    &.app-blur {
+      background: lighten(@colorOSBackgroundBlur, 10%);
+
+      .dapp-header {
         background: @colorOSBackgroundBlur;
-
-        &.app-blur {
-            background: lighten(@colorOSBackgroundBlur, 10%);
-
-            .dapp-header {
-                background: @colorOSBackgroundBlur;
-            }
-        }
+      }
     }
-    .dapp-header {
-        background-color: @colorOSBackgroundFocus;
-        .background-image(linear-gradient(to top,  @colorOSBackgroundFocus 20%, lighten(@colorOSBackgroundFocus, 10%) 90%));
+  }
+  .dapp-header {
+    background-color: @colorOSBackgroundFocus;
+    .background-image(linear-gradient(to top,  @colorOSBackgroundFocus 20%, lighten(@colorOSBackgroundFocus, 10%) 90%));
 
-        nav > ul {
-            margin-left: @gridWidth;
-        }
+    nav > ul {
+      margin-left: @gridWidth;
     }
+  }
 }
 
 .drag-bar {
-    z-index: 31;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 30px;
-    pointer-events: none;
-    -webkit-app-region: drag; // necessary to drag the wallet window
+  z-index: 31;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 30px;
+  pointer-events: none;
+  -webkit-app-region: drag; // necessary to drag the wallet window
 }
 
 .dapp-header {
-    padding-right: @gridWidth * 2.5;
-    padding-left: @gridWidth * 2.5;
-    background-color: @colorWinBackgroundFocus;
-    -webkit-app-region: drag; // necessary to drag the wallet window
-    .background-image(linear-gradient(to bottom,  @colorWinBackgroundFocus 50%, #ddd9d9 90%));
+  padding-right: @gridWidth * 2.5;
+  padding-left: @gridWidth * 2.5;
+  background-color: @colorWinBackgroundFocus;
+  -webkit-app-region: drag; // necessary to drag the wallet window
+  .background-image(linear-gradient(to bottom,  @colorWinBackgroundFocus 50%, #ddd9d9 90%));
+  background: #f0f0f0;
 
-    &.dapp-small {
-        z-index: 30;
-        position: fixed;
-        top:0;
-        left: 0;
-        right: 0;
-        .dapp-shadow-medium;
-  
-        .block-info {
-            padding-bottom: @defaultPaddingVertical - 2;
-        }
-        
-        .wallet-balance ,
-        .block-info {            
-            .text,
-            h3 {
-                display: none;
-            }
-
-            .red {
-                display: none;
-            }
-        }
-
-        &.dapp-full-header + .dapp-flex-content {
-            margin-top: @gridHeight * 3.5;
-        }
-    }
-
-    &.dapp-full-header {
-        padding-top: @gridHeight * 4.5;
-        padding-right: @gridWidth * 0.5;
-        padding-left: @gridWidth * 0.5;
-    }
-
-    nav ul a.active {
-        color: @colorTextSecondary;
-    }
+  &.dapp-small {
+    z-index: 30;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    .dapp-shadow-medium;
 
     .block-info {
-        padding-bottom: @defaultPaddingVertical;        
-        color: lighten(@colorGrayDark, 5%);
-        text-align: center;
-        flex: 1 0;
-
-        &.syncing {
-            .opacity(0.9);
-
-            progress {
-                width: 200px;
-            }
-        }
-
-        i {
-            font-size: 0.7em;
-        }
-
-
-        .private-chain {
-            color: @colorWhite;
-            background-color: @colorError;
-            padding: 1px 5px 2px;
-            border-radius: 2px;
-            top: 1px;
-        }
-        
+      padding-bottom: @defaultPaddingVertical - 2;
     }
-    
-    .wallet-balance {
-        padding-bottom: @defaultPaddingVertical - 5px;
-        padding-left: @defaultPaddingHorizontal;
-        text-align: right;
-        flex: 0 2 auto;
 
-        h3 {
-            margin-bottom: 0;
-        }
+    .wallet-balance,
+    .block-info {
+      .text,
+      h3 {
+        display: none;
+      }
 
-        span.account-balance {
-            color: @colorTextSecondary;
-            font-size: 1.6em;
-
-            .inline-form {
-                > .simple-modal {
-                    min-width: 70px;
-                }
-                > button {
-                    padding: 0;
-                }
-            }
-        }
+      .red {
+        display: none;
+      }
     }
+
+    &.dapp-full-header + .dapp-flex-content {
+      margin-top: @gridHeight * 3.5;
+    }
+  }
+
+  &.dapp-full-header {
+    padding-top: @gridHeight * 4.5;
+    padding-right: @gridWidth * 0.5;
+    padding-left: @gridWidth * 0.5;
+  }
+
+  nav ul a.active {
+    color: @colorTextSecondary;
+  }
+
+  .block-info {
+    padding-bottom: @defaultPaddingVertical;
+    color: lighten(@colorGrayDark, 5%);
+    text-align: center;
+    flex: 1 0;
+
+    &.syncing {
+      .opacity(0.9);
+
+      progress {
+        width: 200px;
+      }
+    }
+
+    i {
+      font-size: 0.7em;
+    }
+  }
+
+  .block-syncing {
+    padding-bottom: 11px;
+    flex: auto;
+    text-align: center;
+    .sync-divider {
+      color: #bbb;
+      padding: 0 2px;
+    }
+    i {
+      padding-right: 2px;
+    }
+
+    .private-chain {
+      background-color: #f9f9f9;
+      padding: 4px;
+      border-radius: 4px;
+    }
+  }
+
+  .wallet-balance {
+    padding-bottom: @defaultPaddingVertical - 5px;
+    padding-left: @defaultPaddingHorizontal;
+    text-align: right;
+    flex: 0 2 auto;
+
+    h3 {
+      margin-bottom: 0;
+    }
+
+    span.account-balance {
+      color: @colorTextSecondary;
+      font-size: 1.6em;
+
+      .inline-form {
+        > .simple-modal {
+          min-width: 70px;
+        }
+        > button {
+          padding: 0;
+        }
+      }
+    }
+  }
 }
 
 .dapp-header.dapp-small + .dapp-flex-content > .dapp-content {
-    padding-top: @gridHeight * 6 - 3px;
+  padding-top: @gridHeight * 6 - 3px;
 }
 
-
 .account-balance {
-    span {
-        font-size: 0.6em;
+  span {
+    font-size: 0.6em;
+  }
+
+  .inline-form {
+    button {
+      border: 0;
     }
-    
-    .inline-form {
-        button {
-            border: 0;
-        }
-        .simple-modal {
-            right: 0;
-        }
+    .simple-modal {
+      right: 0;
     }
+  }
 }
 
 .accounts-page {
-    .display(flex);
-    flex-flow: row wrap;
+  .display(flex);
+  flex-flow: row wrap;
 
-    .dapp-sticky-bar {
-        position: fixed;
-        top: floor(@gridHeight * -1);
-        left: 0;
-        right: 0;
-        height: @gridHeight * 2;
-        padding: @gridHeight/2 @gridWidth * 2.5;
-        background: @colorWhite;
-        opacity: 0;
-        z-index: -1;
+  h1 {
+    font-style: normal;
+    font-weight: 500;
+  }
 
-        .transition(top @animationSpeed, opacity @animationSpeed * 2);
+  .dapp-sticky-bar {
+    position: fixed;
+    top: floor(@gridHeight * -1);
+    left: 0;
+    right: 0;
+    height: @gridHeight * 2;
+    padding: @gridHeight / 2 @gridWidth * 2.5;
+    background: @colorWhite;
+    opacity: 0;
+    z-index: -1;
 
-        &.sticky {
-            top: floor(@gridHeight * 2);
-            opacity: 1;
-            z-index: 25;
-        }
+    .transition(top @animationSpeed, opacity @animationSpeed * 2);
 
-        > .dapp-identicon {
-            // .dapp-tiny;
-            position: absolute;
-            width: floor(@gridWidth / 1.5);
-            height: floor(@gridWidth / 1.5);
-            box-shadow: inset rgba(255, 255, 255, 0.4) 0 1px 1px, inset rgba(0, 0, 0, 0.3) 0 -1px 2px;
-            left: @gridWidth * 2.5;
-        }
-
-        h1 {
-            font-size: 1.1em;
-            text-transform: uppercase;
-            padding-left: @gridWidth;
-        }
-        
-        .account-balance {
-            position: absolute;
-            right: @gridWidth * 2;
-            top: 7px;
-            font-size: 1.2em;
-            font-weight: 400;
-            span {
-                font-size: 0.75em;
-                font-weight: 600;
-            }
-        }
+    &.sticky {
+      top: floor(@gridHeight * 2);
+      opacity: 1;
+      z-index: 25;
     }
 
-    .accounts-page-summary {
-        flex: 1 50%;
-        .display(flex);
-        flex-flow: column;
-
-        > .dapp-identicon {
-            margin-top: @gridHeight;
-            position: absolute;
-        }
-
-        h2 {
-            //white-space: nowrap;
-            span {
-               padding-left: @gridWidth/6;
-            }
-            input {
-                border: none;
-                margin: 0;
-                background: none;
-                width: 440px;
-                color: inherit;
-                padding-left: @gridWidth/6;
-            }
-        }
-
-        header {
-            flex: 1;
-            padding-left: @gridWidth*3;
-        }
-
-        table.token-list {
-            flex: 1 100%;
-
-            .dapp-identicon {
-                margin-top: 0;
-                position: absolute;
-            }
-            
-            tr {
-                &:hover td:last-child a {
-                    visibility: visible;
-                }
-                
-                td:last-child {
-                    text-align: right;
-
-                    
-                    a {
-                        visibility: hidden;
-                    }
-                }
-                td strong {
-                    padding-left: @gridWidth;
-                }
-            }
-            
-        }
-    }
-
-    .accounts-page-summary.sticky + .dapp-actionbar {
-        flex: 100%;
-        nav {
-            float: right;
-        }
-    }
-
-    .accounts-transactions {
-        .watch-events-spinner .spinner-container {
-            position: relative;
-            height: 50px;
-
-            .spinner {
-                left: 3% !important;
-                top: 80% !important;
-            }
-        }
-    }
-
-    .accounts-transactions,
-    .execute-contract {
-        flex: 1 100%;
-    }
-    
     > .dapp-identicon {
-        float: left;
-        margin-right: 20px;
-        margin-top: 18px;
+      // .dapp-tiny;
+      position: absolute;
+      width: floor(@gridWidth / 1.5);
+      height: floor(@gridWidth / 1.5);
+      box-shadow: inset rgba(255, 255, 255, 0.4) 0 1px 1px,
+        inset rgba(0, 0, 0, 0.3) 0 -1px 2px;
+      left: @gridWidth * 2.5;
     }
 
     h1 {
-        margin-bottom: 0;
-        margin-top: 0;
-        display: block;
-        max-width: 60%;
-        word-break: break-all;
-
-        &:hover {
-            button.delete {
-                display: inline-block;
-                &:hover {
-                    color: @colorLink;
-                }
-            }
-        }
-
-        button.delete {
-            display: none;
-            font-size: 0.4em;
-            margin-left: @gridWidth;
-        }
-
-        .edit-name {
-            outline: 0;
-
-            + .edit-icon {
-                display: none;
-                position: absolute;
-                top: @gridHeight*1.2;
-                margin-left: 5px;
-                font-size: 0.4em;
-            }
-
-            &:hover, &:focus {
-                + .edit-icon {
-                    display: inline-block;
-                }
-            }
-
-            &[contenteditable="true"] {
-                border-bottom: 2px dotted @colorTextTertiary;
-            }
-        }
-
-        + h2 {
-            padding: 0;
-            margin-bottom: 0;
-            background-color: transparent;
-            color: @colorTextTertiary;
-            text-transform: none;
-            // font-size: 0.9em; 
-        }
+      font-size: 1.1em;
+      text-transform: uppercase;
+      padding-left: @gridWidth;
     }
 
     .account-balance {
-        font-size: 1.6em;
-        color: @colorTextSecondary;
+      position: absolute;
+      right: @gridWidth * 2;
+      top: 7px;
+      font-size: 1.2em;
+      font-weight: 400;
+      color: #696969;
+      span {
+        font-size: 0.75em;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .accounts-page-summary {
+    flex: 1 50%;
+    .display(flex);
+    flex-flow: column;
+
+    > .dapp-identicon {
+      margin-top: @gridHeight;
+      position: absolute;
     }
 
-    input[type='checkbox'] {
-        float: left; 
-        margin-right: @defaultMargin/2;
+    h2 {
+      //white-space: nowrap;
+      span {
+        padding-left: @gridWidth / 6;
+      }
+      input {
+        border: none;
+        margin: 0;
+        background: none;
+        width: 440px;
+        color: inherit;
+        padding-left: @gridWidth / 6;
+      }
     }
+
+    header {
+      flex: 1;
+      padding-left: @gridWidth*3;
+    }
+
+    table.token-list {
+      flex: 1 100%;
+
+      .dapp-identicon {
+        margin-top: 0;
+        position: absolute;
+      }
+
+      tr {
+        &:hover td:last-child a {
+          visibility: visible;
+        }
+
+        td:last-child {
+          text-align: right;
+
+          a {
+            visibility: hidden;
+          }
+        }
+        td strong {
+          padding-left: @gridWidth;
+          color: #444;
+          font-weight: 400;
+        }
+        td.send {
+          font-weight: 400;
+        }
+      }
+    }
+  }
+
+  .accounts-page-summary.sticky + .dapp-actionbar {
+    flex: 100%;
+    nav {
+      float: right;
+    }
+  }
+
+  .accounts-transactions {
+    .watch-events-spinner .spinner-container {
+      position: relative;
+      height: 50px;
+
+      .spinner {
+        left: 3% !important;
+        top: 80% !important;
+      }
+    }
+  }
+
+  .accounts-transactions,
+  .execute-contract {
+    flex: 1 100%;
+  }
+
+  > .dapp-identicon {
+    float: left;
+    margin-right: 20px;
+    margin-top: 18px;
+  }
+
+  h1 {
+    margin-bottom: 0;
+    margin-top: 0;
+    display: block;
+    max-width: 60%;
+    word-break: break-all;
+
+    &:hover {
+      button.delete {
+        display: inline-block;
+        &:hover {
+          color: @colorLink;
+        }
+      }
+    }
+
+    button.delete {
+      display: none;
+      font-size: 0.4em;
+      margin-left: @gridWidth;
+    }
+
+    .edit-name {
+      outline: 0;
+      font-style: normal;
+
+      + .edit-icon {
+        display: none;
+        position: absolute;
+        top: @gridHeight*1.2;
+        margin-left: 5px;
+        font-size: 0.4em;
+      }
+
+      &:hover,
+      &:focus {
+        + .edit-icon {
+          display: inline-block;
+        }
+      }
+
+      &[contenteditable='true'] {
+        border-bottom: 2px dotted @colorTextTertiary;
+      }
+    }
+
+    + h2 {
+      padding: 0;
+      margin-bottom: 0;
+      background-color: transparent;
+      color: @colorTextTertiary;
+      text-transform: none;
+      // font-size: 0.9em;
+    }
+  }
+
+  .account-balance {
+    font-size: 1.6em;
+    color: @colorTextSecondary;
+  }
+
+  input[type='checkbox'] {
+    float: left;
+    margin-right: @defaultMargin / 2;
+  }
 }
 
 .dapp-full-header + .dapp-flex-content .accounts-page .dapp-sticky-bar.sticky {
-    top: floor(@gridHeight * 5.5);
+  top: floor(@gridHeight * 5.5);
 }
 
-.dapp-actionbar nav ul li button, 
-.dapp-actionbar nav ul li a, 
+.dapp-actionbar nav ul li button,
+.dapp-actionbar nav ul li a,
 .dapp-actionbar nav ul li a:visited {
-    color: @colorLink;
+  color: @colorLink;
+}
+
+.dapp-header nav > ul > li.active a,
+.dapp-header nav > ul > li.active button,
+.dapp-header nav > ul > li button.active,
+.dapp-header nav > ul > li a.active {
+  color: #003a54;
+  border-bottom: 8px solid #fff;
 }
 
 .account-send-form {
+  p.over-daily {
+    .orange;
+    font-weight: 400;
+  }
+  p.under-daily {
+    .green;
+    font-weight: 400;
+  }
 
-    p.over-daily {
-        .orange;
-        font-weight: 400;
-    }
-    p.under-daily {
-        .green;
-        font-weight: 400;
-    }
+  > div {
+    margin-bottom: @defaultMargin;
 
-    > div {
+    &.from-to {
+      position: relative;
+      margin-bottom: 0;
+      padding-bottom: 0;
+
+      > div {
+        position: relative;
         margin-bottom: @defaultMargin;
+      }
 
-        &.from-to {
-            position: relative;
-            margin-bottom: 0;
-            padding-bottom: 0;
-
-            > div {
-                position: relative;
-                margin-bottom: @defaultMargin;
-            }
-
-            select {
-                color: @colorLink;
-                width: 100%;
-            }
-
-            .dapp-address-input input {
-                width: 100%;
-            }
-            
-        }
-
-        &.compile-contract {
-            
-            // switch editor sourcecode/bytecode
-            .dapp-data-textarea {
-                display: block;
-            }
-            .ace_editor {
-                display: none;
-            }
-
-            .source-code {
-                .dapp-data-textarea {
-                    display: none;
-                }
-                .ace_editor {
-                    display: block;
-                }
-            }
-
-            select {
-                margin-bottom: @defaultMargin*2;
-            }
-            h4 {
-                text-transform: lowercase;
-
-                &::first-letter {
-                    text-transform: uppercase;
-                }
-
-                em {
-                    font-style: normal;
-                    font-weight: normal;
-                    .opacity(0.6);
-                }
-            }
-
-            .spinner-container {
-                position: relative;
-                top: -30px;
-            }
-
-            input:not([type='checkbox']),
-            select {
-                width: 100%;
-            }
-            input[type='checkbox'] {
-                float: left; 
-                margin-right: @defaultMargin/2;
-            }
-
-            #contract-source-editor {
-                width: auto;
-                height: 400px;
-            }
-
-            // .solidity-source {
-            //     font-family: 'source code pro', "Lucida Sans Typewriter Regular", Monaco, "Courier New" ,  monospace;
-            //     font-size: 0.8em;
-            //     font-weight: 500;
-            //     color: @colorGrayDark;
-            // }
-        }
-
-        > .amount {
-            position: relative;
-
-            span {
-                font-size: 1.3em;
-                font-weight: 400;
-                color: @colorTextSecondary;
-            }
-
-            input[type="text"] {
-                width: 100%;
-                margin-bottom: @defaultMargin/2;
-            }
-
-            input.send-all  {
-                display: inline-block;
-                float: left;
-                margin-right: @defaultMargin/2;
-            }
-        }
-
-        .token-ether {
-            color: @colorGrayDark;
-            font-size: 16px;
-            font-weight: normal;
-            height: @gridHeight;
-            margin-top: @gridHeight*0.75;
-            padding: @gridHeight/4 @gridWidth/2;
-
-            .ether-symbol {
-                display: inline-block;
-                border: solid 1px @colorGrayDark;
-                border-radius: 50%;
-                width: @gridWidth*0.75;
-                height: @gridWidth*0.75;
-                text-align: center;
-                font-size: 14px;
-                line-height: 22px;
-                margin-right: @gridWidth/4;
-            }
-
-            .balance {
-                float: right;
-            }
-        }
-
-        .dapp-select-gas-price {
-            width: 350px;
-        }
-
-        &.total {
-            font-weight: 400;
-            color: @colorTextSecondary;
-
-            span {
-                font-size: 2em;
-            }
-        }
-         
-    }
-
-    textarea {
+      select {
+        color: @colorLink;
         width: 100%;
+      }
+
+      .dapp-address-input input {
+        width: 100%;
+      }
     }
+
+    &.compile-contract {
+      // switch editor sourcecode/bytecode
+      .dapp-data-textarea {
+        display: block;
+      }
+      .ace_editor {
+        display: none;
+      }
+
+      .source-code {
+        .dapp-data-textarea {
+          display: none;
+        }
+        .ace_editor {
+          display: block;
+        }
+      }
+
+      select {
+        margin-bottom: @defaultMargin*2;
+      }
+      h4 {
+        text-transform: lowercase;
+
+        &::first-letter {
+          text-transform: uppercase;
+        }
+
+        em {
+          font-style: normal;
+          font-weight: normal;
+          .opacity(0.6);
+        }
+      }
+
+      .spinner-container {
+        position: relative;
+        top: -30px;
+      }
+
+      input:not([type='checkbox']),
+      select {
+        width: 100%;
+      }
+      input[type='checkbox'] {
+        float: left;
+        margin-right: @defaultMargin / 2;
+      }
+
+      #contract-source-editor {
+        width: auto;
+        height: 400px;
+      }
+
+      // .solidity-source {
+      //     font-family: 'source code pro', "Lucida Sans Typewriter Regular", Monaco, "Courier New" ,  monospace;
+      //     font-size: 0.8em;
+      //     font-weight: 500;
+      //     color: @colorGrayDark;
+      // }
+    }
+
+    > .amount {
+      position: relative;
+
+      span {
+        font-size: 1.3em;
+        font-weight: 400;
+        color: @colorTextSecondary;
+      }
+
+      input[type='text'] {
+        width: 100%;
+        margin-bottom: @defaultMargin / 2;
+      }
+
+      input.send-all {
+        display: inline-block;
+        float: left;
+        margin-right: @defaultMargin / 2;
+      }
+    }
+
+    .token-ether {
+      color: @colorGrayDark;
+      font-size: 16px;
+      font-weight: normal;
+      height: @gridHeight;
+      margin-top: @gridHeight*0.75;
+      padding: @gridHeight / 4 @gridWidth / 2;
+
+      .ether-symbol {
+        display: inline-block;
+        border: solid 1px @colorGrayDark;
+        border-radius: 50%;
+        width: @gridWidth*0.75;
+        height: @gridWidth*0.75;
+        text-align: center;
+        font-size: 14px;
+        line-height: 22px;
+        margin-right: @gridWidth / 4;
+      }
+
+      .balance {
+        float: right;
+      }
+    }
+
+    .dapp-select-gas-price {
+      width: 350px;
+    }
+
+    &.total {
+      font-weight: 400;
+      color: @colorTextSecondary;
+
+      span {
+        font-size: 2em;
+      }
+    }
+  }
+
+  textarea {
+    width: 100%;
+  }
 }
 
 .transaction-info,
 .send-transaction-info {
-    pre {
-        max-height: 100px;
-    }
+  pre {
+    max-height: 100px;
+  }
 }
 
 .send-transaction-info {
-    h1 {
-        margin-bottom: @defaultMargin*2;
-        small {
-            font-size: 0.6em;
+  h1 {
+    margin-bottom: @defaultMargin*2;
+    small {
+      font-size: 0.6em;
+    }
+  }
+  p {
+    margin: @defaultMargin / 2;
+
+    &.tx-info {
+      margin-top: @defaultMargin*2;
+
+      small {
+        font-weight: 400;
+
+        &.gas-price {
+          font-size: 0.7em;
+          font-weight: 300;
+          color: @colorGray;
         }
+      }
     }
-    p {
-        margin: @defaultMargin/2;
-
-        &.tx-info {
-            margin-top: @defaultMargin*2;
-
-            small {
-                font-weight: 400;
-
-                &.gas-price {
-                    font-size: 0.7em;
-                    font-weight: 300;
-                    color: @colorGray;
-                }
-            }
-        }
-    }
-    i {
-        position: relative;
-        top: 4px;
-        margin-left: -3px;
-        font-size: 1.5em;
-        color: @colorGray;
-    }
-    input.gas {
-        width: 120px;
-        font-size: 0.8em;
-    }
+  }
+  i {
+    position: relative;
+    top: 4px;
+    margin-left: -3px;
+    font-size: 1.5em;
+    color: @colorGray;
+  }
+  input.gas {
+    width: 120px;
+    font-size: 0.8em;
+  }
 }
 
 .new-account {
+  h2 {
+    margin-bottom: @defaultMargin*2;
+  }
 
-    h2 {
-        margin-bottom: @defaultMargin*2;
+  input {
+    display: block;
+  }
+
+  label {
+    display: block;
+    position: relative;
+    padding-left: @gridWidth;
+    cursor: pointer;
+
+    input[type='radio'] {
+      position: absolute;
+      left: 0;
+      top: 0;
+      margin-right: @defaultMargin;
     }
 
-    input {
-        display: block;
+    h3 {
+      margin: 0;
+      color: @colorLink;
     }
+    span {
+      color: @colorTextSecondary;
+    }
+  }
 
-    label {
-        display: block;
+  .indented-box {
+    margin-left: @defaultMargin*2;
+
+    .dapp-address-input {
+      margin-bottom: @defaultMargin;
+    }
+  }
+  p {
+    &.valid {
+      color: @colorGreen;
+
+      i {
         position: relative;
-        padding-left: @gridWidth;
-        cursor: pointer;
-
-        input[type="radio"] {
-            position: absolute;
-            left: 0;
-            top: 0;
-            margin-right: @defaultMargin;
-        }
-
-        h3 {
-            margin: 0;
-            color: @colorLink;
-        }
-        span {
-            color: @colorTextSecondary;
-        }
-        
+        top: 1px;
+      }
     }
-
-    .indented-box {
-        margin-left: @defaultMargin*2;
-
-        .dapp-address-input {
-            margin-bottom: @defaultMargin;
-        }
+    &.invalid {
+      color: @colorError;
     }
-    p {
-        &.valid {
-            color: @colorGreen;
-
-            i {
-                position: relative;
-                top: 1px;
-            }
-        }
-        &.invalid {
-            color: @colorError;
-        }
-    }
+  }
 }
 
-
 .execute-contract {
+  h4,
+  dt {
+    text-transform: lowercase;
+  }
 
-    h4, dt {
-        text-transform: lowercase;
+  select {
+    text-transform: capitalize;
+  }
+
+  h4::first-letter,
+  select::first-letter,
+  dt::first-letter {
+    text-transform: uppercase;
+  }
+
+  .contract-info {
+    h3 {
+      color: @colorGrayDark;
+      text-transform: lowercase;
+      font-weight: 300;
+      font-size: 1.2em;
+    }
+    h3::first-letter {
+      text-transform: uppercase;
+    }
+    input,
+    .dapp-address-input {
+      width: 100%;
     }
 
-    select {
-        text-transform: capitalize;
+    .output > .dapp-identicon {
+      top: 4px;
+      position: relative;
+      margin-right: @defaultMargin / 4;
     }
 
-    h4::first-letter, select::first-letter, dt::first-letter {
-        text-transform: uppercase;
+    .output {
+      position: relative;
+      overflow: auto;
+      max-height: 120px;
+      font-weight: 400;
+
+      em {
+        display: inline-block;
+        color: @colorGray;
+        padding-left: @gridWidth / 2;
+
+        .icon {
+          position: absolute;
+          left: @gridWidth;
+          top: 1px;
+          padding: 1px 4px;
+        }
+      }
     }
 
-    .contract-info {
-        
+    table {
+      table-layout: fixed;
+
+      tr:nth-child(odd) {
+        border-radius: 4px 4px 0 0;
+      }
+
+      tr:nth-child(even) {
+        background-color: #fff;
+        border-bottom: solid 10px @colorWhite;
+      }
+
+      td {
+        border-radius: 2px;
+        vertical-align: top;
+        word-wrap: break-word;
+
         h3 {
-            color: @colorGrayDark;
-            text-transform: lowercase;
-            font-weight: 300;
-            font-size: 1.2em;
-        }
-        h3::first-letter {
-            text-transform: uppercase;
-        }
-        input,
-        .dapp-address-input {
-            width: 100%;
+          margin: 0;
         }
 
-        .output > .dapp-identicon {
-            top: 4px;
-            position: relative;
-            margin-right: @defaultMargin/4;
+        dl {
+          margin: 0;
+          dd {
+            margin-left: 0;
+            margin-bottom: @gridHeight;
+            word-wrap: break-word;
+          }
         }
-
-        .output {
-            position: relative;
-            overflow: auto;
-            max-height: 120px;
-            font-weight: 400;
-
-            em {
-                display: inline-block;
-                color: @colorGray;
-                padding-left: @gridWidth / 2;
-                
-                .icon {
-                    position: absolute;
-                    left:  @gridWidth;
-                    top: 1px;
-                    padding: 1px 4px;
-                }
-            }
-        }
-        
-        table {
-            table-layout: fixed;
-            
-            tr:nth-child(odd) {
-                border-radius: 4px 4px 0 0;
-            }        
-
-            tr:nth-child(even) {
-                background-color: #FFF;
-                border-bottom: solid 10px @colorWhite;
-            }
-
-            td {
-                border-radius: 2px;
-                vertical-align: top;
-                word-wrap: break-word;
-
-                h3 {    
-                    margin: 0;
-                }
-
-                dl {
-                    margin: 0;
-                    dd {
-                        margin-left: 0;
-                        margin-bottom: @gridHeight;
-                        word-wrap: break-word;
-                    }
-                }    
-            }
-        }
-        .dapp-punctuation {
-            opacity: 0.15;
-            overflow: visible;
-        }
+      }
     }
-
-    .dapp-block-button {
-        margin-top: @gridHeight;
+    .dapp-punctuation {
+      opacity: 0.15;
+      overflow: visible;
     }
+  }
+
+  .dapp-block-button {
+    margin-top: @gridHeight;
+  }
 }
 
 .dapp-punctuation {
-    opacity: 0.25;
+  opacity: 0.25;
 }
 
 /* #### Small wallet #### */
-@media screen and (max-width: 1099px){
-    .hide-on-small {
-        display: none;
-
-    }
+@media screen and (max-width: 1099px) {
+  .hide-on-small {
+    display: none;
+  }
 }
-
 
 /* #### All small phone screens landscape #### */
-@media screen and (max-width: 576px){
-    .dapp-header nav ul li.block-info {
-        visibility: hidden;
-        padding: 0;
+@media screen and (max-width: 576px) {
+  .dapp-header nav ul li.block-info {
+    visibility: hidden;
+    padding: 0;
+  }
+
+  .wallet-balance {
+    font-size: 75%;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial,
+    'sans-serif';
+}
+
+.dapp-flex-content {
+  background: #fff;
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 32px;
+}
+
+h2 {
+  padding: 3px 7px;
+  text-transform: capitalize;
+  background: #999;
+  color: #fff;
+  font-weight: 400;
+  border-radius: 1px;
+}
+
+.wallet-box:not(.create) {
+  h3 {
+    margin-top: 5px;
+    color: #333;
+    font-style: normal;
+    span {
+      color: #696969;
     }
-  
-    .wallet-balance {
-        font-size: 75%;
+  }
+  i {
+    font-size: 90%;
+  }
+  .account-balance {
+    line-height: normal;
+  }
+}
+
+.no-txs {
+  background: none;
+  text-transform: none;
+  color: #bbb;
+  font-style: italic;
+}
+
+.no-txs::first-letter {
+  text-transform: uppercase;
+}
+
+.account-info strong {
+  color: #aaa;
+}
+
+table.dapp-zebra tr td:first-of-type {
+  font-weight: 400;
+}
+
+span.address.not-ens-name {
+  font-style: normal;
+  font-weight: 400;
+}
+
+/* Custom icon size for auto-scan button on contracts.html */
+.account-pattern .icon-target {
+    font-size: 0.5em;
+}
+
+button.token-auto-scan {
+    &:hover {
+        cursor: pointer;
     }
 }
 
+table.transactions {
+  font-weight: normal;
+  .account-name h2 {
+    color: #555;
+  }
+  p {
+    color: #777;
+    .address a {
+      color: #444 !important;
+    }
+  }
+  i {
+    margin-right: 3px;
+  }
+}

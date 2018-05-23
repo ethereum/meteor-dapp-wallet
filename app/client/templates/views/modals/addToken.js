@@ -5,106 +5,128 @@ Modal to add token.
 @constructor
 */
 
-
-Template['views_modals_addToken'].onRendered(function(){
-    if(!this.data || !this.data.address)
-        this.$('input[name="address"]').focus();
+Template['views_modals_addToken'].onRendered(function() {
+  if (!this.data || !this.data.address) this.$('input[name="address"]').focus();
 });
 
 Template['views_modals_addToken'].helpers({
-    /**
+  /**
     Returns the token for the preview token box
 
     @method (previewToken)
     */
-    'previewToken' : function(){
-        var token = _.clone(this || {});
+  previewToken: function() {
+    var token = _.clone(this || {});
 
-        if(TemplateVar.get('address'))
-            token.address = TemplateVar.get('address');
-        if(TemplateVar.get('decimals'))
-            token.decimals = TemplateVar.get('decimals');
-        if(TemplateVar.get('symbol'))
-            token.symbol = TemplateVar.get('symbol');
-        if(TemplateVar.get('name'))
-            token.name = TemplateVar.get('name');
+    if (TemplateVar.get('address')) token.address = TemplateVar.get('address');
+    if (TemplateVar.get('decimals'))
+      token.decimals = TemplateVar.get('decimals');
+    if (TemplateVar.get('symbol')) token.symbol = TemplateVar.get('symbol');
+    if (TemplateVar.get('name')) token.name = TemplateVar.get('name');
 
-        return token;
-    }
+    return token;
+  }
 });
 
-
 Template['views_modals_addToken'].events({
-    /**
+  /**
     Change Decimals
 
     @event change .decimals, input .decimals
     */
-    'change .decimals, input .decimals': function(e, template) {
-        TemplateVar.set('decimals', e.target.value);
-    },    
-    /**
+  'change .decimals, input .decimals': function(e, template) {
+    TemplateVar.set('decimals', e.target.value);
+  },
+  /**
     Change Symbol
 
     @event change input.symbol, input input.symbol
     */
-    'change input.symbol, input input.symbol': function(e, template) {
-        TemplateVar.set('symbol', e.target.value);
-    },    
-    /**
+  'change input.symbol, input input.symbol': function(e, template) {
+    TemplateVar.set('symbol', e.target.value);
+  },
+  /**
     Change Name
 
     @event change input.name, input input.name
     */
-    'change input.name, input input.name': function(e, template) {
-        TemplateVar.set('name', e.target.value);
-    },    
-    /**
+  'change input.name, input input.name': function(e, template) {
+    TemplateVar.set('name', e.target.value);
+  },
+  /**
     Change Address
 
     @event change input[name="address"], input input[name="address"]
     */
-    'change input[name="address"], input input[name="address"], blur input[name="address"]': function(e, template) {
-        var tokenAddress = TemplateVar.getFrom('.token-address', 'value');
+  'change input[name="address"], input input[name="address"], blur input[name="address"]': function(
+    e,
+    template
+  ) {
+    var tokenAddress = TemplateVar.getFrom('.token-address', 'value');
 
-        var l = e.currentTarget.value.length;
-        if (!tokenAddress && l > 2 && l < 6) {
-            e.currentTarget.value += '.thetoken.eth';
-            e.currentTarget.setSelectionRange(l,l+13);
-        }
-        
-        
-        if(!tokenAddress || (template.data && template.data.address && template.data.address == tokenAddress))
-            return;
-        
-        TemplateVar.set('address', tokenAddress);
-    
-        // initiate the geo pattern
-        var pattern = GeoPattern.generate(tokenAddress, {color: '#CCC6C6'});
-        $('.example.wallet-box.tokens').css('background-image', pattern.toDataUrl());
-        
-        // check if the token has information about itself asynchrounously
-        var tokenInstance = TokenContract.at(tokenAddress);
+    var l = e.currentTarget.value.length;
+    if (!tokenAddress && l > 2 && l < 6) {
+      e.currentTarget.value += '.thetoken.eth';
+      e.currentTarget.setSelectionRange(l, l + 13);
+    }
 
-        tokenInstance.symbol(function(e, i){
-            template.$('input.symbol').val(i).change();
-        });
+    if (
+      !tokenAddress ||
+      (template.data &&
+        template.data.address &&
+        template.data.address == tokenAddress)
+    )
+      return;
 
-        tokenInstance.name(function(e, i){
-            template.$('input.name').val(i).change();
-        });
-        
-        tokenInstance.decimals(function(e, i){
-            template.$('input.decimals').val(i).change();
-        });
+    TemplateVar.set('address', tokenAddress);
 
-    },    
-    /**
-    Prevent the example from beeing clicked
+    // initiate the geo pattern
+    var pattern = GeoPattern.generate(tokenAddress, { color: '#CCC6C6' });
+    $('.example.wallet-box.tokens').css(
+      'background-image',
+      pattern.toDataUrl()
+    );
+
+    // check if the token has information about itself asynchrounously
+    var tokenInstance = TokenContract;
+    tokenInstance.options.address = tokenAddress;
+
+    tokenInstance.methods
+      .symbol()
+      .call()
+      .then(function(symbol) {
+        template
+          .$('input.symbol')
+          .val(symbol)
+          .change();
+      });
+
+    tokenInstance.methods
+      .name()
+      .call()
+      .then(function(name) {
+        template
+          .$('input.name')
+          .val(name)
+          .change();
+      });
+
+    tokenInstance.methods
+      .decimals()
+      .call()
+      .then(function(decimals) {
+        template
+          .$('input.decimals')
+          .val(decimals)
+          .change();
+      });
+  },
+  /**
+    Prevent the example from being clicked
 
     @event click .example.wallet-box.tokens
     */
-    'click .example.wallet-box.tokens': function(e) {
-        e.preventDefault();
-    }
+  'click .example.wallet-box.tokens': function(e) {
+    e.preventDefault();
+  }
 });

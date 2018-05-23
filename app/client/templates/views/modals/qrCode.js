@@ -5,7 +5,6 @@ The template to display qrCode.
 @constructor
 */
 
-
 Template['views_modals_qrCode'].onRendered(function(){
     if(this.data && this.data.address) {
         var qrcodesvg = new Qrcodesvg("ethereum:" + this.data.address, 'qrcode', 150, {"ecclevel" : 1});

@@ -1,608 +1,597 @@
-
 .orange {
-    color: @colorOrange;
+  color: @colorOrange;
 }
 
 .green {
-    color: @colorGreen;
+  color: @colorGreen;
 }
 
 .red {
-    color: @colorError;
+  color: @colorError;
 }
 
 .blue {
-    color: @colorBlue;
+  color: @colorBlue;
 }
 
 span.address {
-    display: inline;
+  display: inline;
+  position: relative;
+  font-size: 0.9em;
+  color: @colorLink;
+
+  &.ens-name {
+    font-weight: 400;
+  }
+
+  &.not-ens-name {
+    font-style: italic;
+  }
+
+  > .dapp-identicon {
     position: relative;
-    font-size: 0.9em;
-    color: @colorLink;
-
-    &.ens-name {
-        font-weight: 400;
-    }
-
-    &.not-ens-name {
-        font-style: italic;
-    }
-
-    > .dapp-identicon {
-        position: relative;
-        top: 5px;
-        margin-right: @defaultMargin/3;
-    }
+    top: 5px;
+    margin-right: @defaultMargin / 3;
+  }
 }
 
 .abi-input-range {
-    overflow: auto;
-    max-height: 120px;
-    margin-left: 10px;
-    margin-bottom: 10px;
+  overflow: auto;
+  max-height: 120px;
+  margin-left: 10px;
+  margin-bottom: 10px;
 }
 
 .dapp-actionbar .icon-ethereum {
-    height: 26px;
-    background-image: url('ethereum-icon.svg');
-    background-repeat: no-repeat;
-    background-position: center;
+  height: 26px;
+  background-image: url('ethereum-icon.svg');
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .wallet-box-list {
-    display: flex;
-    flex-flow: row wrap;
+  display: flex;
+  flex-flow: row wrap;
 }
 
 .wallet-box {
-    position: relative;
-    display: inline-block;
-    width: @gridWidth * 6.5;
-    min-height: @gridHeight*4;
-    padding-left: @gridWidth + @defaultPaddingHorizontal;
-    padding-right: @defaultPaddingHorizontal/2;
-    margin-right: @defaultMargin;
-    margin-bottom: @defaultMargin;
-    .box-sizing(border-box);
+  position: relative;
+  display: inline-block;
+  width: @gridWidth * 6.5;
+  min-height: @gridHeight*4;
+  padding-left: @gridWidth + @defaultPaddingHorizontal;
+  padding-right: @defaultPaddingHorizontal / 2;
+  margin-right: @defaultMargin;
+  margin-bottom: @defaultMargin;
+  .box-sizing(border-box);
+  border: 0;
+
+  // ANIMATION
+  .transition(background-color @animationSpeed*4, opacity @animationSpeed);
+
+  &:active {
     border: 0;
+  }
 
-    // ANIMATION
-    .transition(background-color @animationSpeed*4, opacity @animationSpeed);
+  &.new {
+    background-color: fadeout(#ffc107, 20%);
+  }
 
-    &:active {
-        border: 0;
+  &.disabled:not(:hover),
+  &.creating {
+    .opacity(0.4);
+  }
+  &.disabled {
+    .filter(grayscale(100%));
+  }
+  &.create {
+    .display(flex);
+    .align-items(center);
+
+    h3 {
+      margin-top: 0;
+      text-align: left;
+    }
+  }
+
+  &.creating {
+    pointer-events: none;
+    cursor: default;
+  }
+
+  &:last-child {
+    flex: 1 0 @gridWidth * 6.5;
+    max-width: @gridWidth * 13.5;
+    margin-right: 0;
+  }
+
+  &:hover {
+    background-color: lighten(@colorBackgroundHeader, 12%);
+  }
+
+  &.wallets {
+    .background-image(linear-gradient(to right,  lighten(@colorBackgroundHeader, 12%) 0%, rgba(255,255,255, 0.1) 100%));
+    overflow: hidden;
+  }
+  &.tokens {
+    perspective: 800px;
+    position: relative;
+    background-repeat: repeat-y;
+    background-color: @colorGray;
+    background-size: cover;
+    // background-size: @gridWidth * 3;
+    background-position-x: 4px;
+    background-blend-mode: overlay;
+    overflow: hidden;
+    transform-style: preserve-3d;
+
+    .dapp-identicon {
+      border: @colorWhite solid 2px;
+      .transition(transform 0.3s);
+      backface-visibility: hidden;
     }
 
-    &.new {
-        background-color: fadeout( #ffc107, 20%);
-    }
+    .delete-token {
+      position: absolute;
+      left: 12px;
+      top: 20px;
+      background: @colorWhite;
+      border-radius: 50%;
+      width: @gridWidth;
+      height: @gridWidth;
+      z-index: 50;
+      backface-visibility: hidden;
+      transform: rotateY(180deg);
+      box-shadow: @colorGray 0 1px 2px;
+      .transition(transform 0.3s);
+      text-align: center;
 
-    &.disabled:not(:hover),
-    &.creating {
-        .opacity(0.4);
-    }
-    &.disabled {
-        .filter(grayscale(100%));
-    }
-    &.create {
-        .display(flex);
-        .align-items(center);
+      &:hover {
+        background: @colorLink;
+        color: @colorWhite;
+      }
 
-        h3 {
-            margin-top: 0;
-            text-align: left;
-        }
-    }
-
-    &.creating {
-        pointer-events: none;
-        cursor: default;
-    }
-
-    &:last-child {
-        flex: 1 0 @gridWidth * 6.5;
-        max-width: @gridWidth * 13.5;
-        margin-right: 0;
+      i {
+        position: relative;
+        top: 1.5px;
+        text-align: center;
+      }
     }
 
     &:hover {
-        background-color: lighten(@colorBackgroundHeader, 12%);
+      .delete-token {
+        transform: rotateY(0);
+      }
+      .dapp-identicon {
+        transform: rotateY(180deg);
+      }
+    }
+    &:last-child {
+      max-width: @gridWidth * 6.5;
+    }
+  }
+
+  > .dapp-identicon {
+    position: absolute;
+    left: 12px;
+    top: 20px;
+  }
+  .spinner-container {
+    position: absolute;
+    top: -11px;
+    left: -72px;
+  }
+  .dapp-progress {
+    position: absolute;
+    left: 0px;
+    bottom: 0;
+  }
+
+  .token-list {
+    .dapp-vertical-menu;
+    position: absolute;
+    left: @gridWidth * 1.5;
+    top: 4px;
+
+    li {
+      margin: 3px 0;
     }
 
-    &.wallets {
-        .background-image(linear-gradient(to right,  lighten(@colorBackgroundHeader, 12%) 0%, rgba(255,255,255, 0.1) 100%));
-        overflow: hidden;
+    .dapp-identicon {
+      display: block;
+      width: 10px;
+      height: 10px;
     }
-    &.tokens {
-        perspective: 800px;
-        position: relative;
-        background-repeat: repeat-y;
-        background-color: @colorGray;
-        background-size: cover;
-        // background-size: @gridWidth * 3;
-        background-position-x: 4px;
-        background-blend-mode: overlay;
-        overflow: hidden;
-        transform-style: preserve-3d;
+  }
 
-        .dapp-identicon {
-            border: @colorWhite solid 2px;
-            .transition(transform 0.3s);
-            backface-visibility: hidden;
-        }
+  .account-pattern {
+    position: absolute;
+    .display(flex);
+    .align-items(center);
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: auto;
+    min-width: @gridWidth*1.4;
+    padding: 0 @gridWidth / 2;
+    background-color: @colorLink;
+    text-align: center;
+    line-height: 100%;
+    color: @colorWhite;
+    font-size: 1.8em;
+    .box-sizing(border-box);
 
-        .delete-token {
-            position: absolute;
-            left: 12px;
-            top: 20px;
-            background: @colorWhite;
-            border-radius: 50%;
-            width: @gridWidth;
-            height: @gridWidth;
-            z-index: 50;
-            backface-visibility: hidden;
-            transform: rotateY(180deg);
-            box-shadow: @colorGray 0 1px 2px;
-            .transition(transform 0.3s);
-            text-align: center;
-
-            &:hover {
-                background: @colorLink;
-                color: @colorWhite;
-            }
-
-            i {
-                position: relative;
-                top: 1.5px;
-                text-align: center;
-            }
-        }
-
-        &:hover {
-            .delete-token {
-                transform: rotateY(0);
-            }
-            .dapp-identicon {
-                transform: rotateY(180deg);
-            }
-        }
-        &:last-child {
-            max-width: @gridWidth * 6.5;
-        }
-
+    a {
+      margin: 0 -@gridWidth / 3;
     }
+  }
 
-    > .dapp-identicon {
-        position: absolute;
-        left: 12px;
-        top: 20px;
+  > h3 {
+    margin: 0;
+    margin-top: 4px;
+    color: @colorLink;
+    max-width: @gridWidth*4.4;
+    float: left;
+
+    &.ens-name {
+      font-weight: 600;
     }
-    .spinner-container {
-        position: absolute;
-        top: -11px;
-        left: -72px;
+    &.not-ens-name {
+      font-style: italic;
     }
-    .dapp-progress {
-        position: absolute;
-        left: 0px;
-        bottom: 0;
-    }
+  }
+  &:not(.create) > h3 {
+    .dapp-shorten-text;
+  }
 
-    .token-list {
-        .dapp-vertical-menu;
-        position: absolute;
-        left: @gridWidth * 1.5;
-        top: 4px;
+  > span {
+    position: relative;
+    clear: left;
+    float: left;
+    color: @colorTextSecondary;
+    font-size: 1.3em;
+    line-height: 1.35em;
+    .dapp-shorten-text;
 
-        li {
-            margin: 3px 0;
-        }
+    &.account-id {
+      font-size: 0.8em;
+      line-height: 1.4em;
+      color: fadeout(@colorTextSecondary, 40%);
 
-        .dapp-identicon {
-            display: block;
-            width: 10px;
-            height: 10px;
-        }
-    }
-
-
-    .account-pattern {
-        position: absolute;
-        .display(flex);
-        .align-items(center);
-        left: 0;
-        top: 0;
-        bottom: 0;
-        width: auto;
-        min-width: @gridWidth*1.4;
-        padding: 0 @gridWidth/2;
-        background-color: @colorLink;
-        text-align: center;
-        line-height: 100%;
+      &.creating {
         color: @colorWhite;
-        font-size: 1.8em;
-        .box-sizing(border-box);
-
-        a {
-            margin: 0 -@gridWidth/3;
-        }
+      }
     }
-
-    > h3 {
-        margin: 0;
-        margin-top: 4px;
-        color: @colorLink;
-        max-width: @gridWidth*4.4;
-        float: left;
-
-        &.ens-name {
-            font-weight: 600;
-        }
-        &.not-ens-name {
-            font-style: italic;
-        }
-    }
-    &:not(.create) > h3 {
-        .dapp-shorten-text;
-    }
-
-    > span {
-        position: relative;
-        clear: left;
-        float: left;
-        color: @colorTextSecondary;
-        font-size: 1.3em;
-        line-height: 1.35em;
-        .dapp-shorten-text;
-
-
-        &.account-id {
-            font-size: 0.8em;
-            line-height: 1.4em;
-            color: fadeout(@colorTextSecondary, 40%);
-
-            &.creating {
-                color: @colorWhite;
-            }
-        }
-    }
+  }
 }
 
 .select-token {
-    .dapp-vertical-menu;
-    .transition(box-shadow @animationSpeed * 2);
-    background: @colorGrayLight;
-    margin-top: @gridHeight*0.75;
+  .dapp-vertical-menu;
+  .transition(box-shadow @animationSpeed * 2);
+  background: @colorGrayLight;
+  margin-top: @gridHeight*0.75;
 
+  &:hover {
+    .dapp-shadow-medium;
+  }
+
+  input[type='radio'] {
+    display: none !important;
+  }
+
+  input:checked + label {
+    position: relative;
+    border-color: @colorGray;
+    color: @colorGrayDark;
+    padding: @defaultPaddingVertical / 2 @defaultPaddingHorizontal / 2;
+    opacity: 1;
+    background: @colorGray;
+    font-weight: 400;
+
+    span {
+      color: @colorGrayDark;
+      border-color: @colorGrayDark;
+    }
+  }
+
+  label {
+    display: block;
+    // text-transform: uppercase;
+    // max-width: @gridWidth * 9;
+    color: @colorLink;
+    display: flex;
+    overflow: hidden;
+    height: @gridHeight * 2;
+    padding: @defaultPaddingVertical / 2 @defaultPaddingHorizontal / 2;
+    .transition(height @animationSpeed/2, opacity @animationSpeed/2, padding @animationSpeed/2);
+    cursor: pointer;
 
     &:hover {
-        .dapp-shadow-medium;
+      background: @colorWhite;
     }
 
-    input[type="radio"]{
-        display: none !important;
+    span {
+      flex: 1 auto;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    input:checked + label {
+    span.token-name {
+      padding-left: @defaultPaddingHorizontal / 4;
+      padding-right: @defaultPaddingHorizontal / 4;
+    }
+
+    span.balance {
+      text-align: right;
+      color: @colorTextSecondary;
+    }
+
+    span.ether-symbol {
+      .flex(0);
+      display: inline-block;
+      min-width: 22px;
+      padding: 1px 0;
+      height: 22px;
+      border: 1px solid @colorLink;
+      .border-radius(50%);
+      text-align: center;
+      font-size: 14px;
+    }
+
+    span.dapp-identicon {
+      flex: 0;
+      min-width: 21px;
+    }
+  }
+}
+
+table {
+  tr {
+    &.full-width {
+      background-color: transparent !important;
+
+      td {
         position: relative;
-        border-color: @colorGray;
-        color: @colorGrayDark;
-        padding: @defaultPaddingVertical/2 @defaultPaddingHorizontal/2;
-        opacity: 1;
-        background: @colorGray;
-        font-weight: 400;
-
-        span {
-            color: @colorGrayDark;
-            border-color: @colorGrayDark;
-        }
+        height: @gridHeight*3;
+        text-align: center;
+      }
     }
+  }
+  td {
+    text-align: left;
+    vertical-align: middle;
+  }
 
-
-    label {
-        display: block;
-        // text-transform: uppercase;
-        // max-width: @gridWidth * 9;
-        color: @colorLink;
-        display: flex;
-        overflow: hidden;
-        height: @gridHeight * 2;
-        padding: @defaultPaddingVertical/2 @defaultPaddingHorizontal/2;
-        .transition(height @animationSpeed/2, opacity @animationSpeed/2, padding @animationSpeed/2);
+  &.transactions {
+    tr {
+      &:not(.pending) {
         cursor: pointer;
 
         &:hover {
-            background: @colorWhite;
+          border-left: 2px solid @colorGray;
+          border-right: 2px solid @colorGray;
+        }
+      }
+
+      &.unconfirmed {
+        .opacity(0.4);
+      }
+      &.disabled {
+        .opacity(0.2);
+      }
+
+      border-left: 2px solid transparent;
+      border-right: 2px solid transparent;
+
+      .dapp-progress {
+        position: absolute;
+        left: 1px;
+        right: 1px;
+        margin: 0;
+        height: 84px;
+        width: auto;
+        border: 0;
+        .opacity(0.1);
+
+        .dapp-bar {
+          .background-image(linear-gradient(to bottom, @colorBlue 0%, fadeout(@colorBlue, 100%) 100%));
         }
 
-        span {
-            flex: 1 auto;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+        > span {
+          padding: 0;
+          line-height: @gridHeight + @defaultPaddingVertical*2 + 4px;
+          font-size: 0.8em;
         }
-
-        span.token-name {
-            padding-left: @defaultPaddingHorizontal/4;
-            padding-right: @defaultPaddingHorizontal/4;
-        }
-
-        span.balance {
-            text-align: right;
-            color: @colorTextSecondary;
-        }
-
-        span.ether-symbol {
-            .flex(0);
-            display: inline-block;
-            min-width: 22px;
-            padding: 1px 0;
-            height: 22px;
-            border: 1px solid @colorLink;
-            .border-radius(50%);
-            text-align: center;
-            font-size: 14px;
-        }
-
-        span.dapp-identicon {
-            flex: 0;
-            min-width: 21px;
-        }
+      }
     }
 
-}
-
-
-table {
-    tr {
-        &.full-width {
-            background-color: transparent !important;
-
-            td {
-                position: relative;
-                height: @gridHeight*3;
-                text-align: center;
-            }
-        }
-    }
     td {
-        text-align: left;
-        vertical-align: middle;
-    }
+      &.plus,
+      .plus {
+        color: @colorTextSecondary;
+      }
+      &.minus,
+      .minus {
+        color: @colorError;
+      }
 
-    &.transactions {
-        tr {
-            &:not(.pending) {
-                cursor: pointer;
+      &.time {
+        text-align: center;
+        padding-left: @defaultMargin;
+        cursor: help;
 
-                &:hover {
-                    border-left: 2px solid @colorGray;
-                    border-right: 2px solid @colorGray;
-                }
-            }
+        p {
+          font-size: 2em;
+          padding-top: 0;
+        }
+      }
+      &.transaction-amount {
+        text-align: right;
+      }
+      &.account-name {
+        color: @colorTextSecondary;
+        line-height: @lineHeight;
 
-            &.unconfirmed {
-                .opacity(0.4);
-            }
-            &.disabled {
-                .opacity(0.2);
-            }
+        // a {
+        //     .dapp-shorten-text;
+        //     max-width: 200px;
+        // }
 
-            border-left: 2px solid transparent;
-            border-right: 2px solid transparent;
-
-            .dapp-progress {
-                position: absolute;
-                left: 1px;
-                right: 1px;
-                margin: 0;
-                height: 84px;
-                width: auto;
-                border: 0;
-                .opacity(0.1);
-
-                .dapp-bar {
-                    .background-image(linear-gradient(to bottom, @colorBlue 0%, fadeout(@colorBlue, 100%) 100%));
-                }
-
-                > span {
-                    padding: 0;
-                    line-height: @gridHeight + @defaultPaddingVertical*2 + 4px;
-                    font-size: 0.8em;
-                }
-            }
+        span.arrow {
+          display: inline;
+          padding: 0 4px;
         }
 
-        td {
+        .owner-confirmations {
+          margin-top: @defaultMargin / 2;
 
-            &.plus, .plus {
-                color: @colorTextSecondary;
-            }
-            &.minus, .minus {
-                color: @colorError;
-            }
-
-            &.time {
-                text-align: center;
-                padding-left: @defaultMargin;
-                cursor: help;
-
-                p {
-                    font-size: 2em;
-                    padding-top: 0;
-                }
-            }
-            &.transaction-amount {
-                text-align: right;
-
-            }
-            &.account-name {
-                color: @colorTextSecondary;
-                line-height: @lineHeight;
-
-                // a {
-                //     .dapp-shorten-text;
-                //     max-width: 200px;
-                // }
-
-
-                span.arrow {
-                    display: inline;
-                    padding: 0 4px;
-                }
-
-                .owner-confirmations {
-                    margin-top: @defaultMargin/2;
-
-                    > div {
-                        position: relative;
-                        display: inline-block;
-                    }
-                    > div + span {
-                        margin-left: @defaultMargin/2;
-                    }
-                    a {
-                        display: block;
-                        position: relative;
-                        margin-top: 0;
-                        margin-left: 0;
-                    }
-                    i {
-                        position: absolute;
-                        z-index: 2;
-                        color: darken(@colorGreen, 25%);
-                        background-color: fadeout(@colorGreen, 20%);
-                        .border-radius(50%);
-                        margin-top: -1px;
-                        margin-left: 0;
-                        font-size: 22px;
-                    }
-                }
-            }
-            &.info {
-                text-align: right;
-                font-size: 0.8em;
-            }
-            &.transaction-purpose {
-                font-weight: 400;
-            }
-            &.button {
-                position: relative;
-                min-width: 100px;
-                text-align: right;
-                padding: 0;
-
-                button {
-                    width: 120px;
-                    margin-right: @defaultMargin;
-                    text-align: center;
-                    .transition(background-color @animationSpeed/2);
-
-                    .hover-label {
-                        display: none;
-                    }
-                    &:hover {
-                        .label {
-                            display: none;
-                        }
-                        .hover-label {
-                            display: block;
-                        }
-                    }
-                }
-
-                button.approve {
-                    background-color: @colorGreen;
-                    border-color: darken(@colorGreen, 10%);
-                    &.selected:not(:hover) {
-                        background-color: transparent;
-                        color: @colorError;
-                        border: @colorError 1px solid;
-                    }
-                }
-                button.revoke {
-                    background-color: @colorError;
-                    border-color: darken(@colorError, 10%);
-                    &.selected:not(:hover) {
-                        background-color: transparent;
-                        color: @colorGreen;
-                        border: @colorGreen 1px solid;
-                    }
-                }
-            }
-
-            button.show-more {
-                width: 100%;
-                text-align: center;
-            }
+          > div {
+            position: relative;
+            display: inline-block;
+          }
+          > div + span {
+            margin-left: @defaultMargin / 2;
+          }
+          a {
+            display: block;
+            position: relative;
+            margin-top: 0;
+            margin-left: 0;
+          }
+          i {
+            position: absolute;
+            z-index: 2;
+            color: darken(@colorGreen, 25%);
+            background-color: fadeout(@colorGreen, 20%);
+            .border-radius(50%);
+            margin-top: -1px;
+            margin-left: 0;
+            font-size: 22px;
+          }
         }
+      }
+      &.info {
+        text-align: right;
+        font-size: 0.8em;
+      }
+      &.transaction-purpose {
+        font-weight: 400;
+      }
+      &.button {
+        position: relative;
+        min-width: 100px;
+        text-align: right;
+        padding: 0;
+
+        button {
+          width: 120px;
+          margin-right: @defaultMargin;
+          text-align: center;
+          .transition(background-color @animationSpeed/2);
+
+          .hover-label {
+            display: none;
+          }
+          &:hover {
+            .label {
+              display: none;
+            }
+            .hover-label {
+              display: block;
+            }
+          }
+        }
+
+        button.approve {
+          background-color: @colorGreen;
+          border-color: darken(@colorGreen, 10%);
+          &.selected:not(:hover) {
+            background-color: transparent;
+            color: @colorError;
+            border: @colorError 1px solid;
+          }
+        }
+        button.revoke {
+          background-color: @colorError;
+          border-color: darken(@colorError, 10%);
+          &.selected:not(:hover) {
+            background-color: transparent;
+            color: @colorGreen;
+            border: @colorGreen 1px solid;
+          }
+        }
+      }
+
+      button.show-more {
+        width: 100%;
+        text-align: center;
+      }
     }
+  }
 }
 
 .account-page-notification {
-    .transition(opacity @animationSpeed * 2);
+  .transition(opacity @animationSpeed * 2);
 
-    .row {
-        text-align: center;
-        background: @colorError;
-        padding: @defaultPaddingHorizontal;
-        font-size: 120%;
+  .row {
+    text-align: center;
+    background: @colorError;
+    padding: @defaultPaddingHorizontal;
+    font-size: 120%;
 
-        a {
-            color: @colorWhite;
-        }
-
-        &:hover {
-            background: lighten(@colorError, 10%);
-        }
+    a {
+      color: @colorWhite;
     }
 
-    a.learn-more-link {
-        display: block;
-        padding-top: @gridHeight;
-        color: @colorError;
-        text-align: center;
-        font-weight: 400;
-
-        &:hover {
-            cursor: pointer;
-            text-decoration: underline;
-        }
+    &:hover {
+      background: lighten(@colorError, 10%);
     }
+  }
+
+  a.learn-more-link {
+    display: block;
+    padding-top: @gridHeight;
+    color: @colorError;
+    text-align: center;
+    font-weight: 400;
+
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
 }
 
 .sticky + div .account-page-notification {
-    opacity: 0;
+  opacity: 0;
 }
 
 // Ace Editor Error Highlight
 .errorMarker {
-  position:absolute;
-  background: #FF0000;
-  z-index:20;
+  position: absolute;
+  background: #ff0000;
+  z-index: 20;
   opacity: 0.2;
 }
-
 
 // Send page
 
 .dapp-select-account.inline {
-    display: inline-block;
+  display: inline-block;
 }
 
 .replay-protection {
-    position: relative;
-    top: 5px;
+  position: relative;
+  top: 5px;
 }
 
 .replay-protection-div {
-    .dapp-address-input {
-        display: inline-block;
-        width: @gridWidth * 13;
-    }
+  .dapp-address-input {
+    display: inline-block;
+    width: @gridWidth * 13;
+  }
 }
-
 
 // Alert
 .alert-banner {
@@ -650,7 +639,8 @@ table {
     color: rgb(75, 75, 75);
     font-weight: 400;
 
-    &:active, &:focus {
+    &:active,
+    &:focus {
       outline: 0;
     }
   }
@@ -663,8 +653,8 @@ table {
 
 .alert-bubble {
   position: fixed;
-  bottom: .75em;
-  right: .75em;
+  bottom: 0.75em;
+  right: 0.75em;
 
   border-radius: 50%;
   background: @colorError;
@@ -683,7 +673,8 @@ table {
     width: 35px;
     height: 35px;
 
-    &:active, &:focus {
+    &:active,
+    &:focus {
       outline: 0;
       border: 0;
     }
@@ -691,6 +682,10 @@ table {
 }
 
 @keyframes jiggle {
-  0% { transform: rotate(-10deg); }
-  100% { transform: rotate(10deg); }
+  0% {
+    transform: rotate(-10deg);
+  }
+  100% {
+    transform: rotate(10deg);
+  }
 }
