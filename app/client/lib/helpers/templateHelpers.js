@@ -11,15 +11,13 @@ Global template helpers
 @constructor
 **/
 
-
-
 /**
 A simple template helper to log objects in the console.
 
 @method (debug)
 **/
-Template.registerHelper('debug', function(object){
-    console.log(object);
+Template.registerHelper('debug', function(object) {
+  console.log(object);
 });
 
 /**
@@ -27,8 +25,8 @@ Check if in mist
 
 @method (isMist)
 **/
-Template.registerHelper('isMist', function(){
-    return (typeof window.mistMode === 'undefined');
+Template.registerHelper('isMist', function() {
+  return typeof window.mist !== 'undefined';
 });
 
 /**
@@ -36,8 +34,8 @@ Check if in mist and in mist mode
 
 @method (isWalletMode)
 **/
-Template.registerHelper('isWalletMode', function(){
-    return window.mistMode === 'wallet' || typeof mist === 'undefined'; // also show network info in normal browsers
+Template.registerHelper('isWalletMode', function() {
+  return window.mistMode === 'wallet' || typeof mist === 'undefined'; // also show network info in normal browsers
 });
 
 /**
@@ -45,11 +43,16 @@ Check if currency unit is an ether unit
 
 @method (isEtherUnit)
 **/
-Template.registerHelper('isEtherUnit', function(){
-    var unit = EthTools.getUnit();
-    return !(unit === 'usd' || unit === 'eur' || unit === 'btc' || unit === 'gbp' || unit === 'brl');
+Template.registerHelper('isEtherUnit', function() {
+  var unit = EthTools.getUnit();
+  return !(
+    unit === 'usd' ||
+    unit === 'eur' ||
+    unit === 'btc' ||
+    unit === 'gbp' ||
+    unit === 'brl'
+  );
 });
-
 
 /**
 Check if wallet has vulnerabilities
@@ -57,36 +60,42 @@ Check if wallet has vulnerabilities
 @method (isVulnerable)
 @param {String} address and address of a wallet/account
 **/
-Template.registerHelper('isVulnerable', function(address){
-    var account = _.isString(address) ? Helpers.getAccountByAddress(address): this;
+Template.registerHelper('isVulnerable', function(address) {
+  var account = _.isString(address)
+    ? Helpers.getAccountByAddress(address)
+    : this;
 
-    if(!account)
-        return;
+  if (!account) return;
 
-    // check if is wallet and is vulnerable
-    if(_.find(account.vulnerabilities || [], function(vul){
-        return vul;
-    })) {
-        return account;
-    }
-
-    // check if is owner account and is vulnerable
-    var wallets = _.map(Wallets.find({vulnerabilities: {$exists: true}}).fetch(), function(wal){
-        return (!!_.find(wal.vulnerabilities || [], function(vul){
-            return vul;
-        }))
-            ? wal : false;
-    });
-    var wallet = _.find(wallets, function(wal){
-        return _.contains(wal.owners, account.address);
+  // check if is wallet and is vulnerable
+  if (
+    _.find(account.vulnerabilities || [], function(vul) {
+      return vul;
     })
+  ) {
+    return account;
+  }
 
-    if(wallet) {
-        // add vulnerabilities to account
-        account.vulnerabilities = wallet.vulnerabilities;
-        return account;
-    } else
-        return false;
+  // check if is owner account and is vulnerable
+  var wallets = _.map(
+    Wallets.find({ vulnerabilities: { $exists: true } }).fetch(),
+    function(wal) {
+      return !!_.find(wal.vulnerabilities || [], function(vul) {
+        return vul;
+      })
+        ? wal
+        : false;
+    }
+  );
+  var wallet = _.find(wallets, function(wal) {
+    return _.contains(wal.owners, account.address);
+  });
+
+  if (wallet) {
+    // add vulnerabilities to account
+    account.vulnerabilities = wallet.vulnerabilities;
+    return account;
+  } else return false;
 });
 
 /**
@@ -94,8 +103,8 @@ Return the current unit
 
 @method (unit)
 **/
-Template.registerHelper('unit', function(){
-    return EthTools.getUnit();
+Template.registerHelper('unit', function() {
+  return EthTools.getUnit();
 });
 
 /**
@@ -103,8 +112,8 @@ Return the latest block
 
 @method (latestBlock)
 **/
-Template.registerHelper('latestBlock', function(){
-    return EthBlocks.latest;
+Template.registerHelper('latestBlock', function() {
+  return EthBlocks.latest;
 });
 
 /**
@@ -112,15 +121,34 @@ Returns a list of accounts and wallets sorted by balance
 
 @method (latestBlock)
 **/
-Template.registerHelper('selectAccounts', function(hideWallets){
-    var accounts = EthAccounts.find({balance:{$ne:"0"}}, {sort: {balance: 1}}).fetch();
+Template.registerHelper('selectAccounts', function(hideWallets) {
+  var accounts = EthAccounts.find(
+    { balance: { $ne: '0' } },
+    { sort: { balance: 1 } }
+  ).fetch();
 
-    if(hideWallets !== true)
-        accounts = _.union(Wallets.find({owners: {$in: _.pluck(EthAccounts.find().fetch(), 'address')}, address: {$exists: true}}, {sort: {name: 1}}).fetch(), accounts);
+  if (hideWallets !== true)
+    accounts = _.union(
+      Wallets.find(
+        {
+          owners: {
+            $in: _.map(EthAccounts.find().fetch(), function(account) {
+              return account.address.toLowerCase();
+            })
+          },
+          address: {
+            $exists: true
+          }
+        },
+        {
+          sort: { name: 1 }
+        }
+      ).fetch(),
+      accounts
+    );
 
-    return accounts;
+  return accounts;
 });
-
 
 /**
 Check if the given wallet is a watch only wallet, by checking if we are one of owners in the wallet.
@@ -135,20 +163,17 @@ Return the right wallet icon
 
 @method (walletIcon)
 **/
-Template.registerHelper('walletIcon', function(){
-    var icon = '';
+Template.registerHelper('walletIcon', function() {
+  var icon = '';
 
-    if(!_.isUndefined(this.owners)) {
-        if(Helpers.isWatchOnly(this._id))
-            icon = '<i class="icon-eye" title="Watch only"></i>';
-        else
-            icon = '<i class="icon-wallet" title="Wallet"></i>';
-    } else
-        icon = '<i class="icon-key" title="Account"></i>';
+  if (!_.isUndefined(this.owners)) {
+    if (Helpers.isWatchOnly(this._id))
+      icon = '<i class="icon-eye" title="Watch only"></i>';
+    else icon = '<i class="icon-wallet" title="Wallet"></i>';
+  } else icon = '<i class="icon-key" title="Account"></i>';
 
-    return new Spacebars.SafeString(icon);
+  return new Spacebars.SafeString(icon);
 });
-
 
 /**
 Get the account name or display the address
@@ -156,11 +181,9 @@ Get the account name or display the address
 @method (accountNameOrAddress)
 @param {String} address
 */
-Template.registerHelper('accountNameOrAddress', function(address){
-    if(account = Helpers.getAccountByAddress(address))
-        return account.name;
-    else
-        return address;
+Template.registerHelper('accountNameOrAddress', function(address) {
+  if ((account = Helpers.getAccountByAddress(address))) return account.name;
+  else return address;
 });
 
 /**
@@ -172,7 +195,10 @@ Format a number based on decimal numbers
 @param {Number} number
 @param {Number} decimals
 */
-Template.registerHelper('formatNumberByDecimals', Helpers.formatNumberByDecimals);
+Template.registerHelper(
+  'formatNumberByDecimals',
+  Helpers.formatNumberByDecimals
+);
 
 /**
 Formats a timestamp to any format given.
@@ -187,7 +213,6 @@ Formats a timestamp to any format given.
 **/
 Template.registerHelper('formatTime', Helpers.formatTime);
 
-
 /**
 Formats a given transactions balance
 
@@ -199,8 +224,10 @@ Formats a given transactions balance
 @param {String} unit  the unit to format to
 @return {String} The formated value
 **/
-Template.registerHelper('formatTransactionBalance', Helpers.formatTransactionBalance);
-
+Template.registerHelper(
+  'formatTransactionBalance',
+  Helpers.formatTransactionBalance
+);
 
 /**
 Formats address to a CaseChecksum
@@ -209,11 +236,9 @@ Formats address to a CaseChecksum
 @param {String} address             The address
 @return {String} checksumAddress    The returned, checksummed address
 **/
-Template.registerHelper('toChecksumAddress', function(address){
-    return _.isString(address) ? web3.toChecksumAddress(address) : '';
+Template.registerHelper('toChecksumAddress', function(address) {
+  return _.isString(address) ? web3.utils.toChecksumAddress(address) : '';
 });
-
-
 
 /**
 Takes a camelcase and shows it with spaces
@@ -223,3 +248,12 @@ Takes a camelcase and shows it with spaces
 @return {string} sentence    The same name with spaces
 **/
 Template.registerHelper('toSentence', Helpers.toSentence);
+
+/**
+Check if on main network
+
+@method (isMainNetwork)
+**/
+Template.registerHelper('isMainNetwork', function() {
+    return Session.get('network') === 'main';
+});

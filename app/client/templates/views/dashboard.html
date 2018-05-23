@@ -87,15 +87,11 @@
 
         <div class="dapp-clear-fix"></div>
 
-
         {{#if allTransactions}}
             <h2>{{i18n 'wallet.transactions.latest'}}</h2>
-
             {{> elements_transactions_table limit=5}}
-
         {{else}}
-
-            <h2>{{i18n 'wallet.transactions.none'}}</h2>
+            <h2 class="no-txs">{{i18n 'wallet.transactions.none'}}</h2>
         {{/if}}
     </div>
 </template>

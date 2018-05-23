@@ -1,14 +1,14 @@
 <template name="views_contracts">
     <div class="dapp-container">
 
-        <h1>{{i18n "wallet.contracts.contractTitle"}}</h1>
+        <h1><strong>{{i18n "wallet.contracts.contractTitle"}}</strong></h1>
 
         <a href="{{pathFor route='deployContract'}}" class="wallet-box create">
             <div class="account-pattern">
                 +
             </div>
             <h3>{{i18n "wallet.contracts.deployNewContract"}}</h3>
-        </a>  
+        </a>
 
         <h2>{{i18n "wallet.contracts.customContracts"}}</h2>
 
@@ -26,7 +26,7 @@
                 +
             </div>
             <h3>{{i18n "wallet.contracts.addCustomContract"}}</h3>
-        </button>  
+        </button>
         <div class="dapp-clear-fix"></div>
 
 
@@ -46,12 +46,26 @@
         {{/each}}
         </div>
 
-        <button class="wallet-box create add-token">
+        <button class="wallet-box create add-token" style="float:left">
             <div class="account-pattern">
                 +
             </div>
             <h3>{{i18n "wallet.app.buttons.addToken"}}</h3>
-        </button>    
-
+        </button>
+        
+        {{#if isMainNetwork}}
+        <button class="wallet-box create token-auto-scan" {{autoScanButtonIsDisabled}} title="{{i18n "wallet.tokens.autoScan.description"}}">
+            <div class="account-pattern">
+                <div class="icon icon-target"></div>
+            </div>
+            <h3>
+                {{#if TemplateVar.get "autoScanStatus"}}
+                    {{TemplateVar.get "autoScanStatus"}}
+                {{else}}
+                    {{i18n "wallet.app.buttons.tokenAutoScan"}}
+                {{/if}}
+            </h3>
+        </button>
+        {{/if}}
     </div>
 </template>
