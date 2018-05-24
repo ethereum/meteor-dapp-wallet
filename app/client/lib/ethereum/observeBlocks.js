@@ -1,11 +1,20 @@
 var peerCountIntervalId = null;
 
 /**
-Update the peercount
+ Update the peercount
 
-@method getPeerCount
-*/
+ @method getPeerCount
+ */
 var getPeerCount = function() {
+
+    web3.net.getPeerCount(function(e, res) {
+        if(!e)
+            Session.set('peerCount', res);
+    });
+
+};
+
+var getLedger = function () {
 
     web3.wan.getListWallets(function (error, result) {
 
@@ -39,18 +48,13 @@ var getPeerCount = function() {
 
     });
 
-    web3.net.getPeerCount(function(e, res) {
-        if(!e)
-            Session.set('peerCount', res);
-    });
 };
 
-
 /**
-Update wallet balances
+ Update wallet balances
 
-@method updateBalances
-*/
+ @method updateBalances
+ */
 updateBalances = function() {
     // UPDATE ALL BALANCES (incl. Tokens)
     var walletsAndContracts = Wallets.find().fetch().concat(CustomContracts.find().fetch());
@@ -64,12 +68,12 @@ updateBalances = function() {
                     // is of type wallet
                     if(account.creationBlock) {
                         Wallets.update(account._id, {$set: {
-                            balance: res.toString(10)
-                        }});
+                                balance: res.toString(10)
+                            }});
                     } else {
                         CustomContracts.update(account._id, {$set: {
-                            balance: res.toString(10)
-                        }});
+                                balance: res.toString(10)
+                            }});
                     }
                 }
             });
@@ -139,10 +143,10 @@ updateBalances = function() {
 
 
 /**
-Observe the latest blocks
+ Observe the latest blocks
 
-@method observeLatestBlocks
-*/
+ @method observeLatestBlocks
+ */
 observeLatestBlocks = function(){
 
     // update balances on start
@@ -159,10 +163,13 @@ observeLatestBlocks = function(){
     // check peer count
     Session.setDefault('peerCount', 0);
     Session.setDefault('ledgerConnect', false);
+
+    getLedger();
     getPeerCount();
 
     clearInterval(peerCountIntervalId);
     peerCountIntervalId = setInterval(function() {
-        getPeerCount()
+        getPeerCount();
+        getLedger();
     }, 1000);
 };

@@ -204,7 +204,8 @@ Template['elements_cross_transactions_table'].events({
                 estimatedGas: getGas,
                 data: transData,
                 trans: trans,
-                transType: transType
+                transType: transType,
+                Chain: show_data.chain,
             },
         },{
             class: 'send-transaction-info'
