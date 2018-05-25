@@ -17,7 +17,7 @@ Template['elements_cross_transactions_table'].onCreated(function(){
     const self = this;
     InterID = Meteor.setInterval(function(){
         mist.ETH2WETH().listHistory(self.data.addressList.concat(self.data.wanAddressList), (err, result) => {
-            // console.log('crosschainList');
+            // console.log('crosschainList', result);
             TemplateVar.set(template, 'crosschainList', result);
         });
 
@@ -126,16 +126,22 @@ Template['elements_cross_transactions_table'].events({
                 gas: getGas, gasPrice: gasPrice
             };
 
-            let getRefundTransData = await Helpers.promisefy(mist.ETH2WETH().getRefundTransData, [trans], mist.ETH2WETH());
-            transData = getRefundTransData.refundTransData;
-            // console.log('transData: ', transData);
+            let getRefundTransData;
 
             if (show_data.chain === 'ETH') {
                 // release x in wan
+                getRefundTransData = await Helpers.promisefy(mist.ETH2WETH().getRefundTransData, [trans], mist.ETH2WETH());
                 coinBalance = await Helpers.promisefy(mist.WETH2ETH().getBalance, [show_data.crossAdress.toLowerCase()], mist.WETH2ETH());
+
+                transData = getRefundTransData.refundTransData;
+                // console.log('transData: ', transData);
             } else {
                 // release x in eth
+                getRefundTransData = await Helpers.promisefy(mist.WETH2ETH().getRefundTransData, [trans], mist.WETH2ETH());
                 coinBalance = await Helpers.promisefy(mist.ETH2WETH().getBalance, [show_data.crossAdress.toLowerCase()], mist.ETH2WETH());
+
+                transData = getRefundTransData.refundTransData;
+                // console.log('transData: ', transData);
             }
         }
 
@@ -159,17 +165,29 @@ Template['elements_cross_transactions_table'].events({
                 gas: getGas, gasPrice: gasPrice
             };
 
-            let getRevokeTransData = await Helpers.promisefy(mist.ETH2WETH().getRevokeTransData, [trans], mist.ETH2WETH());
-            transData = getRevokeTransData.revokeTransData;
-            // console.log('getRevokeTransData: ', transData);
+            let getRevokeTransData;
 
             if (show_data.chain === 'ETH') {
                 // revoke x in eth
-                coinBalance = await Helpers.promisefy(mist.ETH2WETH().getBalance, [show_data.crossAdress.toLowerCase()], mist.ETH2WETH());
+                console.log('getRevokeTransData ETH: ', show_data.chain);
+
+                getRevokeTransData = await Helpers.promisefy(mist.ETH2WETH().getRevokeTransData, [trans], mist.ETH2WETH());
+                coinBalance = await Helpers.promisefy(mist.ETH2WETH().getBalance, [show_data.from.toLowerCase()], mist.ETH2WETH());
+
+                transData = getRevokeTransData.revokeTransData;
             } else {
                 // revoke x in wan
-                coinBalance = await Helpers.promisefy(mist.WETH2ETH().getBalance, [show_data.crossAdress.toLowerCase()], mist.WETH2ETH());
+                console.log('getRevokeTransData WAN: ', show_data.chain);
+
+                getRevokeTransData = await Helpers.promisefy(mist.WETH2ETH().getRevokeTransData, [trans], mist.WETH2ETH());
+                coinBalance = await Helpers.promisefy(mist.WETH2ETH().getBalance, [show_data.from.toLowerCase()], mist.WETH2ETH());
+
+                transData = getRevokeTransData.revokeTransData;
             }
+
+            trans.secretX = getRevokeTransData.secretX;
+
+            // console.log('transData: ', transData);
         }
 
         // other status
@@ -183,7 +201,10 @@ Template['elements_cross_transactions_table'].events({
 
         let fee = new BigNumber(getGas * gasPrice);
 
-        if(new BigNumber(fee, 10).gt(new BigNumber(coinBalance, 10)))
+        // console.log('fee: ', fee);
+        // console.log('coinBalance: ', new BigNumber(coinBalance, 10));
+
+        if(fee.gt(new BigNumber(coinBalance, 10)))
             return GlobalNotification.warning({
                 content: 'i18n:wallet.send.error.notEnoughFunds',
                 duration: 2
