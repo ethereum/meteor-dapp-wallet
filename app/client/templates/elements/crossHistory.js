@@ -160,8 +160,9 @@ Template['elements_cross_transactions_table'].events({
             }
 
             trans = {
-                lockTxHash: show_data.lockTxHash, amount: show_data.value.toString(10),
+                from: show_data.from, amount: show_data.value.toString(10),
                 storemanGroup: show_data.storeman, cross: show_data.crossAdress,
+                x: show_data.x,
                 gas: getGas, gasPrice: gasPrice
             };
 
