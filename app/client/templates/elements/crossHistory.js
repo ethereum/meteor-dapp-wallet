@@ -54,7 +54,7 @@ Template['elements_cross_transactions_table'].helpers({
                     value.state = "Release X";
                 } else if (value.status === 'waitingRevoke' || value.status === 'sentRevokePending' ||
                     value.status === 'sentRevokeConfirming' || value.status === 'finishedRevoke') {
-                    value.state = "Refund";
+                    value.state = "Revoke";
                 }
                 crosschainList.push(value);
             });
@@ -185,8 +185,6 @@ Template['elements_cross_transactions_table'].events({
 
                 transData = getRevokeTransData.revokeTransData;
             }
-
-            trans.secretX = getRevokeTransData.secretX;
 
             // console.log('transData: ', transData);
         }

@@ -68,11 +68,11 @@ Template['views_modals_sendcrosschainReleaseX'].events({
                     // revoke in eth
                     console.log('revoke Chain 1: ', this.Chain);
 
-                    await Helpers.promisefy(mist.ETH2WETH().sendRevokeTrans, [this.trans, password_input, this.trans.secretX], mist.ETH2WETH());
+                    await Helpers.promisefy(mist.ETH2WETH().sendRevokeTrans, [this.trans, password_input, this.trans.x], mist.ETH2WETH());
                 } else {
                     // revoke in wan
                     console.log('revoke Chain 2: ', this.Chain);
-                    await Helpers.promisefy(mist.WETH2ETH().sendRevokeTrans, [this.trans, password_input, this.trans.secretX], mist.WETH2ETH());
+                    await Helpers.promisefy(mist.WETH2ETH().sendRevokeTrans, [this.trans, password_input, this.trans.x], mist.WETH2ETH());
                 }
 
                 EthElements.Modal.hide();
