@@ -7,11 +7,14 @@ Template Controllers
 Template['elements_cross_transactions_table'].onCreated(function(){
     let template = this;
 
-    // console.log('this.data', this.data);
-
     mist.ETH2WETH().listHistory(this.data.addressList.concat(this.data.wanAddressList), (err, result) => {
         // console.log('crosschainList', result);
         TemplateVar.set(template, 'crosschainList', result);
+
+        _.each(result, function (value, index) {
+            let htlcTime = value.time + '<span style="color: red"> + 4h</span>';
+            TemplateVar.set(template, 'htlcTime', htlcTime);
+        });
     });
 
     const self = this;
