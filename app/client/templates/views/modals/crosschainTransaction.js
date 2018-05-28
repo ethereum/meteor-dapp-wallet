@@ -1,6 +1,13 @@
 Template['views_modals_sendcrosschainReleaseX'].onCreated(function(){
     var template = this;
     TemplateVar.set(template, 'isButton', false);
+
+    if (this.data.transType === 'releaseX') {
+        TemplateVar.set(template, 'transType', 'Realease X Transaction');
+    } else {
+        TemplateVar.set(template, 'transType', 'Revoke Transaction');
+    }
+
 });
 
 

@@ -1,3 +1,38 @@
+
+var accountClipboardEventHandler = function(e){
+    e.preventDefault();
+
+    function copyAddress(){
+        var copyTextarea = document.querySelector('.copyable-address');
+
+        console.log('copyTextarea: ', copyTextarea);
+
+        var selection = window.getSelection();
+        var range = document.createRange();
+        range.selectNodeContents(copyTextarea);
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        try {
+            document.execCommand('copy');
+
+            GlobalNotification.info({
+                content: 'i18n:wallet.accounts.addressCopiedToClipboard',
+                duration: 3
+            });
+        } catch (err) {
+            GlobalNotification.error({
+                content: 'i18n:wallet.accounts.addressNotCopiedToClipboard',
+                closeable: false,
+                duration: 3
+            });
+        }
+        selection.removeAllRanges();
+    }
+
+    copyAddress();
+};
+
 Template['elements_account_table'].onCreated(function () {
     let template = this;
     // console.log('addressList: ', this.data);
@@ -47,4 +82,25 @@ Template['elements_account_table'].helpers({
 
         return result;
     },
+
+    'click .copy-to-clipboard-button': function (e) {
+        e.preventDefault();
+        console.log('aaaa');
+        accountClipboardEventHandler(e);
+    },
+
+    'click .qrcode-button': function(e){
+        e.preventDefault();
+
+        var name = e.target.name;
+
+        // Open a modal showing the QR Code
+        EthElements.Modal.show({
+            template: 'views_modals_qrCode',
+            data: {
+                address: name
+            }
+        });
+    },
+
 });

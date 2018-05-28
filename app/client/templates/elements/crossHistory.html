@@ -8,23 +8,21 @@
             <th colspan="5">From</th>
             <th colspan="5">Storeman</th>
             <th colspan="5">To</th>
-            <th colspan="5">Status</th>
             <th colspan="5">Value</th>
+            <th colspan="5">View</th>
         </tr>
         </thead>
         <tbody class="transfer-list-tbody">
         {{#each historyList}}
             <tr class="full-width">
-                <td colspan="5" class="crosschain-list" id="{{@index}}">
-                    {{state}}{{text}}
-                </td>
-                <td colspan="5" class="show-detail" id="{{@index}}">{{{TemplateVar.get "htlcTime"}}}</td>
-                <td colspan="5" class="show-detail" id="{{@index}}">{{time}}</td>
-                <td colspan="5" class="show-detail" id="{{@index}}">{{from.substr 0 20}}...</td>
-                <td colspan="5" class="show-detail" id="{{@index}}">{{storeman.substr 0 20}}...</td>
-                <td colspan="5" class="show-detail" id="{{@index}}">{{crossAdress.substr 0 20}}...</td>
-                <td colspan="5" class="show-detail" id="{{@index}}">{{status}}</td>
-                <td colspan="5" class="show-detail" id="{{@index}}">{{value}} ETH</td>
+                <td colspan="5">{{{state}}}{{{text}}}</td>
+                <td colspan="5" style="cursor: auto;">{{htlcdate}}</td>
+                <td colspan="5" style="cursor: auto;">{{time}}</td>
+                <td colspan="5" style="cursor: auto;">{{from.substr 0 20}}...</td>
+                <td colspan="5" style="cursor: auto;">{{storeman.substr 0 20}}...</td>
+                <td colspan="5" style="cursor: auto;">{{crossAdress.substr 0 20}}...</td>
+                <td colspan="5" style="cursor: auto;">{{value}} ETH</td>
+                <td colspan="5" class="show-detail" id="{{@index}}" style="color: #0e73b8">Detail</td>
             </tr>
         {{/each}}
         </tbody>

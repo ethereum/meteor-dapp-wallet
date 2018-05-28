@@ -8,19 +8,24 @@ Template['elements_cross_transactions_table'].onCreated(function(){
     let template = this;
 
     mist.ETH2WETH().listHistory(this.data.addressList.concat(this.data.wanAddressList), (err, result) => {
-        // console.log('crosschainList', result);
-        TemplateVar.set(template, 'crosschainList', result);
-
         _.each(result, function (value, index) {
-            let htlcTime = value.time + '<span style="color: red"> + 4h</span>';
-            TemplateVar.set(template, 'htlcTime', htlcTime);
+            let d2 = new Date(value.time);
+            d2.add("h", 4);
+            value.htlcdate = d2.Format('yyyy-MM-dd hh:mm:ss');
         });
+
+        TemplateVar.set(template, 'crosschainList', result);
     });
 
     const self = this;
     InterID = Meteor.setInterval(function(){
         mist.ETH2WETH().listHistory(self.data.addressList.concat(self.data.wanAddressList), (err, result) => {
-            // console.log('crosschainList', result);
+            _.each(result, function (value, index) {
+                let d2 = new Date(value.time);
+                d2.add("h", 4);
+                value.htlcdate = d2.Format('yyyy-MM-dd hh:mm:ss');
+            });
+
             TemplateVar.set(template, 'crosschainList', result);
         });
 
@@ -44,20 +49,22 @@ Template['elements_cross_transactions_table'].helpers({
                 // console.log('this.data: ', value);
 
                 if (value.chain === 'ETH') {
-                    value.text = '(ETH=>WETH)';
+                    value.text = '<small>(ETH=>WETH)</small>';
                 } else if (value.chain === 'WAN') {
-                    value.text = '(WETH=>ETH)';
+                    value.text = '<small>(WETH=>ETH)</small>';
                 }
 
                 if (value.status === 'sentHashPending' || value.status === 'sentHashConfirming' ||
-                    value.status === 'waitingCross' || value.status === 'waitingCrossConfirming') {
-                    value.state = "";
-                }else if (value.status === 'waitingX' || value.status === 'sentXPending' ||
-                    value.status === 'sentXConfirming' || value.status === 'finishedX') {
-                    value.state = "Release X";
-                } else if (value.status === 'waitingRevoke' || value.status === 'sentRevokePending' ||
-                    value.status === 'sentRevokeConfirming' || value.status === 'finishedRevoke') {
-                    value.state = "Revoke";
+                    value.status === 'waitingCross' || value.status === 'waitingCrossConfirming' ||
+                    value.status === 'sentXPending' || value.status === 'sentXConfirming' ||
+                    value.status === 'sentRevokePending' || value.status === 'sentRevokeConfirming' ) {
+                    value.state = `<h2 class="crosschain-list" id = ${index} style='color: #1ec89a; display: block; font-size: 18px;'>Doing</h2>`;
+                } else if (value.status === 'refundFinished' || value.status === 'revokeFinished') {
+                    value.state = `<h2 class="crosschain-list" id = ${index}  style='color: #4b90f7; display: block; font-size: 18px;'>Done</h2>`;
+                } else if (value.status === 'waitingX') {
+                    value.state = `<h2 class="crosschain-list" id = ${index} style='color: #920b1c; display: block; font-size: 18px;'>Release X</h2>`;
+                } else if (value.status === 'waitingRevoke') {
+                    value.state = `<h2 class="crosschain-list" id = ${index} style='color: #920b1c; display: block; font-size: 18px;'>Revoke</h2>`;
                 }
                 crosschainList.push(value);
             });
@@ -90,7 +97,8 @@ Template['elements_cross_transactions_table'].events({
                 time: show_data.time,
                 to: show_data.to,
                 value: show_data.value,
-                x: show_data.x
+                x: show_data.x,
+                status: show_data.status,
             }
         });
 

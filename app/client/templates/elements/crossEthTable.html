@@ -10,13 +10,13 @@
         <tbody class="transfer-list-tbody">
         {{#each ethAccounts}}
             <tr class="full-width">
-                <td colspan="5">{{name}}</td>
-                <td colspan="5">
-                    {{address}}
+                <td colspan="5" style="cursor: auto;">{{name}}</td>
+                <td colspan="5" style="cursor: auto;">
+                    {{address}}&nbsp;&nbsp;&nbsp;&nbsp;
+                    <!--<img style="vertical-align: middle;" class="copy-to-clipboard-button copy-address" name={{address}} />-->
+                    <!--<img style="vertical-align: middle;" class="qrcode-button qrcode-address" name={{address}} />-->
                 </td>
-                <td colspan="5">
-                    {{balance}}<span> ETH</span>
-                </td>
+                <td colspan="5" style="cursor: auto;">{{balance}}<span> ETH</span></td>
             </tr>
         {{/each}}
         </tbody>

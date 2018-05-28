@@ -1,5 +1,5 @@
 <template name="views_modals_sendcrosschainReleaseX">
-    <h1>Realease X</h1>
+    <h1>{{TemplateVar.get "transType"}}</h1>
     <table class="dapp-zebraPou">
         <tbody>
             <tr>
@@ -17,7 +17,7 @@
             <tr>
                 <td>crossAdress:</td>
                 <td>{{crossAdress}}</td>
-            </tr> 
+            </tr>
             <tr>
                 <td>amount:</td>
                 <td>{{amount}}</td>
@@ -25,12 +25,6 @@
         </tbody>
     </table>
     <hr>
-    <!-- <h1>Realease X</h1>
-    <p>from: {{from}}</p>
-    <p>to: {{to}}</p>
-    <p>storeman: {{storeman}}</p>
-    <p>crossAdress: {{crossAdress}}</p>
-    <p>amount: {{amount}}</p> -->
 
     <p class="tx-info">
         <small>+ {{i18n "wallet.send.estimatedFee"}}</small> {{fee}}
