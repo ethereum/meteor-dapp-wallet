@@ -11,10 +11,10 @@
         {{#each ethAccounts}}
             <tr class="full-width">
                 <td colspan="5" style="cursor: auto;">{{name}}</td>
-                <td colspan="5" style="cursor: auto;">
-                    {{address}}&nbsp;&nbsp;&nbsp;&nbsp;
-                    <!--<img style="vertical-align: middle;" class="copy-to-clipboard-button copy-address" name={{address}} />-->
-                    <!--<img style="vertical-align: middle;" class="qrcode-button qrcode-address" name={{address}} />-->
+                <td colspan="5" style="cursor: auto;" >
+                    <span class="copy-eth-address{{address}}" name="{{address}}">{{address}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <img style="vertical-align: middle;" class="copy-to-clipboard-button copy-address" name={{address}} />
+                    <img style="vertical-align: middle;" class="qrcode-button qrcode-address" name={{address}} />
                 </td>
                 <td colspan="5" style="cursor: auto;">{{balance}}<span> ETH</span></td>
             </tr>

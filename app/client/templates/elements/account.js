@@ -24,9 +24,7 @@ var accountClipboardEventHandler = function(e){
 
     function copyAddress(){
 
-        var typeClass = e.target.name;
-
-        var copyTextarea = document.querySelector('.copyable-address' + typeClass.toString());
+        var copyTextarea = document.querySelector('.copyable-address' + e.target.name);
 
         var selection = window.getSelection();
         var range = document.createRange();

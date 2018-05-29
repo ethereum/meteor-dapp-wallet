@@ -1,14 +1,13 @@
 
-var accountClipboardEventHandler = function(e){
+const accountClipboardEventHandler = function(e){
     e.preventDefault();
 
     function copyAddress(){
-        var copyTextarea = document.querySelector('.copyable-address');
 
-        console.log('copyTextarea: ', copyTextarea);
+        let copyTextarea = document.querySelector('.copy-eth-address' + e.target.name);
 
-        var selection = window.getSelection();
-        var range = document.createRange();
+        let selection = window.getSelection();
+        let range = document.createRange();
         range.selectNodeContents(copyTextarea);
         selection.removeAllRanges();
         selection.addRange(range);
@@ -83,16 +82,15 @@ Template['elements_account_table'].helpers({
         return result;
     },
 
-    'click .copy-to-clipboard-button': function (e) {
-        e.preventDefault();
-        console.log('aaaa');
-        accountClipboardEventHandler(e);
-    },
+});
+
+Template['elements_account_table'].events({
+    'click .copy-to-clipboard-button': accountClipboardEventHandler,
 
     'click .qrcode-button': function(e){
         e.preventDefault();
 
-        var name = e.target.name;
+        let name = e.target.name;
 
         // Open a modal showing the QR Code
         EthElements.Modal.show({
@@ -102,5 +100,4 @@ Template['elements_account_table'].helpers({
             }
         });
     },
-
 });

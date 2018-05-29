@@ -4,6 +4,9 @@ Template Controllers
 @module Templates
 */
 
+const defaultGasprice = 180000000000;
+const defaultEndtime = 14400000;
+
 function resultEach(result) {
     _.each(result, function (value, index) {
 
@@ -13,7 +16,7 @@ function resultEach(result) {
             let nowTimestamp =  Math.round(new Date(nowTime).getTime());
 
             // add 4h
-            let endTimestamp=parseInt(value.time) + 14400000;
+            let endTimestamp=parseInt(value.time) + defaultEndtime;
 
             if (endTimestamp > nowTimestamp) {
                 value.htlcdate = `<span style="color: #1ec89a">${Helpers.formatDuring(endTimestamp - nowTimestamp)}</span>`;
@@ -73,17 +76,23 @@ Template['elements_cross_transactions_table'].helpers({
                     value.text = '<small>(WETH=>ETH)</small>';
                 }
 
+                let style = 'display: block; font-size: 18px;';
+
                 if (value.status === 'sentHashPending' || value.status === 'sentHashConfirming' ||
                     value.status === 'waitingCross' || value.status === 'waitingCrossConfirming' ||
                     value.status === 'sentXPending' || value.status === 'sentXConfirming' ||
                     value.status === 'sentRevokePending' || value.status === 'sentRevokeConfirming' ) {
-                    value.state = `<h2 class="crosschain-list" id = ${index} style='color: #1ec89a; display: block; font-size: 18px;'>Doing</h2>`;
+                    style += 'color: #1ec89a;';
+                    value.state = `<h2 class="crosschain-list" id = ${index} style="${style}">Doing</h2>`;
                 } else if (value.status === 'refundFinished' || value.status === 'revokeFinished') {
-                    value.state = `<h2 class="crosschain-list" id = ${index}  style='color: #4b90f7; display: block; font-size: 18px;'>Done</h2>`;
+                    style += 'color: #4b90f7;';
+                    value.state = `<h2 class="crosschain-list" id = ${index}  style="${style}">Done</h2>`;
                 } else if (value.status === 'waitingX') {
-                    value.state = `<h2 class="crosschain-list" id = ${index} style='color: #920b1c; display: block; font-size: 18px;'>Release X</h2>`;
+                    style += 'color: #920b1c;';
+                    value.state = `<h2 class="crosschain-list" id = ${index} style="${style}">Release X</h2>`;
                 } else if (value.status === 'waitingRevoke') {
-                    value.state = `<h2 class="crosschain-list" id = ${index} style='color: #920b1c; display: block; font-size: 18px;'>Revoke</h2>`;
+                    style += 'color: #920b1c;';
+                    value.state = `<h2 class="crosschain-list" id = ${index} style="${style}">Revoke</h2>`;
                 }
                 crosschainList.push(value);
             });
@@ -146,8 +155,8 @@ Template['elements_cross_transactions_table'].events({
             getGas = getGasPrice.RefundGas;
             gasPrice = getGasPrice.gasPrice;
 
-            if (gasPrice < 180000000000) {
-                gasPrice = 180000000000
+            if (gasPrice < defaultGasprice) {
+                gasPrice = defaultGasprice
             }
 
             trans = {
@@ -185,8 +194,8 @@ Template['elements_cross_transactions_table'].events({
             getGas = getGasPrice.RevokeGas;
             gasPrice = getGasPrice.gasPrice;
 
-            if (gasPrice < 180000000000) {
-                gasPrice = 180000000000
+            if (gasPrice < defaultGasprice) {
+                gasPrice = defaultGasprice
             }
 
             trans = {

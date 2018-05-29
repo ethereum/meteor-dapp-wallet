@@ -10,15 +10,6 @@
  */
 
 
-/**
- The default gas to provide for estimates. This is set manually,
- so that invalid data etsimates this value and we can later set it down and show a warning,
- when the user actually wants to send the dummy data.
- @property defaultEstimateGas
- */
-var defaultEstimateGas = 50000000;
-
-
 // Set basic variables
 Template['views_ethsend'].onCreated(async function(){
     var template = this;
