@@ -4,15 +4,37 @@ Template Controllers
 @module Templates
 */
 
+function resultEach(result) {
+    _.each(result, function (value, index) {
+
+        if (Helpers.isNumber(value.time)) {
+
+            let nowTime = new Date().Format('yyyy-MM-dd hh:mm:ss:S');
+            let nowTimestamp =  Math.round(new Date(nowTime).getTime());
+
+            // add 4h
+            let endTimestamp=parseInt(value.time) + 14400000;
+
+            if (endTimestamp > nowTimestamp) {
+                value.htlcdate = `<span style="color: #1ec89a">${Helpers.formatDuring(endTimestamp - nowTimestamp)}</span>`;
+            } else {
+                value.htlcdate = "<span style='color: red'>00 h, 00 min</span>";
+            }
+            value.time = Helpers.timeStamp2String(value.time);
+        } else {
+            value.htlcdate = `<span>${value.time}</span>`;
+        }
+
+    });
+}
+
+
 Template['elements_cross_transactions_table'].onCreated(function(){
     let template = this;
 
     mist.ETH2WETH().listHistory(this.data.addressList.concat(this.data.wanAddressList), (err, result) => {
-        _.each(result, function (value, index) {
-            let d2 = new Date(value.time);
-            d2.add("h", 4);
-            value.htlcdate = d2.Format('yyyy-MM-dd hh:mm:ss');
-        });
+
+        resultEach(result);
 
         TemplateVar.set(template, 'crosschainList', result);
     });
@@ -20,11 +42,8 @@ Template['elements_cross_transactions_table'].onCreated(function(){
     const self = this;
     InterID = Meteor.setInterval(function(){
         mist.ETH2WETH().listHistory(self.data.addressList.concat(self.data.wanAddressList), (err, result) => {
-            _.each(result, function (value, index) {
-                let d2 = new Date(value.time);
-                d2.add("h", 4);
-                value.htlcdate = d2.Format('yyyy-MM-dd hh:mm:ss');
-            });
+
+            resultEach(result);
 
             TemplateVar.set(template, 'crosschainList', result);
         });

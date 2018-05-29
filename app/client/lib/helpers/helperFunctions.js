@@ -578,10 +578,7 @@ Helpers.addressDisplay = function (address) {
     return result;
 };
 
-/**
- * js时间对象的格式化;
- * eg:format="yyyy-MM-dd hh:mm:ss";
- */
+
 Date.prototype.Format = function (fmt) { //author: meizz
     var o = {
         "M+": this.getMonth() + 1, //月份
@@ -598,35 +595,54 @@ Date.prototype.Format = function (fmt) { //author: meizz
     return fmt;
 };
 
-/**
- *js中更改日期
- * y年， m月， d日， h小时， n分钟，s秒
- */
-Date.prototype.add = function (part, value) {
-    value *= 1;
-    if (isNaN(value)) {
-        value = 0;
-    }
-    switch (part) {
-        case "y":
-            this.setFullYear(this.getFullYear() + value);
-            break;
-        case "m":
-            this.setMonth(this.getMonth() + value);
-            break;
-        case "d":
-            this.setDate(this.getDate() + value);
-            break;
-        case "h":
-            this.setHours(this.getHours() + value);
-            break;
-        case "n":
-            this.setMinutes(this.getMinutes() + value);
-            break;
-        case "s":
-            this.setSeconds(this.getSeconds() + value);
-            break;
-        default:
 
+
+Helpers.isNumber = function (value) {
+    let patrn = /^(-)?\d+(\.\d+)?$/;
+
+    if (patrn.exec(value) === null || value === "") {
+        return false
+    } else {
+        return true
     }
+};
+
+Helpers.timeStamp2String = function (time){
+    let datetime = new Date();
+    datetime.setTime(time);
+
+    let year = datetime.getFullYear();
+
+    let month = datetime.getMonth() + 1;
+    if (month <10) month = '0' + month.toString();
+
+    let date = datetime.getDate();
+    if (date <10) date = '0' + date.toString();
+
+    let hour = datetime.getHours();
+    if (hour <10) hour = '0' + hour.toString();
+
+    let minute = datetime.getMinutes();
+    if (minute <10) minute = '0' + minute.toString();
+
+    let second = datetime.getSeconds();
+    if (second <10) second = '0' + second.toString();
+
+    return year + "-" + month + "-" + date+" "+hour+":"+minute+":"+second;
+};
+
+Helpers.formatDuring = function (mss) {
+    let days = parseInt(mss / (1000 * 60 * 60 * 24));
+    if (days <10) days = '0' + days.toString();
+
+    let hours = parseInt((mss % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    if (hours <10) hours = '0' + hours.toString();
+
+    let minutes = parseInt((mss % (1000 * 60 * 60)) / (1000 * 60));
+    if (minutes <10) minutes = '0' + minutes.toString();
+
+    let seconds = (mss % (1000 * 60)) / 1000;
+    if (seconds <10) seconds = '0' + seconds.toString();
+
+    return hours + " h, " + minutes + " min ";
 };
