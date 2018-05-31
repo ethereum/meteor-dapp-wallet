@@ -6,7 +6,7 @@
         <tbody>
             <tr>
                 <td>amount</td>
-                <td>{{amount}}</td>
+                <td>{{amount}} {{symbol}}</td>
             </tr>
             <tr>
                 <td>from:</td>
@@ -37,7 +37,7 @@
 
     <input type="password" id="crosschain-psd"
            disabled="{{TemplateVar.get "isButton"}}"
-           placeholder="enter password" style="width: 100%;"/>
+           placeholder="{{TemplateVar.get "passwdType"}}" style="width: 100%;"/>
 
     <div class="dapp-modal-buttons">
         <button class="cancel-cross" disabled="{{TemplateVar.get "isButton"}}">CANCEL</button>

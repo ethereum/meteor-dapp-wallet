@@ -243,7 +243,8 @@ Template['views_wethToeth'].events({
                     data: getLockTransData.lockTransData,
                     trans: trans,
                     secretX: getLockTransData.secretX,
-                    chain: 'WAN'
+                    chain: 'WAN',
+                    symbol: 'WETH'
                 },
             },{
                 class: 'send-transaction-info'

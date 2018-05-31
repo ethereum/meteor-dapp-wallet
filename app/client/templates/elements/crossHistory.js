@@ -19,9 +19,17 @@ function resultEach(result) {
             let endTimestamp=parseInt(value.time) + defaultEndtime;
 
             if (endTimestamp > nowTimestamp) {
-                value.htlcdate = `<span style="color: #1ec89a">${Helpers.formatDuring(endTimestamp - nowTimestamp)}</span>`;
+                if (value.status === 'refundFinished' || value.status === 'revokeFinished') {
+                    value.htlcdate = `<span>${Helpers.timeStamp2String(endTimestamp)}</span>`;
+                } else {
+                    value.htlcdate = `<span style="color: #1ec89a">${Helpers.formatDuring(endTimestamp - nowTimestamp)}</span>`;
+                }
             } else {
-                value.htlcdate = "<span style='color: red'>00 h, 00 min</span>";
+                if (value.status === 'refundFinished' || value.status === 'revokeFinished') {
+                    value.htlcdate = `<span>${Helpers.timeStamp2String(endTimestamp)}</span>`;
+                } else {
+                    value.htlcdate = "<span style='color: red'>00 h, 00 min</span>";
+                }
             }
             value.time = Helpers.timeStamp2String(value.time);
         } else {

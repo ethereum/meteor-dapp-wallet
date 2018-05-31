@@ -1,6 +1,12 @@
 Template['views_modals_unlockTransactionInfo'].onCreated(function(){
     var template = this;
     TemplateVar.set(template, 'isButton', false);
+
+    if (this.data.chain === 'ETH') {
+        TemplateVar.set(template, 'passwdType', 'enter the from account"s password (eth)');
+    } else {
+        TemplateVar.set(template, 'passwdType', 'enter the from account"s password (wan)');
+    }
 });
 
 

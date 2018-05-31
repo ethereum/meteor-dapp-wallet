@@ -1,3 +1,24 @@
+function waitingMoment(number) {
+    EthElements.Modal.show('views_modals_loading', {closeable: false, class: 'crosschain-loading'});
+    setTimeout(() => {
+        EthElements.Modal.hide();
+    }, number);
+}
+
+function showErrorMessage(error) {
+    if (error && error.error) {
+        return GlobalNotification.warning({
+            content: error.error,
+            duration: 2
+        });
+    } else {
+        return GlobalNotification.warning({
+            content: error,
+            duration: 2
+        });
+    }
+}
+
 Template['views_modals_sendcrosschainReleaseX'].onCreated(function(){
     var template = this;
     TemplateVar.set(template, 'isButton', false);
@@ -6,6 +27,12 @@ Template['views_modals_sendcrosschainReleaseX'].onCreated(function(){
         TemplateVar.set(template, 'transType', 'Realease X Transaction');
     } else {
         TemplateVar.set(template, 'transType', 'Revoke Transaction');
+    }
+
+    if (this.data.Chain === 'ETH') {
+        TemplateVar.set(template, 'passwdType', 'enter the crossAdress account"s password (eth)');
+    } else {
+        TemplateVar.set(template, 'passwdType', 'enter the crossAdress account"s password (wan)');
     }
 
 });
@@ -45,24 +72,13 @@ Template['views_modals_sendcrosschainReleaseX'].events({
                 }
 
                 EthElements.Modal.hide();
+                waitingMoment(10000);
+
 
             } catch (error) {
                 // console.log('sendLockTransData error', error);
-
                 EthElements.Modal.hide();
-
-                if (error && error.error) {
-                    return GlobalNotification.warning({
-                        content: error.error,
-                        duration: 2
-                    });
-                } else {
-                    return GlobalNotification.warning({
-                        content: error,
-                        duration: 2
-                    });
-                }
-
+                showErrorMessage(error);
             }
         }
         // revoke
@@ -83,23 +99,12 @@ Template['views_modals_sendcrosschainReleaseX'].events({
                 }
 
                 EthElements.Modal.hide();
+                waitingMoment(10000);
 
             } catch (error) {
                 // console.log('sendLockTransData error', error);
-
                 EthElements.Modal.hide();
-
-                if (error && error.error) {
-                    return GlobalNotification.warning({
-                        content: error.error,
-                        duration: 2
-                    });
-                } else {
-                    return GlobalNotification.warning({
-                        content: error,
-                        duration: 2
-                    });
-                }
+                showErrorMessage(error);
 
             }
         }

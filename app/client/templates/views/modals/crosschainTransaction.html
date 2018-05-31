@@ -20,7 +20,7 @@
             </tr>
             <tr>
                 <td>amount:</td>
-                <td>{{amount}}</td>
+                <td>{{amount}} {{Chain}}</td>
             </tr>
         </tbody>
     </table>
@@ -41,7 +41,7 @@
     <pre>{{data}}</pre>
     </p>
 
-    <input type="password" id="releaseX-psd" placeholder="enter password"
+    <input type="password" id="releaseX-psd" placeholder="{{TemplateVar.get "passwdType"}}"
            disabled="{{TemplateVar.get "isButton"}}"
            style="width: 100%;"/>
 
