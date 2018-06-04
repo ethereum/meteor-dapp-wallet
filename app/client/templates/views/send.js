@@ -318,7 +318,7 @@ Template['views_send'].helpers({
                     accounts[0].isWaddress = false;
                 }
 
-                if (!accounts[0].isWaddress && !Session.get('ledgerConnect')) {
+                if (!accounts[0].isWaddress && !Session.get('hardwareConnect')) {
                     FlowRouter.go('/');
                     return;
                 }

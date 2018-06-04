@@ -45,10 +45,10 @@
             </li>
 
             <li style="flex: 1;">
-                {{#if $.Session.get "ledgerConnect"}}
+                {{#if $.Session.get "hardwareConnect"}}
                     <div class="ledgerConnect">
                         <em class=" wanchain-log-small"></em>
-                        <span>Ledger Wallet Connected</span>
+                        <span>{{$.Session.get "hardwareAccount"}} Connected</span>
                     </div>
                 {{/if}}
             </li>

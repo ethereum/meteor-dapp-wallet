@@ -80,8 +80,10 @@ Template['elements_cross_transactions_table'].helpers({
 
                 if (value.chain === 'ETH') {
                     value.text = '<small>(ETH=>WETH)</small>';
+                    value.symbol = 'ETH';
                 } else if (value.chain === 'WAN') {
                     value.text = '<small>(WETH=>ETH)</small>';
+                    value.symbol = 'WETH';
                 }
 
                 let style = 'display: block; font-size: 18px;';
@@ -119,6 +121,12 @@ Template['elements_cross_transactions_table'].events({
         let show_data = TemplateVar.get('crosschainList')[id];
         // console.log('show_data: ', show_data);
 
+        if (show_data.chain === 'ETH') {
+            show_data.symbol = 'ETH';
+        } else if (show_data.chain === 'WAN') {
+            show_data.symbol = 'WETH';
+        }
+
         EthElements.Modal.show({
             template: 'views_modals_crosstransactionInfo',
             data: {
@@ -134,6 +142,7 @@ Template['elements_cross_transactions_table'].events({
                 to: show_data.to,
                 value: show_data.value,
                 x: show_data.x,
+                symbol: show_data.symbol,
                 status: show_data.status,
             }
         });
@@ -176,6 +185,8 @@ Template['elements_cross_transactions_table'].events({
             let getRefundTransData;
 
             if (show_data.chain === 'ETH') {
+                show_data.symbol = 'ETH';
+
                 // release x in wan
                 getRefundTransData = await Helpers.promisefy(mist.ETH2WETH().getRefundTransData, [trans], mist.ETH2WETH());
                 coinBalance = await Helpers.promisefy(mist.WETH2ETH().getBalance, [show_data.crossAdress.toLowerCase()], mist.WETH2ETH());
@@ -183,6 +194,8 @@ Template['elements_cross_transactions_table'].events({
                 transData = getRefundTransData.refundTransData;
                 // console.log('transData: ', transData);
             } else {
+                show_data.symbol = 'WETH';
+
                 // release x in eth
                 getRefundTransData = await Helpers.promisefy(mist.WETH2ETH().getRefundTransData, [trans], mist.WETH2ETH());
                 coinBalance = await Helpers.promisefy(mist.ETH2WETH().getBalance, [show_data.crossAdress.toLowerCase()], mist.ETH2WETH());
@@ -273,6 +286,7 @@ Template['elements_cross_transactions_table'].events({
                 trans: trans,
                 transType: transType,
                 Chain: show_data.chain,
+                symbol: show_data.symbol
             },
         },{
             class: 'send-transaction-info'

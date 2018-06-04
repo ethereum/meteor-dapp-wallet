@@ -123,7 +123,7 @@ Template['elements_account'].helpers({
                 balance = new BigNumber(balance).toFixed(2);
             }
 
-            return balance + '<span> ' + this.symbol + '</span>';
+            return `${balance} <span>${this.symbol}</span>`;
 
         } else {
             return false;

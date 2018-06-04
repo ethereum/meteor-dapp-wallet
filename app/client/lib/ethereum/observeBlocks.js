@@ -14,7 +14,7 @@ var getPeerCount = function() {
 
 };
 
-var getLedger = function () {
+var getHardware = function () {
 
     web3.wan.getListWallets(function (error, result) {
 
@@ -22,27 +22,47 @@ var getLedger = function () {
             var account = result[result.length -1];
 
             if (account) {
-                if (account.url.indexOf('ledger://') >= 0) {
+                // trezor
+                if (account.url.indexOf('trezor://') >= 0) {
                     if (account.status.indexOf('online') >= 0) {
-                        Session.set('ledgerConnect', true);
+                        Session.set('hardwareConnect', true);
+                        Session.set('hardwareAccount', 'Trezor Account');
                     } else {
-                        if (Session.get('ledgerConnect')) {
-                            Session.set('ledgerConnect', false);
+                        if (Session.get('hardwareConnect')) {
+                            Session.set('hardwareConnect', false);
+                            Session.set('hardwareAccount', '');
                         }
                     }
-                } else {
-                    if (Session.get('ledgerConnect')) {
-                        Session.set('ledgerConnect', false);
+                }
+                // ledger
+                else if (account.url.indexOf('ledger://') >= 0) {
+                    if (account.status.indexOf('online') >= 0) {
+                        Session.set('hardwareConnect', true);
+                        Session.set('hardwareAccount', 'Ledger Account');
+                    } else {
+                        if (Session.get('hardwareConnect')) {
+                            Session.set('hardwareConnect', false);
+                            Session.set('hardwareAccount', '');
+                        }
+                    }
+                }
+                // other
+                else {
+                    if (Session.get('hardwareConnect')) {
+                        Session.set('hardwareConnect', false);
+                        Session.set('hardwareAccount', '');
                     }
                 }
             } else {
-                if (Session.get('ledgerConnect')) {
-                    Session.set('ledgerConnect', false);
+                if (Session.get('hardwareConnect')) {
+                    Session.set('hardwareConnect', false);
+                    Session.set('hardwareAccount', '');
                 }
             }
         } else {
-            if (Session.get('ledgerConnect')) {
-                Session.set('ledgerConnect', false);
+            if (Session.get('hardwareConnect')) {
+                Session.set('hardwareConnect', false);
+                Session.set('hardwareAccount', '');
             }
         }
 
@@ -162,14 +182,14 @@ observeLatestBlocks = function(){
 
     // check peer count
     Session.setDefault('peerCount', 0);
-    Session.setDefault('ledgerConnect', false);
+    Session.setDefault('hardwareConnect', false);
 
-    getLedger();
+    getHardware();
     getPeerCount();
 
     clearInterval(peerCountIntervalId);
     peerCountIntervalId = setInterval(function() {
         getPeerCount();
-        getLedger();
+        getHardware();
     }, 1000);
 };

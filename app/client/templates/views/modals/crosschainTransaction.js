@@ -25,14 +25,10 @@ Template['views_modals_sendcrosschainReleaseX'].onCreated(function(){
 
     if (this.data.transType === 'releaseX') {
         TemplateVar.set(template, 'transType', 'Realease X Transaction');
+        TemplateVar.set(template, 'passwdType', 'enter the crossAdress account\'s password');
     } else {
         TemplateVar.set(template, 'transType', 'Revoke Transaction');
-    }
-
-    if (this.data.Chain === 'ETH') {
-        TemplateVar.set(template, 'passwdType', 'enter the crossAdress account"s password (eth)');
-    } else {
-        TemplateVar.set(template, 'passwdType', 'enter the crossAdress account"s password (wan)');
+        TemplateVar.set(template, 'passwdType', 'enter the from account\'s password');
     }
 
 });

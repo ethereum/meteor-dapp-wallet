@@ -25,9 +25,9 @@
                                     <img class="wanchain-edit edit-icon" style="position: inherit;"/>
 
                                     {{#unless isWaddress}}
-                                        <div class="ledger-account" style="top: 67px;margin-left: 26px;">
+                                        <div class="ledger-account" style=" top: 40px; position: relative;">
                                             <img/>
-                                            <span style="top: 0px;">Ledger Account</span>
+                                            <span style="top: 0px;">{{$.Session.get "hardwareAccount"}}</span>
                                         </div>
                                     {{/unless}}
 

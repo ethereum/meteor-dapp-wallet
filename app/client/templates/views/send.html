@@ -36,7 +36,7 @@
                         {{#unless isWaddress}}
                             <div class="ledger-account" style="top: -3px">
                             <img/>
-                            <span>Ledger Account</span>
+                            <span>{{$.Session.get "hardwareAccount"}}</span>
                         </div>
                         {{/unless}}
 

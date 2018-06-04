@@ -17,6 +17,7 @@ Template['views_wethToeth'].onCreated(async function(){
     TemplateVar.set(template, 'amount', 0);
     TemplateVar.set(template, 'feeMultiplicator', 0);
     TemplateVar.set(template, 'options', false);
+    TemplateVar.set(template, 'coverCharge', 0);
 
     EthElements.Modal.show('views_modals_loading', {closeable: false, class: 'crosschain-loading'});
 
@@ -48,6 +49,15 @@ Template['views_wethToeth'].onCreated(async function(){
             // console.log('WETH2ETH storeman', data);
             TemplateVar.set(template,'storeman',data[0].wanAddress);
             TemplateVar.set(template,'storemanGroup',data);
+        }
+    });
+
+    // get wan2coin ratio
+    await mist.ETH2WETH().getWan2CoinRatio('ETH', function (err,data) {
+        if (data) {
+            TemplateVar.set(template,'wan2CoinRatio',data);
+        } else {
+            TemplateVar.set(template,'wan2CoinRatio',20);
         }
     });
 
@@ -114,15 +124,23 @@ Template['views_wethToeth'].events({
     'keyup input[name="amount"], change input[name="amount"], input input[name="amount"]': function(event){
         event.preventDefault();
 
-        var amount = new BigNumber(0);
+        let amount = new BigNumber(0);
 
-        var regPos = /^\d+(\.\d+)?$/; //非负浮点数
-        var regNeg = /^(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))$/; //负浮点数
+        let regPos = /^\d+(\.\d+)?$/; //非负浮点数
+        let regNeg = /^(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))$/; //负浮点数
 
         if (event.target.value && (regPos.test(event.target.value) || regNeg.test(event.target.value)) ) {
             amount = new BigNumber(event.target.value)
         }
 
+        let txFeeratio = 1;
+        let wan2CoinRatio  = TemplateVar.get('wan2CoinRatio');
+        let amountWei = web3.toWei(amount);
+
+        let coverCharge = amountWei * wan2CoinRatio * txFeeratio / 1000 / 1000;
+        // console.log('coverCharge: ', coverCharge);
+
+        TemplateVar.set('coverCharge', web3.fromWei(coverCharge));
         TemplateVar.set('amount', amount);
     },
 

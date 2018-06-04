@@ -32,7 +32,7 @@ f
             {{#unless isWaddress}}
                 <div class="ledger-account">
                     <img/>
-                    <span>Ledger Account</span>
+                    <span>{{$.Session.get "hardwareAccount"}}</span>
                 </div>
             {{/unless}}
 
