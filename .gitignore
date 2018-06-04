@@ -4,3 +4,4 @@ app/packages/*
 packages/
 app/public/i18n/*.json
 app/.meteor/dev_bundle
+app/node_modules/*
