@@ -3,7 +3,7 @@
     "precommit": "pretty-quick --staged"
   },
   "dependencies": {
-    "@babel/runtime": "^7.0.0-beta.41"
+    "@babel/runtime": "^7.0.0-beta.49"
   },
   "devDependencies": {
     "husky": "^0.14.3",
