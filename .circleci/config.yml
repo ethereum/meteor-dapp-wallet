@@ -19,8 +19,8 @@ jobs:
     steps:
       - checkout
 
-      - npm i -g meteor-build-client
-      - curl https://install.meteor.com/ | sh
+      - run: npm install -g meteor-build-client
+      - run: curl https://install.meteor.com/ | sh
 
       # Download and cache dependencies
       - restore_cache:
