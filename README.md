@@ -11,7 +11,7 @@ and can contain severe bugs! Please use at your own risk.
 
 If you don't have [Meteor](https://www.meteor.com/install):
 
- $ curl https://install.meteor.com/ | sh
+    $ curl https://install.meteor.com/ | sh
 
 Install npm dependencies:
 
