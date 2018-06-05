@@ -26,7 +26,7 @@ Check if in mist
 @method (isMist)
 **/
 Template.registerHelper('isMist', function() {
-  return typeof window.mist !== 'undefined';
+  return window.mistMode === undefined && window.mist !== undefined;
 });
 
 /**
@@ -35,7 +35,17 @@ Check if in mist and in mist mode
 @method (isWalletMode)
 **/
 Template.registerHelper('isWalletMode', function() {
-  return window.mistMode === 'wallet' || typeof mist === 'undefined'; // also show network info in normal browsers
+  // also show network info in normal browsers
+  return window.mistMode === 'wallet' || window.mist === undefined;
+});
+
+/**
+Check if wallet was loaded from browser other than Mist
+
+@method (isBrowserMode)
+**/
+Template.registerHelper('isBrowserMode', function() {
+  return window.mistMode === undefined || window.mist === undefined;
 });
 
 /**
@@ -255,5 +265,5 @@ Check if on main network
 @method (isMainNetwork)
 **/
 Template.registerHelper('isMainNetwork', function() {
-    return Session.get('network') === 'main';
+  return Session.get('network') === 'main';
 });
