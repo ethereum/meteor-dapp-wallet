@@ -14,10 +14,13 @@ jobs:
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mongo:3.4.4
 
-    working_directory: ~/meteor-dapp-wallet/app
+    working_directory: ~/meteor-dapp-wallet
 
     steps:
       - checkout
+
+      - npm i -g meteor-build-client
+      - curl https://install.meteor.com/ | sh
 
       # Download and cache dependencies
       - restore_cache:
@@ -26,13 +29,14 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: yarn install
+      - run: cd app && npm i
 
       - save_cache:
           paths:
             - app/node_modules
           key: v1-dependencies-{{ checksum "app/package.json" }}
-        
+      
+
       # run tests!
       - run: npm run build
 
