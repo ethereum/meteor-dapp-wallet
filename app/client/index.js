@@ -55,7 +55,7 @@ Meteor.startup(function() {
     }
     // SET default language
     // if(Cookie.get('TAPi18next')) {
-    //     TAPi18n.setLanguage(Cookie.get('TAPi18next'));
+    //     TAqPi18n.setLanguage(Cookie.get('TAPi18next'));
     // } else {
     //     var userLang = navigator.language || navigator.userLanguage,
     //     availLang = TAPi18n.getLanguages();
@@ -102,7 +102,8 @@ Meteor.startup(function() {
         //     }, 5000);
         // }
 
-        var unicornToken = '0x63eed4943abaac5f43f657d8eec098ca6d6a546e';
+
+        var unicornToken = '0x22ab03c1cef3e47b3b9dc48d50369ef15883ce1b';
         tokenId = Helpers.makeId('token', unicornToken);
 
         if (Tokens.findOne(tokenId) === undefined) {

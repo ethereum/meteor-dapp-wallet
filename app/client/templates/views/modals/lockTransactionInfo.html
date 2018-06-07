@@ -8,6 +8,13 @@
                 <td>amount</td>
                 <td>{{amount}} {{symbol}}</td>
             </tr>
+            {{#if valueFee}}
+                <tr>
+                    <td>service charge</td>
+                    <td>{{valueFee}} {{symbol}}</td>
+                </tr>
+            {{/if}}
+
             <tr>
                 <td>from:</td>
                 <td>{{from}}</td>

@@ -93,10 +93,10 @@ Template['elements_cross_transactions_table'].helpers({
                     value.status === 'sentXPending' || value.status === 'sentXConfirming' ||
                     value.status === 'sentRevokePending' || value.status === 'sentRevokeConfirming' ) {
                     style += 'color: #1ec89a;';
-                    value.state = `<h2 class="crosschain-list" id = ${index} style="${style}">Doing</h2>`;
+                    value.state = `<h2 class="crosschain-list" id = ${index} style="${style}">${value.status}</h2>`;
                 } else if (value.status === 'refundFinished' || value.status === 'revokeFinished') {
                     style += 'color: #4b90f7;';
-                    value.state = `<h2 class="crosschain-list" id = ${index}  style="${style}">Done</h2>`;
+                    value.state = `<h2 class="crosschain-list" id = ${index}  style="${style}">${value.status}</h2>`;
                 } else if (value.status === 'waitingX') {
                     style += 'color: #920b1c;';
                     value.state = `<h2 class="crosschain-list" id = ${index} style="${style}">Release X</h2>`;
@@ -179,7 +179,7 @@ Template['elements_cross_transactions_table'].events({
             trans = {
                 lockTxHash: show_data.lockTxHash, amount: show_data.value.toString(10),
                 storemanGroup: show_data.storeman, cross: show_data.crossAdress,
-                gas: getGas, gasPrice: gasPrice
+                gas: getGas, gasPrice: gasPrice, X: show_data.x
             };
 
             let getRefundTransData;
@@ -192,7 +192,6 @@ Template['elements_cross_transactions_table'].events({
                 coinBalance = await Helpers.promisefy(mist.WETH2ETH().getBalance, [show_data.crossAdress.toLowerCase()], mist.WETH2ETH());
 
                 transData = getRefundTransData.refundTransData;
-                // console.log('transData: ', transData);
             } else {
                 show_data.symbol = 'WETH';
 
@@ -201,8 +200,9 @@ Template['elements_cross_transactions_table'].events({
                 coinBalance = await Helpers.promisefy(mist.ETH2WETH().getBalance, [show_data.crossAdress.toLowerCase()], mist.ETH2WETH());
 
                 transData = getRefundTransData.refundTransData;
-                // console.log('transData: ', transData);
             }
+
+            // console.log('getRefundTransData: ', getRefundTransData);
         }
 
         // waitingRevoke
@@ -222,7 +222,7 @@ Template['elements_cross_transactions_table'].events({
             trans = {
                 from: show_data.from, amount: show_data.value.toString(10),
                 storemanGroup: show_data.storeman, cross: show_data.crossAdress,
-                x: show_data.x,
+                X: show_data.x,
                 gas: getGas, gasPrice: gasPrice
             };
 

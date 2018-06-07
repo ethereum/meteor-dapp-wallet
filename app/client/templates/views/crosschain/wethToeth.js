@@ -82,12 +82,26 @@ Template['views_wethToeth'].onCreated(async function(){
         }
     });
 
+
+    let ethaddress = [];
+
+    TemplateVar.set(template, 'to', Session.get('addressList')[0]);
+    _.each(Session.get('addressList'), function (value, index) {
+        ethaddress.push({address: value})
+    });
+
+    TemplateVar.set(template, 'addressList', ethaddress);
+
 });
 
 
 Template['views_wethToeth'].helpers({
     'ethAccounts': function(){
         return TemplateVar.get('wanList');
+    },
+
+    'addressList': function(){
+        return TemplateVar.get('addressList');
     },
 
     'Deposit': function () {
@@ -183,7 +197,8 @@ Template['views_wethToeth'].events({
             storeman = TemplateVar.get('storeman'),
             to = TemplateVar.get('to'),
             fee = TemplateVar.get('fee'),
-            amount = TemplateVar.get('amount');
+            amount = TemplateVar.get('amount'),
+            valueFee = TemplateVar.get('coverCharge');
 
         var gasPrice = TemplateVar.get('gasPrice').toString(),
             estimatedGas = TemplateVar.get('estimatedGas').toString();
@@ -241,7 +256,7 @@ Template['views_wethToeth'].events({
 
         var trans = {
             from: from, amount: amount.toString(10), storemanGroup: storeman,
-            cross: to, gas: estimatedGas, gasPrice: gasPrice
+            cross: to, gas: estimatedGas, gasPrice: gasPrice, value: valueFee
         };
 
         // console.log('trans: ', trans);
@@ -261,6 +276,7 @@ Template['views_wethToeth'].events({
                     data: getLockTransData.lockTransData,
                     trans: trans,
                     secretX: getLockTransData.secretX,
+                    valueFee: valueFee,
                     chain: 'WAN',
                     symbol: 'WETH'
                 },

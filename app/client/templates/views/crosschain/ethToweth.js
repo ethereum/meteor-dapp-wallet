@@ -19,7 +19,6 @@ Template['views_ethToweth'].onCreated(async function(){
     TemplateVar.set(template, 'options', false);
 
     EthElements.Modal.show('views_modals_loading', {closeable: false, class: 'crosschain-loading'});
-
     // eth accounts token balance
     await mist.ETH2WETH().getMultiBalances(Session.get('addressList'), (err, result) => {
         if (!err) {
@@ -69,12 +68,25 @@ Template['views_ethToweth'].onCreated(async function(){
         }
     });
 
+
+    let wanaddress = [];
+
+    TemplateVar.set(template, 'to', Session.get('wanAddressList')[0]);
+    _.each(Session.get('wanAddressList'), function (value, index) {
+        wanaddress.push({address: value})
+    });
+
+    TemplateVar.set(template, 'wanAddressList', wanaddress);
 });
 
 
 Template['views_ethToweth'].helpers({
     'ethAccounts': function(){
         return TemplateVar.get('ethList');
+    },
+
+    'wanAddressList': function(){
+        return TemplateVar.get('wanAddressList');
     },
 
     'Deposit': function () {

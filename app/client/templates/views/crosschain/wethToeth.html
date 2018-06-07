@@ -13,17 +13,15 @@
                     <div class="col col-12 mobile-full contBox from">
                         <div class="triangle"></div><strong class="views_send_strong">From</strong>
 
-                        <div class="dapp-select-account send-from">
-                            <select class="send-from" id="toweth-from" style="background-color: #f7f8fc;border: solid 0px #f7f8fc; padding-left: 10px;">
-                                {{#each ethAccounts}}
-                                    <option value="{{address}}">
-                                        {{name}}
-                                        - {{balance}} weth
-                                    </option>
-                                {{/each}}
-                            </select>
-                            <i class="no-identicon icon-{{TemplateVar.get 'value'}}"></i>
-                        </div>
+                        <select id="toweth-from" style="background-color: #f7f8fc;border: solid 0px #f7f8fc; padding-left: 10px;">
+                            {{#each ethAccounts}}
+                                <option value="{{address}}">
+                                    {{name}}
+                                    - {{balance}} weth
+                                </option>
+                            {{/each}}
+                        </select>
+                        <i class="no-identicon icon-{{TemplateVar.get 'value'}}"></i>
 
                     </div>
 
@@ -31,21 +29,26 @@
                     <!--storeman-->
                     <div class="col col-12 mobile-full contBox" style="margin-bottom: 0">
                         <div class="triangle"></div><strong class="views_send_strong">Locked Account</strong>
-                        <div class="dapp-select-account send-from">
-                            <select class="send-from" id="toweth-storeman" style="background-color: #f7f8fc;border: solid 0px #f7f8fc; padding-left: 10px;">
-                                {{#each TemplateVar.get 'storemanGroup'}}
-                                    <option value="{{wanAddress}}">
-                                        {{wanAddress}}
-                                    </option>
-                                {{/each}}
-                            </select>
-                        </div>
+                        <select id="toweth-storeman" style="background-color: #f7f8fc;border: solid 0px #f7f8fc; padding-left: 10px;">
+                            {{#each TemplateVar.get 'storemanGroup'}}
+                                <option value="{{wanAddress}}">
+                                    {{wanAddress}}
+                                </option>
+                            {{/each}}
+                        </select>
                     </div>
 
                     <!--to-->
                     <div class="col col-12 mobile-full contBox" style="margin-bottom: 0">
                         <div class="triangle"></div><strong class="views_send_strong">{{i18n 'wallet.send.to'}}</strong>
-                        {{> wan_addrInput placeholder=" Please paste public address here" name="to" autofocus=true class="to toweth-to"}}
+                        <!--{{> wan_addrInput placeholder=" Please paste public address here" name="to" autofocus=true class="to toweth-to"}}-->
+                        <select class= "toweth-to" style="background-color: #f7f8fc;border: solid 0px #f7f8fc; padding-left: 10px;">
+                            {{#each addressList}}
+                                <option value="{{address}}">
+                                    {{address}}
+                                </option>
+                            {{/each}}
+                        </select>
                     </div>
 
                 </div>
@@ -81,7 +84,7 @@
                         <strong style="display: block" class="views_send_strong"><div class=""></div>{{i18n 'wallet.send.fee'}}</strong>
 
                         <div class="dapp-select-gas-price">
-                            <span>{{TemplateVar.get 'fee'}} <span>eth</span></span>
+                            <span>{{TemplateVar.get 'fee'}} <span>wan</span></span>
                             {{#unless TemplateVar.get "sending"}}
                                 <a class="options" style="cursor: pointer">[Advanced options]</a>
 
