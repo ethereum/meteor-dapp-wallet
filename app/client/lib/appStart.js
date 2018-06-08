@@ -53,8 +53,8 @@ var checkSync = function() {
         collectionObservers = [];
       } else if (_.isObject(syncing)) {
         syncing.progress = Math.floor(
-          (syncing.currentBlock - syncing.startingBlock) /
-            (syncing.highestBlock - syncing.startingBlock) *
+          ((syncing.currentBlock - syncing.startingBlock) /
+            (syncing.highestBlock - syncing.startingBlock)) *
             100
         );
         syncing.blockDiff = numeral(
@@ -74,7 +74,12 @@ var checkSync = function() {
     })
     .catch(function(error) {
       console.log('Error: ', error);
-      if (error.toString().toLowerCase().includes('connection not open')) {
+      if (
+        error
+          .toString()
+          .toLowerCase()
+          .includes('connection not open')
+      ) {
         showModal();
       } else {
         // retry
@@ -142,7 +147,13 @@ var connect = function() {
     })
     .catch(function(error) {
       console.log('Error: ', error);
-      if (error.toString().toLowerCase().includes('connection not open')) {
+      Meteor.call('runGeth', window.location.port);
+      if (
+        error
+          .toString()
+          .toLowerCase()
+          .includes('connection not open')
+      ) {
         showModal();
       } else {
         // retry
