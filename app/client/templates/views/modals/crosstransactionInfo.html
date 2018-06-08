@@ -20,10 +20,12 @@
                     <td>From</td>
                     <td>{{from}}</td>
                 </tr>
-                <tr>
-                    <td>lockTxHash</td>
-                    <td>{{lockTxHash}}</td>
-                </tr>
+                {{#if lockTxHash}}
+                    <tr>
+                        <td>lockTxHash</td>
+                        <td>{{lockTxHash}}</td>
+                    </tr>
+                {{/if}}
                 {{#if refundTxHash}}
                     <tr>
                         <td>refundTxHash</td>
@@ -38,52 +40,58 @@
                     </tr>
                 {{/if}}
 
-                <tr>
-                    <td>Storeman</td>
-                    <td>{{storeman}}</td>
-                </tr>
+                {{#if storeman}}
+                    <tr>
+                        <td>Storeman</td>
+                        <td>{{storeman}}</td>
+                    </tr>
+                {{/if}}
 
                 <tr>
                     <td>Value</td>
                     <td>{{value}} {{symbol}}</td>
                 </tr>
 
-                <tr>
-                    <td>X</td>
-                    <td>{{x}}</td>
-                </tr>
+                {{#if x}}
+                    <tr>
+                        <td>X</td>
+                        <td>{{x}}</td>
+                    </tr>
+                {{/if}}
 
-                <tr>
-                    <td>Status</td>
-                    <td>{{status}}</td>
-                </tr>
+                {{#if status}}
+                    <tr>
+                        <td>Status</td>
+                        <td>{{status}}</td>
+                    </tr>
+                {{/if}}
 
-                <!--{{#if blockHash}}-->
-                    <!--<tr>-->
-                        <!--<td>{{i18n "wallet.transactions.block"}}</td>-->
-                        <!--<td>-->
-                           <!--{{#if $eq ($.Session.get "network") "main"}}-->
-                               <!--<a href="http://explorer.wanchain.org/block/{{blockNumber}}" title="{{blockNumber}}" target="_blank" class="dapp-shorten-text">-->
-                                   <!--{{blockNumber}}-->
-                                   <!--<br>-->
-                                   <!--{{blockHash.substr 0 40}}...-->
-                               <!--</a>-->
-                            <!--{{else}}-->
-                                <!--{{#if $eq ($.Session.get "network") "test"}}-->
-                                    <!--<a href="http://explorer.wanchain.org/block/{{blockNumber}}" title="{{blockNumber}}" target="_blank" class="dapp-shorten-text">-->
-                                        <!--{{blockNumber}}-->
-                                        <!--<br>-->
-                                        <!--{{blockHash.substr 0 40}}...-->
-                                    <!--</a>-->
-                                <!--{{else}}-->
-                                    <!--{{blockNumber}}-->
-                                    <!--<br>-->
-                                    <!--{{blockHash.substr 0 40}}...-->
-                                <!--{{/if}}-->
-                            <!--{{/if}}-->
-                        <!--</td>-->
-                    <!--</tr>-->
-                <!--{{/if}}-->
+                {{#if blockHash}}
+                    <tr>
+                        <td>{{i18n "wallet.transactions.block"}}</td>
+                        <td>
+                           {{#if $eq ($.Session.get "network") "main"}}
+                               <a href="http://explorer.wanchain.org/block/{{blockNumber}}" title="{{blockNumber}}" target="_blank" class="dapp-shorten-text">
+                                   {{blockNumber}}
+                                   <br>
+                                   {{blockHash.substr 0 40}}...
+                               </a>
+                            {{else}}
+                                {{#if $eq ($.Session.get "network") "test"}}
+                                    <a href="http://explorer.wanchain.org/block/{{blockNumber}}" title="{{blockNumber}}" target="_blank" class="dapp-shorten-text">
+                                        {{blockNumber}}
+                                        <br>
+                                        {{blockHash.substr 0 40}}...
+                                    </a>
+                                {{else}}
+                                    {{blockNumber}}
+                                    <br>
+                                    {{blockHash.substr 0 40}}...
+                                {{/if}}
+                            {{/if}}
+                        </td>
+                    </tr>
+                {{/if}}
 
                <tr>
                    <td>Date</td>

@@ -9,7 +9,7 @@ Template['views_modals_unlockTransactionInfo'].events({
     'click .cancel-cross': function () {
         EthElements.Modal.hide();
     },
-    'click .ok-cross': async function () {
+    'click .ok-cross': function () {
         // console.log('data trans: ', this.trans);
         let password_input = document.getElementById('crosschain-psd').value;
 
@@ -23,45 +23,32 @@ Template['views_modals_unlockTransactionInfo'].events({
             });
         }
 
-        try {
-            TemplateVar.set('isButton', true);
+        TemplateVar.set('isButton', true);
 
-            if (this.chain === 'ETH') {
-                console.log('ETH chain: ', this.chain);
-                await Helpers.promisefy(
-                    mist.ETH2WETH().sendLockTrans,
-                    [this.trans, password_input, this.secretX],
-                    mist.ETH2WETH()
-                );
-            } else {
-                console.log('WAN chain: ', this.chain);
-                sendLockTransData = await Helpers.promisefy(
-                    mist.WETH2ETH().sendLockTrans,
-                    [this.trans, password_input, this.secretX],
-                    mist.WETH2ETH()
-                );
-            }
+        if (this.chain === 'ETH') {
+            console.log('ETH chain: ', this.chain);
 
-            EthElements.Modal.hide();
+            mist.ETH2WETH().sendLockTrans(this.trans, password_input, this.secretX, function (err,data) {
+                if (err) {
+                    Helpers.showError(err);
+                    EthElements.Modal.hide();
+                } else {
+                    EthElements.Modal.hide();
+                    Session.set('clickButton', 1);
+                }
+            });
+        } else {
+            console.log('WAN chain: ', this.chain);
 
-            Session.set('clickButton', 1);
-
-        } catch (error) {
-            // console.log('sendLockTransData error', error);
-            EthElements.Modal.hide();
-
-            if (error && error.error) {
-                return GlobalNotification.warning({
-                    content: error.error,
-                    duration: 2
-                });
-            } else {
-                return GlobalNotification.warning({
-                    content: error,
-                    duration: 2
-                });
-            }
-
+            mist.WETH2ETH().sendLockTrans(this.trans, password_input, this.secretX, function (err,data) {
+                if (err) {
+                    Helpers.showError(err);
+                    EthElements.Modal.hide();
+                } else {
+                    EthElements.Modal.hide();
+                    Session.set('clickButton', 1);
+                }
+            });
         }
 
     }

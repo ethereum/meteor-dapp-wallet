@@ -3,51 +3,33 @@
  @module Templates
  */
 
-
-Template['views_crosschain'].onCreated(async function () {
+Template['views_crosschain'].onCreated(function () {
     let template = this;
 
     EthElements.Modal.show('views_modals_loading', {closeable: false, class: 'crosschain-loading'});
 
-    try {
-        // eth => weth
-        let addressList = await Helpers.promisefy(
-            mist.ETH2WETH().getAddressList,
-            ['ETH'],
-            mist.ETH2WETH()
-        );
-
-        TemplateVar.set(template,'addressList',addressList);
-        Session.set('addressList', addressList);
-
-
-        // weth => eth
-        let wanAddressList = await Helpers.promisefy(
-            mist.ETH2WETH().getAddressList,
-            ['WAN'],
-            mist.WETH2ETH()
-        );
-
-        Session.set('wanAddressList', wanAddressList);
-
-        TemplateVar.set(template,'wanAddressList',wanAddressList);
-
-        EthElements.Modal.hide();
-
-    } catch (error) {
-        if (error && error.error) {
-            return GlobalNotification.warning({
-                content: error.error,
-                duration: 2
-            });
+    mist.ETH2WETH().getAddressList('ETH', function (err, addressList) {
+        if (err) {
+            console.log('err: ', err);
+            Helpers.showError(err);
         } else {
-            return GlobalNotification.warning({
-                content: error,
-                duration: 2
+            TemplateVar.set(template,'addressList',addressList);
+            Session.set('addressList', addressList);
+
+            mist.ETH2WETH().getAddressList('WAN', function (err, wanAddressList) {
+                if (err) {
+                    console.log('err: ', err);
+                    Helpers.showError(err);
+                } else {
+                    Session.set('wanAddressList', wanAddressList);
+
+                    TemplateVar.set(template,'wanAddressList',wanAddressList);
+
+                    EthElements.Modal.hide();
+                }
             });
         }
-
-    }
+    });
 
 });
 

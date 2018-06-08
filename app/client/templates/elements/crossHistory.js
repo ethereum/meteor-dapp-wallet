@@ -84,6 +84,8 @@ Template['elements_cross_transactions_table'].helpers({
                 } else if (value.chain === 'WAN') {
                     value.text = '<small>(WETH=>ETH)</small>';
                     value.symbol = 'WETH';
+                } else {
+                    value.text = '<small></small>';
                 }
 
                 let style = 'display: block; font-size: 18px;';
@@ -103,6 +105,11 @@ Template['elements_cross_transactions_table'].helpers({
                 } else if (value.status === 'waitingRevoke') {
                     style += 'color: #920b1c;';
                     value.state = `<h2 class="crosschain-list" id = ${index} style="${style}">Revoke</h2>`;
+                } else {
+                    style += 'color: #4b90f7;';
+                    value.state = `<h2 class="crosschain-list" id = ${index}  style="${style}">Normal transaction</h2>`;
+                    value.crossAdress = value.to;
+                    value.htlcdate = '--'
                 }
                 crosschainList.push(value);
             });
@@ -120,6 +127,10 @@ Template['elements_cross_transactions_table'].events({
 
         let show_data = TemplateVar.get('crosschainList')[id];
         // console.log('show_data: ', show_data);
+
+        if (!show_data.HashX) {
+            show_data.HashX = show_data.txhash
+        }
 
         if (show_data.chain === 'ETH') {
             show_data.symbol = 'ETH';
@@ -149,104 +160,296 @@ Template['elements_cross_transactions_table'].events({
 
     },
 
-    'click .crosschain-list': async function (e) {
+    'click .crosschain-list': function (e) {
         let id = e.target.id;
         let show_data = TemplateVar.get('crosschainList')[id];
-        // console.log('show_data: ', show_data.status);
 
-
-        let getGasPrice;
         let getGas;
         let gasPrice;
         let transData;
         let trans;
         let transType;
-        let coinBalance;
 
-        // waitingX
+        // release X
         if (show_data.status === 'waitingX') {
             transType = 'releaseX';
-            getGasPrice = await Helpers.promisefy(mist.ETH2WETH().getGasPrice, ['WAN'], mist.ETH2WETH());
-            // console.log('releaseX getPrice', getGasPrice);
 
-            getGas = getGasPrice.RefundGas;
-            gasPrice = getGasPrice.gasPrice;
-
-            if (gasPrice < defaultGasprice) {
-                gasPrice = defaultGasprice
-            }
-
-            trans = {
-                lockTxHash: show_data.lockTxHash, amount: show_data.value.toString(10),
-                storemanGroup: show_data.storeman, cross: show_data.crossAdress,
-                gas: getGas, gasPrice: gasPrice, X: show_data.x
-            };
-
-            let getRefundTransData;
-
+            // release X eth => weth
             if (show_data.chain === 'ETH') {
-                show_data.symbol = 'ETH';
+                mist.ETH2WETH().getGasPrice('WAN', function (err,getGasPrice) {
+                    if (err) {
+                        Helpers.showError(err);
+                    } else {
+                        getGas = getGasPrice.RefundGas;
+                        gasPrice = getGasPrice.gasPrice;
 
-                // release x in wan
-                getRefundTransData = await Helpers.promisefy(mist.ETH2WETH().getRefundTransData, [trans], mist.ETH2WETH());
-                coinBalance = await Helpers.promisefy(mist.WETH2ETH().getBalance, [show_data.crossAdress.toLowerCase()], mist.WETH2ETH());
+                        if (gasPrice < defaultGasprice) {
+                            gasPrice = defaultGasprice
+                        }
 
-                transData = getRefundTransData.refundTransData;
-            } else {
-                show_data.symbol = 'WETH';
+                        trans = {
+                            lockTxHash: show_data.lockTxHash, amount: show_data.value.toString(10),
+                            storemanGroup: show_data.storeman, cross: show_data.crossAdress,
+                            gas: getGas, gasPrice: gasPrice, X: show_data.x
+                        };
 
-                // release x in eth
-                getRefundTransData = await Helpers.promisefy(mist.WETH2ETH().getRefundTransData, [trans], mist.WETH2ETH());
-                coinBalance = await Helpers.promisefy(mist.ETH2WETH().getBalance, [show_data.crossAdress.toLowerCase()], mist.ETH2WETH());
+                        show_data.symbol = 'ETH';
 
-                transData = getRefundTransData.refundTransData;
+                        // release x in wan
+                        mist.ETH2WETH().getRefundTransData(trans, function (err,getRefundTransData) {
+                            if (err) {
+                                Helpers.showError(err);
+                            } else {
+                                mist.WETH2ETH().getBalance(show_data.crossAdress.toLowerCase(), function (err,coinBalance) {
+                                    if (err) {
+                                        Helpers.showError(err);
+                                    } else {
+                                        transData = getRefundTransData.refundTransData;
+                                        let fee = new BigNumber(getGas * gasPrice);
+
+                                        if(fee.gt(new BigNumber(coinBalance, 10)))
+                                            return GlobalNotification.warning({
+                                                content: 'i18n:wallet.send.error.notEnoughFunds',
+                                                duration: 2
+                                            });
+
+                                        EthElements.Modal.question({
+                                            template: 'views_modals_sendcrosschainReleaseX',
+                                            data: {
+                                                from: show_data.from,
+                                                to: show_data.to,
+                                                storeman: show_data.storeman,
+                                                crossAdress: show_data.crossAdress,
+                                                amount: show_data.value,
+                                                fee: EthTools.formatBalance(fee, '0,0.00[0000000000000000]', 'ether'),
+                                                gasPrice: gasPrice,
+                                                estimatedGas: getGas,
+                                                data: transData,
+                                                trans: trans,
+                                                transType: transType,
+                                                Chain: show_data.chain,
+                                                symbol: show_data.symbol
+                                            },
+                                        },{
+                                            class: 'send-transaction-info'
+                                        });
+                                    }
+                                });
+                            }
+                        });
+
+                    }
+                })
             }
+            // release X weth => eth
+            else if (show_data.chain === 'WAN') {
+                mist.ETH2WETH().getGasPrice('ETH', function (err,getGasPrice) {
+                    if (err) {
+                        Helpers.showError(err);
+                    } else {
+                        getGas = getGasPrice.RefundGas;
+                        gasPrice = getGasPrice.gasPrice;
 
-            // console.log('getRefundTransData: ', getRefundTransData);
+                        if (gasPrice < defaultGasprice) {
+                            gasPrice = defaultGasprice
+                        }
+
+                        trans = {
+                            lockTxHash: show_data.lockTxHash, amount: show_data.value.toString(10),
+                            storemanGroup: show_data.storeman, cross: show_data.crossAdress,
+                            gas: getGas, gasPrice: gasPrice, X: show_data.x
+                        };
+
+                        show_data.symbol = 'WETH';
+
+                        // release x in eth
+                        mist.WETH2ETH().getRefundTransData(trans, function (err,getRefundTransData) {
+                            if (err) {
+                                Helpers.showError(err);
+                            } else {
+                                // coinBalance = await Helpers.promisefy(mist.WETH2ETH().getBalance, [show_data.crossAdress.toLowerCase()], mist.WETH2ETH());
+                                mist.ETH2WETH().getBalance(show_data.crossAdress.toLowerCase(), function (err,coinBalance) {
+                                    if (err) {
+                                        Helpers.showError(err);
+                                    } else {
+                                        transData = getRefundTransData.refundTransData;
+                                        let fee = new BigNumber(getGas * gasPrice);
+
+                                        if(fee.gt(new BigNumber(coinBalance, 10)))
+                                            return GlobalNotification.warning({
+                                                content: 'i18n:wallet.send.error.notEnoughFunds',
+                                                duration: 2
+                                            });
+
+                                        EthElements.Modal.question({
+                                            template: 'views_modals_sendcrosschainReleaseX',
+                                            data: {
+                                                from: show_data.from,
+                                                to: show_data.to,
+                                                storeman: show_data.storeman,
+                                                crossAdress: show_data.crossAdress,
+                                                amount: show_data.value,
+                                                fee: EthTools.formatBalance(fee, '0,0.00[0000000000000000]', 'ether'),
+                                                gasPrice: gasPrice,
+                                                estimatedGas: getGas,
+                                                data: transData,
+                                                trans: trans,
+                                                transType: transType,
+                                                Chain: show_data.chain,
+                                                symbol: show_data.symbol
+                                            },
+                                        },{
+                                            class: 'send-transaction-info'
+                                        });
+                                    }
+                                });
+                            }
+                        });
+
+                    }
+                })
+            }
         }
 
-        // waitingRevoke
+        // revoke
         else if (show_data.status === 'waitingRevoke') {
             transType = 'revoke';
-            getGasPrice = await Helpers.promisefy(mist.ETH2WETH().getGasPrice, ['ETH'], mist.ETH2WETH());
 
-            // console.log('revoke getPrice', getGasPrice);
-
-            getGas = getGasPrice.RevokeGas;
-            gasPrice = getGasPrice.gasPrice;
-
-            if (gasPrice < defaultGasprice) {
-                gasPrice = defaultGasprice
-            }
-
-            trans = {
-                from: show_data.from, amount: show_data.value.toString(10),
-                storemanGroup: show_data.storeman, cross: show_data.crossAdress,
-                X: show_data.x,
-                gas: getGas, gasPrice: gasPrice
-            };
-
-            let getRevokeTransData;
-
+            // revoke eth => weth
             if (show_data.chain === 'ETH') {
-                // revoke x in eth
-                console.log('getRevokeTransData ETH: ', show_data.chain);
+                mist.ETH2WETH().getGasPrice('ETH', function (err,getGasPrice) {
+                    if (err) {
+                        Helpers.showError(err);
+                    } else {
+                        getGas = getGasPrice.RevokeGas;
+                        gasPrice = getGasPrice.gasPrice;
 
-                getRevokeTransData = await Helpers.promisefy(mist.ETH2WETH().getRevokeTransData, [trans], mist.ETH2WETH());
-                coinBalance = await Helpers.promisefy(mist.ETH2WETH().getBalance, [show_data.from.toLowerCase()], mist.ETH2WETH());
+                        if (gasPrice < defaultGasprice) {
+                            gasPrice = defaultGasprice
+                        }
 
-                transData = getRevokeTransData.revokeTransData;
-            } else {
-                // revoke x in wan
-                console.log('getRevokeTransData WAN: ', show_data.chain);
+                        trans = {
+                            from: show_data.from, amount: show_data.value.toString(10),
+                            storemanGroup: show_data.storeman, cross: show_data.crossAdress,
+                            X: show_data.x,
+                            gas: getGas, gasPrice: gasPrice
+                        };
 
-                getRevokeTransData = await Helpers.promisefy(mist.WETH2ETH().getRevokeTransData, [trans], mist.WETH2ETH());
-                coinBalance = await Helpers.promisefy(mist.WETH2ETH().getBalance, [show_data.from.toLowerCase()], mist.WETH2ETH());
+                        // revoke x in eth
+                        console.log('getRevokeTransData ETH: ', show_data.chain);
 
-                transData = getRevokeTransData.revokeTransData;
+                        mist.ETH2WETH().getRevokeTransData(trans, function (err,getRevokeTransData) {
+                            if (err) {
+                                Helpers.showError(err);
+                            } else {
+                                mist.ETH2WETH().getBalance(show_data.from.toLowerCase(), function (err,coinBalance) {
+                                    if (err) {
+                                        Helpers.showError(err);
+                                    } else {
+                                        transData = getRevokeTransData.revokeTransData;
+                                        let fee = new BigNumber(getGas * gasPrice);
+
+                                        if(fee.gt(new BigNumber(coinBalance, 10)))
+                                            return GlobalNotification.warning({
+                                                content: 'i18n:wallet.send.error.notEnoughFunds',
+                                                duration: 2
+                                            });
+
+                                        EthElements.Modal.question({
+                                            template: 'views_modals_sendcrosschainReleaseX',
+                                            data: {
+                                                from: show_data.from,
+                                                to: show_data.to,
+                                                storeman: show_data.storeman,
+                                                crossAdress: show_data.crossAdress,
+                                                amount: show_data.value,
+                                                fee: EthTools.formatBalance(fee, '0,0.00[0000000000000000]', 'ether'),
+                                                gasPrice: gasPrice,
+                                                estimatedGas: getGas,
+                                                data: transData,
+                                                trans: trans,
+                                                transType: transType,
+                                                Chain: show_data.chain,
+                                                symbol: show_data.symbol
+                                            },
+                                        },{
+                                            class: 'send-transaction-info'
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    }
+                })
+
             }
+            // revoke weth => eth
+            else if (show_data.chain === 'WAN') {
+                mist.ETH2WETH().getGasPrice('WAN', function (err,getGasPrice) {
+                    if (err) {
+                        Helpers.showError(err);
+                    } else {
+                        getGas = getGasPrice.RevokeGas;
+                        gasPrice = getGasPrice.gasPrice;
 
-            // console.log('transData: ', transData);
+                        if (gasPrice < defaultGasprice) {
+                            gasPrice = defaultGasprice
+                        }
+
+                        trans = {
+                            from: show_data.from, amount: show_data.value.toString(10),
+                            storemanGroup: show_data.storeman, cross: show_data.crossAdress,
+                            X: show_data.x,
+                            gas: getGas, gasPrice: gasPrice
+                        };
+
+                        // revoke x in wan
+                        console.log('getRevokeTransData WAN: ', show_data.chain);
+
+                        mist.WETH2ETH().getRevokeTransData(trans, function (err,getRevokeTransData) {
+                            if (err) {
+                                Helpers.showError(err);
+                            } else {
+                                mist.WETH2ETH().getBalance(show_data.from.toLowerCase(), function (err,coinBalance) {
+                                    if (err) {
+                                        Helpers.showError(err);
+                                    } else {
+                                        transData = getRevokeTransData.revokeTransData;
+                                        let fee = new BigNumber(getGas * gasPrice);
+
+                                        if(fee.gt(new BigNumber(coinBalance, 10)))
+                                            return GlobalNotification.warning({
+                                                content: 'i18n:wallet.send.error.notEnoughFunds',
+                                                duration: 2
+                                            });
+
+                                        EthElements.Modal.question({
+                                            template: 'views_modals_sendcrosschainReleaseX',
+                                            data: {
+                                                from: show_data.from,
+                                                to: show_data.to,
+                                                storeman: show_data.storeman,
+                                                crossAdress: show_data.crossAdress,
+                                                amount: show_data.value,
+                                                fee: EthTools.formatBalance(fee, '0,0.00[0000000000000000]', 'ether'),
+                                                gasPrice: gasPrice,
+                                                estimatedGas: getGas,
+                                                data: transData,
+                                                trans: trans,
+                                                transType: transType,
+                                                Chain: show_data.chain,
+                                                symbol: show_data.symbol
+                                            },
+                                        },{
+                                            class: 'send-transaction-info'
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    }
+                })
+            }
         }
 
         // other status
@@ -256,41 +459,6 @@ Template['elements_cross_transactions_table'].events({
                 duration: 2
             });
         }
-
-
-        let fee = new BigNumber(getGas * gasPrice);
-
-        // console.log('fee: ', fee);
-        // console.log('coinBalance: ', new BigNumber(coinBalance, 10));
-
-        if(fee.gt(new BigNumber(coinBalance, 10)))
-            return GlobalNotification.warning({
-                content: 'i18n:wallet.send.error.notEnoughFunds',
-                duration: 2
-            });
-
-        // console.log('transData: ', transData);
-
-        EthElements.Modal.question({
-            template: 'views_modals_sendcrosschainReleaseX',
-            data: {
-                from: show_data.from,
-                to: show_data.to,
-                storeman: show_data.storeman,
-                crossAdress: show_data.crossAdress,
-                amount: show_data.value,
-                fee: EthTools.formatBalance(fee, '0,0.00[0000000000000000]', 'ether'),
-                gasPrice: gasPrice,
-                estimatedGas: getGas,
-                data: transData,
-                trans: trans,
-                transType: transType,
-                Chain: show_data.chain,
-                symbol: show_data.symbol
-            },
-        },{
-            class: 'send-transaction-info'
-        });
 
     },
 });

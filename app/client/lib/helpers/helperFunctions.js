@@ -646,3 +646,24 @@ Helpers.formatDuring = function (mss) {
 
     return hours + " h, " + minutes + " min ";
 };
+
+
+Helpers.showError = function(error) {
+    if (error && error.error) {
+        return GlobalNotification.warning({
+            content: error.error,
+            duration: 2
+        });
+    } else if(error && JSON.stringify(error) === '{}') {
+        return GlobalNotification.warning({
+            content: "unknown error",
+            duration: 2
+        });
+    } else {
+        return GlobalNotification.warning({
+            content: error,
+            duration: 2
+        });
+    }
+};
+

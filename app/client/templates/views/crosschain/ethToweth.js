@@ -11,7 +11,7 @@
 
 
 // Set basic variables
-Template['views_ethToweth'].onCreated(async function(){
+Template['views_ethToweth'].onCreated(function(){
     var template = this;
 
     TemplateVar.set(template, 'amount', 0);
@@ -19,8 +19,19 @@ Template['views_ethToweth'].onCreated(async function(){
     TemplateVar.set(template, 'options', false);
 
     EthElements.Modal.show('views_modals_loading', {closeable: false, class: 'crosschain-loading'});
+
+    let wanaddress = [];
+
+    TemplateVar.set(template, 'to', Session.get('wanAddressList')[0]);
+    _.each(Session.get('wanAddressList'), function (value, index) {
+        wanaddress.push({address: value})
+    });
+
+    TemplateVar.set(template, 'wanAddressList', wanaddress);
+
+
     // eth accounts token balance
-    await mist.ETH2WETH().getMultiBalances(Session.get('addressList'), (err, result) => {
+    mist.ETH2WETH().getMultiBalances(Session.get('addressList'), (err, result) => {
         if (!err) {
             let result_list = [];
 
@@ -32,51 +43,46 @@ Template['views_ethToweth'].onCreated(async function(){
 
             TemplateVar.set(template,'ethList',result_list);
             TemplateVar.set(template,'from',result_list[0].address);
-        }
-    });
 
-    // eth => weth storeman
-    await mist.ETH2WETH().getStoremanGroups(function (err,data) {
-        if (err) {
-            TemplateVar.set(template,'storemanGroup', []);
+            // eth => weth storeman
+            mist.ETH2WETH().getStoremanGroups(function (err,data) {
+                if (err) {
+                    TemplateVar.set(template,'storemanGroup', []);
+                    Helpers.showError(err);
+                } else {
+                    if (data.length > 0) {
+                        // console.log('ETH2WETH storeman', data);
+                        TemplateVar.set(template,'storeman',data[0].ethAddress);
+                        TemplateVar.set(template,'storemanGroup',data);
+                    }
+
+                    // eth chain  gas price
+                    mist.ETH2WETH().getGasPrice('ETH', function (err,data) {
+                        if (err) {
+                            TemplateVar.set(template,'gasEstimate', {});
+                            Helpers.showError(err);
+                        } else {
+                            // console.log(data.LockGas, data.RefundGas, data.RevokeGas, data.gasPrice);
+                            TemplateVar.set(template,'estimatedGas', data.LockGas);
+                            TemplateVar.set(template,'gasPrice', data.gasPrice);
+
+                            // console.log('fee', data.LockGas * web3.fromWei(data.gasPrice, 'ether'));
+                            var number = new BigNumber(data.LockGas * data.gasPrice);
+
+                            TemplateVar.set(template, 'fee', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
+
+                            TemplateVar.set(template, 'total', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
+
+                            EthElements.Modal.hide();
+                        }
+                    });
+                }
+            });
+
         } else {
-            if (data.length > 0) {
-                // console.log('ETH2WETH storeman', data);
-                TemplateVar.set(template,'storeman',data[0].ethAddress);
-                TemplateVar.set(template,'storemanGroup',data);
-            }
+            Helpers.showError(err);
         }
     });
-
-    // eth chain  gas price
-    await mist.ETH2WETH().getGasPrice('ETH', function (err,data) {
-        if (err) {
-            TemplateVar.set(template,'gasEstimate', {});
-        } else {
-            // console.log(data.LockGas, data.RefundGas, data.RevokeGas, data.gasPrice);
-            TemplateVar.set(template,'estimatedGas', data.LockGas);
-            TemplateVar.set(template,'gasPrice', data.gasPrice);
-
-            // console.log('fee', data.LockGas * web3.fromWei(data.gasPrice, 'ether'));
-            var number = new BigNumber(data.LockGas * data.gasPrice);
-
-            TemplateVar.set(template, 'fee', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
-
-            TemplateVar.set(template, 'total', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
-
-            EthElements.Modal.hide();
-        }
-    });
-
-
-    let wanaddress = [];
-
-    TemplateVar.set(template, 'to', Session.get('wanAddressList')[0]);
-    _.each(Session.get('wanAddressList'), function (value, index) {
-        wanaddress.push({address: value})
-    });
-
-    TemplateVar.set(template, 'wanAddressList', wanaddress);
 });
 
 
@@ -174,12 +180,13 @@ Template['views_ethToweth'].events({
      Submit the form and send the transaction!
      @event submit form
      */
-    'submit form': async function(e, template){
+    'submit form': function(e, template){
         let from = TemplateVar.get('from'),
             storeman = TemplateVar.get('storeman'),
             to = TemplateVar.get('to'),
             fee = TemplateVar.get('fee'),
-            amount = TemplateVar.get('amount');
+            amount = TemplateVar.get('amount'),
+            total = TemplateVar.get('total');
 
         var gasPrice = TemplateVar.get('gasPrice').toString(),
             estimatedGas = TemplateVar.get('estimatedGas').toString();
@@ -215,51 +222,57 @@ Template['views_ethToweth'].events({
             });
         }
 
-        let total = new BigNumber(EthTools.toWei(TemplateVar.get('total')));
-        let ethBalance = await Helpers.promisefy(mist.ETH2WETH().getBalance, [from.toLowerCase()], mist.ETH2WETH());
+        mist.ETH2WETH().getBalance([from.toLowerCase()], function (err,ethBalance) {
+            if (err) {
+                Helpers.showError(err);
+            } else {
+                let totalValue = new BigNumber(EthTools.toWei(total));
+                let ethValue = new BigNumber(ethBalance, 10);
 
-        if(total.gt(new BigNumber(ethBalance, 10)))
-            return GlobalNotification.warning({
-                content: 'i18n:wallet.send.error.notEnoughFunds',
-                duration: 2
-            });
+                // console.log('totalValue: ', totalValue);
+                // console.log('ethValue: ', ethValue);
+                if(totalValue.gt(ethValue))
+                    return GlobalNotification.warning({
+                        content: 'i18n:wallet.send.error.notEnoughFunds',
+                        duration: 2
+                    });
 
 
-        var trans = {
-          from: from, amount: amount.toString(10), storemanGroup: storeman,
-            cross: to, gas: estimatedGas, gasPrice: gasPrice
-        };
+                let trans = {
+                    from: from, amount: amount.toString(10), storemanGroup: storeman,
+                    cross: to, gas: estimatedGas, gasPrice: gasPrice
+                };
+                // console.log('trans: ', trans);
 
-        // console.log('trans: ', trans);
-        try {
-            let getLockTransData = await Helpers.promisefy(mist.ETH2WETH().getLockTransData, [trans], mist.ETH2WETH());
-            // console.log('getLockTransData: ', getLockTransData);
+                mist.ETH2WETH().getLockTransData(trans, function (err,getLockTransData) {
+                    // console.log('getLockTransData: ', getLockTransData);
 
-            EthElements.Modal.question({
-                template: 'views_modals_unlockTransactionInfo',
-                data: {
-                    from: from,
-                    to: to,
-                    amount: amount,
-                    gasPrice: gasPrice,
-                    estimatedGas: estimatedGas,
-                    fee: fee,
-                    data: getLockTransData.lockTransData,
-                    trans: trans,
-                    secretX: getLockTransData.secretX,
-                    chain: 'ETH',
-                    symbol: 'ETH'
-                },
-            },{
-                class: 'send-transaction-info'
-            });
+                    if (!err) {
+                        EthElements.Modal.question({
+                            template: 'views_modals_unlockTransactionInfo',
+                            data: {
+                                from: from,
+                                to: to,
+                                amount: amount,
+                                gasPrice: gasPrice,
+                                estimatedGas: estimatedGas,
+                                fee: fee,
+                                data: getLockTransData.lockTransData,
+                                trans: trans,
+                                secretX: getLockTransData.secretX,
+                                chain: 'ETH',
+                                symbol: 'ETH'
+                            },
+                        },{
+                            class: 'send-transaction-info'
+                        });
+                    } else {
+                        Helpers.showError(err);
+                    }
+                });
 
-        } catch (error) {
-            console.log(error);
-            return GlobalNotification.warning({
-                content: 'get data error',
-                duration: 2
-            });
-        }
+            }
+        });
+
     }
 });

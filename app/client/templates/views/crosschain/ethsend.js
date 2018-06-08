@@ -11,7 +11,7 @@
 
 
 // Set basic variables
-Template['views_ethsend'].onCreated(async function(){
+Template['views_ethsend'].onCreated(function(){
     var template = this;
 
     TemplateVar.set(template, 'amount', 0);
@@ -20,8 +20,7 @@ Template['views_ethsend'].onCreated(async function(){
 
     EthElements.Modal.show('views_modals_loading', {closeable: false, class: 'crosschain-loading'});
 
-    await mist.ETH2WETH().getMultiBalances(Session.get('addressList'),function (err,result) {
-        // console.log(result);
+    mist.ETH2WETH().getMultiBalances(Session.get('addressList'), function (err, result) {
         if (!err) {
             let result_list = [];
 
@@ -35,26 +34,28 @@ Template['views_ethsend'].onCreated(async function(){
 
             TemplateVar.set(template,'ethList',result_list);
             TemplateVar.set(template,'from',result_list[0].address);
-        }
-    });
 
-    // eth chain  gas price
-    await mist.ETH2WETH().getGasPrice('ETH', function (err,data) {
-        if (err) {
-            TemplateVar.set(template,'gasEstimate', {});
+            mist.ETH2WETH().getGasPrice('ETH', function (err,data) {
+                if (err) {
+                    TemplateVar.set(template,'gasEstimate', {});
+                    Helpers.showError(err);
+                } else {
+                    // console.log(data.LockGas, data.RefundGas, data.RevokeGas, data.gasPrice);
+                    TemplateVar.set(template,'estimatedGas', data.LockGas);
+                    TemplateVar.set(template,'gasPrice', data.gasPrice);
+
+                    // console.log('fee', data.LockGas * web3.fromWei(data.gasPrice, 'ether'));
+                    var number = new BigNumber(data.LockGas * data.gasPrice);
+
+                    TemplateVar.set(template, 'fee', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
+
+                    TemplateVar.set(template, 'total', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
+
+                    EthElements.Modal.hide();
+                }
+            });
         } else {
-            // console.log(data.LockGas, data.RefundGas, data.RevokeGas, data.gasPrice);
-            TemplateVar.set(template,'estimatedGas', data.LockGas);
-            TemplateVar.set(template,'gasPrice', data.gasPrice);
-
-            // console.log('fee', data.LockGas * web3.fromWei(data.gasPrice, 'ether'));
-            var number = new BigNumber(data.LockGas * data.gasPrice);
-
-            TemplateVar.set(template, 'fee', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
-
-            TemplateVar.set(template, 'total', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
-
-            EthElements.Modal.hide();
+            Helpers.showError(err);
         }
     });
 
@@ -181,30 +182,20 @@ Template['views_ethsend'].events({
         };
 
         // console.log('trans: ', trans);
-        try {
-
-            EthElements.Modal.question({
-                template: 'views_modals_sendEthTransactionInfo',
-                data: {
-                    from: from,
-                    to: to,
-                    amount: amount.toString(10),
-                    gasPrice: gasPrice,
-                    gas: estimatedGas,
-                    fee: fee,
-                    trans: trans,
-                },
-            },{
-                class: 'send-transaction-info'
-            });
-
-        } catch (error) {
-            console.log(error);
-            return GlobalNotification.warning({
-                content: 'get data error',
-                duration: 2
-            });
-        }
+        EthElements.Modal.question({
+            template: 'views_modals_sendEthTransactionInfo',
+            data: {
+                from: from,
+                to: to,
+                amount: amount.toString(10),
+                gasPrice: gasPrice,
+                gas: estimatedGas,
+                fee: fee,
+                trans: trans,
+            },
+        },{
+            class: 'send-transaction-info'
+        });
 
     }
 });

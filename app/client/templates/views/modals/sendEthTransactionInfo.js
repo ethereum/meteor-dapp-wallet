@@ -7,7 +7,7 @@ Template['views_modals_sendEthTransactionInfo'].events({
     'click .cancel-cross': function () {
         EthElements.Modal.hide();
     },
-    'click .ok-cross': async function () {
+    'click .ok-cross': function () {
         let password_input = document.getElementById('ethTransaction-psd').value;
 
         if(!password_input) {
@@ -20,7 +20,7 @@ Template['views_modals_sendEthTransactionInfo'].events({
 
         // console.log('Gas Price: '+ gasPrice);
 
-        var txArgs = {
+        let txArgs = {
             from: this.from,
             to: this.to,
             value: this.amount,
@@ -28,37 +28,17 @@ Template['views_modals_sendEthTransactionInfo'].events({
             gas: this.gas
         };
 
-        try {
+        TemplateVar.set('isButton', true);
 
-            TemplateVar.set('isButton', true);
-
-            await Helpers.promisefy(
-                mist.ETH2WETH().sendNormalTransaction,
-                [txArgs, password_input, 'ETH'],
-                mist.ETH2WETH()
-            );
-
-            EthElements.Modal.hide();
-            Session.set('clickButton', 1);
-
-        } catch (error) {
-            console.log('views_modals_sendEthTransactionInfo error', error);
-
-            EthElements.Modal.hide();
-
-            if (error && error.error) {
-                return GlobalNotification.warning({
-                    content: error.error,
-                    duration: 2
-                });
+        mist.ETH2WETH().sendNormalTransaction(txArgs, password_input, 'ETH', function (err,data) {
+            if (err) {
+                Helpers.showError(err);
+                EthElements.Modal.hide();
             } else {
-                return GlobalNotification.warning({
-                    content: error,
-                    duration: 2
-                });
+                EthElements.Modal.hide();
+                Session.set('clickButton', 1);
             }
-
-        }
+        });
 
     }
 });
