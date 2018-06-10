@@ -39,6 +39,29 @@ function resultEach(result) {
     });
 }
 
+function showQuestion(show_data, fee, gasPrice, getGas, transData, trans, transType) {
+    EthElements.Modal.question({
+        template: 'views_modals_sendcrosschainReleaseX',
+        data: {
+            from: show_data.from,
+            to: show_data.to,
+            storeman: show_data.storeman,
+            crossAdress: show_data.crossAdress,
+            amount: show_data.value,
+            fee: EthTools.formatBalance(fee, '0,0.00[0000000000000000]', 'ether'),
+            gasPrice: gasPrice,
+            estimatedGas: getGas,
+            data: transData,
+            trans: trans,
+            transType: transType,
+            Chain: show_data.chain,
+            symbol: show_data.symbol
+        },
+    },{
+        class: 'send-transaction-info'
+    });
+}
+
 
 Template['elements_cross_transactions_table'].onCreated(function(){
     let template = this;
@@ -120,6 +143,7 @@ Template['elements_cross_transactions_table'].helpers({
         return crosschainList;
     }
 });
+
 Template['elements_cross_transactions_table'].events({
 
     'click .show-detail': function (e) {
@@ -213,26 +237,7 @@ Template['elements_cross_transactions_table'].events({
                                                 duration: 2
                                             });
 
-                                        EthElements.Modal.question({
-                                            template: 'views_modals_sendcrosschainReleaseX',
-                                            data: {
-                                                from: show_data.from,
-                                                to: show_data.to,
-                                                storeman: show_data.storeman,
-                                                crossAdress: show_data.crossAdress,
-                                                amount: show_data.value,
-                                                fee: EthTools.formatBalance(fee, '0,0.00[0000000000000000]', 'ether'),
-                                                gasPrice: gasPrice,
-                                                estimatedGas: getGas,
-                                                data: transData,
-                                                trans: trans,
-                                                transType: transType,
-                                                Chain: show_data.chain,
-                                                symbol: show_data.symbol
-                                            },
-                                        },{
-                                            class: 'send-transaction-info'
-                                        });
+                                        showQuestion(show_data, fee, gasPrice, getGas, transData, trans, transType);
                                     }
                                 });
                             }
@@ -281,26 +286,7 @@ Template['elements_cross_transactions_table'].events({
                                                 duration: 2
                                             });
 
-                                        EthElements.Modal.question({
-                                            template: 'views_modals_sendcrosschainReleaseX',
-                                            data: {
-                                                from: show_data.from,
-                                                to: show_data.to,
-                                                storeman: show_data.storeman,
-                                                crossAdress: show_data.crossAdress,
-                                                amount: show_data.value,
-                                                fee: EthTools.formatBalance(fee, '0,0.00[0000000000000000]', 'ether'),
-                                                gasPrice: gasPrice,
-                                                estimatedGas: getGas,
-                                                data: transData,
-                                                trans: trans,
-                                                transType: transType,
-                                                Chain: show_data.chain,
-                                                symbol: show_data.symbol
-                                            },
-                                        },{
-                                            class: 'send-transaction-info'
-                                        });
+                                        showQuestion(show_data, fee, gasPrice, getGas, transData, trans, transType);
                                     }
                                 });
                             }
@@ -355,26 +341,7 @@ Template['elements_cross_transactions_table'].events({
                                                 duration: 2
                                             });
 
-                                        EthElements.Modal.question({
-                                            template: 'views_modals_sendcrosschainReleaseX',
-                                            data: {
-                                                from: show_data.from,
-                                                to: show_data.to,
-                                                storeman: show_data.storeman,
-                                                crossAdress: show_data.crossAdress,
-                                                amount: show_data.value,
-                                                fee: EthTools.formatBalance(fee, '0,0.00[0000000000000000]', 'ether'),
-                                                gasPrice: gasPrice,
-                                                estimatedGas: getGas,
-                                                data: transData,
-                                                trans: trans,
-                                                transType: transType,
-                                                Chain: show_data.chain,
-                                                symbol: show_data.symbol
-                                            },
-                                        },{
-                                            class: 'send-transaction-info'
-                                        });
+                                        showQuestion(show_data, fee, gasPrice, getGas, transData, trans, transType);
                                     }
                                 });
                             }
@@ -423,26 +390,7 @@ Template['elements_cross_transactions_table'].events({
                                                 duration: 2
                                             });
 
-                                        EthElements.Modal.question({
-                                            template: 'views_modals_sendcrosschainReleaseX',
-                                            data: {
-                                                from: show_data.from,
-                                                to: show_data.to,
-                                                storeman: show_data.storeman,
-                                                crossAdress: show_data.crossAdress,
-                                                amount: show_data.value,
-                                                fee: EthTools.formatBalance(fee, '0,0.00[0000000000000000]', 'ether'),
-                                                gasPrice: gasPrice,
-                                                estimatedGas: getGas,
-                                                data: transData,
-                                                trans: trans,
-                                                transType: transType,
-                                                Chain: show_data.chain,
-                                                symbol: show_data.symbol
-                                            },
-                                        },{
-                                            class: 'send-transaction-info'
-                                        });
+                                        showQuestion(show_data, fee, gasPrice, getGas, transData, trans, transType);
                                     }
                                 });
                             }

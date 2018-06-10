@@ -5,7 +5,11 @@
         <table class="dapp-zebraPou">
             <tbody>
                 <tr>
+                {{#if x}}
                     <td>HashX</td>
+                    {{else}}
+                    <td>Hash</td>
+                {{/if}}
                     <td>{{HashX}}</td>
                 </tr>
                 <tr>
@@ -13,12 +17,16 @@
                     <td>{{chain}}</td>
                 </tr>
                 <tr>
-                    <td>crossAdress</td>
-                    <td>{{crossAdress}}</td>
-                </tr>
-                <tr>
                     <td>From</td>
                     <td>{{from}}</td>
+                </tr>
+                <tr>
+                    {{#if x}}
+                        <td>crossAdress</td>
+                    {{else}}
+                        <td>To</td>
+                    {{/if}}
+                    <td>{{crossAdress}}</td>
                 </tr>
                 {{#if lockTxHash}}
                     <tr>
