@@ -19,6 +19,9 @@ jobs:
     steps:
       - checkout
 
+      - run: npm install -g meteor-build-client
+      - run: curl https://install.meteor.com/ | sh
+
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -26,8 +29,7 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: cd app  
-      - run: yarn install
+      - run: cd app && npm i
 
       - save_cache:
           paths:
