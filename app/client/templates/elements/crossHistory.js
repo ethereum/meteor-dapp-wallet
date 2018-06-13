@@ -5,7 +5,12 @@ Template Controllers
 */
 
 const defaultGasprice = 180000000000;
-const defaultEndtime = 14400000;
+
+const stateDict = {
+    'sentHashPending': 1, 'sentHashConfirming': 2, 'waitingCross': 3, 'waitingCrossConfirming': 4,
+    'waitingX': 5,'sentXPending': 6, 'sentXConfirming': 7, 'refundFinished': 8,
+    'waitingRevoke': 9,'sentRevokePending': 10, 'sentRevokeConfirming': 11, 'revokeFinished': 12,
+};
 
 function resultEach(result) {
     _.each(result, function (value, index) {
@@ -15,17 +20,27 @@ function resultEach(result) {
             let nowTime = new Date().Format('yyyy-MM-dd hh:mm:ss:S');
             let nowTimestamp =  Math.round(new Date(nowTime).getTime());
 
-            // add 4h
-            let endTimestamp=parseInt(value.time) + defaultEndtime;
+            // HTLCtime
+            let endTimestamp= value.HTLCtime;
+            // lock time
+            let lockTimestamp=(parseInt(value.HTLCtime) + parseInt(value.time)) / 2 - 600;
+
+            if (nowTimestamp >= lockTimestamp && nowTimestamp < endTimestamp) {
+                value.lockButton = true;
+            } else {
+                value.lockButton = false;
+            }
 
             if (endTimestamp > nowTimestamp) {
-                if (value.status === 'refundFinished' || value.status === 'revokeFinished') {
+
+                if (stateDict[value.status] === 8 || stateDict[value.status] === 12) {
                     value.htlcdate = `<span>${Helpers.timeStamp2String(endTimestamp)}</span>`;
                 } else {
                     value.htlcdate = `<span style="color: #1ec89a">${Helpers.formatDuring(endTimestamp - nowTimestamp)}</span>`;
                 }
             } else {
-                if (value.status === 'refundFinished' || value.status === 'revokeFinished') {
+
+                if (stateDict[value.status] === 8 || stateDict[value.status] === 12) {
                     value.htlcdate = `<span>${Helpers.timeStamp2String(endTimestamp)}</span>`;
                 } else {
                     value.htlcdate = "<span style='color: red'>00 h, 00 min</span>";
@@ -111,37 +126,63 @@ Template['elements_cross_transactions_table'].helpers({
                     value.text = '<small></small>';
                 }
 
-                let style = 'display: block; font-size: 18px;';
+                let style = 'display: block; font-size: 18px; background-color: transparent;';
 
-                if (value.status === 'sentHashPending' || value.status === 'sentHashConfirming' ||
-                    value.status === 'waitingCross' || value.status === 'waitingCrossConfirming' ||
-                    value.status === 'sentXPending' || value.status === 'sentXConfirming' ||
-                    value.status === 'sentRevokePending' || value.status === 'sentRevokeConfirming' ) {
-                    style += 'color: #1ec89a;';
-                    value.state = `<h2 class="crosschain-list" id = ${index} style="${style}">${value.status}</h2>`;
-                } else if (value.status === 'refundFinished' || value.status === 'revokeFinished') {
-                    style += 'color: #4b90f7;';
-                    value.state = `<h2 class="crosschain-list" id = ${index}  style="${style}">${value.status}</h2>`;
-                } else if (value.status === 'waitingX') {
+                // Release
+                if (stateDict[value.status] === 5) {
                     style += 'color: #920b1c;';
-                    value.state = `<h2 class="crosschain-list" id = ${index} style="${style}">Release X</h2>`;
-                } else if (value.status === 'waitingRevoke') {
+                    style1 = style + 'color: red;';
+
+                    if (value.lockButton) {
+                        value.state = `<h2 class="crosschain-list" id = ${index} style="${style1}">Locked</h2>`;
+                    } else {
+                        value.state = `<h2 class="crosschain-list" id = ${index} style="${style}">Release X</h2>`;
+                    }
+                }
+                // Revoke
+                else if (stateDict[value.status] === 9) {
                     style += 'color: #920b1c;';
                     value.state = `<h2 class="crosschain-list" id = ${index} style="${style}">Revoke</h2>`;
-                } else {
-                    style += 'color: #4b90f7;';
-                    value.state = `<h2 class="crosschain-list" id = ${index}  style="${style}">Normal transaction</h2>`;
-                    value.crossAdress = value.to;
-                    value.htlcdate = '--'
                 }
+                // Release or Revoke finished
+                else if (stateDict[value.status] === 8 || stateDict[value.status] === 12) {
+                    style += 'color: #4b90f7;';
+                    if (stateDict[value.status] === 8) {
+                        value.state = `<h2 class="crosschain-list" id = ${index}  style="${style}">Refunded</h2>`;
+                    } else {
+                        value.state = `<h2 class="crosschain-list" id = ${index}  style="${style}">Revoked</h2>`;
+                    }
+                }
+                // locking
+                else if (stateDict[value.status] >= 1 && stateDict[value.status] <= 4) {
+                    style += 'color: #1ec89a;';
+                    value.state = `<h2 class="crosschain-list" id = ${index} style="${style}">${value.status}</h2>`;
+                }
+                // Releasing
+                else if (stateDict[value.status] >= 6 && stateDict[value.status] <= 7) {
+                    style += 'color: #1ec89a;';
+                    value.state = `<h2 class="crosschain-list" id = ${index} style="${style}">${value.status}</h2>`;
+                }
+                // Revoking
+                else if (stateDict[value.status] >= 10 && stateDict[value.status] <= 11) {
+                    style += 'color: #1ec89a;';
+                    value.state = `<h2 class="crosschain-list" id = ${index} style="${style}">${value.status}</h2>`;
+                }
+                // normal
+                else {
+                    style += 'color: #4b90f7;';
+                    value.state = `<h2 class="crosschain-list" id = ${index}  style="${style}">Normal</h2>`;
+                    value.crossAdress = value.to;
+                    value.htlcdate = '--';
+                }
+
                 crosschainList.push(value);
             });
         }
 
-        // console.log('crosschainList: ', crosschainList);
-
         return crosschainList;
-    }
+    },
+
 });
 
 Template['elements_cross_transactions_table'].events({
@@ -196,7 +237,21 @@ Template['elements_cross_transactions_table'].events({
 
         // release X
         if (show_data.status === 'waitingX') {
+
+            if (show_data.lockButton) {
+                return GlobalNotification.warning({
+                    content: 'This transaction locked, please wait a moment to revoke',
+                    duration: 2
+                });
+            }
+
             transType = 'releaseX';
+
+            trans = {
+                lockTxHash: show_data.lockTxHash, amount: show_data.value.toString(10),
+                storemanGroup: show_data.storeman, cross: show_data.crossAdress,
+                X: show_data.x
+            };
 
             // release X eth => weth
             if (show_data.chain === 'ETH') {
@@ -211,11 +266,8 @@ Template['elements_cross_transactions_table'].events({
                             gasPrice = defaultGasprice
                         }
 
-                        trans = {
-                            lockTxHash: show_data.lockTxHash, amount: show_data.value.toString(10),
-                            storemanGroup: show_data.storeman, cross: show_data.crossAdress,
-                            gas: getGas, gasPrice: gasPrice, X: show_data.x
-                        };
+                        trans.gas = getGas;
+                        trans.gasPrice = gasPrice;
 
                         show_data.symbol = 'ETH';
 
@@ -259,11 +311,8 @@ Template['elements_cross_transactions_table'].events({
                             gasPrice = defaultGasprice
                         }
 
-                        trans = {
-                            lockTxHash: show_data.lockTxHash, amount: show_data.value.toString(10),
-                            storemanGroup: show_data.storeman, cross: show_data.crossAdress,
-                            gas: getGas, gasPrice: gasPrice, X: show_data.x
-                        };
+                        trans.gas = getGas;
+                        trans.gasPrice = gasPrice;
 
                         show_data.symbol = 'WETH';
 
@@ -299,7 +348,22 @@ Template['elements_cross_transactions_table'].events({
 
         // revoke
         else if (show_data.status === 'waitingRevoke') {
+
+            console.log('revoke lockButton', show_data.lockButton);
+            if (show_data.lockButton) {
+                return GlobalNotification.warning({
+                    content: 'This transaction locked, please wait a moment to revoke',
+                    duration: 2
+                });
+            }
+
             transType = 'revoke';
+
+            trans = {
+                from: show_data.from, amount: show_data.value.toString(10),
+                storemanGroup: show_data.storeman, cross: show_data.crossAdress,
+                X: show_data.x,
+            };
 
             // revoke eth => weth
             if (show_data.chain === 'ETH') {
@@ -314,12 +378,8 @@ Template['elements_cross_transactions_table'].events({
                             gasPrice = defaultGasprice
                         }
 
-                        trans = {
-                            from: show_data.from, amount: show_data.value.toString(10),
-                            storemanGroup: show_data.storeman, cross: show_data.crossAdress,
-                            X: show_data.x,
-                            gas: getGas, gasPrice: gasPrice
-                        };
+                        trans.gas = getGas;
+                        trans.gasPrice = gasPrice;
 
                         // revoke x in eth
                         console.log('getRevokeTransData ETH: ', show_data.chain);
@@ -363,12 +423,8 @@ Template['elements_cross_transactions_table'].events({
                             gasPrice = defaultGasprice
                         }
 
-                        trans = {
-                            from: show_data.from, amount: show_data.value.toString(10),
-                            storemanGroup: show_data.storeman, cross: show_data.crossAdress,
-                            X: show_data.x,
-                            gas: getGas, gasPrice: gasPrice
-                        };
+                        trans.gas = getGas;
+                        trans.gasPrice = gasPrice;
 
                         // revoke x in wan
                         console.log('getRevokeTransData WAN: ', show_data.chain);

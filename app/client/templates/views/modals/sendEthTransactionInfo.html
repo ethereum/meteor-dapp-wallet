@@ -1,7 +1,23 @@
 <template name="views_modals_sendEthTransactionInfo">
-    <p>from: {{from}}</p>
-    <p>to: {{to}}</p>
-    <p>amount: {{amount}} ETH</p>
+
+    <h1>normal transaction</h1>
+    <table class="dapp-zebraPou">
+        <tbody>
+        <tr>
+            <td>from:</td>
+            <td>{{from}}</td>
+        </tr>
+        <tr>
+            <td>to：</td>
+            <td>{{to}}</td>
+        </tr>
+        <tr>
+            <td>amount：</td>
+            <td>{{amount}} ETH</td>
+        </tr>
+        </tbody>
+    </table>
+    <hr>
 
     <p class="tx-info">
         <small>+ {{i18n "wallet.send.estimatedFee"}}</small> {{fee}}
@@ -9,7 +25,7 @@
         <small class="gas-price">
             {{i18n "wallet.transactions.gasPrice"}} {{gasPrice}}
             <br>
-            {{i18n "wallet.send.texts.estimatedGas"}} {{estimatedGas}}
+            {{i18n "wallet.send.texts.estimatedGas"}} {{gas}}
         </small>
     </p>
 

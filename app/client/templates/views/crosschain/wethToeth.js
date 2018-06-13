@@ -237,7 +237,13 @@ Template['views_wethToeth'].events({
             });
         }
 
-
+        const amountSymbol = amount.toString().split('.')[1];
+        if (amountSymbol && amountSymbol.length >=19) {
+            return GlobalNotification.warning({
+                content: 'check amount you input',
+                duration: 2
+            });
+        }
 
         let wethBalance = TemplateVar.get('wethBalance')[from.toLowerCase()];
         // let wanBalance = await Helpers.promisefy(mist.WETH2ETH().getBalance, [from.toLowerCase()], mist.WETH2ETH());
@@ -250,7 +256,10 @@ Template['views_wethToeth'].events({
                         duration: 2
                     });
 
-                if(new BigNumber(EthTools.toWei(fee), 10).gt(new BigNumber(wanBalance, 10)))
+                // console.log('fee: ', new BigNumber(EthTools.toWei(fee), 10));
+                // console.log('valueFee: ', new BigNumber(EthTools.toWei(valueFee), 10));
+                // console.log('valueFee: ', new BigNumber(EthTools.toWei(fee), 10).add(new BigNumber(EthTools.toWei(valueFee), 10)));
+                if((new BigNumber(EthTools.toWei(fee), 10).add(new BigNumber(EthTools.toWei(valueFee), 10))).gt(new BigNumber(wanBalance, 10)))
                     return GlobalNotification.warning({
                         content: 'i18n:wallet.send.error.notEnoughFunds',
                         duration: 2
@@ -262,10 +271,10 @@ Template['views_wethToeth'].events({
                     cross: to, gas: estimatedGas, gasPrice: gasPrice, value: valueFee
                 };
 
-                console.log('trans: ', trans);
+                // console.log('trans: ', trans);
 
                 mist.WETH2ETH().getLockTransData(trans, function (err,getLockTransData) {
-                    console.log('getLockTransData: ', getLockTransData);
+                    // console.log('getLockTransData: ', getLockTransData);
 
                     if (!err) {
                         EthElements.Modal.question({

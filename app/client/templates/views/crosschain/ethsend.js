@@ -151,6 +151,19 @@ Template['views_ethsend'].events({
             });
         }
 
+        if (from === to) {
+            return GlobalNotification.warning({
+                content: 'could not send to itself',
+                duration: 2
+            });
+        }
+
+        if(!web3.isAddress(to))
+            return GlobalNotification.warning({
+                content: 'i18n:wallet.send.error.noReceiver',
+                duration: 2
+            });
+
         if(!amount) {
             return GlobalNotification.warning({
                 content: 'the amount empty',
@@ -161,6 +174,14 @@ Template['views_ethsend'].events({
         if(amount.eq(new BigNumber(0))) {
             return GlobalNotification.warning({
                 content: 'the amount empty',
+                duration: 2
+            });
+        }
+
+        const amountSymbol = amount.toString().split('.')[1];
+        if (amountSymbol && amountSymbol.length >=19) {
+            return GlobalNotification.warning({
+                content: 'check amount you input',
                 duration: 2
             });
         }

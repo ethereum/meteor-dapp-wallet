@@ -45,7 +45,7 @@ Template['views_modals_sendcrosschainReleaseX'].events({
                 // release x in eth
                 console.log('release X Chain 1: ', this.Chain);
 
-                console.log('trans: ', this.trans);
+                // console.log('trans: ', this.trans);
 
                 mist.ETH2WETH().sendRefundTrans(this.trans, password_input, function (err,data) {
                     if (err) {

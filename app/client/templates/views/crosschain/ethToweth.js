@@ -222,6 +222,14 @@ Template['views_ethToweth'].events({
             });
         }
 
+        const amountSymbol = amount.toString().split('.')[1];
+        if (amountSymbol && amountSymbol.length >=19) {
+            return GlobalNotification.warning({
+                content: 'check amount you input',
+                duration: 2
+            });
+        }
+
         mist.ETH2WETH().getBalance([from.toLowerCase()], function (err,ethBalance) {
             if (err) {
                 Helpers.showError(err);

@@ -660,6 +660,12 @@ Helpers.showError = function(error) {
             duration: 2
         });
     } else {
+        if (error === 'Error: could not decrypt key with given passphrase') {
+            return GlobalNotification.warning({
+                content: 'wrong password',
+                duration: 2
+            });
+        }
         return GlobalNotification.warning({
             content: error,
             duration: 2
