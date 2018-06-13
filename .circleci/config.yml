@@ -26,6 +26,7 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
+      - run: cd app  
       - run: yarn install
 
       - save_cache:
@@ -33,7 +34,6 @@ jobs:
             - app/node_modules
           key: v1-dependencies-{{ checksum "app/package.json" }}
       
-      - run: cd app  
       - run: npm run build
 
 
