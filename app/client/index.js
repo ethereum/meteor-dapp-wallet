@@ -15,6 +15,14 @@ Meteor.startup(function() {
       TAPi18n.setLanguage('en');
     }
   }
+
+  // change some header attributes
+  document.title = publicSettings.title || publicSettings.walletName || "Ethereum Wallet";
+  var description = publicSettings.description || "The Ethereum wallet";
+  var keywords = publicSettings.keywords || "wallet, dapp, ethereum";
+  $('meta[name=description]').attr('content', description);
+  $('meta[name=keywords]').attr('content', keywords);
+
   // change moment and numeral language, when language changes
   Tracker.autorun(function() {
     if (_.isString(TAPi18n.getLanguage())) {
