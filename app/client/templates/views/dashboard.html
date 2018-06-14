@@ -29,12 +29,7 @@
             </div>
 
             {{#unless isBrowserMode}}
-                <button class="wallet-box create account">
-                    <div class="account-pattern">
-                        +
-                    </div>
-                    <h3>{{i18n "wallet.app.buttons.addAccount"}}</h3>
-                </button>
+                {{> elements_new_account_button }}
             {{/unless}}
 
 
@@ -71,12 +66,7 @@
             <div class="col col-5 mobile-full ">
                 <br>
                 {{#unless isBrowserMode}}
-                    <button class="wallet-box create account">
-                        <div class="account-pattern">
-                            +
-                        </div>
-                        <h3>{{i18n "wallet.app.buttons.addAccount"}}</h3>
-                    </button>
+                  {{> elements_new_account_button }}
                 {{/unless}}
             </div>
             <div class="col col-5 mobile-full ">
