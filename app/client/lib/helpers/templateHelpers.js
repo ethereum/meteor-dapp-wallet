@@ -45,7 +45,7 @@ Check if wallet was loaded from browser other than Mist
 @method (isBrowserMode)
 **/
 Template.registerHelper('isBrowserMode', function() {
-  return window.mistMode === undefined || window.mist === undefined;
+  return window.mist === undefined;
 });
 
 /**
