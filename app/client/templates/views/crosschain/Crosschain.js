@@ -3,34 +3,50 @@
  @module Templates
  */
 
+ const getAddressList = function(template) {
+    mist.ETH2WETH().getAddressList('ETH', function (err, addressList) {
+            if (err) {
+                console.log('err: ', err);
+                Helpers.showError(err);
+            } else {
+                TemplateVar.set(template,'addressList',addressList);
+                Session.set('addressList', addressList);
+
+                mist.ETH2WETH().getAddressList('WAN', function (err, wanAddressList) {
+                    if (err) {
+                        console.log('err: ', err);
+                        Helpers.showError(err);
+                    } else {
+                        Session.set('wanAddressList', wanAddressList);
+
+                        TemplateVar.set(template,'wanAddressList',wanAddressList);
+
+                        EthElements.Modal.hide();
+                    }
+                });
+            }
+        });
+ };
+
 Template['views_crosschain'].onCreated(function () {
     let template = this;
 
     EthElements.Modal.show('views_modals_loading', {closeable: false, class: 'crosschain-loading'});
 
-    mist.ETH2WETH().getAddressList('ETH', function (err, addressList) {
-        if (err) {
-            console.log('err: ', err);
-            Helpers.showError(err);
+    getAddressList(template);
+
+    InterID = Meteor.setInterval(function(){
+        if(!Session.get('isShowModal')) {
+            getAddressList(template);
         } else {
-            TemplateVar.set(template,'addressList',addressList);
-            Session.set('addressList', addressList);
-
-            mist.ETH2WETH().getAddressList('WAN', function (err, wanAddressList) {
-                if (err) {
-                    console.log('err: ', err);
-                    Helpers.showError(err);
-                } else {
-                    Session.set('wanAddressList', wanAddressList);
-
-                    TemplateVar.set(template,'wanAddressList',wanAddressList);
-
-                    EthElements.Modal.hide();
-                }
-            });
+            console.log('isShowModal: ', Session.get('isShowModal'));
         }
-    });
+        }, 10000);
 
+});
+
+Template['views_crosschain'].onDestroyed(function () {
+    Meteor.clearInterval(InterID);
 });
 
 Template['views_crosschain'].helpers({

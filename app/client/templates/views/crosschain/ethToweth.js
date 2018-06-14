@@ -256,6 +256,8 @@ Template['views_ethToweth'].events({
                     // console.log('getLockTransData: ', getLockTransData);
 
                     if (!err) {
+                        Session.set('isShowModal', true);
+
                         EthElements.Modal.question({
                             template: 'views_modals_unlockTransactionInfo',
                             data: {
@@ -272,7 +274,8 @@ Template['views_ethToweth'].events({
                                 symbol: 'ETH'
                             },
                         },{
-                            class: 'send-transaction-info'
+                            class: 'send-transaction-info',
+                            closeable: false,
                         });
                     } else {
                         Helpers.showError(err);

@@ -22,6 +22,8 @@ Template['views_modals_sendcrosschainReleaseX'].onCreated(function(){
 
 Template['views_modals_sendcrosschainReleaseX'].events({
     'click .cancel-cross': function () {
+        Session.set('isShowModal', false);
+
         EthElements.Modal.hide();
     },
     'click .ok-cross': function () {
@@ -37,9 +39,11 @@ Template['views_modals_sendcrosschainReleaseX'].events({
             });
         }
 
+        TemplateVar.set('isButton', true);
+        Session.set('isShowModal', false);
+
         // releaseX
         if (this.transType === 'releaseX') {
-            TemplateVar.set('isButton', true);
 
             if (this.Chain === 'ETH') {
                 // release x in eth
@@ -73,7 +77,6 @@ Template['views_modals_sendcrosschainReleaseX'].events({
         }
         // revoke
         else {
-            TemplateVar.set('isButton', true);
 
             if (this.Chain === 'ETH') {
                 // revoke in eth

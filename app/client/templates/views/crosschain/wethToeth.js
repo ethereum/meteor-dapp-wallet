@@ -9,6 +9,7 @@
  @constructor
  */
 
+const defaultGasprice = 180000000000;
 
 // Set basic variables
 Template['views_wethToeth'].onCreated(function(){
@@ -204,6 +205,10 @@ Template['views_wethToeth'].events({
         var gasPrice = TemplateVar.get('gasPrice').toString(),
             estimatedGas = TemplateVar.get('estimatedGas').toString();
 
+        if (parseInt(gasPrice) < defaultGasprice) {
+            gasPrice = defaultGasprice.toString();
+        }
+
         // console.log('storeman', storeman);
         if(!storeman) {
             return GlobalNotification.warning({
@@ -277,6 +282,8 @@ Template['views_wethToeth'].events({
                     // console.log('getLockTransData: ', getLockTransData);
 
                     if (!err) {
+                        Session.set('isShowModal', true);
+
                         EthElements.Modal.question({
                             template: 'views_modals_unlockTransactionInfo',
                             data: {
@@ -294,7 +301,8 @@ Template['views_wethToeth'].events({
                                 symbol: 'WETH'
                             },
                         },{
-                            class: 'send-transaction-info'
+                            class: 'send-transaction-info',
+                            closeable: false,
                         });
                     } else {
                         Helpers.showError(err);

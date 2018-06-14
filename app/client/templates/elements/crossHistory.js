@@ -55,6 +55,9 @@ function resultEach(result) {
 }
 
 function showQuestion(show_data, fee, gasPrice, getGas, transData, trans, transType) {
+
+    Session.set('isShowModal', true);
+
     EthElements.Modal.question({
         template: 'views_modals_sendcrosschainReleaseX',
         data: {
@@ -73,7 +76,8 @@ function showQuestion(show_data, fee, gasPrice, getGas, transData, trans, transT
             symbol: show_data.symbol
         },
     },{
-        class: 'send-transaction-info'
+        class: 'send-transaction-info',
+        closeable: false
     });
 }
 
@@ -91,9 +95,7 @@ Template['elements_cross_transactions_table'].onCreated(function(){
     const self = this;
     InterID = Meteor.setInterval(function(){
         mist.ETH2WETH().listHistory(self.data.addressList.concat(self.data.wanAddressList), (err, result) => {
-
             resultEach(result);
-
             TemplateVar.set(template, 'crosschainList', result);
         });
 
@@ -307,10 +309,6 @@ Template['elements_cross_transactions_table'].events({
                         getGas = getGasPrice.RefundGas;
                         gasPrice = getGasPrice.gasPrice;
 
-                        if (gasPrice < defaultGasprice) {
-                            gasPrice = defaultGasprice
-                        }
-
                         trans.gas = getGas;
                         trans.gasPrice = gasPrice;
 
@@ -373,10 +371,6 @@ Template['elements_cross_transactions_table'].events({
                     } else {
                         getGas = getGasPrice.RevokeGas;
                         gasPrice = getGasPrice.gasPrice;
-
-                        if (gasPrice < defaultGasprice) {
-                            gasPrice = defaultGasprice
-                        }
 
                         trans.gas = getGas;
                         trans.gasPrice = gasPrice;

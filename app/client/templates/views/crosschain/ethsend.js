@@ -203,6 +203,7 @@ Template['views_ethsend'].events({
         };
 
         // console.log('trans: ', trans);
+        Session.set('isShowModal', true);
         EthElements.Modal.question({
             template: 'views_modals_sendEthTransactionInfo',
             data: {
@@ -215,7 +216,8 @@ Template['views_ethsend'].events({
                 trans: trans,
             },
         },{
-            class: 'send-transaction-info'
+            class: 'send-transaction-info',
+            closeable: false,
         });
 
     }

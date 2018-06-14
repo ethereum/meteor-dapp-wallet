@@ -7,6 +7,8 @@ Template['views_modals_unlockTransactionInfo'].onCreated(function(){
 
 Template['views_modals_unlockTransactionInfo'].events({
     'click .cancel-cross': function () {
+        Session.set('isShowModal', false);
+
         EthElements.Modal.hide();
     },
     'click .ok-cross': function () {
@@ -24,6 +26,7 @@ Template['views_modals_unlockTransactionInfo'].events({
         }
 
         TemplateVar.set('isButton', true);
+        Session.set('isShowModal', false);
 
         if (this.chain === 'ETH') {
             console.log('ETH chain: ', this.chain);

@@ -5,6 +5,8 @@ Template['views_modals_sendEthTransactionInfo'].onCreated(function(){
 
 Template['views_modals_sendEthTransactionInfo'].events({
     'click .cancel-cross': function () {
+        Session.set('isShowModal', false);
+
         EthElements.Modal.hide();
     },
     'click .ok-cross': function () {
@@ -29,6 +31,7 @@ Template['views_modals_sendEthTransactionInfo'].events({
         };
 
         TemplateVar.set('isButton', true);
+        Session.set('isShowModal', false);
 
         mist.ETH2WETH().sendNormalTransaction(txArgs, password_input, 'ETH', function (err,data) {
             if (err) {
