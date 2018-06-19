@@ -151,6 +151,7 @@ var autoScanGetTokens = function(template) {
         .concat(Wallets.find().fetch()),
       'address'
     );
+
     var tokensToAdd = [];
     var promises = [];
     var balancesChecked = 0;
@@ -181,81 +182,84 @@ var autoScanGetTokens = function(template) {
       Meteor.defer(function() {
         // defer to wait for autoScanStatus to update in UI first
         _.each(tokens, function(token) {
-          if (alreadySubscribed.indexOf(token.address) < 0) {
-            _.each(accounts, function(account) {
-              var callData =
-                '0x70a08231000000000000000000000000' +
-                account.substring(2).replace(' ', ''); // balanceOf(address)
-              try {
-                var promise = web3.eth
-                  .call({
-                    to: token.address.replace(' ', ''),
-                    data: callData
-                  })
-                  .then(function(result) {
-                    var tokenAmt = web3.utils.toBN(result);
-                    var tokenAmtInEther = web3.utils.fromWei(tokenAmt, 'ether');
+          if (alreadySubscribed.includes(token.address)) {
+            return;
+          }
 
-                    if (!tokenAmt.isZero()) {
-                      console.log(
-                        token.name +
-                          ' (' +
-                          token.symbol +
-                          ') balance for ' +
-                          account +
-                          ': ' +
-                          tokenAmtInEther
-                      );
-                      tokensToAdd.push(token);
+          _.each(accounts, function(account) {
+            var callData =
+              '0x70a08231000000000000000000000000' +
+              account.substring(2).replace(' ', ''); // balanceOf(address)
+            try {
+              var promise = web3.eth
+                .call({
+                  to: token.address.replace(' ', ''),
+                  data: callData
+                })
+                .then(function(result) {
+                  var tokenAmt = web3.utils.toBN(result);
+                  var tokenAmtInEther = web3.utils.fromWei(tokenAmt, 'ether');
 
-                      tokenId = Helpers.makeId('token', token.address);
-                      Tokens.upsert(tokenId, {
-                        $set: {
-                          address: token.address,
-                          name: token.name,
-                          symbol: token.symbol,
-                          balances: {},
-                          decimals: Number(token.decimals || 0)
-                        }
-                      });
-
-                      TemplateVar.set(template, 'tokens', tokensToAdd);
-                    }
-
-                    balancesChecked++;
-
-                    var statusString = TAPi18n.__(
-                      'wallet.tokens.autoScan.status.checkingBalances',
-                      {
-                        number:
-                          numberOfBalancesToCheck -
-                          balancesChecked -
-                          alreadySubscribed.length
-                      }
+                  if (!tokenAmt.isZero()) {
+                    console.log(
+                      token.name +
+                        ' (' +
+                        token.symbol +
+                        ') balance for ' +
+                        account +
+                        ': ' +
+                        tokenAmtInEther
                     );
 
-                    if (tokensToAdd.length > 0) {
-                      statusString += ' (';
-                      statusString += TAPi18n.__(
-                        'wallet.tokens.autoScan.status.found',
-                        {
-                          number: tokensToAdd.length
-                        }
-                      );
-                      statusString += ')';
+                    tokensToAdd.push(token);
+
+                    tokenId = Helpers.makeId('token', token.address);
+                    Tokens.upsert(tokenId, {
+                      $set: {
+                        address: token.address,
+                        name: token.name,
+                        symbol: token.symbol,
+                        balances: {},
+                        decimals: Number(token.decimals || 0)
+                      }
+                    });
+
+                    TemplateVar.set(template, 'tokens', tokensToAdd);
+                  }
+
+                  balancesChecked++;
+
+                  var statusString = TAPi18n.__(
+                    'wallet.tokens.autoScan.status.checkingBalances',
+                    {
+                      number:
+                        numberOfBalancesToCheck -
+                        balancesChecked -
+                        alreadySubscribed.length
                     }
+                  );
 
-                    TemplateVar.set(template, 'autoScanStatus', statusString);
+                  if (tokensToAdd.length > 0) {
+                    statusString += ' (';
+                    statusString += TAPi18n.__(
+                      'wallet.tokens.autoScan.status.found',
+                      {
+                        number: tokensToAdd.length
+                      }
+                    );
+                    statusString += ')';
+                  }
 
-                    return null;
-                  });
-                promises.push(promise);
-              } catch (error) {
-                var errorString = 'Error trying to web3.eth.call: ' + error;
-                console.log(errorString);
-              }
-            });
-          }
+                  TemplateVar.set(template, 'autoScanStatus', statusString);
+
+                  return null;
+                });
+              promises.push(promise);
+            } catch (error) {
+              var errorString = 'Error trying to web3.eth.call: ' + error;
+              console.log(errorString);
+            }
+          });
         });
 
         Promise.all(promises).then(function() {
