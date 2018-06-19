@@ -185,6 +185,7 @@ var autoScanGetTokens = function(template) {
         // defer to wait for autoScanStatus to update in UI first
         _.each(tokens, function(token) {
           if (alreadySubscribed.includes(token.address)) {
+            console.log('Already subscribed to ' + token.name);
             return;
           }
 
