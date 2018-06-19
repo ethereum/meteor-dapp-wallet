@@ -1,26 +1,24 @@
 <template name="views_modals_unlockTransactionInfo">
-    <h1>
-        {{i18n "wallet.send.sendInfoTitle"}}
-    </h1>
+    <h1>Crosschain Transaction</h1>
     <table class="dapp-zebraPou">
         <tbody>
             <tr>
-                <td>amount</td>
+                <td>Amount</td>
                 <td>{{amount}} {{symbol}}</td>
             </tr>
             {{#if valueFee}}
                 <tr>
-                    <td>service charge</td>
+                    <td>Service charge</td>
                     <td>{{valueFee}} {{symbol}}</td>
                 </tr>
             {{/if}}
 
             <tr>
-                <td>from:</td>
+                <td>From:</td>
                 <td>{{from}}</td>
             </tr>
             <tr>
-                <td>to：</td>
+                <td>To：</td>
                 <td>{{to}}</td>
             </tr>
         </tbody>

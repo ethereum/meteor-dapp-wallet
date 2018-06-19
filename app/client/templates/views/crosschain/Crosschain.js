@@ -9,19 +9,29 @@
                 console.log('err: ', err);
                 Helpers.showError(err);
             } else {
-                TemplateVar.set(template,'addressList',addressList);
-                Session.set('addressList', addressList);
+                let oldAddressList = TemplateVar.get(template, 'addressList');
+
+                if(!oldAddressList || oldAddressList.length !== addressList.length) {
+                    console.log('update addressList');
+
+                    TemplateVar.set(template,'addressList',addressList);
+                    Session.set('addressList', addressList);
+                }
 
                 mist.ETH2WETH().getAddressList('WAN', function (err, wanAddressList) {
                     if (err) {
                         console.log('err: ', err);
                         Helpers.showError(err);
                     } else {
-                        Session.set('wanAddressList', wanAddressList);
+                        let oldWanAddressList = TemplateVar.get(template, 'wanAddressList');
 
-                        TemplateVar.set(template,'wanAddressList',wanAddressList);
+                        if(!oldWanAddressList || oldWanAddressList.length !== wanAddressList.length) {
+                            console.log('update wanAddressList');
 
-                        EthElements.Modal.hide();
+                            Session.set('wanAddressList', wanAddressList);
+                            TemplateVar.set(template,'wanAddressList',wanAddressList);
+                            EthElements.Modal.hide();
+                        }
                     }
                 });
             }

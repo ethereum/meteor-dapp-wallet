@@ -29,7 +29,6 @@ Template['views_ethToweth'].onCreated(function(){
 
     TemplateVar.set(template, 'wanAddressList', wanaddress);
 
-
     // eth accounts token balance
     mist.ETH2WETH().getMultiBalances(Session.get('addressList'), (err, result) => {
         if (!err) {
@@ -37,8 +36,10 @@ Template['views_ethToweth'].onCreated(function(){
 
             _.each(result, function (value, index) {
                 const balance =  web3.fromWei(value, 'ether');
-                const name = index.slice(2, 6) + index.slice(38);
-                result_list.push({name: name, address: index, balance: balance})
+                const name = 'Account_' + index.slice(2, 6);
+                if (new BigNumber(balance).gt(0)) {
+                    result_list.push({name: name, address: index, balance: balance})
+                }
             });
 
             TemplateVar.set(template,'ethList',result_list);
@@ -83,6 +84,12 @@ Template['views_ethToweth'].onCreated(function(){
             Helpers.showError(err);
         }
     });
+
+    setTimeout(() => {
+        if (!TemplateVar.get(template, 'total')) {
+            Session.set('clickButton', 1);
+        }
+    }, 10000);
 });
 
 

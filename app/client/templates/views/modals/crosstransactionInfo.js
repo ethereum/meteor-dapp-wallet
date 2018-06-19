@@ -55,3 +55,10 @@ Template['views_modals_crosstransactionInfo'].helpers({
     }
 });
 
+Template['views_modals_crosstransactionInfo'].events({
+    'click .ok-cross': function () {
+        Session.set('isShowModal', false);
+
+        EthElements.Modal.hide();
+    },
+});

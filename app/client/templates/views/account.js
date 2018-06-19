@@ -12,7 +12,7 @@ Template['views_account'].onCreated(function () {
 
         if (typeof mist !== 'undefined') {
             mist.requestOTACollection(waddress,0, function (e, result) {
-                var oldOtas = TemplateVar.get(template,'otaValue');
+                var oldOtas = TemplateVar.get(template,'otasValue');
                 if(!oldOtas || oldOtas.length !== result.length)
                 {
                     var otaValue = new BigNumber(0);

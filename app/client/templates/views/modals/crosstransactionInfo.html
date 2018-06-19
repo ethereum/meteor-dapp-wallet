@@ -18,15 +18,11 @@
                 </tr>
                 <tr>
                     <td>From</td>
-                    <td>{{from}}</td>
+                    <td>{{from}}{{{fromText}}}</td>
                 </tr>
                 <tr>
-                    {{#if x}}
-                        <td>crossAdress</td>
-                    {{else}}
-                        <td>To</td>
-                    {{/if}}
-                    <td>{{crossAdress}}</td>
+                    <td>To</td>
+                    <td>{{crossAdress}}{{{toText}}}</td>
                 </tr>
                 {{#if lockTxHash}}
                     <tr>
@@ -36,14 +32,14 @@
                 {{/if}}
                 {{#if refundTxHash}}
                     <tr>
-                        <td>refundTxHash</td>
+                        <td>confirmTxHash</td>
                         <td>{{refundTxHash}}</td>
                     </tr>
                 {{/if}}
 
                 {{#if revokeTxHash}}
                     <tr>
-                        <td>revokeTxHash</td>
+                        <td>cancelTxHash</td>
                         <td>{{revokeTxHash}}</td>
                     </tr>
                 {{/if}}
@@ -62,7 +58,7 @@
 
                 {{#if x}}
                     <tr>
-                        <td>X</td>
+                        <td>Secret</td>
                         <td>{{x}}</td>
                     </tr>
                 {{/if}}
@@ -70,7 +66,7 @@
                 {{#if status}}
                     <tr>
                         <td>Status</td>
-                        <td>{{status}}</td>
+                        <td>{{{status}}}</td>
                     </tr>
                 {{/if}}
 
@@ -108,4 +104,7 @@
             </tbody>
         </table>
     {{/with}}
+
+    <div><button class="ok-cross dapp-primary-button">OK</button></div>
+
 </template>

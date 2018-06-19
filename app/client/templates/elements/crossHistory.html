@@ -6,21 +6,21 @@
             <th colspan="5">HTLC</th>
             <th colspan="5">Time</th>
             <th colspan="5">From</th>
-            <th colspan="5">Storeman</th>
             <th colspan="5">To</th>
             <th colspan="5">Value</th>
+            <th colspan="5">Status</th>
         </tr>
         </thead>
         <tbody class="transfer-list-tbody">
         {{#each historyList}}
             <tr class="full-width">
-                <td colspan="5">{{{state}}}{{{text}}}</td>
+                <td colspan="5">{{{operation}}}</td>
                 <td colspan="5" style="cursor: auto">{{{htlcdate}}}</td>
-                <td colspan="5" class="show-detail" id="{{@index}}">{{time}}</td>
-                <td colspan="5" class="show-detail" id="{{@index}}">{{from.substr 0 20}}...</td>
-                <td colspan="5" class="show-detail" id="{{@index}}">{{storeman.substr 0 20}}...</td>
-                <td colspan="5" class="show-detail" id="{{@index}}">{{crossAdress.substr 0 20}}...</td>
-                <td colspan="5" class="show-detail" id="{{@index}}">{{value}} {{symbol}}</td>
+                <td colspan="5" style="cursor: auto">{{time}}</td>
+                <td colspan="5" class="show-detail" id="{{@index}}">{{from.substr 0 20}}...{{{fromText}}}</td>
+                <td colspan="5" class="show-detail" id="{{@index}}">{{crossAdress.substr 0 20}}...{{{toText}}}</td>
+                <td colspan="5" style="cursor: auto">{{value}} {{symbol}}</td>
+                <td colspan="5" style="cursor: auto">{{{state}}}</td>
             </tr>
         {{/each}}
         </tbody>

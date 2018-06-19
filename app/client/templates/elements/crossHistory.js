@@ -12,8 +12,9 @@ const stateDict = {
     'waitingRevoke': 9,'sentRevokePending': 10, 'sentRevokeConfirming': 11, 'revokeFinished': 12,
 };
 
-function resultEach(result) {
+function resultEach(template, result) {
     _.each(result, function (value, index) {
+        delete value.meta;
 
         if (Helpers.isNumber(value.time)) {
 
@@ -87,16 +88,27 @@ Template['elements_cross_transactions_table'].onCreated(function(){
 
     mist.ETH2WETH().listHistory(this.data.addressList.concat(this.data.wanAddressList), (err, result) => {
 
-        resultEach(result);
+        resultEach(template, result);
 
+        Session.set('oldCrosschainList', result);
         TemplateVar.set(template, 'crosschainList', result);
     });
 
     const self = this;
     InterID = Meteor.setInterval(function(){
         mist.ETH2WETH().listHistory(self.data.addressList.concat(self.data.wanAddressList), (err, result) => {
-            resultEach(result);
-            TemplateVar.set(template, 'crosschainList', result);
+            resultEach(template, result);
+
+            let oldCrosschainResult = Session.get('oldCrosschainList');
+            let oldResultHex = web3.toHex(oldCrosschainResult);
+            let resultHex = web3.toHex(result);
+
+            if(!oldCrosschainResult || oldResultHex !== resultHex ) {
+                console.log('update history transaction: ',oldResultHex !== resultHex);
+
+                Session.set('oldCrosschainList', result);
+                TemplateVar.set(template, 'crosschainList', result);
+            }
         });
 
     }, 10000);
@@ -114,68 +126,76 @@ Template['elements_cross_transactions_table'].helpers({
         let crosschainList = [];
 
         if (TemplateVar.get('crosschainList') && TemplateVar.get('crosschainList').length > 0) {
+            let smallStyle = 'display: block; color: #4b90f7;';
 
             _.each(TemplateVar.get('crosschainList'), function (value, index) {
-                // console.log('this.data: ', value);
-
                 if (value.chain === 'ETH') {
-                    value.text = '<small>(ETH=>WETH)</small>';
+                    value.fromText = `<small style="${smallStyle}">ETH</small>`;
+                    value.toText = `<small style="${smallStyle}">WAN</small>`;
                     value.symbol = 'ETH';
                 } else if (value.chain === 'WAN') {
-                    value.text = '<small>(WETH=>ETH)</small>';
+                    value.fromText = `<small style="${smallStyle}">WAN</small>`;
+                    value.toText = `<small style="${smallStyle}">ETH</small>`;
                     value.symbol = 'WETH';
-                } else {
-                    value.text = '<small></small>';
                 }
 
                 let style = 'display: block; font-size: 18px; background-color: transparent;';
 
                 // Release
                 if (stateDict[value.status] === 5) {
-                    style += 'color: #920b1c;';
-                    style1 = style + 'color: red;';
-
                     if (value.lockButton) {
-                        value.state = `<h2 class="crosschain-list" id = ${index} style="${style1}">Locked</h2>`;
+                        value.operation = `<h2 style="${style}">Cancel</h2>`;
+                        value.state = 'To be cancelled in ' + value.htlcdate;
                     } else {
-                        value.state = `<h2 class="crosschain-list" id = ${index} style="${style}">Release X</h2>`;
+                        style += 'color: #920b1c;';
+
+                        value.operation = `<h2 class="crosschain-list" id = ${index} style="${style}">Confirm</h2>`;
+                        value.state = 'To be confirmed';
                     }
                 }
                 // Revoke
                 else if (stateDict[value.status] === 9) {
                     style += 'color: #920b1c;';
-                    value.state = `<h2 class="crosschain-list" id = ${index} style="${style}">Revoke</h2>`;
+                    value.operation = `<h2 class="crosschain-list" id = ${index} style="${style}">Cancel</h2>`;
+                    value.state = 'To be cancelled';
                 }
                 // Release or Revoke finished
                 else if (stateDict[value.status] === 8 || stateDict[value.status] === 12) {
-                    style += 'color: #4b90f7;';
                     if (stateDict[value.status] === 8) {
-                        value.state = `<h2 class="crosschain-list" id = ${index}  style="${style}">Refunded</h2>`;
+                        value.state = 'Success';
                     } else {
-                        value.state = `<h2 class="crosschain-list" id = ${index}  style="${style}">Revoked</h2>`;
+                        value.state = 'Cancelled';
                     }
+
+                    value.operation = `<h2 style="${style}"></h2>`;
                 }
                 // locking
                 else if (stateDict[value.status] >= 1 && stateDict[value.status] <= 4) {
-                    style += 'color: #1ec89a;';
-                    value.state = `<h2 class="crosschain-list" id = ${index} style="${style}">${value.status}</h2>`;
+                    if (stateDict[value.status] === 1) {
+                        value.state = 'Pending';
+                    } else if (stateDict[value.status] >= 2){
+                        value.state = 'Cross-Tx ' + (stateDict[value.status] - 1).toString() +  '/4';
+                    }
+                    value.operation = `<h2 style="${style}">Confirm</h2>`;
                 }
                 // Releasing
                 else if (stateDict[value.status] >= 6 && stateDict[value.status] <= 7) {
-                    style += 'color: #1ec89a;';
-                    value.state = `<h2 class="crosschain-list" id = ${index} style="${style}">${value.status}</h2>`;
+                    value.state = 'Confirming ' + (stateDict[value.status] - 5).toString() +  '/3';
+                    value.operation = `<h2 style="${style}"></h2>`;
                 }
                 // Revoking
                 else if (stateDict[value.status] >= 10 && stateDict[value.status] <= 11) {
-                    style += 'color: #1ec89a;';
-                    value.state = `<h2 class="crosschain-list" id = ${index} style="${style}">${value.status}</h2>`;
+                    value.state = 'Cancelling ' + (stateDict[value.status] - 9).toString() +  '/3';
+                    value.operation = `<h2 style="${style}"></h2>`;
                 }
                 // normal
                 else {
-                    style += 'color: #4b90f7;';
-                    value.state = `<h2 class="crosschain-list" id = ${index}  style="${style}">Normal</h2>`;
+                    value.state = 'Success';
                     value.crossAdress = value.to;
                     value.htlcdate = '--';
+                    value.fromText = `<small style="${smallStyle}">ETH</small>`;
+                    value.toText = `<small style="${smallStyle}">ETH</small>`;
+                    value.operation = `<h2 style="${style}"></h2>`;
                 }
 
                 crosschainList.push(value);
@@ -192,38 +212,47 @@ Template['elements_cross_transactions_table'].events({
     'click .show-detail': function (e) {
         let id = e.target.id;
 
+        Session.set('isShowModal', true);
+
         let show_data = TemplateVar.get('crosschainList')[id];
         // console.log('show_data: ', show_data);
 
-        if (!show_data.HashX) {
-            show_data.HashX = show_data.txhash
-        }
-
-        if (show_data.chain === 'ETH') {
-            show_data.symbol = 'ETH';
-        } else if (show_data.chain === 'WAN') {
-            show_data.symbol = 'WETH';
-        }
-
-        EthElements.Modal.show({
-            template: 'views_modals_crosstransactionInfo',
-            data: {
-                HashX: show_data.HashX,
-                chain: show_data.chain,
-                crossAdress: show_data.crossAdress,
-                from: show_data.from,
-                lockTxHash: show_data.lockTxHash,
-                refundTxHash: show_data.refundTxHash,
-                revokeTxHash: show_data.revokeTxHash,
-                storeman: show_data.storeman,
-                time: show_data.time,
-                to: show_data.to,
-                value: show_data.value,
-                x: show_data.x,
-                symbol: show_data.symbol,
-                status: show_data.status,
+        if (show_data) {
+            if (!show_data.HashX) {
+                show_data.HashX = show_data.txhash;
             }
-        });
+
+            if (show_data.chain === 'ETH') {
+                show_data.symbol = 'ETH';
+            } else if (show_data.chain === 'WAN') {
+                show_data.symbol = 'WETH';
+            }
+
+            EthElements.Modal.show({
+                template: 'views_modals_crosstransactionInfo',
+                data: {
+                    HashX: show_data.HashX,
+                    chain: show_data.chain,
+                    crossAdress: show_data.crossAdress,
+                    from: show_data.from,
+                    lockTxHash: show_data.lockTxHash,
+                    refundTxHash: show_data.refundTxHash,
+                    revokeTxHash: show_data.revokeTxHash,
+                    storeman: show_data.storeman,
+                    time: show_data.time,
+                    to: show_data.to,
+                    value: show_data.value,
+                    x: show_data.x,
+                    symbol: show_data.symbol,
+                    status: show_data.state,
+                    fromText: show_data.fromText,
+                    toText: show_data.toText
+                }
+            }, {
+                closeable: false
+            });
+
+        }
 
     },
 
@@ -242,7 +271,7 @@ Template['elements_cross_transactions_table'].events({
 
             if (show_data.lockButton) {
                 return GlobalNotification.warning({
-                    content: 'This transaction locked, please wait a moment to revoke',
+                    content: 'This transaction locked, please wait a moment to cancel',
                     duration: 2
                 });
             }

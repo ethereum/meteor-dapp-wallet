@@ -44,7 +44,15 @@ Template['elements_account_table'].onCreated(function () {
     const self = this;
     InterID = Meteor.setInterval(function(){
         mist.ETH2WETH().getMultiBalances(self.data.addressList, (err, result) => {
-            TemplateVar.set(template,'ethAccounts',result);
+            let oldAddressList = TemplateVar.get(template, 'ethAccounts');
+            let oldResultHex = web3.toHex(oldAddressList);
+            let resultHex = web3.toHex(result);
+
+            if(!oldAddressList || oldResultHex !== resultHex) {
+                console.log('update eth account table: ',oldResultHex !== resultHex);
+                TemplateVar.set(template,'ethAccounts',result);
+            }
+
         });
 
     }, 10000);
@@ -69,10 +77,9 @@ Template['elements_account_table'].helpers({
 
         let result = [];
         if (ethAccounts) {
-
             _.each(ethAccounts, function (value, index) {
                 const balance =  web3.fromWei(value, 'ether');
-                const name = index.slice(2, 6) + index.slice(38);
+                const name = 'Account_' + index.slice(2, 6);
                 result.push({name: name, address: index, balance: balance})
             });
         }
