@@ -21,16 +21,20 @@ Template['views_ethToweth'].onCreated(function(){
     EthElements.Modal.show('views_modals_loading', {closeable: false, class: 'crosschain-loading'});
 
     let wanaddress = [];
+    let wanAddressList = Session.get('wanAddressList');
 
-    TemplateVar.set(template, 'to', Session.get('wanAddressList')[0]);
-    _.each(Session.get('wanAddressList'), function (value, index) {
-        wanaddress.push({address: value})
-    });
+    if (wanAddressList.length >0) {
+        TemplateVar.set(template, 'to', wanAddressList[0]);
+        _.each(wanAddressList, function (value, index) {
+            wanaddress.push({address: value})
+        });
 
-    TemplateVar.set(template, 'wanAddressList', wanaddress);
+        TemplateVar.set(template, 'wanAddressList', wanaddress);
+    }
 
     // eth accounts token balance
-    mist.ETH2WETH().getMultiBalances(Session.get('addressList'), (err, result) => {
+    let addressList = Session.get('addressList');
+    mist.ETH2WETH().getMultiBalances(addressList, (err, result) => {
         if (!err) {
             let result_list = [];
 
@@ -42,54 +46,43 @@ Template['views_ethToweth'].onCreated(function(){
                 }
             });
 
-            TemplateVar.set(template,'ethList',result_list);
-            TemplateVar.set(template,'from',result_list[0].address);
+            if (result_list.length >0) {
+                TemplateVar.set(template,'ethList',result_list);
+                TemplateVar.set(template,'from',result_list[0].address);
+            }
+        }
+    });
 
-            // eth => weth storeman
-            mist.ETH2WETH().getStoremanGroups(function (err,data) {
-                if (err) {
-                    TemplateVar.set(template,'storemanGroup', []);
-                    Helpers.showError(err);
-                } else {
-                    if (data.length > 0) {
-                        // console.log('ETH2WETH storeman', data);
-                        TemplateVar.set(template,'storeman',data[0].ethAddress);
-                        TemplateVar.set(template,'storemanGroup',data);
-                    }
+    // eth => weth storeman
+    mist.ETH2WETH().getStoremanGroups(function (err,data) {
+        EthElements.Modal.hide();
 
-                    // eth chain  gas price
-                    mist.ETH2WETH().getGasPrice('ETH', function (err,data) {
-                        if (err) {
-                            TemplateVar.set(template,'gasEstimate', {});
-                            Helpers.showError(err);
-                        } else {
-                            // console.log(data.LockGas, data.RefundGas, data.RevokeGas, data.gasPrice);
-                            TemplateVar.set(template,'estimatedGas', data.LockGas);
-                            TemplateVar.set(template,'gasPrice', data.gasPrice);
-
-                            // console.log('fee', data.LockGas * web3.fromWei(data.gasPrice, 'ether'));
-                            var number = new BigNumber(data.LockGas * data.gasPrice);
-
-                            TemplateVar.set(template, 'fee', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
-
-                            TemplateVar.set(template, 'total', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
-
-                            EthElements.Modal.hide();
-                        }
-                    });
-                }
-            });
-
+        if (!err) {
+            if (data.length > 0) {
+                // console.log('ETH2WETH storeman', data);
+                TemplateVar.set(template, 'storeman', data[0].ethAddress);
+                TemplateVar.set(template, 'storemanGroup', data);
+            }
         } else {
             Helpers.showError(err);
         }
     });
 
-    setTimeout(() => {
-        if (!TemplateVar.get(template, 'total')) {
-            Session.set('clickButton', 1);
+    // eth chain  gas price
+    mist.ETH2WETH().getGasPrice('ETH', function (err,data) {
+        if (!err) {
+            // console.log(data.LockGas, data.RefundGas, data.RevokeGas, data.gasPrice);
+            TemplateVar.set(template,'estimatedGas', data.LockGas);
+            TemplateVar.set(template,'gasPrice', data.gasPrice);
+
+            // console.log('fee', data.LockGas * web3.fromWei(data.gasPrice, 'ether'));
+            let number = new BigNumber(data.LockGas * data.gasPrice);
+
+            TemplateVar.set(template, 'fee', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
+            TemplateVar.set(template, 'total', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
         }
-    }, 10000);
+    });
+
 });
 
 
@@ -112,7 +105,10 @@ Template['views_ethToweth'].helpers({
                     let inboundQuota = web3.fromWei(value.inboundQuota, 'ether');
                     let quota = web3.fromWei(value.quota, 'ether');
                     let deposit = web3.fromWei(value.deposit, 'ether');
-                    result.push({deposit: deposit, inboundQuota: inboundQuota, quota: quota, done: quota - inboundQuota})
+                    let done = quota - inboundQuota;
+                    let used = ((done/ quota) * 100).toString() + '%';
+
+                    result.push({deposit: deposit, inboundQuota: inboundQuota, quota: quota, done: done, used: used})
                 }
             });
         }
@@ -195,8 +191,20 @@ Template['views_ethToweth'].events({
             amount = TemplateVar.get('amount'),
             total = TemplateVar.get('total');
 
-        var gasPrice = TemplateVar.get('gasPrice').toString(),
+        let gasPrice = TemplateVar.get('gasPrice').toString(),
             estimatedGas = TemplateVar.get('estimatedGas').toString();
+
+        if (!from && !storeman && !total) {
+            EthElements.Modal.hide();
+            Session.set('clickButton', 1);
+        }
+
+        if(!from) {
+            return GlobalNotification.warning({
+                content: 'no from account',
+                duration: 2
+            });
+        }
 
         // console.log('storeman', storeman);
         if(!storeman) {

@@ -23,16 +23,20 @@ Template['views_wethToeth'].onCreated(function(){
     EthElements.Modal.show('views_modals_loading', {closeable: false, class: 'crosschain-loading'});
 
     let ethaddress = [];
+    let addressList = Session.get('addressList');
+    if (addressList.length >0) {
+        TemplateVar.set(template, 'to', addressList[0]);
+        _.each(addressList, function (value, index) {
+            ethaddress.push({address: value})
+        });
 
-    TemplateVar.set(template, 'to', Session.get('addressList')[0]);
-    _.each(Session.get('addressList'), function (value, index) {
-        ethaddress.push({address: value})
-    });
-
-    TemplateVar.set(template, 'addressList', ethaddress);
+        TemplateVar.set(template, 'addressList', ethaddress);
+    }
 
     // wan accounts token balance
-    mist.WETH2ETH().getMultiTokenBalance(Session.get('wanAddressList'), (err, result) => {
+    let wanAddressList = Session.get('wanAddressList');
+
+    mist.WETH2ETH().getMultiTokenBalance(wanAddressList, (err, result) => {
         TemplateVar.set(template,'wethBalance',result);
 
         if (!err) {
@@ -43,65 +47,55 @@ Template['views_wethToeth'].onCreated(function(){
 
                 if (new BigNumber(balance).gt(0)) {
                     let accounts = EthAccounts.findOne({balance:{$ne:"0"}, address: index});
-
                     result_list.push({name: accounts.name, address: index, balance: balance})
                 }
             });
 
-            TemplateVar.set(template,'wanList',result_list);
-            TemplateVar.set(template,'from',result_list[0].address);
+            if (result_list.length > 0) {
+                TemplateVar.set(template,'wanList',result_list);
+                TemplateVar.set(template,'from',result_list[0].address);
+            }
 
-            // weth => eth storeman
-            mist.WETH2ETH().getStoremanGroups(function (err,data) {
-                if (err) {
-                    TemplateVar.set(template,'storemanGroup', []);
-                    Helpers.showError(err);
-                } else {
-                    // console.log('WETH2ETH storeman', data);
-                    TemplateVar.set(template,'storeman',data[0].wanAddress);
-                    TemplateVar.set(template,'storemanGroup',data);
+        }
+    });
 
-                    // get wan chain gas price
-                    mist.WETH2ETH().getGasPrice('WAN', function (err,data) {
-                        if (err) {
-                            TemplateVar.set(template,'gasEstimate', {});
-                            Helpers.showError(err);
-                        } else {
-                            // console.log('WAN gasPrice', data);
-                            // console.log(data.LockGas, data.RefundGas, data.RevokeGas, data.gasPrice);
-                            TemplateVar.set(template,'estimatedGas', data.LockGas);
-                            TemplateVar.set(template,'gasPrice', data.gasPrice);
+    // weth => eth storeman
+    mist.WETH2ETH().getStoremanGroups(function (err,data) {
+        EthElements.Modal.hide();
 
-                            // console.log('fee', data.LockGas * web3.fromWei(data.gasPrice, 'ether'));
-                            var number = new BigNumber(data.LockGas * data.gasPrice);
-                            // console.log('formatBalance', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
-
-                            TemplateVar.set(template, 'fee', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
-
-                            // get wan2coin ratio
-                            mist.ETH2WETH().getWan2CoinRatio('ETH', function (err,data) {
-                                if (data) {
-                                    TemplateVar.set(template,'wan2CoinRatio',data);
-                                } else {
-                                    TemplateVar.set(template,'wan2CoinRatio',20);
-                                }
-
-                                EthElements.Modal.hide();
-                            });
-                        }
-                    });
-                }
-            });
+        if (!err) {
+            // console.log('WETH2ETH storeman', data);
+            if (data.length > 0) {
+                TemplateVar.set(template,'storeman',data[0].wanAddress);
+                TemplateVar.set(template,'storemanGroup',data);
+            }
         } else {
             Helpers.showError(err);
         }
     });
 
-    setTimeout(() => {
-        if (!TemplateVar.get(template, 'wan2CoinRatio')) {
-            Session.set('clickButton', 1);
+    // get wan chain gas price
+    mist.WETH2ETH().getGasPrice('WAN', function (err,data) {
+        if (!err) {
+            // console.log('WAN gasPrice', data);
+            // console.log(data.LockGas, data.RefundGas, data.RevokeGas, data.gasPrice);
+            TemplateVar.set(template,'estimatedGas', data.LockGas);
+            TemplateVar.set(template,'gasPrice', data.gasPrice);
+
+            // console.log('fee', data.LockGas * web3.fromWei(data.gasPrice, 'ether'));
+            var number = new BigNumber(data.LockGas * data.gasPrice);
+            // console.log('formatBalance', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
+
+            TemplateVar.set(template, 'fee', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
         }
-    }, 10000);
+    });
+
+    // get wan2coin ratio
+    mist.ETH2WETH().getWan2CoinRatio('ETH', function (err,data) {
+        if (!err) {
+            data ? TemplateVar.set(template,'wan2CoinRatio',data) : TemplateVar.set(template,'wan2CoinRatio',20);
+        }
+    });
 
 });
 
@@ -123,7 +117,10 @@ Template['views_wethToeth'].helpers({
                 let inboundQuota = web3.fromWei(value.inboundQuota, 'ether');
                 let quota = web3.fromWei(value.quota, 'ether');
                 let deposit = web3.fromWei(value.deposit, 'ether');
-                result.push({deposit: deposit, inboundQuota: inboundQuota, quota: quota, done: quota - inboundQuota})
+                let done = quota - inboundQuota;
+                let used = ((done/ quota) * 100).toString() + '%';
+
+                result.push({deposit: deposit, inboundQuota: inboundQuota, quota: quota, done: done, used: used})
             }
         });
 
@@ -216,6 +213,18 @@ Template['views_wethToeth'].events({
 
         if (parseInt(gasPrice) < defaultGasprice) {
             gasPrice = defaultGasprice.toString();
+        }
+
+        if (!from && !storeman && !fee && !valueFee) {
+            EthElements.Modal.hide();
+            Session.set('clickButton', 1);
+        }
+
+        if(!from) {
+            return GlobalNotification.warning({
+                content: 'no from account',
+                duration: 2
+            });
         }
 
         // console.log('storeman', storeman);

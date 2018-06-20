@@ -74,7 +74,9 @@ function showQuestion(show_data, fee, gasPrice, getGas, transData, trans, transT
             trans: trans,
             transType: transType,
             Chain: show_data.chain,
-            symbol: show_data.symbol
+            symbol: show_data.symbol,
+            fromText: show_data.fromText,
+            toText: show_data.toText
         },
     },{
         class: 'send-transaction-info',
@@ -104,8 +106,7 @@ Template['elements_cross_transactions_table'].onCreated(function(){
             let resultHex = web3.toHex(result);
 
             if(!oldCrosschainResult || oldResultHex !== resultHex ) {
-                console.log('update history transaction: ',oldResultHex !== resultHex);
-
+                // console.log('update history transaction: ',oldResultHex !== resultHex);
                 Session.set('oldCrosschainList', result);
                 TemplateVar.set(template, 'crosschainList', result);
             }
@@ -266,6 +267,7 @@ Template['elements_cross_transactions_table'].events({
         let trans;
         let transType;
 
+        console.log('show_data.status: ', show_data.status);
         // release X
         if (show_data.status === 'waitingX') {
 

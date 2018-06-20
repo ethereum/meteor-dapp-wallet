@@ -49,7 +49,7 @@ Template['elements_account_table'].onCreated(function () {
             let resultHex = web3.toHex(result);
 
             if(!oldAddressList || oldResultHex !== resultHex) {
-                console.log('update eth account table: ',oldResultHex !== resultHex);
+                // console.log('update eth account table: ',oldResultHex !== resultHex);
                 TemplateVar.set(template,'ethAccounts',result);
             }
 

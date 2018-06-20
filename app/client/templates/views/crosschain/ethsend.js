@@ -21,6 +21,8 @@ Template['views_ethsend'].onCreated(function(){
     EthElements.Modal.show('views_modals_loading', {closeable: false, class: 'crosschain-loading'});
 
     mist.ETH2WETH().getMultiBalances(Session.get('addressList'), function (err, result) {
+        EthElements.Modal.hide();
+
         if (!err) {
             let result_list = [];
 
@@ -34,38 +36,29 @@ Template['views_ethsend'].onCreated(function(){
                 }
             });
 
-            TemplateVar.set(template,'ethList',result_list);
-            TemplateVar.set(template,'from',result_list[0].address);
-
-            mist.ETH2WETH().getGasPrice('ETH', function (err,data) {
-                if (err) {
-                    TemplateVar.set(template,'gasEstimate', {});
-                    Helpers.showError(err);
-                } else {
-                    // console.log(data.LockGas, data.RefundGas, data.RevokeGas, data.gasPrice);
-                    TemplateVar.set(template,'estimatedGas', data.LockGas);
-                    TemplateVar.set(template,'gasPrice', data.gasPrice);
-
-                    // console.log('fee', data.LockGas * web3.fromWei(data.gasPrice, 'ether'));
-                    var number = new BigNumber(data.LockGas * data.gasPrice);
-
-                    TemplateVar.set(template, 'fee', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
-
-                    TemplateVar.set(template, 'total', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
-
-                    EthElements.Modal.hide();
-                }
-            });
+            if (result_list.length >0) {
+                TemplateVar.set(template,'ethList',result_list);
+                TemplateVar.set(template,'from',result_list[0].address);
+            }
         } else {
             Helpers.showError(err);
         }
     });
 
-    setTimeout(() => {
-        if (!TemplateVar.get(template, 'total')) {
-            Session.set('clickButton', 1);
+    mist.ETH2WETH().getGasPrice('ETH', function (err,data) {
+        if (!err) {
+            // console.log(data.LockGas, data.RefundGas, data.RevokeGas, data.gasPrice);
+            TemplateVar.set(template,'estimatedGas', data.LockGas);
+            TemplateVar.set(template,'gasPrice', data.gasPrice);
+
+            // console.log('fee', data.LockGas * web3.fromWei(data.gasPrice, 'ether'));
+            let number = new BigNumber(data.LockGas * data.gasPrice);
+
+            TemplateVar.set(template, 'fee', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
+            TemplateVar.set(template, 'total', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
         }
-    }, 10000);
+    });
+
 });
 
 
@@ -150,6 +143,11 @@ Template['views_ethsend'].events({
             amount = TemplateVar.get('amount'),
             gasPrice = TemplateVar.get('gasPrice').toString(),
             estimatedGas = TemplateVar.get('estimatedGas').toString();
+
+        if (!from && !TemplateVar.get('total')) {
+            EthElements.Modal.hide();
+            Session.set('clickButton', 1);
+        }
 
         if(!to) {
             return GlobalNotification.warning({

@@ -65,7 +65,10 @@
                     {{#each Deposit}}
                         <div class="dapp-select-gas-price">
                             <span>Deposit: <span>{{deposit}}</span> WAN</span>
-                            <input type="range" disabled="true" name="deposit" min="0" max="{{quota}}" step="1" value={{done}}>
+                            <div id="progressbar">
+                                <div id='progress' style="width: {{used}}"></div>
+                                <p></p>
+                            </div>
                             <span style="text-transform: capitalize; position: initial;">Balance: <span>{{inboundQuota}}</span> ETH</span>
                             <span style="text-transform: capitalize; position: initial; float: right;">Cap: <span>{{quota}}</span> ETH</span>
                         </div>

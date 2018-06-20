@@ -5,37 +5,33 @@
 
  const getAddressList = function(template) {
     mist.ETH2WETH().getAddressList('ETH', function (err, addressList) {
-            if (err) {
-                console.log('err: ', err);
-                Helpers.showError(err);
-            } else {
+            if (! err) {
                 let oldAddressList = TemplateVar.get(template, 'addressList');
 
                 if(!oldAddressList || oldAddressList.length !== addressList.length) {
-                    console.log('update addressList');
+                    // console.log('update addressList');
 
                     TemplateVar.set(template,'addressList',addressList);
                     Session.set('addressList', addressList);
                 }
-
-                mist.ETH2WETH().getAddressList('WAN', function (err, wanAddressList) {
-                    if (err) {
-                        console.log('err: ', err);
-                        Helpers.showError(err);
-                    } else {
-                        let oldWanAddressList = TemplateVar.get(template, 'wanAddressList');
-
-                        if(!oldWanAddressList || oldWanAddressList.length !== wanAddressList.length) {
-                            console.log('update wanAddressList');
-
-                            Session.set('wanAddressList', wanAddressList);
-                            TemplateVar.set(template,'wanAddressList',wanAddressList);
-                            EthElements.Modal.hide();
-                        }
-                    }
-                });
             }
         });
+
+    mist.ETH2WETH().getAddressList('WAN', function (err, wanAddressList) {
+        EthElements.Modal.hide();
+
+        if (!err) {
+            let oldWanAddressList = TemplateVar.get(template, 'wanAddressList');
+
+            if(!oldWanAddressList || oldWanAddressList.length !== wanAddressList.length) {
+                // console.log('update wanAddressList');
+
+                Session.set('wanAddressList', wanAddressList);
+                TemplateVar.set(template,'wanAddressList',wanAddressList);
+            }
+        }
+    });
+
  };
 
 Template['views_crosschain'].onCreated(function () {

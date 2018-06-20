@@ -951,6 +951,52 @@ table.dapp-zebraPou tbody tr:nth-child(odd){
     }
 }
 
-//{
-//    width: 100%;
-//}
+
+#progressbar {
+  height: 10px;
+  border: 1px solid #63B8FF;
+  border-radius: 5px;
+}
+
+#progress {
+  height: 100%;
+  width: 0;
+  background: #BFEFFF;
+  border-radius: 5px;
+  z-index: -1;
+
+  background-size: 30px 30px;
+  background-image: -webkit-linear-gradient(-45deg, #63B8FF, #63B8FF 25%, #BFEFFF 25%, #BFEFFF 50%, #63B8FF 50%, #63B8FF 75%, #BFEFFF 75%, #BFEFFF);
+  background-image: -moz-linear-gradient(-45deg, #63B8FF, #63B8FF 25%, #BFEFFF 25%, #BFEFFF 50%, #63B8FF 50%, #63B8FF 75%, #BFEFFF 75%, #BFEFFF);
+  background-image: linear-gradient(-45deg, #63B8FF, #63B8FF 25%, #BFEFFF 25%, #BFEFFF 50%, #63B8FF 50%, #63B8FF 75%, #BFEFFF 75%, #BFEFFF);
+  -webkit-animation: animate 1.5s linear infinite;
+  -moz-animation: animate 1.5s linear infinite;
+  animation: animate 1.5s linear infinite;
+}
+
+@-webkit-keyframes animate {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 60px 30px;
+  }
+}
+
+@-moz-keyframes animate {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 60px 30px;
+  }
+}
+
+@keyframes animate {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 60px 30px;
+  }
+}
