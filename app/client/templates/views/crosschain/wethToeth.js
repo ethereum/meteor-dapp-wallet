@@ -23,7 +23,7 @@ Template['views_wethToeth'].onCreated(function(){
     EthElements.Modal.show('views_modals_loading', {closeable: false, class: 'crosschain-loading'});
 
     let ethaddress = [];
-    let addressList = Session.get('addressList');
+    let addressList = Session.get('addressList') ? Session.get('addressList') : [];
     if (addressList.length >0) {
         TemplateVar.set(template, 'to', addressList[0]);
         _.each(addressList, function (value, index) {

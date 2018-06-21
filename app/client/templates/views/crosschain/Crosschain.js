@@ -3,6 +3,8 @@
  @module Templates
  */
 
+let InterID;
+
  const getAddressList = function(template) {
     mist.ETH2WETH().getAddressList('ETH', function (err, addressList) {
             if (! err) {

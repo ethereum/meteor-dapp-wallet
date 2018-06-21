@@ -1,4 +1,6 @@
 
+let InterID;
+
 const accountClipboardEventHandler = function(e){
     e.preventDefault();
 

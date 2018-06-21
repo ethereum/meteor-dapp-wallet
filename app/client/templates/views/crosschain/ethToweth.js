@@ -21,7 +21,7 @@ Template['views_ethToweth'].onCreated(function(){
     EthElements.Modal.show('views_modals_loading', {closeable: false, class: 'crosschain-loading'});
 
     let wanaddress = [];
-    let wanAddressList = Session.get('wanAddressList');
+    let wanAddressList = Session.get('wanAddressList') ? Session.get('wanAddressList') : [];
 
     if (wanAddressList.length >0) {
         TemplateVar.set(template, 'to', wanAddressList[0]);

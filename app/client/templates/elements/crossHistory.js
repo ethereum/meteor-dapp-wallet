@@ -6,6 +6,8 @@ Template Controllers
 
 const defaultGasprice = 180000000000;
 
+let InterID;
+
 const stateDict = {
     'sentHashPending': 1, 'sentHashConfirming': 2, 'waitingCross': 3, 'waitingCrossConfirming': 4,
     'waitingX': 5,'sentXPending': 6, 'sentXConfirming': 7, 'refundFinished': 8,
