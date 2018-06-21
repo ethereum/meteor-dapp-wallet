@@ -64,7 +64,7 @@ Template['views_ethToweth'].onCreated(function(){
                 TemplateVar.set(template, 'storemanGroup', data);
             }
         } else {
-            Helpers.showError(err);
+            Session.set('clickButton', 1);
         }
     });
 

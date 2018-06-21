@@ -14,6 +14,8 @@
                     TemplateVar.set(template,'addressList',addressList);
                     Session.set('addressList', addressList);
                 }
+            } else {
+                Helpers.showError(err);
             }
         });
 

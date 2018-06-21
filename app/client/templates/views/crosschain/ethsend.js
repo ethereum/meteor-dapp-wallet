@@ -41,7 +41,7 @@ Template['views_ethsend'].onCreated(function(){
                 TemplateVar.set(template,'from',result_list[0].address);
             }
         } else {
-            Helpers.showError(err);
+            Session.set('clickButton', 1);
         }
     });
 
