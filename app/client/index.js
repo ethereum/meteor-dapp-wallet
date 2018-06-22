@@ -102,20 +102,29 @@ Meteor.startup(function() {
         //     }, 5000);
         // }
 
+        if(typeof mist !== 'undefined')
+        {
+            mist.ETH2WETH().getWethToken(function (err, unicornToken) {
+                if(!err) {
+                    Meteor.setTimeout(function(){
+                        let tokenId = Helpers.makeId('token', unicornToken.address);
+                        let dapp_hasWethTOken = Tokens.findOne(tokenId);
 
-        var unicornToken = '0x22ab03c1cef3e47b3b9dc48d50369ef15883ce1b';
-        tokenId = Helpers.makeId('token', unicornToken);
+                        if (dapp_hasWethTOken !== undefined) {
+                            Tokens.upsert(tokenId, {$set: {
+                                    address: unicornToken.address,
+                                    name: unicornToken.name,
+                                    symbol: unicornToken.symbol,
+                                    balances: {},
+                                    decimals: unicornToken.decimals
+                                }});
+                        }
 
-        if (Tokens.findOne(tokenId) === undefined) {
-            Meteor.setTimeout(function(){
-                Tokens.upsert(tokenId, {$set: {
-                        address: unicornToken,
-                        name: 'Wanchain Ethereum Crosschain Token',
-                        symbol: 'WETH',
-                        balances: {},
-                        decimals: 18
-                    }});
-            }, 2000);
+                    }, 2000);
+                } else {
+                    console.log('getWethToken err: ', err);
+                }
+            });
         }
 
     });

@@ -93,6 +93,9 @@ class crossChainOperators{
     getCrossEthScAddress(callback){
         this.invokeOperator(new crossOperator('getCrossEthScAddress',[],this.getOriginChainType(),callback));
     }
+    getWethToken(callback){
+        this.invokeOperator(new crossOperator('getWethToken',[],this.getOriginChainType(),callback));
+    }
     getStoremanGroups(callback){
         this.invokeOperator(new crossOperator('syncStoremanGroups',[],this.getOriginChainType(),callback));
     }
