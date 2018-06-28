@@ -12,6 +12,7 @@ const stateDict = {
     'sentHashPending': 1, 'sentHashConfirming': 2, 'waitingCross': 3, 'waitingCrossConfirming': 4,
     'waitingX': 5,'sentXPending': 6, 'sentXConfirming': 7, 'refundFinished': 8,
     'waitingRevoke': 9,'sentRevokePending': 10, 'sentRevokeConfirming': 11, 'revokeFinished': 12,
+    'sentHashFailed': 13,
 };
 
 function resultEach(template, result) {
@@ -36,14 +37,14 @@ function resultEach(template, result) {
 
             if (endTimestamp > nowTimestamp) {
 
-                if (stateDict[value.status] === 8 || stateDict[value.status] === 12) {
+                if (stateDict[value.status] === 8 || stateDict[value.status] === 12 || stateDict[value.status] === 13) {
                     value.htlcdate = `<span>${Helpers.timeStamp2String(endTimestamp)}</span>`;
                 } else {
                     value.htlcdate = `<span style="color: #1ec89a">${Helpers.formatDuring(endTimestamp - nowTimestamp)}</span>`;
                 }
             } else {
 
-                if (stateDict[value.status] === 8 || stateDict[value.status] === 12) {
+                if (stateDict[value.status] === 8 || stateDict[value.status] === 12 || stateDict[value.status] === 13) {
                     value.htlcdate = `<span>${Helpers.timeStamp2String(endTimestamp)}</span>`;
                 } else {
                     value.htlcdate = "<span style='color: red'>00 h, 00 min</span>";
@@ -189,6 +190,11 @@ Template['elements_cross_transactions_table'].helpers({
                 // Revoking
                 else if (stateDict[value.status] >= 10 && stateDict[value.status] <= 11) {
                     value.state = 'Cancelling ' + (stateDict[value.status] - 9).toString() +  '/3';
+                    value.operation = `<h2 style="${style}"></h2>`;
+                }
+                // Failed
+                else if (stateDict[value.status] === 13) {
+                    value.state = 'Failed';
                     value.operation = `<h2 style="${style}"></h2>`;
                 }
                 // normal
