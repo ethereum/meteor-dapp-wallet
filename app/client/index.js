@@ -105,18 +105,26 @@ Meteor.startup(function() {
         if(typeof mist !== 'undefined')
         {
             mist.ETH2WETH().getWethToken(function (err, unicornToken) {
+
                 if(!err) {
                     Meteor.setTimeout(function(){
                         let tokenId = Helpers.makeId('token', unicornToken.address);
-                        let dapp_hasWethTOken = Tokens.findOne(tokenId);
+                        let dapp_hasWethToken = Tokens.findOne(tokenId);
 
-                        if (dapp_hasWethTOken !== undefined) {
+                        if (dapp_hasWethToken === undefined) {
+                            let dapp_isWeth = Tokens.findOne({isWeth: 1});
+
+                            if (dapp_isWeth !== undefined) {
+                                Tokens.remove(dapp_isWeth._id);
+                            }
+
                             Tokens.upsert(tokenId, {$set: {
                                     address: unicornToken.address,
                                     name: unicornToken.name,
                                     symbol: unicornToken.symbol,
                                     balances: {},
-                                    decimals: unicornToken.decimals
+                                    decimals: unicornToken.decimals,
+                                    isWeth: 1
                                 }});
                         }
 
