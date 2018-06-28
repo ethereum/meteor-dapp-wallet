@@ -31,7 +31,7 @@
                         <div class="triangle"></div><strong class="views_send_strong">Locked Account</strong>
                         <select id="toweth-storeman" style="background-color: #f7f8fc;border: solid 0px #f7f8fc; padding-left: 10px;">
                             {{#each TemplateVar.get 'storemanGroup'}}
-                                <option value="{{wanAddress}}">
+                                <option value="{{wanAddress}}&&{{txFeeRatio}}">
                                     {{wanAddress}}
                                 </option>
                             {{/each}}

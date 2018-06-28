@@ -98,15 +98,19 @@ Template['elements_account_table'].events({
 
     'click .qrcode-button': function(e){
         e.preventDefault();
-
         let name = e.target.name;
+
+        Session.set('isShowModal', true);
 
         // Open a modal showing the QR Code
         EthElements.Modal.show({
             template: 'views_modals_qrCode',
             data: {
-                address: name
+                address: name,
+                ok: true
             }
+        }, {
+            closeable: false
         });
     },
 });

@@ -12,3 +12,11 @@ Template['views_modals_qrCode'].onRendered(function(){
         qrcodesvg.draw({"method": "classic", "fill-colors":["#555","#555","#666"]}, {"stroke-width":1});
     }
 });
+
+Template['views_modals_qrCode'].events({
+    'click .ok-cross': function () {
+        Session.set('isShowModal', false);
+
+        EthElements.Modal.hide();
+    },
+});

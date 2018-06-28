@@ -67,6 +67,8 @@ Template['views_wethToeth'].onCreated(function(){
             // console.log('WETH2ETH storeman', data);
             if (data.length > 0) {
                 TemplateVar.set(template,'storeman',data[0].wanAddress);
+                TemplateVar.set(template,'txFeeRatio',data[0].txFeeRatio);
+
                 TemplateVar.set(template,'storemanGroup',data);
             }
         } else {
@@ -91,7 +93,7 @@ Template['views_wethToeth'].onCreated(function(){
     });
 
     // get wan2coin ratio
-    mist.ETH2WETH().getWan2CoinRatio('ETH', function (err,data) {
+    mist.ETH2WETH().getCoin2WanRatio('ETH', function (err,data) {
         if (!err) {
             data ? TemplateVar.set(template,'wan2CoinRatio',data) : TemplateVar.set(template,'wan2CoinRatio',20);
         }
@@ -155,11 +157,14 @@ Template['views_wethToeth'].events({
             amount = new BigNumber(event.target.value)
         }
 
-        let txFeeratio = 1;
+        let txFeeratio = TemplateVar.get('txFeeRatio');
         let wan2CoinRatio  = TemplateVar.get('wan2CoinRatio');
-        let amountWei = web3.toWei(amount);
+        let exp     = new BigNumber(10);
+        let v       = new BigNumber(amount);
+        let wei     = v.mul(exp.pow(18));
 
-        let coverCharge = amountWei * wan2CoinRatio * txFeeratio / 1000 / 1000;
+        const DEFAULT_PRECISE = 10000;
+        let coverCharge = wei.mul(wan2CoinRatio).mul(txFeeratio).div(DEFAULT_PRECISE).div(DEFAULT_PRECISE);
         // console.log('coverCharge: ', coverCharge);
 
         TemplateVar.set('coverCharge', web3.fromWei(coverCharge));
@@ -173,7 +178,12 @@ Template['views_wethToeth'].events({
 
     'change #toweth-storeman': function (event) {
         event.preventDefault();
-        TemplateVar.set('storeman', event.target.value);
+        let value = event.target.value;
+        let storeman = value.split('&&')[0];
+        let txFeeRatio = value.split('&&')[1];
+
+        TemplateVar.set('storeman', storeman);
+        TemplateVar.set('txFeeRatio', txFeeRatio);
     },
 
     'change .toweth-to': function (event) {

@@ -128,8 +128,8 @@ class crossChainOperators{
     getAddressList(chainType,callback){
         this.invokeOperator(new crossOperator('getAddressList',{},chainType,callback));
     }
-    getWan2CoinRatio(chainType,callback){
-        this.invokeOperator(new crossOperator('getWan2CoinRatio',{},chainType,callback));
+    getCoin2WanRatio(chainType,callback){
+        this.invokeOperator(new crossOperator('getCoin2WanRatio',{},chainType,callback));
     }
 
     getOriginChainType(){
