@@ -100,7 +100,7 @@ class crossChainOperators{
         this.invokeOperator(new crossOperator('syncStoremanGroups',[],this.getOriginChainType(),callback));
     }
     getBalance(address,callback){
-        this.invokeOperator(new crossOperator('getBalance',[address],this.getOriginChainType(),callback));
+        this.invokeOperator(new crossOperator('getBalance', address,this.getOriginChainType(),callback));
     }
     getMultiBalances(address,callback){
         this.invokeOperator(new crossOperator('getMultiBalances',[address],this.getOriginChainType(),callback));
