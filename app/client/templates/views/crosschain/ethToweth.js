@@ -245,7 +245,7 @@ Template['views_ethToweth'].events({
             });
         }
 
-        mist.ETH2WETH().getBalance([from.toLowerCase()], function (err,ethBalance) {
+        mist.ETH2WETH().getBalance(from.toLowerCase(), function (err,ethBalance) {
             if (err) {
                 Helpers.showError(err);
             } else {
