@@ -40,9 +40,9 @@ Template['views_ethToweth'].onCreated(function(){
 
             _.each(result, function (value, index) {
                 const balance =  web3.fromWei(value, 'ether');
-                const name = 'Account_' + index.slice(2, 6);
+                // const name = 'Account_' + index.slice(2, 6);
                 if (new BigNumber(balance).gt(0)) {
-                    result_list.push({name: name, address: index, balance: balance})
+                    result_list.push({name: index, address: index, balance: balance})
                 }
             });
 
@@ -74,6 +74,7 @@ Template['views_ethToweth'].onCreated(function(){
             // console.log(data.LockGas, data.RefundGas, data.RevokeGas, data.gasPrice);
             TemplateVar.set(template,'estimatedGas', data.LockGas);
             TemplateVar.set(template,'gasPrice', data.gasPrice);
+            TemplateVar.set(template,'defaultGasPrice', data.gasPrice);
 
             // console.log('fee', data.LockGas * web3.fromWei(data.gasPrice, 'ether'));
             let number = new BigNumber(data.LockGas * data.gasPrice);
@@ -170,13 +171,20 @@ Template['views_ethToweth'].events({
 
     'change input[name="fee"], input input[name="fee"]': function(e){
         let feeRate = Number(e.currentTarget.value);
+        let newFeeRate = new BigNumber(feeRate).div(10).add(1);
+        let newGasPrice = new BigNumber(TemplateVar.get('defaultGasPrice')).mul(newFeeRate);
 
         // return the fee
-        var number = (TemplateVar.get('estimatedGas') * TemplateVar.get('gasPrice')) * (1 + feeRate/10);
+        let number = TemplateVar.get('estimatedGas') * newGasPrice;
         var fee = EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether');
 
+
+        TemplateVar.set('gasPrice', newGasPrice);
         TemplateVar.set('feeMultiplicator', feeRate);
         TemplateVar.set('fee', fee);
+
+        let amount = TemplateVar.get('amount') ? TemplateVar.get('amount') : new BigNumber(0);
+        TemplateVar.set('total', amount.add(new BigNumber(fee)));
     },
 
     /**
@@ -192,6 +200,7 @@ Template['views_ethToweth'].events({
             total = TemplateVar.get('total');
 
         let gasPrice = TemplateVar.get('gasPrice').toString(),
+            chooseGasPrice = TemplateVar.get('gasPrice').toString(),
             estimatedGas = TemplateVar.get('estimatedGas').toString();
 
         if (!from && !storeman && !total) {
@@ -201,7 +210,7 @@ Template['views_ethToweth'].events({
 
         if(!from) {
             return GlobalNotification.warning({
-                content: 'no from account',
+                content: 'No eligible FROM account',
                 duration: 2
             });
         }
@@ -209,7 +218,7 @@ Template['views_ethToweth'].events({
         // console.log('storeman', storeman);
         if(!storeman) {
             return GlobalNotification.warning({
-                content: 'no storeman',
+                content: 'No eligible Storeman account',
                 duration: 2
             });
         }
@@ -225,14 +234,14 @@ Template['views_ethToweth'].events({
 
         if(! amount) {
             return GlobalNotification.warning({
-                content: 'the amount empty',
+                content: 'Please enter a valid amount',
                 duration: 2
             });
         }
 
         if(amount.eq(new BigNumber(0))) {
             return GlobalNotification.warning({
-                content: 'the amount empty',
+                content: 'Please enter a valid amount',
                 duration: 2
             });
         }
@@ -240,7 +249,7 @@ Template['views_ethToweth'].events({
         const amountSymbol = amount.toString().split('.')[1];
         if (amountSymbol && amountSymbol.length >=19) {
             return GlobalNotification.warning({
-                content: 'check amount you input',
+                content: 'Amount not valid',
                 duration: 2
             });
         }
@@ -280,6 +289,7 @@ Template['views_ethToweth'].events({
                                 to: to,
                                 amount: amount,
                                 gasPrice: gasPrice,
+                                chooseGasPrice: chooseGasPrice,
                                 estimatedGas: estimatedGas,
                                 fee: fee,
                                 data: getLockTransData.lockTransData,

@@ -52,6 +52,18 @@ Template['elements_account_table'].onCreated(function () {
 
             if(!oldAddressList || oldResultHex !== resultHex) {
                 // console.log('update eth account table: ',oldResultHex !== resultHex);
+                let changeResult = Helpers.objectCompare(oldAddressList, result);
+
+                for (let i in changeResult) {
+                    let balance =  web3.fromWei(changeResult[i], 'ether');
+                    let content = 'Balance of ' + i.toString() + ' has changed to ' + balance.toString();
+
+                    GlobalNotification.info({
+                        content: content,
+                        duration: 12
+                    });
+                }
+
                 TemplateVar.set(template,'ethAccounts',result);
             }
 
@@ -81,8 +93,8 @@ Template['elements_account_table'].helpers({
         if (ethAccounts) {
             _.each(ethAccounts, function (value, index) {
                 const balance =  web3.fromWei(value, 'ether');
-                const name = 'Account_' + index.slice(2, 6);
-                result.push({name: name, address: index, balance: balance})
+                // const name = 'Account_' + index.slice(2, 6);
+                result.push({address: index, balance: balance})
             });
         }
 

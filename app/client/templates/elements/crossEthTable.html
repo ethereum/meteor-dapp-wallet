@@ -2,7 +2,6 @@
     <table class="dapp-zebra transactions">
         <thead >
         <tr class="full-width">
-            <th colspan="5">Account</th>
             <th colspan="5">Address</th>
             <th colspan="5">Balance</th>
         </tr>
@@ -10,7 +9,6 @@
         <tbody class="transfer-list-tbody">
         {{#each ethAccounts}}
             <tr class="full-width">
-                <td colspan="5" style="cursor: auto;">{{name}}</td>
                 <td colspan="5" style="cursor: auto;" >
                     <span class="copy-eth-address{{address}}" name="{{address}}">{{address}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
                     <img style="vertical-align: middle;" class="copy-to-clipboard-button copy-address" name={{address}} />

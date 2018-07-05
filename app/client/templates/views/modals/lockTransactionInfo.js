@@ -20,7 +20,7 @@ Template['views_modals_unlockTransactionInfo'].events({
         if(!password_input) {
             EthElements.Modal.hide();
             return GlobalNotification.warning({
-                content: 'the password empty',
+                content: 'Empty password, please enter one',
                 duration: 2
             });
         }

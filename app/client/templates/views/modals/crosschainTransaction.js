@@ -11,11 +11,11 @@ Template['views_modals_sendcrosschainReleaseX'].onCreated(function(){
     TemplateVar.set(template, 'isButton', false);
 
     if (this.data.transType === 'releaseX') {
-        TemplateVar.set(template, 'transType', 'Realease X Transaction');
-        TemplateVar.set(template, 'passwdType', 'enter the crossAdress account\'s password');
+        TemplateVar.set(template, 'transType', 'Confirm Transaction');
+        TemplateVar.set(template, 'passwdType', "Enter TO account's password");
     } else {
-        TemplateVar.set(template, 'transType', 'Revoke Transaction');
-        TemplateVar.set(template, 'passwdType', 'enter the from account\'s password');
+        TemplateVar.set(template, 'transType', 'Cancel Transaction');
+        TemplateVar.set(template, 'passwdType', "Enter FROM account's password");
     }
 
 });
@@ -35,7 +35,7 @@ Template['views_modals_sendcrosschainReleaseX'].events({
             EthElements.Modal.hide();
 
             return GlobalNotification.warning({
-                content: 'the password empty',
+                content: 'Empty password, please enter one',
                 duration: 2
             });
         }

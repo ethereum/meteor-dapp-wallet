@@ -673,3 +673,15 @@ Helpers.showError = function(error) {
     }
 };
 
+Helpers.objectCompare = function (array1, array2) {
+    let result = {};
+
+    for (let i in array1) {
+        if (array1[i] !== array2[i]) {
+            result[i] = array2[i];
+        }
+    }
+
+    return result;
+};
+

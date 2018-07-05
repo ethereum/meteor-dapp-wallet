@@ -14,11 +14,11 @@
                         <div class="triangle"></div><strong class="views_send_strong">From</strong>
 
                         <div class="dapp-select-account send-from">
-                            <select class="send-from" id="ethNor-from" style="background-color: #f7f8fc;border: solid 0px #f7f8fc; padding-left: 10px;">
+                            <select id="ethNor-from" style="background-color: #f7f8fc;border: solid 0px #f7f8fc; padding-left: 10px;">
                                 {{#each selectAccount}}
                                     <option value="{{address}}">
                                         {{name}}
-                                        - {{balance}} eth
+                                        - ({{balance}} eth)
                                     </option>
                                 {{/each}}
                             </select>
@@ -39,7 +39,9 @@
                 <div class="row clear" style="padding: 0; margin-bottom: 0;">
                     <div class="col col-6 mobile-full contBox amount">
                         <div class="triangle"></div><strong class="views_send_strong">{{i18n 'wallet.send.amount'}}</strong>
-                        <input type="text" min="0" step="any" name="amount" placeholder="0.0" class="comAmountInp dapp-large" pattern="[0-9\.,]*" style="height: 40px; line-height: 40px; font-size: 14px;  margin-top: 5px; background-color: #f7f8fc;border: solid 0px;" >
+                        <input type="text" min="0" step="any" name="amount" placeholder="0.0" class="comAmountInp dapp-large" pattern="[0-9\.]*" style="height: 40px; line-height: 40px; font-size: 14px;  margin-top: 5px; background-color: #f7f8fc;border: solid 0px;" >
+
+                        <!--<label><input type="checkbox" class="send-all" style="color: #929cb8;font-weight: bold;vertical-align: middle;"><span style="color: #929cb8;font-weight: bold;vertical-align: middle;font-size: 14px;letter-spacing: 1px;">{{i18n 'wallet.send.sendAll'}}</span></label>-->
                     </div>
                 </div>
 

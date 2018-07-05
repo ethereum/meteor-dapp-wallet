@@ -281,7 +281,7 @@ Template['elements_cross_transactions_table'].events({
 
             if (show_data.lockButton) {
                 return GlobalNotification.warning({
-                    content: 'This transaction locked, please wait a moment to cancel',
+                    content: 'Transaction locked now, please retry cancellation later',
                     duration: 2
                 });
             }
@@ -492,7 +492,7 @@ Template['elements_cross_transactions_table'].events({
         // other status
         else {
             return GlobalNotification.warning({
-                content: 'Cant not operate',
+                content: 'Can not operate',
                 duration: 2
             });
         }
