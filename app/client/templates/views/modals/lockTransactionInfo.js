@@ -1,7 +1,7 @@
 Template['views_modals_unlockTransactionInfo'].onCreated(function(){
     var template = this;
     TemplateVar.set(template, 'isButton', false);
-    TemplateVar.set(template, 'passwdType', 'enter the from account\'s password');
+    TemplateVar.set(template, 'passwdType', 'Enter FROM account\'s password');
 });
 
 

@@ -57,7 +57,7 @@
                 <div class="row clear" style="padding: 0; margin-bottom: 0;">
                     <div class="col col-6 mobile-full contBox amount">
                         <div class="triangle"></div><strong class="views_send_strong">{{i18n 'wallet.send.amount'}}</strong>
-                        <input type="text" min="0" step="any" name="amount" placeholder="0.0" class="comAmountInp dapp-large input-amount" pattern="[0-9\.]*" >
+                        <input type="text" min="0" step="any" name="amount" placeholder="0.0" class="comAmountInp dapp-large input-amount" pattern="[0-9]*|[0-9]*[\.?][0-9]{1,18}" >
                         <span style="text-transform: capitalize;font-size: 1em;margin: 5px 0;">Transaction Fee: {{TemplateVar.get 'coverCharge'}} WAN</span>
                     </div>
                 </div>

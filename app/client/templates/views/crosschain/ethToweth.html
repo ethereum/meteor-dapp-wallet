@@ -55,7 +55,7 @@
             <div class="row clear" style="padding: 0; margin-bottom: 0;">
                 <div class="col col-6 mobile-full contBox amount">
                     <div class="triangle"></div><strong class="views_send_strong">{{i18n 'wallet.send.amount'}}</strong>
-                    <input type="text" min="0" step="any" name="amount" placeholder="0.0" class="dapp-large input-amount" pattern="[0-9\.]*" style="height: 40px; line-height: 40px; font-size: 14px;  margin-top: 5px; background-color: #f7f8fc;border: solid 0px;" >
+                    <input type="text" min="0" step="any" name="amount" placeholder="0.0" class="dapp-large input-amount" pattern="[0-9]*|[0-9]*[\.?][0-9]{1,18}" style="height: 40px; line-height: 40px; font-size: 14px;  margin-top: 5px; background-color: #f7f8fc;border: solid 0px;" >
                 </div>
             </div>
 

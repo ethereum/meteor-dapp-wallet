@@ -12,7 +12,7 @@ const stateDict = {
     'sentHashPending': 1, 'sentHashConfirming': 2, 'waitingCross': 3, 'waitingCrossConfirming': 4,
     'waitingX': 5,'sentXPending': 6, 'sentXConfirming': 7, 'refundFinished': 8,
     'waitingRevoke': 9,'sentRevokePending': 10, 'sentRevokeConfirming': 11, 'revokeFinished': 12,
-    'sentHashFailed': 13,
+    'sentHashFailed': 13, 'suspending': 14
 };
 
 function resultEach(template, result) {
@@ -26,14 +26,6 @@ function resultEach(template, result) {
 
             // HTLCtime
             let endTimestamp= value.HTLCtime;
-            // lock time
-            let lockTimestamp=(parseInt(value.HTLCtime) + parseInt(value.time)) / 2 - 600;
-
-            if (nowTimestamp >= lockTimestamp && nowTimestamp < endTimestamp) {
-                value.lockButton = true;
-            } else {
-                value.lockButton = false;
-            }
 
             if (endTimestamp > nowTimestamp) {
 
@@ -147,15 +139,15 @@ Template['elements_cross_transactions_table'].helpers({
 
                 // Release
                 if (stateDict[value.status] === 5) {
-                    if (value.lockButton) {
-                        value.operation = `<h2 style="${style}">Cancel</h2>`;
-                        value.state = 'To be cancelled in ' + value.htlcdate;
-                    } else {
-                        style += 'color: #920b1c;';
+                    style += 'color: #920b1c;';
 
-                        value.operation = `<h2 class="crosschain-list" id = ${index} style="${style}">Confirm</h2>`;
-                        value.state = 'To be confirmed';
-                    }
+                    value.operation = `<h2 class="crosschain-list" id = ${index} style="${style}">Confirm</h2>`;
+                    value.state = 'To be confirmed';
+                }
+                // suspending
+                else if (stateDict[value.status] === 14) {
+                    value.operation = `<h2 style="${style}">Cancel</h2>`;
+                    value.state = 'To be cancelled in ' + value.htlcdate;
                 }
                 // Revoke
                 else if (stateDict[value.status] === 9) {
@@ -276,16 +268,16 @@ Template['elements_cross_transactions_table'].events({
         let transType;
 
         console.log('show_data.status: ', show_data.status);
+
+        // suspending
+        if (stateDict[show_data.status] === 14) {
+            return GlobalNotification.warning({
+                content: 'Transaction locked now, please retry cancellation later',
+                duration: 2
+            });
+        }
         // release X
-        if (show_data.status === 'waitingX') {
-
-            if (show_data.lockButton) {
-                return GlobalNotification.warning({
-                    content: 'Transaction locked now, please retry cancellation later',
-                    duration: 2
-                });
-            }
-
+        else if (stateDict[show_data.status] === 5) {
             transType = 'releaseX';
 
             trans = {
@@ -384,15 +376,7 @@ Template['elements_cross_transactions_table'].events({
         }
 
         // revoke
-        else if (show_data.status === 'waitingRevoke') {
-
-            console.log('revoke lockButton', show_data.lockButton);
-            if (show_data.lockButton) {
-                return GlobalNotification.warning({
-                    content: 'This transaction locked, please wait a moment to revoke',
-                    duration: 2
-                });
-            }
+        else if (stateDict[show_data.status] === 9) {
 
             transType = 'revoke';
 

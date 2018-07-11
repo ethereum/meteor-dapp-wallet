@@ -60,7 +60,7 @@ Template['elements_account_table'].onCreated(function () {
 
                     GlobalNotification.info({
                         content: content,
-                        duration: 12
+                        duration: 10
                     });
                 }
 
