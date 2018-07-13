@@ -205,12 +205,12 @@ Template['views_ethsend'].events({
 
         if(new BigNumber(total).gt(new BigNumber(ethBalance, 10)))
             return GlobalNotification.warning({
-                content: 'i18n:wallet.send.error.notEnoughFunds',
+                content: 'Insufficient balance',
                 duration: 2
             });
 
 
-        var trans = {
+        let trans = {
             from: from, amount: amount.toString(10),
             to: to, gas: estimatedGas, gasPrice: gasPrice
         };

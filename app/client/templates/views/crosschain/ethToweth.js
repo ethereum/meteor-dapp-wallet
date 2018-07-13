@@ -265,7 +265,7 @@ Template['views_ethToweth'].events({
                 // console.log('ethValue: ', ethValue);
                 if(totalValue.gt(ethValue))
                     return GlobalNotification.warning({
-                        content: 'i18n:wallet.send.error.notEnoughFunds',
+                        content: 'Insufficient ETH balance in your FROM Account',
                         duration: 2
                     });
 

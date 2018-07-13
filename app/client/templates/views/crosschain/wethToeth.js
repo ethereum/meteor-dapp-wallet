@@ -292,7 +292,7 @@ Template['views_wethToeth'].events({
             if (!err) {
                 if(new BigNumber(EthTools.toWei(amount), 10).gt(new BigNumber(wethBalance, 10)))
                     return GlobalNotification.warning({
-                        content: 'i18n:wallet.send.error.notEnoughFunds',
+                        content: 'Insufficient WETH balance in your FROM account',
                         duration: 2
                     });
 
@@ -301,7 +301,7 @@ Template['views_wethToeth'].events({
                 // console.log('valueFee: ', new BigNumber(EthTools.toWei(fee), 10).add(new BigNumber(EthTools.toWei(valueFee), 10)));
                 if((new BigNumber(EthTools.toWei(fee), 10).add(new BigNumber(EthTools.toWei(valueFee), 10))).gt(new BigNumber(wanBalance, 10)))
                     return GlobalNotification.warning({
-                        content: 'i18n:wallet.send.error.notEnoughFunds',
+                        content: 'Insufficient WAN balance in your FROM account',
                         duration: 2
                     });
 

@@ -318,7 +318,7 @@ Template['elements_cross_transactions_table'].events({
 
                                         if(fee.gt(new BigNumber(coinBalance, 10)))
                                             return GlobalNotification.warning({
-                                                content: 'i18n:wallet.send.error.notEnoughFunds',
+                                                content: 'Insufficient WAN balance in your TO account',
                                                 duration: 2
                                             });
 
@@ -360,7 +360,7 @@ Template['elements_cross_transactions_table'].events({
 
                                         if(fee.gt(new BigNumber(coinBalance, 10)))
                                             return GlobalNotification.warning({
-                                                content: 'i18n:wallet.send.error.notEnoughFunds',
+                                                content: 'Insufficient ETH balance in your TO account',
                                                 duration: 2
                                             });
 
@@ -414,7 +414,7 @@ Template['elements_cross_transactions_table'].events({
 
                                         if(fee.gt(new BigNumber(coinBalance, 10)))
                                             return GlobalNotification.warning({
-                                                content: 'i18n:wallet.send.error.notEnoughFunds',
+                                                content: 'Insufficient ETH balance in your FROM Account',
                                                 duration: 2
                                             });
 
@@ -459,7 +459,7 @@ Template['elements_cross_transactions_table'].events({
 
                                         if(fee.gt(new BigNumber(coinBalance, 10)))
                                             return GlobalNotification.warning({
-                                                content: 'i18n:wallet.send.error.notEnoughFunds',
+                                                content: 'Insufficient WAN balance in your FROM account',
                                                 duration: 2
                                             });
 
