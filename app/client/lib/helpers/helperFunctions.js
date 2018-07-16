@@ -633,9 +633,11 @@ Helpers.timeStamp2String = function (time){
 
 Helpers.formatDuring = function (mss) {
     let days = parseInt(mss / (1000 * 60 * 60 * 24));
+    let dayToHour = days *24;
     if (days <10) days = '0' + days.toString();
 
     let hours = parseInt((mss % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    hours = dayToHour + hours;
     if (hours <10) hours = '0' + hours.toString();
 
     let minutes = parseInt((mss % (1000 * 60 * 60)) / (1000 * 60));
