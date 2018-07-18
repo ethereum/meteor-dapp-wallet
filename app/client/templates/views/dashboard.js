@@ -99,24 +99,22 @@ Template['views_dashboard'].events({
   'click .create.account': function(e) {
     e.preventDefault();
 
-    mist.requestAccount(function(e, accounts) {
-      if (!e) {
-        if (!_.isArray(accounts)) {
-          accounts = [accounts];
-        }
-        accounts.forEach(function(account) {
-          account = account.toLowerCase();
-          EthAccounts.upsert(
-            { address: account },
-            {
-              $set: {
-                address: account,
-                new: true
-              }
+    mist
+      .createAccount()
+      .then(account => {
+        account = account.toLowerCase();
+        EthAccounts.upsert(
+          { address: account },
+          {
+            $set: {
+              address: account,
+              new: true
             }
-          );
-        });
-      }
-    });
+          }
+        );
+      })
+      .catch(error => {
+        console.log(`Error creating account: ${error}`);
+      });
   }
 });
