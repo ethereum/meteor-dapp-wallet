@@ -32,8 +32,8 @@ function resultEach(template, result) {
                 if (stateDict[value.status] === 8 || stateDict[value.status] === 12 || stateDict[value.status] === 13) {
                     value.htlcdate = `<span>${Helpers.timeStamp2String(endTimestamp)}</span>`;
                 } else {
-                    console.log('endTimestamp,', endTimestamp);
-                    console.log('nowTimestamp,', nowTimestamp);
+                    // console.log('endTimestamp,', endTimestamp);
+                    // console.log('nowTimestamp,', nowTimestamp);
                     value.htlcdate = `<span style="color: #1ec89a">${Helpers.formatDuring(endTimestamp - nowTimestamp)}</span>`;
                 }
             } else {

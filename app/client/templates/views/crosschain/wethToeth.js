@@ -119,13 +119,13 @@ Template['views_wethToeth'].helpers({
         let result = [];
         _.each(TemplateVar.get('storemanGroup'), function (value, index) {
             if (value.wanAddress === TemplateVar.get('storeman')) {
-                let inboundQuota = web3.fromWei(value.inboundQuota, 'ether');
+
+                let outboundQuota = web3.fromWei(value.outboundQuota, 'ether');
                 let quota = web3.fromWei(value.quota, 'ether');
                 let deposit = web3.fromWei(value.deposit, 'ether');
-                let done = quota - inboundQuota;
-                let used = ((done/ quota) * 100).toString() + '%';
+                let used = ((outboundQuota/ quota) * 100).toString() + '%';
 
-                result.push({deposit: deposit, inboundQuota: inboundQuota, quota: quota, done: done, used: used})
+                result.push({deposit: deposit, outboundQuota: outboundQuota, used: used})
             }
         });
 
