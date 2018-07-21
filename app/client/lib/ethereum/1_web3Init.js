@@ -1,8 +1,8 @@
 if (window.ethereum) {
   start(window.ethereum);
 } else {
-  // Set default provider
-  web3.setProvider('ws://localhost:8546');
+  // Init web3 with default local provider
+  web3 = new Web3('ws://localhost:8546');
 
   // Request Ethereum Provider (EIP 1102)
   window.addEventListener('message', event => {
@@ -16,8 +16,8 @@ if (window.ethereum) {
 }
 
 const start = ethereum => {
-  // Set provider
-  web3.setProvider(ethereum);
+  // Init web3 with provider
+  web3 = new Web3(ethereum);
 
   // Restart app on certain events
   ethereum.on('connect', startApp);
