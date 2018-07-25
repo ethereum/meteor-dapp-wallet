@@ -34,11 +34,11 @@ Meteor.Spinner.options = {
   left: '50%' // Left position relative to parent
 };
 
-var checkSync = function() {
-  // Stop app operation, when the node is syncing
+var checkSync = () => {
+  // Stop app operation if node is syncing
   web3.eth
     .isSyncing()
-    .then(function(syncing) {
+    .then(syncing => {
       if (syncing === true) {
         console.time('nodeRestarted');
         console.log('Node started syncing, stopping app operation');
@@ -53,8 +53,8 @@ var checkSync = function() {
         collectionObservers = [];
       } else if (_.isObject(syncing)) {
         syncing.progress = Math.floor(
-          (syncing.currentBlock - syncing.startingBlock) /
-            (syncing.highestBlock - syncing.startingBlock) *
+          ((syncing.currentBlock - syncing.startingBlock) /
+            (syncing.highestBlock - syncing.startingBlock)) *
             100
         );
         syncing.blockDiff = numeral(
@@ -72,9 +72,14 @@ var checkSync = function() {
         connectToNode();
       }
     })
-    .catch(function(error) {
+    .catch(error => {
       console.log('Error: ', error);
-      if (error.toString().toLowerCase().includes('connection not open')) {
+      if (
+        error
+          .toString()
+          .toLowerCase()
+          .includes('connection not open')
+      ) {
         showModal();
       } else {
         // retry
@@ -83,13 +88,13 @@ var checkSync = function() {
     });
 };
 
-var showModal = function() {
+var showModal = () => {
   // make sure the modal is rendered after all routes are executed
-  Meteor.setTimeout(function() {
+  Meteor.setTimeout(() => {
     // if in mist, tell to start geth, otherwise start with RPC
-    var gethRPC = window.mist
+    const node = window.mist
       ? 'geth'
-      : 'geth --rpc --ws --wsorigins "' +
+      : 'geth --ws --wsorigins "' +
         window.location.protocol +
         '//' +
         window.location.host +
@@ -101,11 +106,11 @@ var showModal = function() {
           TAPi18n.__(
             'wallet.app.texts.connectionError' +
               (window.mist ? 'Mist' : 'Browser'),
-            { node: gethRPC }
+            { node }
           )
         ),
         ok: function() {
-          Tracker.afterFlush(function() {
+          Tracker.afterFlush(() => {
             connect();
           });
         }
@@ -117,45 +122,63 @@ var showModal = function() {
   }, 600);
 };
 
-var connect = function() {
+var connect = () => {
   web3.eth.net
     .isListening()
-    .then(function(isListening) {
-      if (isListening) {
-        // only start app operation, when the node is not syncing (or the eth_syncing property doesn't exists)
-        web3.eth
-          .isSyncing()
-          .then(function(syncing) {
-            if (!syncing) {
-              connectToNode();
-            } else {
-              EthAccounts.init();
-            }
-          })
-          .catch(function(error) {
-            console.log('Error: ', error);
-            connect(); // retry
-          });
-      } else {
+    .then(isListening => {
+      if (!isListening) {
         showModal();
+        return;
       }
+
+      // Only start app operation when the node is not syncing
+      // (or the eth_syncing property doesn't exists)
+      web3.eth
+        .isSyncing()
+        .then(syncing => {
+          if (!syncing) {
+            connectToNode();
+          } else {
+            EthAccounts.init();
+          }
+        })
+        .catch(function(error) {
+          console.error(`Error from web3.eth.isSyncing(): ${error}`);
+          connect(); // retry
+        });
     })
-    .catch(function(error) {
-      console.log('Error: ', error);
-      if (error.toString().toLowerCase().includes('connection not open')) {
+    .catch(error => {
+      console.error(`Error from web3.eth.net.isListening(): ${error}`);
+      if (
+        error
+          .toString()
+          .toLowerCase()
+          .includes('connection not open')
+      ) {
         showModal();
       } else {
-        // retry
+        // Retry
         connect();
       }
     });
+
+  // Restart wallet on relevant EthereumProvider events
+  if (window.ethereum.constructor.name === 'EthereumProvider') {
+    window.ethereum.on('connect', connect);
+    window.ethereum.on('networkChanged', connect);
+    window.ethereum.on('accountsChanged', connect);
+  }
 };
 
-Meteor.startup(function() {
+Meteor.startup(() => {
   // delay so we make sure the data is already loaded from the indexedDB
   // TODO improve persistent-minimongo2 ?
-  Meteor.setTimeout(function() {
-    connect();
-    checkSync();
+  Meteor.setTimeout(() => {
+    if (typeof web3 !== 'undefined') {
+      connect();
+      checkSync();
+    } else {
+      showModal();
+    }
   }, 3000);
 });
