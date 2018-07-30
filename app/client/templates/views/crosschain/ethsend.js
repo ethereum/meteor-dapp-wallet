@@ -47,13 +47,11 @@ Template['views_ethsend'].onCreated(function(){
 
     mist.ETH2WETH().getGasPrice('ETH', function (err,data) {
         if (!err) {
-            // console.log(data.LockGas, data.RefundGas, data.RevokeGas, data.gasPrice);
-            TemplateVar.set(template,'estimatedGas', data.LockGas);
+            TemplateVar.set(template,'estimatedGas', data.ethNormalGas);
             TemplateVar.set(template,'gasPrice', data.gasPrice);
             TemplateVar.set(template,'defaultGasPrice', data.gasPrice);
 
-            // console.log('fee', data.LockGas * web3.fromWei(data.gasPrice, 'ether'));
-            let number = new BigNumber(data.LockGas * data.gasPrice);
+            let number = new BigNumber(data.ethNormalGas * data.gasPrice);
 
             TemplateVar.set(template, 'fee', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
             TemplateVar.set(template, 'total', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
