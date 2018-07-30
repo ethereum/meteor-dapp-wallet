@@ -1,0 +1,26 @@
+image: Visual Studio 2017
+platform: x64
+
+environment:
+  nodejs_version: "8"
+
+init:
+  # enabling remote desktop debug
+  - ps: $blockRdp = true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
+install:
+  - ps: Install-Product node $env:nodejs_version
+  - node --version
+
+  # installs global dependencies
+  - choco install meteor
+  - refreshenv
+  - ps: refreshenv
+
+  # installs dependencies
+  - cd app && npm install
+  - npm install -g meteor-build-client
+
+build_script:
+  - npm run build
+
