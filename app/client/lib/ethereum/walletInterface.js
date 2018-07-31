@@ -457,9 +457,9 @@ checkWalletOwners = function(address) {
       WalletContract.options.address = address;
       var myContract = WalletContract;
 
-      myContract.m_numOwners(function(e, numberOfOwners) {
+      myContract.methods.m_numOwners().call(function(e, numberOfOwners) {
         if (!e) {
-          numberOfOwners = numberOfOwners.toNumber();
+          numberOfOwners = Number(numberOfOwners);
 
           if (numberOfOwners > 0) {
             var owners = [];
@@ -485,10 +485,9 @@ checkWalletOwners = function(address) {
                         ownerAddress !==
                           '0x0000000000000000000000000000000000000000'
                       ) {
-                        myContract.isOwner.call(
-                          ownerAddress,
-                          { from: ownerAddress },
-                          function(e, isOwner) {
+                        myContract.methods
+                          .isOwner(ownerAddress)
+                          .call({ from: ownerAddress }, function(e, isOwner) {
                             if (!e && isOwner) {
                               owners.push(ownerAddress);
                               owners = _.uniq(owners);
@@ -496,8 +495,7 @@ checkWalletOwners = function(address) {
                             }
 
                             resolve();
-                          }
-                        );
+                          });
                       } else {
                         resolve();
                       }
