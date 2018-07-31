@@ -239,7 +239,7 @@ Template['views_account_create'].helpers({
 Template['views_account_create'].events({
   /**
     Check the owner of the imported wallet.
-    
+
     @event change input.import, input input.import
     */
   'change input.import, input input.import': function(e, template) {
@@ -254,7 +254,7 @@ Template['views_account_create'].events({
   },
   /**
     Check the owner that its not a contract wallet
-    
+
     @event change input.owners, input input.owners
     */
   'change input.owners, input input.owners': function(e, template) {
@@ -361,7 +361,9 @@ Template['views_account_create'].events({
         )
       );
 
-      if (owners.length === 0) return;
+      if (owners.length === 0) {
+        return;
+      }
 
       var address = template.find('input.import').value;
       address = '0x' + address.replace('0x', '').toLowerCase();
