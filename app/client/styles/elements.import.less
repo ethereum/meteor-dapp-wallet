@@ -1,5 +1,5 @@
 body{
-    font-family: "MicrosoftYaHei"!important;
+    font-family: "MicrosoftYaHei-Bold, arial";
 }
 .chooseBtn {
     display: none !important;
@@ -426,10 +426,16 @@ input[type="checkbox"]::before, input[type="radio"]::before{
         background-image: url(/images/detail1.png);
     }
 }
+.crosschainBtn:hover .crosschainShow{ 
+    display:block;
+}
 
+.crosschainBtn:hover em{
+    background-image: url(/images/crsIco2.png);
+    
+}
 .header-account {
     border: solid 1px #e0e5f0;
-
     border-radius: 30px !important;
     padding: 2.5px 15px !important;
     margin-bottom: 7px !important;
@@ -440,8 +446,60 @@ input[type="checkbox"]::before, input[type="radio"]::before{
     span{
         color: #c6cbd7;
         font-size: 14px;
-        margin: -1px -4px;
-    };
+        margin: -1px -7px;
+        em{
+            width: 6px;
+            height: 5px;
+            display:inline-block;
+            margin-top: -2px;
+            margin-left: 7px;
+            vertical-align: middle;
+            background-image: url(/images/crsIco.png);
+            background-size: cover;
+            
+        }
+    }
+    .crosschainShow{
+        display: none;
+        width: 137px; 
+        position: absolute;
+        top: 30px;
+        right: 0;
+        ul{
+            width: 137px; 
+            margin-top:10px;
+            background-color: #ffffff;
+            box-shadow: 0px 4px 10px 0px
+            rgba(15, 104, 170, 0.2);
+            border-radius: 8px;z-index: 9;
+            padding-left: 0!important;
+            li{
+                line-height: 50px;
+                text-align: center;
+                list-style: none;
+                color: #3f454c;
+                font-size: 12px;
+                cursor: pointer;
+                span{
+                    width: 4px;
+                    height: 4px;
+                    background-color: #1a91fc;
+                    display: inline-block;
+                    border-radius: 20px;
+                    vertical-align: middle;
+                    margin-right: 10px;
+                    border-bottom: solid 1px #f0f2f6;
+                }
+            }
+            li:last-child{
+                border-bottom: none;
+            }
+            li:hover{
+                color: #1a91fc!important;
+                background-color: #f7f8fc;
+            }
+        }
+    }
 }
 
 .header-account:hover{

@@ -147,7 +147,7 @@ Template['layout_header'].events({
             }
         }
     },
-    'click .Crosschain': function (e) {
+    'click .Cross': function (e) {
         Session.set('clickButton', 1);
     }
 });

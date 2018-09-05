@@ -53,13 +53,21 @@
                 {{/if}}
             </li>
 
-            <li class="header-account" style="position: relative;top: 5px;margin-right: 10px;width: 105px!important;line-height: 23px;">
-                <a href="{{pathFor route='crosschain'}}" style="margin: 0;padding: 0;">
-                    <span style="margin-left: -7px;" class="Crosschain">Crosschain</span>
-                </a>
+            <li class="header-account crosschainBtn" style="position: relative;top: 5px;margin-right: 10px;width: 133px!important;line-height: 23px;">
+                <span style="margin-left: -7px; font-weight: 400;" class="Crosschain">CROSSCHAIN<em></em></span>
+                <div class="crosschainShow">
+                    <ul>
+                        <a href="{{pathFor route='/crosschain/btc'}}" style="margin: 0;padding: 0;">
+                            <li class="Cross" id="btc"><span></span>BTC</li>
+                        </a>
+                        <a href="{{pathFor route='/crosschain/eth'}}" style="margin: 0;padding: 0;">
+                            <li class="Cross" id="eth"><span></span>ETH</li>
+                        </a>
+                    </ul>
+                </div>
             </li>
 
-            <li class="header-account" style="position: relative;top: 5px;margin-right: 10px;width: 100px!important;line-height: 23px;">
+            <li class="header-account" style="position: relative;top: 5px;margin-right: 10px;width: 107px!important;line-height: 23px;">
                 <a href="{{pathFor route='contracts'}}" style="margin: 0;padding: 0;">
                     <span style="margin-left: -7px;">{{i18n 'wallet.app.buttons.contracts'}}</span>
                 </a>

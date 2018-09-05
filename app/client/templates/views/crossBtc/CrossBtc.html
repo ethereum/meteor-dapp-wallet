@@ -1,0 +1,34 @@
+<template name="views_crosschain_btc">
+
+    <div class="tempTable index" style="background:#fff;">
+        <!--ETH Accounts Overview list-->
+        <div class="viwes-account-header">
+            <h1 class="account-h1" style="margin-top: 0; padding-left:0;"><div class="viwes-account-line"></div><strong>BTC Accounts Overview</strong></h1>
+            {{#if addressList}}
+                {{> elements_account_table addressList=addressList}}
+            {{else}}
+                <div class="wanchain-notransaction" style="">
+                    <img />
+                    <p>NO BTC ACCOUNT</p>
+                </div>
+            {{/if}}
+        </div>
+
+        <!--transaction list-->
+        <div class="viwes-account-header">
+            <h1 class="account-h1" style="margin-top: 0; padding-left: 0;"><div class="viwes-account-line"></div><strong>History for BTC and Crosschain Transaction</strong></h1>
+            {{#if addressList }}
+                {{#if wanAddressList}}
+                    {{> elements_cross_transactions_table addressList=addressList wanAddressList=wanAddressList}}
+                {{/if}}
+            {{else}}
+                <div class="wanchain-notransaction" style="">
+                    <img />
+                    <p>NO TRANSACTION RECORD</p>
+                </div>
+            {{/if}}
+        </div>
+    </div>
+
+</template>
+

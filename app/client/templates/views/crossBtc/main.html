@@ -1,8 +1,8 @@
-<template name="views_crosschain_main">
+<template name="views_crosschain_btc_main">
 
     <h1 class="account-h1">
         <div class="circle"></div>
-        <strong>Crosschain >> ETH</strong>
+        <strong>Crosschain >> BTC</strong>
 
         <div class="dapp-header-map">
             <div class="home-link">
@@ -36,7 +36,7 @@
                     color: #737B93;
                     {{/if}}
                         ">
-                    <span>ETH >> WETH</span>
+                    <span>BTC >> WBTC</span>
                 </a>
                 <div class="bottomBor" style="
                     {{#if $eq ($.Session.get "clickButton") 2}}
@@ -51,7 +51,7 @@
                     color: #737B93;
                     {{/if}}
                         ">
-                    <span>WETH >> ETH</span>
+                    <span>WBTC >> BTC</span>
                 </a>
                 <div class="bottomBor" style="
                     {{#if $eq ($.Session.get "clickButton") 3}}
@@ -81,19 +81,19 @@
     </nav>
 
     {{#if $eq ($.Session.get "clickButton") 1}}
-        {{> views_crosschain}}
+        {{> views_crosschain_btc}}
     {{/if}}
 
     {{#if $eq ($.Session.get "clickButton") 2}}
-        {{> views_ethToweth}}
+        {{> views_btcTowbtc}}
     {{/if}}
 
     {{#if $eq ($.Session.get "clickButton") 3}}
-        {{> views_wethToeth}}
+        {{> views_wbtcTobtc}}
     {{/if}}
 
     {{#if $eq ($.Session.get "clickButton") 4}}
-        {{> views_ethsend}}
+        {{> views_btcsend}}
     {{/if}}
 
 </template>
