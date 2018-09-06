@@ -1,0 +1,46 @@
+<template name="elements_account_table_btc">
+    {{#if btcAccounts}}
+        <div>
+            <div class="col-4" style="display: inline-block;">
+                <!--<strong style="display: block;">1.3 BTC</strong>-->
+                <!--<span class="balance-span">Bitcon Wallet Balance</span>-->
+
+                <table class="dapp-zebra transactions">
+                    <thead >
+                    <tr class="full-width">
+                        <th colspan="5">Bitcon Wallet Balance: {{TemplateVar.get "btcBalance"}} BTC</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+
+            <div class="col-6" style="display: inline-block; float: right">
+                <table class="dapp-zebra transactions">
+                    <thead >
+                    <tr class="full-width">
+                        <th colspan="5">Address</th>
+                    </tr>
+                    </thead>
+                    <tbody class="transfer-list-tbody">
+                    {{#each btcAccounts}}
+                        <tr class="full-width">
+                            <td colspan="5" style="cursor: auto;" >
+                                <span class="copy-eth-address{{address}}" name="{{address}}">{{address}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <img style="vertical-align: middle;" class="copy-to-clipboard-button copy-address" name={{address}} />
+                                <img style="vertical-align: middle;" class="qrcode-button qrcode-address" name={{address}} />
+                            </td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    {{else}}
+        <div class="wanchain-notransaction" style="">
+            <img />
+            <p>NO BTC ACCOUNT</p>
+        </div>
+    {{/if}}
+</template>
+

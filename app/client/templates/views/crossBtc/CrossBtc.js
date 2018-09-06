@@ -6,22 +6,6 @@
 let InterID;
 
  const getAddressList = function(template) {
-    mist.BTC2WBTC().getBtcMultiBalances('BTC', function (err, addressList) {
-        console.log('err:' ,err);
-        console.log('addressList:' ,addressList);
-            if (! err) {
-                let oldAddressList = TemplateVar.get(template, 'addressList');
-
-                if(!oldAddressList || oldAddressList.length !== addressList.length) {
-                    // console.log('update addressList');
-
-                    TemplateVar.set(template,'addressList',addressList);
-                    Session.set('addressList', addressList);
-                }
-            } else {
-                Helpers.showError(err);
-            }
-        });
 
     mist.ETH2WETH().getAddressList('WAN', function (err, wanAddressList) {
         EthElements.Modal.hide();
@@ -67,9 +51,6 @@ Template['views_crosschain_btc'].helpers({
      Get all transactions
      @method (allTransactions)
      */
-    'addressList': function(){
-        return TemplateVar.get('addressList');
-    },
 
     'wanAddressList': function(){
         return TemplateVar.get('wanAddressList');

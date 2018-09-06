@@ -19,35 +19,15 @@ Template['views_crosschain_btc_main'].events({
     },
 
     'click .toWeth': function (e) {
-
-        var addressList = Session.get('addressList');
-        if (addressList.length) {
-            Session.set('clickButton', 2);
-        } else {
-            Session.set('clickButton', 1);
-        }
+        Session.set('clickButton', 2);
     },
 
     'click .toWan': function (e) {
-
-        var addressList = Session.get('addressList');
-        // console.log('ethList', ethList);
-        if (addressList.length) {
-            Session.set('clickButton', 3);
-        } else {
-            Session.set('clickButton', 1);
-        }
+        Session.set('clickButton', 3);
     },
 
     'click .toNormal': function (e) {
-
-        var addressList = Session.get('addressList');
-        // console.log('ethList', ethList);
-        if (addressList.length) {
-            Session.set('clickButton', 4);
-        } else {
-            Session.set('clickButton', 1);
-        }
+        Session.set('clickButton', 4);
     }
 });
 

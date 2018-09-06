@@ -29,8 +29,31 @@ class crossBtcOperators{
         window.postMessage({type: messageType+this.crossType,message:crossOperator.message}, (!location.origin || location.origin === "null" ) ? '*' : location.origin);
     };
 
+    invokeCallback(data){
+        // console.log('invokeCallback : ',data);
+        if(this.OperatorDict[data.index]){
+            if(this.OperatorDict[data.index].callback){
+                this.OperatorDict[data.index].callback(data.error,data.value);
+            }
+            return true;
+        }
+        return false;
+    }
+
     getBtcMultiBalances(chainType,callback){
         this.invokeOperator(new crossOperator('getBtcMultiBalances',{},chainType,callback));
+    };
+
+    sendBtcToAddress(chainType,parameters,callback){
+        this.invokeOperator(new crossOperator('sendBtcToAddress',parameters,chainType,callback));
+    };
+
+    getAddressList(chainType,callback){
+        this.invokeOperator(new crossOperator('listBtcAddress',{},chainType,callback));
+    };
+
+    getBtcBalance(chainType,callback){
+        this.invokeOperator(new crossOperator('getBtcBalance',{},chainType,callback));
     };
 
     getOriginChainType(){
