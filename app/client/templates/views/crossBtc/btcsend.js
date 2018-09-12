@@ -56,18 +56,16 @@ Template['views_btcsend'].events({
 
         event.preventDefault();
 
-        var amount = new BigNumber(0);
+        let amount = new BigNumber(0);
 
-        var regPos = /^\d+(\.\d+)?$/; //非负浮点数
-        var regNeg = /^(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))$/; //负浮点数
+        let regPos = /^\d+(\.\d+)?$/; //非负浮点数
+        let regNeg = /^(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))$/; //负浮点数
 
         if (event.target.value && (regPos.test(event.target.value) || regNeg.test(event.target.value)) ) {
             amount = new BigNumber(event.target.value)
         }
 
         TemplateVar.set('amount', amount);
-        TemplateVar.set('total', amount.add(new BigNumber(TemplateVar.get('fee'))));
-
     },
 
     'change .to': function (event) {

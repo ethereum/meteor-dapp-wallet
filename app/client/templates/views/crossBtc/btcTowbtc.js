@@ -15,8 +15,6 @@ Template['views_btcTowbtc'].onCreated(function(){
     var template = this;
 
     TemplateVar.set(template, 'amount', 0);
-    TemplateVar.set(template, 'feeMultiplicator', 0);
-    TemplateVar.set(template, 'options', false);
 
     EthElements.Modal.show('views_modals_loading', {closeable: false, class: 'crosschain-loading'});
 
@@ -32,35 +30,14 @@ Template['views_btcTowbtc'].onCreated(function(){
         TemplateVar.set(template, 'wanAddressList', wanaddress);
     }
 
-    // eth accounts token balance
-    let addressList = Session.get('addressList');
-    mist.ETH2WETH().getMultiBalances(addressList, (err, result) => {
-        if (!err) {
-            let result_list = [];
-
-            _.each(result, function (value, index) {
-                const balance =  web3.fromWei(value, 'ether');
-                // const name = 'Account_' + index.slice(2, 6);
-                if (new BigNumber(balance).gt(0)) {
-                    result_list.push({name: index, address: index, balance: balance})
-                }
-            });
-
-            if (result_list.length >0) {
-                TemplateVar.set(template,'ethList',result_list);
-                TemplateVar.set(template,'from',result_list[0].address);
-            }
-        }
-    });
-
-    // eth => weth storeman
-    mist.ETH2WETH().getStoremanGroups(function (err,data) {
+    // btc => wbtc storeman
+    mist.BTC2WBTC().getStoremanGroups('BTC', function (err,data) {
         EthElements.Modal.hide();
 
         if (!err) {
             if (data.length > 0) {
-                // console.log('ETH2WETH storeman', data);
                 TemplateVar.set(template, 'storeman', data[0].ethAddress);
+                TemplateVar.set(template, 'storemanWan', data[0].wanAddress);
                 TemplateVar.set(template, 'storemanGroup', data);
             }
         } else {
@@ -68,29 +45,10 @@ Template['views_btcTowbtc'].onCreated(function(){
         }
     });
 
-    // eth chain  gas price
-    mist.ETH2WETH().getGasPrice('ETH', function (err,data) {
-        if (!err) {
-            // console.log(data.LockGas, data.RefundGas, data.RevokeGas, data.gasPrice);
-            TemplateVar.set(template,'estimatedGas', data.LockGas);
-            TemplateVar.set(template,'gasPrice', data.gasPrice);
-            TemplateVar.set(template,'defaultGasPrice', data.gasPrice);
-
-            // console.log('fee', data.LockGas * web3.fromWei(data.gasPrice, 'ether'));
-            let number = new BigNumber(data.LockGas * data.gasPrice);
-
-            TemplateVar.set(template, 'fee', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
-            TemplateVar.set(template, 'total', EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether'));
-        }
-    });
-
 });
 
 
 Template['views_btcTowbtc'].helpers({
-    'ethAccounts': function(){
-        return TemplateVar.get('ethList');
-    },
 
     'wanAddressList': function(){
         return TemplateVar.get('wanAddressList');
@@ -100,6 +58,7 @@ Template['views_btcTowbtc'].helpers({
 
         let result = [];
 
+        // ===== 单位换算问题 =======
         if (TemplateVar.get('storemanGroup')) {
             _.each(TemplateVar.get('storemanGroup'), function (value, index) {
                 if (value.ethAddress === TemplateVar.get('storeman')) {
@@ -114,19 +73,7 @@ Template['views_btcTowbtc'].helpers({
             });
         }
 
-        // console.log('result: ', result);
         return result;
-    },
-
-    'i18nText': function(key){
-        if(typeof TAPi18n !== 'undefined'
-            && TAPi18n.__('elements.selectGasPrice.'+ key) !== 'elements.selectGasPrice.'+ key) {
-            return TAPi18n.__('elements.selectGasPrice.'+ key);
-        } else if (typeof this[key] !== 'undefined') {
-            return this[key];
-        } else {
-            return (key === 'high') ? '+' : '-';
-        }
     },
 
 });
@@ -147,12 +94,6 @@ Template['views_btcTowbtc'].events({
         }
 
         TemplateVar.set('amount', amount);
-        TemplateVar.set('total', amount.add(new BigNumber(TemplateVar.get('fee'))));
-    },
-
-    'change #toweth-from': function (event) {
-        event.preventDefault();
-        TemplateVar.set('from', event.target.value);
     },
 
     'change #toweth-storeman': function (event) {
@@ -165,57 +106,16 @@ Template['views_btcTowbtc'].events({
         TemplateVar.set('to', event.target.value);
     },
 
-    'click .options': function () {
-        TemplateVar.set('options', !TemplateVar.get('options'));
-    },
-
-    'change input[name="fee"], input input[name="fee"]': function(e){
-        let feeRate = Number(e.currentTarget.value);
-        let newFeeRate = new BigNumber(feeRate).div(10).add(1);
-        let newGasPrice = new BigNumber(TemplateVar.get('defaultGasPrice')).mul(newFeeRate);
-
-        // return the fee
-        let number = TemplateVar.get('estimatedGas') * newGasPrice;
-        var fee = EthTools.formatBalance(number, '0,0.00[0000000000000000]', 'ether');
-
-
-        TemplateVar.set('gasPrice', newGasPrice);
-        TemplateVar.set('feeMultiplicator', feeRate);
-        TemplateVar.set('fee', fee);
-
-        let amount = TemplateVar.get('amount') ? TemplateVar.get('amount') : new BigNumber(0);
-        TemplateVar.set('total', amount.add(new BigNumber(fee)));
-    },
-
     /**
      Submit the form and send the transaction!
      @event submit form
      */
     'submit form': function(e, template){
-        let from = TemplateVar.get('from'),
-            storeman = TemplateVar.get('storeman'),
+        let storeman = TemplateVar.get('storeman'),
+            storemanWan = TemplateVar.get('storemanWan'),
             to = TemplateVar.get('to'),
-            fee = TemplateVar.get('fee'),
-            amount = TemplateVar.get('amount'),
-            total = TemplateVar.get('total');
+            amount = TemplateVar.get('amount');
 
-        let gasPrice = TemplateVar.get('gasPrice').toString(),
-            chooseGasPrice = TemplateVar.get('gasPrice').toString(),
-            estimatedGas = TemplateVar.get('estimatedGas').toString();
-
-        if (!from && !storeman && !total) {
-            EthElements.Modal.hide();
-            Session.set('clickButton', 1);
-        }
-
-        if(!from) {
-            return GlobalNotification.warning({
-                content: 'No eligible FROM account',
-                duration: 2
-            });
-        }
-
-        // console.log('storeman', storeman);
         if(!storeman) {
             return GlobalNotification.warning({
                 content: 'No eligible Storeman account',
@@ -223,8 +123,6 @@ Template['views_btcTowbtc'].events({
             });
         }
 
-        // wan address
-        // console.log('to', to);
         if(!to) {
             return GlobalNotification.warning({
                 content: 'i18n:wallet.send.error.noReceiver',
@@ -246,68 +144,56 @@ Template['views_btcTowbtc'].events({
             });
         }
 
-        const amountSymbol = amount.toString().split('.')[1];
-        if (amountSymbol && amountSymbol.length >=19) {
-            return GlobalNotification.warning({
-                content: 'Amount not valid',
-                duration: 2
-            });
-        }
+        // const amountSymbol = amount.toString().split('.')[1];
+        // if (amountSymbol && amountSymbol.length >=19) {
+        //     return GlobalNotification.warning({
+        //         content: 'Amount not valid',
+        //         duration: 2
+        //     });
+        // }
 
-        mist.ETH2WETH().getBalance(from.toLowerCase(), function (err,ethBalance) {
+
+        mist.BTC2WBTC().getBtcMultiBalances('BTC', (err, result) => {
+
             if (err) {
                 Helpers.showError(err);
             } else {
-                let totalValue = new BigNumber(EthTools.toWei(total));
-                let ethValue = new BigNumber(ethBalance, 10);
+                let btcAccounts = result.address;
+                let btcBalance = new BigNumber(result.balance);
 
-                // console.log('totalValue: ', totalValue);
-                // console.log('ethValue: ', ethValue);
-                if(totalValue.gt(ethValue))
+                console.log('btc: ', result);
+                if(btcBalance.eq(new BigNumber(0))) {
                     return GlobalNotification.warning({
-                        content: 'Insufficient ETH balance in your FROM Account',
+                        content: 'btc address no balance',
                         duration: 2
                     });
-
+                }
 
                 let trans = {
-                    from: from, amount: amount.toString(10), storemanGroup: storeman,
-                    cross: to, gas: estimatedGas, gasPrice: gasPrice
+                    storeman: {wanAddress: storemanWan, ethAddress: storeman},
+                    wanAddress: to,
+                    amount: amount.toString(10)
                 };
-                // console.log('trans: ', trans);
 
-                mist.ETH2WETH().getLockTransData(trans, function (err,getLockTransData) {
-                    // console.log('getLockTransData: ', getLockTransData);
+                Session.set('isShowModal', true);
 
-                    if (!err) {
-                        Session.set('isShowModal', true);
-
-                        EthElements.Modal.question({
-                            template: 'views_modals_unlockTransactionInfo',
-                            data: {
-                                from: from,
-                                to: to,
-                                amount: amount,
-                                gasPrice: gasPrice,
-                                chooseGasPrice: chooseGasPrice,
-                                estimatedGas: estimatedGas,
-                                fee: fee,
-                                data: getLockTransData.lockTransData,
-                                trans: trans,
-                                secretX: getLockTransData.secretX,
-                                chain: 'ETH',
-                                symbol: 'ETH'
-                            },
-                        },{
-                            class: 'send-transaction-info',
-                            closeable: false,
-                        });
-                    } else {
-                        Helpers.showError(err);
-                    }
+                EthElements.Modal.question({
+                    template: 'views_modals_lockBtcInfo',
+                    data: {
+                        to: to,
+                        amount: amount,
+                        storeman: storeman,
+                        symbol: 'BTC',
+                        trans: trans,
+                        chain: 'BTC'
+                    },
+                },{
+                    class: 'send-transaction-info',
+                    closeable: false,
                 });
 
             }
+
         });
 
     }

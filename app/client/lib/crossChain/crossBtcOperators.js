@@ -58,10 +58,18 @@ class crossBtcOperators{
 
     getOriginChainType(){
         return this.direction === directionEnum[0] ? chainType[0] : chainType[1];
-    }
+    };
     getCrossChainType(){
         return this.direction === directionEnum[0] ? chainType[1] : chainType[0];
-    }
+    };
+
+    getStoremanGroups(chainType, callback){
+        this.invokeOperator(new crossOperator('listStoremanGroups',[], chainType, callback));
+    };
+
+    lockBtc(chainType,parameters,callback){
+        this.invokeOperator(new crossOperator('lockBtc',parameters,chainType,callback));
+    };
 }
 
 if(typeof mist !== 'undefined')

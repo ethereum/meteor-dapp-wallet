@@ -8,23 +8,6 @@
             <!-- from/to -->
             <div class="row clear from-to">
 
-                <!--from-->
-                <div class="col col-12 mobile-full contBox from">
-                    <div class="triangle"></div><strong class="views_send_strong">From</strong>
-
-                    <select id="toweth-from" style="background-color: #f7f8fc;border: solid 0px #f7f8fc; padding-left: 10px;">
-                        {{#each ethAccounts}}
-                            <option value="{{address}}">
-                                {{name}}
-                                - ({{balance}} eth)
-                            </option>
-                        {{/each}}
-                    </select>
-                    <i class="no-identicon icon-{{TemplateVar.get 'value'}}"></i>
-
-                </div>
-
-
                 <!--storeman-->
                 <div class="col col-12 mobile-full contBox" style="margin-bottom: 0">
                     <div class="triangle"></div><strong class="views_send_strong">Locked Account</strong>
@@ -69,42 +52,11 @@
                                 <div id='progress' style="width: {{used}}"></div>
                                 <p></p>
                             </div>
-                            <span style="text-transform: capitalize; position: initial;">Balance: <span>{{inboundQuota}}</span> ETH</span>
-                            <span style="text-transform: capitalize; position: initial; float: right;">Cap: <span>{{quota}}</span> ETH</span>
+                            <span style="text-transform: capitalize; position: initial;">Balance: <span>{{inboundQuota}}</span> BTC</span>
+                            <span style="text-transform: capitalize; position: initial; float: right;">Cap: <span>{{quota}}</span> BTC</span>
                         </div>
                     {{/each}}
 
-                </div>
-            </div>
-
-
-            <!-- fee -->
-            <div class="row clear" style="padding-top: 0;">
-                <div class="col col-12 mobile-full contBox">
-                    <strong style="display: block" class="views_send_strong"><div class="triangle"></div>{{i18n 'wallet.send.fee'}}</strong>
-
-                    <div class="dapp-select-gas-price">
-                        <span>{{TemplateVar.get 'fee'}} <span>eth</span></span>
-                        {{#unless TemplateVar.get "sending"}}
-                            <a class="options" style="cursor: pointer">[Advanced options]</a>
-
-                            {{#if TemplateVar.get "options"}}
-                                <input type="range" name="fee" min="-1" max="5" step="1" value="{{TemplateVar.get 'feeMultiplicator'}}">
-                                <span style="left: 10px;margin-top: 10px;">{{i18nText 'low'}}</span>
-                                <span style="right: 10px;margin-top: 10px;">{{i18nText 'high'}}</span>
-                            {{/if}}
-
-                        {{/unless}}
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- Total -->
-            <div class="col col-12 mobile-full contBox send-info" style="padding-left: 0;">
-                <strong style="display: block" class="views_send_strong"><div class="triangle"></div>Total</strong>
-                <div class="dapp-select-gas-price">
-                    <span class="amount">{{TemplateVar.get "total"}}<span> eth</span></span>
                 </div>
             </div>
 

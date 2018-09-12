@@ -38,10 +38,8 @@ Template['views_modals_sendBtcTransactionInfo'].events({
         Session.set('isShowModal', false);
 
         mist.BTC2WBTC().sendBtcToAddress('BTC', txArgs, function (err,data) {
-            console.log('data: ', data);
-            console.log('err: ', err);
             if (err) {
-                Helpers.showError('Send Transaction Error!');
+                Helpers.showError(err);
                 EthElements.Modal.hide();
             } else {
                 EthElements.Modal.hide();
