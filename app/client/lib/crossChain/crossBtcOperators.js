@@ -70,6 +70,11 @@ class crossBtcOperators{
     lockBtc(chainType,parameters,callback){
         this.invokeOperator(new crossOperator('lockBtc',parameters,chainType,callback));
     };
+
+    listHistory(chainType,callback){
+        this.invokeOperator(new crossOperator('listTransactions',chainType,callback));
+    };
+
 }
 
 if(typeof mist !== 'undefined')
