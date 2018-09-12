@@ -72,7 +72,7 @@ class crossBtcOperators{
     };
 
     listHistory(chainType,callback){
-        this.invokeOperator(new crossOperator('listTransactions',chainType,callback));
+        this.invokeOperator(new crossOperator('listTransactions',{},chainType,callback));
     };
 
 }

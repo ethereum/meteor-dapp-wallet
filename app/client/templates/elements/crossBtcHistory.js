@@ -85,12 +85,12 @@ function showQuestion(show_data, fee, gasPrice, getGas, transData, trans, transT
 Template['elements_cross_transactions_table_btc'].onCreated(function(){
     let template = this;
 
-    Session.set('oldCrosschainList', []);
-    TemplateVar.set(template, 'crosschainList', []);
-
     mist.BTC2WBTC().listHistory('BTC', (err, result) => {
         if (err) {
             console.log('err: ', err);
+
+            Session.set('oldCrosschainList', []);
+            TemplateVar.set(template, 'crosschainList', []);
         } else {
             resultEach(template, result);
             console.log('result: ', result);

@@ -22,6 +22,7 @@ Template['views_btcTowbtc'].onCreated(function(){
     let wanAddressList = Session.get('wanAddressList') ? Session.get('wanAddressList') : [];
 
     if (wanAddressList.length >0) {
+
         TemplateVar.set(template, 'to', wanAddressList[0]);
         _.each(wanAddressList, function (value, index) {
             wanaddress.push({address: value})

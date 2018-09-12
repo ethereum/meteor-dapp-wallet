@@ -3,6 +3,69 @@
  @module Templates
  */
 
+let InterID;
+
+ const getAddressList = function(template) {
+
+     // mist.BTC2WBTC().getAddressList('BTC', function (err, addressList) {
+     //     if (! err) {
+     //         let oldAddressList = TemplateVar.get(template, 'btcList');
+     //
+     //         if(!oldAddressList || oldAddressList.length !== addressList.length) {
+     //             TemplateVar.set(template,'btcList',addressList);
+     //             Session.set('btcList', addressList);
+     //         }
+     //     } else {
+     //         Helpers.showError(err);
+     //     }
+     // });
+
+    mist.ETH2WETH().getAddressList('WAN', function (err, wanAddressList) {
+        EthElements.Modal.hide();
+
+        if (!err) {
+            let oldWanAddressList = TemplateVar.get(template, 'wanAddressList');
+
+            if(!oldWanAddressList || oldWanAddressList.length !== wanAddressList.length) {
+                Session.set('wanAddressList', wanAddressList);
+                TemplateVar.set(template,'wanAddressList',wanAddressList);
+            }
+        }
+    });
+
+ };
+
+Template['views_crosschain_btc'].onCreated(function () {
+    let template = this;
+
+    EthElements.Modal.show('views_modals_loading', {closeable: false, class: 'crosschain-loading'});
+
+    getAddressList(template);
+
+    InterID = Meteor.setInterval(function(){
+        if(!Session.get('isShowModal')) {
+            getAddressList(template);
+        } else {
+            console.log('isShowModal: ', Session.get('isShowModal'));
+        }
+        }, 10000);
+
+});
+
+Template['views_crosschain_btc'].onDestroyed(function () {
+    Meteor.clearInterval(InterID);
+});
+
+Template['views_crosschain_btc'].helpers({
+
+    /**
+     Get all transactions
+     @method (allTransactions)
+     */
+
+
+});
+
 Template['views_crosschain_btc'].events({
 
     /**
