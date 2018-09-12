@@ -63,7 +63,7 @@ function showQuestion(show_data, fee, gasPrice, getGas, transData, trans, transT
             to: show_data.to,
             storeman: show_data.storeman,
             crossAdress: show_data.crossAdress,
-            amount: show_data.value,
+            amount: show_data.balance,
             fee: EthTools.formatBalance(fee, '0,0.00[0000000000000000]', 'ether'),
             gasPrice: gasPrice,
             estimatedGas: getGas,
@@ -93,7 +93,6 @@ Template['elements_cross_transactions_table_btc'].onCreated(function(){
             TemplateVar.set(template, 'crosschainList', []);
         } else {
             resultEach(template, result);
-            console.log('result: ', result);
 
             Session.set('oldCrosschainList', result);
             TemplateVar.set(template, 'crosschainList', result);
@@ -101,27 +100,34 @@ Template['elements_cross_transactions_table_btc'].onCreated(function(){
     });
 
     const self = this;
-    // InterID = Meteor.setInterval(function(){
-    //     mist.BTC2WBTC().listHistory('BTC', (err, result) => {
-    //         resultEach(template, result);
-    //
-    //         let oldCrosschainResult = Session.get('oldCrosschainList');
-    //         let oldResultHex = web3.toHex(oldCrosschainResult);
-    //         let resultHex = web3.toHex(result);
-    //
-    //         if(!oldCrosschainResult || oldResultHex !== resultHex ) {
-    //             // console.log('update history transaction: ',oldResultHex !== resultHex);
-    //             Session.set('oldCrosschainList', result);
-    //             TemplateVar.set(template, 'crosschainList', result);
-    //         }
-    //     });
-    //
-    // }, 10000);
+    InterID = Meteor.setInterval(function(){
+        mist.BTC2WBTC().listHistory('BTC', (err, result) => {
+            if (err) {
+                console.log('err: ', err);
+
+                Session.set('oldCrosschainList', []);
+                TemplateVar.set(template, 'crosschainList', []);
+            } else {
+                resultEach(template, result);
+
+                let oldCrosschainResult = Session.get('oldCrosschainList');
+                let oldResultHex = web3.toHex(oldCrosschainResult);
+                let resultHex = web3.toHex(result);
+
+                if(!oldCrosschainResult || oldResultHex !== resultHex ) {
+                    // console.log('update history transaction: ',oldResultHex !== resultHex);
+                    Session.set('oldCrosschainList', result);
+                    TemplateVar.set(template, 'crosschainList', result);
+                }
+            }
+        });
+
+    }, 10000);
 
 });
 
 Template['elements_cross_transactions_table_btc'].onDestroyed(function () {
-    // Meteor.clearInterval(InterID);
+    Meteor.clearInterval(InterID);
 });
 
 
@@ -134,14 +140,16 @@ Template['elements_cross_transactions_table_btc'].helpers({
             let smallStyle = 'display: block; color: #4b90f7;';
 
             _.each(TemplateVar.get('crosschainList'), function (value, index) {
-                if (value.chain === 'ETH') {
-                    value.fromText = `<small style="${smallStyle}">ETH</small>`;
+                value.balance =  web3.toBigNumber(value.value).div(100000000).toString();
+
+                if (value.chain === 'BTC') {
+                    value.fromText = `<small style="${smallStyle}">BTC</small>`;
                     value.toText = `<small style="${smallStyle}">WAN</small>`;
-                    value.symbol = 'ETH';
+                    value.symbol = 'BTC';
                 } else if (value.chain === 'WAN') {
                     value.fromText = `<small style="${smallStyle}">WAN</small>`;
                     value.toText = `<small style="${smallStyle}">ETH</small>`;
-                    value.symbol = 'WETH';
+                    value.symbol = 'WBTC';
                 }
 
                 let style = 'display: block; font-size: 18px; background-color: transparent;';
@@ -232,10 +240,10 @@ Template['elements_cross_transactions_table_btc'].events({
                 show_data.HashX = show_data.txhash;
             }
 
-            if (show_data.chain === 'ETH') {
-                show_data.symbol = 'ETH';
+            if (show_data.chain === 'BTC') {
+                show_data.symbol = 'BTC';
             } else if (show_data.chain === 'WAN') {
-                show_data.symbol = 'WETH';
+                show_data.symbol = 'WBTC';
             }
 
             EthElements.Modal.show({
@@ -296,7 +304,7 @@ Template['elements_cross_transactions_table_btc'].events({
             };
 
             // release X eth => weth
-            if (show_data.chain === 'ETH') {
+            if (show_data.chain === 'BTC') {
                 mist.ETH2WETH().getGasPrice('WAN', function (err,getGasPrice) {
                     if (err) {
                         Helpers.showError(err);

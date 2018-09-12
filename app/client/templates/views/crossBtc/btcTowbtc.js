@@ -18,17 +18,29 @@ Template['views_btcTowbtc'].onCreated(function(){
 
     EthElements.Modal.show('views_modals_loading', {closeable: false, class: 'crosschain-loading'});
 
-    let wanaddress = [];
     let wanAddressList = Session.get('wanAddressList') ? Session.get('wanAddressList') : [];
 
     if (wanAddressList.length >0) {
 
-        TemplateVar.set(template, 'to', wanAddressList[0]);
-        _.each(wanAddressList, function (value, index) {
-            wanaddress.push({address: value})
+        mist.ETH2WETH().getMultiBalances(wanAddressList, (err, result) => {
+            if (!err) {
+                let wanaddress = [];
+
+                _.each(result, function (value, index) {
+                    const balance =  web3.fromWei(value, 'ether');
+                    // const name = 'Account_' + index.slice(2, 6);
+                    if (new BigNumber(balance).gt(0)) {
+                        wanaddress.push({name: index, address: index, balance: balance})
+                    }
+                });
+
+                if (wanaddress.length >0) {
+                    TemplateVar.set(template, 'wanAddressList', wanaddress);
+                    TemplateVar.set(template, 'to', wanaddress[0].address);
+                }
+            }
         });
 
-        TemplateVar.set(template, 'wanAddressList', wanaddress);
     }
 
     // btc => wbtc storeman

@@ -3,13 +3,27 @@
     <div class="tempTable index" style="background:#fff;">
         <!--ETH Accounts Overview list-->
         <div class="viwes-account-header">
-            <h1 class="account-h1" style="margin-top: 0; padding-left:0;"><div class="viwes-account-line"></div><strong>BTC Accounts Overview</strong></h1>
-            {{> elements_account_table_btc}}
+            <h1 class="account-h1" style="margin-top: 0; padding-left:0;">
+                <div class="viwes-account-line"></div>
+                <strong>BTC Accounts Overview</strong>
+                {{#if btcAccounts}}
+                    <div style="float: right; font-size: 16px;">
+                        <p>Bitcon Wallet Balance:
+                            <span style="font-size: 30px;">{{TemplateVar.get "btcBalance"}}</span>
+                            <strong>BTC</strong>
+                        </p>
+                    </div>
+                {{/if}}
+            </h1>
+            {{> elements_account_table_btc btcAccounts=btcAccounts}}
         </div>
 
         <!--transaction list-->
         <div class="viwes-account-header">
-            <h1 class="account-h1" style="margin-top: 0; padding-left: 0;"><div class="viwes-account-line"></div><strong>History for BTC and Crosschain Transaction</strong></h1>
+            <h1 class="account-h1" style="margin-top: 0; padding-left: 0;">
+                <div class="viwes-account-line"></div>
+                <strong>History for BTC and Crosschain Transaction</strong>
+            </h1>
             {{> elements_cross_transactions_table_btc}}
         </div>
     </div>

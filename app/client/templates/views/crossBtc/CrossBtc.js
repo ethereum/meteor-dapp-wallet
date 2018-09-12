@@ -7,18 +7,18 @@ let InterID;
 
  const getAddressList = function(template) {
 
-     // mist.BTC2WBTC().getAddressList('BTC', function (err, addressList) {
-     //     if (! err) {
-     //         let oldAddressList = TemplateVar.get(template, 'btcList');
-     //
-     //         if(!oldAddressList || oldAddressList.length !== addressList.length) {
-     //             TemplateVar.set(template,'btcList',addressList);
-     //             Session.set('btcList', addressList);
-     //         }
-     //     } else {
-     //         Helpers.showError(err);
-     //     }
-     // });
+     mist.BTC2WBTC().getBtcMultiBalances('BTC', (err, result) => {
+         if (!err) {
+             let oldAddressList = TemplateVar.get(template, 'btcAccounts');
+             let oldResultHex = web3.toHex(oldAddressList);
+             let resultHex = web3.toHex(result);
+
+             if(!oldAddressList || oldResultHex !== resultHex) {
+                 TemplateVar.set(template,'btcAccounts',result.address);
+                 TemplateVar.set(template,'btcBalance',result.balance);
+             }
+         }
+     });
 
     mist.ETH2WETH().getAddressList('WAN', function (err, wanAddressList) {
         EthElements.Modal.hide();
@@ -63,6 +63,16 @@ Template['views_crosschain_btc'].helpers({
      @method (allTransactions)
      */
 
+    'btcAccounts': function(){
+        let btcAccounts = TemplateVar.get('btcAccounts');
+
+        let result = [];
+        _.each(btcAccounts, function(address){
+            result.push({'address': address});
+        });
+
+        return result;
+    },
 
 });
 

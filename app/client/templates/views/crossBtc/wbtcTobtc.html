@@ -17,12 +17,11 @@
                             {{#each ethAccounts}}
                                 <option value="{{address}}">
                                     {{name}}
-                                    - ({{balance}} weth)
+                                    - ({{balance}} wbtc)
                                 </option>
                             {{/each}}
                         </select>
                         <i class="no-identicon icon-{{TemplateVar.get 'value'}}"></i>
-
                     </div>
 
 
@@ -66,7 +65,7 @@
                 <div class="row clear" style="padding-top: 0;">
                     <div class="col col-12 mobile-full contBox">
                         {{#each Deposit}}
-                            <div class="dapp-select-gas-price deposit-input">
+                            <div class="dapp-select-gas-price deposit-input" style=" width: 100%;">
                                 <span>Deposit: <span>{{deposit}}</span> WAN</span>
                                 <div id="progressbar">
                                     <div id='progress' style="width: {{used}}"></div>

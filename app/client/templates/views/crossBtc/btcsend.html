@@ -3,16 +3,16 @@
 
         <div class="viwes-account-header">
 
-            <table class="dapp-zebra transactions">
-                <thead >
-                <tr class="full-width">
-                    <th colspan="5">Bitcon Wallet Balance: {{TemplateVar.get "btcBalance"}} BTC</th>
-                </tr>
-                </thead>
-            </table>
-
             <!-- we use a form, which posts into the "dapp-form-helper-iframe" iframe, so that the browser stores inout fields for native autocpmplete -->
             <form class="account-send-form" action="about:blank" target="dapp-form-helper-iframe" autocomplete="on">
+
+                <!--btc balance-->
+                <div>
+                    <div class="dapp-select-gas-price" style="width: 100%">
+                        <a>Bitcon Wallet Balance</a>
+                        <span style="margin: 10px 0 5px 0; display: block;">{{TemplateVar.get "btcBalance"}} BTC</span>
+                    </div>
+                </div>
 
                 <!-- to -->
                 <div class="row clear from-to">
