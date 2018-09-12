@@ -20,27 +20,16 @@ Template['views_btcTowbtc'].onCreated(function(){
 
     let wanAddressList = Session.get('wanAddressList') ? Session.get('wanAddressList') : [];
 
+    let wanaddress = [];
+
     if (wanAddressList.length >0) {
-
-        mist.ETH2WETH().getMultiBalances(wanAddressList, (err, result) => {
-            if (!err) {
-                let wanaddress = [];
-
-                _.each(result, function (value, index) {
-                    const balance =  web3.fromWei(value, 'ether');
-                    // const name = 'Account_' + index.slice(2, 6);
-                    if (new BigNumber(balance).gt(0)) {
-                        wanaddress.push({name: index, address: index, balance: balance})
-                    }
-                });
-
-                if (wanaddress.length >0) {
-                    TemplateVar.set(template, 'wanAddressList', wanaddress);
-                    TemplateVar.set(template, 'to', wanaddress[0].address);
-                }
-            }
+        TemplateVar.set(template, 'to', wanAddressList[0]);
+        _.each(wanAddressList, function (value, index) {
+            wanaddress.push({address: value})
         });
 
+        TemplateVar.set(template, 'wanAddressList', wanaddress);
+        TemplateVar.set(template, 'to', wanaddress[0].address);
     }
 
     // btc => wbtc storeman
@@ -157,6 +146,15 @@ Template['views_btcTowbtc'].events({
             });
         }
 
+        let account = new BigNumber(Helpers.getAccountByAddress(to).balance ? Helpers.getAccountByAddress(to).balance : 0);
+
+        if(account.eq(new BigNumber(0))) {
+            return GlobalNotification.warning({
+                content: 'This wan address\'s balance is 0.',
+                duration: 2
+            });
+        }
+
         // const amountSymbol = amount.toString().split('.')[1];
         // if (amountSymbol && amountSymbol.length >=19) {
         //     return GlobalNotification.warning({
@@ -174,7 +172,7 @@ Template['views_btcTowbtc'].events({
                 let btcAccounts = result.address;
                 let btcBalance = new BigNumber(result.balance);
 
-                console.log('btc: ', result);
+
                 if(btcBalance.eq(new BigNumber(0))) {
                     return GlobalNotification.warning({
                         content: 'btc address no balance',

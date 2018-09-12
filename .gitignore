@@ -5,3 +5,4 @@ packages/
 .idea/
 app/public/i18n/*.json
 app/.meteor/dev_bundle
+.DS_Store
