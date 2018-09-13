@@ -358,48 +358,16 @@ Template['elements_cross_transactions_table_btc'].events({
             trans = {
                 from: show_data.from, amount: show_data.value.toString(10),
                 storemanGroup: show_data.storeman, cross: show_data.crossAdress,
-                X: show_data.x,
+                HashX: show_data.x,
             };
 
-            // revoke eth => weth
-            if (show_data.chain === 'ETH') {
-                mist.ETH2WETH().getGasPrice('ETH', function (err,getGasPrice) {
-                    if (err) {
-                        Helpers.showError(err);
-                    } else {
-                        getGas = getGasPrice.RevokeGas;
-                        gasPrice = getGasPrice.gasPrice;
+            // revoke btc => wbtc
+            if (show_data.chain === 'BTC') {
+                console.log('chain: ', show_data.chain);
+                show_data.symbol = 'BTC';
 
-                        trans.gas = getGas;
-                        trans.gasPrice = gasPrice;
-
-                        // revoke x in eth
-                        console.log('getRevokeTransData ETH: ', show_data.chain);
-
-                        mist.ETH2WETH().getRevokeTransData(trans, function (err,getRevokeTransData) {
-                            if (err) {
-                                Helpers.showError(err);
-                            } else {
-                                mist.ETH2WETH().getBalance(show_data.from.toLowerCase(), function (err,coinBalance) {
-                                    if (err) {
-                                        Helpers.showError(err);
-                                    } else {
-                                        transData = getRevokeTransData.revokeTransData;
-                                        let fee = new BigNumber(getGas * gasPrice);
-
-                                        if(fee.gt(new BigNumber(coinBalance, 10)))
-                                            return GlobalNotification.warning({
-                                                content: 'Insufficient ETH balance in your FROM Account',
-                                                duration: 2
-                                            });
-
-                                        showQuestion(show_data, fee, gasPrice, getGas, transData, trans, transType);
-                                    }
-                                });
-                            }
-                        });
-                    }
-                })
+                // release x in wan
+                showQuestion(show_data, trans, transType);
 
             }
             // revoke weth => eth

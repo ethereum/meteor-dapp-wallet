@@ -91,15 +91,15 @@ Template['views_modals_sendcrossBtcReleaseX'].events({
                 params.HashX = this.trans.HashX;
                 params.btcPassword = password_input;
 
-                // mist.BTC2WBTC().revokeBtc('BTC', params, function (err,data) {
-                //     if (err) {
-                //         Helpers.showError(err);
-                //         EthElements.Modal.hide();
-                //     } else {
-                //         EthElements.Modal.hide();
-                //         waitingMoment();
-                //     }
-                // });
+                mist.BTC2WBTC().revokeBtc('BTC', params, function (err,data) {
+                    if (err) {
+                        Helpers.showError(err);
+                        EthElements.Modal.hide();
+                    } else {
+                        EthElements.Modal.hide();
+                        waitingMoment();
+                    }
+                });
             } else {
                 // revoke in wan
                 console.log('revoke Chain 2: ', this.Chain);

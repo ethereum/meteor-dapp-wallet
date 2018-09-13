@@ -48,6 +48,10 @@ class crossBtcOperators{
         this.invokeOperator(new crossOperator('sendBtcToAddress',parameters,chainType,callback));
     };
 
+    getWbtcToken(callback){
+        this.invokeOperator(new crossOperator('getWbtcToken',[],this.getOriginChainType(),callback));
+    }
+
     getAddressList(chainType,callback){
         this.invokeOperator(new crossOperator('listBtcAddress',{},chainType,callback));
     };

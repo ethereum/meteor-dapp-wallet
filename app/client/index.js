@@ -104,8 +104,8 @@ Meteor.startup(function() {
 
         if(typeof mist !== 'undefined')
         {
+            // weth
             mist.ETH2WETH().getWethToken(function (err, unicornToken) {
-
                 if(!err) {
                     Meteor.setTimeout(function(){
                         let tokenId = Helpers.makeId('token', unicornToken.address);
@@ -133,6 +133,37 @@ Meteor.startup(function() {
                     console.log('getWethToken err: ', err);
                 }
             });
+
+            // wbtc
+            mist.BTC2WBTC().getWbtcToken(function (err, unicornToken) {
+                if(!err) {
+                    Meteor.setTimeout(function(){
+                        let tokenId = Helpers.makeId('token', unicornToken.address);
+                        let dapp_hasWethToken = Tokens.findOne(tokenId);
+
+                        if (dapp_hasWethToken === undefined) {
+                            let dapp_isWeth = Tokens.findOne({isWbtc: 1});
+
+                            if (dapp_isWeth !== undefined) {
+                                Tokens.remove(dapp_isWeth._id);
+                            }
+
+                            Tokens.upsert(tokenId, {$set: {
+                                    address: unicornToken.address,
+                                    name: unicornToken.name,
+                                    symbol: unicornToken.symbol,
+                                    balances: {},
+                                    decimals: unicornToken.decimals,
+                                    isWbtc: 1
+                                }});
+                        }
+
+                    }, 2000);
+                } else {
+                    console.log('getWethToken err: ', err);
+                }
+            });
+
         }
 
     });
