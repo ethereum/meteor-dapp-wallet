@@ -71,6 +71,14 @@ class crossBtcOperators{
         this.invokeOperator(new crossOperator('lockBtc',parameters,chainType,callback));
     };
 
+    redeemBtc(chainType,parameters,callback) {
+        this.invokeOperator(new crossOperator('redeemBtc',parameters,chainType,callback));
+    };
+
+    revokeBtc(chainType,parameters,callback) {
+        this.invokeOperator(new crossOperator('revokeBtc',parameters,chainType,callback));
+    }
+
     listHistory(chainType,callback){
         this.invokeOperator(new crossOperator('listTransactions',{},chainType,callback));
     };

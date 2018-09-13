@@ -45,8 +45,6 @@ Template['views_modals_lockBtcInfo'].events({
         this.trans.btcPassword = password_input;
         this.trans.wanPassword = password_input_wan;
 
-        console.log('data trans: ', this.trans);
-
         TemplateVar.set('isButton', true);
         Session.set('isShowModal', false);
 

@@ -1,0 +1,36 @@
+<template name="views_modals_sendcrossBtcReleaseX">
+    <h1>{{TemplateVar.get "transType"}}</h1>
+    <table class="dapp-zebraPou">
+        <tbody>
+            <tr>
+                <td>From:</td>
+                <td>{{from}}{{{fromText}}}</td>
+            </tr>
+            <tr>
+                <td>To:</td>
+                <td>{{crossAdress}}{{{toText}}}</td>
+            </tr>
+            <tr>
+                <td>Storeman:</td>
+                <td>{{storeman}}</td>
+            </tr>
+            <tr>
+                <td>Amount:</td>
+                <td>{{amount}} {{symbol}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+
+    <input type="password" id="releaseX-psd" placeholder="{{TemplateVar.get "passwdType"}}"
+           disabled="{{TemplateVar.get "isButton"}}"
+           style="width: 100%;"/>
+
+    <div class="dapp-modal-buttons">
+        <button class="cancel-cross" disabled="{{TemplateVar.get "isButton"}}">CANCEL</button>
+        <button class="ok-cross dapp-primary-button"
+                disabled="{{TemplateVar.get "isButton"}}"
+        >OK</button>
+    </div>
+
+</template>

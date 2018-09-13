@@ -52,22 +52,18 @@ function resultEach(template, result) {
     });
 }
 
-function showQuestion(show_data, fee, gasPrice, getGas, transData, trans, transType) {
+function showQuestion(show_data, trans, transType) {
 
     Session.set('isShowModal', true);
 
     EthElements.Modal.question({
-        template: 'views_modals_sendcrosschainReleaseX',
+        template: 'views_modals_sendcrossBtcReleaseX',
         data: {
             from: show_data.from,
             to: show_data.to,
             storeman: show_data.storeman,
             crossAdress: show_data.crossAdress,
             amount: show_data.balance,
-            fee: EthTools.formatBalance(fee, '0,0.00[0000000000000000]', 'ether'),
-            gasPrice: gasPrice,
-            estimatedGas: getGas,
-            data: transData,
             trans: trans,
             transType: transType,
             Chain: show_data.chain,
@@ -259,7 +255,7 @@ Template['elements_cross_transactions_table_btc'].events({
                     storeman: show_data.storeman,
                     time: show_data.time,
                     to: show_data.to,
-                    value: show_data.value,
+                    value: show_data.balance,
                     x: show_data.x,
                     symbol: show_data.symbol,
                     status: show_data.state,
@@ -284,8 +280,6 @@ Template['elements_cross_transactions_table_btc'].events({
         let trans;
         let transType;
 
-        console.log('show_data.status: ', show_data.status);
-
         // suspending
         if (stateDict[show_data.status] === 14) {
             return GlobalNotification.warning({
@@ -305,48 +299,12 @@ Template['elements_cross_transactions_table_btc'].events({
 
             // release X eth => weth
             if (show_data.chain === 'BTC') {
-                mist.ETH2WETH().getGasPrice('WAN', function (err,getGasPrice) {
-                    if (err) {
-                        Helpers.showError(err);
-                    } else {
-                        getGas = getGasPrice.RefundGas;
-                        gasPrice = getGasPrice.gasPrice;
 
-                        if (gasPrice < defaultGasprice) {
-                            gasPrice = defaultGasprice
-                        }
+                show_data.symbol = 'BTC';
 
-                        trans.gas = getGas;
-                        trans.gasPrice = gasPrice;
+                // release x in wan
+                showQuestion(show_data, trans, transType);
 
-                        show_data.symbol = 'ETH';
-
-                        // release x in wan
-                        mist.ETH2WETH().getRefundTransData(trans, function (err,getRefundTransData) {
-                            if (err) {
-                                Helpers.showError(err);
-                            } else {
-                                mist.WETH2ETH().getBalance(show_data.crossAdress.toLowerCase(), function (err,coinBalance) {
-                                    if (err) {
-                                        Helpers.showError(err);
-                                    } else {
-                                        transData = getRefundTransData.refundTransData;
-                                        let fee = new BigNumber(getGas * gasPrice);
-
-                                        if(fee.gt(new BigNumber(coinBalance, 10)))
-                                            return GlobalNotification.warning({
-                                                content: 'Insufficient WAN balance in your TO account',
-                                                duration: 2
-                                            });
-
-                                        showQuestion(show_data, fee, gasPrice, getGas, transData, trans, transType);
-                                    }
-                                });
-                            }
-                        });
-
-                    }
-                })
             }
             // release X weth => eth
             else if (show_data.chain === 'WAN') {
