@@ -57,7 +57,6 @@ Template['views_modals_lockBtcInfo'].events({
                     Helpers.showError(err);
                     EthElements.Modal.hide();
                 } else {
-                    console.log('data: ', data);
                     EthElements.Modal.hide();
                     Session.set('clickButton', 1);
                 }
@@ -65,15 +64,16 @@ Template['views_modals_lockBtcInfo'].events({
         } else {
             console.log('WAN chain: ', this.chain);
 
-            // mist.WETH2ETH().sendLockTrans(this.trans, password_input, this.secretX, function (err,data) {
-            //     if (err) {
-            //         Helpers.showError(err);
-            //         EthElements.Modal.hide();
-            //     } else {
-            //         EthElements.Modal.hide();
-            //         Session.set('clickButton', 1);
-            //     }
-            // });
+            mist.BTC2WBTC().lockWbtc('BTC', this.trans, function (err,data) {
+                if (err) {
+                    console.log('err: ', err);
+                    Helpers.showError(err);
+                    EthElements.Modal.hide();
+                } else {
+                    EthElements.Modal.hide();
+                    Session.set('clickButton', 1);
+                }
+            });
         }
 
     }

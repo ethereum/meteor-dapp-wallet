@@ -1,6 +1,5 @@
 <template name="views_wbtcTobtc">
     <div class="tempTable">
-Ds.DS
         <div class="viwes-account-header">
 
             <!-- we use a form, which posts into the "dapp-form-helper-iframe" iframe, so that the browser stores inout fields for native autocpmplete -->
@@ -71,43 +70,10 @@ Ds.DS
                                     <div id='progress' style="width: {{used}}"></div>
                                     <p></p>
                                 </div>
-                                <span style="text-transform: capitalize; position: initial;">Balance: <span>{{outboundQuota}}</span> ETH</span>
+                                <span style="text-transform: capitalize; position: initial;">Balance: <span>{{outboundQuota}}</span> BTC</span>
                             </div>
                         {{/each}}
 
-                    </div>
-                </div>
-
-
-                <!-- fee -->
-                <div class="row clear" style="padding-top: 0;">
-                    <div class="col col-12 mobile-full contBox comBg">
-                        <strong style="display: block" class="views_send_strong"><div class=""></div>{{i18n 'wallet.send.fee'}}</strong>
-
-                        <div class="dapp-select-gas-price">
-                            <span>{{TemplateVar.get 'fee'}} <span>wan</span></span>
-                            {{#unless TemplateVar.get "sending"}}
-                                <a class="options" style="cursor: pointer">[Advanced options]</a>
-
-                                {{#if TemplateVar.get "options"}}
-                                    <input type="range" name="fee" min="-1" max="5" step="1" value="{{TemplateVar.get 'feeMultiplicator'}}">
-                                    <span style="left: 10px;margin-top: 10px;" class="leftTextColor">{{i18nText 'low'}}</span>
-                                    <span style="right: 10px;margin-top: 10px;">{{i18nText 'high'}}</span>
-                                {{/if}}
-
-                            {{/unless}}
-                        </div>
-
-                    </div>
-                </div>
-
-                <!-- Total -->
-                <div class="col col-12 mobile-full contBox send-info comBg" style="padding-left: 0;">
-                    <strong style="display: block" class="views_send_strong"><div class=""></div>Total</strong>
-                    <div class="dapp-select-gas-price">
-                        <span class="amount">{{TemplateVar.get "amount"}}<span> weth</span></span>
-                        <br>
-                        {{i18n "wallet.send.estimatedFee"}}: {{TemplateVar.get "fee"}}<span> wan</span>
                     </div>
                 </div>
 
