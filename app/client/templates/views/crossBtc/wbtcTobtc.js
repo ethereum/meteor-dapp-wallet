@@ -95,12 +95,14 @@ Template['views_wbtcTobtc'].helpers({
     'Deposit': function () {
 
         let result = [];
+
+        // ===== 单位换算问题 =======
         _.each(TemplateVar.get('storemanGroup'), function (value, index) {
             if (value.wanAddress === TemplateVar.get('storeman')) {
-
-                let outboundQuota = web3.fromWei(value.outboundQuota, 'ether');
-                let quota = web3.fromWei(value.quota, 'ether');
                 let deposit = web3.fromWei(value.deposit, 'ether');
+
+                let outboundQuota = web3.toBigNumber(value.outboundQuota).div(100000000);
+                let quota = web3.toBigNumber(value.quota).div(100000000);
                 let used = ((outboundQuota/ quota) * 100).toString() + '%';
 
                 result.push({deposit: deposit, outboundQuota: outboundQuota, used: used})

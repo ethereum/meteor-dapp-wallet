@@ -64,13 +64,14 @@ Template['views_btcTowbtc'].helpers({
         if (TemplateVar.get('storemanGroup')) {
             _.each(TemplateVar.get('storemanGroup'), function (value, index) {
                 if (value.ethAddress === TemplateVar.get('storeman')) {
-                    let inboundQuota = web3.fromWei(value.inboundQuota, 'ether');
-                    let quota = web3.fromWei(value.quota, 'ether');
                     let deposit = web3.fromWei(value.deposit, 'ether');
+
+                    let inboundQuota = web3.toBigNumber(value.inboundQuota).div(100000000);
+                    let quota = web3.toBigNumber(value.quota).div(100000000);
                     let done = quota - inboundQuota;
                     let used = ((done/ quota) * 100).toString() + '%';
 
-                    result.push({deposit: deposit, inboundQuota: inboundQuota, quota: quota, done: done, used: used})
+                    result.push({deposit: deposit, inboundQuota: inboundQuota, quota: quota, used: used})
                 }
             });
         }

@@ -92,7 +92,7 @@ class crossBtcOperators{
     };
 
     lockWbtc(chainType,parameters,callback) {
-        this.invokeOperator(new crossOperator('revokeBtc',parameters,chainType,callback));
+        this.invokeOperator(new crossOperator('lockWbtc',parameters,chainType,callback));
     }
 
 
