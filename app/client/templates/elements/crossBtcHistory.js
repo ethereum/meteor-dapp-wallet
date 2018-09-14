@@ -358,7 +358,7 @@ Template['elements_cross_transactions_table_btc'].events({
             trans = {
                 from: show_data.from, amount: show_data.value.toString(10),
                 storemanGroup: show_data.storeman, cross: show_data.crossAdress,
-                HashX: show_data.x,
+                HashX: show_data.HashX,
             };
 
             // revoke btc => wbtc
