@@ -15,8 +15,8 @@
             </li>            
             <li class="block-syncing {{#if TemplateVar.get 'syncing'}}syncing{{/if}}">
                 {{#if isWalletMode}}
-                    {{#if $eq ($.Session.get "network") "test"}}
-                        <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">Test-net</span> &nbsp;&nbsp; 
+                    {{#if $eq ($.Session.get "network") "testnet"}}
+                        <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain' ether=ether}}">Test-net</span> &nbsp;&nbsp; 
                     {{/if}}
                     {{#if $eq ($.Session.get "network") "rinkeby"}}
                         <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">Rinkeby</span> &nbsp;&nbsp; 
@@ -28,7 +28,7 @@
                         <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">Kovan</span> &nbsp;&nbsp; 
                     {{/if}}
                     {{#if $eq ($.Session.get "network") "private"}}
-                        <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">Private-net</span> &nbsp;&nbsp; 
+                        <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain' ether=ether}}">Private-net</span> &nbsp;&nbsp; 
                     {{/if}}
 
                     {{#with TemplateVar.get "syncing"}}

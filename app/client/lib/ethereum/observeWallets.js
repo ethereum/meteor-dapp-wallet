@@ -902,7 +902,9 @@ observeWallets = function() {
             Wallets.remove(newDocument._id);
 
             GlobalNotification.error({
-              content: TAPi18n.__('wallet.app.error.wrongChain'),
+              content: TAPi18n.__('wallet.app.error.wrongChain', {
+                Ethereum: publicSettings.Ethereum
+              }),
               closeable: false
             });
             return;

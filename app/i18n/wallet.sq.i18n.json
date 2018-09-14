@@ -23,22 +23,22 @@
             "texts": {
                 "note": "Shënim",
                 "balance": "Balanca",
-                "connectionErrorMist": "Nuk mund të lidhet. Ju lutemi të nisni geth duke përdorur:<br><br><small><code>__node__</code><br><br>Sigurohuni që vendndodhja e IPC të jetë ajo e parazgjedhur, nëse përdoret <code>datadir</code> e ndryshme, p.sh.<br><code>geth --datadir ... --ipcpath /Users/&lt;perdoruesiJuaj&gt;/Library/Ethereum/geth.ipc</code><br>or<br><code>geth --datadir ... --ipcpath /Users/&lt;perdoruesiJuaj&gt;/.ethereum/geth.ipc</code>. <br><br>Sipas dëshirës shtoni: <code>--unlock &lt;llogariaJuaj&gt;.</code></small>",
-                "connectionErrorBrowser": "Nuk mund të lidhet. Ju lutemi të nisni geth duke përdorur:<br><br><small><code>__node__</code><br><br>Sipas dëshirës shtoni: <code>--unlock &lt;llogariaJuaj&gt;.</code></small>",
+                "connectionErrorMist": "Nuk mund të lidhet. Ju lutemi të nisni __geth__ duke përdorur:<br><br><small><code>__node__</code><br><br>Sigurohuni që vendndodhja e IPC të jetë ajo e parazgjedhur, nëse përdoret <code>datadir</code> e ndryshme, p.sh.<br><code>__geth__ --datadir ... --ipcpath /Users/&lt;perdoruesiJuaj&gt;/Library/__Ethereum__/__gethIpc__</code><br>or<br><code>__geth__ --datadir ... --ipcpath /Users/&lt;perdoruesiJuaj&gt;/.__ethereum__/__gethIpc__</code>. <br><br>Sipas dëshirës shtoni: <code>--unlock &lt;llogariaJuaj&gt;.</code></small>",
+                "connectionErrorBrowser": "Nuk mund të lidhet. Ju lutemi të nisni __geth__ duke përdorur:<br><br><small><code>__node__</code><br><br>Sipas dëshirës shtoni: <code>--unlock &lt;llogariaJuaj&gt;.</code></small>",
                 "pendingConfirmationsBadge": "Duke pritur konfirmim!",
                 "nodeSyncing": "__blockDiff__ blloqe të mbetura",
                 "blockReceived": "U mor bllok i ri",
                 "timeSinceBlock": "nga blloku i fundit",
                 "peers": "miq",
                 "waitingForBlocks": "Duke pritur blloqe..",
-                "testnetExplain": "Jeni në rrjetin test, MOS DËRGONI Ether të vërtetë drejt këtyre adresave",
+                "testnetExplain": "Jeni në rrjetin test, MOS DËRGONI __ether__ të vërtetë drejt këtyre adresave",
                 "noAccounts": {
                   "title": "Nuk keni ende llogari",
                     "text": "Duhet të krijoni të paktën një llogari me fjalëkalim të fortë."
                 }
             },
             "error": {
-                "wrongChain": "Duket se jeni në zinxhir tjetër. Ju lutemi të rihapni aplikacionin e kuletës Ethereum!"
+                "wrongChain": "Duket se jeni në zinxhir tjetër. Ju lutemi të rihapni aplikacionin e kuletës __Ethereum__!"
             },
             "warnings": {
                 "txOriginVulnerabilityWallet": "Kuleta e kësaj kontrate të zgjuar ka kod të papërditësuar dhe mund të jetë subjekt i sulmeve të vjedhjes së identitetit. ",
@@ -55,7 +55,7 @@
                 "title": "Zgjidhni një llogari"
             },
             "testnetWallet": {
-                "walletNeedsDeployment": "Duket se ndodheni në një rrjet provë.<br><br>Nuk u gjet kod origjinal kontrate. Duhet ta krijojmë një, i cili mund të përdoret nga kontratat cungje, nga adresa juaj: <br><br><small><code>__account__</code></small><br><br><em>Ju lutemi sigurohuni që kjo adresë ka të paktën 1 Ether!</em>",
+                "walletNeedsDeployment": "Duket se ndodheni në një rrjet provë.<br><br>Nuk u gjet kod origjinal kontrate. Duhet ta krijojmë një, i cili mund të përdoret nga kontratat cungje, nga adresa juaj: <br><br><small><code>__account__</code></small><br><br><em>Ju lutemi sigurohuni që kjo adresë ka të paktën 1 __ether__!</em>",
                 "testnetWalletDeployed": "Kontrata origjinale e kuletës u vendos!<br>Një kontratë origjinale kulete u vendos në adresën:<br><br><small><code>__address__</code></small>."
             },
             "addToken": {
@@ -79,9 +79,9 @@
             "defaultName": "Pa emër",
             "creating": "Duke krijuar",
             "importing": "Duke marrë",
-            "accountNote": "Llogaritë nuk mund të tregojnë transaksionet hyrëse, por mund të ruajnë, mbajnë dhe dërgojnë Ether. Për të parë transaksionet ardhëse <a href=\"/account/new\">krijoni një kontratë kulete</a> për të ruajtur ether.",
+            "accountNote": "Llogaritë nuk mund të tregojnë transaksionet hyrëse, por mund të ruajnë, mbajnë dhe dërgojnë __ether__. Për të parë transaksionet ardhëse <a href=\"/account/new\">krijoni një kontratë kulete</a> për të ruajtur __ether__.",
             "outOfSyncNote": "Nëse balanca e llogarisë nuk duket e përditësuar, sigurohuni që jeni të sinkronizuar me rrjetin.",
-            "walletNote": "Shumica e pikave të këmbimit nuk lejojnë akoma marrjen e ether nga kuleta kontratash. Sigurohuni që ta kaloni balancën në një adresë llogarie në fillim!",
+            "walletNote": "Shumica e pikave të këmbimit nuk lejojnë akoma marrjen e __ether__ nga kuleta kontratash. Sigurohuni që ta kaloni balancën në një adresë llogarie në fillim!",
             "addressCopiedToClipboard": "U kopjua",
             "addressNotCopiedToClipboard": "Problem me kopjimin e adresës. Ju lutemi provoni përsëri.",
             "qrCodeLabel": "Drejtoni një aplikacion të përshtatshëm celular për të lexuar këtë kod",
@@ -89,11 +89,11 @@
             "dailyLimitRemaining": "të mbetura sot",
             "requiredSignatures": "Firma të nevojshme",
             "owners": "Pronarë",
-            "walletsDescription": "Këto kontrata ruhen në zinxhirin e blloqeve dhe mund të ruajnë Ether. Mund të kenë disa llogari si pronarë dhe ruajnë një listë të plotë të transaksioneve.",
-            "walletsDescriptionNotEnoughFunds": "Pasi të keni më shumë se 1 Ether mund të krijoni kontrata më të sofistikuara. Kuletat janë kontrata të zgjuara që lejojnë disa llogari të kontrollojnë fondet tuaja. Mund të kenë limit mbi tërheqjet për të rritur nivelin e sigurisë (sipas dëshirës). Krijoni kontratat tuaj sipas kërkesës në faqen <em>Kontrata</em>.",
-            "accountsDescription": "Llogaritë janë çelësa të ruajtur me fjalëkalim që mund të mbajnë Ether dhe valuta të tjera të bazuara mbi Ether. Ato mund të kontrollojnë kontrata, por nuk mund të shfaqin transaksione ardhëse.",
+            "walletsDescription": "Këto kontrata ruhen në zinxhirin e blloqeve dhe mund të ruajnë __ether__. Mund të kenë disa llogari si pronarë dhe ruajnë një listë të plotë të transaksioneve.",
+            "walletsDescriptionNotEnoughFunds": "Pasi të keni më shumë se 1 __ether__ mund të krijoni kontrata më të sofistikuara. Kuletat janë kontrata të zgjuara që lejojnë disa llogari të kontrollojnë fondet tuaja. Mund të kenë limit mbi tërheqjet për të rritur nivelin e sigurisë (sipas dëshirës). Krijoni kontratat tuaj sipas kërkesës në faqen <em>Kontrata</em>.",
+            "accountsDescription": "Llogaritë janë çelësa të ruajtur me fjalëkalim që mund të mbajnë __ether__ dhe valuta të tjera të bazuara mbi __ether__. Ato mund të kontrollojnë kontrata, por nuk mund të shfaqin transaksione ardhëse.",
             "buttons": {
-                "deposit": "Transfer Ether & Tokens",
+                "deposit": "Transfer __ether__ & Tokens",
                 "buyEther": "Fund with Bitcoin",
                 "viewOnExplorer": "View on Etherscan",
                 "copyAddress": "Copy address",
@@ -205,7 +205,7 @@
                     "description": "Kontratë e kontrolluar nga disa llogari",
                     "text1": "Kjo është llogari kyçe e kontrolluar nga",
                     "text2": "pronarë. Ju mund të dërgoni deri në",
-                    "text3": "Ether në ditë.",
+                    "text3": "__Ether__ në ditë.",
                     "text4": "Çdo transaksion mbi limitin ditor kërkon konfirmimin e",
                     "text5": "pronarëve.",
                     "accountOwnersTitle": "Pronarët e llogarisë",
@@ -261,7 +261,7 @@
             "texts": {
                 "ownerPaysGas": "Karburanti paguhet nga pronari i kontratës së kuletës",
                 "sendAmount": "Ju doni të dërgoni <strong>__amount__</strong>.",
-                "sendAmountEquivalent": "Ju doni të dërgoni <strong>__amount__</strong> në Ether, duke përdorur norma këmbimi nga <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">Cryptocompare.com</a>.<br>Që tani është ekuivalente me <strong>__etherAmount__</strong>.",
+                "sendAmountEquivalent": "Ju doni të dërgoni <strong>__amount__</strong> në __ether__, duke përdorur norma këmbimi nga <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">Cryptocompare.com</a>.<br>Që tani është ekuivalente me <strong>__etherAmount__</strong> __ether__.",
                 "sendToken": "Ju doni të dërgoni <strong>__amount__ __symbol__</strong> <strong> __name__</strong>.",
                 "overDailyLimit": "<p class=\"over-daily\">Kjo sasi është mbi limitin e mbetur ditor prej __limit__ (nga __total__ në ditë), pra ju duhet __count__ adresë tjetër për ta konfirmuar.</p>",
                 "overDailyLimit_plural": "<p class=\"over-daily\">Kjo sasi është mbi limitin e mbetur ditor prej __limit__ (nga __total__ në ditë), pra ju duhet __count__ adresa të tjera për ta konfirmuar.</p>",
@@ -270,7 +270,7 @@
                 "noCodeInRecipient": "Llogaria marrëse nuk është kontratë, pra ju nuk mund të ekzekutoni asgjë. <strong> Vendosni një adresë kontrate në fushën \"DREJT\". </strong>",
                 "addData": "Mund të shtoni të dhëna të tjera shtesë për t'u dërguar me gjithë transaksionin. Nëse nuk e dini çfarë është, atëherë <strong>mos e prekni ose mund të ketë probleme</strong>.",
                 "dataNotExecutable": "Të dhënat duket se nuk janë të ekzekutueshme, pra ky transaksion do të përdorë të gjithë karburantin që i mundësoni.",
-                "cantEstimateGas": "Konsumi juaj i karburantit nuk mund të llogaritet saktësisht, sepse ju duhet të paktën 1 Ether në llogari.",
+                "cantEstimateGas": "Konsumi juaj i karburantit nuk mund të llogaritet saktësisht, sepse ju duhet të paktën 1 __ether__ në llogari.",
                 "estimatedGas": "Karburanti i nevojshëm i përafruar",
                 "timeTexts": {
                     "0": "brenda pak minutave ose më gjatë",
@@ -286,7 +286,7 @@
             "title": "<strong>Valuta</strong> të personalizuara",
             "subTitle": "Valutat e shtuara",
             "admin": "__name__ (faqja e administrimit)",
-            "description": "Valutat janë elemente të këmbyeshme të ndërtuara mbi platformën Ethereum. Në mënyrë që llogaritë të mund të kontrollojnë për valuta dhe t'i dërgojnë ato, duhet të shtoni adresën e tyre në këtë listë. Mund të krijoni valutën tuaj personale thjesht duke modifikuar <a href=\"https://ethereum.org/token#the-code\" target=\"_blank\">këtë shembull kontrate valute të personalizuar</a> ose duke mësuar më shumë rreth <a href=\"https://www.ethereum.org/token\" target=\"_blank\">Valutave Ethereum</a>.",
+            "description": "Valutat janë elemente të këmbyeshme të ndërtuara mbi platformën Ethereum. Në mënyrë që llogaritë të mund të kontrollojnë për valuta dhe t'i dërgojnë ato, duhet të shtoni adresën e tyre në këtë listë. Mund të krijoni valutën tuaj personale thjesht duke modifikuar <a href=\"https://ethereum.org/token#the-code\" target=\"_blank\">këtë shembull kontrate valute të personalizuar</a> ose duke mësuar më shumë rreth <a href=\"https://www.ethereum.org/token\" target=\"_blank\">Valutave __Ethereum__</a>.",
             "deleteToken": "A doni ta hiqni valutën <strong>__token__</strong> nga lista juaj?",
             "addedToken": "__token__ u shtua në listën tuaj të vëzhgimit",
             "editedToken": "U modifikua valuta __token__",

@@ -23,22 +23,22 @@
             "texts": {
                 "note": "메모",
                 "balance": "잔고",
-                "connectionErrorMist": "연결할 수 없습니다. geth를 다음과 같이 실행하세요:<br><br><small><code>__node__</code><br><br>IPC 경로가 디폴트로 되어있는지 확인하세요. 만일 다른 경로를 사용한다면 다음과 같이 실행하세요: <code>datadir</code>, e.g.<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/geth.ipc</code><br>or<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/geth.ipc</code>. <br><br>Optional add: <code>--unlock &lt;yourAccount&gt;.</code></small>",
-                "connectionErrorBrowser": "연결할 수 없습니다. geth를 다음의 옵션으로 실행하세요.:<br><br><small><code>__node__</code><br><br>Optional add: <code>--unlock &lt;yourAccount&gt;.</code></small>",
+                "connectionErrorMist": "연결할 수 없습니다. __geth__를 다음과 같이 실행하세요:<br><br><small><code>__node__</code><br><br>IPC 경로가 디폴트로 되어있는지 확인하세요. 만일 다른 경로를 사용한다면 다음과 같이 실행하세요: <code>datadir</code>, e.g.<br><code>__geth__ --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/__Ethereum__/__gethIpc__</code><br>or<br><code>__geth__ --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/__gethIpc__</code>. <br><br>Optional add: <code>--unlock &lt;yourAccount&gt;.</code></small>",
+                "connectionErrorBrowser": "연결할 수 없습니다. __geth__를 다음의 옵션으로 실행하세요.:<br><br><small><code>__node__</code><br><br>Optional add: <code>--unlock &lt;yourAccount&gt;.</code></small>",
                 "pendingConfirmationsBadge": "승인 대기 중!",
                 "nodeSyncing": "__blockDiff__ 블럭 남음",
                 "blockReceived": "새 블럭을 받았음",
                 "timeSinceBlock": "마지막 블럭 이후",
                 "peers": "피어(peers)",
                 "waitingForBlocks": "블럭을 기다리는 중..",
-                "testnetExplain": "현재 테스트넷 상에 있습니다. 진짜 이더를 이 주소로 절대 보내지 마세요.",
+                "testnetExplain": "현재 테스트넷 상에 있습니다. 진짜 __ether__를 이 주소로 절대 보내지 마세요.",
                 "noAccounts": {
                     "title": "계정이 없습니다",
                     "text": "강력한 암호를 가진 계정이 최소 1개는 있어야 합니다."
                 }
             },
             "error": {
-                "wrongChain": "현재 다른 체인상에 있는 것 같습니다. 이더리움 지갑앱을 재실행하세요!"
+                "wrongChain": "현재 다른 체인상에 있는 것 같습니다. __Ethereum__ 지갑앱을 재실행하세요!"
             },
             "warnings": {
                 "txOriginVulnerabilityWallet": "이 스마트 계약 지갑 오래된 코드를 가지고 있으며, 피싱 공격을받습니다.",
@@ -53,7 +53,7 @@
                 "title": "계정을 선택하세요"
             },
             "testnetWallet": {
-                "walletNeedsDeployment": "테스넷상에 있습니다.<br><br>원본 지갑 컨트랙트 코드가 없습니다. 지갑컨트랙트의 서브컨트랙들이 다음의 당신 주소에서 사용할 코드가 필요합니다: <br><br><small><code>__account__</code></small><br><br><em> 이 주소에 최소한 1 이더가 있어야 합니다!</em>",
+                "walletNeedsDeployment": "테스넷상에 있습니다.<br><br>원본 지갑 컨트랙트 코드가 없습니다. 지갑컨트랙트의 서브컨트랙들이 다음의 당신 주소에서 사용할 코드가 필요합니다: <br><br><small><code>__account__</code></small><br><br><em> 이 주소에 최소한 1 __ether__가 있어야 합니다!</em>",
                 "testnetWalletDeployed": "오리지널 지갑 컨트랙트가 설치되었습니다.<br> 사용된 주소는 다음과 같습니다:<br><br><small><code>__address__</code></small>."
             },
             "addToken": {
@@ -77,7 +77,7 @@
             "defaultName": "미정",
             "creating": "만들기",
             "importing": "불러오기",
-            "accountNote": "계정들은 이더를 보관하고 전송할 수 있지만 개별 입금되는 트랜잭션들을 보여줄 수 없습니다. 개별 입금 트랜잭션들을 보려면 <a href=\"/account/new\">지갑 컨트랙트 설치하기</a>를 해야합니다.",
+            "accountNote": "계정들은 __ether__를 보관하고 전송할 수 있지만 개별 입금되는 트랜잭션들을 보여줄 수 없습니다. 개별 입금 트랜잭션들을 보려면 <a href=\"/account/new\">지갑 컨트랙트 설치하기</a>를 해야합니다.",
             "walletNote": "대부분의 거래소는 아직 컨트랙트 지갑을 지원하지 않습니다. 송금하려는 금액을 계정주소로 먼저 이동시키기 바랍니다.",
             "addressCopiedToClipboard": "클립보드에 복사되었습니다",
             "addressNotCopiedToClipboard": "클립보드에 복사하는데 실패했습니다. 다시 시도하세요.",
@@ -86,11 +86,11 @@
             "dailyLimitRemaining": "일일 한도 잔여시간",
             "requiredSignatures": "필요한 서명",
             "owners": "소유자",
-            "walletsDescription": "이것은 블랙체인에 저장되는 컨트랙트들로서 이더를 보관하고 보호할 수 있습니다. 다수의 소유자를 지정할 수 있고 모든 트랜잭션 로그기록을 보관합니다.",
-            "walletsDescriptionNotEnoughFunds": "1 이더 이상을 가지고 있으면 여러 가지 기능을 가진 컨트랙트들을 만들 수 있습니다. 지갑 컨트랙트은 기본 스마트 컨트랙트의 한가지 유형인데, 보안 강화를 위해 자금을 다수의 계정에 의해 통제되도록 하거나 하루 출금량을 제한할 수도 있습니다. 여러분의 필요에 맞게 컨트랙트를 만들기 위해서는 <em> 컨트랙트 </em> 메뉴 탭을 클릭하세요",
-            "accountsDescription": "계정은 암호로 보호된 키인데 이더, 이더리움을 기반으로 한 토큰 또는 코인들을 보관하고 컨트랙트를 통제합니다. 계정은 개별 입금 트랙잭션은 보여주지 못합니다.",
+            "walletsDescription": "이것은 블랙체인에 저장되는 컨트랙트들로서 __ether__를 보관하고 보호할 수 있습니다. 다수의 소유자를 지정할 수 있고 모든 트랜잭션 로그기록을 보관합니다.",
+            "walletsDescriptionNotEnoughFunds": "1 __ether__ 이상을 가지고 있으면 여러 가지 기능을 가진 컨트랙트들을 만들 수 있습니다. 지갑 컨트랙트은 기본 스마트 컨트랙트의 한가지 유형인데, 보안 강화를 위해 자금을 다수의 계정에 의해 통제되도록 하거나 하루 출금량을 제한할 수도 있습니다. 여러분의 필요에 맞게 컨트랙트를 만들기 위해서는 <em> 컨트랙트 </em> 메뉴 탭을 클릭하세요",
+            "accountsDescription": "계정은 암호로 보호된 키인데 __ether__혹은 __Ethereum__을 기반으로 한 토큰 또는 코인들을 보관하고 컨트랙트를 통제합니다. 계정은 개별 입금 트랙잭션은 보여주지 못합니다.",
             "buttons": {
-                "deposit": "이더 입금",
+                "deposit": "__ether__ 입금",
                 "buyEther": "비트코인을 사용한 입금",
                 "viewOnExplorer": "View on Etherscan",
                 "copyAddress": "주소 복사",
@@ -202,7 +202,7 @@
                     "description": "다수의 계정에 의해 통제되는 컨트랙트",
                     "text1": "이것은 다음의 소유자에 의해 통제되는 계정입니다.",
                     "text2": "소유자들. 하루에 보낼 수 있는 최대금액은",
-                    "text3": "이더 / 일.",
+                    "text3": "__ether__ / 일.",
                     "text4": "이 일일 금액을 초과하는 트랜잭션은 다음 소유자들의 승인을 필요로 합니다.",
                     "text5": "소유자들.",
                     "accountOwnersTitle": "계정 소유자들",
@@ -254,8 +254,8 @@
             },
             "texts": {
                 "ownerPaysGas": "개스는 지갑 컨트랙트의 소유자에 의해 지불되었습니다.",
-                "sendAmount": "보내고자하는 금액은 <strong>__amount__</strong> 입니다.",
-                "sendAmountEquivalent": "보내고자 하는 금액은 <strong>__amount__</strong> 이더이고, 교환비율은 <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a> 에 근거하였으며, <br>현재 <strong>__etherAmount__ </strong>만큼의 이더입니다.",
+                "sendAmount": "보내고자하는 금액은 <strong>__amount__</strong>입니다.",
+                "sendAmountEquivalent": "보내고자 하는 금액은 <strong>__amount__</strong> __ether__이고, 교환비율은 <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a> 에 근거하였으며, <br>현재 <strong>__etherAmount__ </strong>만큼의 __ether__입니다.",
                 "sendToken": "<strong> __name__</strong>, <strong>__amount__ __symbol__</strong>을 보내고자 합니다.",
                 "overDailyLimit": "<p class=\"over-daily\">이 금액은 현재 남은 일일 제한 금액인 __limit__ (총 일일 한도 __total__)을 초과합니다, 따라서 __count__ 개의 다른 계정의 승인이 필요합니다.</p>",
                 "overDailyLimit_plural": "<p class=\"over-daily\">이 금액은 현재 남은 일일 제한 금액인 __limit__ (일일 한도 __total__)을 초과합니다, 따라서 __count__ 개의 다른 계정의 승인이 필요합니다.</p>",
@@ -264,7 +264,7 @@
                 "noCodeInRecipient": "수신계정이 컨트랙트가 아닙니다, 따라서 아무것도 실행할 수 없습니다. <strong> '에게' 란에 컨트랙트 주소를 입력하세요.</strong>",
                 "addData": "트랜잭션과 함께 추가 데이터를 송신할 수 있습니다. 만일 \"에게\" 란이 비어 있으면, 송신된 데이터를 이용해 컨트랙트가 설치됩니다.",
                 "dataNotExecutable": "이 데이터를 실행할 수가 없습니다, 따라서 이 트랜잭션은 제공된 개스를 모두 소모하게 될 것입니다.",
-                "cantEstimateGas": "개스 사용량을 정확히 예측할 수가 없습니다, 따라서 최소 1 이더가 계정에 있어야 합니다.",
+                "cantEstimateGas": "개스 사용량을 정확히 예측할 수가 없습니다, 따라서 최소 1 __ether__가 계정에 있어야 합니다.",
                 "estimatedGas": "예상 필요 개스",
                 "timeTexts": {
                     "0": "수분 또는 그 이상",
@@ -280,7 +280,7 @@
             "title": "주문형 <strong>토큰</strong>",
             "subTitle": "추가된 토큰",
             "admin": "__name__ (관리자 페이지)",
-            "description": "토큰은 이더리움 플랫폼 위에 만들어진 화폐와 다른 대체수단들을 말합니다. 토큰들을 열람하고 송금하기 위해서는, 토큰들의 주소를 이 목록에 등록해야 합니다. <a href=\"https://ethereum.org/token#the-code\" target=\"_blank\">주문형 토큰 예제</a>를 수정해 주문형 토큰을 만들거나, <a href=\"https://www.ethereum.org/token\" target=\"_blank\">이더리움 토큰들</a>를 통해 더 학습을 할 수도 있습니다.",
+            "description": "토큰은 Ethereum 플랫폼 위에 만들어진 화폐와 다른 대체수단들을 말합니다. 토큰들을 열람하고 송금하기 위해서는, 토큰들의 주소를 이 목록에 등록해야 합니다. <a href=\"https://ethereum.org/token#the-code\" target=\"_blank\">주문형 토큰 예제</a>를 수정해 주문형 토큰을 만들거나, <a href=\"https://www.ethereum.org/token\" target=\"_blank\">__Ethereum__ 토큰들</a>를 통해 더 학습을 할 수도 있습니다.",
             "deleteToken": "목록에서 <strong>__token__</strong> 토큰을 삭제하고 싶습니까?",
             "addedToken": "리스트에 __token__ 토큰 추가됨",
             "editedToken": "__token__ 토큰 수정됨",

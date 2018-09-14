@@ -88,7 +88,46 @@ Template['elements_selectableUnit'].helpers({
     @method (selectedUnit)
     */
   units: function() {
-    return selectableUnits;
+    if(Session.get('name') == 'ethereum')
+      return selectableUnits;
+
+    var supportedUnits = [];
+    if(publicSettings.unit)
+      supportedUnits.push({ text: publicSettings.unit, value: publicSettings.unit });
+    else
+      supportedUnits.push({ text: 'ETHER', value: 'ether' });
+
+    if(Session.get('network') == 'main') {
+      var unsupports = ['FINNEY', 'BTC', 'USD', 'EUR', 'GBP', 'BRL'];
+      var supports = [];
+
+      if(publicSettings.unsupportedUnits) {
+        unsupports = publicSettings.unsupportedUnits;
+      }
+      if(publicSettings.supportedUnits) {
+        supports = publicSettings.supportedUnits;
+      }
+
+      var i = 1;
+      // remove unsupporeted default units
+      for(; i < 7; i++) {
+        if(unsupports.indexOf(selectableUnits[i].text) < 0) {
+          supportedUnits.push(selectableUnits[i]);
+        }
+      }
+      // add supporeted units
+      for(var j = 0; j < supports.length; j++) {
+        supportedUnits.push(supports[j]);
+      }
+
+      // append remains ester eggs
+      for(; i < selectableUnits.length; i++) {
+        supportedUnits.push(selectableUnits[i]);
+      }
+
+      return supportedUnits;
+    }
+    return supportedUnits;
   },
   /**
     Can select units

@@ -757,7 +757,7 @@ Helpers.getENSName = function(address, callback) {
     return;
   }
 
-  if (Session.get('network') !== 'main') {
+  if (Session.get('name') !== 'ethereum') {
     callback(
       'Cannot retrieve ENS addresses unless fully synced on main chain',
       null,

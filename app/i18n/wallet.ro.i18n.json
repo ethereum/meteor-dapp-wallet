@@ -23,14 +23,14 @@
             "texts": {
                 "note": "Nota",
                 "balance": "Balanta",
-                "connectionErrorMist": "Nu ma pot conecta. Te rog porneste geth cu urmatoarele optiuni:<br><br><small><code>__node__</code><br><br>Ai grija sa iti setezi calea IPC implicita<code>datadir</code>, e.g.<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/geth.ipc</code><br>or<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/geth.ipc</code>. <br><br>Optional adauga: <code>--unlock &lt;yourAccount&gt;.</code></small>",
-                "connectionErrorBrowser": "Nu ma pot conecta. Te rog porneste geth cu urmatoarele optiuni:<br><br><small><code>__node__</code><br><br>Optional adauga: <code>--unlock &lt;yourAccount&gt;.</code></small>",
+                "connectionErrorMist": "Nu ma pot conecta. Te rog porneste __geth__ cu urmatoarele optiuni:<br><br><small><code>__node__</code><br><br>Ai grija sa iti setezi calea IPC implicita<code>datadir</code>, e.g.<br><code>__geth__ --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/__Ethereum__/__gethIpc__</code><br>or<br><code>__geth__ --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.__ethereum__/__gethIpc__</code>. <br><br>Optional adauga: <code>--unlock &lt;yourAccount&gt;.</code></small>",
+                "connectionErrorBrowser": "Nu ma pot conecta. Te rog porneste __geth__ cu urmatoarele optiuni:<br><br><small><code>__node__</code><br><br>Optional adauga: <code>--unlock &lt;yourAccount&gt;.</code></small>",
                 "pendingConfirmationsBadge": "Astept confirmarea!",
                 "nodeSyncing": "__blockDiff__ blocuri ramase",
                 "blockReceived": "Bloc nou descarcat",
                 "timeSinceBlock": "de la ultimul bloc",
                 "peers": "peers",
-                "testnetExplain": "Te afli in reteaua de teste, NU TRIMITE ether din reteaua principala catre aceste adrese",
+                "testnetExplain": "Te afli in reteaua de teste, NU TRIMITE __ether__ din reteaua principala catre aceste adrese",
                 "noAccounts": {
                     "title": "Nu ai niciun cont configurat",
                     "text": "Inainte de a folosi portofelul, ai nevoie de un cont securizat cu o parola puternica."
@@ -52,7 +52,7 @@
                 "title": "Alege un cont"
             },
             "testnetWallet": {
-                "walletNeedsDeployment": "Esti pe reteaua de teste.<br><br>Nu am gasit niciun portofel, trebuie implementat un portofel ce poate fi folosit de contracte, de la adresa ta: <br><br><small><code>__account__</code></small><br><br><em>Please make sure this address has at least 1 ether!</em>",
+                "walletNeedsDeployment": "Esti pe reteaua de teste.<br><br>Nu am gasit niciun portofel, trebuie implementat un portofel ce poate fi folosit de contracte, de la adresa ta: <br><br><small><code>__account__</code></small><br><br><em>Please make sure this address has at least 1 __ether__!</em>",
                 "testnetWalletDeployed": "Portofelul a fost implementat!<br>Acest portofel a fost implementat pe adresa:<br><br><small><code>__address__</code></small>."
             },
             "addToken": {
@@ -76,17 +76,17 @@
             "defaultName": "Portofel nou",
             "creating": "Se creeaza",
             "importing": "Se importa",
-            "accountNote": "Conturile nu pot afisa jurnalul tranzactiilor dar pot stoca si trimite ether. Pentru a vedea jurnalul tranzactiilor <a href=\"/account/new\">implementeaza un portofel bazat pe contracte</a> pentru a stoca ether.",
-            "walletNote": "Majoritatea furnizorilor de servicii de schimb nu permit ca tranzactiile de ether sa fie facute dintr-un portofel de tip contract-inteligent. Asigura-te ca trimiti intai ether catre contul tau!",
+            "accountNote": "Conturile nu pot afisa jurnalul tranzactiilor dar pot stoca si trimite __ether__. Pentru a vedea jurnalul tranzactiilor <a href=\"/account/new\">implementeaza un portofel bazat pe contracte</a> pentru a stoca __ether__.",
+            "walletNote": "Majoritatea furnizorilor de servicii de schimb nu permit ca tranzactiile de __ether__ sa fie facute dintr-un portofel de tip contract-inteligent. Asigura-te ca trimiti intai __ether__ catre contul tau!",
             "addressCopiedToClipboard": "Copiaza adresa ta",
             "qrCodeLabel": "Scaneaza acest cod cu o aplicatie mobila compatibila",
             "dailyLimit": "Limita zilnica",
             "dailyLimitRemaining": "ramasa azi",
             "requiredSignatures": "Semnaturi necesare",
             "owners": "Detinatori",
-            "walletsDescription": "Acestea sunt contracte ce stocheaza si securizeaza ether. Ele pot avea mai multi detinatori si pot pastra intregul jurnal al tranzactiilor.",
-            "walletsDescriptionNotEnoughFunds": "Ai nevoie de cel putin 1 ether pentru a implementa contracte mai sofisticate. Portofelele sunt la baza niste contracte inteligente, ce pot fi controlate de mai multi detinatori si chiar se pot seta limite de retragere pentru o mai buna securitate.  Pentru a implementa un contract personalizat, mergi la sectiunea <em> Contracts </em>.",
-            "accountsDescription": "Conturile sunt chei securizate prin parola ce pot controla contractele. Conturile pot stoca ether dar nu pot lista jurnalul tranzactiilor.",
+            "walletsDescription": "Acestea sunt contracte ce stocheaza si securizeaza __ether__. Ele pot avea mai multi detinatori si pot pastra intregul jurnal al tranzactiilor.",
+            "walletsDescriptionNotEnoughFunds": "Ai nevoie de cel putin 1 __ether__ pentru a implementa contracte mai sofisticate. Portofelele sunt la baza niste contracte inteligente, ce pot fi controlate de mai multi detinatori si chiar se pot seta limite de retragere pentru o mai buna securitate.  Pentru a implementa un contract personalizat, mergi la sectiunea <em> Contracts </em>.",
+            "accountsDescription": "Conturile sunt chei securizate prin parola ce pot controla contractele. Conturile pot stoca __ether__ dar nu pot lista jurnalul tranzactiilor.",
             "buttons": {
                 "deposit": "Depunere",
                 "buyEther": "Depunere Bitcoin",
@@ -197,7 +197,7 @@
                     "description": "Un portofel controlat de mai multe conturi.",
                     "text1": "Acesta este un portofel controlat de",
                     "text2": "detinatori. Poti trimite pana la",
-                    "text3": "ether pe zi.",
+                    "text3": "__ether__ pe zi.",
                     "text4": "Orice tranzactie ce depaseste limita zilnica, necesita confirmarea celor",
                     "text5": "detinatori.",
                     "accountOwnersTitle": "Detinatorii Portofelului",
@@ -250,7 +250,7 @@
             "texts": {
                 "ownerPaysGas": "Gas is payed by the owner of the wallet contract",
                 "sendAmount": "Vei trimite <strong>__amount__</strong>.",
-                "sendAmountEquivalent": "Vei trimite <strong>__amount__</strong> in ether, folosind rata de <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a>.<br>In acest moment echivalentul a <strong>__etherAmount__</strong>.",
+                "sendAmountEquivalent": "Vei trimite <strong>__amount__</strong> in __ether__, folosind rata de <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a>.<br>In acest moment echivalentul a <strong>__etherAmount__</strong> __ether__.",
                 "sendToken": "You want to send <strong>__amount__ __name__</strong>.",
                 "overDailyLimit": "<p class=\"over-daily\">Aceasta suma depaseste limita zilnica de __limit__ (of __total__ pe zi), ai nevoie de aceste __count__ conturi pentru confirmare.</p>",
                 "overDailyLimit_plural": "<p class=\"over-daily\">Aceasta suma depaseste limita zilnica de __limit__ (of __total__ pe zi), ai nevoie de aceste __count__ conturi pentru a confirmare.</p>",
@@ -259,7 +259,7 @@
                 "noCodeInRecipient": "Destinatarul nu este un contract, nu se pot executa instructiuni. <strong> Pune adresa unui contract in campul 'CATRE' . </strong>",
                 "addData": "Poti adauga date suplimentare alaturi de aceasta tranzactie. Daca acest camp \"to\" va ramane gol, acesta va incerca sa implementeze un contract cu datele introduse.",
                 "dataNotExecutable": "Datele nu par a fi eligibile pentru executie, asta inseamna ca aceasta tranzactie va folosi gas-ul pus la dispozitie.",
-                "cantEstimateGas": "Nu putem estima cu exactitate cantintatea de gas ce urmeaza sa fie folosita, trebuie sa ai cel putin 1 ether in cont.",
+                "cantEstimateGas": "Nu putem estima cu exactitate cantintatea de gas ce urmeaza sa fie folosita, trebuie sa ai cel putin 1 __ether__ in cont.",
                 "estimatedGas": "Estimare gas necesar",
                 "timeTexts": {
                     "0": "in cateva minute sau chiar mai mult",

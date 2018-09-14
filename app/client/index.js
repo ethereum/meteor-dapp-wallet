@@ -15,6 +15,14 @@ Meteor.startup(function() {
       TAPi18n.setLanguage('en');
     }
   }
+
+  // change some header attributes
+  document.title = publicSettings.title || publicSettings.walletName || "Ethereum Wallet";
+  var description = publicSettings.description || "The Ethereum wallet";
+  var keywords = publicSettings.keywords || "wallet, dapp, ethereum";
+  $('meta[name=description]').attr('content', description);
+  $('meta[name=keywords]').attr('content', keywords);
+
   // change moment and numeral language, when language changes
   Tracker.autorun(function() {
     if (_.isString(TAPi18n.getLanguage())) {
@@ -27,5 +35,28 @@ Meteor.startup(function() {
       }
       EthTools.setLocale(lang);
     }
+
+    var tokens = [];
+
+    if (publicSettings.tokens) {
+      console.info('load tokens...');
+      _.extend(tokens, publicSettings.tokens);
+    }
+
+    tokens.forEach(function(tok) {
+      // If on the network, this will add token by default, only once.
+      if (
+        !localStorage[tok.local] &&
+        Session.get('name') === tok.name
+      ) {
+        localStorage.setItem(tok.local, true);
+
+        // wait 5s, to allow the tokens to be loaded from the localstorage first
+        Meteor.setTimeout(function() {
+          tokenId = Helpers.makeId('token', tok.token.address);
+          Tokens.upsert(tokenId, {$set: tok.token});
+        }, 5000);
+      }
+    });
   });
 });

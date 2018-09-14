@@ -88,8 +88,8 @@ var showModal = function() {
   Meteor.setTimeout(function() {
     // if in mist, tell to start geth, otherwise start with RPC
     var gethRPC = window.mist
-      ? 'geth'
-      : 'geth --rpc --ws --wsorigins "' +
+      ? publicSettings.geth
+      : publicSettings.geth + ' --rpc --ws --wsorigins "' +
         window.location.protocol +
         '//' +
         window.location.host +
@@ -101,7 +101,12 @@ var showModal = function() {
           TAPi18n.__(
             'wallet.app.texts.connectionError' +
               (window.mist ? 'Mist' : 'Browser'),
-            { node: gethRPC }
+            {
+              node: gethRPC,
+              geth: publicSettings.geth,
+              Ethereum: publicSettings.Ethereum,
+              ethereum: publicSettings.ethereum
+            }
           )
         ),
         ok: function() {

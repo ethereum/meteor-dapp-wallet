@@ -23,8 +23,8 @@
             "texts": {
                 "note": "備註",
                 "balance": "餘額",
-                "connectionErrorMist": "無法連線。請用下列指令開啟 geth:<br><br><small><code>__node__</code><br><br>當使用不同<code>datadir</code>時，請確認將 IPC 路徑設回預設的，也就是：<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/geth.ipc</code><br>or<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/geth.ipc</code>. <br><br>或加上：<code>--unlock &lt;yourAccount&gt;.</code></small>",
-                "connectionErrorBrowser": "無法連線，請使用下列方式啟動 geth 。<br><br><small><code>__node__</code><br><br>或加上：<code>--unlock &lt;yourAccount&gt;.</code></small>",
+                "connectionErrorMist": "無法連線。請用下列指令開啟 __geth__:<br><br><small><code>__node__</code><br><br>當使用不同<code>datadir</code>時，請確認將 IPC 路徑設回預設的，也就是：<br><code>__geth__ --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/__Ethereum__/__gethIpc__</code><br>or<br><code>__geth__ --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.__ethereum__/__gethIpc__</code>. <br><br>或加上：<code>--unlock &lt;yourAccount&gt;.</code></small>",
+                "connectionErrorBrowser": "無法連線，請使用下列方式啟動 __geth__ 。<br><br><small><code>__node__</code><br><br>或加上：<code>--unlock &lt;yourAccount&gt;.</code></small>",
                 "pendingConfirmationsBadge": "等待中的確認！",
                 "nodeSyncing": "剩下 __blockDiff__ 塊",
                 "blockReceived": "收到新的區塊",
@@ -37,7 +37,7 @@
                 }
             },
             "error": {
-                "wrongChain": "您似乎在一條不同的鏈上，請重新啟動 Ethereum 錢包 App！"
+                "wrongChain": "您似乎在一條不同的鏈上，請重新啟動 __Ethereum__ 錢包 App！"
             },
             "warnings": {
                 "txOriginVulnerabilityWallet": "這個聰明的合同錢包過時代碼，並受網絡釣魚攻擊。",
@@ -54,7 +54,7 @@
                 "title": "選擇一個帳戶"
             },
             "testnetWallet": {
-                "walletNeedsDeployment": "您似乎在 testnet 上。<br><br>沒有發現任何原始錢包契約程式碼，我們需要從您的位址佈署一個，可讓錢包契約的 stub contract 使用：<br><br><small><code>__account__</code></small><br><br><em>請確認這個地址至少有 1 ether！</em>",
+                "walletNeedsDeployment": "您似乎在 testnet 上。<br><br>沒有發現任何原始錢包契約程式碼，我們需要從您的位址佈署一個，可讓錢包契約的 stub contract 使用：<br><br><small><code>__account__</code></small><br><br><em>請確認這個地址至少有 1 __ether__！</em>",
                 "testnetWalletDeployed": "原始錢包契約佈署了！<br>一個原始錢包契約佈署在位址：<br><br><small><code>__address__</code></small>."
             },
             "addToken": {
@@ -78,19 +78,19 @@
             "defaultName": "未命名",
             "creating": "創建",
             "importing": "匯入",
-            "accountNote": "帳戶沒辦法顯示正在進帳的交易，但可以顯示餘額和送出 ether。要看進帳的交易，創建 <a href=\"/account/new\">錢包契約</a> 來儲存 ether。",
-            "walletNote": "多數交易所尚未支援從契約錢包收受 ether。務必先把錢移動到一個帳戶位址！",
+            "accountNote": "帳戶沒辦法顯示正在進帳的交易，但可以顯示餘額和送出 __ether__。要看進帳的交易，創建 <a href=\"/account/new\">錢包契約</a> 來儲存 __ether__。",
+            "walletNote": "多數交易所尚未支援從契約錢包收受 __ether__。務必先把錢移動到一個帳戶位址！",
             "addressCopiedToClipboard": "已複製到剪貼簿",
             "qrCodeLabel": "將相容的手機 app 指向這個二維條碼",
             "dailyLimit": "每日限額",
             "dailyLimitRemaining": "今日剩餘限額",
             "requiredSignatures": "需要簽章",
             "owners": "擁有者",
-            "walletsDescription": "這些是存在區塊鏈中，可以保存和保障 ether 的契約。他們可以使用多個帳戶擁有者，而且記錄所有交易的日誌。",
-            "walletsDescriptionNotEnoughFunds": "一旦你有多於 1 ether 時你可以創建更成熟的契約。錢包只是一種基本的智能契約，讓你的基金能夠由多個帳戶控制，而且想要的話可以設定每日提款限額來增加安全性。要創建自己的客製化契約，到<em> 契約 </em> 分頁。",
-            "accountsDescription": "帳戶由密碼保護，可以儲存 ether ，保障基於以太坊的 Token 或貨幣，並且控制契約。帳戶無法顯示進帳中的交易。",
+            "walletsDescription": "這些是存在區塊鏈中，可以保存和保障 __ether__ 的契約。他們可以使用多個帳戶擁有者，而且記錄所有交易的日誌。",
+            "walletsDescriptionNotEnoughFunds": "一旦你有多於 1 __ether__ 時你可以創建更成熟的契約。錢包只是一種基本的智能契約，讓你的基金能夠由多個帳戶控制，而且想要的話可以設定每日提款限額來增加安全性。要創建自己的客製化契約，到<em> 契約 </em> 分頁。",
+            "accountsDescription": "帳戶由密碼保護，可以儲存 __ether__ ，保障基於以太坊的 Token 或貨幣，並且控制契約。帳戶無法顯示進帳中的交易。",
             "buttons": {
-                "deposit": "存入 Ether",
+                "deposit": "存入 __Ether__",
                 "depositBitcoin": "使用 Bitcoin 做存款",
                 "viewOnExplorer": "View on Etherscan",
                 "copyAddress": "複製位址",
@@ -199,7 +199,7 @@
                     "description": "一個受複數帳戶控制的契約。",
                     "text1": "這是一個聯合帳戶，受",
                     "text2": "個擁有帳戶控制。您每天最多可以發送",
-                    "text3": "ether 。",
+                    "text3": "__ether__ 。",
                     "text4": "超過每日提款限額的任何交易，都需要",
                     "text5": "個擁有帳戶確認。",
                     "accountOwnersTitle": "帳戶擁有者們",
@@ -252,7 +252,7 @@
             "texts": {
                 "ownerPaysGas": "瓦斯由錢包契約擁有者支付。",
                 "sendAmount": "您將發送 <strong>__amount__</strong>.",
-                "sendAmountEquivalent": "您將發送 <strong>__amount__</strong> 等值的 ether, 匯率參照 <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a>.<br>目前等值於 <strong>__etherAmount__</strong>.",
+                "sendAmountEquivalent": "您將發送 <strong>__amount__</strong> 等值的 __ether__, 匯率參照 <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a>.<br>目前等值於 <strong>__etherAmount__</strong> __ether__.",
                 "sendToken": "您將發送 <strong>__amount__ __symbol__</strong> 的 <strong> __name__</strong>.",
                 "overDailyLimit": "<p class=\"over-daily\">發送數量將超過今日剩餘限額 __limit__ (每日限額總計 __total__)，您需要 __count__ 個其他帳戶確認。</p>",
                 "overDailyLimit_plural": "<p class=\"over-daily\">發送數量將超過今日剩餘限額 __limit__ (每日限額總計 __total__ )，您需要 __count__ 個其他帳戶確認。</p>",
@@ -261,7 +261,7 @@
                 "noCodeInRecipient": "收受者帳戶非契約，您無法執行任何程式。<strong>請於 '發送至' 欄位填入契約位址。</strong>",
                 "addData": "您可以添加額外資料與本筆交易一併發送。若 \"發送至\" 欄位為空，將嘗試為您添加的額外資料佈署契約。",
                 "dataNotExecutable": "資料似乎不可執行，本筆交易將消耗您提供的全部瓦斯。",
-                "cantEstimateGas": "無法正確估計瓦斯消耗量，您的帳戶需要至少 1 ether 。",
+                "cantEstimateGas": "無法正確估計瓦斯消耗量，您的帳戶需要至少 1 __ether__ 。",
                 "estimatedGas": "估計所需的瓦斯",
                 "timeTexts": {
                     "0": "約數分鐘或更久",
@@ -277,7 +277,7 @@
             "title": "客製化 <strong>token</strong>",
             "subTitle": "新增 token",
             "admin": "__name__ (管理頁面)",
-            "description": "Tokens 為貨幣或其他基於 Ethereum 平台的代幣。您需要添加 token 位址至此清單以便發送或觀察該 token 。您可以修改 <a href=\"https://ethereum.org/token#the-code\" target=\"_blank\">客製化 token 契約範例</a> 以創建客製化 token，或見 <a href=\"https://www.ethereum.org/token\" target=\"_blank\">Ethereum Tokens</a> 以深入學習。",
+            "description": "Tokens 為貨幣或其他基於 Ethereum 平台的代幣。您需要添加 token 位址至此清單以便發送或觀察該 token 。您可以修改 <a href=\"https://ethereum.org/token#the-code\" target=\"_blank\">客製化 token 契約範例</a> 以創建客製化 token，或見 <a href=\"https://www.ethereum.org/token\" target=\"_blank\">__Ethereum__ Tokens</a> 以深入學習。",
             "deleteToken": "您確定要從清單中移除 token <strong>__token__</strong> ？",
             "addedToken": "添加 __token__ 至您的觀察清單",
             "editedToken": "編輯 token __token__",

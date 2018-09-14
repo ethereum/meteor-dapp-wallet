@@ -101,7 +101,7 @@
                     <!-- Account infos -->
                     <div class="account-info">
                         <h3>{{i18n "wallet.app.texts.note"}}</h3>
-                        <p>{{i18n "wallet.accounts.walletNote"}}</p>
+                        <p>{{i18n "wallet.accounts.walletNote" ether=unit}}</p>
                     </div>
                 {{/if}}
 
@@ -109,7 +109,7 @@
                     <!-- Account infos -->
                     <div class="account-info">
                         <h3>{{i18n "wallet.app.texts.note"}}</h3>
-                        <p>{{{i18n "wallet.accounts.accountNote"}}}</p>
+                        <p>{{{i18n "wallet.accounts.accountNote" ether=unit Ether=Ether}}}</p>
                         <p><strong>{{i18n "wallet.accounts.outOfSyncNote"}}</strong></p>
                     </div>
                 {{/if}}
@@ -123,23 +123,32 @@
                         <li>
                             <a href="{{pathFor route='sendTo' address=(toChecksumAddress address)}}" title="{{toChecksumAddress address}}">
                                 <i class="icon-arrow-down"></i>
-                                {{i18n "wallet.accounts.buttons.deposit"}}
+                                {{i18n "wallet.accounts.buttons.deposit" ether=unit Ether=Ether}}
                             </a>
                         </li>
 
-                        {{#if $eq ($.Session.get "network") "main"}}
+                        {{#if $eq ($.Session.get "name") "ethereum"}}
 
                           {{#if ownedAccount}}
                           <li>
                               <a href="https://changelly.com/widget/v1?auth=email&from=USD&to=ETH&merchant_id=47f87f7cddda&address={{address}}&amount=1&ref_id=e25c5a2e8719&color=02a8f3" target="_blank">
                                   <i class="icon-ethereum"></i>
-                                  {{i18n "wallet.accounts.buttons.buyEther"}}
+                                  {{i18n "wallet.accounts.buttons.buyEther" ether=unit Ether=Ether}}
                               </a>
                           </li>
                           {{/if}}
 
                         <li>
                             <a href="https://etherscan.io/address/{{address}}" target="_blank">
+                                <i class="icon-info"></i>
+                                {{i18n "wallet.accounts.buttons.viewOnExplorer"}}
+                            </a>
+                        </li>
+                        {{/if}}
+
+                        {{#if $neq ($.Session.get "name") "ethereum"}}
+                        <li>
+                            <a href="{{publicSettings.blockExplorerAddrUrl}}{{address}}" target="_blank">
                                 <i class="icon-info"></i>
                                 {{i18n "wallet.accounts.buttons.viewOnExplorer"}}
                             </a>

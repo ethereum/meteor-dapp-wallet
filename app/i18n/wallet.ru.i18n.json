@@ -23,8 +23,8 @@
             "texts": {
                 "note": "Примечание",
                 "balance": "Баланс",
-                "connectionErrorMist": "Подключение не получилось. Пожалуйста запустите geth используя:<br><br><small><code>__node__</code><br><br>Убедитесь, что установлен правильный путь IPC по умолчанию, если вы используете особый <code>datadir</code>, например<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/geth.ipc</code><br>or<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/geth.ipc</code>. <br><br>Можно добавить: <code>--unlock &lt;yourAccount&gt;.</code></small>",
-                "connectionErrorBrowser": "Подключение не получилось. Попробуйте запустить geth с такими параметрами:<br><br><small><code>__node__</code><br><br>Можно добавить: <code>--unlock &lt;yourAccount&gt;.</code></small>",
+                "connectionErrorMist": "Подключение не получилось. Пожалуйста запустите __geth__ используя:<br><br><small><code>__node__</code><br><br>Убедитесь, что установлен правильный путь IPC по умолчанию, если вы используете особый <code>datadir</code>, например<br><code>__geth__ --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/__Ethereum__/__gethIpc__</code><br>or<br><code>__geth__ --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.__ethereum__/__gethIpc__</code>. <br><br>Можно добавить: <code>--unlock &lt;yourAccount&gt;.</code></small>",
+                "connectionErrorBrowser": "Подключение не получилось. Попробуйте запустить __geth__ с такими параметрами:<br><br><small><code>__node__</code><br><br>Можно добавить: <code>--unlock &lt;yourAccount&gt;.</code></small>",
                 "pendingConfirmationsBadge": "Ожидаем подтверждения!",
                 "nodeSyncing": "осталось __blockDiff__ блоков",
                 "blockReceived": "Получено новых блоков",
@@ -37,7 +37,7 @@
                 }
             },
             "error": {
-                "wrongChain": "Кажется вы не в той цепочке, перезапустите Ethereum Wallet App!"
+                "wrongChain": "Кажется вы не в той цепочке, перезапустите __Ethereum__ Wallet App!"
             },
             "warnings": {
                 "txOriginVulnerabilityWallet": "Этот умный контракт кошелек имеет устаревший код и подлежит фишинга.",
@@ -252,7 +252,7 @@
             "texts": {
                 "ownerPaysGas": "Газ оплачивается владельцем контракта кошелька",
                 "sendAmount": "Вы желаете отправить <strong>__amount__</strong>.",
-                "sendAmountEquivalent": "Вы желаете отправить <strong>__amount__</strong> эфира, используя курс с <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a>.<br>Что в данный момент эквивалентно <strong>__etherAmount__</strong>.",
+                "sendAmountEquivalent": "Вы желаете отправить <strong>__amount__</strong> эфира, используя курс с <a href=\"https://www.cryptocompare.com/coins/eth/overview/BTC\" target=\"_blank\">cryptocompare.com</a>.<br>Что в данный момент эквивалентно <strong>__etherAmount__</strong> __ether__.",
                 "sendToken": "Вы хотите отправить <strong>__amount__ __symbol__</strong> от <strong> __name__</strong>.",
                 "overDailyLimit": "<p class=\"over-daily\">Этот платеж превышает дневной лимит на __limit__ ( __total__ в день), вам требуется подтверждение __count__ других аккаутнов.</p>",
                 "overDailyLimit_plural": "<p class=\"over-daily\">Этот платеж превышает дневной лимит на __limit__ ( __total__ в день), вам требуется подтверждение __count__ других аккаунтов.</p>",
