@@ -26,11 +26,11 @@
                 "connectionErrorMist": "연결할 수 없습니다. geth를 다음과 같이 실행하세요:<br><br><small><code>__node__</code><br><br>IPC 경로가 디폴트로 되어있는지 확인하세요. 만일 다른 경로를 사용한다면 다음과 같이 실행하세요: <code>datadir</code>, e.g.<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/geth.ipc</code><br>or<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/geth.ipc</code>. <br><br>Optional add: <code>--unlock &lt;yourAccount&gt;.</code></small>",
                 "connectionErrorBrowser": "연결할 수 없습니다. geth를 다음의 옵션으로 실행하세요.:<br><br><small><code>__node__</code><br><br>Optional add: <code>--unlock &lt;yourAccount&gt;.</code></small>",
                 "pendingConfirmationsBadge": "승인 대기 중!",
-                "nodeSyncing": "__blockDiff__ 블럭 남음",
-                "blockReceived": "새 블럭을 받았음",
-                "timeSinceBlock": "마지막 블럭 이후",
+                "nodeSyncing": "__blockDiff__ 블록 남음",
+                "blockReceived": "새 블록을 받았음",
+                "timeSinceBlock": "마지막 블록 이후",
                 "peers": "피어(peers)",
-                "waitingForBlocks": "블럭을 기다리는 중..",
+                "waitingForBlocks": "블록을 기다리는 중..",
                 "testnetExplain": "현재 테스트넷 상에 있습니다. 진짜 이더를 이 주소로 절대 보내지 마세요.",
                 "noAccounts": {
                     "title": "계정이 없습니다",
@@ -53,7 +53,7 @@
                 "title": "계정을 선택하세요"
             },
             "testnetWallet": {
-                "walletNeedsDeployment": "테스넷상에 있습니다.<br><br>원본 지갑 컨트랙트 코드가 없습니다. 지갑컨트랙트의 서브컨트랙들이 다음의 당신 주소에서 사용할 코드가 필요합니다: <br><br><small><code>__account__</code></small><br><br><em> 이 주소에 최소한 1 이더가 있어야 합니다!</em>",
+                "walletNeedsDeployment": "테스트넷상에 있습니다.<br><br>원본 지갑 컨트랙트 코드가 없습니다. 지갑컨트랙트의 서브컨트랙들이 다음의 당신 주소에서 사용할 코드가 필요합니다: <br><br><small><code>__account__</code></small><br><br><em> 이 주소에 최소한 1 이더가 있어야 합니다!</em>",
                 "testnetWalletDeployed": "오리지널 지갑 컨트랙트가 설치되었습니다.<br> 사용된 주소는 다음과 같습니다:<br><br><small><code>__address__</code></small>."
             },
             "addToken": {
@@ -86,7 +86,7 @@
             "dailyLimitRemaining": "일일 한도 잔여시간",
             "requiredSignatures": "필요한 서명",
             "owners": "소유자",
-            "walletsDescription": "이것은 블랙체인에 저장되는 컨트랙트들로서 이더를 보관하고 보호할 수 있습니다. 다수의 소유자를 지정할 수 있고 모든 트랜잭션 로그기록을 보관합니다.",
+            "walletsDescription": "이것은 블록체인에 저장되는 컨트랙트들로서 이더를 보관하고 보호할 수 있습니다. 다수의 소유자를 지정할 수 있고 모든 트랜잭션 로그기록을 보관합니다.",
             "walletsDescriptionNotEnoughFunds": "1 이더 이상을 가지고 있으면 여러 가지 기능을 가진 컨트랙트들을 만들 수 있습니다. 지갑 컨트랙트은 기본 스마트 컨트랙트의 한가지 유형인데, 보안 강화를 위해 자금을 다수의 계정에 의해 통제되도록 하거나 하루 출금량을 제한할 수도 있습니다. 여러분의 필요에 맞게 컨트랙트를 만들기 위해서는 <em> 컨트랙트 </em> 메뉴 탭을 클릭하세요",
             "accountsDescription": "계정은 암호로 보호된 키인데 이더, 이더리움을 기반으로 한 토큰 또는 코인들을 보관하고 컨트랙트를 통제합니다. 계정은 개별 입금 트랙잭션은 보여주지 못합니다.",
             "buttons": {
@@ -98,7 +98,7 @@
                 "showInterface": "인터페이스 보기"
             },
             "modal": {
-                "deleteText": "이 지갑 컨트랙트를 삭제하려는 것이 정말 맞습니까? 블럭체인 위에 계정은 여전히 존재하겠지만, <br>만일 이 주소를 지우면, 여기에 저장된 자금을 찾을 수 없고 결국 잃어 버리게 될 것입니다. 정말 삭제를 하는 것이 맞다면 \"delete\" 라고 입력하세요",
+                "deleteText": "이 지갑 컨트랙트를 삭제하려는 것이 정말 맞습니까? 블록체인 위에 계정은 여전히 존재하겠지만, <br>만일 이 주소를 지우면, 여기에 저장된 자금을 찾을 수 없고 결국 잃어 버리게 될 것입니다. 정말 삭제를 하는 것이 맞다면 \"delete\" 라고 입력하세요",
                 "backupWallet": {
                     "title": "지갑 컨트랙트 주소를 백업합니다!",
                     "description": "반드시 지갑 컨트랙트 주소를 적어 놓으시기 바랍니다:"
@@ -113,7 +113,7 @@
             "latest": "최종 이벤트",
             "filter": "이벤트 필터링",
             "transactionHash": "트랜잭션 해시",
-            "block": "블럭",
+            "block": "블록",
             "originContract": "컨트랙트 출처",
             "logIndex": "로그 색인",
             "transactionIndex": "트랜잭션 인덱스",
@@ -123,7 +123,7 @@
         "transactions": {
             "transactionInfoTitle": "트랜잭션",
             "latest": "최종 트랜잭션",
-            "block": "블럭",
+            "block": "블록",
             "pendingConfirmations": "승인 필요",
             "none": "트랜잭션 없음",
             "time": "시간",
@@ -260,7 +260,7 @@
                 "overDailyLimit": "<p class=\"over-daily\">이 금액은 현재 남은 일일 제한 금액인 __limit__ (총 일일 한도 __total__)을 초과합니다, 따라서 __count__ 개의 다른 계정의 승인이 필요합니다.</p>",
                 "overDailyLimit_plural": "<p class=\"over-daily\">이 금액은 현재 남은 일일 제한 금액인 __limit__ (일일 한도 __total__)을 초과합니다, 따라서 __count__ 개의 다른 계정의 승인이 필요합니다.</p>",
                 "underDailyLimit": "<p class=\"under-daily\">이 금액은 현재 남은 일일 제한 금액인 __limit__ (총 일일 한도 __total__)을 초과하지 않습니다, 따라서 즉시 송금이 될 것입니다.</p>",
-                "sendFee": "이것은 이 트랜잭션을 처리하기 위해 사용될 최대 금액입니다. 당신의 트랜잭션은 <strong>__timetext__</strong>에 블럭체인에 등록될 것입니다.",
+                "sendFee": "이것은 이 트랜잭션을 처리하기 위해 사용될 최대 금액입니다. 당신의 트랜잭션은 <strong>__timetext__</strong>에 블록체인에 등록될 것입니다.",
                 "noCodeInRecipient": "수신계정이 컨트랙트가 아닙니다, 따라서 아무것도 실행할 수 없습니다. <strong> '에게' 란에 컨트랙트 주소를 입력하세요.</strong>",
                 "addData": "트랜잭션과 함께 추가 데이터를 송신할 수 있습니다. 만일 \"에게\" 란이 비어 있으면, 송신된 데이터를 이용해 컨트랙트가 설치됩니다.",
                 "dataNotExecutable": "이 데이터를 실행할 수가 없습니다, 따라서 이 트랜잭션은 제공된 개스를 모두 소모하게 될 것입니다.",
@@ -293,7 +293,7 @@
             "deployNewContract": "신규 컨트랙트 설치",
             "addCustomContract": "컨트랙트 열람",
             "customContracts": "주문형 컨트랙트",
-            "description": "이미 블럭체인에 올려진 컨트랙트를 열람하고 사용하기 위해서는 그것의 주소와 JSON으로 된 인터페이스 설정양식이 필요합니다.",
+            "description": "이미 블록체인에 올려진 컨트랙트를 열람하고 사용하기 위해서는 그것의 주소와 JSON으로 된 인터페이스 설정양식이 필요합니다.",
             "deployContract": "컨트랙트 <strong>설치하기</strong> ",
             "contractSourceCode": "솔리더티 컨트랙트 소스 코드",
             "contractByteCode": "컨트랙트 바이트 코드",
@@ -308,7 +308,7 @@
             "writeToContract": "컨트랙트에 쓰기",
             "pickContract": "컨트랙트 선택",
             "pickFunction": "함수 선택",
-            "noContract": "<p>여기에 원하는 컨트랙트의 소스를 입력하세요. <a href=\"http://ethereum.org\" target=\"_blank\">ethereum.org</a>에 여러가지 컨트랙트 예제가 있습니다.: </p> <ul><li><a href=\"http://ethereum.org/token#the-code\" target=\"_blank\">토큰 만들기</a></li><li><a href=\"http://ethereum.org/crowdsale#the-code\" target=\"_blank\">크라우드세일 시작하기</a></li><li><a href=\"http://ethereum.org/dao#the-code\" target=\"_blank\">블럭체인 조직 만들기</a></li></ul>",
+            "noContract": "<p>여기에 원하는 컨트랙트의 소스를 입력하세요. <a href=\"http://ethereum.org\" target=\"_blank\">ethereum.org</a>에 여러가지 컨트랙트 예제가 있습니다.: </p> <ul><li><a href=\"http://ethereum.org/token#the-code\" target=\"_blank\">토큰 만들기</a></li><li><a href=\"http://ethereum.org/crowdsale#the-code\" target=\"_blank\">크라우드세일 시작하기</a></li><li><a href=\"http://ethereum.org/dao#the-code\" target=\"_blank\">블록체인 조직 만들기</a></li></ul>",
             "buttons": {
                 "showContractInfo": "컨트랙트 정보 보기",
                 "hideContractInfo": "컨트랙트 정보 감추기",
