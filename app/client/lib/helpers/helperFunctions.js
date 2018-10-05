@@ -18,8 +18,7 @@ Get the default contract example
 @method getDefaultContractExample
 **/
 Helpers.getDefaultContractExample = function(withoutPragma) {
-  var source =
-    'contract MyContract {\n    /* Constructor */\n    function MyContract() public {\n\n    }\n}';
+  var source = 'contract MyContract {\n    constructor() public {\n\n    }\n}';
 
   if (withoutPragma) {
     return source;
@@ -91,7 +90,7 @@ Helpers.getLocalStorageSize = function() {
   var size = 0;
   if (localStorage) {
     _.each(Object.keys(localStorage), function(key) {
-      size += localStorage[key].length * 2 / 1024 / 1024;
+      size += (localStorage[key].length * 2) / 1024 / 1024;
     });
   }
 
