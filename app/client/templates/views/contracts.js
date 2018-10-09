@@ -184,6 +184,11 @@ var autoScanGetTokens = function(template) {
       Meteor.defer(function() {
         // defer to wait for autoScanStatus to update in UI first
         _.each(tokens, function(token) {
+          if (!web3.utils.isAddress(token.address)) {
+            console.log('Token address invalid: ', token.address);
+            return;
+          }
+
           if (alreadySubscribed.includes(token.address)) {
             console.log('Already subscribed to ' + token.name);
             return;
