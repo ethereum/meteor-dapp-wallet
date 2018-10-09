@@ -11,10 +11,9 @@ jobs:
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mongo:3.4.4
 
-    working_directory: ~/meteor-dapp-wallet
-
     steps:
       - checkout
+      - working_directory: app
       - run: curl https://install.meteor.com/ | sh
       - run: cd app
       - run: npm i
