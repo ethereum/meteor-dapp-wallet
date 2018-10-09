@@ -3,8 +3,8 @@
     "name": "standard-minifier-js",
     "version": "2.3.2"
   },
-  "totalMinifiedBytes": 2930663,
-  "totalMinifiedGzipBytes": 743537,
+  "totalMinifiedBytes": 2930684,
+  "totalMinifiedGzipBytes": 743539,
   "minifiedBytesByPackage": {
     "packages/meteor.js": 8962,
     "packages/standard-minifiers.js": 38,
@@ -1085,7 +1085,7 @@
     "app/client/lib/ethereum/observeWallets.js": 114176,
     "app/client/lib/ethereum/tokenInterface.js": 1200,
     "app/client/lib/ethereum/walletConnector.js": 1895,
-    "app/client/lib/ethereum/walletInterface.js": 29161,
+    "app/client/lib/ethereum/walletInterface.js": 29182,
     "app/client/lib/helpers/helperFunctions.js": 9502,
     "app/client/lib/helpers/templateHelpers.js": 2357,
     "app/client/lib/thirdparty/ace.js": 338148,
