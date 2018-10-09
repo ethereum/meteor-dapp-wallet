@@ -18,24 +18,8 @@ jobs:
 
     steps:
       - checkout
-
-      - run: npm install -g meteor-build-client
       - run: curl https://install.meteor.com/ | sh
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "app/package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
       - run: cd app && npm i
-
-      - save_cache:
-          paths:
-            - app/node_modules
-          key: v1-dependencies-{{ checksum "app/package.json" }}
-      
       - run: npm run build
 
 
