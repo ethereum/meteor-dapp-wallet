@@ -16,7 +16,8 @@ jobs:
     steps:
       - checkout
       - run: curl https://install.meteor.com/ | sh
-      - run: cd app && npm i
+      - run: cd app
+      - run: npm i
       - run: npm run build
 
 
