@@ -460,13 +460,12 @@ checkWalletOwners = function(address) {
       myContract.methods.m_numOwners().call(function(e, numberOfOwners) {
         if (!e) {
           numberOfOwners = Number(numberOfOwners);
-
           if (numberOfOwners > 0) {
             var owners = [];
 
             // go through the number of owners we stop
             P.all(
-              _.map(_.range(100), function(i) {
+              _.map(_.range(numberOfOwners), function(i) {
                 return new P(function(resolve, reject) {
                   web3.eth.getStorageAt(address, 2 + i, function(
                     e,
@@ -477,6 +476,8 @@ checkWalletOwners = function(address) {
                         '0x000000000000000000000000',
                         '0x'
                       );
+
+                      ownerAddress = web3.utils.toChecksumAddress(ownerAddress);
 
                       if (owners.length > numberOfOwners) return resolve();
 
@@ -507,6 +508,7 @@ checkWalletOwners = function(address) {
               function() {
                 returnValue.owners = owners;
 
+                // FIXME: helper should take address checksum into consideration
                 if ((account = Helpers.getAccountByAddress({ $in: owners }))) {
                   returnValue.info = TAPi18n.__(
                     'wallet.newWallet.accountType.import.youreOwner',
