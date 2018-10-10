@@ -446,14 +446,13 @@ Check wallet owners
 @method checkWalletOwners
 */
 checkWalletOwners = function(address) {
-  if (!web3.utils.isAddress(address)) return;
-
   return new P(function(resolve, reject) {
     var returnValue = {
       owners: false,
       info: ''
     };
 
+    if (!web3.utils.isAddress(address)) return;
     address = address.toLowerCase();
     WalletContract.options.address = address;
     var myContract = WalletContract;
