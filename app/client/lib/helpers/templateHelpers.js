@@ -137,18 +137,23 @@ Template.registerHelper('selectAccounts', function(hideWallets) {
     { sort: { balance: 1 } }
   ).fetch();
 
+  // array of objects
+  accounts = accounts.map(function(e) {
+    e.address = e.address.toLowerCase();
+    return e;
+  });
+
+  // array of string addresses
+  var accountsAddresses = accounts.map(function(e) {
+    return e.address;
+  });
+
   if (hideWallets !== true)
     accounts = _.union(
       Wallets.find(
         {
-          owners: {
-            $in: _.map(EthAccounts.find().fetch(), function(account) {
-              return account.address.toLowerCase();
-            })
-          },
-          address: {
-            $exists: true
-          }
+          owners: { $in: accountsAddresses },
+          address: { $exists: true }
         },
         {
           sort: { name: 1 }
