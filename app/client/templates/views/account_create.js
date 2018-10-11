@@ -363,14 +363,8 @@ Template['views_account_create'].events({
 
       if (owners.length === 0) return;
 
-      // TODO: Allow reimport of the wallet - should upsert() with fresh values.
       var address = template.find('input.import').value;
       address = '0x' + address.replace('0x', '').toLowerCase();
-      if (Wallets.findOne({ address: address }))
-        return GlobalNotification.warning({
-          content: 'i18n:wallet.newWallet.error.alreadyExists',
-          duration: 2
-        });
 
       // reorganize owners, so that yourself is at place one
       var account = Helpers.getAccountByAddress({ $in: owners || [] });
@@ -379,17 +373,22 @@ Template['views_account_create'].events({
         owners.unshift(account.address);
       }
 
-      Wallets.insert({
-        owners: owners,
-        name:
-          template.find('input[name="accountName"]').value ||
-          TAPi18n.__('wallet.accounts.defaultName'),
-        address: address,
-        balance: '0',
-        // TODO set to 0
-        creationBlock: 300000
-        // imported: true
-      });
+      Wallets.upsert(
+        { address: address },
+        {
+          $set: {
+            owners: owners,
+            name:
+              template.find('input[name="accountName"]').value ||
+              TAPi18n.__('wallet.accounts.defaultName'),
+            address: address,
+            balance: '0',
+            // TODO set to 0
+            creationBlock: 300000
+            // imported: true
+          }
+        }
+      );
 
       FlowRouter.go('dashboard');
     }
