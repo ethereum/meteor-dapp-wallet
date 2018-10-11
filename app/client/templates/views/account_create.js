@@ -361,10 +361,9 @@ Template['views_account_create'].events({
         )
       );
 
-      if (owners.length === 0) {
-        return;
-      }
+      if (owners.length === 0) return;
 
+      // TODO: Allow reimport of the wallet - should upsert() with fresh values.
       var address = template.find('input.import').value;
       address = '0x' + address.replace('0x', '').toLowerCase();
       if (Wallets.findOne({ address: address }))
@@ -388,8 +387,8 @@ Template['views_account_create'].events({
         address: address,
         balance: '0',
         // TODO set to 0
-        creationBlock: 300000,
-        imported: true
+        creationBlock: 300000
+        // imported: true
       });
 
       FlowRouter.go('dashboard');
