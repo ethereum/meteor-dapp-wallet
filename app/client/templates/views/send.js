@@ -621,6 +621,13 @@ Template['views_send'].events({
       if (sendAll && (selectedAccount.owners || tokenAddress !== 'ether'))
         sendAll = false;
 
+      // if is a wallet contract, normalize addresses to lowercase
+      if (selectedAccount.owners) {
+        selectedAccount.owners = selectedAccount.owners.map(function(e) {
+          return e.toLowerCase();
+        });
+      }
+
       console.log('Providing gas: ', estimatedGas, sendAll ? '' : ' + 100000');
 
       if (TemplateVar.get('selectedAction') === 'deploy-contract' && !data)

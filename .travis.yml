@@ -5,10 +5,10 @@ node_js: "7"
 sudo: required
 
 install:
-  - npm install -g meteor-build-client
+  - cd app
+  - npm install
   - curl https://install.meteor.com/ | sh
 
 script:
-  - cd app
   - npm run build
 
