@@ -144,9 +144,13 @@ Template.registerHelper('selectAccounts', function(hideWallets) {
   });
 
   // array of string addresses
-  var accountsAddresses = accounts.map(function(e) {
-    return e.address;
-  });
+  // we can't be sure how the addresses would look like, checksum or lowercase,
+  // so we add both types to the search.
+  var accountsAddresses = _.flatten(
+    accounts.map(function(e) {
+      return [e.address, web3.utils.toChecksumAddress(e.address)];
+    })
+  );
 
   if (hideWallets !== true)
     accounts = _.union(
