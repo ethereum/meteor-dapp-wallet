@@ -11,4 +11,4 @@ install:
 
 script:
   - npm run build
-  - npm run pack && ls wallet.asar
+  - npm run pack && ls ../wallet.asar
