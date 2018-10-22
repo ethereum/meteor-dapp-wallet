@@ -1,13 +1,15 @@
 {
   "scripts": {
     "precommit": "pretty-quick --staged",
-    "build": "meteor-build-client ../build --path \"\""
+    "build": "meteor-build-client ../build --path \"\"",
+    "pack": "asar pack ../build ../wallet.asar"
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.49",
     "core-js": "^2.5.7"
   },
   "devDependencies": {
+    "asar": "^0.14.5",
     "husky": "^0.14.3",
     "meteor-build-client": "^0.4.1",
     "prettier": "^1.11.1",
