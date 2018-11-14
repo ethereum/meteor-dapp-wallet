@@ -191,6 +191,10 @@ Helpers.showNotification = function(i18nText, values, callback) {
   if (typeof mist !== 'undefined') mist.sounds.bip();
 };
 
+var multipleCaseAddresses = function(address) {
+  return [address.toLowerCase(), web3.utils.toChecksumAddress(address)];
+};
+
 /**
 Gets the docuement matching the given addess from the EthAccounts or Wallets collection.
 
@@ -199,13 +203,23 @@ Gets the docuement matching the given addess from the EthAccounts or Wallets col
 @param {Boolean} reactive
 */
 Helpers.getAccountByAddress = function(address, reactive) {
+  if (address == null) {
+    console.log('No query provided');
+    return null;
+  }
   var options = reactive === false ? { reactive: false } : {};
-  // if(_.isString(address))
-  //     address = address.toLowerCase();
+  var query;
+
+  if (_.isString(address)) {
+    query = { address: { $in: multipleCaseAddresses(address) } };
+  } else {
+    query = { address: address };
+  }
+
   return (
-    EthAccounts.findOne({ address: address }, options) ||
-    Wallets.findOne({ address: address }, options) ||
-    CustomContracts.findOne({ address: address }, options)
+    EthAccounts.findOne(query, options) ||
+    Wallets.findOne(query, options) ||
+    CustomContracts.findOne(query, options)
   );
 };
 
@@ -218,7 +232,10 @@ Gets the docuement matching the given query from the EthAccounts or Wallets coll
 */
 Helpers.getAccounts = function(query, reactive) {
   var options = reactive === false ? { reactive: false } : {};
-  if (_.isString(query.address)) query.address = query.address.toLowerCase();
+  if (_.isString(query.address)) {
+    query.address = { $in: multipleCaseAddresses(query.address) };
+  }
+
   return EthAccounts.find(query, options)
     .fetch()
     .concat(Wallets.find(query, options).fetch());
