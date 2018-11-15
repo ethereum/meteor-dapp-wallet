@@ -204,7 +204,6 @@ Gets the docuement matching the given addess from the EthAccounts or Wallets col
 */
 Helpers.getAccountByAddress = function(address, reactive) {
   if (address == null) {
-    console.log('No query provided');
     return null;
   }
   var options = reactive === false ? { reactive: false } : {};
@@ -212,6 +211,12 @@ Helpers.getAccountByAddress = function(address, reactive) {
 
   if (_.isString(address)) {
     query = { address: { $in: multipleCaseAddresses(address) } };
+  } else if ('$in' in address) {
+    // If provided query is a list of accounts, unwrap it and adds redundant addresses.
+    var addressArray = _.flatten(
+      address.$in.map(e => multipleCaseAddresses(e))
+    );
+    query = { address: { $in: addressArray } };
   } else {
     query = { address: address };
   }
