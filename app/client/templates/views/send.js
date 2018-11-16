@@ -133,6 +133,13 @@ var translateExternalErrorMessage = function(message) {
   }
 };
 
+var getSelectedFromAccount = function() {
+  return TemplateVar.getFrom(
+    'select[name="dapp-select-account"].send-from',
+    'value'
+  );
+};
+
 // Set basic variables
 Template['views_send'].onCreated(function() {
   var template = this;
@@ -604,9 +611,8 @@ Template['views_send'].events({
       to = TemplateVar.getFrom('.dapp-address-input .to', 'value'),
       gasPrice = TemplateVar.getFrom('.dapp-select-gas-price', 'gasPrice'),
       estimatedGas = TemplateVar.get('estimatedGas'),
-      selectedAccount = Helpers.getAccountByAddress(
-        template.find('select[name="dapp-select-account"].send-from').value
-      ),
+      selectedFrom = getSelectedFromAccount(),
+      selectedAccount = Helpers.getAccountByAddress(selectedFrom),
       selectedAction = TemplateVar.get('selectedAction'),
       data = getDataField(),
       contract = TemplateVar.getFrom('.compile-contract', 'contract'),

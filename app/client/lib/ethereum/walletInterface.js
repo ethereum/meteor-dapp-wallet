@@ -506,7 +506,6 @@ checkWalletOwners = function(address) {
           function() {
             returnValue.owners = owners;
 
-            // FIXME: helper should take address checksum into consideration
             if ((account = Helpers.getAccountByAddress({ $in: owners }))) {
               returnValue.info = TAPi18n.__(
                 'wallet.newWallet.accountType.import.youreOwner',
