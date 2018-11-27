@@ -137,18 +137,27 @@ Template.registerHelper('selectAccounts', function(hideWallets) {
     { sort: { balance: 1 } }
   ).fetch();
 
+  // array of objects
+  accounts = accounts.map(function(e) {
+    e.address = e.address.toLowerCase();
+    return e;
+  });
+
+  // array of string addresses
+  // we can't be sure how the addresses would look like, checksum or lowercase,
+  // so we add both types to the search.
+  var accountsAddresses = _.flatten(
+    accounts.map(function(e) {
+      return [e.address, web3.utils.toChecksumAddress(e.address)];
+    })
+  );
+
   if (hideWallets !== true)
     accounts = _.union(
       Wallets.find(
         {
-          owners: {
-            $in: _.map(EthAccounts.find().fetch(), function(account) {
-              return account.address.toLowerCase();
-            })
-          },
-          address: {
-            $exists: true
-          }
+          owners: { $in: accountsAddresses },
+          address: { $exists: true }
         },
         {
           sort: { name: 1 }

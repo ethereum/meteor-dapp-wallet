@@ -133,6 +133,13 @@ var translateExternalErrorMessage = function(message) {
   }
 };
 
+var getSelectedFromAccount = function() {
+  return TemplateVar.getFrom(
+    'select[name="dapp-select-account"].send-from',
+    'value'
+  );
+};
+
 // Set basic variables
 Template['views_send'].onCreated(function() {
   var template = this;
@@ -604,9 +611,8 @@ Template['views_send'].events({
       to = TemplateVar.getFrom('.dapp-address-input .to', 'value'),
       gasPrice = TemplateVar.getFrom('.dapp-select-gas-price', 'gasPrice'),
       estimatedGas = TemplateVar.get('estimatedGas'),
-      selectedAccount = Helpers.getAccountByAddress(
-        template.find('select[name="dapp-select-account"].send-from').value
-      ),
+      selectedFrom = getSelectedFromAccount(),
+      selectedAccount = Helpers.getAccountByAddress(selectedFrom),
       selectedAction = TemplateVar.get('selectedAction'),
       data = getDataField(),
       contract = TemplateVar.getFrom('.compile-contract', 'contract'),
@@ -620,6 +626,13 @@ Template['views_send'].events({
       // if its a wallet contract and tokens, don't need to remove the gas addition on send-all, as the owner pays
       if (sendAll && (selectedAccount.owners || tokenAddress !== 'ether'))
         sendAll = false;
+
+      // if is a wallet contract, normalize addresses to lowercase
+      if (selectedAccount.owners) {
+        selectedAccount.owners = selectedAccount.owners.map(function(e) {
+          return e.toLowerCase();
+        });
+      }
 
       console.log('Providing gas: ', estimatedGas, sendAll ? '' : ' + 100000');
 
