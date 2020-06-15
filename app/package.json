@@ -4,7 +4,7 @@
     "build": "meteor-build-client ../build --path \"\""
   },
   "dependencies": {
-    "@babel/runtime": "^7.10.2",
+    "@babel/runtime": "^7.0.0-beta.55",
     "core-js": "^2.5.7"
   },
   "devDependencies": {
