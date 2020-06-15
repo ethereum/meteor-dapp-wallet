@@ -25,9 +25,7 @@
                 {{/each}}
             </div>
 
-            {{#unless isBrowserMode}}
-                {{> elements_new_account_button }}
-            {{/unless}}
+            {{> elements_new_account_button }}
 
 
             <h2>{{i18n "wallet.accounts.walletsTitle"}}</h2>
@@ -62,9 +60,7 @@
         {{else}}
             <div class="col col-5 mobile-full ">
                 <br>
-                {{#unless isBrowserMode}}
-                  {{> elements_new_account_button }}
-                {{/unless}}
+                {{> elements_new_account_button }}
             </div>
             <div class="col col-5 mobile-full ">
                 <h3>{{i18n "wallet.app.texts.noAccounts.title"}}</h3>

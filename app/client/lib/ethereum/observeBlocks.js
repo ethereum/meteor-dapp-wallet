@@ -162,6 +162,9 @@ observeLatestBlocks = function() {
   updateBalances();
 
   // GET the latest blockchain information
+  // setInterval(()=>{
+  //   updateBalances();
+  // }, 1000 * 15);
   web3.eth.subscribe('newBlockHeaders', function(e, res) {
     if (!e) {
       updateBalances();
