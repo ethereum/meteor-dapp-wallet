@@ -60,7 +60,8 @@ Template['views_dashboard'].helpers({
   hasMinimumBalance: function() {
     var enoughBalance = false;
     _.each(_.pluck(EthAccounts.find({}).fetch(), 'balance'), function(bal) {
-      if (new BigNumber(bal, '10').gt(1000000000000000)) enoughBalance = true;
+      if (bal && new BigNumber(bal, '10').gt(1000000000000000))
+        enoughBalance = true;
     });
 
     return enoughBalance;
@@ -90,33 +91,66 @@ Template['views_dashboard'].helpers({
   }
 });
 
+var insertAccounts = function(accounts) {
+  accounts.forEach(function(account) {
+    account = account.toLowerCase();
+    EthAccounts.upsert(
+      { address: account },
+      {
+        $set: {
+          address: account,
+          new: true
+        }
+      }
+    );
+  });
+};
+
 Template['views_dashboard'].events({
   /**
     Request to create an account in mist
 
     @event click .create.account
     */
-  'click .create.account': function(e) {
+  'click .create.account': async function(e) {
     e.preventDefault();
 
-    mist.requestAccount(function(e, accounts) {
-      if (!e) {
-        if (!_.isArray(accounts)) {
-          accounts = [accounts];
+    if (typeof mist !== 'undefined') {
+      mist.requestAccount(function(e, accounts) {
+        if (!e) {
+          if (!_.isArray(accounts)) {
+            accounts = [accounts];
+          }
+          insertAccounts(accounts);
         }
-        accounts.forEach(function(account) {
-          account = account.toLowerCase();
-          EthAccounts.upsert(
-            { address: account },
-            {
-              $set: {
-                address: account,
-                new: true
-              }
+      });
+
+      // we assume meta mask is present
+    } else {
+      if (typeof ethereum != 'undefined') {
+        let accounts = await ethereum.enable();
+        // old meta mask way
+        if (Array.isArray(accounts) && accounts.length > 0) {
+          insertAccounts(accounts);
+        } else {
+          try {
+            accounts = await ethereum.send('eth_requestAccounts');
+          } catch (e) {}
+          if (Array.isArray(accounts) && accounts.length > 0) {
+            insertAccounts(accounts);
+          } else {
+            const web3 = new Web3(ethereum);
+            accounts = await web3.eth.getAccounts();
+            if (accounts.length > 0) {
+              insertAccounts(accounts);
+            } else {
+              alert(
+                'No accounts found! Is your browser wallet unlocked?\n\nUnlock your Browser-Wallet and reload the page.'
+              );
             }
-          );
-        });
+          }
+        }
       }
-    });
+    }
   }
 });

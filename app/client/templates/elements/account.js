@@ -17,7 +17,7 @@ Block required until a transaction is confirmed.
 @property blocksForConfirmation
 @type Number
 */
-var blocksForConfirmation = 12;
+var blocksForConfirmation = 3;
 
 Template['elements_account'].rendered = function() {
   // initiate the geo pattern
@@ -127,7 +127,7 @@ Template['elements_account'].helpers({
     return blocksForConfirmation >= confirmations && confirmations >= 0
       ? {
           confirmations: confirmations,
-          percent: confirmations / blocksForConfirmation * 100
+          percent: (confirmations / blocksForConfirmation) * 100
         }
       : false;
   },

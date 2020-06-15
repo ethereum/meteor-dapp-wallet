@@ -10,17 +10,18 @@ addTransactionAfterSend = function(
   to,
   gasPrice,
   estimatedGas,
-  data,
+  rawData,
   tokenId
 ) {
   var jsonInterface = undefined,
     contractName = undefined,
+    data = undefined,
     txId = Helpers.makeId('tx', txHash);
 
   if (_.isObject(data)) {
     contractName = data.contract.name.replace(/([A-Z])/g, ' $1');
     jsonInterface = data.contract.jsonInterface;
-    data = data.data;
+    data = rawData.data;
   }
 
   Transactions.upsert(txId, {

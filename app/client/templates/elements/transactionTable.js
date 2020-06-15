@@ -155,7 +155,9 @@ Template['elements_transactions_row'].helpers({
   transactionType: function() {
     var to = Helpers.getAccountByAddress(this.to),
       from = Helpers.getAccountByAddress(this.from),
-      initiator = Helpers.getAccountByAddress(this.initiator),
+      initiator = this.initiator
+        ? Helpers.getAccountByAddress(this.initiator)
+        : null,
       sendData = this.data;
 
     if (from)
@@ -226,7 +228,7 @@ Template['elements_transactions_row'].helpers({
     return blocksForConfirmation >= confirmations && confirmations >= 0
       ? {
           confirmations: confirmations,
-          percent: confirmations / blocksForConfirmation * 100
+          percent: (confirmations / blocksForConfirmation) * 100
         }
       : false;
   },

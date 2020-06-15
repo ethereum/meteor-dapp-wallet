@@ -4,49 +4,56 @@ The Ethereum wallet.
 
 [![Build Status](https://travis-ci.org/ethereum/meteor-dapp-wallet.svg?branch=master)](https://travis-ci.org/ethereum/meteor-dapp-wallet)
 
-**NOTE** The wallet is not yet official released,
-can contain severe bugs!
+**PLEASE NOTE:** This wallet is not yet officially released,
+and can contain severe bugs! Please use at your own risk.
+
+## Install
+
+If you don't have [Meteor](https://www.meteor.com/install):
+
+    $ curl https://install.meteor.com/ | sh
+
+Install npm dependencies:
+
+    $ cd meteor-dapp-wallet/app
+    $ npm install
 
 ## Development
 
-Start an `geth` node and the app using meteor and open http://localhost:3000 in your browser:
+Start a `geth` node:
 
     $ geth --ws --wsorigins "http://localhost:3000" --unlock <your account>
 
-Starting the wallet dapp using [Meteor](https://meteor.com/install)
+Run dev server:
 
     $ cd meteor-dapp-wallet/app
     $ meteor
 
-Go to http://localhost:3000
+Navigate to http://localhost:3000
 
 ## Deployment
 
-To create a build version of your app run:
+To create a build:
 
-// install meteor-build-client
-$ npm install -g meteor-build-client
-
-    // bundle dapp
+    $ npm install -g meteor-build-client
     $ cd meteor-dapp-wallet/app
+    $ npm install
     $ meteor-build-client ../build --path ""
 
-This will generate the files in the `../build` folder. Double click the index.html to start the app.
-To make routing work properly you need to build it using:
+This will generate the files in the `../build` folder.
 
-    $ meteor-build-client ../build
+Navigating to `index.html` will start the app, but you will need to serve it over a local server like [MAMP](https://www.mamp.info).
 
-And start a local server which points with its document root into the `../build` folder,
-so that you can open the app using `http://localhost:80/`
+---
 
-To deploy them to the **wallet.ethereum.org** site, execute these commands (from the app folder):
+To deploy to the **wallet.ethereum.org** site, execute these commands:
 
-    git checkout gh-pages
-    git merge develop
-    cd app
-    meteor-build-client ../build --path "/"
+    $ git checkout gh-pages
+    $ git merge develop
+    $ cd app
+    $ meteor-build-client ../build --path "/"
 
-And push (or PR) your changes to the gh-pages branch.
+And push (or PR) your changes to the `gh-pages` branch.
 
 ---
 
