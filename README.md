@@ -14,7 +14,7 @@ If you don't have [Meteor](https://www.meteor.com/install):
     $ curl https://install.meteor.com/ | sh
 
 Install npm dependencies:
-
+    $ git clone https://github.com/ethereum/meteor-dapp-wallet.git
     $ cd meteor-dapp-wallet/app
     $ npm install
 
