@@ -1,8 +1,8 @@
 # Ethereum Wallet Ðapp
 
-The Ethereum Wallet Dapp -- "Wallet" -- is a dapp originally intended for use within the now-deprecated Mist Browser. There is also a web-hosted version on [https://wallet.ethereum.org](https://wallet.ethereum.org). This edition has been hosted in this way for a number of years, mainly to enable users who created multisig wallets to continue to be able to manage them. 
+The Ethereum Wallet Dapp is a dapp originally intended for use within the now-deprecated Mist Browser. There is also a web-hosted version on [https://wallet.ethereum.org](https://wallet.ethereum.org). This is hosted in order to enable users who created multisig wallets using Mist to continue to be able to manage them.
 
-Keep in mind that to use the web-hosted version of Wallet, you will need to run geth!
+To use the web-hosted Wallet, you will need to locally run geth!
 
 ## Notices
 
@@ -18,13 +18,13 @@ Do not use this dapp to manage significant value! [Read this guide](https://medi
 
 This dapp and multisig smart contract can contain severe bugs!
 
-## About those Ethereum keys...
+### Ethereum Keys
 
-Mist and Ethereum Dapp Wallet make use of geth-style encrypted Ethereum keys. You may have generated them in Mist, MEW, MyCrypto, or even geth, but they must be present in order to access your accounts and multisigs w/ the web-hosted Ethereum Dapp Wallet. 
+Mist and Ethereum Dapp Wallet make use of encrypted Ethereum keys. You may have generated them w/ a password in Mist, MEW, MyCrypto, or even geth itself, but they must be present in order to access your accounts and multisigs in the web-hosted Ethereum Dapp Wallet. 
 
-When you use the Wallet w/ geth, your keys are accessed by geth. Think of geth as your gateway to Ethereum mainnet, and Wallet -- even though it is in your browser -- is using geth to interact with your keys.
+When you use the Wallet w/ geth, your keys are actually accessed by geth. Think of geth as your gateway to Ethereum mainnet, and Wallet -- even though it is in your browser -- is using geth to interact with your keys.
 
-Keep them secret. Keep them safe.
+Understand where your keys are on your local disk, and back them up. Keep them secret! Keep them safe!
 
 
 ## Using the Ethereum Wallet Dapp
