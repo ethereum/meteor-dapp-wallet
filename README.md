@@ -18,32 +18,79 @@ Do not use this dapp to manage significant value! [Read this guide](https://medi
 
 This dapp and multisig smart contract can contain severe bugs!
 
-### Ethereum Keys
+### Regarding geth
 
-Mist and Ethereum Dapp Wallet make use of encrypted Ethereum keys. You may have generated them w/ a password in Mist, MEW, MyCrypto, or even geth itself, but they must be present in order to access your accounts and multisigs in the web-hosted Ethereum Dapp Wallet. 
+Please download and use the latest version of geth with the Ethereum Wallet Dapp!
 
-When you use the Wallet w/ geth, your keys are actually accessed by geth. Think of geth as your gateway to Ethereum mainnet, and Wallet -- even though it is in your browser -- is using geth to interact with your keys.
+[https://github.com/ethereum/go-ethereum/releases](https://github.com/ethereum/go-ethereum/releases)
+
+Important flags:
+- "syncmode" flag - specify light or fast sync to save time and disk space
+- "rpc" flag - opens a JSON-RPC service on port 8545
+- "rpccorsdomain" flag - enables the browser's javascript to make use of the JSON-RPC service opened by geth
+- "allow-insecure-unlock" - enables geth to unlock encrypted Ethereum keys while the JSON-RPC service is open
+
+### Ethereum Accounts
+
+Mist and Ethereum Dapp Wallet make use of encrypted Ethereum keys. You may have generated them w/ a password in Mist, MEW, MyCrypto, or evenin geth itself. A key must be available in order for you to access your accounts and multisigs in the web-hosted Ethereum Dapp Wallet. 
+
+When you use the Wallet w/ geth, your keys are accessed by geth from the file system. You can think of geth as your gateway to Ethereum mainnet. The Wallet -- even though it is in your browser -- is accessing geth via the JSON-RPC interface to interact with your keys and the Ethereum network. You will need to unlock the keys within geth's attach CLI.
 
 Understand where your keys are on your local disk, and back them up. Keep them secret! Keep them safe!
-
 
 ## Using the Ethereum Wallet Dapp
 
 While Wallet is deprecated software, you can use the web-hosted [https://wallet.ethereum.org](https://wallet.ethereum.org) version if you are able to properly configure a local Ethereum node.
 
-**First start a local geth node:**
+You must run geth with a special "allow-insecure-unlock" flag which enables you to run geth in RPC mode while encrypted keys are unlocked. This unlocking exposes you to instant theft of the value on an opened key, so do this carefully (ideally on a clean system with firewall enabled).
+
+**In a terminal, start a local light geth node:**
 
 ```
-   $ geth --syncmode "light" --rpc --rpccorsdomain "https://wallet.ethereum.org"
+   $ geth --syncmode "light" --rpc --rpccorsdomain "https://wallet.ethereum.org" --allow-insecure-unlock
 ```
+
+Wait for the node to sync, it may take a few minutes.
+
+**In another terminal, attach to geth via CLI:**
+
+```
+   $ geth attach
+   > 
+```
+
+List available Ethereum accounts in the CLI:
+
+(remember that these are stored in JSON files in geth's keystore directory)
+
+```
+   > personal.listAccounts
+   > ['0x...']
+```
+
+Unlock the Ethereum account and, on prompt, enter the password::
+
+```
+   > personal.unlockAccount('0x...')
+   > Unlock account 0x...
+   > Passphrase: **********
+```
+
+You must lock the account back up!
+
+```
+   > personal.lockAccount('0x...')
+```
+
 
 **Now open a non-Metamask browser to use the dapp**
 
-Make sure Metamask isn't offering a connection to Ethereum mainnet when you use the dapp. In the future there may be a Metamask-enabled version release. For now, you must use your local geth's connection!
+Make sure that Metamask isn't running and offering a connection to Ethereum mainnet when you use the dapp. In the future there may be a Metamask-enabled version release. For now, you must use your local geth's connection!
 
 The best result so far is using Firefox w/o Metamask extension installed.
 
 Go to [https://wallet.ethereum.org](https://wallet.ethereum.org).
+
 
 ## Developing the Ethereum Wallet Dapp
 
@@ -66,12 +113,6 @@ Also, download and install [Meteor](https://www.meteor.com/install).
 ```
     $ geth --syncmode "light" --rpccorsdomain "http://localhost:3000" --rpc
 ```
-
-Regarding geth::
-
-- The rpc flag opens a JSON-RPC service on port 8545.
-- The rpccorsdomain flag enables the browser's javascript to make use of the JSON-RPC service opened by geth.
-
 
 **Now start a local instance of the Wallet dapp using Meteor**
 
