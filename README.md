@@ -27,8 +27,8 @@ Please download and use the latest version of geth with the Ethereum Wallet Dapp
 Important flags:
 - "syncmode" flag - specify light or fast sync to save time and disk space
 - "rpc" flag - opens a JSON-RPC service on port 8545
-- "rpccorsdomain" flag - enables the browser's javascript to make use of the JSON-RPC service opened by geth
-- "allow-insecure-unlock" - enables geth to unlock encrypted Ethereum keys while the JSON-RPC service is open
+- "rpccorsdomain" flag - enables the dapp to make use of the JSON-RPC service opened by geth
+- "allow-insecure-unlock" - enables geth to unlock Ethereum keys while the JSON-RPC service is open
 
 ### Ethereum Accounts
 
@@ -50,7 +50,8 @@ You must run geth with a special "allow-insecure-unlock" flag which enables you 
    $ geth --syncmode "light" --rpc --rpccorsdomain "https://wallet.ethereum.org" --allow-insecure-unlock
 ```
 
-Wait for the node to sync, it may take a few minutes.
+This is your "sync terminal". Wait for the node to sync, it may take a few minutes.
+
 
 **In another terminal, attach to geth via CLI:**
 
@@ -59,28 +60,24 @@ Wait for the node to sync, it may take a few minutes.
    > 
 ```
 
-List available Ethereum accounts in the CLI:
+This is your "attach terminal".
 
-(remember that these are stored in JSON files in geth's keystore directory)
+List Ethereum accounts available to geth in the CLI:
 
 ```
    > personal.listAccounts
    > ['0x...']
 ```
 
-Unlock the Ethereum account and, on prompt, enter the password::
+Unlock the Ethereum account and, on prompt, enter the password:
 
 ```
    > personal.unlockAccount('0x...')
    > Unlock account 0x...
-   > Passphrase: **********
+   > Passphrase: * * *
 ```
 
-You must lock the account back up!
-
-```
-   > personal.lockAccount('0x...')
-```
+Once it is unlocked, you can operate on the value in your Ethereum account.
 
 
 **Now open a non-Metamask browser to use the dapp**
@@ -90,6 +87,17 @@ Make sure that Metamask isn't running and offering a connection to Ethereum main
 The best result so far is using Firefox w/o Metamask extension installed.
 
 Go to [https://wallet.ethereum.org](https://wallet.ethereum.org).
+
+**Wrap-up**
+
+When you are done operating, you must lock the account back up!
+
+In the attach terminal:
+
+```
+   > personal.lockAccount('0x...')
+```
+
 
 
 ## Developing the Ethereum Wallet Dapp
