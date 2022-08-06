@@ -1,10 +1,15 @@
 {
   "scripts": {
-    "precommit": "pretty-quick --staged"
+    "precommit": "pretty-quick --staged",
+    "build": "meteor-build-client ../build --path \"\""
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.0.0-beta.55",
+    "core-js": "^2.5.7"
   },
   "devDependencies": {
-    "@babel/runtime": "^7.0.0-beta.41",
     "husky": "^0.14.3",
+    "meteor-build-client": "^0.4.1",
     "prettier": "^1.11.1",
     "pretty-quick": "^1.4.1"
   }

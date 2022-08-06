@@ -18,8 +18,7 @@ Get the default contract example
 @method getDefaultContractExample
 **/
 Helpers.getDefaultContractExample = function(withoutPragma) {
-  var source =
-    'contract MyContract {\n    /* Constructor */\n    function MyContract() public {\n\n    }\n}';
+  var source = 'contract MyContract {\n    constructor() public {\n\n    }\n}';
 
   if (withoutPragma) {
     return source;
@@ -91,7 +90,7 @@ Helpers.getLocalStorageSize = function() {
   var size = 0;
   if (localStorage) {
     _.each(Object.keys(localStorage), function(key) {
-      size += localStorage[key].length * 2 / 1024 / 1024;
+      size += (localStorage[key].length * 2) / 1024 / 1024;
     });
   }
 
@@ -192,6 +191,10 @@ Helpers.showNotification = function(i18nText, values, callback) {
   if (typeof mist !== 'undefined') mist.sounds.bip();
 };
 
+var multipleCaseAddresses = function(address) {
+  return [address.toLowerCase(), web3.utils.toChecksumAddress(address)];
+};
+
 /**
 Gets the docuement matching the given addess from the EthAccounts or Wallets collection.
 
@@ -200,13 +203,28 @@ Gets the docuement matching the given addess from the EthAccounts or Wallets col
 @param {Boolean} reactive
 */
 Helpers.getAccountByAddress = function(address, reactive) {
+  if (address == null) {
+    return null;
+  }
   var options = reactive === false ? { reactive: false } : {};
-  // if(_.isString(address))
-  //     address = address.toLowerCase();
+  var query;
+
+  if (_.isString(address)) {
+    query = { address: { $in: multipleCaseAddresses(address) } };
+  } else if ('$in' in address) {
+    // If provided query is a list of accounts, unwrap it and adds redundant addresses.
+    var addressArray = _.flatten(
+      address.$in.map(e => multipleCaseAddresses(e))
+    );
+    query = { address: { $in: addressArray } };
+  } else {
+    query = { address: address };
+  }
+
   return (
-    EthAccounts.findOne({ address: address }, options) ||
-    Wallets.findOne({ address: address }, options) ||
-    CustomContracts.findOne({ address: address }, options)
+    EthAccounts.findOne(query, options) ||
+    Wallets.findOne(query, options) ||
+    CustomContracts.findOne(query, options)
   );
 };
 
@@ -219,7 +237,10 @@ Gets the docuement matching the given query from the EthAccounts or Wallets coll
 */
 Helpers.getAccounts = function(query, reactive) {
   var options = reactive === false ? { reactive: false } : {};
-  if (_.isString(query.address)) query.address = query.address.toLowerCase();
+  if (_.isString(query.address)) {
+    query.address = { $in: multipleCaseAddresses(query.address) };
+  }
+
   return EthAccounts.find(query, options)
     .fetch()
     .concat(Wallets.find(query, options).fetch());

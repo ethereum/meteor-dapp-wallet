@@ -1,7 +1,4 @@
 <template name="views_dashboard">
-    {{#if isMist }}
-      {{>mist_alert}}
-    {{/if}}
 
     <div class="dapp-container">
 
@@ -28,14 +25,9 @@
                 {{/each}}
             </div>
 
-            {{#if isMist}}
-                <button class="wallet-box create account">
-                    <div class="account-pattern">
-                        +
-                    </div>
-                    <h3>{{i18n "wallet.app.buttons.addAccount"}}</h3>
-                </button>
-            {{/if}}
+            {{#unless isBrowserMode}}
+                {{> elements_new_account_button }}
+            {{/unless}}
 
 
             <h2>{{i18n "wallet.accounts.walletsTitle"}}</h2>
@@ -70,14 +62,9 @@
         {{else}}
             <div class="col col-5 mobile-full ">
                 <br>
-                {{#if isMist}}
-                    <button class="wallet-box create account">
-                        <div class="account-pattern">
-                            +
-                        </div>
-                        <h3>{{i18n "wallet.app.buttons.addAccount"}}</h3>
-                    </button>
-                {{/if}}
+                {{#unless isBrowserMode}}
+                  {{> elements_new_account_button }}
+                {{/unless}}
             </div>
             <div class="col col-5 mobile-full ">
                 <h3>{{i18n "wallet.app.texts.noAccounts.title"}}</h3>

@@ -38,7 +38,6 @@ var setupContractSubscription = function(newDocument) {
     }
   );
 
-  // SETUP FILTERS
   Helpers.eventLogs(
     'Checking Token Transfers for ' +
       newDocument.address +
@@ -52,6 +51,7 @@ var setupContractSubscription = function(newDocument) {
     fromBlock: blockToCheckBack,
     toBlock: 'latest'
   });
+
   events.push(subscription);
 
   // get past logs, to set the new blockNumber

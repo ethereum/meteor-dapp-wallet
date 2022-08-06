@@ -142,31 +142,36 @@ var autoScanGetTokens = function(template) {
     );
 
     var tokenListURL =
-      'https://raw.githubusercontent.com/MyEtherWallet/ethereum-lists/master/tokens/tokens-eth.json';
+      'https://raw.githubusercontent.com/MyEtherWallet/ethereum-lists/master/dist/tokens/eth/tokens-eth.json';
 
-    var accounts = _.pluck(
+    const accounts = _.pluck(
       EthAccounts.find()
         .fetch()
         .concat(CustomContracts.find().fetch())
         .concat(Wallets.find().fetch()),
       'address'
     );
-    var tokensToAdd = [];
-    var promises = [];
-    var balancesChecked = 0;
+
+    const tokensToAdd = [];
+    const promises = [];
+    let balancesChecked = 0;
+
+    const alreadySubscribed = _.pluck(Tokens.find().fetch(), 'address');
 
     HTTP.get(tokenListURL, function(error, result) {
+      let tokens;
+
       try {
-        var tokens = JSON.parse(result.content);
+        tokens = JSON.parse(result.content);
       } catch (error) {
-        var errorString = 'Error parsing token list: ' + error;
-        console.log(errorString);
+        const errorString = 'Error parsing token list: ' + error;
+        console.error(errorString);
         TemplateVar.set(template, 'autoScanStatus', errorString);
         reject(errorString);
         return;
       }
 
-      var numberOfBalancesToCheck = tokens.length * accounts.length;
+      const numberOfBalancesToCheck = tokens.length * accounts.length;
       TemplateVar.set(
         template,
         'autoScanStatus',
@@ -179,19 +184,29 @@ var autoScanGetTokens = function(template) {
       Meteor.defer(function() {
         // defer to wait for autoScanStatus to update in UI first
         _.each(tokens, function(token) {
+          if (!web3.utils.isAddress(token.address)) {
+            console.log('Token address invalid: ', token.address);
+            return;
+          }
+
+          if (alreadySubscribed.includes(token.address)) {
+            console.log('Already subscribed to ' + token.name);
+            return;
+          }
+
           _.each(accounts, function(account) {
-            var callData =
+            const callData =
               '0x70a08231000000000000000000000000' +
               account.substring(2).replace(' ', ''); // balanceOf(address)
             try {
-              var promise = web3.eth
+              const promise = web3.eth
                 .call({
                   to: token.address.replace(' ', ''),
                   data: callData
                 })
                 .then(function(result) {
-                  var tokenAmt = web3.utils.toBN(result);
-                  var tokenAmtInEther = web3.utils.fromWei(tokenAmt, 'ether');
+                  const tokenAmt = web3.utils.toBN(result);
+                  const tokenAmtInEther = web3.utils.fromWei(tokenAmt, 'ether');
 
                   if (!tokenAmt.isZero()) {
                     console.log(
@@ -203,16 +218,32 @@ var autoScanGetTokens = function(template) {
                         ': ' +
                         tokenAmtInEther
                     );
+
                     tokensToAdd.push(token);
+
+                    tokenId = Helpers.makeId('token', token.address);
+                    Tokens.upsert(tokenId, {
+                      $set: {
+                        address: token.address,
+                        name: token.name,
+                        symbol: token.symbol,
+                        balances: {},
+                        decimals: Number(token.decimals || 0)
+                      }
+                    });
+
                     TemplateVar.set(template, 'tokens', tokensToAdd);
                   }
 
                   balancesChecked++;
 
-                  var statusString = TAPi18n.__(
+                  let statusString = TAPi18n.__(
                     'wallet.tokens.autoScan.status.checkingBalances',
                     {
-                      number: numberOfBalancesToCheck - balancesChecked
+                      number:
+                        numberOfBalancesToCheck -
+                        balancesChecked -
+                        alreadySubscribed.length
                     }
                   );
 
@@ -230,23 +261,31 @@ var autoScanGetTokens = function(template) {
                   TemplateVar.set(template, 'autoScanStatus', statusString);
 
                   return null;
+                })
+                .catch(function(error) {
+                  console.error(error);
                 });
               promises.push(promise);
             } catch (error) {
-              var errorString = 'Error trying to web3.eth.call: ' + error;
-              console.log(errorString);
+              const errorString = 'Error trying to web3.eth.call: ' + error;
+              console.error(errorString);
+              TemplateVar.set(template, 'autoScanStatus', errorString);
             }
           });
         });
 
-        Promise.all(promises).then(function() {
-          console.log('done');
-          console.log(tokensToAdd);
-          console.log(promises);
-          TemplateVar.set(template, 'autoScanStatus', null);
-          resolve(tokensToAdd);
-          return null;
-        });
+        Promise.all(promises)
+          .then(function() {
+            console.log('autoscan done');
+            console.log(tokensToAdd);
+            TemplateVar.set(template, 'autoScanStatus', null);
+            resolve(tokensToAdd);
+            return null;
+          })
+          .catch(function(error) {
+            console.error(error);
+            TemplateVar.set(template, 'autoScanStatus', error);
+          });
       });
     });
   });
@@ -343,19 +382,6 @@ Template['views_contracts'].events({
         });
         return null;
       }
-
-      _.each(tokens, function(token) {
-        tokenId = Helpers.makeId('token', token.address);
-        Tokens.upsert(tokenId, {
-          $set: {
-            address: token.address,
-            name: token.name,
-            symbol: token.symbol,
-            balances: {},
-            decimals: Number(token.decimals || 0)
-          }
-        });
-      });
 
       updateBalances();
 

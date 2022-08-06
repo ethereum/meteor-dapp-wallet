@@ -452,91 +452,84 @@ checkWalletOwners = function(address) {
       info: ''
     };
 
-    if (web3.utils.isAddress(address)) {
-      address = address.toLowerCase();
-      WalletContract.options.address = address;
-      var myContract = WalletContract;
+    if (!web3.utils.isAddress(address)) return;
+    address = address.toLowerCase();
+    WalletContract.options.address = address;
+    var myContract = WalletContract;
 
-      myContract.m_numOwners(function(e, numberOfOwners) {
-        if (!e) {
-          numberOfOwners = numberOfOwners.toNumber();
+    myContract.methods.m_numOwners().call(function(e, numberOfOwners) {
+      if (e) reject(e);
 
-          if (numberOfOwners > 0) {
-            var owners = [];
+      numberOfOwners = Number(numberOfOwners);
+      if (numberOfOwners > 0) {
+        var owners = [];
 
-            // go through the number of owners we stop
-            P.all(
-              _.map(_.range(100), function(i) {
-                return new P(function(resolve, reject) {
-                  web3.eth.getStorageAt(address, 2 + i, function(
-                    e,
-                    ownerAddress
+        // go through the number of owners we stop
+        P.all(
+          _.map(_.range(numberOfOwners), function(i) {
+            return new P(function(resolve, reject) {
+              web3.eth.getStorageAt(address, 2 + i, function(e, ownerAddress) {
+                if (!e) {
+                  ownerAddress = ownerAddress.replace(
+                    '0x000000000000000000000000',
+                    '0x'
+                  );
+
+                  ownerAddress = web3.utils.toChecksumAddress(ownerAddress);
+
+                  if (owners.length > numberOfOwners) return resolve();
+
+                  if (
+                    web3.utils.isAddress(ownerAddress) &&
+                    ownerAddress !==
+                      '0x0000000000000000000000000000000000000000'
                   ) {
-                    if (!e) {
-                      ownerAddress = ownerAddress.replace(
-                        '0x000000000000000000000000',
-                        '0x'
-                      );
+                    myContract.methods
+                      .isOwner(ownerAddress)
+                      .call({ from: ownerAddress }, function(e, isOwner) {
+                        if (!e && isOwner) {
+                          owners.push(ownerAddress);
+                          owners = _.uniq(owners);
+                          owners.sort();
+                        }
 
-                      if (owners.length > numberOfOwners) return resolve();
-
-                      if (
-                        web3.utils.isAddress(ownerAddress) &&
-                        ownerAddress !==
-                          '0x0000000000000000000000000000000000000000'
-                      ) {
-                        myContract.isOwner.call(
-                          ownerAddress,
-                          { from: ownerAddress },
-                          function(e, isOwner) {
-                            if (!e && isOwner) {
-                              owners.push(ownerAddress);
-                              owners = _.uniq(owners);
-                              owners.sort();
-                            }
-
-                            resolve();
-                          }
-                        );
-                      } else {
                         resolve();
-                      }
-                    }
-                  });
-                });
-              })
-            ).then(
-              function() {
-                returnValue.owners = owners;
-
-                if ((account = Helpers.getAccountByAddress({ $in: owners }))) {
-                  returnValue.info = TAPi18n.__(
-                    'wallet.newWallet.accountType.import.youreOwner',
-                    { account: account.name }
-                  );
-                } else {
-                  returnValue.info = TAPi18n.__(
-                    'wallet.newWallet.accountType.import.watchOnly'
-                  );
+                      });
+                  } else {
+                    resolve();
+                  }
                 }
+              });
+            });
+          })
+        ).then(
+          function() {
+            returnValue.owners = owners;
 
-                resolve(returnValue);
-                return null;
-              },
-              function() {
-                reject();
-              }
-            );
-          } else {
-            returnValue.info = TAPi18n.__(
-              'wallet.newWallet.accountType.import.notWallet'
-            );
+            if ((account = Helpers.getAccountByAddress({ $in: owners }))) {
+              returnValue.info = TAPi18n.__(
+                'wallet.newWallet.accountType.import.youreOwner',
+                { account: account.name }
+              );
+            } else {
+              returnValue.info = TAPi18n.__(
+                'wallet.newWallet.accountType.import.watchOnly'
+              );
+            }
+
             resolve(returnValue);
+            return null;
+          },
+          function() {
+            reject();
           }
-        } else {
-          reject(e);
-        }
-      });
-    }
+        );
+      } else {
+        returnValue.info = TAPi18n.__(
+          'wallet.newWallet.accountType.import.notWallet'
+        );
+        resolve(returnValue);
+      }
+    });
   });
 };
